@@ -1,0 +1,493 @@
+/* Smoooth scrolling looks nicer */
+html {
+  scroll-behavior: smooth;
+}
+
+/* This creates aside bar fixed to the left of the page */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 6rem;
+  padding: 2rem 1rem 2rem 1rem;
+  background-color: #f8f9fa;
+  /*z-index: 1050;*/
+  /*transition: width 0.2s ease-in-out;*/
+}
+
+/* when the user hovers on the sidebar, expand it
+.sidebar:hover {
+  width: 17rem;
+}
+ */
+
+
+/* make sure the contents of the navlink don't wrap when navbar collapses */
+.sidebar .nav-link {
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/* change color of selected pills */
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+background-color:#50bdda !important ; 
+}
+
+
+
+/* fix the width of the icons 
+.sidebar .nav-link i {
+  width: 1rem;
+  margin: auto;
+}
+*/
+
+/* hide the navlink labels by default 
+.sidebar .nav-link span {
+  visibility: hidden;
+  opacity: 0;
+  /*transition: opacity 0.1s ease-in-out;
+}*/
+
+/* when the sidebar is hovered, reveal the labels 
+.sidebar:hover .nav-link span {
+  visibility: visible;
+  opacity: 1;
+}
+*/
+
+/* container for the sidebar header. make sure the contents don't wrap when
+ * the sidebar is collapsed.
+ */
+.sidebar-header .nav-link {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  overflow: hidden;
+  white-space: nowrap;
+  padding-left: 0.1rem;
+}
+
+/* position the header relative to the logo and hide by default */
+.sidebar-header .nav-link h5 {
+  opacity: 0;
+  margin-left: 1rem;
+  margin-bottom: 0;
+  /*transition: opacity 0.1s ease-in-out;*/
+}
+
+/* reveal the header when the sidebar is toggled */
+.sidebar:hover .sidebar-header .nav-link h5 {
+  opacity: 1;
+}
+
+/* light blue color for brain 
+.icon-brain {
+  color: #3a8bb6; 
+}
+*/
+
+/* container for the sidebar footbar. make sure the contents don't wrap when
+ * the sidebar is collapsed. Keep bar at the lowest position.
+ */
+ .sidebar-copyright {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  overflow: hidden;
+  white-space: nowrap;
+
+  position: fixed;
+  bottom: 0;
+  padding-left: 0.2rem;
+}
+
+/* shift the content when the sidebar is hovered 
+.sidebar:hover + #content {
+  margin-left: 18rem;
+}
+*/
+
+ /* Show spinner briefly when a link is clicked 
+ .nav-link:hover + #main-spinner {
+  margin-left : 7rem;
+  padding-right : 7rem;
+}
+*/
+
+/* default settings for content */
+#content {
+  margin-left: 5rem;
+  margin-right: 1rem;
+  /*padding: 1rem 1rem;*/
+  padding-left: 1rem;
+  white-space: normal;
+  /*white-space: normal;*/
+  /*transition: margin-left 0.2s ease-in-out;*/
+}
+
+/* min/max size for graphs */
+/*.dash-graph {
+  /*min-width: 420px; */
+  /*min-height: 300px;*/
+  /*max-height: 90vh;*/
+  /*max-width: 90vw;*/
+/*}*/
+.dash-graph {
+  max-height: 85vh;
+}
+
+/* rounded corner for images (doesn't work)
+.image {
+  border-radius: 250px;
+  border-top-left-radius: 50px;
+}
+
+#page-1-graph-slice-selection .main-svg {border-radius: 80px}
+#page-1-graph-slice-selection > div.js-plotly-plot > div > div > svg:nth-child(1) > g.cartesianlayer > g > g.plot > g > g > image {
+  border-radius: 50px;
+  border-collapse: separate; 
+  overflow: hidden;
+  perspective: 1px;
+  border-top-left-radius: 50px;
+}
+*/
+
+/* rainbow color for home icon 
+.rainbow_text_animated {
+  background: linear-gradient(to right, #222222, #3a8bb6, rgba(80, 189, 218));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: rainbow_animation 6s ease-in-out infinite;
+  background-size: 400% 100%;
+}
+
+@keyframes rainbow_animation {
+  0%,100% {
+      background-position: 0 0;
+  }
+
+  50% {
+      background-position: 100% 0;
+  }
+}
+*/
+
+/* nicer slider */
+.rc-slider-track {
+  background-color: #50bdda;
+}
+
+.rc-slider-dot-active {  
+  border-color:#50bdda;
+  border: solid 2px #50bdda;
+}
+
+.rc-slider-handle {
+  background-color: #50bdda;
+  border-color: #50bdda;
+  border: solid 2px #74bedb;
+}
+
+.rc-slider-handle-click-focused:focus {
+  border-color: #74bedb;
+}
+
+
+.rc-slider-handle:hover {
+  border-color: #50bdda;
+}
+
+.rc-slider-handle-active:active {
+  border-color: #50bdda;
+}
+
+#page-1-slider-slice-selection {
+  white-space: nowrap;
+}
+
+/* correct color for dropdowns */
+#page-3-dropdown-red .Select-value {
+  background-color: rgba(223,80,52, 0.8);
+  color: #222222;
+}
+
+#page-3-dropdown-red .Select-control {
+  border-color: rgba(223,80,52, 0.8);
+}
+
+#page-3-dropdown-red .Select-menu-outer {
+  background-color: rgba(223,80,52, 0.8);
+  color: #222222;
+}
+
+#page-3-dropdown-green .Select-value {
+  background-color: rgba(95,169,112,0.8);
+  color: #222222;
+}
+
+#page-3-dropdown-green .Select-control {
+  border-color: rgba(95,169,112,0.8);
+}
+
+#page-3-dropdown-green .Select-menu-outer {
+  background-color: rgba(95,169,112,0.8);
+  color: #222222;
+}
+
+#page-3-dropdown-blue .Select-value {
+  background-color: rgba(58,139,182,0.8);
+  color: #222222;
+}
+
+#page-3-dropdown-blue .Select-control {
+  border-color: rgba(58,139,182,0.8);
+}
+
+#page-3-dropdown-blue .Select-menu-outer {
+  background-color: rgba(58,139,182,0.8);
+  color: #222222;
+}
+
+/* shift modebar on graph */
+#page-1-graph-slice-selection .js-plotly-plot .plotly .modebar{
+  left: 68%;
+  top: -0.3rem;
+}
+
+/* shift modebar on graph */
+#page-2-graph-heatmap-mz-selection .js-plotly-plot .plotly .modebar{
+  left: 65%;
+  top: 0rem;
+}
+
+#page-2-graph-low-resolution-spectrum .js-plotly-plot .plotly .modebar{
+  left: 62%;
+  top: 3rem;
+}
+
+#page-2-graph-high-resolution-spectrum .js-plotly-plot .plotly .modebar{
+  left: 55%;
+  top: 3rem;
+}
+
+#page-3-graph-heatmap-per-sel .js-plotly-plot .plotly .modebar{
+  left: 68%;
+  top: 0rem;
+}
+
+#page-3-graph-spectrum-per-pixel .js-plotly-plot .plotly .modebar{
+  left: 53%;
+  top: 0.2rem;
+}
+
+
+
+#page-3-graph-heatmap-per-lipid .js-plotly-plot .plotly .modebar{
+  left: 34%;
+  top: 0.0rem;
+}
+
+/* dcc.Loading component with transparent background */
+/* this defines a style for a Loading component with parent_className='loading-wrapper' */
+.loading-wrapper > div {
+  visibility: visible !important;
+}
+
+
+
+
+/* To fix the aspect ratio of the image graphs, images are initally a multiple 420*300 */
+.page-1-fixed-aspect-ratio {
+  position: relative;
+  width: 100%;
+  padding-bottom: 72%;
+  float: left;
+  height: 0;
+}
+
+.page-4-fixed-aspect-ratio {
+  position: relative;
+  width: 100%;
+  padding-bottom: 72%;
+  float: left;
+  height: 0;
+}
+
+.fixed-aspect-ratio {
+  position: relative;
+  width: 100%;
+  padding-bottom: 57.8%;
+  float: left;
+  height: 0;
+}
+
+/* To center main toast header */
+#page-1-main-toast > div.toast-header > strong {
+  margin : auto;
+  color: #ffffff;
+}
+
+
+/* For styling all headers the same 
+div.toast-header > strong {
+  margin : auto;
+  color: #ffffff;
+}
+*/
+/* 
+.toast-body {
+  background-color: #757575;
+}
+*/
+
+/* Make the close button white as well 
+div.toast-header > button > span {
+  color: #ffffff;
+}
+*/
+
+/* Remove above style for lipid toasts */
+#page-2-toast-lipid-1 > div.toast-header > strong, #page-2-toast-lipid-2 > div.toast-header > strong, #page-2-toast-lipid-3 > div.toast-header > strong {
+  color:#222222;
+}
+
+#page-2-toast-lipid-1 > div.toast-header > button > span, #page-2-toast-lipid-2 > div.toast-header > button > span, #page-2-toast-lipid-3 > div.toast-header > button > span {
+  color: #757575;
+}
+
+
+
+/* customize dropdown 
+
+.Select-control {
+  height: calc(1.5em + 0.75rem + 2px);
+  font-size: 0.9375rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #fff;
+  background-color: #222;
+  background-clip: padding-box;
+  border: 1px solid #444;
+  border-radius: 0.25rem;
+  transition: border-color 0.95s ease-in-out, box-shadow 0.95s ease-in-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .Select-control {
+    transition: none;
+  }
+}
+
+.Select-control:hover {
+  box-shadow: none;
+}
+
+.is-open > .Select-control {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.is-focused:not(.is-open) > .Select-control {
+  border-color: #aaa;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(55, 90, 127, 0.25);
+}
+
+.Select.is-disabled > .Select-control {
+  background-color: #ebebeb;
+}
+
+.Select--multi .Select-value {
+  border-radius: 0.125rem;
+  color: #eee;
+  border-color: rgba(200, 200, 200, 0.25);
+  background-color: rgba(55, 55, 55, 0.1);
+}
+
+.Select--multi .Select-value-icon:hover {
+    background-color: #333;
+    color: #fff;
+}
+
+.Select--multi .Select-value-icon {
+  border-right-color: rgba(55, 55, 55, 0.25);
+}
+
+.has-value.Select--single > .Select-control .Select-value .Select-value-label,
+.has-value.is-pseudo-focused.Select--single > .Select-control .Select-value .Select-value-label {
+  color: #444;
+}
+
+.Select-multi-value-wrapper {
+  height: calc(1.5em + 0.75rem);
+}
+
+.Select-placeholder {
+  color: #999;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
+
+.Select--single > .Select-control .Select-value,
+.Select-placeholder {
+  line-height: calc(1.5em + 0.75rem);
+}
+
+.Select-input {
+  height: calc(1.5em + 0.75rem);
+}
+
+.Select-menu-outer {
+  border-bottom-right-radius: 0.25rem;
+  border-bottom-left-radius: 0.25rem;
+  background-color: #222;
+  background-clip: padding-box;
+  border: 1px solid #444;
+  border-top-color: transparent;
+  box-shadow: none;
+  color: #fff;
+}
+
+.VirtualizedSelectOption {
+  height: calc(1.5em + 0.75rem) !important;
+}
+
+.VirtualizedSelectFocusedOption {
+  background-color: rgba(55, 90, 127, 0.1) !important;
+}
+
+*/
+
+.VirtualizedSelectFocusedOption {
+  background-color: rgba(80, 189, 218, 0.5) !important;
+}
+
+.is-focused:not(.is-open) > .Select-control {
+  border-color: rgba(80, 189, 218, 0.5);
+}
+
+
+/* at some point, replace this nasty hack by a dropdown in which you can select 1 value only
+and print the selection next to the dropdown (unerasable, except with reset) 
+div.Select-value > span.Select-value-icon {
+  visibility: hidden;
+}
+
+*/
+
+
+/* Improve react grid look */
+/* 
+div.item-top{
+  transform: translate(0,10px);
+} */
+
+div.item {
+  background: #e9ecef;
+  box-shadow: 0px 10px 6px -1px rgb(30 44 57 / 15%);
+}
+
