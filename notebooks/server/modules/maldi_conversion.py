@@ -151,7 +151,7 @@ def filter_peaks(array_spectra, array_peaks, verbose=False):
     Args:
         array_spectra (np.ndarray): A numpy array containing spectrum data (pixel index, m/z and intensity).
         array_peaks (numpy.ndarray): A numpy array containing the peak annotations.
-        verbose (boolean): If True, some prints are displayed for debugging purposes. Default to False.
+        verbose (bool): If True, some prints are displayed for debugging purposes. Default to False.
 
     Returns:
         list: m/z values corresponding to peaks that have been annotated.
@@ -241,10 +241,10 @@ def return_array_pixel_indexes(array_pixel, total_shape):
     array_pixel_indexes = np.empty((total_shape, 2), dtype=np.int32)
     array_pixel_indexes.fill(-1)
     for i, p in enumerate(array_pixel):
-        # first time pixel is encountered
+        # First time pixel is encountered
         if array_pixel_indexes[p, 0] == -1:
             array_pixel_indexes[p, 0] = i
-        # last time pixel is encountered
+        # Last time pixel is encountered
         array_pixel_indexes[p, 1] = i
     return array_pixel_indexes
 
@@ -265,6 +265,7 @@ def return_average_spectrum(array_intensity, array_unique_counts):
     """
     array_unique_intensity = np.zeros(array_unique_counts.shape[0], dtype=np.float32)
     j = 0
+    # For each unique m/z value, sum corresponding intensities
     for i, count in enumerate(array_unique_counts):
         array_unique_intensity[i] = np.sum(array_intensity[j : j + count])
         j += count
@@ -281,19 +282,21 @@ def return_averaged_spectra_array(array):
     Returns:
         np.ndarray: Array of shape (2,n) containing intensities averaged over unique m/z values across all pixels.
     """
-    # take the transpose for easier browsing
+    # Take the transpose for easier browsing
     array_spectra = array.T
 
-    # get length of spectrum (i.e. unique mz values)
+    # Get length of spectrum (i.e. unique mz values)
     array_unique_mz, array_unique_counts = np.unique(array_spectra[1, :], return_counts=True)
 
-    # get averaged array
+    # Get averaged array
     array_unique_intensity = return_average_spectrum(array_spectra[2, :], array_unique_counts)
 
     return np.array([array_unique_mz, array_unique_intensity], dtype=np.float32)
 
 
-def process_raw_data(t_index_name, bool_filter_peaks=True, save=True, return_result=False):
+def process_raw_data(
+    t_index_path, bool_filter_peaks=True, save=True, return_result=True, output_path="lbae/data/temp/", verbose=True
+):
     """This function has been implemented to allow the paralellization of slice processing. It turns the raw MALDI data
     into several numpy arrays and lookup tables:
     - array_pixel_indexes_high_res: of shape (n,2), it maps each pixel to two array_spectra_high_res indices, delimiting
@@ -307,33 +310,36 @@ def process_raw_data(t_index_name, bool_filter_peaks=True, save=True, return_res
     - image_shape: a tuple of integers, indicating the vertical and horizontal shapes of the corresponding slice.
 
     Args:
-        t_index_name ([type]): [description]
-        bool_filter_peaks (bool, optional): [description]. Defaults to True.
-        test_array_pixel (bool, optional): [description]. Defaults to False.
-        save (bool, optional): [description]. Defaults to True.
-        return_result (bool, optional): [description]. Defaults to False.
+        t_index_path (tuple(int, str)): A tuple containing the index of the slice (starting from 1) and the 
+                                        corresponding path for the raw data.
+        bool_filter_peaks (bool, optional): If True, non-annotated peaks are filtered out. Defaults to True.
+        save (bool, optional): If True, output arrays are saved in a npz file. Defaults to True.
+        return_result (bool, optional): If True, output arrays are returned by the function. Defaults to False.
+        output_path (str, optional): Path to save the output npz file. Defaults to "lbae/data/temp/".
+        verbose (bool, optional): If True, print the successive steps used for the conversion of the raw data. 
+                                  Defaults to True.
 
     Returns:
-        [type]: [description]
+        Depending on 'return result', returns either nothing, either several np.ndarrays, described above.
     """
 
-    # get slice path
-    index_slice = t_index_name[0]
-    name = t_index_name[1]
+    # Get slice path
+    index_slice = t_index_path[0]
+    name = t_index_path[1]
 
-    # load file in high and low resolution
+    # Load file in high and low resolution
     print("Loading files : " + name)
     smz_high_res = load_file(name, resolution=1e-5)
     image_shape = smz_high_res.img_shape
 
-    # load df with different sortings (low_res will be averaged over m/z afterwards)
+    # Load df with different sortings (low_res will be averaged over m/z afterwards)
     print("Creating and sorting dataframes")
     df_high_res = process_sparse_matrix(smz_high_res, sort="m/z")
 
-    # convert df into arrays for easier manipulation with numba
+    # Convert df into arrays for easier manipulation with numba
     array_high_res = df_high_res.to_numpy()
 
-    # filter out the non-desired peaks and convert to array
+    # Filter out the non-desired peaks and convert to array
     appendix = "_unfiltered"
     if bool_filter_peaks:
         try:
@@ -345,31 +351,31 @@ def process_raw_data(t_index_name, bool_filter_peaks=True, save=True, return_res
         except:
             appendix = "_unfiltered"
 
-    # average low/high resolution arrays over identical mz across pixels
+    # Average low/high resolution arrays over identical mz across pixels
     print("Getting spectrums array averaged accross pixels")
     array_averaged_mz_intensity_high_res = return_averaged_spectra_array(array_high_res)
 
     print("Build the low-resolution averaged array from the high resolution averaged array")
-    array_averaged_mz_intensity_low_res = reduce_resolution_sorted(
-        array_averaged_mz_intensity_high_res, resolution=10 ** -2, max_intensity=True
+    array_averaged_mz_intensity_low_res = reduce_resolution_sorted_array_spectra(
+        array_averaged_mz_intensity_high_res, resolution=10 ** -2
     )
 
     # Process more high-resolution data
     print("Double sorting high-res array")
     array_high_res = array_high_res[np.lexsort((array_high_res[:, 1], array_high_res[:, 0]), axis=0)]
 
-    # get arrays spectra and corresponding array_pixel_index tables for the high resolution
+    # Get arrays spectra and corresponding array_pixel_index tables for the high resolution
     print("Getting corresponding spectra arrays")
     array_pixel_high_res = array_high_res[:, 0].T.astype(np.int32)
     array_spectra_high_res = array_high_res[:, 1:].T.astype(np.float32)
     array_pixel_indexes_high_res = return_array_pixel_indexes(array_pixel_high_res, image_shape[0] * image_shape[1])
 
+    # Save all array as a npz file as a temporary backup
     if save:
-        # save as npz file
         print("Saving : " + name)
-        if len(t_index_name) > 2:
+        if len(t_index_path) > 2:
             np.savez(
-                "data/slice_" + str(index_slice) + "_bis" + appendix + ".npz",
+                output_path + "slice_" + str(index_slice) + "_bis" + appendix + ".npz",
                 array_pixel_indexes_high_res=array_pixel_indexes_high_res,
                 array_spectra_high_res=array_spectra_high_res,
                 array_averaged_mz_intensity_low_res=array_averaged_mz_intensity_low_res,
@@ -379,7 +385,7 @@ def process_raw_data(t_index_name, bool_filter_peaks=True, save=True, return_res
 
         else:
             np.savez(
-                "data/slice_" + str(index_slice) + appendix + ".npz",
+                output_path + "slice_" + str(index_slice) + appendix + ".npz",
                 array_pixel_indexes_high_res=array_pixel_indexes_high_res,
                 array_spectra_high_res=array_spectra_high_res,
                 array_averaged_mz_intensity_low_res=array_averaged_mz_intensity_low_res,
@@ -387,6 +393,7 @@ def process_raw_data(t_index_name, bool_filter_peaks=True, save=True, return_res
                 image_shape=image_shape,
             )
 
+    # Returns all array if needed
     if return_result:
         return (
             array_pixel_indexes_high_res,
@@ -395,3 +402,4 @@ def process_raw_data(t_index_name, bool_filter_peaks=True, save=True, return_res
             array_averaged_mz_intensity_high_res,
             image_shape,
         )
+
