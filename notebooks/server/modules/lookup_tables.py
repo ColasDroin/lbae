@@ -138,7 +138,7 @@ def build_index_lookup_table_averaged_spectrum(array_mz, size_spectrum=2000):
                              an averaged indexed spectrum ranging from 0 m/z to 2000 m/z.
 
     Returns:
-        np.ndarray: An array of  length size_spectrum (i.e. the defaults divider_lookup is 1 for this array), 
+        np.ndarray: An array of length size_spectrum (i.e. the defaults divider_lookup is 1 for this array), 
         mapping m/z values to indexes in the averaged array_spectra for each pixel.
     """
 
@@ -235,9 +235,26 @@ def add_zeros_to_spectrum(array_spectra, pad_individual_peaks=False):
         return new_array_spectra
 
 
-def process_lookup_tables(t_index_path, l_arrays_raw_data=None, load_from_file=True, test=False, save=True):
+def process_lookup_tables(t_index_path, l_arrays_raw_data=None, load_from_file=True, save=True, return_result=False):
     """This function has been implemented to allow the paralellization of lookup tables processing. It computes and
-    returns the lookup tables for each slice.
+    returns/saves the lookup tables for each slice. The output consists of:
+    - array_pixel_indexes_high_res: of shape (n,2), it maps each pixel to two array_spectra_high_res indices, delimiting
+      the corresponding spectrum.
+    - array_spectra_high_res: of shape (2,m), it contains the concatenated spectra of each pixel. First row contains the
+      m/z values, while second row contains the corresponding intensities.
+    - array_averaged_mz_intensity_low_res: of shape (2, k), it contains the low-resolution spectrum averaged over all 
+      pixels. First row contains the m/z values, while second row contains the corresponding intensities.
+    - array_averaged_mz_intensity_low_res: Same as array_averaged_mz_intensity_low_res, but in higher resolution, with,
+      therefore, a different shape.
+    - image_shape: a tuple of integers, indicating the vertical and horizontal shapes of the corresponding slice.
+    - divider_lookup: Integer that sets the resolution of the lookup tables.
+    - lookup_table_spectra_high_res: of shape (size_spectrum// divider_lookup, m), it maps m/z values to indexes in 
+      array_spectra for each pixel.
+    - cumulated_image_lookup_table_high_res: of shape (size_spectrum// divider_lookup, image height, image_width), it 
+    maps m/z values to the cumulated spectrum until the corresponding m/z value for each pixel.
+    - lookup_table_averaged_spectrum_high_res: of length size_spectrum, it maps m/z values to indexes in the averaged 
+      array_spectra for each pixel.
+
 
     Args:
         t_index_path (tuple(int, str)): A tuple containing the index of the slice (starting from 1) and the 
@@ -248,11 +265,11 @@ def process_lookup_tables(t_index_path, l_arrays_raw_data=None, load_from_file=T
         load_from_file (bool, optional): If True, the arrays containing the data processed by the current function are 
                                          loaded from the disk. If False, the corresponding arrays must be provided 
                                          through the parameter l_arrays_raw_data. Defaults to True.
-        test (bool, optional): [description]. Defaults to False.
-        save (bool, optional): [description]. Defaults to True.
+        save (bool, optional): If True, output arrays are saved in a npz file. Defaults to True.
+        return_result (bool, optional): If True, output arrays are returned by the function. Defaults to False.
 
     Returns:
-        [type]: [description]
+        Depending on 'return result', returns either nothing, either several np.ndarrays, described above.
     """
 
     if l_arrays_raw_data is not None:
@@ -266,7 +283,7 @@ def process_lookup_tables(t_index_path, l_arrays_raw_data=None, load_from_file=T
 
     elif load_from_file:
 
-        # get slice path
+        # Get slice path
         index_slice = t_index_path[0]
         name = t_index_path[1]
         try:
@@ -274,7 +291,8 @@ def process_lookup_tables(t_index_path, l_arrays_raw_data=None, load_from_file=T
             if len(t_index_path) > 2:
                 path = "data/slice_" + str(index_slice) + "_bis" + appendix + ".npz"
                 npzfile = np.load(path)
-                # annotate repeated slice by multiplying their index by thousand (easier than replacing slice name with a non-int like bis)
+                # Annotate repeated slice by multiplying their index by thousand (easier than replacing slice name
+                # with a non-int like bis)
                 path = "data/slice_" + str(index_slice * 1000) + appendix + ".npz"
             else:
                 path = "data/slice_" + str(index_slice) + appendix + ".npz"
@@ -284,13 +302,14 @@ def process_lookup_tables(t_index_path, l_arrays_raw_data=None, load_from_file=T
             if len(t_index_path) > 2:
                 path = "data/slice_" + str(index_slice) + "_bis" + appendix + ".npz"
                 npzfile = np.load(path)
-                # annotate repeated slice by multiplying their index by thousand (easier than replacing slice name with a non-int like bis)
+                # Annotate repeated slice by multiplying their index by thousand (easier than replacing slice name
+                # with a non-int like bis)
                 path = "data/slice_" + str(index_slice * 1000) + appendix + ".npz"
             else:
                 path = "data/slice_" + str(index_slice) + appendix + ".npz"
                 npzfile = np.load(path)
 
-        # load individual arrays
+        # Load individual arrays
         array_pixel_indexes_high_res = npzfile["array_pixel_indexes_high_res"]
         array_spectra_high_res = npzfile["array_spectra_high_res"]
         array_averaged_mz_intensity_low_res = npzfile["array_averaged_mz_intensity_low_res"]
@@ -304,10 +323,10 @@ def process_lookup_tables(t_index_path, l_arrays_raw_data=None, load_from_file=T
         print("Either the data or a filename must be provided")
         return None
 
-    # define divider_lookup
+    # Define divider_lookup
     divider_lookup = 10
 
-    # buid lookup table linking mz value to index in array_spectra for each pixel
+    # Build lookup table linking mz value to index in array_spectra for each pixel
     lookup_table_spectra_high_res = build_index_lookup_table(
         array_spectra_high_res, array_pixel_indexes_high_res, divider_lookup
     )
@@ -316,7 +335,7 @@ def process_lookup_tables(t_index_path, l_arrays_raw_data=None, load_from_file=T
     )
     print("Shape of lookup_table_spectra_high_res: ", lookup_table_spectra_high_res.shape)
 
-    # build lookup table of the cumulated spectrum for each pixel
+    # Build lookup table of the cumulated spectrum for each pixel
     cumulated_image_lookup_table_high_res = build_cumulated_image_lookup_table(
         array_spectra_high_res, array_pixel_indexes_high_res, image_shape, divider_lookup
     )
@@ -326,7 +345,7 @@ def process_lookup_tables(t_index_path, l_arrays_raw_data=None, load_from_file=T
     )
     print("Shape of cumulated_image_lookup_table_high_res: ", cumulated_image_lookup_table_high_res.shape)
 
-    # build lookup table to compute fast the indexes corresponding to the boundaries selected on dash
+    # Build lookup table to compute fast the indexes corresponding to the boundaries selected on dash
     lookup_table_averaged_spectrum_high_res = build_index_lookup_table_averaged_spectrum(
         array_mz=array_averaged_mz_intensity_high_res[0, :]
     )
@@ -336,7 +355,7 @@ def process_lookup_tables(t_index_path, l_arrays_raw_data=None, load_from_file=T
     )
     print("Shape of lookup_table_averaged_spectrum_high_res: ", lookup_table_averaged_spectrum_high_res.shape)
 
-    # extend averaged arrays with zeros for nicer display
+    # Extend averaged arrays with zeros for nicer display
     array_averaged_mz_intensity_low_res = add_zeros_to_spectrum(
         array_averaged_mz_intensity_low_res, pad_individual_peaks=True
     )
@@ -344,14 +363,14 @@ def process_lookup_tables(t_index_path, l_arrays_raw_data=None, load_from_file=T
         array_averaged_mz_intensity_high_res, pad_individual_peaks=True
     )
 
-    # normalize spectrum
+    # Normalize spectrum
     array_averaged_mz_intensity_low_res[1, :] /= np.sum(array_averaged_mz_intensity_low_res[1, :])
     array_averaged_mz_intensity_high_res[1, :] /= np.sum(array_averaged_mz_intensity_high_res[1, :])
     for (b1, b2) in array_pixel_indexes_high_res:
         array_spectra_high_res[1, b1 : b2 + 1] /= np.sum(array_spectra_high_res[1, b1 : b2 + 1])
 
     if save:
-        # save as npz file
+        # Save as npz file
         print("Saving...")
         np.savez(
             path,
@@ -364,5 +383,19 @@ def process_lookup_tables(t_index_path, l_arrays_raw_data=None, load_from_file=T
             lookup_table_spectra_high_res=lookup_table_spectra_high_res,
             cumulated_image_lookup_table_high_res=cumulated_image_lookup_table_high_res,
             lookup_table_averaged_spectrum_high_res=lookup_table_averaged_spectrum_high_res,
+        )
+
+    # Returns all array if needed
+    if return_result:
+        return (
+            array_pixel_indexes_high_res,
+            array_spectra_high_res,
+            array_averaged_mz_intensity_low_res,
+            array_averaged_mz_intensity_high_res,
+            image_shape,
+            divider_lookup,
+            lookup_table_spectra_high_res,
+            cumulated_image_lookup_table_high_res,
+            lookup_table_averaged_spectrum_high_res,
         )
 
