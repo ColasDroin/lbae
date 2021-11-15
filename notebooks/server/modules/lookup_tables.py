@@ -1,7 +1,7 @@
 ###### IMPORT MODULES ######
 import numpy as np
 from numba import njit
-from lbae.modules.tools.lookup_functions import convert_spectrum_index_to_coordinate
+from lbae.modules.tools.lookup_functions import convert_spectrum_idx_to_coor
 
 ###### DEFINE UTILITARY FUNCTIONS ######
 
@@ -97,7 +97,7 @@ def build_cumulated_image_lookup_table(
         if j == -1:
             continue
         pix_value = 0
-        coor_pix = convert_spectrum_index_to_coordinate(idx_pix, img_shape)
+        coor_pix = convert_spectrum_idx_to_coor(idx_pix, img_shape)
 
         # Loop over lookup indexes
         for index_lookup in range(size_spectrum // divider_lookup - 1):
@@ -235,7 +235,14 @@ def add_zeros_to_spectrum(array_spectra, pad_individual_peaks=False):
         return new_array_spectra
 
 
-def process_lookup_tables(t_index_path, l_arrays_raw_data=None, load_from_file=True, save=True, return_result=False):
+def process_lookup_tables(
+    t_index_path,
+    temp_path="notebooks/server/data/temp/",
+    l_arrays_raw_data=None,
+    load_from_file=True,
+    save=True,
+    return_result=False,
+):
     """This function has been implemented to allow the paralellization of lookup tables processing. It computes and
     returns/saves the lookup tables for each slice. The output consists of:
     - array_pixel_indexes_high_res: of shape (n,2), it maps each pixel to two array_spectra_high_res indices, delimiting
@@ -259,6 +266,7 @@ def process_lookup_tables(t_index_path, l_arrays_raw_data=None, load_from_file=T
     Args:
         t_index_path (tuple(int, str)): A tuple containing the index of the slice (starting from 1) and the 
                                         corresponding path for the raw data.
+        temp_path (str, optional): Path to load/save the output npz file. Defaults to "notebooks/server/data/temp/".
         l_arrays_raw_data (list, optional): A list of arrays containing the data that is processed in the current 
                                             function. If None, the same arrays must be loaded from the disk. 
                                             Defaults to None.
@@ -271,7 +279,6 @@ def process_lookup_tables(t_index_path, l_arrays_raw_data=None, load_from_file=T
     Returns:
         Depending on 'return result', returns either nothing, either several np.ndarrays, described above.
     """
-
     if l_arrays_raw_data is not None:
         (
             array_pixel_indexes_high_res,
@@ -289,24 +296,24 @@ def process_lookup_tables(t_index_path, l_arrays_raw_data=None, load_from_file=T
         try:
             appendix = "_unfiltered"
             if len(t_index_path) > 2:
-                path = "data/slice_" + str(index_slice) + "_bis" + appendix + ".npz"
+                path = temp_path + "slice_" + str(index_slice) + "_bis" + appendix + ".npz"
                 npzfile = np.load(path)
                 # Annotate repeated slice by multiplying their index by thousand (easier than replacing slice name
                 # with a non-int like bis)
-                path = "data/slice_" + str(index_slice * 1000) + appendix + ".npz"
+                path = temp_path + "slice_" + str(index_slice * 1000) + appendix + ".npz"
             else:
-                path = "data/slice_" + str(index_slice) + appendix + ".npz"
+                path = temp_path + "slice_" + str(index_slice) + appendix + ".npz"
                 npzfile = np.load(path)
         except:
             appendix = "_filtered"
             if len(t_index_path) > 2:
-                path = "data/slice_" + str(index_slice) + "_bis" + appendix + ".npz"
+                path = temp_path + "slice_" + str(index_slice) + "_bis" + appendix + ".npz"
                 npzfile = np.load(path)
                 # Annotate repeated slice by multiplying their index by thousand (easier than replacing slice name
                 # with a non-int like bis)
-                path = "data/slice_" + str(index_slice * 1000) + appendix + ".npz"
+                path = temp_path + "slice_" + str(index_slice * 1000) + appendix + ".npz"
             else:
-                path = "data/slice_" + str(index_slice) + appendix + ".npz"
+                path = temp_path + "slice_" + str(index_slice) + appendix + ".npz"
                 npzfile = np.load(path)
 
         # Load individual arrays

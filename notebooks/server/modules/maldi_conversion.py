@@ -298,7 +298,7 @@ def process_raw_data(
     t_index_path,
     bool_filter_peaks=True,
     save=True,
-    return_result=True,
+    return_result=False,
     output_path="notebooks/server/data/temp/",
     verbose=True,
 ):
