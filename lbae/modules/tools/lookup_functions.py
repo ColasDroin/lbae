@@ -1,19 +1,39 @@
 ###### IMPORT MODULES ######
-
 import numpy as np
-from numba import jit
-from timeit import default_timer as timer
+from numba import njit
 
 ###### DEFINE UTILITARY FUNCTIONS ######
-
-
-@jit(nopython=True)
+@njit
 def convert_spectrum_idx_to_coor(index, shape):
+    """This function takes a pixel index and converts it into a tuple of integers representing the coordinates
+    of the pixel in the current slice.
+
+    Args:
+        index (int): Pixel index in a flattened version of the slice image.
+        shape (tuple(int)): Shape of the MALDI acquisition of the corresponding slice.
+
+    Returns:
+        tuple(int): Corresponding coordinate in the original image.
+    """
+
     return int(index // shape[1]), int(index % shape[1])
 
 
-@jit(nopython=True)
+@njit
 def convert_coor_to_spectrum_idx(coordinate, shape):
+    """This function takes a tuple of integers representing the coordinates
+    of the pixel in the current slice and converts it into an index in a flattened
+    version of the image.
+
+    Args:
+        coordinate tuple(int): Coordinate in the original image.
+        shape (tuple(int)): Shape of the MALDI acquisition of the corresponding slice.
+
+    Returns:
+        (int): Pixel index in a flattened version of the slice image.
+
+    """
+
     ind = coordinate[0] * shape[1] + coordinate[1]
     if ind >= shape[0] * shape[1]:
         print("BUG, index not allowed")
@@ -21,43 +41,55 @@ def convert_coor_to_spectrum_idx(coordinate, shape):
     return ind
 
 
-# Get image between two mz value
-@jit(nopython=True)
+@njit
 def compute_normalized_spectra(
     array_spectra, array_pixel_indexes,
 ):
+    """This function takes an array of spectra and returns it normalized (per pixel). In pratice, each pixel spectrum is 
+    converted into a uncompressed version, and divided by the sum of all spectra. This may be a problematic approach as
+    there seems to be small shifts between spectra across pixels, leading to a noise amplification after normalization.
+
+    Args:
+        array_spectra (np.ndarray): An array of shape (2,n) containing spectrum data (m/z and intensity).
+        array_pixel_indexes (np.ndarray): An array of shape (m,2) containing the boundary indices of each pixel in 
+                                          array_spectra. 
+
+    Returns:
+        (np.ndarray): An array of shape (2,m) containing the normalized spectrum data (m/z and intensity).
+
+    """
     spectrum_sum = convert_array_to_fine_grained(array_spectra, 10 ** -3, lb=350, hb=1250) + 1
-    # array_spectra_normalized = np.copy(array_spectra)
     array_spectra_normalized = np.zeros(array_spectra.shape, dtype=np.float32)
 
     for idx_pix in range(array_pixel_indexes.shape[0]):
-        print(idx_pix / array_pixel_indexes.shape[0] * 100, " done")
+        # print(idx_pix / array_pixel_indexes.shape[0] * 100, " done")
+
         # If pixel contains no peak, skip it
         if array_pixel_indexes[idx_pix, 0] == -1:
             continue
 
         spectrum = array_spectra[:, array_pixel_indexes[idx_pix, 0] : array_pixel_indexes[idx_pix, 1] + 1]
 
-        # first normalize the spectrum of current pixel with respect to its own sum
+        # First normalize the spectrum of current pixel with respect to its own sum
         # actually useless since array_spectra is normally already normalized by pixel
         spectrum[1, :] /= np.sum(spectrum[1, :])
 
-        # then move spectrum to uncompressed version
+        # Then move spectrum to uncompressed version
         spectrum = convert_array_to_fine_grained(spectrum, 10 ** -3, lb=350, hb=1250)
 
-        # then normalize with respect to all pixels
+        # Then normalize with respect to all pixels
         spectrum[1, :] /= spectrum_sum[1, :]
 
-        # then back to original space
+        # Then back to original space
         spectrum = strip_zeros(spectrum)
 
-        # store back the spectrum
+        # Store back the spectrum
         if spectrum.shape[1] == array_pixel_indexes[idx_pix, 1] + 1 - array_pixel_indexes[idx_pix, 0]:
             array_spectra_normalized[
                 :, array_pixel_indexes[idx_pix, 0] : array_pixel_indexes[idx_pix, 1] + 1
             ] = spectrum
         else:
-            # store shorter-sized spectrum in array_spectra_normalized, rest will be zeros
+            # Store shorter-sized spectrum in array_spectra_normalized, rest will be zeros
             array_spectra_normalized[
                 :, array_pixel_indexes[idx_pix, 0] : array_pixel_indexes[idx_pix, 0] + len(spectrum) + 1
             ]
@@ -66,7 +98,7 @@ def compute_normalized_spectra(
 
 
 # Get image between two mz value
-@jit(nopython=True)
+@njit
 def return_image_using_index_lookup(
     low_bound,
     high_bound,
@@ -119,7 +151,7 @@ def return_image_using_index_lookup(
     return image
 
 
-@jit(nopython=True)
+@njit
 def return_image_using_index_and_image_lookup(
     low_bound,
     high_bound,
@@ -187,7 +219,7 @@ def return_image_using_index_and_image_lookup(
         return image
 
 
-@jit(nopython=True)
+@njit
 def return_index_boundaries_nolookup(low_bound, high_bound, array_mz):
     index_low_bound = 0
     index_high_bound = array_mz.shape[0] - 1
@@ -205,7 +237,7 @@ def return_index_boundaries_nolookup(low_bound, high_bound, array_mz):
     return index_low_bound, index_high_bound
 
 
-@jit(nopython=True)
+@njit
 def return_index_boundaries(low_bound, high_bound, array_mz, lookup_table):
     index_low_bound = 0
     index_high_bound = array_mz.shape[0] - 1
@@ -223,7 +255,7 @@ def return_index_boundaries(low_bound, high_bound, array_mz, lookup_table):
     return index_low_bound, index_high_bound
 
 
-@jit(nopython=True)
+@njit
 def return_spectrum_per_pixel(idx_pix, array_spectra, array_pixel_indexes):
     idx_1, idx_2 = array_pixel_indexes[idx_pix]
     if idx_1 == -1:
@@ -231,7 +263,7 @@ def return_spectrum_per_pixel(idx_pix, array_spectra, array_pixel_indexes):
     return array_spectra[:, idx_1 : idx_2 + 1]
 
 
-@jit(nopython=True)
+@njit
 def add_zeros_to_spectrum(array_spectra, pad_individual_peaks=True, padding=10 ** -5):
 
     # For speed, allocate array of maximum size
@@ -287,14 +319,14 @@ def add_zeros_to_spectrum(array_spectra, pad_individual_peaks=True, padding=10 *
         return new_array_spectra, array_index_padding
 
 
-@jit(nopython=True)
+@njit
 def return_zeros_extended_spectrum_per_pixel(idx_pix, array_spectra, array_pixel_indexes):
     array_spectra = return_spectrum_per_pixel(idx_pix, array_spectra, array_pixel_indexes)
     new_array_spectra, array_index_padding = add_zeros_to_spectrum(array_spectra)
     return new_array_spectra
 
 
-@jit(nopython=True)
+@njit
 def reduce_resolution_sorted(array_spectra, resolution=10 ** -3, max_intensity=True):
     """Recompute a sparce representation of the spectrum at a lower (fixed) resolution
        Resolution should be <=10**-4 as it's the maximum precision allowd by float32
@@ -349,7 +381,7 @@ def reduce_resolution_sorted(array_spectra, resolution=10 ** -3, max_intensity=T
     return new_array_spectra
 
 
-@jit(nopython=True)
+@njit
 def compute_spectrum_per_row_selection(
     list_index_bound_rows,
     list_index_bound_column_per_row,
@@ -423,7 +455,7 @@ def compute_spectrum_per_row_selection(
     return array_spectra_selection
 
 
-@jit(nopython=True)
+@njit
 def sample_rows_from_path(path):
     # Careful: in this whole function, x is the vertical axis (from top to bottom), and y the horizontal one
     # this is counter-intuitive given the computations done in the function
@@ -500,7 +532,7 @@ def sample_rows_from_path(path):
 # boundaries of the identified lipids zero padding extra is needed for both taking into account the zero-padding
 # (this way zeros on the sides of the peak are also identified as the annotated lipid) but also because the annotation
 # is very stringent in the first place, and sometimes border of the peaks are missing in the annotation
-@jit(nopython=True)
+@njit
 def return_index_labels(l_min, l_max, l_mz, zero_padding_extra=5 * 10 ** -5):
 
     # Build empty array for lipid indexes
@@ -530,7 +562,7 @@ def return_index_labels(l_min, l_max, l_mz, zero_padding_extra=5 * 10 ** -5):
     return array_indexes
 
 
-@jit(nopython=True)
+@njit
 def return_avg_intensity_per_lipid(l_intensity_with_lipids, l_idx_labels):
     l_unique_idx_labels = []
     l_avg_intensity = []
@@ -553,7 +585,7 @@ def return_avg_intensity_per_lipid(l_intensity_with_lipids, l_idx_labels):
     return l_unique_idx_labels, l_avg_intensity
 
 
-@jit(nopython=True)
+@njit
 def project_image(index_slice, original_image, array_projection_correspondence):
     # correct index
     index_slice -= 1
@@ -570,7 +602,7 @@ def project_image(index_slice, original_image, array_projection_correspondence):
     return new_image
 
 
-@jit(nopython=True)
+@njit
 def get_projected_atlas_mask(stack_mask, slice_coordinates, shape_atlas):
 
     projected_mask = np.full(slice_coordinates.shape[:-1], stack_mask[0, 0, 0], dtype=np.int32)
@@ -589,7 +621,7 @@ def get_projected_atlas_mask(stack_mask, slice_coordinates, shape_atlas):
     return projected_mask
 
 
-@jit(nopython=True)
+@njit
 def get_array_rows_from_atlas_mask(mask, mask_remapped, array_projection_correspondence):
     # map back the mask coordinates to original data
     for x in range(mask.shape[0]):
@@ -642,7 +674,7 @@ def get_array_rows_from_atlas_mask(mask, mask_remapped, array_projection_corresp
     return np.array([xmin, xmax], dtype=np.int32), array_index_bound_column_per_row
 
 
-@jit(nopython=True)
+@njit
 def convert_array_to_fine_grained(array, resolution, lb=350, hb=1250):
     # this function converts a compressed sparse array into the uncompressed version.
     # If several values of the compressed version map to the same value of the uncompressed one, they are added
@@ -655,7 +687,7 @@ def convert_array_to_fine_grained(array, resolution, lb=350, hb=1250):
     return new_array
 
 
-@jit(nopython=True)
+@njit
 def strip_zeros(array):
     l_to_keep = [idx for idx, x in enumerate(array[1, :]) if x != 0 and not np.isnan(x)]
     array_mz = array[0, :].take(l_to_keep)
