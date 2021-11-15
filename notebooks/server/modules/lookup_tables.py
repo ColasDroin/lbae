@@ -252,7 +252,7 @@ def process_lookup_tables(t_index_path, l_arrays_raw_data=None, load_from_file=T
         save (bool, optional): [description]. Defaults to True.
 
     Returns:
-        [type]: [description]
+        [type]: test
     """
 
     if l_arrays_raw_data is not None:
