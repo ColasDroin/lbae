@@ -295,7 +295,12 @@ def return_averaged_spectra_array(array):
 
 
 def process_raw_data(
-    t_index_path, bool_filter_peaks=True, save=True, return_result=True, output_path="lbae/data/temp/", verbose=True
+    t_index_path,
+    bool_filter_peaks=True,
+    save=True,
+    return_result=True,
+    output_path="notebooks/server/data/temp/",
+    verbose=True,
 ):
     """This function has been implemented to allow the paralellization of slice processing. It turns the raw MALDI data
     into several numpy arrays and lookup tables:
@@ -315,7 +320,7 @@ def process_raw_data(
         bool_filter_peaks (bool, optional): If True, non-annotated peaks are filtered out. Defaults to True.
         save (bool, optional): If True, output arrays are saved in a npz file. Defaults to True.
         return_result (bool, optional): If True, output arrays are returned by the function. Defaults to False.
-        output_path (str, optional): Path to save the output npz file. Defaults to "lbae/data/temp/".
+        output_path (str, optional): Path to save the output npz file. Defaults to "notebooks/server/data/temp/".
         verbose (bool, optional): If True, print the successive steps used for the conversion of the raw data. 
                                   Defaults to True.
 
