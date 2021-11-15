@@ -220,6 +220,41 @@ def return_image_using_index_and_image_lookup(
 
 
 @njit
+def return_image_per_lipid(
+    lb_mz,
+    hb_mz,
+    array_spectra_high_res,
+    array_pixel_indexes_high_res,
+    image_shape,
+    lookup_table_spectra_high_res,
+    cumulated_image_lookup_table_high_res,
+    divider_lookup,
+    percentile_normalization=99,
+    RGB_format=True,
+):
+
+    # Get image from raw mass spec data
+    image = return_image_using_index_and_image_lookup(
+        lb_mz,
+        hb_mz,
+        array_spectra_high_res,
+        array_pixel_indexes_high_res,
+        image_shape,
+        lookup_table_spectra_high_res,
+        cumulated_image_lookup_table_high_res,
+        divider_lookup,
+        False,
+    )
+
+    # Normalize by percentile
+    image = image / np.percentile(image, percentile_normalization) * 1
+    image = np.clip(0, 1, image)
+    if RGB_format:
+        image *= 255
+    return image
+
+
+@njit
 def return_index_boundaries_nolookup(low_bound, high_bound, array_mz):
     index_low_bound = 0
     index_high_bound = array_mz.shape[0] - 1
