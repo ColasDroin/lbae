@@ -1,9 +1,9 @@
 ###### IMPORT MODULES ######
 import numpy as np
 from numba import njit
-from lbae.modules.tools.lookup_functions import convert_spectrum_idx_to_coor
+from lbae.modules.tools.spectra import convert_spectrum_idx_to_coor
 
-###### DEFINE UTILITARY FUNCTIONS ######
+###### DEFINE UTILITY FUNCTIONS ######
 @njit
 def build_index_lookup_table(array_spectra, array_pixel_indexes, divider_lookup, size_spectrum=2000):
     """This function builds a lookup table to map mz values to indexes in array_spectra. In practice, for each pixel,

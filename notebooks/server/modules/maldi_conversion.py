@@ -5,7 +5,7 @@ import os
 import pandas as pd
 from lbae.modules.tools.mspec import SmzMLobj, reduce_resolution_sorted
 
-###### DEFINE UTILITARY FUNCTIONS ######
+###### DEFINE UTILITY FUNCTIONS ######
 
 
 def load_file(path, resolution=1e-5):
