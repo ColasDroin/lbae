@@ -1,8 +1,8 @@
 ###### IMPORT MODULES ######
 import numpy as np
-from numba import njit
+from numba import njit, jit
 
-###### DEFINE UTILITARY FUNCTIONS ######
+###### UTILITARY FUNCTIONS WITH NUMBA ######
 @njit
 def convert_spectrum_idx_to_coor(index, shape):
     """This function takes a pixel index and converts it into a tuple of integers representing the coordinates
@@ -217,41 +217,6 @@ def return_image_using_index_and_image_lookup(
                 i += 1
 
         return image
-
-
-@njit
-def return_image_per_lipid(
-    lb_mz,
-    hb_mz,
-    array_spectra_high_res,
-    array_pixel_indexes_high_res,
-    image_shape,
-    lookup_table_spectra_high_res,
-    cumulated_image_lookup_table_high_res,
-    divider_lookup,
-    percentile_normalization=99,
-    RGB_format=True,
-):
-
-    # Get image from raw mass spec data
-    image = return_image_using_index_and_image_lookup(
-        lb_mz,
-        hb_mz,
-        array_spectra_high_res,
-        array_pixel_indexes_high_res,
-        image_shape,
-        lookup_table_spectra_high_res,
-        cumulated_image_lookup_table_high_res,
-        divider_lookup,
-        False,
-    )
-
-    # Normalize by percentile
-    image = image / np.percentile(image, percentile_normalization) * 1
-    image = np.clip(0, 1, image)
-    if RGB_format:
-        image *= 255
-    return image
 
 
 @njit
@@ -729,3 +694,39 @@ def strip_zeros(array):
     array_intensity = array[1, :].take(l_to_keep)
     return np.vstack((array_mz, array_intensity))
 
+
+###### OTHER FUNCTIONS ######
+
+# can't use Numba because of np.clip
+def return_normalized_image_per_lipid(
+    lb_mz,
+    hb_mz,
+    array_spectra_high_res,
+    array_pixel_indexes_high_res,
+    image_shape,
+    lookup_table_spectra_high_res,
+    cumulated_image_lookup_table_high_res,
+    divider_lookup,
+    percentile_normalization=99,
+    RGB_format=True,
+):
+
+    # Get image from raw mass spec data
+    image = return_image_using_index_and_image_lookup(
+        lb_mz,
+        hb_mz,
+        array_spectra_high_res,
+        array_pixel_indexes_high_res,
+        image_shape,
+        lookup_table_spectra_high_res,
+        cumulated_image_lookup_table_high_res,
+        divider_lookup,
+        False,
+    )
+
+    # Normalize by percentile
+    image = image / np.percentile(image, percentile_normalization) * 1
+    image = np.clip(0, 1, image)
+    if RGB_format:
+        image *= 255
+    return image
