@@ -1,9 +1,14 @@
 ###### IMPORT MODULES ######
+
+# Standard imports
 import numpy as np
 from numba import njit
 import os
 import pandas as pd
-from lbae.modules.tools.mspec import SmzMLobj, reduce_resolution_sorted
+
+# Homemade packages
+from lbae.modules.tools.mspec import SmzMLobj
+from lbae.modules.tools.spectra import reduce_resolution_sorted_array_spectra
 
 ###### DEFINE UTILITY FUNCTIONS ######
 
@@ -198,31 +203,6 @@ def filter_peaks(array_spectra, array_peaks, verbose=False):
         print(array_peaks[-10:, 2])
 
     return l_to_keep
-
-
-@njit
-def reduce_resolution_sorted_array_spectra(array_spectra, resolution=10 ** -3):
-    """Recompute a sparce representation of the spectrum at a lower (fixed) resolution, summing over the redundant bins.
-    Resolution should be <=10**-4 as it's about the maximum precision allowd by float32.
-
-    Args:
-        array_spectra (np.ndarray): Array of shape=(2, n) containing m/z value on first row, and intensities on second.
-        resolution (float, optional): The size of the bin used to merge intensities. Defaults to 10**-3.
-
-    Returns:
-        (np.ndarray): Array of shape=(2, m) similar to the input array but with a new sampling resolution.
-    """
-
-    # Get the re-sampled m/z and intensities from mspec library, with max_intensity = False to sum over redundant bins
-    new_mz, new_intensity = reduce_resolution_sorted(
-        array_spectra[:, 0], array_spectra[:, 1], resolution, max_intensity=False
-    )
-
-    # Build a new array as the stack of the two others
-    new_array_spectra = np.empty((2, new_mz.shape[0]), dtype=np.float32)
-    new_array_spectra[0, :] = new_mz
-    new_array_spectra[1, :] = new_intensity
-    return new_array_spectra
 
 
 @njit

@@ -1,6 +1,10 @@
 ###### IMPORT MODULES ######
+
+# Standard imports
 import numpy as np
 from numba import njit
+
+# Homemade package
 from lbae.modules.tools.spectra import convert_spectrum_idx_to_coor
 
 ###### DEFINE UTILITY FUNCTIONS ######
@@ -8,12 +12,12 @@ from lbae.modules.tools.spectra import convert_spectrum_idx_to_coor
 def build_index_lookup_table(array_spectra, array_pixel_indexes, divider_lookup, size_spectrum=2000):
     """This function builds a lookup table to map mz values to indexes in array_spectra. In practice, for each pixel,
     the lookup table gives the first index of mz such that mz>=lookup*divider_lookup. If no such mz exists, the lookup 
-    table gives last possible mz index (i.e. bigger possible mz for the current pixel, but under the lookup). If 
-    lookup*divider_lookup is bigger than the smallest mz, it returns the first mz index possible for the current pixel, 
+    table gives last possible mz index (i.e. biggest possible mz for the current pixel, but under the lookup). If 
+    lookup*divider_lookup is smaller than the smallest mz, it returns the first mz index possible for the current pixel, 
     above the current lookup. If there are no peak at all in the spectrum... it returns -1.
 
     Args:
-        array_spectra (np.ndarray): An array of shape (2,n) containing spectrum data (m/z and intensity).
+        array_spectra (np.ndarray): An array of shape (2,n) containing spectrum data (m/z and intensity) for each pixel.
         array_pixel_indexes (np.ndarray): An array of shape (m,2) containing the boundary indices of each pixel in 
                                           array_spectra. 
         divider_lookup (int): Sets the resolution of the lookup table. The bigger it is, the bigger the increments 
@@ -72,7 +76,7 @@ def build_cumulated_image_lookup_table(
     (for each pixel) until this mz value.
 
     Args:
-        array_spectra (np.ndarray): An array of shape (2,n) containing spectrum data (m/z and intensity).
+        array_spectra (np.ndarray): An array of shape (2,n) containing spectrum data (m/z and intensity) for each pixel.
         array_pixel_indexes (np.ndarray): An array of shape (m,2) containing the boundary indices of each pixel in 
                                           array_spectra. 
         img_shape ([type]): [description]
@@ -137,7 +141,7 @@ def build_index_lookup_table_averaged_spectrum(array_mz, size_spectrum=2000):
 
     Returns:
         np.ndarray: An array of length size_spectrum (i.e. the defaults divider_lookup is 1 for this array), 
-        mapping m/z values to indexes in the averaged array_spectra for each pixel.
+        mapping m/z values to indexes in the averaged array_spectra.
     """
 
     # Define the empty array for the lookup table
@@ -172,7 +176,7 @@ def add_zeros_to_spectrum(array_spectra, pad_individual_peaks=False):
     """This function extends the averaged spectra with zeros (e.g. to be able to plot them as scatterplotgl).
 
     Args:
-        array_spectra (np.ndarray): An array of shape (2,n) containing spectrum data (m/z and intensity).
+        array_spectra (np.ndarray): An array of shape (2,n) containing spectrum data (m/z and intensity) for each pixel.
         pad_individual_peaks (bool, optional): If true, pads the peaks individually, with a given threshold distance 
         between two m/z values to consider them as belonging to the same peak. Else, it pads all single value in the 
         spectrum with zeros. Defaults to False.
