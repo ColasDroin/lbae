@@ -5,7 +5,7 @@ import numpy as np
 from numba import njit
 
 # Homemade package
-from lbae.modules.tools.spectra import convert_spectrum_idx_to_coor
+from lbae.modules.tools.spectra import convert_spectrum_idx_to_coor, add_zeros_to_spectrum
 
 ###### DEFINE UTILITY FUNCTIONS ######
 @njit
@@ -29,7 +29,6 @@ def build_index_lookup_table(array_spectra, array_pixel_indexes, divider_lookup,
         np.ndarray: An array of shape (size_spectrum// divider_lookup, m), mapping m/z values to indexes in 
                     array_spectra for each pixel.
     """
-
     # Define the empty array for the lookup table
     lookup_table = np.zeros((size_spectrum // divider_lookup, array_pixel_indexes.shape[0]), dtype=np.int32)
     lookup_table[0, :] = array_pixel_indexes[:, 0]
@@ -53,11 +52,11 @@ def build_index_lookup_table(array_spectra, array_pixel_indexes, divider_lookup,
                 if j == array_pixel_indexes[idx_pix, 1] + 1:
                     break
 
-            # Check that we're still in the desired pixel and add mz index to lookup
+            # Check that we're still in the requested pixel and add mz index to lookup
             if j < array_pixel_indexes[idx_pix, 1] + 1:
                 lookup_table[index_lookup + 1, idx_pix] = j
 
-            # If we're not in the desired pixel, this means that the while loop was exited because the lookup didn't
+            # If we're not in the requested pixel, this means that the while loop was exited because the lookup didn't
             # exist, so we fill the rest of the table with biggest possible value
             else:
                 for i in range(index_lookup + 1, size_spectrum // divider_lookup):
@@ -89,7 +88,6 @@ def build_cumulated_image_lookup_table(
         np.ndarray: An array of shape (size_spectrum// divider_lookup, image height, image_width), mapping m/z values to 
         the cumulated spectrum until the corresponding m/z value for each pixel.
     """
-
     # Define the empty array for the lookup table
     image_lookup_table = np.zeros((size_spectrum // divider_lookup, img_shape[0], img_shape[1]), dtype=np.float32)
     image_lookup_table[0, :] = np.zeros((img_shape[0], img_shape[1]), dtype=np.float32)
@@ -118,7 +116,7 @@ def build_cumulated_image_lookup_table(
             if j < array_pixel_indexes[idx_pix, 1] + 1:
                 image_lookup_table[index_lookup + 1, coor_pix[0], coor_pix[1]] = pix_value
 
-            # If we're not in the desired pixel, this means that the while loop was exited because the lookup didn't
+            # If we're not in the requested pixel, this means that the while loop was exited because the lookup didn't
             # exist, so we fill the rest of the table with biggest possible value
             else:
                 for i in range(index_lookup + 1, size_spectrum // divider_lookup):
@@ -143,7 +141,6 @@ def build_index_lookup_table_averaged_spectrum(array_mz, size_spectrum=2000):
         np.ndarray: An array of length size_spectrum (i.e. the defaults divider_lookup is 1 for this array), 
         mapping m/z values to indexes in the averaged array_spectra.
     """
-
     # Define the empty array for the lookup table
     lookup_table = np.empty((size_spectrum), dtype=np.int32)
     j = 0
@@ -171,72 +168,6 @@ def build_index_lookup_table_averaged_spectrum(array_mz, size_spectrum=2000):
     return lookup_table
 
 
-@njit
-def add_zeros_to_spectrum(array_spectra, pad_individual_peaks=False):
-    """This function extends the averaged spectra with zeros (e.g. to be able to plot them as scatterplotgl).
-
-    Args:
-        array_spectra (np.ndarray): An array of shape (2,n) containing spectrum data (m/z and intensity) for each pixel.
-        pad_individual_peaks (bool, optional): If true, pads the peaks individually, with a given threshold distance 
-        between two m/z values to consider them as belonging to the same peak. Else, it pads all single value in the 
-        spectrum with zeros. Defaults to False.
-
-    Returns:
-        np.ndarray: An array of shape (2,k) containing the padded spectrum data (m/z and intensity).
-
-    """
-    # For speed considerations, allocate right away an array of maximum size
-    new_array_spectra = np.zeros((array_spectra.shape[0], array_spectra.shape[1] * 3), dtype=np.float32)
-
-    # If we want to pad peak individually, i.e. consider close m/z values as belonging to the same peak
-    if pad_individual_peaks:
-        pad = 0
-
-        # Loop over the m/z values
-        for i in range(array_spectra.shape[1] - 1):
-
-            # If there's a discontinuity between two peaks, pad with zeros
-            if array_spectra[0, i + 1] - array_spectra[0, i] >= 2 * 10 ** -4:
-                # print("discontuinuity detected")
-
-                # Add left peak
-                new_array_spectra[0, i + pad] = array_spectra[0, i]
-                new_array_spectra[1, i + pad] = array_spectra[1, i]
-
-                # Add zero to the right of left peak
-                pad += 1
-                new_array_spectra[0, i + pad] = array_spectra[0, i] + 10 ** -5
-                new_array_spectra[1, i + pad] = 0
-
-                # Add zero to the left of right peak
-                pad += 1
-                new_array_spectra[0, i + pad] = array_spectra[0, i + 1] - 10 ** -5
-                new_array_spectra[1, i + pad] = 0
-
-                # Right peak added in the next loop iteration
-            else:
-                # print("two near peaks")
-                new_array_spectra[0, i + pad] = array_spectra[0, i]
-                new_array_spectra[1, i + pad] = array_spectra[1, i]
-
-        new_array_spectra[0, array_spectra.shape[1] + pad - 1] = array_spectra[0, -1]
-        new_array_spectra[1, array_spectra.shape[1] + pad - 1] = array_spectra[1, -1]
-        return new_array_spectra[:, : array_spectra.shape[1] + pad]
-
-    # If we want to pad each value individually
-    else:
-        for i in range(array_spectra.shape[1]):
-            # Store old array in a regular grid in the extended array
-            new_array_spectra[0, 3 * i + 1] = array_spectra[0, i]
-            new_array_spectra[1, 3 * i + 1] = array_spectra[1, i]
-
-            # Add zeros in the remaining slots
-            new_array_spectra[0, 3 * i] = array_spectra[0, i] - 10 ** -4
-            new_array_spectra[0, 3 * i + 2] = array_spectra[0, i] + 10 ** -4
-
-        return new_array_spectra
-
-
 def process_lookup_tables(
     t_index_path,
     temp_path="notebooks/server/data/temp/",
@@ -255,7 +186,7 @@ def process_lookup_tables(
       pixels. First row contains the m/z values, while second row contains the corresponding intensities.
     - array_averaged_mz_intensity_low_res: Same as array_averaged_mz_intensity_low_res, but in higher resolution, with,
       therefore, a different shape.
-    - image_shape: a tuple of integers, indicating the vertical and horizontal shapes of the corresponding slice.
+    - image_shape: a tuple of integers, indicating the vertical and horizontal size of the corresponding slice.
     - divider_lookup: Integer that sets the resolution of the lookup tables.
     - lookup_table_spectra_high_res: of shape (size_spectrum// divider_lookup, m), it maps m/z values to indexes in 
       array_spectra for each pixel.
@@ -365,10 +296,10 @@ def process_lookup_tables(
     print("Shape of lookup_table_averaged_spectrum_high_res: ", lookup_table_averaged_spectrum_high_res.shape)
 
     # Extend averaged arrays with zeros for nicer display
-    array_averaged_mz_intensity_low_res = add_zeros_to_spectrum(
+    array_averaged_mz_intensity_low_res, _ = add_zeros_to_spectrum(
         array_averaged_mz_intensity_low_res, pad_individual_peaks=True
     )
-    array_averaged_mz_intensity_high_res = add_zeros_to_spectrum(
+    array_averaged_mz_intensity_high_res, _ = add_zeros_to_spectrum(
         array_averaged_mz_intensity_high_res, pad_individual_peaks=True
     )
 

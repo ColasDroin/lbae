@@ -376,7 +376,7 @@ class SmzMLobj:
             Whether to load the data upon initialization of the object.
             If False, a connection to the file is established and part of the
             data will be read when it is required by other actions or when
-            desired using the method `load`
+            requested using the method `load`
         
         **pymzml_kwargs: Dict[Any, Any],
 

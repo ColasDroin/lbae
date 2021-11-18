@@ -148,7 +148,7 @@ def _convert_array_to_fine_grained(array, resolution, lb=350, hb=1250):
     """This internal function is wrapped by convert_array_to_fine_grained(). Please consult the corresponding 
     documentation.
     """
-    # Build an empty (zeroed) array with the desired uncompressed size
+    # Build an empty (zeroed) array with the requested uncompressed size
     new_array = np.linspace(lb, hb, int(round((hb - lb) * resolution ** -1)))
     new_array = np.vstack((new_array, np.zeros(new_array.shape, dtype=np.float32)))
 
@@ -201,7 +201,7 @@ def compute_image_using_index_lookup(
     """For each pixel, this function extracts from array_spectra the intensity of a given m/z selection (normally 
     corresponding to a lipid annotation) defined by a lower and a higher bound. For faster computation, it uses 
     lookup_table_spectra to map m/z values to given indices. It then assigns the pixel intensity to an array of shape 
-    img_shape, therefore producing an image representing the desired lipid distribution. 
+    img_shape, therefore producing an image representing the requested lipid distribution. 
     It wraps the internal functions _compute_image_using_index_lookup_partial() and 
     _compute_image_using_index_lookup_full() to ensure that the proper array type is used with numba depending if the 
     data is coming from a HDF5 storage or not.
@@ -268,7 +268,7 @@ def _compute_image_using_index_lookup_partial(
         higher_bound = lookup_table[int(np.ceil(high_bound / divider_lookup))][idx_pix]
         array_to_sum = array_spectra[:, lower_bound : higher_bound + 1]
 
-        # Sum the mz values over the desired range
+        # Sum the mz values over the requested range
         image = _fill_image(image, idx_pix, img_shape, array_to_sum, lower_bound, higher_bound, low_bound, high_bound)
 
     return image
@@ -297,7 +297,7 @@ def _compute_image_using_index_lookup_full(
         higher_bound = lookup_table_spectra[int(np.ceil(high_bound / divider_lookup))][idx_pix]
         array_to_sum = array_spectra[:, lower_bound : higher_bound + 1]
 
-        # Sum the m/z values over the desired range
+        # Sum the m/z values over the requested range
         image = _fill_image(image, idx_pix, img_shape, array_to_sum, lower_bound, higher_bound, low_bound, high_bound)
 
     return image
@@ -421,7 +421,7 @@ def _compute_image_using_index_and_image_lookup_partial(
     memory-optimized, option, when the slice data must be manually extracted from a HDF5 (aka pytables.array) dataset. 
     Please consult the documentation of compute_image_using_index_and_image_lookup() for more information.
     """
-    # Get a first approximate of the desired lipid image
+    # Get a first approximate of the requested lipid image
     image = lookup_table_image[int(high_bound / divider_lookup)] - lookup_table_image[int(low_bound / divider_lookup)]
 
     # Look for true lower/higher bound between the lower/higher looked up image and the next one
@@ -503,7 +503,7 @@ def _compute_image_using_index_and_image_lookup_full(
     numba-ized, option, when the slice data is provided as a numpy array. Please consult the documentation of 
     compute_image_using_index_and_image_lookup() for more information.
     """
-    # Get a first approximate of the desired lipid image
+    # Get a first approximate of the requested lipid image
     image = lookup_table_image[int(high_bound / divider_lookup)] - lookup_table_image[int(low_bound / divider_lookup)]
 
     # Look for true lower bound between the lower looked up image and the next one
@@ -733,6 +733,21 @@ def _loop_compute_index_boundaries(array_to_sum_lb, array_to_sum_hb, low_bound, 
 ###### FUNCTIONS TO COMPUTE SPECTRA AVERAGED FROM A MANUAL SELECTION OR A MASK SELECTION ######
 # returns np.array wheter hdf5 as input or not... Therefore not numba for safety as the input can be hdf5
 def return_spectrum_per_pixel(idx_pix, array_spectra, array_pixel_indexes):
+    """This function returns the spectrum of the pixel having index pixel_idx, using the lookup table 
+    array_pixel_indexes. Note that no wrapper is needed for this function as it always returb a np.ndarray whether the
+    input is a pytables.array or a np.ndarray, and Numba doesn't bring any valuable speedup here.
+
+    Args:
+        idx_pix (int): Index of the pixel to return.
+        array_spectra (np.ndarray or pytables.array): An array of shape (2,n) containing spectrum data (m/z and 
+                                                      intensity) for each pixel.
+        array_pixel_indexes (np.ndarray): An array of shape (m,2) containing the boundary indices of each pixel in 
+                                          array_spectra.
+       
+    Returns:
+        np.ndarray: An array of shape (2,m) containing spectrum data (m/z and intensity) for the requested pixel.
+    """
+    # Get the indices of the spectrum of the requested pixel
     idx_1, idx_2 = array_pixel_indexes[idx_pix]
     if idx_1 == -1:
         idx_2 == -2  # To return empty list in the end
@@ -742,12 +757,32 @@ def return_spectrum_per_pixel(idx_pix, array_spectra, array_pixel_indexes):
 # should only be used with full arrays, no HDF5 here
 @njit
 def add_zeros_to_spectrum(array_spectra, pad_individual_peaks=True, padding=10 ** -5):
+    """This function adds zeros in-between the peaks of the spectra contained in array_spectra (e.g. to be able to plot 
+    them as scatterplotgl). Note that it should only be used with array_spectra of type np.ndarray (that should be the 
+    case as this function is mainly used to pad spectra coming from a manual selection, which happen to be np.ndarray).
+
+    Args:
+        array_spectra (np.ndarray): An array of shape (2,n) containing spectrum data (m/z and intensity) for each pixel.
+        pad_individual_peaks (bool, optional): If true, pads the peaks individually, with a given threshold distance 
+        between two m/z values to consider them as belonging to the same peak. Else, it pads all single value in the 
+        spectrum with zeros. Defaults to False.
+        padding (float, optional): The m/z distance between a peak value and a zero for the padding. Default to 10**-5.
+
+    Returns:
+        (np.ndarray, np.ndarray): An array of shape (2,m) containing the padded spectrum data (m/z and intensity) and an
+                                  an array of shape (k,) containing the number of zeros added at each index of 
+                                  array_spectra.
+
+    """
     # For speed, allocate array of maximum size
     new_array_spectra = np.zeros((array_spectra.shape[0], array_spectra.shape[1] * 3), dtype=np.float32)
     array_index_padding = np.zeros((array_spectra.shape[1]), dtype=np.int32)
 
+    # Either pad each peak individually
     if pad_individual_peaks:
         pad = 0
+
+        # Loop over m/z values
         for i in range(array_spectra.shape[1] - 1):
 
             # If there's a discontinuity between two peaks, pad with zeros
@@ -767,20 +802,26 @@ def add_zeros_to_spectrum(array_spectra, pad_individual_peaks=True, padding=10 *
                 new_array_spectra[0, i + pad] = array_spectra[0, i + 1] - padding
                 new_array_spectra[1, i + pad] = 0
 
-                # Right peak added in the next loop iteration
-
                 # Record that 2 zeros have been added between idx i and i+1
                 array_index_padding[i] = 2
 
+                # Right peak added in the next loop iteration
+
+            # Else, just store the values of array_spectra without padding
             else:
+                logging.info("two near peaks")
                 new_array_spectra[0, i + pad] = array_spectra[0, i]
                 new_array_spectra[1, i + pad] = array_spectra[1, i]
 
+        # Add the last value of array_spectra
         new_array_spectra[0, array_spectra.shape[1] + pad - 1] = array_spectra[0, -1]
         new_array_spectra[1, array_spectra.shape[1] + pad - 1] = array_spectra[1, -1]
         return new_array_spectra[:, : array_spectra.shape[1] + pad], array_index_padding
 
+    # Or pad each m/z value individually
     else:
+
+        # Loop over m/z values
         for i in range(array_spectra.shape[1]):
             # Store old array in a regular grid in the extended array
             new_array_spectra[0, 3 * i + 1] = array_spectra[0, i]
@@ -790,14 +831,29 @@ def add_zeros_to_spectrum(array_spectra, pad_individual_peaks=True, padding=10 *
             new_array_spectra[0, 3 * i] = array_spectra[0, i] - padding
             new_array_spectra[0, 3 * i + 2] = array_spectra[0, i] + padding
 
+            # Record that 2 zeros have been added between idx i and i+1
             array_index_padding[i] = 2
 
         return new_array_spectra, array_index_padding
 
 
 # no numba since the input may be hdf5
-def return_zeros_extended_spectrum_per_pixel(idx_pix, array_spectra, array_pixel_indexes):
-    # first line returns np.array whaterver the input is
+def compute_zeros_extended_spectrum_per_pixel(idx_pix, array_spectra, array_pixel_indexes):
+    """This function computes a zero-extended version of the spectrum of pixel indexed by idx_pix. It is not numba-ized
+       since the input may be a pytables array, but add_zeros_to_spectrum() is.
+
+    Args:
+        idx_pix (int): Index of the pixel to return.
+        array_spectra (np.ndarray or pytables.array): An array of shape (2,n) containing spectrum data (m/z and 
+                                                      intensity) for each pixel.
+        array_pixel_indexes (np.ndarray): An array of shape (m,2) containing the boundary indices of each pixel in 
+                                          array_spectra.
+
+    Returns:
+        np.ndarray: An array of shape (2,m) containing the zero-padded spectrum data (m/z and intensity) for the 
+                    requested pixel.
+    """
+    # First line returns np.array whaterver the input is
     array_spectra = return_spectrum_per_pixel(idx_pix, array_spectra, array_pixel_indexes)
     new_array_spectra, array_index_padding = add_zeros_to_spectrum(array_spectra)
     return new_array_spectra
@@ -806,17 +862,16 @@ def return_zeros_extended_spectrum_per_pixel(idx_pix, array_spectra, array_pixel
 def reduce_resolution_sorted_array_spectra(array_spectra, resolution=10 ** -3):
     """Recompute a sparce representation of the spectrum at a lower (fixed) resolution, summing over the redundant bins.
     Resolution should be <=10**-4 as it's about the maximum precision allowd by float32. Wraps the numba function
-    _reduce_resolution_sorted_array_spectra to ensure array_spectra is of type np.ndarray. 
+    _reduce_resolution_sorted_array_spectra() to ensure array_spectra is of type np.ndarray. 
 
     Args:
         array_spectra (np.ndarray or pytables.array): An array of shape (2,n) containing spectrum data (m/z and 
-                                                intensity) for each pixel.
+                                                      intensity) for each pixel.
         resolution (float, optional): The size of the bin used to merge intensities. Defaults to 10**-3.
 
     Returns:
         (np.ndarray): Array of shape=(2, m) similar to the input array but with a new sampling resolution.
     """
-
     if isinstance(array_spectra, tables.array.Array):
         warnings.warn(
             "You are using a pytables array instead of a numpy array."
@@ -834,7 +889,6 @@ def _reduce_resolution_sorted_array_spectra(array_spectra, resolution=10 ** -3):
     """This internal function is wrapped by reduce_resolution_sorted_array_spectra. Please consult the corresponding 
     documentation.
     """
-
     # Get the re-sampled m/z and intensities from mspec library, with max_intensity = False to sum over redundant bins
     new_mz, new_intensity = reduce_resolution_sorted(
         array_spectra[:, 0], array_spectra[:, 1], resolution, max_intensity=False
@@ -847,7 +901,6 @@ def _reduce_resolution_sorted_array_spectra(array_spectra, resolution=10 ** -3):
     return new_array_spectra
 
 
-# ? Just one version for hdf5 and numpy... Maybe also implement the pure numpy one? Ideally compare speeds
 def compute_spectrum_per_row_selection(
     list_index_bound_rows,
     list_index_bound_column_per_row,
@@ -855,12 +908,31 @@ def compute_spectrum_per_row_selection(
     array_pixel_indexes,
     image_shape,
     zeros_extend=True,
-    sample=False,
 ):
+    """This function computes the average spectrum from a manual selection of rows of pixel (each containing a 
+    spectrum). The resulting average array can be zero-padded. Note that this function is not numba-ized as it wouldn't 
+    bring any valuable speed up here, and it allows for indiscriminate inputs in the form of pytables.array or 
+    np.ndarray.
 
+    Args:
+        list_index_bound_rows (list(tuple)): A list of lower and upper indices delimiting the range of rows belonging to
+                                             the current selection.
+        list_index_bound_column_per_row (list(list)): For each row (outer list), provides the index of the columns 
+                                                      delimiting the current selection (inner list). 
+        array_spectra (np.ndarray or pytables.array): An array of shape (2,n) containing spectrum data (m/z and 
+                                                      intensity) for each pixel.
+        array_pixel_indexes (np.ndarray): An array of shape (m,2) containing the boundary indices of each pixel in 
+                                          array_spectra.
+        image_shape (int, int): A tuple of integers, indicating the vertical and horizontal sizes of the current slice.
+        zeros_extend (bool, optional): If True, the resulting spectrum will be zero-padded. Defaults to True.
+
+    Returns:
+        np.ndarray: Spectrum averaged from a manual selection of rows of pixel, containing m/z values in the first row, 
+                    and intensities in the second row.
+    """
     # Get list of row indexes for the current selection
     ll_idx, size_array = get_list_row_indexes(
-        list_index_bound_rows, list_index_bound_column_per_row, array_pixel_indexes, image_shape, sample=sample
+        list_index_bound_rows, list_index_bound_column_per_row, array_pixel_indexes, image_shape
     )
 
     # Init array selection of size size_array
@@ -876,7 +948,7 @@ def compute_spectrum_per_row_selection(
     # Sort array
     array_spectra_selection = array_spectra_selection[:, array_spectra_selection[0].argsort()]
 
-    # Iteratively bin at 1e-4 because too many values to display (also sum of the array together in the process)
+    # Sum the arrays (similar m/z values are added)
     array_spectra_selection = reduce_resolution_sorted_array_spectra(array_spectra_selection, resolution=10 ** -4)
 
     # Pad with zeros if asked
@@ -886,68 +958,101 @@ def compute_spectrum_per_row_selection(
 
 
 @njit
-def get_list_row_indexes(
-    list_index_bound_rows, list_index_bound_column_per_row, array_pixel_indexes, image_shape, sample=False,
-):
+def get_list_row_indexes(list_index_bound_rows, list_index_bound_column_per_row, array_pixel_indexes, image_shape):
+    """This function turns a selection of rows (bounds in list_index_bound_rows) and corresponding columns (bounds in 
+    list_index_bound_column_per_row) into an optimized list of pixel indices in array_spectra. It takes advantage of the 
+    fact that pixels that are neighbours in a given rows also have contiguous spectra in array_spectra, allowing for 
+    faster query.
 
+    Args:
+        list_index_bound_rows (list(tuple)): A list of lower and upper indices delimiting the range of rows belonging to
+                                             the current selection.
+        list_index_bound_column_per_row (list(list)): For each row (outer list), provides the index of the columns 
+                                                      delimiting the current selection (inner list). 
+        array_pixel_indexes (np.ndarray): An array of shape (m,2) containing the boundary indices of each pixel in 
+                                          array_spectra.
+        image_shape (int, int): A tuple of integers, indicating the vertical and horizontal sizes of the current slice.
+
+    Returns:
+        (list(list), int): The list of list contains outer pixel indices (inner list) in array_spectra for each row 
+                           (outer list). The integer provides the expected total size of the concatenated spectra 
+                           indexed. 
+    """
     # Compute size array
     size_array = 0
     ll_idx = []
-    # This loop should be more very fast
+
+    # Loop over rows in the selection
     for i, x in enumerate(range(list_index_bound_rows[0], list_index_bound_rows[1] + 1)):
-        # Careful: list_rows[i] must be even
+        # Careful: list_index_bound_column_per_row
         l_idx = []
+        for j in range(0, len(list_index_bound_column_per_row[i]), 2):
+            # Check if we're not just looping over zero padding
+            if list_index_bound_column_per_row[i][j] == 0 and list_index_bound_column_per_row[i][j + 1] == 0:
+                continue
 
-        # Sample only one row out of four
-        if sample and i % 4 != 0:
-            ll_idx.append(l_idx)
-            continue
-        else:
-            for j in range(0, len(list_index_bound_column_per_row[i]), 2):
-                # Check if we're not just looping over zero padding
-                if list_index_bound_column_per_row[i][j] == 0 and list_index_bound_column_per_row[i][j + 1] == 0:
-                    continue
-                idx_pix_1 = convert_coor_to_spectrum_idx((x, list_index_bound_column_per_row[i][j]), image_shape)
-                idx_1 = array_pixel_indexes[idx_pix_1, 0]
-                idx_pix_2 = convert_coor_to_spectrum_idx((x, list_index_bound_column_per_row[i][j + 1]), image_shape)
-                idx_2 = array_pixel_indexes[idx_pix_2, 1]
+            # Get the outer indexes of the (concatenated) spectra of the current row belonging to the selection
+            idx_pix_1 = convert_coor_to_spectrum_idx((x, list_index_bound_column_per_row[i][j]), image_shape)
+            idx_1 = array_pixel_indexes[idx_pix_1, 0]
+            idx_pix_2 = convert_coor_to_spectrum_idx((x, list_index_bound_column_per_row[i][j + 1]), image_shape)
+            idx_2 = array_pixel_indexes[idx_pix_2, 1]
 
-                # Case we started or finished with empty pixel
-                if idx_1 == -1 or idx_2 == -1:
-                    j = 1
-                    while idx_1 == -1:
-                        idx_1 = array_pixel_indexes[idx_pix_1 + j, 0]
-                        j += 1
+            # Case we started or finished with empty pixel
+            if idx_1 == -1 or idx_2 == -1:
 
-                    j = 1
-                    while idx_2 == -1:
-                        idx_2 = array_pixel_indexes[idx_pix_2 - j, 1]
-                        j += 1
+                # Move forward until a non-empty pixel is found for idx_1
+                j = 1
+                while idx_1 == -1:
+                    idx_1 = array_pixel_indexes[idx_pix_1 + j, 0]
+                    j += 1
 
-                # Check that we still have idx_2>=idx_1
-                if idx_1 > idx_2:
-                    pass
-                else:
-                    size_array += idx_2 + 1 - idx_1
-                    l_idx.extend([idx_1, idx_2])
+                # Move backward until a non-empty pixel is found for idx_2
+                j = 1
+                while idx_2 == -1:
+                    idx_2 = array_pixel_indexes[idx_pix_2 - j, 1]
+                    j += 1
 
-            ll_idx.append(l_idx)
+            # Check that we still have idx_2>=idx_1
+            if idx_1 > idx_2:
+                pass
+            else:
+                size_array += idx_2 + 1 - idx_1
+                l_idx.extend([idx_1, idx_2])
+
+        # Add the couple of spectra indexes to the list
+        ll_idx.append(l_idx)
 
     return ll_idx, size_array
 
 
 @njit
 def sample_rows_from_path(path):
-    # Careful: in this whole function, x is the vertical axis (from top to bottom), and y the horizontal one
-    # this is counter-intuitive given the computations done in the function
+    """This function takes a path as input and returns the lower and upper indexes of the rows belonging to the current
+    selection (i.e. indexed in the path), as well as the corresponding column boundaries for each row. Note that, 
+    although counter-intuitive given the kind of regression done in this function, x is the vertical axis (from top to 
+    bottom), and y the horizontal one.
 
+    Args:
+        path (np.ndarray): A two-dimensional array, containing, in each row, the row and column coordinates (x and y) of
+                           the current selection.
+
+    Returns:
+        (np.ndarray, np.ndarray): The first array contains the lower and upper indexes of the rows belonging to the 
+                                  current selection. The second array contains, for each row, the corresponding column
+                                  boundaries (there can be more than 2 for non-convex shapes).
+    """
+    # Find out the lower and upper rows
     x_min = path[:, 0].min()
     x_max = path[:, 0].max()
 
-    # Numba won't accept a list of list, so I have to use a list of np arrays
+    # Numba won't accept a list of list, so I have to use a list of np arrays for the column boundaries
     list_index_bound_column_per_row = [np.arange(0) for x in range(x_min, x_max + 1)]
+
+    # Also register the x-axis direction to correct the linear regression accordingly
     dir_prev = None
 
+    # For each couple of points in the path, do a linear regression to find the corresponding y (needed due to non
+    # constant sampling on the y-axis)
     for i in range(path.shape[0] - 1):
         x1, y1 = path[i]
         x2, y2 = path[i + 1]
@@ -988,7 +1093,8 @@ def sample_rows_from_path(path):
         if len(list_index_bound_column_per_row[x - x_min]) % 2 == 0:
             pass
         else:
-            print("BUG WITH LIST X", x, list_index_bound_column_per_row[x - x_min])
+            warnings.warn("Bug with list x", x, list_index_bound_column_per_row[x - x_min])
+            # Try to correct the number of times x appear
             if (
                 len(list_index_bound_column_per_row[x - x_min]) % 2 == 1
                 and len(list_index_bound_column_per_row[x - x_min]) != 1
@@ -998,9 +1104,9 @@ def sample_rows_from_path(path):
                 list_index_bound_column_per_row[x - x_min] = np.append(
                     list_index_bound_column_per_row[x - x_min], list_index_bound_column_per_row[x - x_min][0]
                 )
-        list_index_bound_column_per_row[x - x_min].sort()  # Inplace sort
+        list_index_bound_column_per_row[x - x_min].sort()  # Inplace sort to spare memory
 
-    # Convert list of np.array to np array padded with zeros (for numba compatibility...)
+    # Convert list of np.array to np array padded with zeros (for numba compatibility)
     max_len = max([len(i) for i in list_index_bound_column_per_row])
     array_index_bound_column_per_row = np.zeros((len(list_index_bound_column_per_row), max_len), dtype=np.int32)
     for i, arr in enumerate(list_index_bound_column_per_row):
@@ -1009,13 +1115,22 @@ def sample_rows_from_path(path):
     return np.array([x_min, x_max], dtype=np.int32), array_index_bound_column_per_row
 
 
-# This function returns the corresponding lipid name from a list of m/z values. l_min and l_max correspond to the peak
-# boundaries of the identified lipids zero padding extra is needed for both taking into account the zero-padding
-# (this way zeros on the sides of the peak are also identified as the annotated lipid) but also because the annotation
-# is very stringent in the first place, and sometimes border of the peaks are missing in the annotation
 @njit
 def return_index_labels(l_min, l_max, l_mz, zero_padding_extra=5 * 10 ** -5):
+    """This function returns the corresponding lipid name indices from a list of m/z values. Note that the 
+    zero_padding_extra parameter is needed for both taking into account the zero-padding (this way zeros on the sides of 
+    the peak are also identified as the annotated lipid) but also because the annotation is very stringent in the first 
+    place, and sometimes border of the peaks are missing in the annotation.
 
+    Args:
+        l_min (list(int)): This list provides the lower peak boundaries of the identified lipids.
+        l_max (list(int)): This list provides the upper peak boundaries of the identified lipids.
+        l_mz (list(float)): The list of m/z value which must be annotated with lipid names.
+        zero_padding_extra (float, optional): Size of the zero-padding. Defaults to 5*10**-5.
+
+    Returns:
+        np.ndarray: A 1-dimensional array containing the indices of the lipid labels.
+    """
     # Build empty array for lipid indexes
     array_indexes = np.empty((len(l_mz),), dtype=np.int32)
     array_indexes.fill(-1)
@@ -1044,10 +1159,25 @@ def return_index_labels(l_min, l_max, l_mz, zero_padding_extra=5 * 10 ** -5):
 
 
 @njit
-def return_avg_intensity_per_lipid(l_intensity_with_lipids, l_idx_labels):
+def compute_avg_intensity_per_lipid(l_intensity_with_lipids, l_idx_labels):
+    """This function computes the average intensity of each annotated lipid (summing over peaks coming from the same 
+    lipid) from a given spectrum.
+
+    Args:
+        l_intensity_with_lipids (list(float)): A list of peak intensities (where one lipid can correspond to several 
+                                               peaks, but one peak always correspond to one lipid). 
+        l_idx_labels (list(int)): A list of lipid annotation, each lipid being annotated with a unique integer.
+
+    Returns:
+        list(int), list(float): The first list provides the lipid indices, while the second provide the lipid average 
+                                intensities. Peaks corresponding to identical lipid have been averaged.
+    """
+    # Define empty lists for the lipid indices and intensities
     l_unique_idx_labels = []
     l_avg_intensity = []
     idx_label_temp = -1
+
+    # Loop over the lipid indices (i.e. m/z values)
     for i, idx_label in enumerate(l_idx_labels):
 
         # Actual lipid and not just a placeholder

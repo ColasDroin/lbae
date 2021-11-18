@@ -24,7 +24,6 @@ def load_file(path, resolution=1e-5):
     Returns:
         scipy.sparse: A sparse matrix containing the intensity for each m/z value.
     """
-
     # Load object from SmzMLobj
     smz = SmzMLobj(path + ".mzML", path + ".UDP", mz_resolution=resolution)
     smz.load(load_unique_mz=True)
@@ -44,7 +43,6 @@ def load_peak_file(path):
     Returns:
         pandas.dataframe: The sorted dataframe containing the annotations.
     """
-
     # Try to load the peaks annotations using the first definition used for the csv file
     try:
         df = pd.read_csv(path + ".csv", sep="\t")
@@ -122,7 +120,6 @@ def process_sparse_matrix(smz, sort=["Pixel", "m/z"], sample=False):
     Returns:
         pandas.Dataframe: A sorted dataframe with three columns: pixels index, m/z, and intensity value.
     """
-
     # We're going to slice the matrix row by row, so it's faster to convert it to csr rather than csc
     S_row = smz.S.tocsr()
 
@@ -161,7 +158,7 @@ def filter_peaks(array_spectra, array_peaks, verbose=False):
     Returns:
         list: m/z values corresponding to peaks that have been annotated.
     """
-
+    # Define initial values
     l_to_keep = []
     index_peak = 0
     idx_curr_mz = 0
@@ -217,7 +214,6 @@ def return_array_pixel_indexes(array_pixel, total_shape):
     Returns:
         np.ndarray: An array of shape (m,2) containing the boundary indices of each pixel in the original spectra array. 
     """
-
     array_pixel_indexes = np.empty((total_shape, 2), dtype=np.int32)
     array_pixel_indexes.fill(-1)
     for i, p in enumerate(array_pixel):
@@ -292,7 +288,7 @@ def process_raw_data(
       pixels. First row contains the m/z values, while second row contains the corresponding intensities.
     - array_averaged_mz_intensity_low_res: Same as array_averaged_mz_intensity_low_res, but in higher resolution, with,
       therefore, a different shape.
-    - image_shape: a tuple of integers, indicating the vertical and horizontal shapes of the corresponding slice.
+    - image_shape: a tuple of integers, indicating the vertical and horizontal sizes of the corresponding slice.
 
     Args:
         t_index_path (tuple(int, str)): A tuple containing the index of the slice (starting from 1) and the 
@@ -307,7 +303,6 @@ def process_raw_data(
     Returns:
         Depending on 'return result', returns either nothing, either several np.ndarrays, described above.
     """
-
     # Get slice path
     index_slice = t_index_path[0]
     name = t_index_path[1]
@@ -324,7 +319,7 @@ def process_raw_data(
     # Convert df into arrays for easier manipulation with numba
     array_high_res = df_high_res.to_numpy()
 
-    # Filter out the non-desired peaks and convert to array
+    # Filter out the non-requested peaks and convert to array
     appendix = "_unfiltered"
     if bool_filter_peaks:
         try:
