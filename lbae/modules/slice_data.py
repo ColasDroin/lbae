@@ -12,8 +12,19 @@ import time
 ###### DEFINE SliceData CLASS ######
 
 
+class StudentSlot:
+    __slots__ = ["first_name", "last_name"]
+
+    def __init__(self, first_name, last_name):
+        self.first_name = first_name
+        self.last_name = last_name
+
+
 class SliceData:
-    def __init__(self, slice_limit=3, slice_index=None):
+    __slots__ = ["dictionnary_data", "hdf5_data"]
+    ### TODO TODO TODO TOD
+
+    def __init__(self, path_dictionnary_data, path_hdf5_data):
 
         # list to keep track of the order in which the slices have been added
         self.list_order = []
