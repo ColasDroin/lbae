@@ -11,8 +11,6 @@ from lbae.modules.tools.mspec import SmzMLobj
 from lbae.modules.tools.spectra import reduce_resolution_sorted_array_spectra
 
 ###### DEFINE UTILITY FUNCTIONS ######
-
-
 def load_file(path, resolution=1e-5):
     """This function loads the specified MALDI file from the raw data format (.mzML and .UDP) 
     with the given resolution, and turns it into a scipy sparse matrix. 

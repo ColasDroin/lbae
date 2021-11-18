@@ -1,10 +1,9 @@
 ###### IMPORT MODULES ######
+# Standard import
 import numpy as np
 from numba import njit
 
-###### UTILITY FUNCTIONS WITH NUMBA ######
-
-
+###### DEFINE UTILITY FUNCTIONS ######
 @njit
 def project_image(index_slice, original_image, array_projection_correspondence):
     # correct index
