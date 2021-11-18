@@ -11,75 +11,16 @@ from PIL import Image
 import base64
 from io import BytesIO
 from matplotlib import cm
-import zarr
 import plotly.express as px
 from skimage import io
-from numba import njit
-
-
-# App module
-import app
 
 # Homemade functions
-from tools.lookup_functions import (
-    get_projected_atlas_mask,
-    get_array_rows_from_atlas_mask,
-    compute_spectrum_per_row_selection,
-)
+from lbae.modules.tools.atlas import project_atlas_mask, get_array_rows_from_atlas_mask, fill_array_projection
+from lbae.modules.tools.spectra import compute_spectrum_per_row_selection
+from lbae.modules.atlas_labels import Labels, LabelContours
 
-
-###### Labels Class ######
-class Labels:
-    """ Class used to access labels data without having to create new arrays"""
-
-    def __init__(self, bg_atlas, use_zarr=True):
-        self.bg_atlas = bg_atlas
-        self.use_zarr = use_zarr
-
-    def __getitem__(self, key):
-        x = self.bg_atlas.annotation[key]
-        if isinstance(x, np.uint32):
-            if x != 0:
-                return self.bg_atlas.structures[x]["name"]
-            else:
-                return "undefined"
-        # an array slice have been provided
-        else:
-            if self.use_zarr:
-                return zarr.array(
-                    np.reshape(
-                        [self.bg_atlas.structures[i]["name"] if i != 0 else "undefined" for i in x.flatten()], x.shape
-                    )
-                )
-            else:
-                return np.reshape(
-                    [self.bg_atlas.structures[i]["name"] if i != 0 else "undefined" for i in x.flatten()], x.shape
-                )
-
-
-###### LabelContours Class ######
-class LabelContours:
-    """ Class used to map labels to increasing integers"""
-
-    def __init__(self, bg_atlas, use_zarr=True):
-        self.bg_atlas = bg_atlas
-        self.unique_id = {ni: indi for indi, ni in enumerate(set(self.bg_atlas.annotation.flatten()))}
-        self.use_zarr = use_zarr
-
-    def __getitem__(self, key):
-        x = self.bg_atlas.annotation[key]
-        if isinstance(x, np.uint32):
-            return self.unique_id[x]
-        else:
-            array = np.reshape([self.unique_id[i] for i in x.flatten()], x.shape)
-            if self.use_zarr:
-                return zarr.array(array)
-            else:
-                return array
-
-
-###### SliceAtlas Class ######
-class SliceAtlas:
+###### Atlas Class ######
+class Atlas:
     def __init__(self, resolution=25, force_recompute=False):
 
         # resolution to be chosen among 10um, 25um or 100um (the only three availbable with the reference atlas)
@@ -157,7 +98,7 @@ class SliceAtlas:
             original_slice = np.array(io.imread(filename), dtype=np.int16)
 
             # map back the pixel from the atlas coordinates
-            array_projection, array_projection_correspondence = SliceAtlas.fill_array_projection(
+            array_projection, array_projection_correspondence = fill_array_projection(
                 i,
                 array_projection,
                 array_projection_filling,
@@ -472,7 +413,7 @@ class SliceAtlas:
         for mask_name, id_mask in self.dic_name_id.items():
             # get the array corresponding to the projected mask
             stack_mask = self.get_atlas_mask(id_mask)
-            projected_mask = get_projected_atlas_mask(stack_mask, slice_coor_rescaled, self.bg_atlas.reference.shape)
+            projected_mask = project_atlas_mask(stack_mask, slice_coor_rescaled, self.bg_atlas.reference.shape)
             if np.sum(projected_mask) == 0:
                 continue
 
@@ -513,7 +454,7 @@ class SliceAtlas:
                     dtype=np.int16,
                 )
             stack_mask = app.slice_atlas.get_atlas_mask(app.slice_atlas.dic_name_id[mask_name])
-            projected_mask = get_projected_atlas_mask(
+            projected_mask = project_atlas_mask(
                 stack_mask, slice_coor_rescaled, app.slice_atlas.bg_atlas.reference.shape
             )
 
@@ -752,169 +693,4 @@ class SliceAtlas:
                     print("Structure " + acronym + " could not be computed")
             else:
                 print(acronym + " has already been computed before. Skipping it.")
-
-    def solve_plane_equation(self, index_slice, point_1=(150, 151), point_2=(800, 1200), point_3=(100, 101)):
-        # define a system of linear equation for three points of the plane
-        # can't take points on the extremities as Nicholas software is buggued and the origin doesn't linearly maps to the 3D plane
-        A = np.zeros((9, 9))
-        b = np.zeros((9,))
-
-        A[0] = [point_1[0], 0, 0, point_1[1], 0, 0, 1, 0, 0]
-        A[1] = [0, point_1[0], 0, 0, point_1[1], 0, 0, 1, 0]
-        A[2] = [0, 0, point_1[0], 0, 0, point_1[1], 0, 0, 1]
-        A[3] = [point_2[0], 0, 0, point_2[1], 0, 0, 1, 0, 0]
-        A[4] = [0, point_2[0], 0, 0, point_2[1], 0, 0, 1, 0]
-        A[5] = [0, 0, point_2[0], 0, 0, point_2[1], 0, 0, 1]
-        A[6] = [point_3[0], 0, 0, point_3[1], 0, 0, 1, 0, 0]
-        A[7] = [0, point_3[0], 0, 0, point_3[1], 0, 0, 1, 0]
-        A[8] = [0, 0, point_3[0], 0, 0, point_3[1], 0, 0, 1]
-
-        b = [
-            self.array_coordinates_high_res[index_slice, point_1[0], point_1[1], 0],
-            self.array_coordinates_high_res[index_slice, point_1[0], point_1[1], 1],
-            self.array_coordinates_high_res[index_slice, point_1[0], point_1[1], 2],
-            self.array_coordinates_high_res[index_slice, point_2[0], point_2[1], 0],
-            self.array_coordinates_high_res[index_slice, point_2[0], point_2[1], 1],
-            self.array_coordinates_high_res[index_slice, point_2[0], point_2[1], 2],
-            self.array_coordinates_high_res[index_slice, point_3[0], point_3[1], 0],
-            self.array_coordinates_high_res[index_slice, point_3[0], point_3[1], 1],
-            self.array_coordinates_high_res[index_slice, point_3[0], point_3[1], 2],
-        ]
-
-        u1, u2, u3, v1, v2, v3, a1, a2, a3 = np.linalg.solve(A, b)
-        u_atlas = (u1, u2, u3)
-        v_atlas = (v1, v2, v3)
-        a_atlas = (a1, a2, a3)
-        return a_atlas, u_atlas, v_atlas
-
-    @staticmethod
-    @njit
-    def slice_to_atlas_transform(a, u, v, lambd, mu):
-        # equation of a plan in space
-        x_atlas = a[0] + lambd * u[0] + mu * v[0]
-        y_atlas = a[1] + lambd * u[1] + mu * v[1]
-        z_atlas = a[2] + lambd * u[2] + mu * v[2]
-        return x_atlas, y_atlas, z_atlas
-
-    @staticmethod
-    @njit
-    def fill_array_projection(
-        index_slice,
-        array_projection,
-        array_projection_filling,
-        array_projection_correspondence,
-        original_coor,
-        atlas_resolution,
-        a,
-        u,
-        v,
-        original_slice,
-        array_coordinates,
-        annotation,
-        nearest_neighbour_correction=False,
-        atlas_correction=False,
-    ):
-
-        A = np.empty((2, 2), dtype=np.float64)
-        A[0] = [u[1], v[1]]
-        A[1] = [u[2], v[2]]
-        A += np.random.normal(0, 0.000000001, (2, 2))  # to solve singularity issues when inversion
-
-        for i_original_slice in range(original_coor.shape[0]):
-            for j_original_slice in range(original_coor.shape[1]):
-                x_atlas, y_atlas, z_atlas = original_coor[i_original_slice, j_original_slice]
-
-                # solve the inverse transform by solving a system of linear equations
-                b = np.array([y_atlas - a[1], z_atlas - a[2]], dtype=np.float64)
-                i, j = np.linalg.solve(A, b)
-
-                # ugly but numba won't accept any other way
-                i = int(round(i))
-                j = int(round(j))
-
-                if i < array_projection.shape[1] and j < array_projection.shape[2] and i > 0 and j > 0:
-                    try:
-                        array_projection[index_slice, i, j] = original_slice[i_original_slice, j_original_slice, 2]
-                        array_projection_filling[index_slice, i, j] = 1
-                        array_projection_correspondence[index_slice, i, j] = [i_original_slice, j_original_slice]
-                    except:
-                        print(i, j, array_projection.shape, i_original_slice, j_original_slice, original_slice.shape)
-
-        if nearest_neighbour_correction:
-            for i in range(array_projection.shape[1]):
-
-                for j in range(array_projection.shape[2]):
-                    x_atlas, y_atlas, z_atlas = array_coordinates[index_slice, i, j] * 1000 / atlas_resolution
-                    # ugly but numba doesn't support np.round
-                    x_atlas = int(round(x_atlas))
-                    y_atlas = int(round(y_atlas))
-                    z_atlas = int(round(z_atlas))
-                    if (
-                        x_atlas < annotation.shape[0]
-                        and x_atlas >= 0
-                        and y_atlas < annotation.shape[1]
-                        and y_atlas >= 0
-                        and z_atlas < annotation.shape[2]
-                        and z_atlas >= 0
-                    ):
-                        if annotation[x_atlas, y_atlas, z_atlas] != 0:
-                            if array_projection_filling[index_slice, i, j] == 0:
-                                # only fill missing areas if far from the sides
-                                if (
-                                    i > 20
-                                    and i < array_projection.shape[1] - 20
-                                    and j > 20
-                                    and j < array_projection.shape[2] - 20
-                                ):
-                                    # look for neighbours that are filled in a close window
-                                    radius = 3
-                                    array_window = np.empty((2 * radius + 1, 2 * radius + 1), dtype=np.float32)
-                                    for x in range(-radius, radius + 1):
-                                        for y in range(-radius, radius + 1):
-                                            if (
-                                                i + x > 0
-                                                and i + x < array_projection.shape[1]
-                                                and j + x > 0
-                                                and j + y < array_projection.shape[2]
-                                            ):
-                                                if array_projection_filling[index_slice, i + x, j + y] == 0:
-                                                    array_window[x + radius, y + radius] = np.nan
-                                                else:
-                                                    array_window[x + radius, y + radius] = array_projection[
-                                                        index_slice, i + x, j + y
-                                                    ]
-                                    avg = np.nanmean(array_window)
-                                    if np.isnan(avg):
-                                        continue
-                                    clean_window = np.abs(array_window - avg)
-                                    # numba doesn't support nanargmin...
-                                    mini = 10000
-                                    selected_pixel_x = 0
-                                    selected_pixel_y = 0
-                                    for x in range(2 * radius + 1):
-                                        for y in range(2 * radius + 1):
-                                            if clean_window[x, y] < mini:
-                                                mini = clean_window[x, y]
-                                                selected_pixel_x = x
-                                                selected_pixel_y = y
-
-                                    array_projection[index_slice, i, j] = array_window[
-                                        selected_pixel_x, selected_pixel_y
-                                    ]
-                                    array_projection_correspondence[
-                                        index_slice, i, j
-                                    ] = array_projection_correspondence[
-                                        index_slice, i + selected_pixel_x - radius, j + selected_pixel_y - radius
-                                    ]
-                        elif atlas_correction:
-                            array_projection[index_slice, i, j] = 0
-                            array_projection_filling[index_slice, i, j] = 1
-                            array_projection_correspondence[index_slice, i, j] = [-1, -1]
-
-                    elif atlas_correction:
-                        array_projection[index_slice, i, j] = 0
-                        array_projection_filling[index_slice, i, j] = 1
-                        array_projection_correspondence[index_slice, i, j] = [-1, -1]
-
-        return array_projection, array_projection_correspondence
 
