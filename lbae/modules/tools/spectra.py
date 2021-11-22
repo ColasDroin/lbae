@@ -809,7 +809,7 @@ def add_zeros_to_spectrum(array_spectra, pad_individual_peaks=True, padding=10 *
 
             # Else, just store the values of array_spectra without padding
             else:
-                logging.info("two near peaks")
+                # logging.info("two near peaks")
                 new_array_spectra[0, i + pad] = array_spectra[0, i]
                 new_array_spectra[1, i + pad] = array_spectra[1, i]
 
