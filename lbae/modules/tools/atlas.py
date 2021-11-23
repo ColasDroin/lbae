@@ -13,12 +13,10 @@ def project_image(index_slice, original_image, array_projection_correspondence):
     Args:
         index_slice (int): Index of the slice to project.
         original_image (np.ndarray): A two-dimensional array representing the MADI data of the current slice (e.g. for a 
-                                     given lipid selection). 
+            given lipid selection). 
         array_projection_correspondence (np.ndarray): A three-dimensional array which associates, to each triplet of 
-                                                      coordinates of the original acquisition (slice_index, row_index, 
-                                                      column_index), a tuple of coordinates corresponding to 
-                                                      the row_index and column_index of the warped higher-resolution 
-                                                      image.
+            coordinates of the original acquisition (slice_index, row_index, column_index), a tuple of coordinates 
+            corresponding to the row_index and column_index of the warped higher-resolution image.
 
     Returns:
         np.ndarray: A warped, high-resolution image, corresponding to the clean, registered version, of our acquisition.
@@ -42,14 +40,14 @@ def project_image(index_slice, original_image, array_projection_correspondence):
 
 @njit
 def project_atlas_mask(stack_mask, slice_coordinates_rescaled, shape_atlas):
-    """This function projects a mask array_annotation (obtained from the atlas, sliced from a 3-dimensional object) on our 
-    two-dimensional, high-resolution warped data, for a given slice.
+    """This function projects a mask array_annotation (obtained from the atlas, sliced from a 3-dimensional object) on 
+    our two-dimensional, high-resolution warped data, for a given slice.
 
     Args:
         stack_mask (np.ndarray): A three-dimensional array indexed with the ccfv3. It contains a zero if the selected 
-                                 coordinate is outside the mask array_annotation, and 1 otherwise.
+            coordinate is outside the mask array_annotation, and 1 otherwise.
         slice_coordinates_rescaled (np.ndarray): A two-dimensional array mapping our slice coordinate (rescaled and 
-                                                discretized) to the ccfv3.
+            discretized) to the ccfv3.
         shape_atlas (tuple(int)): A tuple of three integers representing the shape of the ccfv3-indexed atlas.
 
     Returns:
@@ -81,21 +79,19 @@ def get_array_rows_from_atlas_mask(mask, mask_remapped, array_projection_corresp
  
     Args:
         mask (np.ndarray): A two-dimensional array representing the (high-resolution, warped) mask projected on the 
-                           requested slice.
+            requested slice.
         mask_remapped (np.ndarray): An empty two-dimensional array of the shape of the original acquisition, passed a 
-                                    parameter as numba won't allow for np.uint8 creation inside of the scope of the 
-                                    function. It is initially filled with the high-resolution warped mask values, whose 
-                                    coordinates have been mapped back to the original data.
+            parameter as numba won't allow for np.uint8 creation inside of the scope of the function. It is initially
+            filled with the high-resolution warped mask values, whose coordinates have been mapped back to the original 
+            data.
         array_projection_correspondence_sliced (np.ndarray): A two-dimensional array which associates, to each couple of                                                      
-                                                            coordinates of the original acquisition (row_index, 
-                                                            column_index), a tuple of coordinates corresponding to the 
-                                                            row_index and column_index of the warped higher-resolution 
-                                                            image.
+            coordinates of the original acquisition (row_index, column_index), a tuple of coordinates corresponding to
+            the row_index and column_index of the warped higher-resolution image.
 
     Returns:
         (np.ndarray, np.ndarray): The first array contains the lower and upper indexes of the rows belonging to the 
-                                  mask. The second array contains, for each row, the corresponding column
-                                  boundaries of the mask (there can be more than 2 for non-convex shapes).
+            mask. The second array contains, for each row, the corresponding column boundaries of the mask (there can be 
+            more than 2 for non-convex shapes).
     """
     # Map back the mask coordinates to original data
     for x in range(mask.shape[0]):
@@ -164,18 +160,18 @@ def solve_plane_equation(
     Args:
         index_slice (int): Index of the slice to parametrize in space.
         array_coordinates_high_res (np.ndarray): A three-dimensional array which maps the high-dimensional warped data 
-                                                 to the atlas coordinate system. That is, for each 3-D coordinate 
-                                                 (slice_index,x,y), it associates a 3D coordinate (i,j,k) in the ccfv3.
+            to the atlas coordinate system. That is, for each 3-D coordinate (slice_index,x,y), it associates a 3D 
+            coordinate (i,j,k) in the ccfv3.
         point_1 (tuple, optional): Couple of coordinates corresponding to the first point indexed on the 3D plane. 
-                                   Defaults to (150, 151).
+            Defaults to (150, 151).
         point_2 (tuple, optional): Couple of coordinates corresponding to the first point indexed on the 3D plane. 
-                                   Defaults to (800, 1200).
+            Defaults to (800, 1200).
         point_3 (tuple, optional): Couple of coordinates corresponding to the first point indexed on the 3D plane. 
-                                   Defaults to (100, 101).
+            Defaults to (100, 101).
 
     Returns:
-        tuple(float), tuple(float), tuple(float): Three vectors allowing to parametrize the coordinate of our slice in the 
-                                            ccfv3.
+        tuple(float), tuple(float), tuple(float): Three vectors allowing to parametrize the coordinate of our slice in 
+            the ccfv3.
     """
     # Define empty array for the linear system of equations
     A = np.zeros((9, 9))
@@ -260,42 +256,37 @@ def fill_array_projection(
     Args:
         index_slice (int): Index of the slice to parametrize in space.
         array_projection (np.ndarray): An empty, high-resolution, three-dimensional array which, at the end of the 
-                                       function, should contain the data (one integer per coordinate, corresponding to 
-                                       a pixel intensity) from our original acquisition. Note that, if no correction is 
-                                       applied, since the original acquisition has a way lower resolution than 
-                                       array_projection, the latter may be quite sparse.
+            function, should contain the data (one integer per coordinate, corresponding to a pixel intensity) from our 
+            original acquisition. Note that, if no correction is applied, since the original acquisition has a way lower 
+            resolution than array_projection, the latter may be quite sparse.
         array_projection_filling (np.ndarray): An empty, high-resolution, three-dimensional array which is used to keep 
-                                               track of the state of array_projection; that is, which elements have 
-                                               already been filled.
+            track of the state of array_projection; that is, which elements have already been filled.
         array_projection_correspondence (np.ndarray): An empty three-dimensional array which, at the end of the 
-                                                      function, associates, to each tripled of coordinates of the 
-                                                      original acquisition (slice_index, row_index, column_index), a 
-                                                      tuple of coordinates corresponding to the row_index and 
-                                                      column_index of the warped higher-resolution image.
+            function, associates, to each tripled of coordinates of the original acquisition (slice_index, row_index, 
+            column_index), a tuple of coordinates corresponding to the row_index and column_index of the warped 
+            higher-resolution image.
         original_coor (np.ndarray): A two-dimensional array which maps our initial (low-resolution) data to the atlas 
-                                    coordinate system. That is, for each 2-D coordinate (x,y), it associates a 
-                                    3D coordinate (i,j,k) in the ccfv3.
+            coordinate system. That is, for each 2-D coordinate (x,y), it associates a 3D coordinate (i,j,k) in the 
+            ccfv3.
         atlas_resolution (int): The resolution used for the atlas, in um.
         a (tuple(float)): The first of the three vectors used to parametrize the plane is space.
         u (tuple(float)): The second of the three vectors used to parametrize the plane in space.
         v (tuple(float)): The third of the three vectors used to parametrize the plane in space.
         original_slice (np.ndarray): A two-dimensional array representing an image of the MALDI acquisition.
         array_coordinates_high_res (np.ndarray): A three-dimensional array which maps the high-dimensional warped data 
-                                                to the atlas coordinate system. That is, for each 3-D coordinate 
-                                                (slice_index,x,y), it associates a 3D coordinate (i,j,k) in the ccfv3.
+            to the atlas coordinate system. That is, for each 3-D coordinate (slice_index,x,y), it associates a 3D 
+            coordinate (i,j,k) in the ccfv3.
         array_annotation (np.ndarray): A three-dimensional array containing the atlas annotation, used to filter out the 
-                                      regions of our data which are outside the annotated brain, if atlas_correction is 
-                                      True.
+            regions of our data which are outside the annotated brain, if atlas_correction is True.
         nearest_neighbour_correction (bool, optional): If True, applies a neared-neighbour correction, that is, for 
-                                                       every empty pixel far from the image boundaries, it looks for 
-                                                       neighbours that are filled in a close window, and used the most 
-                                                       represented value to fill the empty pixel. Defaults to False.
+            every empty pixel far from the image boundaries, it looks for neighbours that are filled in a close window, 
+            and used the most represented value to fill the empty pixel. Defaults to False.
         atlas_correction (bool, optional): If True, filters out pixels that are not annotated in the ccfv3. Defaults to 
-                                           False.
+            False.
 
     Returns:
         np.ndarray, np.ndarray: The first array is a high-resolution version of our initial data, in which each 
-        individual pixel has been mapped according to the second array, which acts as a mapping table.
+            individual pixel has been mapped according to the second array, which acts as a mapping table.
     """
 
     # Start by inverting a simple system of linear equations for each coordinate in the initial data to find the

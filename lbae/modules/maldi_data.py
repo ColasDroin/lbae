@@ -1,41 +1,106 @@
 ###### IMPORT MODULES ######
 
-# Official modules
+# Standard imports
 import pickle
 import warnings
+import numpy as np
 
 ###### DEFINE MaldiData CLASS ######
 
 
 class MaldiData:
-    __slots__ = ["dic_slices", "hdf5_getter"]
+    """
+    A class to access the various arrays in the dataset from two dictionnaries, lightweight (always kept in ram), and 
+    memmap (remains on disk). It uses the special attribute __slots__ for faster access to the attributes.
 
-    def __init__(self, hdf5_getter, path_dictionnary_data="lbae/data/whole_dataset/slices.pickle"):
+    Attributes:
+        self._dic_lightweight (dictionnary): A dictionnary containing the following lightweights arrays, 
+            which therefore remain in memory as long as the app is running:
+            - image_shape: a tuple of integers, indicating the vertical and horizontal sizes of the 
+                corresponding slice.
+            - divider_lookup: integer that sets the resolution of the lookup tables.
+            - array_avg_spectrum_downsampled: bidimensional, it contains the low-resolution spectrum averaged over all 
+                pixels. First row contains the m/z values, while second row contains the corresponding intensities.
+            - array_lookup_pixels: bidimensional, it maps each pixel to two array_spectra_high_res indices, delimiting
+                the corresponding spectrum.
+            - array_lookup_mz_avg: unidimensional, it maps m/z values to indexes in the averaged 
+                array_spectra for each pixel.
+            In addition, it contains the shape of all the arrays stored in the numpy memory maps.
+        self._dic_memmap (dictionnary): A dictionnary containing numpy memory maps allowing to access the heavyweights 
+            arrays of the datasets, without saturating the disk. The arrays in the dictionnary are:
+            - array_spectra: bidimensional, it contains the concatenated spectra of each pixel. First row contains the
+                m/z values, while second row contains the corresponding intensities.
+            - array_avg_spectrum: bidimensional, it contains the high-resolution spectrum averaged over all 
+                pixels. First row contains the m/z values, while second row contains the corresponding intensities.
+            - array_lookup_mz: bidimensional, it maps m/z values to indexes in array_spectra for each pixel.
+            - array_cumulated_lookup_mz_image: bidimensional, it maps m/z values to the cumulated spectrum until the 
+                corresponding m/z value for each pixel.
+
+    Methods:
+        get_image_shape(slice_index): getter for image_shape, which indicates the shape of the image corresponding to 
+            the acquisition indexed by slice_index.
+        get_divider_lookup(slice_index): getter for divider_lookup, which sets the resolution of the lookup of the 
+            acquisition indexed by slice_index.
+        get_array_avg_intensity_downsampled(slice_index): getter for array_avg_intensity_downsampled, which is a lookup 
+            table for the low-resolution average spectrum of the acquisition indexed by slice_index.
+        get_array_lookup_pixels(slice_index):
+        get_array_lookup_mz_avg(slice_index):
+        get_array_spectra(slice_index):
+        get_array_mz(slice_index):
+        get_array_intensity(slice_index):
+        get_array_avg_spectrum(slice_index):
+        get_array_lookup_mz(slice_index):
+        get_array_cumulated_lookup_mz_image(slice_index):
+        get_partial_array_spectra(slice_index, lb=None, hb=None, index=None):
+        get_partial_array_mz(slice_index, lb=None, hb=None, index=None):
+        get_partial_array_intensity(slice_index, lb=None, hb=None, index=None):
+        get_partial_array_avg_spectrum(slice_index, lb=None, hb=None):
+        get_lookup_mz(slice_index, index):
+        get_cumulated_lookup_mz_image(slice_index, index):
+    """
+
+    __slots__ = ["_dic_lightweight", "_dic_memmap"]
+
+    def __init__(self, path_data="lbae/data/whole_dataset/"):
 
         # Load the dictionnary containing small-size data for all slices
-        with open(path_dictionnary_data, "rb") as handle:
-            self.dic_slices = pickle.load(handle)
+        with open(path_data + "light_arrays.pickle", "rb") as handle:
+            self._dic_lightweight = pickle.load(handle)
 
-        # Set the accesser to the HDF5 dataset
-        self.hdf5_getter = hdf5_getter
+        # Set the accesser to the mmap files
+        self._dic_memmap = {}
+        for slice_index in range(1, len(self._dic_lightweight) + 1):
+            self._dic_memmap[slice_index] = {}
+            for array_name in [
+                "array_spectra",
+                "array_avg_spectrum",
+                "array_lookup_mz",
+                "array_cumulated_lookup_mz_image",
+            ]:
+                self._dic_memmap[slice_index][array_name] = np.memmap(
+                    path_data + array_name + "_" + str(slice_index) + ".mmap",
+                    dtype="float32" if array_name != "array_lookup_mz" else "int32",
+                    mode="r",
+                    shape=self._dic_lightweight[slice_index][array_name + "_shape"],
+                )
 
     def get_image_shape(self, slice_index):
-        return self.dic_slices["s" + str(slice_index)]["image_shape"]
+        return self._dic_lightweight[slice_index]["image_shape"]
 
     def get_divider_lookup(self, slice_index):
-        return self.dic_slices["s" + str(slice_index)]["divider_lookup"]
+        return self._dic_lightweight[slice_index]["divider_lookup"]
 
     def get_array_avg_intensity_downsampled(self, slice_index):
         # Previously called array_averaged_mz_intensity_low_res
-        return self.dic_slices["s" + str(slice_index)]["array_avg_intensity_downsampled"]
+        return self._dic_lightweight[slice_index]["array_avg_intensity_downsampled"]
 
     def get_array_lookup_pixels(self, slice_index):
         # Previously called array_pixel_indexes_high_res
-        return self.dic_slices["s" + str(slice_index)]["array_lookup_pixels"]
+        return self._dic_lightweight[slice_index]["array_lookup_pixels"]
 
     def get_array_lookup_mz_avg(self, slice_index):
         # Previously called lookup_table_averaged_spectrum_high_res
-        return self.dic_slices["s" + str(slice_index)]["array_lookup_mz_avg"]
+        return self._dic_lightweight[slice_index]["array_lookup_mz_avg"]
 
     def get_array_spectra(self, slice_index):
         # Previously called array_spectra_high_res
@@ -44,7 +109,7 @@ class MaldiData:
             + "That's a time and memory costly operation that you might want to avoid "
             + "by calling get_partial_array_spectra() instead."
         )
-        return self.hdf5_getter.root["s" + str(slice_index)]["array_spectra"][:]
+        return self._dic_memmap[slice_index]["array_spectra"][:]
 
     def get_array_mz(self, slice_index):
         # Previously called array_spectra_high_res
@@ -53,7 +118,7 @@ class MaldiData:
             + "That's a time and memory costly operation that you might want to avoid "
             + "by calling get_partial_array_mz() instead."
         )
-        return self.hdf5_getter.root["s" + str(slice_index)]["array_spectra"][0, :]
+        return self._dic_memmap[slice_index]["array_spectra"][0, :]
 
     def get_array_intensity(self, slice_index):
         # Previously called array_spectra_high_res
@@ -62,7 +127,7 @@ class MaldiData:
             + "That's a time and memory costly operation that you might want to avoid "
             + "by calling get_partial_array_intensity() instead."
         )
-        return self.hdf5_getter.root["s" + str(slice_index)]["array_spectra"][1, :]
+        return self._dic_memmap[slice_index]["array_spectra"][1, :]
 
     def get_array_avg_spectrum(self, slice_index):
         # Previously called array_averaged_mz_intensity_high_res
@@ -71,7 +136,7 @@ class MaldiData:
             "get_array_avg_spectrum()is a time costly function that you might want to avoid "
             + "by calling get_partial_array_avg_spectrum() instead."
         )
-        return self.hdf5_getter.root["s" + str(slice_index)]["array_avg_intensity"][:]
+        return self._dic_memmap[slice_index]["array_avg_intensity"][:]
 
     def get_array_lookup_mz(self, slice_index):
         # Previously called lookup_table_spectra_high_res
@@ -80,7 +145,7 @@ class MaldiData:
             "get_array_lookup_mz()is a time costly function that you might want to avoid "
             + "by calling get_lookup_mz() instead."
         )
-        return self.hdf5_getter.root["s" + str(slice_index)]["array_lookup_mz"][:]
+        return self._dic_memmap[slice_index]["array_lookup_mz"][:]
 
     def get_array_cumulated_lookup_mz_image(self, slice_index):
         # Previously called cumulated_image_lookup_table_high_res
@@ -89,7 +154,7 @@ class MaldiData:
             "get_array_cumulated_lookup_mz_image()is a time costly function that you might want to avoid "
             + "by calling get_cumulated_lookup_mz_image() instead."
         )
-        return self.hdf5_getter.root["s" + str(slice_index)]["array_cumulated_lookup_mz_image"][:]
+        return self._dic_memmap[slice_index]["array_cumulated_lookup_mz_image"][:]
 
     def get_partial_array_spectra(self, slice_index, lb=None, hb=None, index=None):
 
@@ -98,7 +163,7 @@ class MaldiData:
 
             # Start with most likely case
             if hb is not None and lb is not None:
-                return self.hdf5_getter.root["s" + str(slice_index)]["array_spectra"][:, lb:hb]
+                return self._dic_memmap[slice_index]["array_spectra"][:, lb:hb]
 
             # Second most likely case : full slice
             elif lb is None and hb is None:
@@ -106,9 +171,9 @@ class MaldiData:
 
             # Most likely the remaining cases won't be used
             elif lb is None:
-                return self.hdf5_getter.root["s" + str(slice_index)]["array_spectra"][:, :hb]
+                return self._dic_memmap[slice_index]["array_spectra"][:, :hb]
             else:
-                return self.hdf5_getter.root["s" + str(slice_index)]["array_spectra"][:, lb:]
+                return self._dic_memmap[slice_index]["array_spectra"][:, lb:]
 
         # Else, it returns the required index
         else:
@@ -117,7 +182,7 @@ class MaldiData:
                     "Both one or several boundaries and one index have been specified when calling array_spectra. "
                     + "Only the index request will be satisfied."
                 )
-            return self.hdf5_getter.root["s" + str(slice_index)]["array_spectra"][:, index]
+            return self._dic_memmap[slice_index]["array_spectra"][:, index]
 
     def get_partial_array_mz(self, slice_index, lb=None, hb=None, index=None):
 
@@ -126,7 +191,7 @@ class MaldiData:
 
             # Start with most likely case
             if hb is not None and lb is not None:
-                return self.hdf5_getter.root["s" + str(slice_index)]["array_spectra"][0, lb:hb]
+                return self._dic_memmap[slice_index]["array_spectra"][0, lb:hb]
 
             # Second most likely case : full slice
             elif lb is None and hb is None:
@@ -134,10 +199,10 @@ class MaldiData:
 
             # Most likely the remaining cases won't be used
             elif lb is None:
-                return self.hdf5_getter.root["s" + str(slice_index)]["array_spectra"][0, :hb]
+                return self._dic_memmap[slice_index]["array_spectra"][0, :hb]
 
             else:
-                return self.hdf5_getter.root["s" + str(slice_index)]["array_spectra"][0, lb:]
+                return self._dic_memmap[slice_index]["array_spectra"][0, lb:]
 
         # Else, it returns the required index
         else:
@@ -146,7 +211,7 @@ class MaldiData:
                     "Both one or several boundaries and one index have been specified when calling array_spectra. "
                     + "Only the index request will be satisfied."
                 )
-            return self.hdf5_getter.root["s" + str(slice_index)]["array_spectra"][0, tuple(index)]
+            return self._dic_memmap[slice_index]["array_spectra"][0, index]
 
     def get_partial_array_intensity(self, slice_index, lb=None, hb=None, index=None):
 
@@ -155,7 +220,7 @@ class MaldiData:
 
             # Start with most likely case
             if hb is not None and lb is not None:
-                return self.hdf5_getter.root["s" + str(slice_index)]["array_spectra"][1, lb:hb]
+                return self._dic_memmap[slice_index]["array_spectra"][1, lb:hb]
 
             # Second most likely case : full slice
             elif lb is None and hb is None:
@@ -163,10 +228,10 @@ class MaldiData:
 
             # Most likely the remaining cases won't be used
             elif lb is None:
-                return self.hdf5_getter.root["s" + str(slice_index)]["array_spectra"][1, :hb]
+                return self._dic_memmap[slice_index]["array_spectra"][1, :hb]
 
             else:
-                return self.hdf5_getter.root["s" + str(slice_index)]["array_spectra"][1, lb:]
+                return self._dic_memmap[slice_index]["array_spectra"][1, lb:]
 
         # Else, it returns the required index
         else:
@@ -175,13 +240,13 @@ class MaldiData:
                     "Both one or several boundaries and one index have been specified when calling array_spectra. "
                     + "Only the index request will be satisfied."
                 )
-            return self.hdf5_getter.root["s" + str(slice_index)]["array_spectra"][1, index]
+            return self._dic_memmap[slice_index]["array_spectra"][1, index]
 
     def get_partial_array_avg_spectrum(self, slice_index, lb=None, hb=None):
 
         # Start with most likely case
         if hb is not None and lb is not None:
-            return self.hdf5_getter.root["s" + str(slice_index)]["array_avg_intensity"][:, lb:hb]
+            return self._dic_memmap[slice_index]["array_avg_intensity"][:, lb:hb]
 
         # Second most likely case : full slice
         elif lb is None and hb is None:
@@ -189,15 +254,15 @@ class MaldiData:
 
         # Most likely the remaining cases won't be used
         elif lb is None:
-            return self.hdf5_getter.root["s" + str(slice_index)]["array_avg_intensity"][:, :hb]
+            return self._dic_memmap[slice_index]["array_avg_intensity"][:, :hb]
         else:
-            return self.hdf5_getter.root["s" + str(slice_index)]["array_avg_intensity"][:, lb:]
+            return self._dic_memmap[slice_index]["array_avg_intensity"][:, lb:]
 
     def get_lookup_mz(self, slice_index, index):
         # Just return the (one) required lookup to go faster
-        return self.hdf5_getter.root["s" + str(slice_index)]["array_lookup_mz"][index]
+        return self._dic_memmap[slice_index]["array_lookup_mz"][index]
 
     def get_cumulated_lookup_mz_image(self, slice_index, index):
         # Just return the (one) required lookup to go faster
-        return self.hdf5_getter.root["s" + str(slice_index)]["array_cumulated_lookup_mz_image"][index]
+        return self._dic_memmap[slice_index]["array_cumulated_lookup_mz_image"][index]
 

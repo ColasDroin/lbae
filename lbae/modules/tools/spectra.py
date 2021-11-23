@@ -46,34 +46,20 @@ def convert_coor_to_spectrum_idx(coordinate, shape):
 
 
 ###### FUNCTIONS TO NORMALIZE SPECTRUM ######
+@njit
 def compute_normalized_spectra(array_spectra, array_pixel_indexes):
     """This function takes an array of spectra and returns it normalized (per pixel). In pratice, each pixel spectrum is 
     converted into a uncompressed version, and divided by the sum of all spectra. This might a problematic approach as
     there seems to be small shifts between spectra across pixels, leading to a noise amplification after normalization.
-    It wraps the internal numba-ized function _compute_normalized_spectra() to ensure array_spectra is of type 
-    np.ndarray.
 
     Args:
         array_spectra (np.ndarray or pytables.array): An array of shape (2,n) containing spectrum data (m/z and 
-                                                      intensity) for each pixel.
+            intensity) for each pixel.
         array_pixel_indexes (np.ndarray): An array of shape (m,2) containing the boundary indices of each pixel in 
-                                          array_spectra. 
+            array_spectra. 
 
     Returns:
         (np.ndarray): An array of shape (2,m) containing the normalized spectrum data (m/z and intensity).
-    """
-    if isinstance(array_spectra, tables.array.Array):
-        return _compute_normalized_spectra(array_spectra[:], array_pixel_indexes)
-    elif isinstance(array_spectra, np.ndarray):
-        return _compute_normalized_spectra(array_spectra, array_pixel_indexes)
-    else:
-        raise ValueError("A numpy array or a pytables array must be provided as spectra.")
-
-
-@njit
-def _compute_normalized_spectra(array_spectra, array_pixel_indexes):
-    """This internal function is wrapped by compute_normalized_spectra. Please consult the corresponding 
-    documentation.
     """
     # Start by converting array_spectra into a very fine-grained version
     spectrum_sum = convert_array_to_fine_grained(array_spectra, 10 ** -3, lb=350, hb=1250) + 1
@@ -116,12 +102,11 @@ def _compute_normalized_spectra(array_spectra, array_pixel_indexes):
 
     return array_spectra_normalized
 
-
+@njit
 def convert_array_to_fine_grained(array, resolution, lb=350, hb=1250):
     """This function converts an array to a fine-grained version, which is common to all pixels, allowing for easier 
     computations. If several values of the compressed version map to the same value of the uncompressed one, they are 
     summed. Therefore, when ran on the spectrum of a whole image, it adds the spectra of all pixels. 
-    It wraps the internal numba-ized function _convert_array_to_fine_grained() to ensure array is of type np.ndarray.
 
     Args:
         array (np.ndarray or pytables.array): An array of shape (2,n) containing spectrum data (m/z and intensity).
@@ -131,22 +116,6 @@ def convert_array_to_fine_grained(array, resolution, lb=350, hb=1250):
 
     Returns:
         (np.ndarray): A sparse, fine-grained array of shape (2,m) containing spectrum data (m/z and intensity).
-    """
-    if isinstance(array, tables.array.Array):
-        warnings.warn(
-            "You are using a pytables array instead of a numpy array."
-            + "The pytables array will be loaded in physical memory. This is a slow operation."
-            + "You should consider doing this fine-graining operation upstram, with a numpy array."
-        )
-        return _convert_array_to_fine_grained(array[:], resolution, lb, hb)
-    else:
-        return _convert_array_to_fine_grained(array, resolution, lb, hb)
-
-
-@njit
-def _convert_array_to_fine_grained(array, resolution, lb=350, hb=1250):
-    """This internal function is wrapped by convert_array_to_fine_grained(). Please consult the corresponding 
-    documentation.
     """
     # Build an empty (zeroed) array with the requested uncompressed size
     new_array = np.linspace(lb, hb, int(round((hb - lb) * resolution ** -1)))
@@ -158,32 +127,16 @@ def _convert_array_to_fine_grained(array, resolution, lb=350, hb=1250):
 
     return new_array
 
-
+@njit
 def strip_zeros(array):
     """This function strips a (potentially sparse) array (e.g. one that has been converted with 
     convert_array_to_fine_grained) from its columns having intensity zero. 
-    It wraps the internal numba-ized function _strip_zeros() to ensure array is of type np.ndarray. 
 
     Args:
         array (np.ndarray or pytables.array): An array of shape (2,n) containing spectrum data (m/z and intensity).
 
     Returns:
         (np.ndarray): The same array stripped from its zero intensity values. Now of shape (2,m).
-    """
-    if isinstance(array, tables.array.Array):
-        warnings.warn(
-            "You are using a pytables array instead of a numpy array."
-            + "The pytables array will be loaded in physical memory. This is a slow operation."
-            + "You should consider doing this zero-stripping operation upstram, with a numpy array."
-        )
-        return _strip_zeros(array[:])
-    else:
-        return _strip_zeros(array)
-
-
-@njit
-def _strip_zeros(array):
-    """This internal function is wrapped by strip_zeros(). Please consult the corresponding documentation.
     """
     # Look for the non-zero values and store them in l_to_keep
     l_to_keep = [idx for idx, x in enumerate(array[1, :]) if x != 0 and not np.isnan(x)]
@@ -195,6 +148,7 @@ def _strip_zeros(array):
 
 
 ###### FUNCTIONS TO COMPUTE IMAGE FROM LIPID SELECTION ######
+@njit
 def compute_image_using_index_lookup(
     low_bound, high_bound, array_spectra, array_pixel_indexes, img_shape, lookup_table_spectra, divider_lookup,
 ):
@@ -202,85 +156,24 @@ def compute_image_using_index_lookup(
     corresponding to a lipid annotation) defined by a lower and a higher bound. For faster computation, it uses 
     lookup_table_spectra to map m/z values to given indices. It then assigns the pixel intensity to an array of shape 
     img_shape, therefore producing an image representing the requested lipid distribution. 
-    It wraps the internal functions _compute_image_using_index_lookup_partial() and 
-    _compute_image_using_index_lookup_full() to ensure that the proper array type is used with numba depending if the 
-    data is coming from a HDF5 storage or not.
      
     Args:
         low_bound (float): Lower m/z value for the annotation.
         high_bound (float): Higher m/z value for the annotation.
         array_spectra (np.ndarray or pytables.array): An array of shape (2,n) containing spectrum data (m/z and 
-                                                      intensity) for each pixel.
+            intensity) for each pixel.
         array_pixel_indexes (np.ndarray): An array of shape (m,2) containing the boundary indices of each pixel in 
-                                          array_spectra.
+            array_spectra.
         img_shape (tuple(int)): A tuple with the two integer values corresponding to height and width of the current
-                                slice acquisition.
+            slice acquisition.
         lookup_table_spectra (np.ndarray or pytables.array): An array of shape (k,m) representing a lookup table with 
-                                                             the following mapping: lookup_table_spectra[i,j] contains 
-                                                             the first m/z index of pixel j such that 
-                                                             m/z >= i * divider_lookup.
+            the following mapping: lookup_table_spectra[i,j] contains the first m/z index of pixel j such that 
+            m/z >= i * divider_lookup.
         divider_lookup (int): Integer used to set the resolution when building the lookup table.
 
     Returns:
         np.ndarray: An array of shape img_shape (reprensenting an image) containing the cumulated intensity of the 
-                    spectra between low_bound and high_bound, for each pixel.
-    """
-    # If the spectrum is provided as HDF5, we need to manually extract the regions of interest without Numba
-    if (isinstance(array_spectra, tables.array.Array) and isinstance(lookup_table_spectra, tables.array.Array)) or (
-        isinstance(array_spectra, tables.array.Array) and isinstance(lookup_table_spectra, np.ndarray)
-    ):
-        return _compute_image_using_index_lookup_partial(
-            low_bound, high_bound, array_spectra, array_pixel_indexes, img_shape, lookup_table_spectra, divider_lookup,
-        )
-
-    # If all arrays are provided as numpy arrays, compute everything with Numba
-    elif isinstance(array_spectra, np.ndarray) and isinstance(lookup_table_spectra, np.ndarray):
-        return _compute_image_using_index_lookup_full(
-            low_bound, high_bound, array_spectra, array_pixel_indexes, img_shape, lookup_table_spectra, divider_lookup,
-        )
-    else:
-        raise ValueError("Lookup and spectra arrays must be provided either as pytables arrays or numpy arrays.")
-
-
-def _compute_image_using_index_lookup_partial(
-    low_bound, high_bound, array_spectra, array_pixel_indexes, img_shape, lookup_table_spectra, divider_lookup,
-):
-    """This internal function is wrapped by compute_image_using_index_lookup(). It is used as a slower, 
-    memory-optimized, option, when the slice data must be manually extracted from a HDF5 (aka pytables.array) dataset. 
-    Please consult the documentation of compute_image_using_index_lookup() for more information.
-    """
-    # Load full lookup at the beginning as it's called twice for each pixel
-    if isinstance(lookup_table_spectra, tables.array.Array):
-        lookup_table = lookup_table_spectra[:]
-
-    # Build empty image
-    image = np.zeros((img_shape[0], img_shape[1]), dtype=np.float32)
-
-    # Find lower bound and add from there
-    for idx_pix in range(array_pixel_indexes.shape[0]):
-
-        # If pixel contains no peak, skip it
-        if array_pixel_indexes[idx_pix, 0] == -1:
-            continue
-
-        # Compute the range in which values must be summed and extract corresponding part of the spectrum
-        lower_bound = lookup_table[int(low_bound / divider_lookup)][idx_pix]
-        higher_bound = lookup_table[int(np.ceil(high_bound / divider_lookup))][idx_pix]
-        array_to_sum = array_spectra[:, lower_bound : higher_bound + 1]
-
-        # Sum the mz values over the requested range
-        image = _fill_image(image, idx_pix, img_shape, array_to_sum, lower_bound, higher_bound, low_bound, high_bound)
-
-    return image
-
-
-@njit
-def _compute_image_using_index_lookup_full(
-    low_bound, high_bound, array_spectra, array_pixel_indexes, img_shape, lookup_table_spectra, divider_lookup,
-):
-    """This internal function is wrapped by compute_image_using_index_lookup(). It is used as a faster, numba-ized, 
-    option, when the slice data is provided as a numpy array. Please consult the documentation of 
-    compute_image_using_index_lookup() for more information.
+            spectra between low_bound and high_bound, for each pixel.
     """
     # Build empty image
     image = np.zeros((img_shape[0], img_shape[1]), dtype=np.float32)
@@ -321,6 +214,7 @@ def _fill_image(image, idx_pix, img_shape, array_to_sum, lower_bound, higher_bou
     return image
 
 
+# ! I have to compare the speed and correctedness of the two versions and delete the full is possible
 def compute_image_using_index_and_image_lookup(
     low_bound,
     high_bound,
@@ -330,6 +224,7 @@ def compute_image_using_index_and_image_lookup(
     lookup_table_spectra,
     lookup_table_image,
     divider_lookup,
+    use_full = True
 ):
     """This function is very much similar to compute_image_using_index_lookup, except that it uses a different lookup 
     table: lookup_table_image. This lookup table contains the cumulated intensities above the current lookup (instead of
@@ -345,25 +240,22 @@ def compute_image_using_index_and_image_lookup(
         low_bound (float): Lower m/z value for the annotation.
         high_bound (float): Higher m/z value for the annotation.
         array_spectra (np.ndarray or pytables.array): An array of shape (2,n) containing spectrum data (m/z and 
-                                                      intensity) for each pixel.
+            intensity) for each pixel.
         array_pixel_indexes (np.ndarray): An array of shape (m,2) containing the boundary indices of each pixel in 
-                                          array_spectra.
+            array_spectra.
         img_shape (tuple(int)): A tuple with the two integer values corresponding to height and width of the current
-                                slice acquisition.
+            slice acquisition.
         lookup_table_spectra (np.ndarray or pytables.array): An array of shape (k,m) representing a lookup table with 
-                                                             the following mapping: lookup_table_spectra[i,j] contains 
-                                                             the first m/z index of pixel j such that 
-                                                             m/z >= i * divider_lookup.
+            the following mapping: lookup_table_spectra[i,j] contains the first m/z index of pixel j such that 
+            m/z >= i * divider_lookup.
         lookup_table_image (np.ndarray or pytables.array): An array of shape (k,m) representing a lookup table with 
-                                                             the following mapping: lookup_table_image[i,j] contains,
-                                                             for the pixel of index j, the cumulated intensities from 
-                                                             the lowest possible m/z until the first m/z such that 
-                                                             m/z >= i * divider_lookup.
+            the following mapping: lookup_table_image[i,j] contains,nfor the pixel of index j, the cumulated intensities 
+            from the lowest possible m/z until the first m/z such that m/z >= i * divider_lookup.
         divider_lookup (int): Integer used to set the resolution when building the lookup table.
 
     Returns:
         np.ndarray: An array of shape img_shape (reprensenting an image) containing the cumulated intensity of the 
-                    spectra between low_bound and high_bound, for each pixel.
+            spectra between low_bound and high_bound, for each pixel.
     """
 
     # Image lookup table is not worth it for small differences between the bounds
@@ -374,11 +266,7 @@ def compute_image_using_index_and_image_lookup(
 
     else:
         # If all arrays are provided as numpy arrays, compute everything with Numba
-        if (
-            isinstance(array_spectra, np.ndarray)
-            and isinstance(lookup_table_spectra, np.ndarray)
-            and isinstance(lookup_table_image, np.ndarray)
-        ):
+        if use_full
             return _compute_image_using_index_and_image_lookup_full(
                 low_bound,
                 high_bound,
@@ -391,7 +279,7 @@ def compute_image_using_index_and_image_lookup(
             )
 
         # If the spectrum is provided as HDF5, we need to manually extract the regions of interest without Numba
-        elif isinstance(array_spectra, tables.array.Array):
+        else
             return _compute_image_using_index_and_image_lookup_partial(
                 low_bound,
                 high_bound,
@@ -403,10 +291,8 @@ def compute_image_using_index_and_image_lookup(
                 divider_lookup,
             )
 
-        else:
-            raise ValueError("Lookups and spectra arrays must be provided either as pytables arrays or numpy arrays.")
 
-
+@njit
 def _compute_image_using_index_and_image_lookup_partial(
     low_bound,
     high_bound,
@@ -438,7 +324,7 @@ def _compute_image_using_index_and_image_lookup_partial(
         )
     ):
 
-        # Extract array from HDF5 dataset
+        # Extract array from mmap
         array_to_sum_lb = array_spectra[:, idx_low_bound_inf : idx_low_bound_sup + 1]
         array_to_sum_hb = array_spectra[:, idx_high_bound_inf : idx_high_bound_sup + 1]
 
@@ -499,9 +385,8 @@ def _compute_image_using_index_and_image_lookup_full(
     lookup_table_image,
     divider_lookup,
 ):
-    """This internal function is wrapped by compute_image_using_index_and_image_lookup(). It is used as a faster, 
-    numba-ized, option, when the slice data is provided as a numpy array. Please consult the documentation of 
-    compute_image_using_index_and_image_lookup() for more information.
+    """This internal function is wrapped by compute_image_using_index_and_image_lookup(). Please consult the 
+    documentation of compute_image_using_index_and_image_lookup() for more information.
     """
     # Get a first approximate of the requested lipid image
     image = lookup_table_image[int(high_bound / divider_lookup)] - lookup_table_image[int(low_bound / divider_lookup)]
@@ -547,7 +432,6 @@ def _compute_image_using_index_and_image_lookup_full(
     return image
 
 
-# work with hdf5 or not as array spectra is handled by the wrapper compute_image_using_index_and_image_lookup
 def compute_normalized_image_per_lipid(
     lb_mz,
     hb_mz,
@@ -563,37 +447,34 @@ def compute_normalized_image_per_lipid(
     """This function is mostly a wrapper for compute_image_using_index_and_image_lookup, this is, it computes an image
     containing the cumulated intensity of the spectra between low_bound and high_bound, for each pixel. In addition, it
     adds a step of normalization, such that the output is more visually pleasing and comparable across selections. The
-    output can also be provided in 8 bits, that is, the format of a single channel in a RGB image. 
+    output can also be provided in 8 bits, that is, the format of a single channel in a RGB image.
     
     Args:
         low_bound (float): Lower m/z value for the annotation.
         high_bound (float): Higher m/z value for the annotation.
         array_spectra (np.ndarray or pytables.array): An array of shape (2,n) containing spectrum data (m/z and 
-                                                      intensity) for each pixel.
+            intensity) for each pixel.
         array_pixel_indexes (np.ndarray): An array of shape (m,2) containing the boundary indices of each pixel in 
-                                          array_spectra.
+            array_spectra.
         img_shape (tuple(int)): A tuple with the two integer values corresponding to height and width of the current
-                                slice acquisition.
+            slice acquisition.
         lookup_table_spectra (np.ndarray or pytables.array): An array of shape (k,m) representing a lookup table with 
-                                                             the following mapping: lookup_table_spectra[i,j] contains 
-                                                             the first m/z index of pixel j such that 
-                                                             m/z >= i * divider_lookup.
+            the following mapping: lookup_table_spectra[i,j] contains the first m/z index of pixel j such that 
+            m/z >= i * divider_lookup.
         lookup_table_image (np.ndarray or pytables.array): An array of shape (k,m) representing a lookup table with 
-                                                             the following mapping: lookup_table_image[i,j] contains,
-                                                             for the pixel of index j, the cumulated intensities from 
-                                                             the lowest possible m/z until the first m/z such that 
-                                                             m/z >= i * divider_lookup.
+            the following mapping: lookup_table_image[i,j] contains, for the pixel of index j, the cumulated intensities 
+            from the lowest possible m/z until the first m/z such that m/z >= i * divider_lookup.
         divider_lookup (int): Integer used to set the resolution when building the lookup table.
         percentile_normalization (int): Integer used to re-normalize the data, such that the maximum value correspond to
-                                        the given percentile.
+            the given percentile.
         RGB_channel_format (bool): If False, the output image is provided as an array with values between 0 and 1. Else,
-                                   the values are between 0 and 255.
+            the values are between 0 and 255.
 
     Returns:
         np.ndarray: An array of shape img_shape (reprensenting an image) containing the cumulated intensity of the 
-                    spectra between low_bound and high_bound, for each pixel. This image is normalized according to
-                    percentile_normalized. Output values are between 0 and 1 (255) depending if RGB_channel_format is
-                    False (True).
+            spectra between low_bound and high_bound, for each pixel. This image is normalized according to 
+            percentile_normalized. Output values are between 0 and 1 (255) depending if RGB_channel_format is False 
+            (True).
     """
     # Get image from raw mass spec data
     image = compute_image_using_index_and_image_lookup(
@@ -618,41 +499,27 @@ def compute_normalized_image_per_lipid(
 
 
 ###### FUNCTIONS TO COMPUTE M/Z BOUNDARIES FOR AVERAGED ARRAYS (1-D LOOKUP TABLE) ######
+@njit
 def compute_index_boundaries_nolookup(low_bound, high_bound, array_spectra_avg):
     """This function computes, from array_spectra_avg, the first existing indices corresponding to m/z values above the 
     provided lower and higher bounds, without using any lookup. If high_bound and/or low_bound are above the highest 
     possible value for the required lookup, it returns the index of the highest existing value. Note that 
     array_spectra_avg normally corresponds to the high-resolution spectrum averaged across all pixels, but in can be 
     any spectrum so long as it is not subdivided in pixels.
-    It wraps the internal numba-ized function _compute_index_boundaries_nolookup() to ensure array_spectra_avg is of 
-    type np.ndarray.
      
     Args:
         low_bound (float): Lower m/z value for the annotation.
         high_bound (float): Higher m/z value for the annotation.
         array_spectra_avg (np.ndarray or pytables.array): An array of shape (2,n) containing spectrum data (m/z and 
-                                                          intensity).
+            intensity).
 
     Returns:
         tuple(int): A tuple of integer representing the best guess for the indices of low_bound and high_bound in 
-                    array_spectra_avg.
+            array_spectra_avg.
     """
-    if isinstance(array_spectra_avg, tables.array.Array):
-        warnings.warn(
-            "You are using a pytables array instead of a numpy array."
-            + "The pytables array will be loaded in physical memory. This is a slow operation."
-            + "If you need to use a pytables array,"
-            + "consider using compute_index_boundaries with a lookup table instead."
-        )
-    # Same call whether HDF5 or not since a view/copy of the array must be made to keep only the mz values
-    return _compute_index_boundaries_nolookup(low_bound, high_bound, array_spectra_avg[0, :])
+    # Extract the mz values for array_spectra_avg
+    array_mz = array_spectra_avg[0, :]
 
-
-@njit
-def _compute_index_boundaries_nolookup(low_bound, high_bound, array_mz):
-    """This internal function is wrapped by compute_index_boundaries_nolookup(). Please consult the corresponding 
-    documentation.
-    """
     # Define intial guess for the low and high bounds indices
     index_low_bound = 0
     index_high_bound = array_mz.shape[0] - 1
@@ -671,7 +538,7 @@ def _compute_index_boundaries_nolookup(low_bound, high_bound, array_mz):
 
     return index_low_bound, index_high_bound
 
-
+@njit
 def compute_index_boundaries(low_bound, high_bound, array_spectra_avg, lookup_table):
     """This function is very much similar to compute_index_boundaries_nolookup(), except that it uses lookup_table to
     find the low and high bounds indices faster. As in compute_index_boundaries_nolookup(), it computes, from 
@@ -683,23 +550,21 @@ def compute_index_boundaries(low_bound, high_bound, array_spectra_avg, lookup_ta
     the two versions would have been almost identical (there's no loop over pixels, contrarily to e.g. 
     compute_image_using_index_lookup(), and a view/copy of the partial spectra in the selection is made as a first
     step, turning any pytables.array in a np.ndarray).  
-    It wraps the internal numba-ized function _compute_index_boundaries_nolookup() to ensure array_spectra_avg is of 
-    type np.ndarray.
+    It wraps the internal numba-ized function _compute_index_boundaries_nolookup().
 
     Args:
         low_bound (float): Lower m/z value for the annotation.
         high_bound (float): Higher m/z value for the annotation.
         array_spectra_avg (np.ndarray or pytables.array): An array of shape (2,n) containing spectrum data (m/z and 
-                                                          intensity).
+            intensity).
         lookup_table (np.ndarray): A 1-dimensional array of length m providing, for each index (i.e. lookup), the index 
-        of the first m/z value in the averaged array_spectra superior or equal to the lookup.
+            of the first m/z value in the averaged array_spectra superior or equal to the lookup.
 
     Returns:
         tuple(int): A tuple of integer representing the best guess for the indices of low_bound and high_bound in 
-                    array_spectra_avg.
+            array_spectra_avg.
     """
     # Extract the arrays provided by the lookup table as first guess for the low and high bounds
-    # This steps also ensures that the data passed to _loop_compute_index_boundaries() is of type np.ndarray
     array_to_sum_lb = array_spectra_avg[0, lookup_table[int(low_bound)] : lookup_table[int(np.ceil(low_bound))] + 1]
     array_to_sum_hb = array_spectra_avg[0, lookup_table[int(high_bound)] : lookup_table[int(np.ceil(high_bound))] + 1]
 
@@ -731,18 +596,17 @@ def _loop_compute_index_boundaries(array_to_sum_lb, array_to_sum_hb, low_bound, 
 
 
 ###### FUNCTIONS TO COMPUTE SPECTRA AVERAGED FROM A MANUAL SELECTION OR A MASK SELECTION ######
-# returns np.array wheter hdf5 as input or not... Therefore not numba for safety as the input can be hdf5
+@njit
 def return_spectrum_per_pixel(idx_pix, array_spectra, array_pixel_indexes):
     """This function returns the spectrum of the pixel having index pixel_idx, using the lookup table 
-    array_pixel_indexes. Note that no wrapper is needed for this function as it always returb a np.ndarray whether the
-    input is a pytables.array or a np.ndarray, and Numba doesn't bring any valuable speedup here.
+    array_pixel_indexes.
 
     Args:
         idx_pix (int): Index of the pixel to return.
         array_spectra (np.ndarray or pytables.array): An array of shape (2,n) containing spectrum data (m/z and 
-                                                      intensity) for each pixel.
+            intensity) for each pixel.
         array_pixel_indexes (np.ndarray): An array of shape (m,2) containing the boundary indices of each pixel in 
-                                          array_spectra.
+            array_spectra.
        
     Returns:
         np.ndarray: An array of shape (2,m) containing spectrum data (m/z and intensity) for the requested pixel.
@@ -754,24 +618,21 @@ def return_spectrum_per_pixel(idx_pix, array_spectra, array_pixel_indexes):
     return array_spectra[:, idx_1 : idx_2 + 1]
 
 
-# should only be used with full arrays, no HDF5 here
 @njit
 def add_zeros_to_spectrum(array_spectra, pad_individual_peaks=True, padding=10 ** -5):
     """This function adds zeros in-between the peaks of the spectra contained in array_spectra (e.g. to be able to plot 
-    them as scatterplotgl). Note that it should only be used with array_spectra of type np.ndarray (that should be the 
-    case as this function is mainly used to pad spectra coming from a manual selection, which happen to be np.ndarray).
+    them as scatterplotgl).
 
     Args:
         array_spectra (np.ndarray): An array of shape (2,n) containing spectrum data (m/z and intensity) for each pixel.
         pad_individual_peaks (bool, optional): If true, pads the peaks individually, with a given threshold distance 
-        between two m/z values to consider them as belonging to the same peak. Else, it pads all single value in the 
-        spectrum with zeros. Defaults to False.
+            between two m/z values to consider them as belonging to the same peak. Else, it pads all single value in the 
+            spectrum with zeros. Defaults to False.
         padding (float, optional): The m/z distance between a peak value and a zero for the padding. Default to 10**-5.
 
     Returns:
         (np.ndarray, np.ndarray): An array of shape (2,m) containing the padded spectrum data (m/z and intensity) and an
-                                  an array of shape (k,) containing the number of zeros added at each index of 
-                                  array_spectra.
+            an array of shape (k,) containing the number of zeros added at each index of array_spectra.
 
     """
     # For speed, allocate array of maximum size
@@ -837,57 +698,37 @@ def add_zeros_to_spectrum(array_spectra, pad_individual_peaks=True, padding=10 *
         return new_array_spectra, array_index_padding
 
 
-# no numba since the input may be hdf5
+@njit
 def compute_zeros_extended_spectrum_per_pixel(idx_pix, array_spectra, array_pixel_indexes):
-    """This function computes a zero-extended version of the spectrum of pixel indexed by idx_pix. It is not numba-ized
-       since the input may be a pytables array, but add_zeros_to_spectrum() is.
+    """This function computes a zero-extended version of the spectrum of pixel indexed by idx_pix.
 
     Args:
         idx_pix (int): Index of the pixel to return.
         array_spectra (np.ndarray or pytables.array): An array of shape (2,n) containing spectrum data (m/z and 
-                                                      intensity) for each pixel.
+            intensity) for each pixel.
         array_pixel_indexes (np.ndarray): An array of shape (m,2) containing the boundary indices of each pixel in 
-                                          array_spectra.
+            array_spectra.
 
     Returns:
         np.ndarray: An array of shape (2,m) containing the zero-padded spectrum data (m/z and intensity) for the 
-                    requested pixel.
+            requested pixel.
     """
-    # First line returns np.array whaterver the input is
     array_spectra = return_spectrum_per_pixel(idx_pix, array_spectra, array_pixel_indexes)
     new_array_spectra, array_index_padding = add_zeros_to_spectrum(array_spectra)
     return new_array_spectra
 
-
+@njit
 def reduce_resolution_sorted_array_spectra(array_spectra, resolution=10 ** -3):
     """Recompute a sparce representation of the spectrum at a lower (fixed) resolution, summing over the redundant bins.
-    Resolution should be <=10**-4 as it's about the maximum precision allowd by float32. Wraps the numba function
-    _reduce_resolution_sorted_array_spectra() to ensure array_spectra is of type np.ndarray. 
+    Resolution should be <=10**-4 as it's about the maximum precision allowd by float32.
 
     Args:
         array_spectra (np.ndarray or pytables.array): An array of shape (2,n) containing spectrum data (m/z and 
-                                                      intensity) for each pixel.
+            intensity) for each pixel.
         resolution (float, optional): The size of the bin used to merge intensities. Defaults to 10**-3.
 
     Returns:
         (np.ndarray): Array of shape=(2, m) similar to the input array but with a new sampling resolution.
-    """
-    if isinstance(array_spectra, tables.array.Array):
-        warnings.warn(
-            "You are using a pytables array instead of a numpy array."
-            + "The pytables array will be loaded in physical memory. This is a slow operation."
-            + "If you need to use a pytables array,"
-            + "consider using compute_index_boundaries with a lookup table instead."
-        )
-        return _reduce_resolution_sorted_array_spectra(array_spectra[:], resolution)
-    else:
-        return _reduce_resolution_sorted_array_spectra(array_spectra, resolution)
-
-
-@njit
-def _reduce_resolution_sorted_array_spectra(array_spectra, resolution=10 ** -3):
-    """This internal function is wrapped by reduce_resolution_sorted_array_spectra. Please consult the corresponding 
-    documentation.
     """
     # Get the re-sampled m/z and intensities from mspec library, with max_intensity = False to sum over redundant bins
     new_mz, new_intensity = reduce_resolution_sorted(
@@ -901,6 +742,7 @@ def _reduce_resolution_sorted_array_spectra(array_spectra, resolution=10 ** -3):
     return new_array_spectra
 
 
+@njit
 def compute_spectrum_per_row_selection(
     list_index_bound_rows,
     list_index_bound_column_per_row,
@@ -910,25 +752,23 @@ def compute_spectrum_per_row_selection(
     zeros_extend=True,
 ):
     """This function computes the average spectrum from a manual selection of rows of pixel (each containing a 
-    spectrum). The resulting average array can be zero-padded. Note that this function is not numba-ized as it wouldn't 
-    bring any valuable speed up here, and it allows for indiscriminate inputs in the form of pytables.array or 
-    np.ndarray.
+    spectrum). The resulting average array can be zero-padded.
 
     Args:
         list_index_bound_rows (list(tuple)): A list of lower and upper indices delimiting the range of rows belonging to
-                                             the current selection.
+            the current selection.
         list_index_bound_column_per_row (list(list)): For each row (outer list), provides the index of the columns 
-                                                      delimiting the current selection (inner list). 
+            delimiting the current selection (inner list). 
         array_spectra (np.ndarray or pytables.array): An array of shape (2,n) containing spectrum data (m/z and 
-                                                      intensity) for each pixel.
+            intensity) for each pixel.
         array_pixel_indexes (np.ndarray): An array of shape (m,2) containing the boundary indices of each pixel in 
-                                          array_spectra.
+            array_spectra.
         image_shape (int, int): A tuple of integers, indicating the vertical and horizontal sizes of the current slice.
         zeros_extend (bool, optional): If True, the resulting spectrum will be zero-padded. Defaults to True.
 
     Returns:
         np.ndarray: Spectrum averaged from a manual selection of rows of pixel, containing m/z values in the first row, 
-                    and intensities in the second row.
+            and intensities in the second row.
     """
     # Get list of row indexes for the current selection
     ll_idx, size_array = get_list_row_indexes(
@@ -966,17 +806,16 @@ def get_list_row_indexes(list_index_bound_rows, list_index_bound_column_per_row,
 
     Args:
         list_index_bound_rows (list(tuple)): A list of lower and upper indices delimiting the range of rows belonging to
-                                             the current selection.
+            the current selection.
         list_index_bound_column_per_row (list(list)): For each row (outer list), provides the index of the columns 
-                                                      delimiting the current selection (inner list). 
+            delimiting the current selection (inner list). 
         array_pixel_indexes (np.ndarray): An array of shape (m,2) containing the boundary indices of each pixel in 
-                                          array_spectra.
+            array_spectra.
         image_shape (int, int): A tuple of integers, indicating the vertical and horizontal sizes of the current slice.
 
     Returns:
         (list(list), int): The list of list contains outer pixel indices (inner list) in array_spectra for each row 
-                           (outer list). The integer provides the expected total size of the concatenated spectra 
-                           indexed. 
+            (outer list). The integer provides the expected total size of the concatenated spectra indexed. 
     """
     # Compute size array
     size_array = 0
@@ -1034,12 +873,12 @@ def sample_rows_from_path(path):
 
     Args:
         path (np.ndarray): A two-dimensional array, containing, in each row, the row and column coordinates (x and y) of
-                           the current selection.
+            the current selection.
 
     Returns:
         (np.ndarray, np.ndarray): The first array contains the lower and upper indexes of the rows belonging to the 
-                                  current selection. The second array contains, for each row, the corresponding column
-                                  boundaries (there can be more than 2 for non-convex shapes).
+            current selection. The second array contains, for each row, the corresponding column boundaries (there can 
+            be more than 2 for non-convex shapes).
     """
     # Find out the lower and upper rows
     x_min = path[:, 0].min()
@@ -1165,12 +1004,12 @@ def compute_avg_intensity_per_lipid(l_intensity_with_lipids, l_idx_labels):
 
     Args:
         l_intensity_with_lipids (list(float)): A list of peak intensities (where one lipid can correspond to several 
-                                               peaks, but one peak always correspond to one lipid). 
+            peaks, but one peak always correspond to one lipid). 
         l_idx_labels (list(int)): A list of lipid annotation, each lipid being annotated with a unique integer.
 
     Returns:
         list(int), list(float): The first list provides the lipid indices, while the second provide the lipid average 
-                                intensities. Peaks corresponding to identical lipid have been averaged.
+            intensities. Peaks corresponding to identical lipid have been averaged.
     """
     # Define empty lists for the lipid indices and intensities
     l_unique_idx_labels = []

@@ -112,7 +112,7 @@ def process_sparse_matrix(smz, sort=["Pixel", "m/z"], sample=False):
     Args:
         smz (scipy.sparse): The sparse matrix obtained from the MALDI imaging.
         sort (list, optional): A list of column names according to which the final dataframe should be sorted. 
-                               Defaults to ["Pixel", "m/z"].
+            Defaults to ["Pixel", "m/z"].
         sample (bool, optional): A boolean parameter to sample only a subset of the matrix. Defaults to False.
 
     Returns:
@@ -229,13 +229,13 @@ def return_average_spectrum(array_intensity, array_unique_counts):
 
     Args:
         array_intensity (np.ndarray): Array of length n containing the sorted intensities of all the pixels of a a
-                                      given acquisition. 
+            given acquisition. 
         array_unique_counts (np.ndarray)): Array of length m containing the unique m/z values found across all spectra
-                                           from all pixels.
+            from all pixels.
 
     Returns:
         np.ndarray: Array of length m containing the summed intensities for the unique m/z values across all spectra
-        from all pixels.
+            from all pixels.
     """
     array_unique_intensity = np.zeros(array_unique_counts.shape[0], dtype=np.float32)
     j = 0
@@ -284,19 +284,19 @@ def process_raw_data(
       m/z values, while second row contains the corresponding intensities.
     - array_averaged_mz_intensity_low_res: of shape (2, k), it contains the low-resolution spectrum averaged over all 
       pixels. First row contains the m/z values, while second row contains the corresponding intensities.
-    - array_averaged_mz_intensity_low_res: Same as array_averaged_mz_intensity_low_res, but in higher resolution, with,
+    - array_averaged_mz_intensity_high_res: Same as array_averaged_mz_intensity_low_res, but in higher resolution, with,
       therefore, a different shape.
     - image_shape: a tuple of integers, indicating the vertical and horizontal sizes of the corresponding slice.
 
     Args:
         t_index_path (tuple(int, str)): A tuple containing the index of the slice (starting from 1) and the 
-                                        corresponding path for the raw data.
+            corresponding path for the raw data.
         bool_filter_peaks (bool, optional): If True, non-annotated peaks are filtered out. Defaults to True.
         save (bool, optional): If True, output arrays are saved in a npz file. Defaults to True.
         return_result (bool, optional): If True, output arrays are returned by the function. Defaults to False.
         output_path (str, optional): Path to save the output npz file. Defaults to "notebooks/server/data/temp/".
         verbose (bool, optional): If True, print the successive steps used for the conversion of the raw data. 
-                                  Defaults to True.
+            Defaults to True.
 
     Returns:
         Depending on 'return result', returns either nothing, either several np.ndarrays, described above.
