@@ -8,17 +8,21 @@ import flask
 import numpy as np
 
 # Data module
-from tools.SliceData import SliceData
-from tools.SliceStore import SliceStore
-from tools.SliceAtlas import SliceAtlas
+from lbae.modules.maldi_data import MaldiData
+from lbae.modules.figures import Figures
+
+# from tools.SliceAtlas import SliceAtlas
 
 ###### APP PRE-COMPUTATIONS ######
 
-# Load data of slice 1 as current slice
-initial_slice = 1
-slice_store = SliceStore(slice_limit=3, slice_index=initial_slice)
-slice_atlas = SliceAtlas(resolution=25)
+# Load data and Figures object
+data = MaldiData()
+figures = Figures(data)
 
+# Load atlas # ! try to store it as memmap as well?
+# slice_atlas = SliceAtlas(resolution=25)
+
+"""
 # pickle all slice files and images
 force_pickle = False
 if force_pickle:
@@ -26,11 +30,7 @@ if force_pickle:
     SliceData.pickle_array_figures()
     slice_atlas.pickle_all_3D_figures(force_recompute=False)
     slice_atlas.pickle_all_masks_and_spectra(force_recompute=True)
-
-
-# Load lipid annotation (not user-session specific)
-df_annotation = pd.read_csv("data/lipid_annotation.csv")
-df_annotation["name"] = df_annotation["name"].map(lambda x: x.split("_")[1])
+"""
 
 # Load array of figures for the slices
 list_array_original_data = SliceData.load_array_figures(load="original_data", atlas_contours=False, atlas_hover=False)
@@ -55,34 +55,8 @@ list_array_projection_boundaries = SliceData.load_array_figures(
 list_array_projection_corrected_boundaries = SliceData.load_array_figures(
     load="projection_corrected", atlas_contours=True, atlas_hover=False
 )
-
-
 list_atlas_boundaries = SliceData.load_array_figures(load="atlas_boundaries", atlas_contours=True, atlas_hover=False)
 
-
-# Define colors (list and dictionnary)
-dic_colors = {"blue": "#50bdda", "green": "#5fa970", "orange": "#de9334", "red": "#df5034", "dark": "#222222"}
-l_colors = ["#50bdda", "#5fa970", "#de9334", "#df5034", "#222222"]
-
-# Define basic config for graphs
-basic_config = {
-    # "displayModeBar": True,
-    "displaylogo": False,
-    "modeBarButtonsToRemove": [
-        "select2d",
-        "lasso2d",
-        "autoScale2d",
-        "hoverClosestGl2d",
-        "hoverClosestPie",
-        "toggleHover",
-        "resetViews",
-        "toImage: sendDataToCloud",
-        "toggleSpikelines",
-        "resetViewMapbox",
-        "hoverClosestCartesian",
-        "hoverCompareCartesian",
-    ],
-}
 
 ###### INSTANTIATE APP ######
 server = flask.Flask(__name__)
