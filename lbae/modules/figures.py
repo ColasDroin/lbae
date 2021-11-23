@@ -16,82 +16,83 @@ from scipy.ndimage.interpolation import map_coordinates
 from time import time
 import tables
 
-# App module
-import app
-from tools.SliceAtlas import SliceAtlas
+# from tools.SliceAtlas import SliceAtlas
 
 # Homemade functions
-from tools.lookup_functions import (
-    return_index_boundaries,
-    return_image_using_index_and_image_lookup,
-    compute_spectrum_per_row_selection,
-    sample_rows_from_path,
-    project_image,
-    compute_normalized_spectra,
-)
+from lbae.modules.tools import spectra
 
 ###### DEFINE SliceData CLASS ######
-class SliceData:
-    def __init__(self, slice_index, slice_name=None, load_from_pytables=False):
-        self.slice_index = slice_index
-        if slice_name is None:
-            self.load_all(np.load("data/npz_slices/slice_" + str(slice_index) + "_filtered.npz"), load_from_pytables)
-        else:
-            self.load_all(np.load(slice_name))
+class Figures:
+    __slots__ = ["_data"]
 
-    # def load_all(self, npzfile):
-    def load_all(self, npzfile, load_from_pytables):
+    def __init__(self, maldi_data):
+        self._data = maldi_data
 
-        # Load individual arrays
-        self.array_pixel_indexes_high_res = npzfile["array_pixel_indexes_high_res"]
-        self.array_averaged_mz_intensity_low_res = npzfile["array_averaged_mz_intensity_low_res"]
-        self.array_averaged_mz_intensity_high_res = npzfile["array_averaged_mz_intensity_high_res"]
-        self.image_shape = npzfile["image_shape"]
-
-        # Load lookup tables arrays
-        self.divider_lookup = npzfile["divider_lookup"]
-        self.lookup_table_spectra_high_res = npzfile["lookup_table_spectra_high_res"]
-        self.cumulated_image_lookup_table_high_res = npzfile["cumulated_image_lookup_table_high_res"]
-        self.lookup_table_averaged_spectrum_high_res = npzfile["lookup_table_averaged_spectrum_high_res"]
-
-        if load_from_pytables:
-            """
-            path_mmap = "data/mmap/" + str(self.slice_index) + ".mmap"
-            path_shape = "data/mmap/shapes.pickle"
-            shape = {}
+    def load_array_figures(from_pickle=True, load="warped_data", atlas_contours=False, atlas_hover=False):
+        only_boundaries = False
+        if from_pickle:
+            path = (
+                "data/pickled_data/load_figures_slider/figures_slices_"
+                + str(load)
+                + "_"
+                + str(atlas_contours)
+                + "_"
+                + str(atlas_hover)
+                + ".pickle"
+            )
             try:
-                with open(path_shape, "rb") as file:
-                    shape = pickle.load(file)
+                with open(path, "rb",) as slice_file:
+                    return pickle.load(slice_file)
             except:
-                pass
-            if str(self.slice_index) in [x.split(".mmap")[0] for x in os.listdir("data/mmap/")]:
-                print("Loading slice from mmap file")
-                self.array_spectra_high_res = np.memmap(path_mmap, dtype="float32", mode="r", shape=shape[self.slice_index])
-            else:
-                print(
-                    "The mmap file for slice " + str(self.slice_index) + " could not be found. Buidling it right now."
+                print("The file " + path + " could not be found. Rebuilding and pickling the array of figures now.")
+                return SliceData.pickle_array_figures(
+                    load=load, atlas_contours=atlas_contours, atlas_hover=atlas_hover
                 )
-                array_to_store = np.array(npzfile["array_spectra_high_res"])
-                self.array_spectra_high_res = np.memmap(
-                    path_mmap, dtype="float32", mode="w+", shape=array_to_store.shape
-                )
-                shape[self.slice_index] = array_to_store.shape
-                self.array_spectra_high_res[:] = array_to_store[:]
-                self.array_spectra_high_res.flush()
-                with open(path_shape, "wb") as handle:
-                    pickle.dump(shape, handle)
-            """
-            path_pytables = "data/hdf5/slices.hdf5"
-            read_hdf5_file = tables.open_file(path_pytables, mode="r")
-            self.array_spectra_high_res = read_hdf5_file.root["slice_" + str(self.slice_index)][:].T
-            read_hdf5_file.close()
         else:
+            if load == "atlas":
+                array_images = app.slice_atlas.array_projected_images_atlas
+            elif load == "warped_data":
+                array_images = np.array(io.imread("data/tif_files/slices.tif"))
+            elif load == "projection":
+                array_images = app.slice_atlas.array_projection
+            elif load == "projection_corrected":
+                array_images = app.slice_atlas.array_projection_corrected
+            elif load == "original_data":
+                array_images = SliceData.return_padded_original_images()
+            elif load == "atlas_boundaries":
+                array_images = app.slice_atlas.array_projection
+                only_boundaries = True
+                if atlas_contours is False:
+                    print("BUG: atlas contour must be True if array_image is not provided")
+            array_coordinates_high_res = app.slice_atlas.array_coordinates_high_res
+            return [
+                SliceData.return_images_figure(
+                    array_images, i, array_coordinates_high_res, atlas_contours, atlas_hover, only_boundaries
+                )
+                for i in range(array_images.shape[0])
+            ]
 
-            self.array_spectra_high_res = np.array(npzfile["array_spectra_high_res"])
+    @staticmethod
+    def pickle_array_figures(load="warped_data", atlas_contours=False, atlas_hover=False):
+        list_fig = SliceData.load_array_figures(
+            from_pickle=False, load=load, atlas_contours=atlas_contours, atlas_hover=atlas_hover
+        )
+        path = (
+            "data/pickled_data/load_figures_slider/figures_slices_"
+            + str(load)
+            + "_"
+            + str(atlas_contours)
+            + "_"
+            + str(atlas_hover)
+            + ".pickle"
+        )
+        with open(path, "wb") as slice_file:
+            pickle.dump(list_fig, slice_file)
+        return list_fig
 
     ###### FUNCTIONS RETURNING APP GRAPHS ######
-
-    def return_normalized_spectra(self, force_recompute=False):
+    """
+    def compute_normalized_spectra(self, force_recompute=False):
         path = "data/pickled_data/normalized_spectra/"
         name_fig = "spectra_" + str(self.slice_index) + ".pickle"
         if name_fig in os.listdir(path) and not force_recompute:
@@ -623,68 +624,7 @@ class SliceData:
 
         return np.array(l_array_slices)
 
-    @staticmethod
-    def load_array_figures(from_pickle=True, load="warped_data", atlas_contours=False, atlas_hover=False):
-        only_boundaries = False
-        if from_pickle:
-            path = (
-                "data/pickled_data/load_figures_slider/figures_slices_"
-                + str(load)
-                + "_"
-                + str(atlas_contours)
-                + "_"
-                + str(atlas_hover)
-                + ".pickle"
-            )
-            try:
-                with open(path, "rb",) as slice_file:
-                    return pickle.load(slice_file)
-            except:
-                print("The file " + path + " could not be found. Rebuilding and pickling the array of figures now.")
-                return SliceData.pickle_array_figures(
-                    load=load, atlas_contours=atlas_contours, atlas_hover=atlas_hover
-                )
-        else:
-            if load == "atlas":
-                array_images = app.slice_atlas.array_projected_images_atlas
-            elif load == "warped_data":
-                array_images = np.array(io.imread("data/tif_files/slices.tif"))
-            elif load == "projection":
-                array_images = app.slice_atlas.array_projection
-            elif load == "projection_corrected":
-                array_images = app.slice_atlas.array_projection_corrected
-            elif load == "original_data":
-                array_images = SliceData.return_padded_original_images()
-            elif load == "atlas_boundaries":
-                array_images = app.slice_atlas.array_projection
-                only_boundaries = True
-                if atlas_contours is False:
-                    print("BUG: atlas contour must be True if array_image is not provided")
-            array_coordinates_high_res = app.slice_atlas.array_coordinates_high_res
-            return [
-                SliceData.return_images_figure(
-                    array_images, i, array_coordinates_high_res, atlas_contours, atlas_hover, only_boundaries
-                )
-                for i in range(array_images.shape[0])
-            ]
 
-    @staticmethod
-    def pickle_array_figures(load="warped_data", atlas_contours=False, atlas_hover=False):
-        list_fig = SliceData.load_array_figures(
-            from_pickle=False, load=load, atlas_contours=atlas_contours, atlas_hover=atlas_hover
-        )
-        path = (
-            "data/pickled_data/load_figures_slider/figures_slices_"
-            + str(load)
-            + "_"
-            + str(atlas_contours)
-            + "_"
-            + str(atlas_hover)
-            + ".pickle"
-        )
-        with open(path, "wb") as slice_file:
-            pickle.dump(list_fig, slice_file)
-        return list_fig
 
     @staticmethod
     def get_surface(index_slice, l_transform_parameters, array_projection, reduce_resolution_factor):
@@ -967,22 +907,6 @@ class SliceData:
                 else:
                     continue
 
-                """
-                a, u, v = l_transform_parameters[index_slice]
-
-                # reduce resolution of the slices
-                new_dims = []
-                d1 = array_data.shape[0]
-                d2 = array_data.shape[1]
-                for original_length, new_length in zip(
-                    array_data.shape,
-                    (int(round(d1 / reduce_resolution_factor)), int(round(d2 / reduce_resolution_factor))),
-                ):
-                    new_dims.append(np.linspace(0, original_length - 1, new_length))
-
-                coords = np.meshgrid(*new_dims, indexing="ij")
-                array_data = map_coordinates(array_data, coords)
-                """
                 for i in range(array_data_stripped.shape[0]):
                     # for j in range(array_data_stripped.shape[1]):
                     x_atlas, y_atlas, z_atlas = original_coordinates_stripped[i] / 1000
@@ -1040,3 +964,4 @@ class SliceData:
         )
 
         return fig
+    """

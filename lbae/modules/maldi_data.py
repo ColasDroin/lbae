@@ -4,6 +4,7 @@
 import pickle
 import warnings
 import numpy as np
+import pandas as pd
 
 ###### DEFINE MaldiData CLASS ######
 
@@ -35,8 +36,11 @@ class MaldiData:
             - array_lookup_mz: bidimensional, it maps m/z values to indexes in array_spectra for each pixel.
             - array_cumulated_lookup_mz_image: bidimensional, it maps m/z values to the cumulated spectrum until the 
                 corresponding m/z value for each pixel.
+        self._df_annotations (pd.dataframe): A dataframe containing for each slice and each annotated peak the name of 
+            the lipid inbetween the two annotated peak boundaries.
 
     Methods:
+        get_annotations(): getter for the lipid annotation of each slice, contained in a pandas dataframe.
         get_image_shape(slice_index): getter for image_shape, which indicates the shape of the image corresponding to 
             the acquisition indexed by slice_index.
         get_divider_lookup(slice_index): getter for divider_lookup, which sets the resolution of the lookup of the 
@@ -59,9 +63,9 @@ class MaldiData:
         get_cumulated_lookup_mz_image(slice_index, index):
     """
 
-    __slots__ = ["_dic_lightweight", "_dic_memmap"]
+    __slots__ = ["_dic_lightweight", "_dic_memmap", "_df_annotations"]
 
-    def __init__(self, path_data="lbae/data/whole_dataset/"):
+    def __init__(self, path_data="lbae/data/whole_dataset/", path_annotations="lbae/data/annotations/"):
 
         # Load the dictionnary containing small-size data for all slices
         with open(path_data + "light_arrays.pickle", "rb") as handle:
@@ -83,6 +87,13 @@ class MaldiData:
                     mode="r",
                     shape=self._dic_lightweight[slice_index][array_name + "_shape"],
                 )
+
+        # Load lipid annotation (not user-session specific)
+        self._df_annotations = pd.read_csv(path_annotations + "lipid_annotation.csv")
+        self._df_annotations["name"] = self._df_annotations["name"].map(lambda x: x.split("_")[1])
+
+    def get_annotations(self):
+        return self._df_annotations
 
     def get_image_shape(self, slice_index):
         return self._dic_lightweight[slice_index]["image_shape"]

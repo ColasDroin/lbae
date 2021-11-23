@@ -12,7 +12,7 @@ import dash_draggable
 import app
 
 # Data module
-from tools.SliceData import SliceData
+from lbae.modules.figures import Figures
 
 ###### DEFFINE PAGE LAYOUT ######
 
