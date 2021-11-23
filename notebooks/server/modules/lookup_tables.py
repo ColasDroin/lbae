@@ -262,6 +262,12 @@ def process_lookup_tables(
         print("Either the data or a filename must be provided")
         return None
 
+    # Normalize spectrum
+    array_averaged_mz_intensity_low_res[1, :] /= np.sum(array_averaged_mz_intensity_low_res[1, :])
+    array_averaged_mz_intensity_high_res[1, :] /= np.sum(array_averaged_mz_intensity_high_res[1, :])
+    for (b1, b2) in array_pixel_indexes_high_res:
+        array_spectra_high_res[1, b1 : b2 + 1] /= np.sum(array_spectra_high_res[1, b1 : b2 + 1])
+
     # Define divider_lookup
     divider_lookup = 10
 
@@ -284,6 +290,14 @@ def process_lookup_tables(
     )
     print("Shape of cumulated_image_lookup_table_high_res: ", cumulated_image_lookup_table_high_res.shape)
 
+    # Extend averaged arrays with zeros for nicer display
+    array_averaged_mz_intensity_low_res, _ = add_zeros_to_spectrum(
+        array_averaged_mz_intensity_low_res, pad_individual_peaks=True
+    )
+    array_averaged_mz_intensity_high_res, _ = add_zeros_to_spectrum(
+        array_averaged_mz_intensity_high_res, pad_individual_peaks=True
+    )
+
     # Build lookup table to compute fast the indexes corresponding to the boundaries selected on dash
     lookup_table_averaged_spectrum_high_res = build_index_lookup_table_averaged_spectrum(
         array_mz=array_averaged_mz_intensity_high_res[0, :]
@@ -293,20 +307,6 @@ def process_lookup_tables(
         round(lookup_table_averaged_spectrum_high_res.nbytes / 1024 / 1024, 2),
     )
     print("Shape of lookup_table_averaged_spectrum_high_res: ", lookup_table_averaged_spectrum_high_res.shape)
-
-    # Extend averaged arrays with zeros for nicer display
-    array_averaged_mz_intensity_low_res, _ = add_zeros_to_spectrum(
-        array_averaged_mz_intensity_low_res, pad_individual_peaks=True
-    )
-    array_averaged_mz_intensity_high_res, _ = add_zeros_to_spectrum(
-        array_averaged_mz_intensity_high_res, pad_individual_peaks=True
-    )
-
-    # Normalize spectrum
-    array_averaged_mz_intensity_low_res[1, :] /= np.sum(array_averaged_mz_intensity_low_res[1, :])
-    array_averaged_mz_intensity_high_res[1, :] /= np.sum(array_averaged_mz_intensity_high_res[1, :])
-    for (b1, b2) in array_pixel_indexes_high_res:
-        array_spectra_high_res[1, b1 : b2 + 1] /= np.sum(array_spectra_high_res[1, b1 : b2 + 1])
 
     if save:
         # Save as npz file

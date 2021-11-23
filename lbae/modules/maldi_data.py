@@ -41,7 +41,7 @@ class MaldiData:
             the acquisition indexed by slice_index.
         get_divider_lookup(slice_index): getter for divider_lookup, which sets the resolution of the lookup of the 
             acquisition indexed by slice_index.
-        get_array_avg_intensity_downsampled(slice_index): getter for array_avg_intensity_downsampled, which is a lookup 
+        get_array_avg_spectrum_downsampled(slice_index): getter for array_avg_spectrum_downsampled, which is a lookup 
             table for the low-resolution average spectrum of the acquisition indexed by slice_index.
         get_array_lookup_pixels(slice_index):
         get_array_lookup_mz_avg(slice_index):
@@ -90,9 +90,9 @@ class MaldiData:
     def get_divider_lookup(self, slice_index):
         return self._dic_lightweight[slice_index]["divider_lookup"]
 
-    def get_array_avg_intensity_downsampled(self, slice_index):
+    def get_array_avg_spectrum_downsampled(self, slice_index):
         # Previously called array_averaged_mz_intensity_low_res
-        return self._dic_lightweight[slice_index]["array_avg_intensity_downsampled"]
+        return self._dic_lightweight[slice_index]["array_avg_spectrum_downsampled"]
 
     def get_array_lookup_pixels(self, slice_index):
         # Previously called array_pixel_indexes_high_res
@@ -103,58 +103,30 @@ class MaldiData:
         return self._dic_lightweight[slice_index]["array_lookup_mz_avg"]
 
     def get_array_spectra(self, slice_index):
-        # Previously called array_spectra_high_res
-        warnings.warn(
-            "A large slice dataset is being loaded in memory. "
-            + "That's a time and memory costly operation that you might want to avoid "
-            + "by calling get_partial_array_spectra() instead."
-        )
-        return self._dic_memmap[slice_index]["array_spectra"][:]
+        # Previously called array_spectra_high_res.
+        return self._dic_memmap[slice_index]["array_spectra"]
 
+    # ! Time this compared to getting the full array and put a warning if needed
     def get_array_mz(self, slice_index):
         # Previously called array_spectra_high_res
-        warnings.warn(
-            "A large slice dataset is being loaded in memory. "
-            + "That's a time and memory costly operation that you might want to avoid "
-            + "by calling get_partial_array_mz() instead."
-        )
         return self._dic_memmap[slice_index]["array_spectra"][0, :]
 
+    # ! Time this compared to getting the full array and put a warning if needed
     def get_array_intensity(self, slice_index):
         # Previously called array_spectra_high_res
-        warnings.warn(
-            "A large slice dataset is being loaded in memory. "
-            + "That's a time and memory costly operation that you might want to avoid "
-            + "by calling get_partial_array_intensity() instead."
-        )
         return self._dic_memmap[slice_index]["array_spectra"][1, :]
 
     def get_array_avg_spectrum(self, slice_index):
         # Previously called array_averaged_mz_intensity_high_res
-
-        warnings.warn(
-            "get_array_avg_spectrum()is a time costly function that you might want to avoid "
-            + "by calling get_partial_array_avg_spectrum() instead."
-        )
-        return self._dic_memmap[slice_index]["array_avg_intensity"][:]
+        return self._dic_memmap[slice_index]["array_avg_spectrum"]
 
     def get_array_lookup_mz(self, slice_index):
         # Previously called lookup_table_spectra_high_res
-
-        warnings.warn(
-            "get_array_lookup_mz()is a time costly function that you might want to avoid "
-            + "by calling get_lookup_mz() instead."
-        )
-        return self._dic_memmap[slice_index]["array_lookup_mz"][:]
+        return self._dic_memmap[slice_index]["array_lookup_mz"]
 
     def get_array_cumulated_lookup_mz_image(self, slice_index):
         # Previously called cumulated_image_lookup_table_high_res
-
-        warnings.warn(
-            "get_array_cumulated_lookup_mz_image()is a time costly function that you might want to avoid "
-            + "by calling get_cumulated_lookup_mz_image() instead."
-        )
-        return self._dic_memmap[slice_index]["array_cumulated_lookup_mz_image"][:]
+        return self._dic_memmap[slice_index]["array_cumulated_lookup_mz_image"]
 
     def get_partial_array_spectra(self, slice_index, lb=None, hb=None, index=None):
 
@@ -246,7 +218,7 @@ class MaldiData:
 
         # Start with most likely case
         if hb is not None and lb is not None:
-            return self._dic_memmap[slice_index]["array_avg_intensity"][:, lb:hb]
+            return self._dic_memmap[slice_index]["array_avg_spectrum"][:, lb:hb]
 
         # Second most likely case : full slice
         elif lb is None and hb is None:
@@ -254,9 +226,9 @@ class MaldiData:
 
         # Most likely the remaining cases won't be used
         elif lb is None:
-            return self._dic_memmap[slice_index]["array_avg_intensity"][:, :hb]
+            return self._dic_memmap[slice_index]["array_avg_spectrum"][:, :hb]
         else:
-            return self._dic_memmap[slice_index]["array_avg_intensity"][:, lb:]
+            return self._dic_memmap[slice_index]["array_avg_spectrum"][:, lb:]
 
     def get_lookup_mz(self, slice_index, index):
         # Just return the (one) required lookup to go faster

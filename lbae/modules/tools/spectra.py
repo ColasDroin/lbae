@@ -102,6 +102,7 @@ def compute_normalized_spectra(array_spectra, array_pixel_indexes):
 
     return array_spectra_normalized
 
+
 @njit
 def convert_array_to_fine_grained(array, resolution, lb=350, hb=1250):
     """This function converts an array to a fine-grained version, which is common to all pixels, allowing for easier 
@@ -126,6 +127,7 @@ def convert_array_to_fine_grained(array, resolution, lb=350, hb=1250):
         new_array[1, int(round((mz - lb) * (1 / resolution)))] += intensity
 
     return new_array
+
 
 @njit
 def strip_zeros(array):
@@ -224,7 +226,7 @@ def compute_image_using_index_and_image_lookup(
     lookup_table_spectra,
     lookup_table_image,
     divider_lookup,
-    use_full = True
+    use_full=True,
 ):
     """This function is very much similar to compute_image_using_index_lookup, except that it uses a different lookup 
     table: lookup_table_image. This lookup table contains the cumulated intensities above the current lookup (instead of
@@ -266,7 +268,7 @@ def compute_image_using_index_and_image_lookup(
 
     else:
         # If all arrays are provided as numpy arrays, compute everything with Numba
-        if use_full
+        if use_full:
             return _compute_image_using_index_and_image_lookup_full(
                 low_bound,
                 high_bound,
@@ -279,7 +281,7 @@ def compute_image_using_index_and_image_lookup(
             )
 
         # If the spectrum is provided as HDF5, we need to manually extract the regions of interest without Numba
-        else
+        else:
             return _compute_image_using_index_and_image_lookup_partial(
                 low_bound,
                 high_bound,
@@ -308,7 +310,10 @@ def _compute_image_using_index_and_image_lookup_partial(
     Please consult the documentation of compute_image_using_index_and_image_lookup() for more information.
     """
     # Get a first approximate of the requested lipid image
-    image = lookup_table_image[int(high_bound / divider_lookup)] - lookup_table_image[int(low_bound / divider_lookup)]
+    image = (
+        (lookup_table_image[int(high_bound / divider_lookup)] - lookup_table_image[int(low_bound / divider_lookup)])
+        / lookup_table_image[140]
+    )  # ! Remove the normalization once the image is normalized upstream
 
     # Look for true lower/higher bound between the lower/higher looked up image and the next one
     array_idx_low_bound_inf_pix = lookup_table_spectra[int(low_bound / divider_lookup)]
@@ -389,7 +394,10 @@ def _compute_image_using_index_and_image_lookup_full(
     documentation of compute_image_using_index_and_image_lookup() for more information.
     """
     # Get a first approximate of the requested lipid image
-    image = lookup_table_image[int(high_bound / divider_lookup)] - lookup_table_image[int(low_bound / divider_lookup)]
+    image = (
+        (lookup_table_image[int(high_bound / divider_lookup)] - lookup_table_image[int(low_bound / divider_lookup)])
+        / lookup_table_image[140]
+    )  # ! Remove once the normalization image is normalized upstream
 
     # Look for true lower bound between the lower looked up image and the next one
     for idx_pix, i in enumerate(lookup_table_spectra[int(low_bound / divider_lookup)]):
@@ -537,6 +545,7 @@ def compute_index_boundaries_nolookup(low_bound, high_bound, array_spectra_avg):
             break
 
     return index_low_bound, index_high_bound
+
 
 @njit
 def compute_index_boundaries(low_bound, high_bound, array_spectra_avg, lookup_table):
@@ -717,6 +726,7 @@ def compute_zeros_extended_spectrum_per_pixel(idx_pix, array_spectra, array_pixe
     new_array_spectra, array_index_padding = add_zeros_to_spectrum(array_spectra)
     return new_array_spectra
 
+
 @njit
 def reduce_resolution_sorted_array_spectra(array_spectra, resolution=10 ** -3):
     """Recompute a sparce representation of the spectrum at a lower (fixed) resolution, summing over the redundant bins.
@@ -732,7 +742,7 @@ def reduce_resolution_sorted_array_spectra(array_spectra, resolution=10 ** -3):
     """
     # Get the re-sampled m/z and intensities from mspec library, with max_intensity = False to sum over redundant bins
     new_mz, new_intensity = reduce_resolution_sorted(
-        array_spectra[:, 0], array_spectra[:, 1], resolution, max_intensity=False
+        array_spectra[0, :], array_spectra[1, :], resolution, max_intensity=False
     )
 
     # Build a new array as the stack of the two others
