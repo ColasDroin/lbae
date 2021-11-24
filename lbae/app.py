@@ -1,26 +1,22 @@
 ###### IMPORT MODULES ######
 
-# Official modules
+# Standard imports
 import dash
 import dash_bootstrap_components as dbc
-import pandas as pd
 import flask
-import numpy as np
 
-# Data module
+# Homemade modules
 from lbae.modules.maldi_data import MaldiData
 from lbae.modules.figures import Figures
-
-# from tools.SliceAtlas import SliceAtlas
+from lbae.modules.atlas import Atlas
+from lbae.modules.tools.misc import return_pickled_object
 
 ###### APP PRE-COMPUTATIONS ######
 
 # Load data and Figures object
 data = MaldiData()
-figures = Figures(data)
-
-# Load atlas # ! try to store it as memmap as well?
-# slice_atlas = SliceAtlas(resolution=25)
+atlas = Atlas(resolution=25)
+figures = Figures(data, atlas)
 
 """
 # pickle all slice files and images
@@ -33,29 +29,33 @@ if force_pickle:
 """
 
 # Load array of figures for the slices
-list_array_original_data = SliceData.load_array_figures(load="original_data", atlas_contours=False, atlas_hover=False)
-list_array_warped_data = SliceData.load_array_figures(load="warped_data", atlas_contours=False, atlas_hover=False)
-list_array_images_atlas = SliceData.load_array_figures(load="atlas", atlas_contours=False, atlas_hover=False)
-list_array_projection = SliceData.load_array_figures(load="projection", atlas_contours=False, atlas_hover=False)
-
-list_array_projection_corrected = SliceData.load_array_figures(
+list_array_original_data = figures.compute_array_figures_basic_image(
+    load="original_data", atlas_contours=False, atlas_hover=False
+)
+list_array_warped_data = figures.compute_array_figures_basic_image(
+    load="warped_data", atlas_contours=False, atlas_hover=False
+)
+list_array_images_atlas = figures.compute_array_figures_basic_image(
+    load="atlas", atlas_contours=False, atlas_hover=False
+)
+list_array_projection_corrected = figures.compute_array_figures_basic_image(
     load="projection_corrected", atlas_contours=False, atlas_hover=False
 )
-
-list_array_original_data_boundaries = SliceData.load_array_figures(
+list_array_original_data_boundaries = figures.compute_array_figures_basic_image(
     load="original_data", atlas_contours=True, atlas_hover=False
 )
-list_array_warped_data_boundaries = SliceData.load_array_figures(
+list_array_warped_data_boundaries = figures.compute_array_figures_basic_image(
     load="warped_data", atlas_contours=True, atlas_hover=False
 )
-list_array_images_atlas_boundaries = SliceData.load_array_figures(load="atlas", atlas_contours=True, atlas_hover=False)
-list_array_projection_boundaries = SliceData.load_array_figures(
-    load="projection", atlas_contours=True, atlas_hover=False
+list_array_images_atlas_boundaries = figures.compute_array_figures_basic_image(
+    load="atlas", atlas_contours=True, atlas_hover=False
 )
-list_array_projection_corrected_boundaries = SliceData.load_array_figures(
+list_array_projection_corrected_boundaries = figures.compute_array_figures_basic_image(
     load="projection_corrected", atlas_contours=True, atlas_hover=False
 )
-list_atlas_boundaries = SliceData.load_array_figures(load="atlas_boundaries", atlas_contours=True, atlas_hover=False)
+list_atlas_boundaries = figures.compute_array_figures_basic_image(
+    load="atlas_boundaries", atlas_contours=True, atlas_hover=False
+)
 
 
 ###### INSTANTIATE APP ######
