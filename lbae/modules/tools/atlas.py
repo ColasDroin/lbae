@@ -174,8 +174,8 @@ def solve_plane_equation(
             the ccfv3.
     """
     # Define empty array for the linear system of equations
-    A = np.zeros((9, 9))
-    b = np.zeros((9,))
+    A = np.zeros((9, 9), dtype=np.float32)
+    b = np.zeros((9,), dtype=np.float32)
 
     # Fill the matrices, such that Ax=b, where A represents the projection from 2D coordinates (x) to the ccfv3 (b)
     A[0] = [point_1[0], 0, 0, point_1[1], 0, 0, 1, 0, 0]
@@ -188,17 +188,15 @@ def solve_plane_equation(
     A[7] = [0, point_3[0], 0, 0, point_3[1], 0, 0, 1, 0]
     A[8] = [0, 0, point_3[0], 0, 0, point_3[1], 0, 0, 1]
 
-    b = [
-        array_coordinates_high_res[index_slice, point_1[0], point_1[1], 0],
-        array_coordinates_high_res[index_slice, point_1[0], point_1[1], 1],
-        array_coordinates_high_res[index_slice, point_1[0], point_1[1], 2],
-        array_coordinates_high_res[index_slice, point_2[0], point_2[1], 0],
-        array_coordinates_high_res[index_slice, point_2[0], point_2[1], 1],
-        array_coordinates_high_res[index_slice, point_2[0], point_2[1], 2],
-        array_coordinates_high_res[index_slice, point_3[0], point_3[1], 0],
-        array_coordinates_high_res[index_slice, point_3[0], point_3[1], 1],
-        array_coordinates_high_res[index_slice, point_3[0], point_3[1], 2],
-    ]
+    b[0] = array_coordinates_high_res[index_slice, point_1[0], point_1[1], 0]
+    b[1] = array_coordinates_high_res[index_slice, point_1[0], point_1[1], 1]
+    b[2] = array_coordinates_high_res[index_slice, point_1[0], point_1[1], 2]
+    b[3] = array_coordinates_high_res[index_slice, point_2[0], point_2[1], 0]
+    b[4] = array_coordinates_high_res[index_slice, point_2[0], point_2[1], 1]
+    b[5] = array_coordinates_high_res[index_slice, point_2[0], point_2[1], 2]
+    b[6] = array_coordinates_high_res[index_slice, point_3[0], point_3[1], 0]
+    b[7] = array_coordinates_high_res[index_slice, point_3[0], point_3[1], 1]
+    b[8] = array_coordinates_high_res[index_slice, point_3[0], point_3[1], 2]
 
     # Invert the system of equation
     u1, u2, u3, v1, v2, v3, a1, a2, a3 = np.linalg.solve(A, b)
@@ -315,6 +313,7 @@ def fill_array_projection(
                     array_projection_filling[index_slice, i, j] = 1
                     array_projection_correspondence[index_slice, i, j] = [i_original_slice, j_original_slice]
                 except:
+                    raise ValueError
                     logging.info(
                         i, j, array_projection.shape, i_original_slice, j_original_slice, original_slice.shape
                     )

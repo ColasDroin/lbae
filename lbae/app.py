@@ -6,10 +6,10 @@ import dash_bootstrap_components as dbc
 import flask
 
 # Homemade modules
-from lbae.modules.maldi_data import MaldiData
-from lbae.modules.figures import Figures
-from lbae.modules.atlas import Atlas
-from lbae.modules.tools.misc import return_pickled_object
+from modules.maldi_data import MaldiData
+from modules.figures import Figures
+from modules.atlas import Atlas
+from modules.tools.misc import return_pickled_object
 
 ###### APP PRE-COMPUTATIONS ######
 

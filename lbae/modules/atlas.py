@@ -16,7 +16,7 @@ from skimage import io
 import warnings
 
 # Homemade functions
-from lbae.modules.tools.atlas import (
+from modules.tools.atlas import (
     project_atlas_mask,
     get_array_rows_from_atlas_mask,
     fill_array_projection,
@@ -40,8 +40,10 @@ class Atlas:
             self.resolution = 25
 
         # Load or download the atlas if it's the first time
+        brainglobe_dir = "lbae/data/atlas/brain_globe/"
+        os.makedirs(brainglobe_dir, exist_ok=True)
         self.bg_atlas = BrainGlobeAtlas(
-            "allen_mouse_" + str(resolution) + "um", brainglobe_dir="lbae/data/atlas/brain_globe/", check_latest=False
+            "allen_mouse_" + str(resolution) + "um", brainglobe_dir=brainglobe_dir, check_latest=False
         )
 
         # When computing an array of figures with a slider to explore the atlas, subsample in the longitudinal
@@ -131,12 +133,12 @@ class Atlas:
             a, u, v = l_transform_parameters[i]
 
             # load corresponding slice and coor
-            path = "data/tif_files/deformation_field/"
+            path = "lbae/data/tiff_files/coordinates_original_data/"
             filename = path + [x for x in os.listdir(path) if str(i + 1) == x.split("slice_")[1].split(".tiff")[0]][0]
             original_coor = np.array(io.imread(filename), dtype=np.float32)
             l_original_coor.append(original_coor)
 
-            path = "data/tif_files/original_slices/"
+            path = "lbae/data/tiff_files/original_data/"
             filename = path + [x for x in os.listdir(path) if str(i + 1) == x.split("slice_")[1].split(".tiff")[0]][0]
             original_slice = np.array(io.imread(filename), dtype=np.int16)
 

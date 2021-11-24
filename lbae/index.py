@@ -8,15 +8,15 @@ import uuid
 import dash_loading_spinners as dls
 
 # App modules
-from app import app
+from app import app, data
 from pages import (
     sidebar,
     home,
     load_slice,
-    lipid_selection,
-    lipid_selection_all_slices,
-    region_analysis,
-    threeD_exploration,
+    # lipid_selection,
+    # lipid_selection_all_slices,
+    # region_analysis,
+    # threeD_exploration,
 )
 from config import basic_config
 
@@ -29,7 +29,7 @@ initial_slice = 1
 server = app.server
 
 # list of empty lipid indexes for the dropdown of page 2bis
-empty_lipid_list = [-1 for i in range(app.data.get_slice_number())]
+empty_lipid_list = [-1 for i in range(data.get_slice_number())]
 
 # Responsive layout
 def return_main_content():
@@ -109,7 +109,7 @@ app.validation_layout = html.Div(
     [
         main_content,
         home.layout,
-        load_slice.return_layout(initial_slice=initial_slice),
+        load_slice.return_layout(basic_config=basic_config, initial_slice=initial_slice),
         # lipid_selection.return_layout(),
         # lipid_selection_all_slices.return_layout(),
         # region_analysis.return_layout(),
@@ -133,7 +133,7 @@ def render_page_content(pathname, slice_index):
         page = home.layout
 
     elif pathname == "/load-slice":
-        page = (load_slice.return_layout(initial_slice=slice_index),)
+        page = (load_slice.return_layout(basic_config=basic_config, initial_slice=slice_index),)
 
     # elif pathname == "/lipid-selection":
     #     page = (lipid_selection.return_layout(slice_index=slice_index),)

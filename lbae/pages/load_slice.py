@@ -10,14 +10,15 @@ import dash_draggable
 
 # App module
 import app
+import config
 
 # Data module
-from lbae.modules.figures import Figures
+from modules.figures import Figures
 
 ###### DEFFINE PAGE LAYOUT ######
 
 
-def return_layout(basic_config=app.basic_config, initial_slice=1):
+def return_layout(basic_config, initial_slice=1):
 
     page = dash_draggable.ResponsiveGridLayout(
         id="draggable",
@@ -100,9 +101,8 @@ def return_layout(basic_config=app.basic_config, initial_slice=1):
                                 [
                                     dbc.Tab(label="Original slices", tab_id="page-1-tab-0"),
                                     dbc.Tab(label="Warped slices", tab_id="page-1-tab-1"),
-                                    dbc.Tab(label="Atlas slices", tab_id="page-1-tab-2"),
-                                    dbc.Tab(label="Projected slices", tab_id="page-1-tab-3"),
-                                    dbc.Tab(label="Corrected projected slices", tab_id="page-1-tab-4"),
+                                    dbc.Tab(label="Corrected projected slices", tab_id="page-1-tab-2"),
+                                    dbc.Tab(label="Atlas slices", tab_id="page-1-tab-3"),
                                 ],
                                 id="page-1-card-tabs",
                                 # card=True,
@@ -212,7 +212,7 @@ def return_layout(basic_config=app.basic_config, initial_slice=1):
                                                         marks={
                                                             x: {
                                                                 "label": str(x) if x % 2 == 0 else "",
-                                                                "style": {"color": app.dic_colors["dark"]},
+                                                                "style": {"color": config.dic_colors["dark"]},
                                                             }
                                                             for x in range(1, len(app.list_array_warped_data) + 1,)
                                                         },
@@ -295,22 +295,18 @@ def tab_1_load_image(value_slider, active_tab, display_annotations):
             if active_tab[-1] == "1":
                 return app.list_array_warped_data[value_slider - 1]
             elif active_tab[-1] == "2":
-                return app.list_array_images_atlas[value_slider - 1]
-            elif active_tab[-1] == "3":
-                return app.list_array_projection[value_slider - 1]
-            elif active_tab[-1] == "4":
                 return app.list_array_projection_corrected[value_slider - 1]
+            elif active_tab[-1] == "3":
+                return app.list_array_images_atlas[value_slider - 1]
         else:
             if active_tab[-1] == "0":
                 return app.list_array_original_data_boundaries[value_slider - 1]
             if active_tab[-1] == "1":
                 return app.list_array_warped_data_boundaries[value_slider - 1]
             elif active_tab[-1] == "2":
-                return app.list_array_images_atlas_boundaries[value_slider - 1]
-            elif active_tab[-1] == "3":
-                return app.list_array_projection_boundaries[value_slider - 1]
-            elif active_tab[-1] == "4":
                 return app.list_array_projection_corrected_boundaries[value_slider - 1]
+            elif active_tab[-1] == "3":
+                return app.list_array_images_atlas_boundaries[value_slider - 1]
     else:
         return dash.no_update
 
@@ -345,16 +341,16 @@ def page_1_hover(hoverData, slice_index):
             y = hoverData["points"][0]["y"]
 
             slice_coor_rescaled = np.asarray(
-                (app.slice_atlas.array_coordinates_high_res[x, y, z] * 1000 / app.slice_atlas.resolution).round(0),
+                (app.atlas.array_coordinates_warped_data[x, y, z] * 1000 / app.atlas.resolution).round(0),
                 dtype=np.int16,
             )
             if (
                 min(slice_coor_rescaled) >= 0
-                and slice_coor_rescaled[0] < app.slice_atlas.bg_atlas.reference.shape[0]
-                and slice_coor_rescaled[1] < app.slice_atlas.bg_atlas.reference.shape[1]
-                and slice_coor_rescaled[2] < app.slice_atlas.bg_atlas.reference.shape[2]
+                and slice_coor_rescaled[0] < app.atlas.bg_atlas.reference.shape[0]
+                and slice_coor_rescaled[1] < app.atlas.bg_atlas.reference.shape[1]
+                and slice_coor_rescaled[2] < app.atlas.bg_atlas.reference.shape[2]
             ):
-                label = app.slice_atlas.labels[tuple(slice_coor_rescaled)]
+                label = app.atlas.labels[tuple(slice_coor_rescaled)]
             else:
                 label = "undefined"
             return "Hovered region: " + label
@@ -362,6 +358,7 @@ def page_1_hover(hoverData, slice_index):
     return dash.no_update
 
 
+"""
 # Function to register new slice index when load button is pressed
 @app.app.callback(
     Output("tab-1-loading-text", "children"),
@@ -394,3 +391,4 @@ def tab_1_load_slice_index(clicked, value_slider, slice_index):
         else:
             return None, value_slider
 
+"""
