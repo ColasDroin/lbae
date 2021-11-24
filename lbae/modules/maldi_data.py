@@ -15,7 +15,7 @@ class MaldiData:
     memmap (remains on disk). It uses the special attribute __slots__ for faster access to the attributes.
 
     Attributes:
-        self._dic_lightweight (dictionnary): A dictionnary containing the following lightweights arrays, 
+        _dic_lightweight (dictionnary): a dictionnary containing the following lightweights arrays, 
             which therefore remain in memory as long as the app is running:
             - image_shape: a tuple of integers, indicating the vertical and horizontal sizes of the 
                 corresponding slice.
@@ -27,7 +27,7 @@ class MaldiData:
             - array_lookup_mz_avg: unidimensional, it maps m/z values to indexes in the averaged 
                 array_spectra for each pixel.
             In addition, it contains the shape of all the arrays stored in the numpy memory maps.
-        self._dic_memmap (dictionnary): A dictionnary containing numpy memory maps allowing to access the heavyweights 
+        _dic_memmap (dictionnary): a dictionnary containing numpy memory maps allowing to access the heavyweights 
             arrays of the datasets, without saturating the disk. The arrays in the dictionnary are:
             - array_spectra: bidimensional, it contains the concatenated spectra of each pixel. First row contains the
                 m/z values, while second row contains the corresponding intensities.
@@ -36,11 +36,13 @@ class MaldiData:
             - array_lookup_mz: bidimensional, it maps m/z values to indexes in array_spectra for each pixel.
             - array_cumulated_lookup_mz_image: bidimensional, it maps m/z values to the cumulated spectrum until the 
                 corresponding m/z value for each pixel.
-        self._df_annotations (pd.dataframe): A dataframe containing for each slice and each annotated peak the name of 
+        _n_slices (int): number of slices present in the dataset.
+        _df_annotations (pd.dataframe): a dataframe containing for each slice and each annotated peak the name of 
             the lipid inbetween the two annotated peak boundaries.
 
     Methods:
         get_annotations(): getter for the lipid annotation of each slice, contained in a pandas dataframe.
+        get_slice_number(): getter for the number of slices present in the dataset.
         get_image_shape(slice_index): getter for image_shape, which indicates the shape of the image corresponding to 
             the acquisition indexed by slice_index.
         get_divider_lookup(slice_index): getter for divider_lookup, which sets the resolution of the lookup of the 
@@ -63,7 +65,7 @@ class MaldiData:
         get_cumulated_lookup_mz_image(slice_index, index):
     """
 
-    __slots__ = ["_dic_lightweight", "_dic_memmap", "_df_annotations"]
+    __slots__ = ["_dic_lightweight", "_dic_memmap", "_n_slices", "_df_annotations"]
 
     def __init__(self, path_data="lbae/data/whole_dataset/", path_annotations="lbae/data/annotations/"):
 
@@ -73,7 +75,8 @@ class MaldiData:
 
         # Set the accesser to the mmap files
         self._dic_memmap = {}
-        for slice_index in range(1, len(self._dic_lightweight) + 1):
+        self._n_slices = len(self._dic_lightweight)
+        for slice_index in range(1, self._n_slices + 1):
             self._dic_memmap[slice_index] = {}
             for array_name in [
                 "array_spectra",
@@ -94,6 +97,9 @@ class MaldiData:
 
     def get_annotations(self):
         return self._df_annotations
+
+    def get_slice_number(self):
+        return self._n_slices
 
     def get_image_shape(self, slice_index):
         return self._dic_lightweight[slice_index]["image_shape"]

@@ -3,8 +3,6 @@
 # Standard imports
 import numpy as np
 
-#! These classes were previously implemented with zarr, need to understand why
-
 ###### Labels Class ######
 class Labels:
     """ Class used to access labels data without having to create new arrays"""

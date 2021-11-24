@@ -13,67 +13,105 @@ from io import BytesIO
 from matplotlib import cm
 import plotly.express as px
 from skimage import io
+import warnings
 
 # Homemade functions
-from lbae.modules.tools.atlas import project_atlas_mask, get_array_rows_from_atlas_mask, fill_array_projection
+from lbae.modules.tools.atlas import (
+    project_atlas_mask,
+    get_array_rows_from_atlas_mask,
+    fill_array_projection,
+    solve_plane_equation,
+)
 from lbae.modules.tools.spectra import compute_spectrum_per_row_selection
 from lbae.modules.atlas_labels import Labels, LabelContours
+from lbae.modules.tools.misc import return_pickled_object
+
+#! Overall, see if I can memmap all the objects in this class
 
 ###### Atlas Class ######
 class Atlas:
-    def __init__(self, resolution=25, force_recompute=False):
+    def __init__(self, resolution=25):
 
-        # resolution to be chosen among 10um, 25um or 100um (the only three availbable with the reference atlas)
+        # Resolution of the atlas, to be chosen among 10um, 25um or 100um
         if resolution in (10, 25, 100):
             self.resolution = resolution
         else:
-            print("The resolution you asked for is not available, using the default of 25um")
+            warnings.warn("The resolution you chose is not available, using the default of 25um")
             self.resolution = 25
 
-        # when computing an array of figures with a slider to explore the atlas, subsample in the longitudinal
+        # Load or download the atlas if it's the first time
+        self.bg_atlas = BrainGlobeAtlas(
+            "allen_mouse_" + str(resolution) + "um", brainglobe_dir="lbae/data/atlas/brain_globe/", check_latest=False
+        )
+
+        # When computing an array of figures with a slider to explore the atlas, subsample in the longitudinal
         # direction, otherwise it's too heavy
         self.subsampling_block = 20
 
-        # load or download the atlas if it's the first time
-        self.bg_atlas = BrainGlobeAtlas(
-            "allen_mouse_" + str(resolution) + "um", brainglobe_dir="data/atlas/", check_latest=False
+        # Load string annotation and simplified integer version of the labels for contour plot, for each voxel
+        self.labels = Labels(self.bg_atlas)
+        self.simplified_labels_int = LabelContours(self.bg_atlas)
+
+        # Compute hierarchical tree of brain structures # ! see if can turn that Pickle thing into a decorator
+        self.l_nodes, self.l_parents, self.dic_name_id = return_pickled_object(
+            "atlas/atlas_objects", "hierarchy", force_update=False, compute_function=self.compute_hierarchy_list
         )
 
-        # load string annotation and simplified integer version of the labels for contour plot, for each voxel
-        self.labels = Labels(self.bg_atlas, use_zarr=True)
-        self.simplified_labels_int = LabelContours(self.bg_atlas, use_zarr=True)
+        # Load array of coordinates for our data
+        self.array_coordinates_warped_data = np.array(
+            io.imread("lbae/data/tiff_files/coordinates_warped_data.tif"), dtype=np.float32
+        )
 
-        # compute hierarchical tree
-        self.l_nodes, self.l_parents, self.dic_name_id = self.compute_hierarchy_list()
-        # load array of coordinates for our data
-        self.array_coordinates_high_res = np.array(io.imread("data/tif_files/coors.tif"), dtype=np.float32)
-
-        # load array of atlas images corresponding to our data and how it is projected
-        self.array_projected_images_atlas, self.array_projected_simplified_id = self.return_array_images_atlas()
-        (
-            self.array_projection,
-            self.array_projection_correspondence,
-            self.l_original_coor,
-        ) = self.return_array_projection(nearest_neighbour_correction=False, atlas_correction=False)
+        # Load arrays of images using atlas projection
         (
             self.array_projection_corrected,
             self.array_projection_correspondence_corrected,
             self.l_original_coor,
-        ) = self.return_array_projection(nearest_neighbour_correction=True, atlas_correction=True)
+        ) = return_pickled_object(
+            "atlas/atlas_objects",
+            "arrays_projection_corrected_with_atlas_and_nearest_neighbours",
+            force_update=False,
+            compute_function=self.compute_array_projection,
+            nearest_neighbour_correction=True,
+            atlas_correction=True,
+        )
 
-        # record number of slices for use in other classes
-        self.n_slices = self.array_projected_images_atlas.shape[0]
+        # Load array of projected atlas borders
+        self.list_projected_atlas_borders_figures = return_pickled_object(
+            "atlas/atlas_objects",
+            "list_projected_atlas_borders_figures",
+            force_update=False,
+            compute_function=self.compute_list_projected_atlas_borders_figures,
+        )
 
-        # load array of projected atlas borders
-        self.list_projected_atlas_borders_figures = self.return_list_projected_atlas_borders_figures()
-
-        # temporary variables
+        # Temporary variables #! Check if really needed, else delete
         self.current_dic_name = None
         self.current_disk_masks_and_spectra = None
 
+    def compute_hierarchy_list(self):
+
+        # Create a list of parents for all ancestors
+        l_nodes = []
+        l_parents = []
+        dic_name_id = {}
+        idx = 0
+        for x, v in self.bg_atlas.structures.items():
+            if len(self.bg_atlas.get_structure_ancestors(v["acronym"])) > 0:
+                ancestor_acronym = self.bg_atlas.get_structure_ancestors(v["acronym"])[-1]
+                ancestor_name = self.bg_atlas.structures[ancestor_acronym]["name"]
+            else:
+                ancestor_name = ""
+            current_name = self.bg_atlas.structures[x]["name"]
+
+            l_nodes.append(current_name)
+            l_parents.append(ancestor_name)
+            dic_name_id[current_name] = v["acronym"]
+
+        return l_nodes, l_parents, dic_name_id
+
     def compute_array_projection(self, nearest_neighbour_correction=False, atlas_correction=False):
 
-        array_projection = np.zeros(self.array_coordinates_high_res.shape[:-1], dtype=np.int16)
+        array_projection = np.zeros(self.array_coordinates_warped_data.shape[:-1], dtype=np.int16)
         array_projection_filling = np.zeros(array_projection.shape, dtype=np.int16)
 
         # This array makes the correspondence between the original data coordinates and the new ones
@@ -82,7 +120,12 @@ class Atlas:
 
         # list of orginal coordinates
         l_original_coor = []
-        l_transform_parameters = self.return_projection_parameters()
+        l_transform_parameters = return_pickled_object(
+            "atlas/atlas_objects",
+            "l_transform_parameters",
+            force_update=False,
+            compute_function=self.compute_projection_parameters,
+        )
         for i in range(array_projection.shape[0]):
             # print("slice " + str(i) + " getting processed")
             a, u, v = l_transform_parameters[i]
@@ -109,7 +152,7 @@ class Atlas:
                 u,
                 v,
                 original_slice,
-                self.array_coordinates_high_res,
+                self.array_coordinates_warped_data,
                 self.bg_atlas.annotation,
                 nearest_neighbour_correction=nearest_neighbour_correction,
                 atlas_correction=atlas_correction,
@@ -117,50 +160,52 @@ class Atlas:
 
         return array_projection, array_projection_correspondence, l_original_coor
 
-    def return_array_projection(
-        self, nearest_neighbour_correction=False, atlas_correction=False, force_recompute=False
-    ):
-        path = "data/pickled_data/atlas_array_images/"
-        name_array = "array_projection_" + str(nearest_neighbour_correction) + "_" + str(atlas_correction) + ".pickle"
-        if name_array in os.listdir(path) and not force_recompute:
-            with open(path + name_array, "rb") as atlas_file:
-                return pickle.load(atlas_file)
-        else:
-            array_projection, array_projection_correspondence, l_original_coor = self.compute_array_projection(
-                nearest_neighbour_correction=nearest_neighbour_correction, atlas_correction=atlas_correction
-            )
-            with open(path + name_array, "wb") as atlas_file:
-                pickle.dump((array_projection, array_projection_correspondence, l_original_coor), atlas_file)
-            return array_projection, array_projection_correspondence, l_original_coor
-
     def compute_projection_parameters(self):
         l_transform_parameters = []
-        for index_slice in range(self.array_coordinates_high_res.shape[0]):
-            a_atlas, u_atlas, v_atlas = self.solve_plane_equation(index_slice)
-            # coor_from_transform = SliceAtlas.slice_to_atlas_transform(a_atlas, u_atlas, v_atlas, 300, 302)
-            # coor_from_array = self.array_coordinates_high_res[index_slice, 300, 302]
+        for index_slice in range(self.array_coordinates_warped_data.shape[0]):
+            a_atlas, u_atlas, v_atlas = solve_plane_equation(index_slice, self.array_coordinates_warped_data)
             l_transform_parameters.append((a_atlas, u_atlas, v_atlas))
         return l_transform_parameters
 
-    def return_projection_parameters(self, force_recompute=False):
-        path = "data/pickled_data/atlas_array_images/"
-        name_list = "projection_parameters.pickle"
-        if name_list in os.listdir(path) and not force_recompute:
-            with open(path + name_list, "rb") as atlas_file:
-                return pickle.load(atlas_file)
-        else:
-            list_parameters = self.compute_projection_parameters()
-            with open(path + name_list, "wb") as atlas_file:
-                pickle.dump(list_parameters, atlas_file)
-            return list_parameters
+    def compute_list_projected_atlas_borders_figures(self):
+        l_figures = []
+        # Load array of atlas images corresponding to our data and how it is projected
+        array_projected_images_atlas, array_projected_simplified_id = self.compute_array_images_atlas()
+        for slice_index in range(array_projected_simplified_id.shape[0]):
+
+            contours = (
+                array_projected_simplified_id[slice_index, 1:, 1:]
+                - array_projected_simplified_id[slice_index, :-1, :-1]
+            )
+            contours = np.clip(contours ** 2, 0, 1)
+            contours = np.pad(contours, ((1, 0), (1, 0)))
+            # do some cleaning on the sides
+            contours[:, :10] = 0
+            contours[:, -10:] = 0
+            contours[:10, :] = 0
+            contours[-10:, :] = 0
+
+            fig = plt.figure(frameon=False)
+            dpi = 100
+            fig.set_size_inches(contours.shape[1] / dpi, contours.shape[0] / dpi)
+            ax = fig.add_axes([0, 0, 1, 1])
+            ax.axis("off")
+            prefix = "data:image/png;base64,"
+            plt.contour(contours, colors="orange", antialiased=True, linewidths=0.2, origin="image")
+            with BytesIO() as stream:
+                plt.savefig(stream, format="png", dpi=dpi)
+                plt.close()
+                base64_string = prefix + base64.b64encode(stream.getvalue()).decode("utf-8")
+            l_figures.append(go.Image(visible=True, source=base64_string, zsmooth="fast", hoverinfo="none"))
+        return l_figures
 
     def compute_array_images_atlas(self):
-        array_images = np.empty(self.array_coordinates_high_res.shape[:-1], dtype=np.uint8)
+        array_images = np.empty(self.array_coordinates_warped_data.shape[:-1], dtype=np.uint8)
         array_projected_simplified_id = np.full(
             array_images.shape, self.simplified_labels_int[0, 0, 0], dtype=np.int32
         )
 
-        array_coor_rescaled = ((self.array_coordinates_high_res * 1000 / self.resolution).round(0)).astype(np.int16)
+        array_coor_rescaled = ((self.array_coordinates_warped_data * 1000 / self.resolution).round(0)).astype(np.int16)
         for x in range(array_images.shape[0]):
             for y in range(array_images.shape[1]):
                 for z in range(array_images.shape[2]):
@@ -178,18 +223,7 @@ class Atlas:
                         array_images[x, y, z] = 0
         return array_images, array_projected_simplified_id
 
-    def return_array_images_atlas(self, force_recompute=False):
-        path = "data/pickled_data/atlas_array_images/"
-        name_array = "array_images_atlas.pickle"
-        if name_array in os.listdir(path) and not force_recompute:
-            with open(path + name_array, "rb") as atlas_file:
-                return pickle.load(atlas_file)
-        else:
-            array, array_id = self.compute_array_images_atlas()
-            with open(path + name_array, "wb") as atlas_file:
-                pickle.dump([array, array_id], atlas_file)
-            return array, array_id
-
+    """
     def return_atlas_with_slider(self, view="frontal", contour=False, hover_data=False, force_recompute=False):
         path = "data/pickled_data/atlas_figures_slider/"
         name_fig = "figure_slider_atlas_" + view + "_" + str(contour) + "_" + str(hover_data) + ".pickle"
@@ -348,48 +382,9 @@ class Atlas:
 
         return fig
 
-    def compute_list_projected_atlas_borders_figures(self):
-        l_figures = []
-        for slice_index in range(self.array_projected_simplified_id.shape[0]):
 
-            contours = (
-                self.array_projected_simplified_id[slice_index, 1:, 1:]
-                - self.array_projected_simplified_id[slice_index, :-1, :-1]
-            )
-            contours = np.clip(contours ** 2, 0, 1)
-            contours = np.pad(contours, ((1, 0), (1, 0)))
-            # do some cleaning on the sides
-            contours[:, :10] = 0
-            contours[:, -10:] = 0
-            contours[:10, :] = 0
-            contours[-10:, :] = 0
 
-            fig = plt.figure(frameon=False)
-            dpi = 100
-            fig.set_size_inches(contours.shape[1] / dpi, contours.shape[0] / dpi)
-            ax = fig.add_axes([0, 0, 1, 1])
-            ax.axis("off")
-            prefix = "data:image/png;base64,"
-            plt.contour(contours, colors="orange", antialiased=True, linewidths=0.2, origin="image")
-            with BytesIO() as stream:
-                plt.savefig(stream, format="png", dpi=dpi)
-                plt.close()
-                base64_string = prefix + base64.b64encode(stream.getvalue()).decode("utf-8")
-            l_figures.append(go.Image(visible=True, source=base64_string, zsmooth="fast", hoverinfo="none"))
-        return l_figures
 
-    def return_list_projected_atlas_borders_figures(self, force_recompute=False):
-
-        path = "data/pickled_data/atlas_borders/"
-        name_fig = "atlas_borders_figures.pickle"
-        if name_fig in os.listdir(path) and not force_recompute:
-            with open(path + name_fig, "rb") as atlas_file:
-                return pickle.load(atlas_file)
-        else:
-            fig = self.compute_list_projected_atlas_borders_figures()
-            with open(path + name_fig, "wb") as atlas_file:
-                pickle.dump(fig, atlas_file)
-            return fig
 
     def get_atlas_mask(self, structure):
 
@@ -408,7 +403,7 @@ class Atlas:
     def compute_dic_projected_masks_and_spectra(self, slice_index):
         dic = {}
         slice_coor_rescaled = np.asarray(
-            (self.array_coordinates_high_res[slice_index, :, :] * 1000 / self.resolution).round(0), dtype=np.int16,
+            (self.array_coordinates_warped_data[slice_index, :, :] * 1000 / self.resolution).round(0), dtype=np.int16,
         )
         for mask_name, id_mask in self.dic_name_id.items():
             # get the array corresponding to the projected mask
@@ -450,7 +445,7 @@ class Atlas:
         elif mask_name is not None:
             if slice_coor_rescaled is None:
                 slice_coor_rescaled = np.asarray(
-                    (self.array_coordinates_high_res[slice_index, :, :] * 1000 / self.resolution).round(0),
+                    (self.array_coordinates_warped_data[slice_index, :, :] * 1000 / self.resolution).round(0),
                     dtype=np.int16,
                 )
             stack_mask = app.slice_atlas.get_atlas_mask(app.slice_atlas.dic_name_id[mask_name])
@@ -513,25 +508,7 @@ class Atlas:
             except:
                 print("Mask and spectra could not be computed for slice " + str(slice_index))
 
-    def compute_hierarchy_list(self):
-        # create a list of parents for all ancestors
-        l_nodes = []
-        l_parents = []
-        dic_name_id = {}
-        idx = 0
-        for x, v in self.bg_atlas.structures.items():
-            if len(self.bg_atlas.get_structure_ancestors(v["acronym"])) > 0:
-                ancestor_acronym = self.bg_atlas.get_structure_ancestors(v["acronym"])[-1]
-                ancestor_name = self.bg_atlas.structures[ancestor_acronym]["name"]
-            else:
-                ancestor_name = ""
-            current_name = self.bg_atlas.structures[x]["name"]
 
-            l_nodes.append(current_name)
-            l_parents.append(ancestor_name)
-            dic_name_id[current_name] = v["acronym"]
-
-        return l_nodes, l_parents, dic_name_id
 
     def return_sunburst_figure(self, maxdepth=3):
         fig = px.sunburst(names=self.l_nodes, parents=self.l_parents, maxdepth=3,)
@@ -539,12 +516,13 @@ class Atlas:
         return fig
 
     def compute_root_data(self):
-        # get root data
+
+        # Get root data
         mesh_data_root = self.bg_atlas.mesh_from_structure("root")
         vertices_root = mesh_data_root.points
         triangles_root = mesh_data_root.cells[0].data
 
-        # compute points and vertices
+        # Compute points and vertices
         x_root, y_root, z_root = vertices_root.T
         I_root, J_root, K_root = triangles_root.T
         # tri_points_root = vertices_root[triangles_root]
@@ -693,4 +671,4 @@ class Atlas:
                     print("Structure " + acronym + " could not be computed")
             else:
                 print(acronym + " has already been computed before. Skipping it.")
-
+    """

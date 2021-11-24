@@ -6,89 +6,129 @@ import plotly.graph_objects as go
 import plotly.express as px
 import os
 from skimage import io
-import pickle
-from matplotlib import cm
-from PIL import Image
-import base64
-from io import BytesIO
-from skimage import measure
-from scipy.ndimage.interpolation import map_coordinates
-from time import time
-import tables
-
-# from tools.SliceAtlas import SliceAtlas
+import warnings
 
 # Homemade functions
 from lbae.modules.tools import spectra
+from lbae.modules.tools.misc import return_pickled_object, turn_image_into_base64_string
 
-###### DEFINE SliceData CLASS ######
+###### DEFINE FIGURES CLASS ######
 class Figures:
-    __slots__ = ["_data"]
+    __slots__ = ["_data", "_atlas"]
 
-    def __init__(self, maldi_data):
+    def __init__(self, maldi_data, atlas):
         self._data = maldi_data
+        self._atlas = atlas
 
-    def load_array_figures(from_pickle=True, load="warped_data", atlas_contours=False, atlas_hover=False):
-        only_boundaries = False
-        if from_pickle:
-            path = (
-                "data/pickled_data/load_figures_slider/figures_slices_"
-                + str(load)
-                + "_"
-                + str(atlas_contours)
-                + "_"
-                + str(atlas_hover)
-                + ".pickle"
+    # ? Move into another class? Doesn't really need self
+    def compute_padded_original_images(self):
+
+        # Compute number of slices from the original acquisition are present in the folder
+        path = "data/tiff_files/original_data/"
+        n_slices = len([x for x in os.listdir(path) if "slice_" in x])
+        if n_slices != self._data.get_slice_number():
+            warnings.warn(
+                "The number of slices computed from the original tiff files is different from the number of slice "
+                + "recorded in the MaldiData object."
             )
-            try:
-                with open(path, "rb",) as slice_file:
-                    return pickle.load(slice_file)
-            except:
-                print("The file " + path + " could not be found. Rebuilding and pickling the array of figures now.")
-                return SliceData.pickle_array_figures(
-                    load=load, atlas_contours=atlas_contours, atlas_hover=atlas_hover
-                )
-        else:
-            if load == "atlas":
-                array_images = app.slice_atlas.array_projected_images_atlas
-            elif load == "warped_data":
-                array_images = np.array(io.imread("data/tif_files/slices.tif"))
-            elif load == "projection":
-                array_images = app.slice_atlas.array_projection
-            elif load == "projection_corrected":
-                array_images = app.slice_atlas.array_projection_corrected
-            elif load == "original_data":
-                array_images = SliceData.return_padded_original_images()
-            elif load == "atlas_boundaries":
-                array_images = app.slice_atlas.array_projection
-                only_boundaries = True
-                if atlas_contours is False:
-                    print("BUG: atlas contour must be True if array_image is not provided")
-            array_coordinates_high_res = app.slice_atlas.array_coordinates_high_res
-            return [
-                SliceData.return_images_figure(
-                    array_images, i, array_coordinates_high_res, atlas_contours, atlas_hover, only_boundaries
-                )
-                for i in range(array_images.shape[0])
-            ]
 
-    @staticmethod
-    def pickle_array_figures(load="warped_data", atlas_contours=False, atlas_hover=False):
-        list_fig = SliceData.load_array_figures(
-            from_pickle=False, load=load, atlas_contours=atlas_contours, atlas_hover=atlas_hover
+        # Store them as arrays in a list
+        l_array_slices = []
+        for i in range(n_slices):
+            filename = path + "slice_" + str(i + 1) + ".tiff"
+            l_array_slices.append(np.array(io.imread(filename), dtype=np.int16)[:, :, 2])
+
+        # Find the size of the biggest image
+        max_size = (
+            np.max([array_slice.shape[0] for array_slice in l_array_slices]),
+            np.max([array_slice.shape[1] for array_slice in l_array_slices]),
         )
-        path = (
-            "data/pickled_data/load_figures_slider/figures_slices_"
-            + str(load)
-            + "_"
-            + str(atlas_contours)
-            + "_"
-            + str(atlas_hover)
-            + ".pickle"
+
+        # Pad the images with zeros (we add +-0.1 in case we need to round above or below 0.5 if odd dimension)
+        l_array_slices = [
+            np.pad(
+                array_slice,
+                (
+                    (
+                        int(round(max_size[0] - array_slice.shape[0] / 2 - 0.1)),
+                        int(round(max_size[0] - array_slice.shape[0] / 2 + 0.1)),
+                    ),
+                    (
+                        int(round(max_size[1] - array_slice.shape[1] / 2 - 0.1)),
+                        int(round(max_size[1] - array_slice.shape[1] / 2 + 0.1)),
+                    ),
+                ),
+            )
+            for array_slice in l_array_slices
+        ]
+
+        return np.array(l_array_slices)
+
+    def compute_figure_basic_image(self, array_image, atlas_contours=None, only_boundaries=False):
+
+        # Create figure
+        fig = go.Figure()
+
+        # Compute image from our data if not only the atlas annotations are requested
+        if not only_boundaries:
+
+            fig.add_trace(go.Image(visible=True, source=turn_image_into_base64_string(array_image), hoverinfo="none",))
+
+            # Add the labels only if it's not a simple annotation illustration
+            fig.update_xaxes(title_text=self._atlas.bg_atlas.space.axis_labels[0][1])
+            fig.update_yaxes(title_text=self._atlas.bg_atlas.space.axis_labels[0][0])
+
+        if atlas_contours is not None:
+            fig.add_trace(atlas_contours)
+
+        # Improve layout
+        fig.update_xaxes(showticklabels=False)
+        fig.update_yaxes(showticklabels=False)
+        fig.update_layout(
+            margin=dict(t=20, r=0, b=10, l=0),
+            xaxis={"showgrid": False},
+            yaxis={"showgrid": False},
+            paper_bgcolor="rgba(0,0,0,0)",
+            plot_bgcolor="rgba(0,0,0,0)",
         )
-        with open(path, "wb") as slice_file:
-            pickle.dump(list_fig, slice_file)
-        return list_fig
+
+        return fig
+
+    def compute_array_figures_basic_image(self, type_figure="warped_data"):
+
+        # Either the requested figure is just a simple atlas annotation, with no background
+        if type_figure == "atlas_boundaries":
+            return [
+                self.compute_figure_basic_image(
+                    None, atlas_contours=self._atlas.list_projected_atlas_borders_figures[i], only_boundaries=True,
+                )
+                for i in range(self._data.get_slice_number())
+            ]
+        else:
+            array_images = None
+            if type_figure == "original_data":
+                array_images = self.compute_padded_original_images()
+            elif type_figure == "warped_data":
+                array_images = np.array(io.imread("data/tiff_files/warped_data.tif"))
+            elif type_figure == "projection":
+                warnings.warn("This feature is not implemented anymore.")
+                # array_images = self._atlas.array_projection
+            elif type_figure == "projection_corrected":
+                array_images = self._atlas.array_projection_corrected
+            elif type_figure == "atlas":
+                array_projected_images_atlas, array_projected_simplified_id = self._atlas.compute_array_images_atlas()
+                array_images = array_projected_images_atlas
+
+            if array_images is None:
+                raise ValueError("array_images has not been assigned, can't proceed.")
+            return [
+                self.compute_figure_basic_image(
+                    array_images[i],
+                    atlas_contours=self._atlas.list_projected_atlas_borders_figures[i],
+                    only_boundaries=False,
+                )
+                for i in range(self._data.get_slice_number())
+            ]
 
     ###### FUNCTIONS RETURNING APP GRAPHS ######
     """
@@ -515,115 +555,6 @@ class Figures:
             return list_index_bound_rows, list_index_bound_column_per_row, l_mz_intensities
         else:
             return l_mz_intensities
-
-    @staticmethod
-    def return_images_figure(
-        array_images,
-        index_image,
-        array_coordinates_high_res=None,
-        atlas_contours=False,
-        atlas_hover=False,
-        only_boundaries=False,
-    ):
-
-        fig = go.Figure()
-
-        # compute image from our data
-        if not only_boundaries:
-            img = np.uint8(cm.viridis(array_images[index_image]) * 255)
-            pil_img = Image.fromarray(img)  # PIL image object
-            prefix = "data:image/png;base64,"
-            with BytesIO() as stream:
-                # Optimize the quality as the figure will be pickled, so this line of code won't run live
-                pil_img.save(stream, format="png", optimize=True, quality=85)
-                base64_string_exp = prefix + base64.b64encode(stream.getvalue()).decode("utf-8")
-            projected_labels = None
-
-            # the customdata for annotation must be given to different traces depending if atlas_contours or not
-            # if not atlas_contours:
-            fig.add_trace(
-                go.Image(
-                    visible=True,
-                    source=base64_string_exp,
-                    customdata=projected_labels if atlas_hover else None,
-                    hovertemplate="<br>%{customdata}<br><extra></extra>" if atlas_hover else "",
-                    hoverinfo="all" if atlas_hover else "none",
-                )
-            )
-
-        if atlas_contours:
-            fig.add_trace(app.slice_atlas.list_projected_atlas_borders_figures[index_image])
-
-        # else:
-        #    fig.add_trace(go.Image(visible=True, source=base64_string_exp))
-        #
-        #    fig.add_trace(
-        #        go.Contour(
-        #            visible=True,
-        #            showscale=False,
-        #            z=projected_simplified_labels_id,
-        #            contours=dict(coloring="none"),
-        #            line_width=2,
-        #            line_color="gold",
-        #            customdata=projected_labels if atlas_hover else None,
-        #            hovertemplate="<br>%{customdata}<br><extra></extra>" if atlas_hover else "",
-        #            hoverinfo="all" if atlas_hover else "none",
-        #        )
-        #    )
-
-        if not only_boundaries:
-            fig.update_xaxes(title_text=app.slice_atlas.bg_atlas.space.axis_labels[0][1])
-            fig.update_yaxes(title_text=app.slice_atlas.bg_atlas.space.axis_labels[0][0])
-
-        fig.update_xaxes(showticklabels=False)
-        fig.update_yaxes(showticklabels=False)
-        fig.update_layout(
-            margin=dict(t=20, r=0, b=10, l=0),
-            xaxis={"showgrid": False},
-            yaxis={"showgrid": False},
-            paper_bgcolor="rgba(0,0,0,0)",
-            plot_bgcolor="rgba(0,0,0,0)",
-        )
-
-        # fig = px.imshow(255 - array_images[index_image], binary_string=True)
-
-        return fig
-
-    @staticmethod
-    def return_padded_original_images():
-        path = "data/tif_files/original_slices/"
-        n_slices = len([x for x in os.listdir(path) if "slice_" in x])
-        l_array_slices = []
-        for i in range(n_slices):
-            filename = path + "slice_" + str(i + 1) + ".tiff"
-            l_array_slices.append(np.array(io.imread(filename), dtype=np.int16)[:, :, 2])
-
-        max_size = (
-            np.max([array_slice.shape[0] for array_slice in l_array_slices]),
-            np.max([array_slice.shape[1] for array_slice in l_array_slices]),
-        )
-
-        l_array_slices = [
-            np.pad(
-                array_slice,
-                (
-                    (
-                        int(
-                            round(max_size[0] - array_slice.shape[0] / 2 - 0.1)
-                        ),  # +-0.1 in case we need to round above or below 0.5 if odd dimension
-                        int(round(max_size[0] - array_slice.shape[0] / 2 + 0.1)),
-                    ),
-                    (
-                        int(round(max_size[1] - array_slice.shape[1] / 2 - 0.1)),
-                        int(round(max_size[1] - array_slice.shape[1] / 2 + 0.1)),
-                    ),
-                ),
-            )
-            for array_slice in l_array_slices
-        ]
-
-        return np.array(l_array_slices)
-
 
 
     @staticmethod
