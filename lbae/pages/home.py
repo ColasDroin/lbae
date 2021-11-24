@@ -3,7 +3,7 @@
 import dash_bootstrap_components as dbc
 from dash.dependencies import Input, Output, State
 from dash import dcc, html
-import app
+from lbae import app
 
 ###### DEFFINE PAGE LAYOUT ######
 

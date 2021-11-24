@@ -6,10 +6,10 @@ import dash_bootstrap_components as dbc
 import flask
 
 # Homemade modules
-from modules.maldi_data import MaldiData
-from modules.figures import Figures
-from modules.atlas import Atlas
-from modules.tools.misc import return_pickled_object
+from lbae.modules.maldi_data import MaldiData
+from lbae.modules.figures import Figures
+from lbae.modules.atlas import Atlas
+from lbae.modules.tools.misc import return_pickled_object
 
 ###### APP PRE-COMPUTATIONS ######
 
@@ -83,6 +83,7 @@ list_array_warped_data_boundaries = return_pickled_object(
     plot_atlas_contours=True,
 )
 
+# ! Computing this takes a lot of time
 list_array_images_atlas_boundaries = return_pickled_object(
     "figures/load_page",
     "array_figures_basic_image",
@@ -101,7 +102,7 @@ list_array_projection_corrected_boundaries = return_pickled_object(
     plot_atlas_contours=True,
 )
 
-list_array_projection_corrected_boundaries = return_pickled_object(
+list_array_atlas_boundaries = return_pickled_object(
     "figures/load_page",
     "array_figures_basic_image",
     force_update=False,

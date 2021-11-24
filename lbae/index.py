@@ -6,19 +6,20 @@ from dash import dcc, html
 from dash.dependencies import Input, Output, State
 import uuid
 import dash_loading_spinners as dls
+import os
 
-# App modules
-from app import app, data
-from pages import (
+# Homemade modules
+from lbae.app import app, data
+from lbae.pages import (
     sidebar,
     home,
     load_slice,
     # lipid_selection,
-    # lipid_selection_all_slices,
+    lipid_selection_all_slices,
     # region_analysis,
     # threeD_exploration,
 )
-from config import basic_config
+from lbae.config import basic_config
 
 ###### DEFINE APP LAYOUT ######
 
@@ -111,7 +112,7 @@ app.validation_layout = html.Div(
         home.layout,
         load_slice.return_layout(basic_config=basic_config, initial_slice=initial_slice),
         # lipid_selection.return_layout(),
-        # lipid_selection_all_slices.return_layout(),
+        lipid_selection_all_slices.return_layout(),
         # region_analysis.return_layout(),
         # threeD_exploration.return_layout(),
     ]
@@ -138,14 +139,14 @@ def render_page_content(pathname, slice_index):
     # elif pathname == "/lipid-selection":
     #     page = (lipid_selection.return_layout(slice_index=slice_index),)
 
-    # elif pathname == "/lipid-selection-all-slices":
-    #     page = (lipid_selection_all_slices.return_layout(),)
+    elif pathname == "/lipid-selection-all-slices":
+        page = (lipid_selection_all_slices.return_layout(),)
 
     # elif pathname == "/region-analysis":
     #     page = (region_analysis.return_layout(slice_index=slice_index),)
 
     # elif pathname == "/3D-exploration":
-    #     page = (threeD_exploration.return_layout(),)
+    #    page = (threeD_exploration.return_layout(),)
 
     else:
         # If the user tries to reach a different page, return a 404 message
@@ -159,8 +160,12 @@ def render_page_content(pathname, slice_index):
     return page, ""
 
 
-# Run app from local console (not gunicorn)
-if __name__ == "__main__":
+def run():
     app.run_server(port=8060, debug=False)
+
+
+# Run app from local console (not gunicorn)
+# if __name__ == "__main__":
+#    app.run_server(port=8060, debug=False)
 
 # pkill -P1 gunicorn

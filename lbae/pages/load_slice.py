@@ -9,11 +9,8 @@ import numpy as np
 import dash_draggable
 
 # App module
-import app
-import config
-
-# Data module
-from modules.figures import Figures
+from lbae import app
+from lbae import config
 
 ###### DEFFINE PAGE LAYOUT ######
 

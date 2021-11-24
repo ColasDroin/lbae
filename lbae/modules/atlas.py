@@ -16,7 +16,7 @@ from skimage import io
 import warnings
 
 # Homemade functions
-from modules.tools.atlas import (
+from lbae.modules.tools.atlas import (
     project_atlas_mask,
     get_array_rows_from_atlas_mask,
     fill_array_projection,
@@ -164,8 +164,8 @@ class Atlas:
 
     def compute_projection_parameters(self):
         l_transform_parameters = []
-        for index_slice in range(self.array_coordinates_warped_data.shape[0]):
-            a_atlas, u_atlas, v_atlas = solve_plane_equation(index_slice, self.array_coordinates_warped_data)
+        for slice_index in range(self.array_coordinates_warped_data.shape[0]):
+            a_atlas, u_atlas, v_atlas = solve_plane_equation(slice_index, self.array_coordinates_warped_data)
             l_transform_parameters.append((a_atlas, u_atlas, v_atlas))
         return l_transform_parameters
 
@@ -201,6 +201,7 @@ class Atlas:
             l_figures.append(go.Image(visible=True, source=base64_string, zsmooth="fast", hoverinfo="none"))
         return l_figures
 
+    # ! This is very slow, can I pickle it?
     def compute_array_images_atlas(self):
         array_images = np.empty(self.array_coordinates_warped_data.shape[:-1], dtype=np.uint8)
         array_projected_simplified_id = np.full(
@@ -226,167 +227,6 @@ class Atlas:
         return array_images, array_projected_simplified_id
 
     """
-    def return_atlas_with_slider(self, view="frontal", contour=False, hover_data=False, force_recompute=False):
-        path = "data/pickled_data/atlas_figures_slider/"
-        name_fig = "figure_slider_atlas_" + view + "_" + str(contour) + "_" + str(hover_data) + ".pickle"
-        if name_fig in os.listdir(path) and not force_recompute:
-            with open(path + name_fig, "rb") as atlas_file:
-                return pickle.load(atlas_file)
-        else:
-            fig = self.compute_atlas_with_slider(view=view, contour=contour, hover_data=hover_data)
-            with open(path + name_fig, "wb") as atlas_file:
-                pickle.dump(fig, atlas_file)
-            return fig
-
-    def compute_atlas_with_slider(self, view="frontal", contour=False, hover_data=False):
-        # Check that the given view exists
-        if view not in ("frontal", "horizontal", "sagittal"):
-            print(
-                "The provided view must be of of the following: frontal, horizontal, or sagittal. Back to default, i.e. frontal"
-            )
-            view = "frontal"
-
-        if view == "frontal":
-            idx_view = 0
-            axis_labels = self.bg_atlas.space.axis_labels[0]
-        elif view == "horizontal":
-            idx_view = 1
-            axis_labels = self.bg_atlas.space.axis_labels[1]
-        elif view == "sagittal":
-            idx_view = 2
-            axis_labels = self.bg_atlas.space.axis_labels[1]
-
-        # multiplier to compute proper slice index depending if contours/mask are present or not
-        multiplier = 1
-        if contour:  # or do_stack_mask:
-            multiplier = 2
-        # if contour and do_stack_mask:
-        #    multiplier = 3
-
-        # Create figure
-        fig = go.Figure()
-
-        subsampling = list(range(0, self.bg_atlas.reference.shape[idx_view], self.subsampling_block))
-        # Add traces, one for each slider step
-        for step in subsampling:
-            if view == "frontal":
-                img = np.uint8(cm.viridis(self.bg_atlas.reference[step, :, :]) * 255)
-                customdata = self.labels[step, :, :]
-                # if do_stack_mask:
-                #    img_mask = np.uint8(cm.gray(stack_mask[step,:,:])*255)
-            elif view == "horizontal":
-                img = np.uint8(cm.viridis(self.bg_atlas.reference[:, step, :]) * 255)
-                customdata = self.labels[:, step, :]
-                # if do_stack_mask:
-                #    img_mask = np.uint8(cm.gray(stack_mask[:,step,:])*255)
-            elif view == "sagittal":
-                img = np.uint8(cm.viridis(self.bg_atlas.reference[:, :, step]) * 255)
-                customdata = self.labels[:, :, step]
-                # if do_stack_mask:
-                #    img_mask = np.uint8(cm.gray(stack_mask[:,:,step])*255)
-
-            pil_img = Image.fromarray(img)  # PIL image object
-            prefix = "data:image/png;base64,"
-            with BytesIO() as stream:
-                # Optimize the quality as the figure will be pickled and this line of code won't be run live
-                pil_img.save(stream, format="png", optimize=True, quality=85)
-                base64_string = prefix + base64.b64encode(stream.getvalue()).decode("utf-8")
-
-            if not contour:
-                fig.add_trace(
-                    go.Image(
-                        visible=True,
-                        source=base64_string,
-                        customdata=customdata if hover_data else None,
-                        hovertemplate="<br>%{customdata}<br><extra></extra>" if hover_data else "",
-                        hoverinfo="all" if hover_data else "none",
-                    )
-                )
-
-            else:
-                fig.add_trace(go.Image(visible=True, source=base64_string))
-
-                if view == "frontal":
-                    contour = self.simplified_labels_int[step, :, :]
-                elif view == "horizontal":
-                    contour = self.simplified_labels_int[:, step, :]
-                elif view == "sagittal":
-                    contour = self.simplified_labels_int[:, :, step]
-
-                fig.add_trace(
-                    go.Contour(
-                        visible=False,
-                        showscale=False,
-                        z=contour,
-                        contours=dict(coloring="none"),
-                        line_width=2,
-                        line_color="gold",
-                        customdata=customdata if hover_data else None,
-                        hovertemplate="<br>%{customdata}<br><extra></extra>" if hover_data else "",
-                        hoverinfo="all" if hover_data else "none",
-                    )
-                )
-
-            # if do_stack_mask:
-            #    fig.add_trace(go.Image(visible=True,source=base64_string_mask, hoverinfo='skip'))
-
-        # Make 1st trace visible
-        fig.data[multiplier * 1].visible = True
-
-        # Create and add slider
-        steps = []
-        for i in range(len(fig.data) // multiplier):
-            step = dict(
-                method="update",
-                args=[{"visible": [False] * len(fig.data) * multiplier},],  # layout attribute
-                label=subsampling[i],
-            )
-            step["args"][0]["visible"][multiplier * i] = True  # Toggle i'th trace to "visible"
-            if contour:  # or do_stack_mask:
-                step["args"][0]["visible"][multiplier * i + 1] = True
-            # if contour and do_stack_mask:
-            #    step["args"][0]["visible"][multiplier*i+2] = True
-
-            steps.append(step)
-
-        sliders = [
-            dict(
-                active=10,
-                currentvalue={"visible": False,},
-                pad={"t": 50, "l": 100, "r": 100},
-                steps=steps,
-                # len = 0.4,
-                # xanchor = 'center',
-            )
-        ]
-
-        fig.update_layout(sliders=sliders)
-
-        fig.update_layout(
-            yaxis=dict(scaleanchor="x"),
-            # width=1000,
-            # height=800,
-            title={
-                "text": f"{view.capitalize()} view",
-                "y": 0.99,
-                "x": 0.5,
-                "xanchor": "center",
-                "yanchor": "top",
-                "font": dict(size=14,),
-            },
-            margin=dict(t=25, r=0, b=0, l=0),
-        )
-
-        fig.update_xaxes(title_text=axis_labels[1])
-        fig.update_yaxes(title_text=axis_labels[0])
-        fig.update_xaxes(showticklabels=False)
-        fig.update_yaxes(showticklabels=False)
-
-        return fig
-
-
-
-
 
     def get_atlas_mask(self, structure):
 
@@ -510,12 +350,6 @@ class Atlas:
             except:
                 print("Mask and spectra could not be computed for slice " + str(slice_index))
 
-
-
-    def return_sunburst_figure(self, maxdepth=3):
-        fig = px.sunburst(names=self.l_nodes, parents=self.l_parents, maxdepth=3,)
-        fig.update_layout(margin=dict(t=0, r=0, b=0, l=0),)
-        return fig
 
     def compute_root_data(self):
 

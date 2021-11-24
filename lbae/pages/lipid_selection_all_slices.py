@@ -8,22 +8,19 @@ from dash import dcc, html
 import dash
 
 # import orjson
-import json
-import pandas as pd
 from dash.dependencies import Input, Output, State
 import numpy as np
-import cProfile
 
 # Data module
-from tools.SliceData import SliceData
-
-# App module
-import app
+from lbae.config import basic_config
+from lbae.app import figures
+from lbae import app
+from lbae.modules.tools.misc import return_pickled_object
 
 ###### DEFFINE PAGE LAYOUT ######
 
 
-def return_layout(basic_config=app.basic_config):
+def return_layout(basic_config=basic_config):
 
     page = html.Div(
         children=[
@@ -84,7 +81,12 @@ def return_layout(basic_config=app.basic_config):
                                                                     "position": "absolute",
                                                                     "left": "0",
                                                                 },
-                                                                figure=SliceData.return_figure_slices_3D(),
+                                                                figure=return_pickled_object(
+                                                                    "figures/3D_page",
+                                                                    "slices_3D",
+                                                                    force_update=False,
+                                                                    compute_function=figures.compute_figure_slices_3D,
+                                                                ),
                                                             ),
                                                         ],
                                                     ),
@@ -367,15 +369,20 @@ def page_2bis_plot_graph_heatmap_mz_selection(
     elif id_input == "page-2bis-display-button":
 
         if (
-            np.sum(l_lipid_1_index) > -app.slice_atlas.n_slices
-            or np.sum(l_lipid_2_index) > -app.slice_atlas.n_slices
-            or np.sum(l_lipid_3_index) > -app.slice_atlas.n_slices
+            np.sum(l_lipid_1_index) > -app.data.get_slice_number()
+            or np.sum(l_lipid_2_index) > -app.data.get_slice_number()
+            or np.sum(l_lipid_3_index) > -app.data.get_slice_number()
         ):
 
             # Build the list of mz boundaries for each peak and each index
             lll_lipid_bounds = [
                 [
-                    [(float(app.df_annotation.iloc[index]["min"]), float(app.df_annotation.iloc[index]["max"]))]
+                    [
+                        (
+                            float(app.data.get_annotations().iloc[index]["min"]),
+                            float(app.data.get_annotations().iloc[index]["max"]),
+                        )
+                    ]
                     if index != -1
                     else None
                     for index in [lipid_1_index, lipid_2_index, lipid_3_index]
@@ -386,9 +393,9 @@ def page_2bis_plot_graph_heatmap_mz_selection(
             ]
 
             if active_tab == "page-2bis-tab-2":
-                return SliceData.compute_figure_slices_2D(lll_lipid_bounds, normalize_independently=True)
+                return figures.compute_figure_slices_2D(lll_lipid_bounds, normalize_independently=True)
             if active_tab == "page-2bis-tab-3":
-                return SliceData.compute_figure_bubbles_3D(lll_lipid_bounds, normalize_independently=False)
+                return figures.compute_figure_bubbles_3D(lll_lipid_bounds, normalize_independently=False)
 
         else:
             # probably the page has just been loaded, so do nothing
@@ -421,19 +428,20 @@ def page_2bis_handle_dropdowns(name, structure, options_names, options_structure
     # when second one is set, the last one option is computed
 
     if len(id_input) == 0 or id_input == "dcc-store-slice-index":
-        options_names = [{"label": name, "value": name} for name in sorted(app.df_annotation.name.unique())]
+        options_names = [{"label": name, "value": name} for name in sorted(app.data.get_annotations().name.unique())]
         return options_names, [], [], None, None, None
 
     elif name is not None:
         if id_input == "page-2bis-dropdown-lipid-names":
-            structures = app.df_annotation[app.df_annotation["name"] == name].structure.unique()
+            structures = app.data.get_annotations()[app.data.get_annotations()["name"] == name].structure.unique()
             options_structures = [{"label": structure, "value": structure} for structure in sorted(structures)]
             return options_names, options_structures, [], name, None, None
 
         elif structure is not None:
             if id_input == "page-2bis-dropdown-lipid-structures":
-                cations = app.df_annotation[
-                    (app.df_annotation["name"] == name) & (app.df_annotation["structure"] == structure)
+                cations = app.data.get_annotations()[
+                    (app.data.get_annotations()["name"] == name)
+                    & (app.data.get_annotations()["structure"] == structure)
                 ].cation.unique()
                 options_cations = [{"label": cation, "value": cation} for cation in sorted(cations)]
                 return options_names, options_structures, options_cations, name, structure, None
@@ -487,7 +495,7 @@ def page_2bis_add_toast_selection(
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
     value_input = dash.callback_context.triggered[0]["prop_id"].split(".")[1]
 
-    empty_lipid_list = [-1 for i in range(app.slice_atlas.n_slices)]
+    empty_lipid_list = [-1 for i in range(app.data.get_slice_number())]
     # Take advantage of dash bug that automatically triggers 'page-2bis-dropdown-lipid-cations'
     # everytime the page is loaded, and prevent using dcc-store-slice-index as an input
     # if page-2bis-dropdown-lipid-cations is called while there's no lipid name defined, it means the page just got loaded
@@ -531,15 +539,19 @@ def page_2bis_add_toast_selection(
     # Otherwise, add lipid to selection
     elif cation is not None and id_input == "page-2bis-dropdown-lipid-cations":
 
-        for slice_index in range(app.slice_atlas.n_slices):
+        for slice_index in range(app.data.get_slice_number()):
 
             # Find lipid location
-            l_lipid_loc = app.df_annotation.index[
-                (app.df_annotation["name"] == name)
-                & (app.df_annotation["structure"] == structure)
-                & (app.df_annotation["slice"] == slice_index)
-                & (app.df_annotation["cation"] == cation)
-            ].tolist()
+            l_lipid_loc = (
+                app.data.get_annotations()
+                .index[
+                    (app.data.get_annotations()["name"] == name)
+                    & (app.data.get_annotations()["structure"] == structure)
+                    & (app.data.get_annotations()["slice"] == slice_index)
+                    & (app.data.get_annotations()["cation"] == cation)
+                ]
+                .tolist()
+            )
             # If several lipids correspond to the selection, we have a problem...
             if len(l_lipid_loc) > 1:
                 print("BUG: more than one lipid corresponds to the selection")
@@ -555,17 +567,17 @@ def page_2bis_add_toast_selection(
             if not bool_toast_1:
                 header_1 = lipid_string
                 l_lipid_1_index[slice_index] = l_lipid_loc[0]
-                if slice_index == app.slice_atlas.n_slices - 1:
+                if slice_index == app.data.get_slice_number() - 1:
                     bool_toast_1 = True
             elif not bool_toast_2:
                 header_2 = lipid_string
                 l_lipid_2_index[slice_index] = l_lipid_loc[0]
-                if slice_index == app.slice_atlas.n_slices - 1:
+                if slice_index == app.data.get_slice_number() - 1:
                     bool_toast_2 = True
             elif not bool_toast_3:
                 header_3 = lipid_string
                 l_lipid_3_index[slice_index] = l_lipid_loc[0]
-                if slice_index == app.slice_atlas.n_slices - 1:
+                if slice_index == app.data.get_slice_number() - 1:
                     bool_toast_3 = True
             else:
                 print("BUG, more than 3 lipids have been selected")
@@ -601,9 +613,9 @@ def page_2bis_disable_dropdowns(l_lipid_1_index, l_lipid_2_index, l_lipid_3_inde
 
     # If all slots are taken, disable all dropdowns
     if (
-        np.sum(l_lipid_1_index) > -app.slice_atlas.n_slices
-        and np.sum(l_lipid_2_index) > -app.slice_atlas.n_slices
-        and np.sum(l_lipid_3_index) > -app.slice_atlas.n_slices
+        np.sum(l_lipid_1_index) > -app.data.get_slice_number()
+        and np.sum(l_lipid_2_index) > -app.data.get_slice_number()
+        and np.sum(l_lipid_3_index) > -app.data.get_slice_number()
     ):
         return True, True, True, "mt-1 text-center"
     else:
@@ -618,7 +630,7 @@ def page_2bis_disable_dropdowns(l_lipid_1_index, l_lipid_2_index, l_lipid_3_inde
 )
 def tab_2_active_download(l_lipid_1_index, l_lipid_2_index, l_lipid_3_index):
     # If lipids has been selected from the dropdown, activate button
-    if np.sum(l_lipid_1_index + l_lipid_2_index + l_lipid_3_index) > -3 * app.slice_atlas.n_slices:
+    if np.sum(l_lipid_1_index + l_lipid_2_index + l_lipid_3_index) > -3 * app.data.get_slice_number():
         return False
     else:
         return True

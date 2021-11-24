@@ -302,7 +302,7 @@ def process_raw_data(
         Depending on 'return result', returns either nothing, either several np.ndarrays, described above.
     """
     # Get slice path
-    index_slice = t_index_path[0]
+    slice_index = t_index_path[0]
     name = t_index_path[1]
 
     # Load file in high and low resolution
@@ -353,7 +353,7 @@ def process_raw_data(
         print("Saving : " + name)
         if len(t_index_path) > 2:
             np.savez(
-                output_path + "slice_" + str(index_slice) + "_bis" + appendix + ".npz",
+                output_path + "slice_" + str(slice_index) + "_bis" + appendix + ".npz",
                 array_pixel_indexes_high_res=array_pixel_indexes_high_res,
                 array_spectra_high_res=array_spectra_high_res,
                 array_averaged_mz_intensity_low_res=array_averaged_mz_intensity_low_res,
@@ -363,7 +363,7 @@ def process_raw_data(
 
         else:
             np.savez(
-                output_path + "slice_" + str(index_slice) + appendix + ".npz",
+                output_path + "slice_" + str(slice_index) + appendix + ".npz",
                 array_pixel_indexes_high_res=array_pixel_indexes_high_res,
                 array_spectra_high_res=array_spectra_high_res,
                 array_averaged_mz_intensity_low_res=array_averaged_mz_intensity_low_res,

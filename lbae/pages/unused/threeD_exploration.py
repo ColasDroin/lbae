@@ -7,19 +7,16 @@ from dash import dcc, html
 # from dash.dependencies import Input, Output, State
 from dash.dependencies import Input, Output, State
 import dash
-import plotly.graph_objects as go
-import numpy as np
-import pandas as pd
 
 # App module
-import app
-from tools.SliceData import SliceData
-
+from lbae import config
+from lbae.app import figures
+from lbae.modules.tools.misc import return_pickled_object
 
 ###### DEFFINE PAGE LAYOUT ######
 
 
-def return_layout(basic_config=app.basic_config, slice_index=1):
+def return_layout(basic_config=config.basic_config, slice_index=1):
 
     page = html.Div(
         children=[
@@ -53,7 +50,12 @@ def return_layout(basic_config=app.basic_config, slice_index=1):
                                                             }
                                                         },
                                                         style={},
-                                                        figure=app.slice_atlas.return_sunburst_figure(),
+                                                        figure=return_pickled_object(
+                                                            "figures/3D_page",
+                                                            "sunburst",
+                                                            force_update=False,
+                                                            compute_function=figures.compute_sunburst_figure,
+                                                        ),
                                                     ),
                                                 ],
                                             ),
@@ -107,8 +109,13 @@ def return_layout(basic_config=app.basic_config, slice_index=1):
                                                             "position": "absolute",
                                                             "left": "0",
                                                         },
-                                                        figure=app.slice_atlas.return_atlas_with_slider(
-                                                            view="frontal", contour=False
+                                                        figure=return_pickled_object(
+                                                            "figures/3D_page",
+                                                            "atlas_with_slider",
+                                                            force_update=False,
+                                                            compute_function=figures.compute_atlas_with_slider,
+                                                            view="frontal",
+                                                            contour=False,
                                                         ),
                                                     ),
                                                     html.P(

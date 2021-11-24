@@ -50,6 +50,23 @@ def turn_image_into_base64_string(image, colormap=cm.viridis, reverse_colorscale
     # Turn array into PIL image object
     pil_img = Image.fromarray(img)
 
+    # Do the string conversion into base64 string
+    return base_64_string_conversion(pil_img)
+
+def turn_RGB_image_into_base64_string(image, colormap=cm.viridis):
+    
+    # Convert image to PIL image
+    pil_img = Image.fromarray(image, "RGB")  # PIL image object
+    x, y = pil_img.size
+
+    # Decrease resolution to save space
+    x2, y2 = int(round(x / 2)), int(round(y / 2))
+    pil_img = pil_img.resize((x2, y2), Image.ANTIALIAS)
+
+    # Do the string conversion into base64 string
+    return base_64_string_conversion(pil_img)
+
+def base_64_string_conversion(pil_img):
     # Convert to base64 string
     base64_string = None
     with BytesIO() as stream:
@@ -57,3 +74,8 @@ def turn_image_into_base64_string(image, colormap=cm.viridis, reverse_colorscale
         pil_img.save(stream, format="png", optimize=True, quality=85)
         base64_string = "data:image/png;base64," + base64.b64encode(stream.getvalue()).decode("utf-8")
     return base64_string
+
+
+
+
+

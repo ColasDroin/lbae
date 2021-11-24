@@ -6,12 +6,12 @@ from numba import njit
 
 ###### DEFINE UTILITY FUNCTIONS ######
 @njit
-def project_image(index_slice, original_image, array_projection_correspondence):
+def project_image(slice_index, original_image, array_projection_correspondence):
     """This function is used to project the original maldi acquisition (low-resolution, possibly tilted, and) into a 
     warped and higher resolution, indexed with the Allen Mouse Brain Common Coordinate Framework (ccfv3).
 
     Args:
-        index_slice (int): Index of the slice to project.
+        slice_index (int): Index of the slice to project.
         original_image (np.ndarray): A two-dimensional array representing the MADI data of the current slice (e.g. for a 
             given lipid selection). 
         array_projection_correspondence (np.ndarray): A three-dimensional array which associates, to each triplet of 
@@ -22,17 +22,17 @@ def project_image(index_slice, original_image, array_projection_correspondence):
         np.ndarray: A warped, high-resolution image, corresponding to the clean, registered version, of our acquisition.
     """
     # Correct index as slice names start at 1
-    index_slice -= 1
+    slice_index -= 1
 
     # Define empty array for the high-resolution image
     new_image = np.zeros(array_projection_correspondence.shape[1:-1], dtype=original_image.dtype)
 
     # Exclude the borders of the image to gain some time
-    for i in range(50, array_projection_correspondence[index_slice].shape[0] - 50):
-        for j in range(50, array_projection_correspondence[index_slice].shape[1] - 50):
+    for i in range(50, array_projection_correspondence[slice_index].shape[0] - 50):
+        for j in range(50, array_projection_correspondence[slice_index].shape[1] - 50):
             # Maps the original coordinates to the new one, with coordinate -1 corresponding to unassigned
-            if array_projection_correspondence[index_slice, i, j, 0] != -1:
-                x, y = array_projection_correspondence[index_slice, i, j]
+            if array_projection_correspondence[slice_index, i, j, 0] != -1:
+                x, y = array_projection_correspondence[slice_index, i, j]
                 new_image[i, j] = original_image[x, y]
 
     return new_image
@@ -150,7 +150,7 @@ def get_array_rows_from_atlas_mask(mask, mask_remapped, array_projection_corresp
 
 @njit
 def solve_plane_equation(
-    index_slice, array_coordinates_high_res, point_1=(150, 151), point_2=(800, 1200), point_3=(100, 101)
+    slice_index, array_coordinates_high_res, point_1=(150, 151), point_2=(800, 1200), point_3=(100, 101)
 ):
     """This function defines and solves a system of linear equations for three points of the plane (which corresponds to
     a slice in the ccfv3). The vectors returned by the function enable to index the 2D slice in the 3D atlas space 
@@ -158,7 +158,7 @@ def solve_plane_equation(
     slice, as the registration made with ABBA is buggued and the origin doesn't linearly maps to the 3D plane.
 
     Args:
-        index_slice (int): Index of the slice to parametrize in space.
+        slice_index (int): Index of the slice to parametrize in space.
         array_coordinates_high_res (np.ndarray): A three-dimensional array which maps the high-dimensional warped data 
             to the atlas coordinate system. That is, for each 3-D coordinate (slice_index,x,y), it associates a 3D 
             coordinate (i,j,k) in the ccfv3.
@@ -188,15 +188,15 @@ def solve_plane_equation(
     A[7] = [0, point_3[0], 0, 0, point_3[1], 0, 0, 1, 0]
     A[8] = [0, 0, point_3[0], 0, 0, point_3[1], 0, 0, 1]
 
-    b[0] = array_coordinates_high_res[index_slice, point_1[0], point_1[1], 0]
-    b[1] = array_coordinates_high_res[index_slice, point_1[0], point_1[1], 1]
-    b[2] = array_coordinates_high_res[index_slice, point_1[0], point_1[1], 2]
-    b[3] = array_coordinates_high_res[index_slice, point_2[0], point_2[1], 0]
-    b[4] = array_coordinates_high_res[index_slice, point_2[0], point_2[1], 1]
-    b[5] = array_coordinates_high_res[index_slice, point_2[0], point_2[1], 2]
-    b[6] = array_coordinates_high_res[index_slice, point_3[0], point_3[1], 0]
-    b[7] = array_coordinates_high_res[index_slice, point_3[0], point_3[1], 1]
-    b[8] = array_coordinates_high_res[index_slice, point_3[0], point_3[1], 2]
+    b[0] = array_coordinates_high_res[slice_index, point_1[0], point_1[1], 0]
+    b[1] = array_coordinates_high_res[slice_index, point_1[0], point_1[1], 1]
+    b[2] = array_coordinates_high_res[slice_index, point_1[0], point_1[1], 2]
+    b[3] = array_coordinates_high_res[slice_index, point_2[0], point_2[1], 0]
+    b[4] = array_coordinates_high_res[slice_index, point_2[0], point_2[1], 1]
+    b[5] = array_coordinates_high_res[slice_index, point_2[0], point_2[1], 2]
+    b[6] = array_coordinates_high_res[slice_index, point_3[0], point_3[1], 0]
+    b[7] = array_coordinates_high_res[slice_index, point_3[0], point_3[1], 1]
+    b[8] = array_coordinates_high_res[slice_index, point_3[0], point_3[1], 2]
 
     # Invert the system of equation
     u1, u2, u3, v1, v2, v3, a1, a2, a3 = np.linalg.solve(A, b)
@@ -230,7 +230,7 @@ def slice_to_atlas_transform(a, u, v, lambd, mu):
 
 @njit
 def fill_array_projection(
-    index_slice,
+    slice_index,
     array_projection,
     array_projection_filling,
     array_projection_correspondence,
@@ -252,7 +252,7 @@ def fill_array_projection(
     mapped according to the second array, array_projection_correspondence.
     
     Args:
-        index_slice (int): Index of the slice to parametrize in space.
+        slice_index (int): Index of the slice to parametrize in space.
         array_projection (np.ndarray): An empty, high-resolution, three-dimensional array which, at the end of the 
             function, should contain the data (one integer per coordinate, corresponding to a pixel intensity) from our 
             original acquisition. Note that, if no correction is applied, since the original acquisition has a way lower 
@@ -309,9 +309,9 @@ def fill_array_projection(
             # If the high-resolution coordinate found be inversion exists, fill array_projection
             if i < array_projection.shape[1] and j < array_projection.shape[2] and i > 0 and j > 0:
                 try:
-                    array_projection[index_slice, i, j] = original_slice[i_original_slice, j_original_slice, 2]
-                    array_projection_filling[index_slice, i, j] = 1
-                    array_projection_correspondence[index_slice, i, j] = [i_original_slice, j_original_slice]
+                    array_projection[slice_index, i, j] = original_slice[i_original_slice, j_original_slice, 2]
+                    array_projection_filling[slice_index, i, j] = 1
+                    array_projection_correspondence[slice_index, i, j] = [i_original_slice, j_original_slice]
                 except:
                     raise ValueError
                     logging.info(
@@ -324,7 +324,7 @@ def fill_array_projection(
             for j in range(array_projection.shape[2]):
 
                 # Look for the 3D atlas coordinate of out data
-                x_atlas, y_atlas, z_atlas = array_coordinates_high_res[index_slice, i, j] * 1000 / atlas_resolution
+                x_atlas, y_atlas, z_atlas = array_coordinates_high_res[slice_index, i, j] * 1000 / atlas_resolution
 
                 # Ugly again, but numba doesn't support np.round
                 x_atlas = int(round(x_atlas))
@@ -348,7 +348,7 @@ def fill_array_projection(
 
                             # If the pixel hasn't already been dealt with before (because of the way the projection is
                             # done and warping, this may happen)
-                            if array_projection_filling[index_slice, i, j] == 0:
+                            if array_projection_filling[slice_index, i, j] == 0:
 
                                 # Only fill missing areas if far from the sides
                                 if (
@@ -371,11 +371,11 @@ def fill_array_projection(
                                                 and j + x > 0
                                                 and j + y < array_projection.shape[2]
                                             ):
-                                                if array_projection_filling[index_slice, i + x, j + y] == 0:
+                                                if array_projection_filling[slice_index, i + x, j + y] == 0:
                                                     array_window[x + radius, y + radius] = np.nan
                                                 else:
                                                     array_window[x + radius, y + radius] = array_projection[
-                                                        index_slice, i + x, j + y
+                                                        slice_index, i + x, j + y
                                                     ]
                                     avg = np.nanmean(array_window)
                                     if np.isnan(avg):
@@ -393,25 +393,25 @@ def fill_array_projection(
                                                 selected_pixel_y = y
 
                                     # Fill the pixel in array projection with the most represented value in the window
-                                    array_projection[index_slice, i, j] = array_window[
+                                    array_projection[slice_index, i, j] = array_window[
                                         selected_pixel_x, selected_pixel_y
                                     ]
                                     array_projection_correspondence[
-                                        index_slice, i, j
+                                        slice_index, i, j
                                     ] = array_projection_correspondence[
-                                        index_slice, i + selected_pixel_x - radius, j + selected_pixel_y - radius
+                                        slice_index, i + selected_pixel_x - radius, j + selected_pixel_y - radius
                                     ]
                     # Wipe the pixels values that are not annotated in the atlas
                     elif atlas_correction:
-                        array_projection[index_slice, i, j] = 0
-                        array_projection_filling[index_slice, i, j] = 1
-                        array_projection_correspondence[index_slice, i, j] = [-1, -1]
+                        array_projection[slice_index, i, j] = 0
+                        array_projection_filling[slice_index, i, j] = 1
+                        array_projection_correspondence[slice_index, i, j] = [-1, -1]
 
                 # Wipe the pixels values that are not in the ccfv3
                 elif atlas_correction:
-                    array_projection[index_slice, i, j] = 0
-                    array_projection_filling[index_slice, i, j] = 1
-                    array_projection_correspondence[index_slice, i, j] = [-1, -1]
+                    array_projection[slice_index, i, j] = 0
+                    array_projection_filling[slice_index, i, j] = 1
+                    array_projection_correspondence[slice_index, i, j] = [-1, -1]
 
     return array_projection, array_projection_correspondence
 
