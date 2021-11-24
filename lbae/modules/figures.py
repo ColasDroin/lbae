@@ -94,7 +94,7 @@ class Figures:
 
         return fig
 
-    def compute_array_figures_basic_image(self, type_figure="warped_data"):
+    def compute_array_figures_basic_image(self, type_figure="warped_data", plot_atlas_contours=False):
 
         # Either the requested figure is just a simple atlas annotation, with no background
         if type_figure == "atlas_boundaries":
@@ -124,7 +124,9 @@ class Figures:
             return [
                 self.compute_figure_basic_image(
                     array_images[i],
-                    atlas_contours=self._atlas.list_projected_atlas_borders_figures[i],
+                    atlas_contours=self._atlas.list_projected_atlas_borders_figures[i]
+                    if plot_atlas_contours
+                    else None,
                     only_boundaries=False,
                 )
                 for i in range(self._data.get_slice_number())

@@ -5,13 +5,10 @@ import dash_bootstrap_components as dbc
 from dash import dcc, html
 from dash.dependencies import Input, Output, State
 import uuid
-import dash
-import time
 import dash_loading_spinners as dls
-import orjson
 
 # App modules
-from app import app, initial_slice, slice_atlas
+from app import app
 from pages import (
     sidebar,
     home,
@@ -21,21 +18,18 @@ from pages import (
     region_analysis,
     threeD_exploration,
 )
+from config import basic_config
 
 ###### DEFINE APP LAYOUT ######
+
+# ! Update this
+initial_slice = 1
 
 # Define server for gunicorn
 server = app.server
 
-# Define basic config for graphs
-basic_config = {
-    "displayModeBar": False,
-    "modeBarButtonsToRemove": [],
-    "displaylogo": False,
-}
-
 # list of empty lipid indexes for the dropdown of page 2bis
-empty_lipid_list = [-1 for i in range(slice_atlas.n_slices)]
+empty_lipid_list = [-1 for i in range(app.data.get_slice_number())]
 
 # Responsive layout
 def return_main_content():
@@ -116,10 +110,10 @@ app.validation_layout = html.Div(
         main_content,
         home.layout,
         load_slice.return_layout(initial_slice=initial_slice),
-        lipid_selection.return_layout(),
-        lipid_selection_all_slices.return_layout(),
-        region_analysis.return_layout(),
-        threeD_exploration.return_layout(),
+        # lipid_selection.return_layout(),
+        # lipid_selection_all_slices.return_layout(),
+        # region_analysis.return_layout(),
+        # threeD_exploration.return_layout(),
     ]
 )
 
@@ -141,17 +135,17 @@ def render_page_content(pathname, slice_index):
     elif pathname == "/load-slice":
         page = (load_slice.return_layout(initial_slice=slice_index),)
 
-    elif pathname == "/lipid-selection":
-        page = (lipid_selection.return_layout(slice_index=slice_index),)
+    # elif pathname == "/lipid-selection":
+    #     page = (lipid_selection.return_layout(slice_index=slice_index),)
 
-    elif pathname == "/lipid-selection-all-slices":
-        page = (lipid_selection_all_slices.return_layout(),)
+    # elif pathname == "/lipid-selection-all-slices":
+    #     page = (lipid_selection_all_slices.return_layout(),)
 
-    elif pathname == "/region-analysis":
-        page = (region_analysis.return_layout(slice_index=slice_index),)
+    # elif pathname == "/region-analysis":
+    #     page = (region_analysis.return_layout(slice_index=slice_index),)
 
-    elif pathname == "/3D-exploration":
-        page = (threeD_exploration.return_layout(),)
+    # elif pathname == "/3D-exploration":
+    #     page = (threeD_exploration.return_layout(),)
 
     else:
         # If the user tries to reach a different page, return a 404 message

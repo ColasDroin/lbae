@@ -22,3 +22,10 @@ basic_config = {
     ],
 }
 
+# ! Find which one is the good one
+# Define basic config for graphs
+basic_config = {
+    "displayModeBar": False,
+    "modeBarButtonsToRemove": [],
+    "displaylogo": False,
+}

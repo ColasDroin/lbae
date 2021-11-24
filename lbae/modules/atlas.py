@@ -69,7 +69,7 @@ class Atlas:
             self.l_original_coor,
         ) = return_pickled_object(
             "atlas/atlas_objects",
-            "arrays_projection_corrected_with_atlas_and_nearest_neighbours",
+            "arrays_projection_corrected",
             force_update=False,
             compute_function=self.compute_array_projection,
             nearest_neighbour_correction=True,

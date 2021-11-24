@@ -29,32 +29,85 @@ if force_pickle:
 """
 
 # Load array of figures for the slices
-list_array_original_data = figures.compute_array_figures_basic_image(
-    load="original_data", atlas_contours=False, atlas_hover=False
+list_array_original_data = return_pickled_object(
+    "figures/load_page",
+    "array_figures_basic_image",
+    force_update=False,
+    compute_function=figures.compute_array_figures_basic_image,
+    type_figure="original_data",
+    plot_atlas_contours=False,
 )
-list_array_warped_data = figures.compute_array_figures_basic_image(
-    load="warped_data", atlas_contours=False, atlas_hover=False
+list_array_warped_data = return_pickled_object(
+    "figures/load_page",
+    "array_figures_basic_image",
+    force_update=False,
+    compute_function=figures.compute_array_figures_basic_image,
+    type_figure="warped_data",
+    plot_atlas_contours=False,
 )
-list_array_images_atlas = figures.compute_array_figures_basic_image(
-    load="atlas", atlas_contours=False, atlas_hover=False
+
+list_array_images_atlas = return_pickled_object(
+    "figures/load_page",
+    "array_figures_basic_image",
+    force_update=False,
+    compute_function=figures.compute_array_figures_basic_image,
+    type_figure="atlas",
+    plot_atlas_contours=False,
 )
-list_array_projection_corrected = figures.compute_array_figures_basic_image(
-    load="projection_corrected", atlas_contours=False, atlas_hover=False
+
+list_array_projection_corrected = return_pickled_object(
+    "figures/load_page",
+    "array_figures_basic_image",
+    force_update=False,
+    compute_function=figures.compute_array_figures_basic_image,
+    type_figure="projection_corrected",
+    plot_atlas_contours=False,
 )
-list_array_original_data_boundaries = figures.compute_array_figures_basic_image(
-    load="original_data", atlas_contours=True, atlas_hover=False
+
+list_array_original_data_boundaries = return_pickled_object(
+    "figures/load_page",
+    "array_figures_basic_image",
+    force_update=False,
+    compute_function=figures.compute_array_figures_basic_image,
+    type_figure="original_data",
+    plot_atlas_contours=True,
 )
-list_array_warped_data_boundaries = figures.compute_array_figures_basic_image(
-    load="warped_data", atlas_contours=True, atlas_hover=False
+
+
+list_array_warped_data_boundaries = return_pickled_object(
+    "figures/load_page",
+    "array_figures_basic_image",
+    force_update=False,
+    compute_function=figures.compute_array_figures_basic_image,
+    type_figure="warped_data",
+    plot_atlas_contours=True,
 )
-list_array_images_atlas_boundaries = figures.compute_array_figures_basic_image(
-    load="atlas", atlas_contours=True, atlas_hover=False
+
+list_array_images_atlas_boundaries = return_pickled_object(
+    "figures/load_page",
+    "array_figures_basic_image",
+    force_update=False,
+    compute_function=figures.compute_array_figures_basic_image,
+    type_figure="atlas",
+    plot_atlas_contours=True,
 )
-list_array_projection_corrected_boundaries = figures.compute_array_figures_basic_image(
-    load="projection_corrected", atlas_contours=True, atlas_hover=False
+
+list_array_projection_corrected_boundaries = return_pickled_object(
+    "figures/load_page",
+    "array_figures_basic_image",
+    force_update=False,
+    compute_function=figures.compute_array_figures_basic_image,
+    type_figure="projection_corrected",
+    plot_atlas_contours=True,
 )
-list_atlas_boundaries = figures.compute_array_figures_basic_image(
-    load="atlas_boundaries", atlas_contours=True, atlas_hover=False
+
+list_array_projection_corrected_boundaries = return_pickled_object(
+    "figures/load_page",
+    "array_figures_basic_image",
+    force_update=False,
+    compute_function=figures.compute_array_figures_basic_image,
+    type_figure="atlas_boundaries",
+    plot_atlas_contours=True,
 )
 
 

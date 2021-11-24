@@ -12,7 +12,7 @@ from PIL import Image
 
 ###### DEFINE MISC FUNCTIONS ######
 
-# ! Implement automatic naming with kwargs, delete bad name in atlas class
+
 def return_pickled_object(data_folder, file_name, force_update, compute_function, **compute_function_args):
 
     # Create folder containing the object if it doesn't already exist
@@ -20,8 +20,12 @@ def return_pickled_object(data_folder, file_name, force_update, compute_function
     logging.info("The folder " + path_folder + " doesn't already exists, creating it now")
     os.makedirs(path_folder, exist_ok=True)
 
-    # Check if the object is in the folder already and return it
+    # Complete filename with function arguments
+    for key, value in compute_function_args.items():
+        file_name += "_" + str(value)
     file_name += ".pickle"
+
+    # Check if the object is in the folder already and return it
     if file_name in os.listdir(path_folder) and not force_update:
         logging.info("Returning " + file_name + " from pickled file.")
         with open(path_folder + file_name, "rb") as file:
@@ -29,6 +33,7 @@ def return_pickled_object(data_folder, file_name, force_update, compute_function
     else:
         logging.info(file_name + " could not be found. Computing the object and pickling it now.")
         object = compute_function(**compute_function_args)
+
         with open(path_folder + file_name, "wb") as file:
             pickle.dump(object, file)
         return object
