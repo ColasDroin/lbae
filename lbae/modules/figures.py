@@ -24,7 +24,7 @@ class Figures:
     def compute_padded_original_images(self):
 
         # Compute number of slices from the original acquisition are present in the folder
-        path = "data/tiff_files/original_data/"
+        path = "lbae/data/tiff_files/original_data/"
         n_slices = len([x for x in os.listdir(path) if "slice_" in x])
         if n_slices != self._data.get_slice_number():
             warnings.warn(
@@ -109,7 +109,7 @@ class Figures:
             if type_figure == "original_data":
                 array_images = self.compute_padded_original_images()
             elif type_figure == "warped_data":
-                array_images = np.array(io.imread("data/tiff_files/warped_data.tif"))
+                array_images = np.array(io.imread("lbae/data/tiff_files/warped_data.tif"))
             elif type_figure == "projection":
                 warnings.warn("This feature is not implemented anymore.")
                 # array_images = self._atlas.array_projection
