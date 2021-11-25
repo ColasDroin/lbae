@@ -10,6 +10,7 @@ import warnings
 from scipy.ndimage.interpolation import map_coordinates
 import logging
 
+
 # Homemade functions
 from lbae.modules.tools import spectra
 from lbae.modules.tools.misc import (
@@ -18,6 +19,8 @@ from lbae.modules.tools.misc import (
     turn_RGB_image_into_base64_string,
 )
 from lbae.modules.tools.atlas import project_image, slice_to_atlas_transform
+from lbae.modules.tools.memuse import logmem
+from lbae.modules.maldi_data import MaldiData
 
 ###### DEFINE FIGURES CLASS ######
 class Figures:
@@ -319,6 +322,7 @@ class Figures:
                             self._data.get_array_lookup_mz(slice_index),
                             self._data.get_array_cumulated_lookup_mz_image(slice_index),
                             self._data.get_divider_lookup(slice_index),
+                            use_full=True,
                         )
                         if log:
                             image_temp = np.log(image_temp + 1)
@@ -332,6 +336,7 @@ class Figures:
                             image_temp = np.clip(0, 255, image_temp)
 
                         image += image_temp
+                        # Close memmap
 
             if not normalize_independently:
                 perc = np.percentile(image, 99.0)
@@ -496,6 +501,7 @@ class Figures:
     # This function sums over three lipids for now
     def compute_figure_bubbles_3D(self, ll_t_bounds, normalize_independently=True, reduce_resolution_factor=7):
 
+        logging.info("Starting computing 3D figure" + logmem())
         # get transform parameters (a,u,v) for each slice
         l_transform_parameters = return_pickled_object(
             "atlas/atlas_objects",
@@ -535,7 +541,11 @@ class Figures:
                         l_y.append(x_atlas)
                         l_z.append(y_atlas)
                         l_c.append(array_data_stripped[i])
+                logging.info("Slice " + str(slice_index) + " in progress" + logmem())
+            self._data.get_array_spectra(slice_index + 1)._mmap.close()
 
+        # Reopen all memaps
+        self._data = MaldiData()
         fig = go.Figure(
             data=go.Scatter3d(
                 x=l_x,
@@ -578,7 +588,7 @@ class Figures:
             #    bgcolor="rgb(20, 24, 54)",
             # ),
         )
-
+        logging.info("Done" + logmem())
         return fig
 
     # ! I need to order properly these functions

@@ -11,6 +11,7 @@ from io import BytesIO
 from PIL import Image
 
 ###### DEFINE MISC FUNCTIONS ######
+from lbae.modules.tools.memuse import logmem
 
 
 def return_pickled_object(data_folder, file_name, force_update, compute_function, **compute_function_args):
@@ -26,7 +27,7 @@ def return_pickled_object(data_folder, file_name, force_update, compute_function
 
     # Check if the object is in the folder already and return it
     if file_name in os.listdir(path_folder) and not force_update:
-        logging.info("Returning " + file_name + " from pickled file.")
+        logging.info("Returning " + file_name + " from pickled file." + logmem())
         with open(path_folder + file_name, "rb") as file:
             return pickle.load(file)
     else:

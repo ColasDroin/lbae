@@ -12,9 +12,11 @@ from lbae.modules.figures import Figures
 from lbae.modules.atlas import Atlas
 from lbae.modules.tools.misc import return_pickled_object
 
+
 ###### APP PRE-COMPUTATIONS ######
 
 # Load data and Figures object
+
 
 data = MaldiData()
 atlas = Atlas(resolution=25)

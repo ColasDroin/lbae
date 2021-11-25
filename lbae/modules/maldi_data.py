@@ -5,6 +5,7 @@ import pickle
 import warnings
 import numpy as np
 import pandas as pd
+from lbae.modules.tools.memuse import logmem
 import logging
 
 ###### DEFINE MaldiData CLASS ######
@@ -70,7 +71,7 @@ class MaldiData:
 
     def __init__(self, path_data="lbae/data/whole_dataset/", path_annotations="lbae/data/annotations/"):
 
-        logging.info("Initializing MaldiData object")
+        logging.info("Initializing MaldiData object" + logmem())
 
         # Load the dictionnary containing small-size data for all slices
         with open(path_data + "light_arrays.pickle", "rb") as handle:

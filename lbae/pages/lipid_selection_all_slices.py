@@ -556,7 +556,7 @@ def page_2bis_add_toast_selection(
             # If several lipids correspond to the selection, we have a problem...
             if len(l_lipid_loc) > 1:
                 logging.warning("More than one lipid corresponds to the selection")
-                l_lipid_loc = l_lipid_loc[-1]
+                l_lipid_loc = [l_lipid_loc[-1]]
             if len(l_lipid_loc) == 0:
                 l_lipid_loc = [-1]
 
