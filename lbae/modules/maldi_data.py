@@ -5,6 +5,7 @@ import pickle
 import warnings
 import numpy as np
 import pandas as pd
+import logging
 
 ###### DEFINE MaldiData CLASS ######
 
@@ -68,6 +69,8 @@ class MaldiData:
     __slots__ = ["_dic_lightweight", "_dic_memmap", "_n_slices", "_df_annotations"]
 
     def __init__(self, path_data="lbae/data/whole_dataset/", path_annotations="lbae/data/annotations/"):
+
+        logging.info("Initializing MaldiData object")
 
         # Load the dictionnary containing small-size data for all slices
         with open(path_data + "light_arrays.pickle", "rb") as handle:
@@ -167,7 +170,7 @@ class MaldiData:
         # Else, it returns the required index
         else:
             if lb is not None or hb is not None:
-                warnings.warn(
+                logging.warning(
                     "Both one or several boundaries and one index have been specified when calling array_spectra. "
                     + "Only the index request will be satisfied."
                 )
@@ -196,7 +199,7 @@ class MaldiData:
         # Else, it returns the required index
         else:
             if lb is not None or hb is not None:
-                warnings.warn(
+                logging.warning(
                     "Both one or several boundaries and one index have been specified when calling array_spectra. "
                     + "Only the index request will be satisfied."
                 )
@@ -225,7 +228,7 @@ class MaldiData:
         # Else, it returns the required index
         else:
             if lb is not None or hb is not None:
-                warnings.warn(
+                logging.warning(
                     "Both one or several boundaries and one index have been specified when calling array_spectra. "
                     + "Only the index request will be satisfied."
                 )

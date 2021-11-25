@@ -348,7 +348,7 @@ class SmzMLobjView:
         return SmzMLobjView(self.spectra[slice_like], self.source_obj)
 
     def __getattr__(self, attr: str) -> Any:
-        # warnings.warn("Accessing source object attribute")
+        # logging.warning("Accessing source object attribute")
         return getattr(self._source_obj, attr)
 
     def __len__(self) -> int:

@@ -40,7 +40,7 @@ def convert_coor_to_spectrum_idx(coordinate, shape):
     """
     ind = coordinate[0] * shape[1] + coordinate[1]
     if ind >= shape[0] * shape[1]:
-        warnings.warn("Index not allowed.")
+        logging.warning("Index not allowed.")
         return -1
     return ind
 
@@ -942,7 +942,7 @@ def sample_rows_from_path(path):
         if len(list_index_bound_column_per_row[x - x_min]) % 2 == 0:
             pass
         else:
-            warnings.warn("Bug with list x", x, list_index_bound_column_per_row[x - x_min])
+            logging.warning("Bug with list x", x, list_index_bound_column_per_row[x - x_min])
             # Try to correct the number of times x appear
             if (
                 len(list_index_bound_column_per_row[x - x_min]) % 2 == 1

@@ -14,6 +14,7 @@ from matplotlib import cm
 import plotly.express as px
 from skimage import io
 import warnings
+import logging
 
 # Homemade functions
 from lbae.modules.tools.atlas import (
@@ -32,11 +33,13 @@ from lbae.modules.tools.misc import return_pickled_object
 class Atlas:
     def __init__(self, resolution=25):
 
+        logging.info("Initializing Atlas object")
+
         # Resolution of the atlas, to be chosen among 10um, 25um or 100um
         if resolution in (10, 25, 100):
             self.resolution = resolution
         else:
-            warnings.warn("The resolution you chose is not available, using the default of 25um")
+            logging.warning("The resolution you chose is not available, using the default of 25um")
             self.resolution = 25
 
         # Load or download the atlas if it's the first time

@@ -4,6 +4,7 @@
 import dash
 import dash_bootstrap_components as dbc
 import flask
+import numpy as np
 
 # Homemade modules
 from lbae.modules.maldi_data import MaldiData
@@ -14,6 +15,7 @@ from lbae.modules.tools.misc import return_pickled_object
 ###### APP PRE-COMPUTATIONS ######
 
 # Load data and Figures object
+
 data = MaldiData()
 atlas = Atlas(resolution=25)
 figures = Figures(data, atlas)

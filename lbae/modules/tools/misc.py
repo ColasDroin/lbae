@@ -17,7 +17,6 @@ def return_pickled_object(data_folder, file_name, force_update, compute_function
 
     # Create folder containing the object if it doesn't already exist
     path_folder = "lbae/data/" + data_folder + "/"
-    logging.info("The folder " + path_folder + " doesn't already exists, creating it now")
     os.makedirs(path_folder, exist_ok=True)
 
     # Complete filename with function arguments
@@ -53,8 +52,9 @@ def turn_image_into_base64_string(image, colormap=cm.viridis, reverse_colorscale
     # Do the string conversion into base64 string
     return base_64_string_conversion(pil_img)
 
+
 def turn_RGB_image_into_base64_string(image, colormap=cm.viridis):
-    
+
     # Convert image to PIL image
     pil_img = Image.fromarray(image, "RGB")  # PIL image object
     x, y = pil_img.size
@@ -66,6 +66,7 @@ def turn_RGB_image_into_base64_string(image, colormap=cm.viridis):
     # Do the string conversion into base64 string
     return base_64_string_conversion(pil_img)
 
+
 def base_64_string_conversion(pil_img):
     # Convert to base64 string
     base64_string = None
@@ -74,8 +75,4 @@ def base_64_string_conversion(pil_img):
         pil_img.save(stream, format="png", optimize=True, quality=85)
         base64_string = "data:image/png;base64," + base64.b64encode(stream.getvalue()).decode("utf-8")
     return base64_string
-
-
-
-
 

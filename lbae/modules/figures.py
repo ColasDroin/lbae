@@ -8,6 +8,7 @@ import os
 from skimage import io
 import warnings
 from scipy.ndimage.interpolation import map_coordinates
+import logging
 
 # Homemade functions
 from lbae.modules.tools import spectra
@@ -23,6 +24,7 @@ class Figures:
     __slots__ = ["_data", "_atlas"]
 
     def __init__(self, maldi_data, atlas):
+        logging.info("Initializing Figures object")
         self._data = maldi_data
         self._atlas = atlas
 
@@ -33,7 +35,7 @@ class Figures:
         path = "lbae/data/tiff_files/original_data/"
         n_slices = len([x for x in os.listdir(path) if "slice_" in x])
         if n_slices != self._data.get_slice_number():
-            warnings.warn(
+            logging.warning(
                 "The number of slices computed from the original tiff files is different from the number of slice "
                 + "recorded in the MaldiData object."
             )
@@ -117,7 +119,7 @@ class Figures:
             elif type_figure == "warped_data":
                 array_images = np.array(io.imread("lbae/data/tiff_files/warped_data.tif"))
             elif type_figure == "projection":
-                warnings.warn("This feature is not implemented anymore.")
+                logging.warning("This feature is not implemented anymore.")
                 # array_images = self._atlas.array_projection
             elif type_figure == "projection_corrected":
                 array_images = self._atlas.array_projection_corrected

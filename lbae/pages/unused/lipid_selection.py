@@ -3,7 +3,7 @@
 # Official modules
 import dash_bootstrap_components as dbc
 from dash import dcc, html
-
+import logging
 # from dash.dependencies import Input, Output, State
 import dash
 
@@ -958,8 +958,9 @@ def tab_2_add_toast_selection(
         ].tolist()
 
         # If several lipids correspond to the selection, we have a problem...
-        if len(l_lipid_loc) > 1:
-            print("BUG: more than one lipid corresponds to the selection")
+            if len(l_lipid_loc) > 1:
+                logging.warning("More than one lipid corresponds to the selection")
+                l_lipid_loc = l_lipid_loc[-1]
 
         # Record location and lipid name
         lipid_index = l_lipid_loc[0]
