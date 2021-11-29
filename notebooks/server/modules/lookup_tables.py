@@ -255,6 +255,7 @@ def process_lookup_tables(
         array_averaged_mz_intensity_high_res = npzfile["array_averaged_mz_intensity_high_res"]
         image_shape = npzfile["image_shape"]
 
+        # Try to see if the array has already been processed before
         if "divider_lookup" in npzfile:
             print("This file has already been processed before")
             return None
@@ -269,7 +270,7 @@ def process_lookup_tables(
         array_spectra_high_res[1, b1 : b2 + 1] /= np.sum(array_spectra_high_res[1, b1 : b2 + 1])
 
     # Define divider_lookup
-    divider_lookup = 10
+    divider_lookup = 1
 
     # Build lookup table linking mz value to index in array_spectra for each pixel
     lookup_table_spectra_high_res = build_index_lookup_table(

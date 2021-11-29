@@ -9,7 +9,8 @@ from skimage import io
 import warnings
 from scipy.ndimage.interpolation import map_coordinates
 import logging
-
+from numba import njit
+import time
 
 # Homemade functions
 from lbae.modules.tools import spectra
@@ -509,13 +510,48 @@ class Figures:
             force_update=False,
             compute_function=self._atlas.compute_projection_parameters,
         )
-        l_x = []
-        l_y = []
-        l_z = []
-        l_c = []
+
+        # Initialize empty arrays with a large estimate of 400*400 for the orginal acquisition size
+        max_size = 400 * 400 * self._data.get_slice_number()
+        array_x = np.empty(max_size, dtype=np.float32)
+        array_y = np.empty(max_size, dtype=np.float32)
+        array_z = np.empty(max_size, dtype=np.float32)
+        array_c = np.empty(max_size, dtype=np.int16)
+        total_index = 0
+        logging.debug(f"Size array_x: {array_x.nbytes / 1024 / 1024 :.2f}")
+        logging.info("Starting slice iteration" + logmem())
+
+        # Define a numba function to accelerate the loop in which the ccfv3 coordinates are computed and the final
+        # arrays are filled
+        @njit
+        def return_final_array(
+            array_data_stripped,
+            original_coordinates_stripped,
+            percentile,
+            array_x,
+            array_y,
+            array_z,
+            array_c,
+            total_index,
+        ):
+            # Keep track of the array indexing even outside of this function
+            total_index_temp = 0
+            for i in range(array_data_stripped.shape[0]):
+                x_atlas, y_atlas, z_atlas = original_coordinates_stripped[i] / 1000
+                if array_data_stripped[i] >= percentile:
+                    array_x[total_index + total_index_temp] = z_atlas
+                    array_y[total_index + total_index_temp] = x_atlas
+                    array_z[total_index + total_index_temp] = y_atlas
+                    array_c[total_index + total_index_temp] = array_data_stripped[i]
+                    total_index_temp += 1
+
+            total_index += total_index_temp
+            return array_x, array_y, array_z, array_c, total_index
+
         for slice_index in range(0, self._data.get_slice_number(), 1):
             if ll_t_bounds[slice_index] != [None, None, None]:
 
+                # Get the data as an expression image per lipid
                 array_data = self.return_rgb_array_per_lipid_selection(
                     slice_index + 1,
                     ll_t_bounds[slice_index],
@@ -524,39 +560,56 @@ class Figures:
                     log=False,
                     enrichment=False,
                 )
+
+                # Sum array colors (i.e. lipids)
                 array_data = np.sum(array_data, axis=-1)
+
+                # Remove pixels for which lipid expression is zero
                 array_data_stripped = array_data[array_data != 0]
-                if len(array_data_stripped) > 0:
-                    percentile = np.percentile(array_data_stripped, 60)
-                    original_coordinates = self._atlas.l_original_coor[slice_index]
-                    original_coordinates_stripped = original_coordinates[array_data != 0]
-                else:
+
+                # Skip the current slice if expression is very sparse
+                if len(array_data_stripped) < 10:
                     continue
 
-                for i in range(array_data_stripped.shape[0]):
-                    # for j in range(array_data_stripped.shape[1]):
-                    x_atlas, y_atlas, z_atlas = original_coordinates_stripped[i] / 1000
-                    if array_data_stripped[i] >= percentile:
-                        l_x.append(z_atlas)
-                        l_y.append(x_atlas)
-                        l_z.append(y_atlas)
-                        l_c.append(array_data_stripped[i])
-                logging.info("Slice " + str(slice_index) + " in progress" + logmem())
+                # Compute the percentile of expression to filter out lowly expressed pixels
+                percentile = np.percentile(array_data_stripped, 60)
+
+                # Get the coordindates of the pixels in the ccfv3
+                original_coordinates = self._atlas.l_original_coor[slice_index]
+                original_coordinates_stripped = original_coordinates[array_data != 0]
+
+                array_x, array_y, array_z, array_c, total_index = return_final_array(
+                    array_data_stripped,
+                    original_coordinates_stripped,
+                    percentile,
+                    array_x,
+                    array_y,
+                    array_z,
+                    array_c,
+                    total_index,
+                )
+                logging.info("Slice " + str(slice_index) + " done" + logmem())
             self._data.get_array_spectra(slice_index + 1)._mmap.close()
+
+        # Strip the arrays from the zeros
+        array_x = array_x[:total_index]
+        array_y = array_y[:total_index]
+        array_z = array_z[:total_index]
+        array_c = array_c[:total_index].tolist()
 
         # Reopen all memaps
         self._data = MaldiData()
         fig = go.Figure(
             data=go.Scatter3d(
-                x=l_x,
-                y=l_y,
-                z=l_z,
+                x=array_x,
+                y=array_y,
+                z=array_z,
                 mode="markers",
                 marker=dict(
                     sizemode="diameter",
                     sizeref=40,
-                    size=l_c,
-                    color=l_c,
+                    size=array_c,
+                    color=array_c,
                     colorscale="Viridis",
                     colorbar_title="Expression",
                     # line_color="rgb(140, 140, 170)",

@@ -191,7 +191,6 @@ def compute_image_using_index_lookup(
         lower_bound = lookup_table_spectra[int(low_bound / divider_lookup)][idx_pix]
         higher_bound = lookup_table_spectra[int(np.ceil(high_bound / divider_lookup))][idx_pix]
         array_to_sum = array_spectra[:, lower_bound : higher_bound + 1]
-
         # Sum the m/z values over the requested range
         image = _fill_image(image, idx_pix, img_shape, array_to_sum, lower_bound, higher_bound, low_bound, high_bound)
 
@@ -261,7 +260,7 @@ def compute_image_using_index_and_image_lookup(
     """
 
     # Image lookup table is not worth it for small differences between the bounds
-    if (high_bound - low_bound) < 20:
+    if (high_bound - low_bound) < 5:
         return compute_image_using_index_lookup(
             low_bound, high_bound, array_spectra, array_pixel_indexes, img_shape, lookup_table_spectra, divider_lookup,
         )
@@ -311,9 +310,8 @@ def _compute_image_using_index_and_image_lookup_partial(
     """
     # Get a first approximate of the requested lipid image
     image = (
-        (lookup_table_image[int(high_bound / divider_lookup)] - lookup_table_image[int(low_bound / divider_lookup)])
-        / lookup_table_image[140]
-    )  # ! Remove the normalization once the image is normalized upstream
+        lookup_table_image[int(high_bound / divider_lookup)] - lookup_table_image[int(low_bound / divider_lookup)]
+    )  # Normalization should be useless here as the spectrum is already normalized
 
     # Look for true lower/higher bound between the lower/higher looked up image and the next one
     array_idx_low_bound_inf_pix = lookup_table_spectra[int(low_bound / divider_lookup)]

@@ -7,6 +7,7 @@ from dash.dependencies import Input, Output, State
 import uuid
 import dash_loading_spinners as dls
 import os
+import logging
 
 # Homemade modules
 from lbae.app import app, data
@@ -20,6 +21,7 @@ from lbae.pages import (
     # threeD_exploration,
 )
 from lbae.config import basic_config
+from lbae.modules.tools.memuse import logmem
 
 ###### DEFINE APP LAYOUT ######
 
@@ -121,7 +123,7 @@ app.validation_layout = html.Div(
 
 ###### APP CALLBACK FOR URL ######
 
-
+# ! Keep slice index as a variable?
 @app.callback(
     Output("content", "children"),
     Output("empty-content", "children"),
@@ -129,6 +131,8 @@ app.validation_layout = html.Div(
     State("dcc-store-slice-index", "data"),
 )
 def render_page_content(pathname, slice_index):
+    logging.info("Page" + pathname + "has been selected" + logmem())
+
     # Set the content according to the current pathname
     if pathname == "/":
         page = home.layout
