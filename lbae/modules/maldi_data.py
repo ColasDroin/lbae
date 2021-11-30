@@ -67,7 +67,7 @@ class MaldiData:
         get_cumulated_lookup_mz_image(slice_index, index):
     """
 
-    __slots__ = ["_dic_lightweight", "_dic_memmap", "_n_slices", "_df_annotations"]
+    __slots__ = ["_dic_lightweight", "_dic_memmap", "_n_slices", "_df_annotations", "_path_data"]
 
     def __init__(self, path_data="lbae/data/whole_dataset/", path_annotations="lbae/data/annotations/"):
 
@@ -77,9 +77,11 @@ class MaldiData:
         with open(path_data + "light_arrays.pickle", "rb") as handle:
             self._dic_lightweight = pickle.load(handle)
 
+        # Simple variable to get the number of slices
+        self._n_slices = len(self._dic_lightweight)
+
         # Set the accesser to the mmap files
         self._dic_memmap = {}
-        self._n_slices = len(self._dic_lightweight)
         for slice_index in range(1, self._n_slices + 1):
             self._dic_memmap[slice_index] = {}
             for array_name in [
@@ -94,6 +96,9 @@ class MaldiData:
                     mode="r",
                     shape=self._dic_lightweight[slice_index][array_name + "_shape"],
                 )
+
+        # Save path_data for cleaning memmap in case
+        self._path_data = path_data
 
         # Load lipid annotation (not user-session specific)
         self._df_annotations = pd.read_csv(path_annotations + "lipid_annotation.csv")
@@ -258,4 +263,58 @@ class MaldiData:
     def get_cumulated_lookup_mz_image(self, slice_index, index):
         # Just return the (one) required lookup to go faster
         return self._dic_memmap[slice_index]["array_cumulated_lookup_mz_image"][index]
+
+    # ? For the docstring : this function takes only about 5ms to run on all memmaps, and 1ms on a given slice
+    # ! Does the GIL handle this properly? Must try with several users at once
+    def clean_memory(self, slice_index=None, array=None):
+
+        # Case no array name has been provided
+        if array is None:
+            l_array_names = [
+                "array_spectra",
+                "array_avg_spectrum",
+                "array_lookup_mz",
+                "array_cumulated_lookup_mz_image",
+            ]
+
+            # Clean all memmaps if no slice index have been given
+            if slice_index is None:
+                for index in range(1, self._n_slices + 1):
+                    for array_name in l_array_names:
+                        self._dic_memmap[index][array_name] = np.memmap(
+                            self._path_data + array_name + "_" + str(index) + ".mmap",
+                            dtype="float32" if array_name != "array_lookup_mz" else "int32",
+                            mode="r",
+                            shape=self._dic_lightweight[index][array_name + "_shape"],
+                        )
+
+            # Else clean all memmaps of a given slice index
+            else:
+                for array_name in l_array_names:
+                    self._dic_memmap[slice_index][array_name] = np.memmap(
+                        self._path_data + array_name + "_" + str(slice_index) + ".mmap",
+                        dtype="float32" if array_name != "array_lookup_mz" else "int32",
+                        mode="r",
+                        shape=self._dic_lightweight[slice_index][array_name + "_shape"],
+                    )
+        # Case an array name has been provided
+        else:
+            # Clean all memmaps corresponding to the current array if no slice_index have been given
+            if slice_index is None:
+                for index in range(1, self._n_slices + 1):
+                    self._dic_memmap[index][array] = np.memmap(
+                        self._path_data + array + "_" + str(index) + ".mmap",
+                        dtype="float32" if array != "array_lookup_mz" else "int32",
+                        mode="r",
+                        shape=self._dic_lightweight[index][array + "_shape"],
+                    )
+
+            # Else clean the memap of the given slice index
+            else:
+                self._dic_memmap[slice_index][array] = np.memmap(
+                    self._path_data + array + "_" + str(slice_index) + ".mmap",
+                    dtype="float32" if array != "array_lookup_mz" else "int32",
+                    mode="r",
+                    shape=self._dic_lightweight[slice_index][array + "_shape"],
+                )
 

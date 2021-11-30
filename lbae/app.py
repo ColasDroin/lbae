@@ -5,12 +5,14 @@ import dash
 import dash_bootstrap_components as dbc
 import flask
 import numpy as np
+import logging
 
 # Homemade modules
 from lbae.modules.maldi_data import MaldiData
 from lbae.modules.figures import Figures
 from lbae.modules.atlas import Atlas
 from lbae.modules.tools.misc import return_pickled_object
+from lbae.modules.tools.memuse import logmem
 
 
 ###### APP PRE-COMPUTATIONS ######

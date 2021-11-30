@@ -1,10 +1,8 @@
-# Inspired from https://stackoverflow.com/questions/10848342/use-python-logging-for-memory-usage-statistics
-
-import logging
 import psutil
 import os
 
-
+# ? Put this in misc ?
+# for dosctring: this function has been benchmarked and takes about 0.5ms to run
 def logmem():
     memory = psutil.Process(os.getpid()).memory_info().rss / (1024 * 1024)
     memory_string = "MemTotal: " + str(memory)

@@ -28,7 +28,7 @@ class Figures:
     __slots__ = ["_data", "_atlas"]
 
     def __init__(self, maldi_data, atlas):
-        logging.info("Initializing Figures object")
+        logging.info("Initializing Figures object" + logmem())
         self._data = maldi_data
         self._atlas = atlas
 
@@ -357,6 +357,9 @@ class Figures:
         # Reoder axis to match plotly go.image requirements
         array_image = np.moveaxis(np.array(l_images), 0, 2)
 
+        # Clean memmap memory
+        self._data.clean_memory(slice_index=slice_index)
+
         return np.asarray(array_image, dtype=np.uint8)
 
     def return_rgb_image_per_lipid_selection(
@@ -589,7 +592,6 @@ class Figures:
                     total_index,
                 )
                 logging.info("Slice " + str(slice_index) + " done" + logmem())
-            self._data.get_array_spectra(slice_index + 1)._mmap.close()
 
         # Strip the arrays from the zeros
         array_x = array_x[:total_index]
@@ -598,7 +600,6 @@ class Figures:
         array_c = array_c[:total_index].tolist()
 
         # Reopen all memaps
-        self._data = MaldiData()
         fig = go.Figure(
             data=go.Scatter3d(
                 x=array_x,

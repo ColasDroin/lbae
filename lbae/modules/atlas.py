@@ -26,6 +26,7 @@ from lbae.modules.tools.atlas import (
 from lbae.modules.tools.spectra import compute_spectrum_per_row_selection
 from lbae.modules.atlas_labels import Labels, LabelContours
 from lbae.modules.tools.misc import return_pickled_object
+from lbae.modules.tools.memuse import logmem
 
 #! Overall, see if I can memmap all the objects in this class
 
@@ -33,7 +34,7 @@ from lbae.modules.tools.misc import return_pickled_object
 class Atlas:
     def __init__(self, resolution=25):
 
-        logging.info("Initializing Atlas object")
+        logging.info("Initializing Atlas object" + logmem())
 
         # Resolution of the atlas, to be chosen among 10um, 25um or 100um
         if resolution in (10, 25, 100):

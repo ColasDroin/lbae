@@ -28,9 +28,6 @@ from lbae.modules.tools.memuse import logmem
 # ! Update this
 initial_slice = 1
 
-# Define server for gunicorn
-server = app.server
-
 # list of empty lipid indexes for the dropdown of page 2bis
 empty_lipid_list = [-1 for i in range(data.get_slice_number())]
 
