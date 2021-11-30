@@ -31,7 +31,9 @@ def return_pickled_object(data_folder, file_name, force_update, compute_function
         with open(path_folder + file_name, "rb") as file:
             return pickle.load(file)
     else:
-        logging.info(file_name + " could not be found. Computing the object and pickling it now.")
+        logging.info(
+            file_name + " could not be found or force_update is True. Computing the object and pickling it now."
+        )
         object = compute_function(**compute_function_args)
 
         with open(path_folder + file_name, "wb") as file:
@@ -39,22 +41,29 @@ def return_pickled_object(data_folder, file_name, force_update, compute_function
         return object
 
 
-def turn_image_into_base64_string(image, colormap=cm.viridis, reverse_colorscale=False):
+def turn_image_into_base64_string(
+    image, colormap=cm.viridis, reverse_colorscale=False, overlay=None, optimize=False, quality=85
+):
 
     # Map image to a colormap and convert to uint8
     img = np.uint8(cm.viridis(image) * 255)
-
     if reverse_colorscale:
         img = 255 - img
 
     # Turn array into PIL image object
     pil_img = Image.fromarray(img)
 
+    if overlay is not None:
+        pil_img = pil_img.convert("RGBA")
+        overlay_img = Image.fromarray(overlay, "RGBA")
+        pil_img.paste(overlay_img, (0, 0), overlay_img)
+
     # Do the string conversion into base64 string
-    return base_64_string_conversion(pil_img)
+    print("so far so good")
+    return base_64_string_conversion(pil_img, optimize=optimize, quality=quality)
 
 
-def turn_RGB_image_into_base64_string(image, colormap=cm.viridis):
+def turn_RGB_image_into_base64_string(image, colormap=cm.viridis, optimize=False, quality=85):
 
     # Convert image to PIL image
     pil_img = Image.fromarray(image, "RGB")  # PIL image object
@@ -65,15 +74,25 @@ def turn_RGB_image_into_base64_string(image, colormap=cm.viridis):
     pil_img = pil_img.resize((x2, y2), Image.ANTIALIAS)
 
     # Do the string conversion into base64 string
-    return base_64_string_conversion(pil_img)
+    return base_64_string_conversion(pil_img, optimize=optimize, quality=quality)
 
 
-def base_64_string_conversion(pil_img):
+def base_64_string_conversion(pil_img, optimize, quality, convert_to_RGB=True):
+    # Convert image from RGBA to RGB if needed
+    if convert_to_RGB:
+        pil_img = pil_img.convert("RGB")
+
     # Convert to base64 string
     base64_string = None
+    # with BytesIO() as stream:
+    #    # Optimize the quality as the figure will be pickled, so this line of code won't run live
+    #    pil_img.save(stream, format="webp", optimize=optimize, quality=100, method=6, lossless=True)
+    #    base64_string = "data:image/webp;base64," + base64.b64encode(stream.getvalue()).decode("utf-8")
+
     with BytesIO() as stream:
         # Optimize the quality as the figure will be pickled, so this line of code won't run live
-        pil_img.save(stream, format="png", optimize=True, quality=85)
-        base64_string = "data:image/png;base64," + base64.b64encode(stream.getvalue()).decode("utf-8")
+        pil_img.save(stream, format="jpeg", optimize=optimize, quality=40)
+        base64_string = "data:image/jpeg;base64," + base64.b64encode(stream.getvalue()).decode("utf-8")
+
     return base64_string
 

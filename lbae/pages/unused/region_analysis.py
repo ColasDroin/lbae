@@ -1813,7 +1813,7 @@ def draw_modal_graph(
             for l_lipids in [l_red_lipids, l_green_lipids, l_blue_lipids]
         ]
 
-        fig = app.slice_store.getSlice(slice_index).return_rgb_image_per_lipid_selection(
+        fig = app.slice_store.getSlice(slice_index).compute_rgb_image_per_lipid_selection(
             l_lipid_bounds, title=False, enrichment=enrichment, log=log
         )
         if boolean_mask:

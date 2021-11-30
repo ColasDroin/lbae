@@ -12,9 +12,11 @@ import base64
 from io import BytesIO
 from matplotlib import cm
 import plotly.express as px
-from skimage import io
+import skimage
 import warnings
 import logging
+import io
+from imageio import imread
 
 # Homemade functions
 from lbae.modules.tools.atlas import (
@@ -58,14 +60,14 @@ class Atlas:
         self.labels = Labels(self.bg_atlas)
         self.simplified_labels_int = LabelContours(self.bg_atlas)
 
-        # Compute hierarchical tree of brain structures # ! see if can turn that Pickle thing into a decorator
+        # Compute hierarchical tree of brain structures -
         self.l_nodes, self.l_parents, self.dic_name_id = return_pickled_object(
             "atlas/atlas_objects", "hierarchy", force_update=False, compute_function=self.compute_hierarchy_list
         )
 
         # Load array of coordinates for our data
         self.array_coordinates_warped_data = np.array(
-            io.imread("lbae/data/tiff_files/coordinates_warped_data.tif"), dtype=np.float32
+            skimage.io.imread("lbae/data/tiff_files/coordinates_warped_data.tif"), dtype=np.float32
         )
 
         # Load arrays of images using atlas projection
@@ -83,7 +85,7 @@ class Atlas:
         )
 
         # Load array of projected atlas borders
-        self.list_projected_atlas_borders_figures = return_pickled_object(
+        self.list_projected_atlas_borders_figures, self.list_projected_atlas_borders_arrays = return_pickled_object(
             "atlas/atlas_objects",
             "list_projected_atlas_borders_figures",
             force_update=False,
@@ -139,12 +141,12 @@ class Atlas:
             # load corresponding slice and coor
             path = "lbae/data/tiff_files/coordinates_original_data/"
             filename = path + [x for x in os.listdir(path) if str(i + 1) == x.split("slice_")[1].split(".tiff")[0]][0]
-            original_coor = np.array(io.imread(filename), dtype=np.float32)
+            original_coor = np.array(skimage.io.imread(filename), dtype=np.float32)
             l_original_coor.append(original_coor)
 
             path = "lbae/data/tiff_files/original_data/"
             filename = path + [x for x in os.listdir(path) if str(i + 1) == x.split("slice_")[1].split(".tiff")[0]][0]
-            original_slice = np.array(io.imread(filename), dtype=np.int16)
+            original_slice = np.array(skimage.io.imread(filename), dtype=np.int16)
 
             # map back the pixel from the atlas coordinates
             array_projection, array_projection_correspondence = fill_array_projection(
@@ -175,8 +177,15 @@ class Atlas:
 
     def compute_list_projected_atlas_borders_figures(self):
         l_figures = []
+        l_array_images = []
         # Load array of atlas images corresponding to our data and how it is projected
-        array_projected_images_atlas, array_projected_simplified_id = self.compute_array_images_atlas()
+        array_projected_images_atlas, array_projected_simplified_id = return_pickled_object(
+            "atlas/atlas_objects",
+            "array_images_atlas",
+            force_update=False,
+            compute_function=self.compute_array_images_atlas,
+        )
+
         for slice_index in range(array_projected_simplified_id.shape[0]):
 
             contours = (
@@ -201,11 +210,24 @@ class Atlas:
             with BytesIO() as stream:
                 plt.savefig(stream, format="png", dpi=dpi)
                 plt.close()
-                base64_string = prefix + base64.b64encode(stream.getvalue()).decode("utf-8")
-            l_figures.append(go.Image(visible=True, source=base64_string, zsmooth="fast", hoverinfo="none"))
-        return l_figures
+                # base64_string = prefix + base64.b64encode(stream.getvalue()).decode("utf-8")
 
-    # ! This is very slow, can I pickle it?
+                # Convert image to numpy array
+                # print("ICI", stream.getvalue())
+                img = imread(io.BytesIO(stream.getvalue()))
+
+                # Convert numpy array to PIL img
+                # pil_img = Image.fromarray(img)
+
+                # with BytesIO() as stream:
+                #    # Optimize the quality as the figure will be pickled, so this line of code won't run live
+                #    pil_img.save(stream, format="webp", lossless=True, quality=100, method=6)
+                #    base64_string = "data:image/webp;base64," + base64.b64encode(stream.getvalue()).decode("utf-8")
+                l_array_images.append(img)
+            # l_figures.append(go.Image(visible=True, source=base64_string, zsmooth="fast", hoverinfo="none"))
+            l_figures.append(None)
+        return l_figures, l_array_images
+
     def compute_array_images_atlas(self):
         array_images = np.empty(self.array_coordinates_warped_data.shape[:-1], dtype=np.uint8)
         array_projected_simplified_id = np.full(

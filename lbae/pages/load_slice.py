@@ -10,7 +10,9 @@ import dash_draggable
 
 # App module
 from lbae import app
+from lbae.app import figures
 from lbae import config
+from lbae.modules.tools.misc import return_pickled_object
 
 ###### DEFFINE PAGE LAYOUT ######
 
@@ -290,7 +292,18 @@ def tab_1_load_image(value_slider, active_tab, display_annotations):
             if active_tab[-1] == "0":
                 return app.list_array_original_data[value_slider - 1]
             if active_tab[-1] == "1":
-                return app.list_array_warped_data[value_slider - 1]
+                # return app.list_array_warped_data[value_slider - 1]
+
+                return return_pickled_object(
+                    "figures/load_page",
+                    "figure_basic_images_with_slider",
+                    force_update=True,
+                    compute_function=figures.compute_figure_basic_images_with_slider,
+                    type_figure="warped_data",
+                    plot_atlas_contours=True,
+                )
+
+                return figures.compute_figure_basic_images_with_slider(plot_atlas_contours=False)
             elif active_tab[-1] == "2":
                 return app.list_array_projection_corrected[value_slider - 1]
             elif active_tab[-1] == "3":

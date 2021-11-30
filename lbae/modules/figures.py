@@ -6,11 +6,9 @@ import plotly.graph_objects as go
 import plotly.express as px
 import os
 from skimage import io
-import warnings
 from scipy.ndimage.interpolation import map_coordinates
 import logging
 from numba import njit
-import time
 
 # Homemade functions
 from lbae.modules.tools import spectra
@@ -21,7 +19,6 @@ from lbae.modules.tools.misc import (
 )
 from lbae.modules.tools.atlas import project_image, slice_to_atlas_transform
 from lbae.modules.tools.memuse import logmem
-from lbae.modules.maldi_data import MaldiData
 
 ###### DEFINE FIGURES CLASS ######
 class Figures:
@@ -106,6 +103,127 @@ class Figures:
 
         return fig
 
+    def compute_array_basic_images(self, type_figure="warped_data"):
+        array_images = None
+        if type_figure == "original_data":
+            array_images = self.compute_padded_original_images()
+        elif type_figure == "warped_data":
+            array_images = np.array(io.imread("lbae/data/tiff_files/warped_data.tif"))
+        elif type_figure == "projection":
+            logging.warning("This feature is not implemented anymore.")
+            # array_images = self._atlas.array_projection
+        elif type_figure == "projection_corrected":
+            array_images = self._atlas.array_projection_corrected
+        elif type_figure == "atlas":
+            array_projected_images_atlas, array_projected_simplified_id = self._atlas.compute_array_images_atlas()
+            array_images = array_projected_images_atlas
+        return array_images
+
+    def compute_figure_basic_images_with_slider(self, type_figure="warped_data", plot_atlas_contours=False):
+        # Get array of images
+        array_images = return_pickled_object(
+            "figures/load_page",
+            "array_basic_images",
+            force_update=False,
+            compute_function=self.compute_array_basic_images,
+            type_figure=type_figure,
+        )
+
+        if plot_atlas_contours:
+            array_images_atlas = self._atlas.list_projected_atlas_borders_arrays
+
+        # Build plot with slider
+        fig = go.Figure(
+            frames=[
+                go.Frame(
+                    data=[
+                        go.Image(
+                            visible=True,
+                            source=turn_image_into_base64_string(
+                                array_images[i],
+                                overlay=array_images_atlas[i] if plot_atlas_contours else None,
+                                optimize=True,
+                                quality=40,
+                            ),
+                            hoverinfo="none",
+                        ),
+                        # array_images_atlas[i],
+                    ],
+                    name=str(i + 1),
+                )
+                for i in range(0, self._data.get_slice_number(), 1)
+            ]
+        )
+        fig.add_trace(
+            go.Image(
+                visible=True,
+                source=turn_image_into_base64_string(
+                    array_images[0],
+                    overlay=array_images_atlas[0] if plot_atlas_contours else None,
+                    optimize=True,
+                    quality=25,
+                ),
+                hoverinfo="none",
+            )
+        )
+
+        # fig.add_trace(array_images_atlas[0],)
+
+        def frame_args(duration):
+            return {
+                "frame": {"duration": duration},
+                "mode": "immediate",
+                "fromcurrent": True,
+                "transition": {"duration": duration, "easing": "linear"},
+            }
+
+        sliders = [
+            {
+                "pad": {"b": 10, "t": 60},
+                "len": 0.9,
+                "x": 0.1,
+                "y": 0,
+                "steps": [
+                    {"args": [[f.name], frame_args(0)], "label": str(k), "method": "update",}
+                    for k, f in enumerate(fig.frames)
+                ],
+            }
+        ]
+
+        # Layout
+        fig.update_layout(
+            # title="Experimental slices in volumetric data",
+            margin=dict(t=25, r=0, b=0, l=0),
+        )
+
+        def frame_args(duration):
+            return {
+                "frame": {"duration": duration, "redraw": True},
+                "mode": "immediate",
+                "fromcurrent": True,
+                "transition": {"duration": duration, "easing": "linear"},
+            }
+
+        fig.layout.sliders = [
+            {
+                "active": 0,
+                "yanchor": "top",
+                "xanchor": "left",
+                "currentvalue": {"prefix": "Slice" + "="},
+                "pad": {"b": 10, "t": 60},
+                "len": 0.9,
+                "x": 0.1,
+                "y": 0,
+                "steps": [
+                    {"args": [[f.name], frame_args(0)], "label": f.name, "method": "animate",} for f in fig.frames
+                ],
+            }
+        ]
+
+        logging.info("Figure has been computed")
+        return fig
+
+    # ! This function is deprecated and should be deleted when properly replaced
     def compute_array_figures_basic_image(self, type_figure="warped_data", plot_atlas_contours=False):
 
         # Either the requested figure is just a simple atlas annotation, with no background
@@ -117,20 +235,8 @@ class Figures:
                 for i in range(self._data.get_slice_number())
             ]
         else:
-            array_images = None
-            if type_figure == "original_data":
-                array_images = self.compute_padded_original_images()
-            elif type_figure == "warped_data":
-                array_images = np.array(io.imread("lbae/data/tiff_files/warped_data.tif"))
-            elif type_figure == "projection":
-                logging.warning("This feature is not implemented anymore.")
-                # array_images = self._atlas.array_projection
-            elif type_figure == "projection_corrected":
-                array_images = self._atlas.array_projection_corrected
-            elif type_figure == "atlas":
-                array_projected_images_atlas, array_projected_simplified_id = self._atlas.compute_array_images_atlas()
-                array_images = array_projected_images_atlas
 
+            array_images = self.compute_array_basic_images(type_figure=type_figure)
             if array_images is None:
                 raise ValueError("array_images has not been assigned, can't proceed.")
             return [
@@ -293,7 +399,7 @@ class Figures:
         )
         return surface
 
-    def return_rgb_array_per_lipid_selection(
+    def compute_rgb_array_per_lipid_selection(
         self,
         slice_index,
         ll_t_bounds,
@@ -362,7 +468,7 @@ class Figures:
 
         return np.asarray(array_image, dtype=np.uint8)
 
-    def return_rgb_image_per_lipid_selection(
+    def compute_rgb_image_per_lipid_selection(
         self,
         slice_index,
         ll_t_bounds,
@@ -375,7 +481,7 @@ class Figures:
         use_pil=False,
     ):
 
-        array_image = self.return_rgb_array_per_lipid_selection(
+        array_image = self.compute_rgb_array_per_lipid_selection(
             slice_index,
             ll_t_bounds,
             normalize_independently=normalize_independently,
@@ -419,7 +525,7 @@ class Figures:
         fig = go.Figure(
             frames=[
                 go.Frame(
-                    data=self.return_rgb_image_per_lipid_selection(
+                    data=self.compute_rgb_image_per_lipid_selection(
                         i,
                         ll_t_bounds[i - 1],
                         normalize_independently=True,
@@ -438,7 +544,7 @@ class Figures:
         )
 
         fig.add_trace(
-            self.return_rgb_image_per_lipid_selection(
+            self.compute_rgb_image_per_lipid_selection(
                 1,
                 [
                     ll_t_bounds[i - 1]
@@ -555,7 +661,7 @@ class Figures:
             if ll_t_bounds[slice_index] != [None, None, None]:
 
                 # Get the data as an expression image per lipid
-                array_data = self.return_rgb_array_per_lipid_selection(
+                array_data = self.compute_rgb_array_per_lipid_selection(
                     slice_index + 1,
                     ll_t_bounds[slice_index],
                     normalize_independently=False,

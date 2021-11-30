@@ -520,9 +520,9 @@ def page_2_plot_graph_heatmap_mz_selection(
             if id_input == "tab-2-colormap-button":
                 return app.slice_store.getSlice(slice_index).return_heatmap_per_lipid_selection(ll_lipid_bounds)
             elif id_input == "tab-2-rgb-button":
-                return app.slice_store.getSlice(slice_index).return_rgb_image_per_lipid_selection(ll_lipid_bounds)
+                return app.slice_store.getSlice(slice_index).compute_rgb_image_per_lipid_selection(ll_lipid_bounds)
             else:
-                return app.slice_store.getSlice(slice_index).return_rgb_image_per_lipid_selection(ll_lipid_bounds)
+                return app.slice_store.getSlice(slice_index).compute_rgb_image_per_lipid_selection(ll_lipid_bounds)
 
         else:
             # probably the page has just been loaded, so do nothing
