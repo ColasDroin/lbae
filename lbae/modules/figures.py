@@ -9,6 +9,7 @@ from skimage import io
 from scipy.ndimage.interpolation import map_coordinates
 import logging
 from numba import njit
+from matplotlib import cm
 
 # Homemade functions
 from lbae.modules.tools import spectra
@@ -19,6 +20,7 @@ from lbae.modules.tools.misc import (
 )
 from lbae.modules.tools.atlas import project_image, slice_to_atlas_transform
 from lbae.modules.tools.memuse import logmem
+from lbae.config import dic_colors, l_colors
 
 ###### DEFINE FIGURES CLASS ######
 class Figures:
@@ -28,6 +30,8 @@ class Figures:
         logging.info("Initializing Figures object" + logmem())
         self._data = maldi_data
         self._atlas = atlas
+
+    ###### FUNCTIONS FOR FIGURE IN LOAD_SLICE PAGE ######
 
     # ? Move into another class? Doesn't really need self
     def compute_padded_original_images(self):
@@ -149,7 +153,7 @@ class Figures:
             array_images = array_projected_images_atlas
         return array_images
 
-    #! Properly drop this function as well? But this one works and may be kept in the future
+    # ? Drop this function as well? But this one works and may be kept in the future
     def compute_figure_basic_images_with_slider(self, type_figure="warped_data", plot_atlas_contours=False):
         # Get array of images
         array_images = return_pickled_object(
@@ -222,10 +226,7 @@ class Figures:
         ]
 
         # Layout
-        fig.update_layout(
-            # title="Experimental slices in volumetric data",
-            margin=dict(t=25, r=0, b=0, l=0),
-        )
+        fig.update_layout(margin=dict(t=25, r=0, b=0, l=0),)
 
         def frame_args(duration):
             return {
@@ -252,6 +253,89 @@ class Figures:
         ]
 
         logging.info("Figure has been computed")
+        return fig
+
+    ###### FUNCTIONS FOR FIGURE IN LIPID_SELECTION PAGE ######
+
+    def return_image_per_lipid(self, slice_index, lb_mz, hb_mz, RGB_format=True):
+        # Get image from raw mass spec data
+        image = spectra.compute_image_using_index_and_image_lookup(
+            lb_mz,
+            hb_mz,
+            self._data.get_array_spectra(slice_index),
+            self._data.get_array_lookup_pixels(slice_index),
+            self._data.get_image_shape(slice_index),
+            self._data.get_array_lookup_mz(slice_index),
+            self._data.get_array_cumulated_lookup_mz_image(slice_index),
+            self._data.get_divider_lookup(slice_index),
+        )
+
+        # Normalize by 99 percentile
+        image = image / np.percentile(image, 99) * 1
+        image = np.clip(0, 1, image)
+        if RGB_format:
+            image *= 255
+        image = np.round(image).astype(np.uint8)
+        return image
+
+    def return_heatmap(
+        self,
+        slice_index,
+        lb_mz=None,
+        hb_mz=None,
+        draw=False,
+        binary_string=False,
+        projected_image=True,
+        plot_contours=False,
+        heatmap=False,
+    ):
+        # Upper bound lower than the lowest m/z value and higher that the highest m/z value
+        if lb_mz is None:
+            lb_mz = 200
+        if hb_mz is None:
+            hb_mz = 1800
+
+        image = self.return_image_per_lipid(slice_index, lb_mz, hb_mz, RGB_format=False)
+
+        # project image into cleaned and higher resolution version
+        if projected_image:
+            image = project_image(slice_index, image, self._atlas.array_projection_correspondence_corrected)
+
+        # Build graph from image
+        if heatmap:
+            fig = px.imshow(image, binary_string=binary_string, color_continuous_scale="deep_r")  # , aspect = 'auto')
+            if plot_contours:
+                b64_string = turn_RGB_image_into_base64_string(
+                    self._atlas.list_projected_atlas_borders_arrays[slice_index], colormap=cm.Oranges, RGBA=True
+                )
+                fig.add_trace(go.Image(visible=True, source=b64_string))
+
+        else:
+            fig = go.Figure()
+
+            if plot_contours:
+                array_image_atlas = self._atlas.list_projected_atlas_borders_arrays[slice_index]
+            else:
+                array_image_atlas = None
+
+            base64_string = turn_image_into_base64_string(image)
+            fig.add_trace(go.Image(visible=True, source=base64_string, overlay=array_image_atlas))
+
+        # Improve graph layout
+        fig.update_layout(
+            margin=dict(t=0, r=0, b=0, l=0),
+            newshape=dict(fillcolor=dic_colors["blue"], opacity=0.7, line=dict(color="white", width=1)),
+            # Do not specify height for now as plotly is buggued and resets it to 450px if switching tabs
+            # height=500,
+        )
+        fig.update_xaxes(showticklabels=False)
+        fig.update_yaxes(showticklabels=False)
+        fig.update(layout_coloraxis_showscale=False)
+
+        # Set how the image should be annotated
+        if draw:
+            fig.update_layout(dragmode="drawclosedpath")
+
         return fig
 
     # ! I need to order properly these functions
@@ -966,103 +1050,9 @@ class Figures:
             fig.update_xaxes(range=[lb, hb])
         return fig
 
-    def return_image_per_lipid(self, lb_mz, hb_mz, RGB_format=True):
-        # Get image from raw mass spec data
-        image = return_image_using_index_and_image_lookup(
-            lb_mz,
-            hb_mz,
-            self.array_spectra_high_res,
-            self.array_pixel_indexes_high_res,
-            self.image_shape,
-            self.lookup_table_spectra_high_res,
-            self.cumulated_image_lookup_table_high_res,
-            self.divider_lookup,
-            False,
-        )
 
-        # Normalize by 99 percentile
-        image = image / np.percentile(image, 99) * 1
-        image = np.clip(0, 1, image)
-        if RGB_format:
-            image *= 255
-        # image = np.round(image).astype(np.uint8) #doesn't save much memory and probably takes a little time
-        return image
 
-    def return_heatmap(
-        self,
-        lb_mz=None,
-        hb_mz=None,
-        draw=False,
-        binary_string=False,
-        projected_image=True,
-        plot_contours=False,
-        heatmap=False,
-    ):
-        # Upper bound lower than the lowest m/z value and higher that the highest m/z value
-        if lb_mz is None:
-            lb_mz = 200
-        if hb_mz is None:
-            hb_mz = 1800
-
-        image = self.return_image_per_lipid(lb_mz, hb_mz, RGB_format=False)
-
-        # project image into cleaned and higher resolution version
-        if projected_image:
-            image = project_image(self.slice_index, image, app.slice_atlas.array_projection_correspondence_corrected)
-
-        # Build graph from image
-        if heatmap:
-            fig = px.imshow(image, binary_string=binary_string, color_continuous_scale="deep_r")  # , aspect = 'auto')
-        else:
-            fig = go.Figure()
-            img = np.uint8(cm.viridis(image) * 255)
-            pil_img = Image.fromarray(img)  # PIL image object
-            prefix = "data:image/png;base64,"
-            with BytesIO() as stream:
-                pil_img.save(stream, format="png")  # , optimize=True, quality=85)
-                base64_string = prefix + base64.b64encode(stream.getvalue()).decode("utf-8")
-            fig.add_trace(go.Image(visible=True, source=base64_string))
-
-        if plot_contours:
-
-            fig.add_trace(app.slice_atlas.list_projected_atlas_borders_figures[self.slice_index - 1])
-            # brain_regions = app.slice_atlas.array_projected_simplified_id[self.slice_index - 1, :, :]
-            # contours = brain_regions[2:, 2:] - brain_regions[:-2, :-2]
-            # contours = np.clip(contours ** 2, 0, 0.8)
-            # contours = np.pad(contours, ((1, 1), (1, 1)))
-            # contour_image = np.full(image.shape + (3,), 255, dtype=np.uint8)
-            # contour_image = np.concatenate((contour_image, np.expand_dims(contours, -1)), axis=-1)
-
-            # Build graph from image
-            # fig.add_trace(go.Image(z=contour_image, colormodel="rgba", hoverinfo="skip"))
-
-            # fig.add_trace(
-            #    go.Contour(
-            #        visible=True,
-            #        showscale=False,
-            #        z=contour,
-            #        contours=dict(coloring="none"),
-            #        line_width=2,
-            #        line_color="gold",
-            #    )
-            # )
-
-        # Improve graph layout
-        fig.update_layout(
-            margin=dict(t=0, r=0, b=0, l=0),
-            newshape=dict(fillcolor=app.dic_colors["blue"], opacity=0.7, line=dict(color="white", width=1)),
-            # Do not specify height for now as plotly is buggued and resets it to 450px if switching tabs
-            # height=500,
-        )
-        fig.update_xaxes(showticklabels=False)
-        fig.update_yaxes(showticklabels=False)
-        fig.update(layout_coloraxis_showscale=False)
-
-        # Set how the image should be annotated
-        if draw:
-            fig.update_layout(dragmode="drawclosedpath")
-
-        return fig
+ 
 
     def return_heatmap_per_lipid_selection(self, ll_t_bounds, normalize_independently=True, projected_image=True):
 

@@ -8,7 +8,7 @@ import dash
 import numpy as np
 import dash_draggable
 
-# App module
+# Homemade modules
 from lbae import app
 from lbae.app import figures, data
 from lbae import config
@@ -189,18 +189,6 @@ def return_layout(basic_config, initial_slice=1):
                                                     )
                                                 ],
                                             ),
-                                            ## Third column
-                                            dbc.Col(
-                                                width=2,
-                                                className="mr-n1 mt-2",
-                                                children=[
-                                                    dbc.Button(
-                                                        id="tab-1-load-button",
-                                                        color="primary",
-                                                        children=html.Strong("Load!"),
-                                                    ),
-                                                ],
-                                            ),
                                         ],
                                     ),
                                 ],
@@ -299,38 +287,3 @@ def page_1_hover(hoverData, slice_index):
 
     return dash.no_update
 
-
-"""
-# Function to register new slice index when load button is pressed
-@app.app.callback(
-    Output("tab-1-loading-text", "children"),
-    Output("dcc-store-slice-index", "data"),
-    Input("tab-1-load-button", "n_clicks"),
-    State("page-1-slider-slice-selection", "value"),
-    State("dcc-store-slice-index", "data"),
-)
-def tab_1_load_slice_index(clicked, value_slider, slice_index):
-
-    # Find out which input triggered the function
-    id_input, value_input = dash.callback_context.triggered[0]["prop_id"].split(".")
-
-    # The button has been clicked
-    if clicked is not None and slice_index != value_slider:
-
-        # Cache selected slice
-        app.slice_store.addSliceFromIndex(value_slider)
-
-        # Cache correcsponding dictionnary of masks
-        app.slice_atlas.return_dic_projected_masks_and_spectra(value_slider - 1)
-
-        return None, value_slider
-
-    # The app is initializing, button has actually not been clicked (and value_slider should be equal to initial_slice)
-    else:
-        # This return is needed instead of dash.no_update to activate the subsequent callbacks on dcc-store-slice-index
-        if slice_index is not None:
-            return None, slice_index
-        else:
-            return None, value_slider
-
-"""

@@ -225,7 +225,6 @@ def compute_image_using_index_and_image_lookup(
     lookup_table_spectra,
     lookup_table_image,
     divider_lookup,
-    use_full=True,
 ):
     """This function is very much similar to compute_image_using_index_lookup, except that it uses a different lookup 
     table: lookup_table_image. This lookup table contains the cumulated intensities above the current lookup (instead of
@@ -266,31 +265,16 @@ def compute_image_using_index_and_image_lookup(
         )
 
     else:
-        # If all arrays are provided as numpy arrays, compute everything with Numba
-        if use_full:
-            return _compute_image_using_index_and_image_lookup_full(
-                low_bound,
-                high_bound,
-                array_spectra,
-                array_pixel_indexes,
-                img_shape,
-                lookup_table_spectra,
-                lookup_table_image,
-                divider_lookup,
-            )
-
-        # If the spectrum is provided as HDF5, we need to manually extract the regions of interest without Numba
-        else:
-            return _compute_image_using_index_and_image_lookup_partial(
-                low_bound,
-                high_bound,
-                array_spectra,
-                array_pixel_indexes,
-                img_shape,
-                lookup_table_spectra,
-                lookup_table_image,
-                divider_lookup,
-            )
+        return _compute_image_using_index_and_image_lookup_partial(
+            low_bound,
+            high_bound,
+            array_spectra,
+            array_pixel_indexes,
+            img_shape,
+            lookup_table_spectra,
+            lookup_table_image,
+            divider_lookup,
+        )
 
 
 @njit
@@ -372,69 +356,6 @@ def _correct_image(image, idx_pix, img_shape, array_to_sum_lb, array_to_sum_hb, 
         # Add the missing intensities
         image[convert_spectrum_idx_to_coor(idx_pix, img_shape)] += array_to_sum_hb[1, i]
         i += 1
-    return image
-
-
-# TODO : Maybe update this function so that it looks more than the partial one... To think of after I check that the two are identical
-# TODO : compare the performace of the full an partial functions for np.arrays, to see if it's worth it to delete the full one
-@njit
-def _compute_image_using_index_and_image_lookup_full(
-    low_bound,
-    high_bound,
-    array_spectra,
-    array_pixel_indexes,
-    img_shape,
-    lookup_table_spectra,
-    lookup_table_image,
-    divider_lookup,
-):
-    """This internal function is wrapped by compute_image_using_index_and_image_lookup(). Please consult the 
-    documentation of compute_image_using_index_and_image_lookup() for more information.
-    """
-    # Get a first approximate of the requested lipid image
-    image = (
-        (lookup_table_image[int(high_bound / divider_lookup)] - lookup_table_image[int(low_bound / divider_lookup)])
-        / lookup_table_image[140]
-    )  # ! Remove once the normalization image is normalized upstream
-
-    # Look for true lower bound between the lower looked up image and the next one
-    for idx_pix, i in enumerate(lookup_table_spectra[int(low_bound / divider_lookup)]):
-
-        # If pixel contains no peak, skip it
-        if array_pixel_indexes[idx_pix, 0] == -1:
-            continue
-
-        # First correct for the m/z values that have been summed in the image and shouldn't have
-        while array_spectra[0, i] < low_bound and i <= array_pixel_indexes[idx_pix, 1]:
-
-            # If the peak corresponding to highest mz is before the lookup value, just skip it altogether as
-            # no correction is needed (the spectrum is empty between lower bound and low bound)
-            if array_spectra[0, i] < int(low_bound / divider_lookup) * divider_lookup:
-                break
-
-            # Remove intensities that should not have been added in the first place
-            image[convert_spectrum_idx_to_coor(idx_pix, img_shape)] -= array_spectra[1, i]
-            i += 1
-
-    # Look for true higher bound between the higher looked up image and the next one
-    for idx_pix, i in enumerate(lookup_table_spectra[int(high_bound / divider_lookup)]):
-
-        # If pixel contains no peak, skip it
-        if array_pixel_indexes[idx_pix, 0] == -1:
-            continue
-
-        # Then add the m/z values that are missing in the image
-        while array_spectra[0, i] <= high_bound and i <= array_pixel_indexes[idx_pix, 1]:
-
-            # If the peak corresponding to the highest mz is before the lookup value, just skip it altogether as
-            # no correction is needed (the spectrum is empty between high bound and higher bound)
-            if array_spectra[0, i] < int(high_bound / divider_lookup) * divider_lookup:
-                break
-
-            # Add the missing intensities
-            image[convert_spectrum_idx_to_coor(idx_pix, img_shape)] += array_spectra[1, i]
-            i += 1
-
     return image
 
 

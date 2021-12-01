@@ -131,12 +131,10 @@ class MaldiData:
         # Previously called array_spectra_high_res.
         return self._dic_memmap[slice_index]["array_spectra"]
 
-    # ! Time this compared to getting the full array and put a warning if needed
     def get_array_mz(self, slice_index):
         # Previously called array_spectra_high_res
         return self._dic_memmap[slice_index]["array_spectra"][0, :]
 
-    # ! Time this compared to getting the full array and put a warning if needed
     def get_array_intensity(self, slice_index):
         # Previously called array_spectra_high_res
         return self._dic_memmap[slice_index]["array_spectra"][1, :]

@@ -4,25 +4,20 @@
 import dash_bootstrap_components as dbc
 from dash import dcc, html
 import logging
-
-# from dash.dependencies import Input, Output, State
 import dash
-
-# import orjson
 import json
 import pandas as pd
 from dash.dependencies import Input, Output, State
 
-# Data module
-from tools.SliceData import SliceData
+# Homemade modules
+from lbae.app import figures, data
+from lbae import app
 
-# App module
-import app
 
 ###### DEFFINE PAGE LAYOUT ######
 
 
-def return_layout(basic_config=app.basic_config, slice_index=1):
+def return_layout(basic_config, slice_index=1):
 
     page = html.Div(
         children=[
@@ -475,9 +470,7 @@ def page_2_plot_graph_heatmap_mz_selection(
         mz = float(mz)
         mz_range = float(mz_range)
         if mz > 400 and mz < 1200 and mz_range < 10:
-            return app.slice_store.getSlice(slice_index).return_heatmap(
-                mz - mz_range / 2, mz + mz_range / 2, binary_string=False
-            )
+            return figures.return_heatmap(slice_index, mz - mz_range / 2, mz + mz_range / 2, binary_string=False)
         else:
             return dash.no_update
 

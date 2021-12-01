@@ -63,10 +63,13 @@ def turn_image_into_base64_string(
     return base_64_string_conversion(pil_img, optimize=optimize, quality=quality)
 
 
-def turn_RGB_image_into_base64_string(image, colormap=cm.viridis, optimize=True, quality=85):
+def turn_RGB_image_into_base64_string(image, colormap=cm.viridis, optimize=True, quality=85, RGBA=False):
 
     # Convert image to PIL image
-    pil_img = Image.fromarray(image, "RGB")  # PIL image object
+    if RGBA:
+        pil_img = Image.fromarray(image, "RGBA")  # PIL image object
+    else:
+        pil_img = Image.fromarray(image, "RGB")  # PIL image object
     x, y = pil_img.size
 
     # Decrease resolution to save space

@@ -2,6 +2,9 @@
 dic_colors = {"blue": "#50bdda", "green": "#5fa970", "orange": "#de9334", "red": "#df5034", "dark": "#222222"}
 l_colors = ["#50bdda", "#5fa970", "#de9334", "#df5034", "#222222"]
 
+
+# ? Delete this/ Adapt this
+"""
 # Define basic config for graphs
 basic_config = {
     # "displayModeBar": True,
@@ -21,8 +24,8 @@ basic_config = {
         "hoverCompareCartesian",
     ],
 }
+"""
 
-# ! Find which one is the good one
 # Define basic config for graphs
 basic_config = {
     "displayModeBar": False,
