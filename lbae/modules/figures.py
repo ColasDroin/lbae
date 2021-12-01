@@ -254,33 +254,6 @@ class Figures:
         logging.info("Figure has been computed")
         return fig
 
-    # ! This function is deprecated and should be deleted when properly replaced
-    def compute_array_figures_basic_image(self, type_figure="warped_data", plot_atlas_contours=False):
-
-        # Either the requested figure is just a simple atlas annotation, with no background
-        if type_figure == "atlas_boundaries":
-            return [
-                self.compute_figure_basic_image(
-                    None, atlas_contours=self._atlas.list_projected_atlas_borders_figures[i], only_contours=True,
-                )
-                for i in range(self._data.get_slice_number())
-            ]
-        else:
-
-            array_images = self.compute_array_basic_images(type_figure=type_figure)
-            if array_images is None:
-                raise ValueError("array_images has not been assigned, can't proceed.")
-            return [
-                self.compute_figure_basic_image(
-                    array_images[i],
-                    atlas_contours=self._atlas.list_projected_atlas_borders_figures[i]
-                    if plot_atlas_contours
-                    else None,
-                    only_contours=False,
-                )
-                for i in range(self._data.get_slice_number())
-            ]
-
     # ! I need to order properly these functions
     def compute_figure_slices_3D(self, reduce_resolution_factor=7):
 
