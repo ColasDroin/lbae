@@ -68,9 +68,9 @@ def return_layout(basic_config, slice_index=1):
                                                                     "position": "absolute",
                                                                     "left": "0",
                                                                 },
-                                                                figure=app.slice_store.getSlice(
-                                                                    slice_index
-                                                                ).return_heatmap(binary_string=False),
+                                                                figure=figures.compute_heatmap_per_mz(
+                                                                    slice_index, binary_string=False
+                                                                ),
                                                             ),
                                                         ],
                                                     ),
@@ -114,9 +114,9 @@ def return_layout(basic_config, slice_index=1):
                                                                 children=[
                                                                     dcc.Graph(
                                                                         id="page-2-graph-low-resolution-spectrum",
-                                                                        figure=app.slice_store.getSlice(
+                                                                        figure=figures.compute_spectrum_low_res(
                                                                             slice_index
-                                                                        ).return_spectrum_low_res(),
+                                                                        ),
                                                                         style={"height": "20vh"},
                                                                         config=basic_config
                                                                         | {
@@ -470,7 +470,10 @@ def page_2_plot_graph_heatmap_mz_selection(
         mz = float(mz)
         mz_range = float(mz_range)
         if mz > 400 and mz < 1200 and mz_range < 10:
-            return figures.return_heatmap(slice_index, mz - mz_range / 2, mz + mz_range / 2, binary_string=False)
+            # ? Could I not use return_heatmap_per_lipid_selection instead ?
+            return figures.compute_heatmap_per_mz(
+                slice_index, mz - mz_range / 2, mz + mz_range / 2, binary_string=False
+            )
         else:
             return dash.no_update
 
@@ -478,7 +481,7 @@ def page_2_plot_graph_heatmap_mz_selection(
     elif id_input == "page-2-button-bounds":
         lb, hb = float(lb), float(hb)
         if lb > 400 and hb < 1200 and hb - lb > 0 and hb - lb < 10:
-            return app.slice_store.getSlice(slice_index).return_heatmap(lb, hb, binary_string=False)
+            return figures.compute_heatmap_per_mz(slice_index, lb, hb, binary_string=False)
         else:
             return dash.no_update
 
@@ -494,7 +497,7 @@ def page_2_plot_graph_heatmap_mz_selection(
 
             # Build the list of mz boundaries for each peak
             ll_lipid_bounds = [
-                [(float(app.df_annotation.iloc[index]["min"]), float(app.df_annotation.iloc[index]["max"]))]
+                [(float(data.get_annotations().iloc[index]["min"]), float(data.get_annotations().iloc[index]["max"]))]
                 if index != -1
                 else None
                 for index in [lipid_1_index, lipid_2_index, lipid_3_index]
@@ -511,34 +514,26 @@ def page_2_plot_graph_heatmap_mz_selection(
                         print("BUG: some pixel annotations intercept each other")
 
             if id_input == "tab-2-colormap-button":
-                return app.slice_store.getSlice(slice_index).return_heatmap_per_lipid_selection(ll_lipid_bounds)
+                return figures.compute_heatmap_per_lipid_selection(slice_index, ll_lipid_bounds)
             elif id_input == "tab-2-rgb-button":
-                return app.slice_store.getSlice(slice_index).compute_rgb_image_per_lipid_selection(ll_lipid_bounds)
+                return figures.compute_rgb_image_per_lipid_selection(slice_index, ll_lipid_bounds)
             else:
-                return app.slice_store.getSlice(slice_index).compute_rgb_image_per_lipid_selection(ll_lipid_bounds)
+                return figures.compute_rgb_image_per_lipid_selection(slice_index, ll_lipid_bounds)
 
         else:
             # probably the page has just been loaded, so do nothing
             # return app.slice_store.getSlice(slice_index).return_heatmap(binary_string=False)
             return dash.no_update
 
-    # Case trigger is load button through state of the corresponding dcc store state or empty lipid selection
-    # elif id_input == "dcc-store-slice-index":  # or 'page-2-selected-lipid' in id_input:
-    #    return app.slice_store.getSlice(slice_index).return_heatmap(binary_string=False)
-
     # Case trigger is range slider from high resolution spectrum
     elif id_input == "boundaries-high-resolution-mz-plot" and bound_high_res is not None:
         bound_high_res = json.loads(bound_high_res)
-        return app.slice_store.getSlice(slice_index).return_heatmap(
-            bound_high_res[0], bound_high_res[1], binary_string=False
-        )
+        return figures.compute_heatmap_per_mz(slice_index, bound_high_res[0], bound_high_res[1], binary_string=False)
 
     # Case trigger is range slider from low resolution spectrum
     elif id_input == "boundaries-low-resolution-mz-plot" and bound_low_res is not None:
         bound_low_res = json.loads(bound_low_res)
-        return app.slice_store.getSlice(slice_index).return_heatmap(
-            bound_low_res[0], bound_low_res[1], binary_string=False
-        )
+        return figures.compute_heatmap_per_mz(slice_index, bound_low_res[0], bound_low_res[1], binary_string=False)
 
     # Case colormap changed (hidden for now)
     elif id_input == "tab-2-colormap-switch":
@@ -599,34 +594,34 @@ def tab_2_plot_graph_low_res_spectrum(
 
             # build the list of mz boundaries for each peak
             l_lipid_bounds = [
-                (float(app.df_annotation.iloc[index]["min"]), float(app.df_annotation.iloc[index]["max"]))
+                (float(data.get_annotations().iloc[index]["min"]), float(data.get_annotations().iloc[index]["max"]))
                 if index != -1
                 else None
                 for index in [lipid_1_index, lipid_2_index, lipid_3_index]
             ]
-            return app.slice_store.getSlice(slice_index).return_spectrum_low_res(l_lipid_bounds)
+            return figures.compute_spectrum_low_res(slice_index, l_lipid_bounds)
 
         else:
             # probably the page has just been loaded, so load new figure with default parameters
             return dash.no_update
-            # return app.slice_store.getSlice(slice_index).return_spectrum_low_res()
+            # return figures.compute_spectrum_low_res(slice_index,)
 
     elif id_input == "page-2-button-range":
         mz = float(mz)
         mz_range = float(mz_range)
         if mz > 400 and mz < 1200 and mz_range < 10:
             l_lipid_bounds = [(mz - mz_range / 2, mz + mz_range / 2), None, None]
-            return app.slice_store.getSlice(slice_index).return_spectrum_low_res(l_lipid_bounds)
+            return figures.compute_spectrum_low_res(slice_index, l_lipid_bounds)
 
     elif id_input == "page-2-button-bounds":
         lb, hb = float(lb), float(hb)
         if lb > 400 and hb < 1200 and hb - lb > 0 and hb - lb < 10:
             l_lipid_bounds = [(lb, hb), None, None]
-            return app.slice_store.getSlice(slice_index).return_spectrum_low_res(l_lipid_bounds)
+            return figures.compute_spectrum_low_res(slice_index, l_lipid_bounds)
 
     # If no trigger, it means the page has just been loaded, so load new figure with default parameters
     else:
-        # return app.slice_store.getSlice(slice_index).return_spectrum_low_res()
+        # return figures.compute_spectrum_low_res(slice_index,)
         return dash.no_update
 
 
@@ -637,7 +632,7 @@ def tab_2_plot_graph_low_res_spectrum(
     Input("page-2-graph-low-resolution-spectrum", "relayoutData"),
     State("dcc-store-slice-index", "data"),
 )
-def tab_2_store_boundaries_mz_from_graph_low_res_spectrum(relayoutData, slice_index):
+def page_2_store_boundaries_mz_from_graph_low_res_spectrum(relayoutData, slice_index):
     if relayoutData is not None:
         if "xaxis.range[0]" in relayoutData:
             return json.dumps([relayoutData["xaxis.range[0]"], relayoutData["xaxis.range[1]"]])
@@ -649,8 +644,8 @@ def tab_2_store_boundaries_mz_from_graph_low_res_spectrum(relayoutData, slice_in
         elif "xaxis.autorange" in relayoutData:
             return json.dumps(
                 [
-                    app.slice_store.getSlice(slice_index).array_averaged_mz_intensity_low_res[0, 0].astype("float"),
-                    app.slice_store.getSlice(slice_index).array_averaged_mz_intensity_low_res[0, -1].astype("float"),
+                    data.get_array_avg_spectrum_downsampled(slice_index)[0, 0].astype("float"),
+                    data.get_array_avg_spectrum_downsampled(slice_index)[0, -1].astype("float"),
                 ]
             )
 
@@ -712,13 +707,14 @@ def page_2_plot_graph_high_res_spectrum(
             # Build the list of mz boundaries for each peak
             l_indexes = [lipid_1_index, lipid_2_index, lipid_3_index]
             l_lipid_bounds = [
-                (float(app.df_annotation.iloc[index]["min"]), float(app.df_annotation.iloc[index]["max"]))
+                (float(data.get_annotations().iloc[index]["min"]), float(data.get_annotations().iloc[index]["max"]))
                 if index != 1
                 else None
                 for index in l_indexes
             ]
             current_lipid_index = l_indexes.index(l_selected_lipids[-1])
-            return app.slice_store.getSlice(slice_index).return_spectrum_high_res(
+            return figures.compute_spectrum_high_res(
+                slice_index,
                 l_lipid_bounds[current_lipid_index][0] - 10 ** -2,
                 l_lipid_bounds[current_lipid_index][1] + 10 ** -2,
                 annotations=l_lipid_bounds,
@@ -730,7 +726,8 @@ def page_2_plot_graph_high_res_spectrum(
         mz_range = float(mz_range)
         if mz > 400 and mz < 1200 and mz_range < 10:
             # l_lipid_bounds = [(mz - mz_range / 2, mz + mz_range / 2), None, None]
-            return app.slice_store.getSlice(slice_index).return_spectrum_high_res(
+            return figures.compute_spectrum_high_res(
+                slice_index,
                 mz - mz_range / 2 - 10 ** -2,
                 mz + mz_range / 2 + 10 ** -2,
                 # annotations=l_lipid_bounds,
@@ -741,8 +738,8 @@ def page_2_plot_graph_high_res_spectrum(
         lb, hb = float(lb), float(hb)
         if lb > 400 and hb < 1200 and hb - lb > 0 and hb - lb < 10:
             # l_lipid_bounds = [(lb, hb), None, None]
-            return app.slice_store.getSlice(slice_index).return_spectrum_high_res(
-                lb - 10 ** -2, hb + 10 ** -2, force_xlim=True,  # annotations=l_lipid_bounds,
+            return figures.compute_spectrum_high_res(
+                slice_index, lb - 10 ** -2, hb + 10 ** -2, force_xlim=True,  # annotations=l_lipid_bounds,
             )
 
     # If the figure is created at app launch or after load button is cliked, or with an empty lipid selection,
@@ -756,7 +753,7 @@ def page_2_plot_graph_high_res_spectrum(
 
         # Case the zoom is high enough
         if bound_high_res[1] - bound_high_res[0] <= 3:
-            return app.slice_store.getSlice(slice_index).return_spectrum_high_res(bound_high_res[0], bound_high_res[1])
+            return figures.compute_spectrum_high_res(slice_index, bound_high_res[0], bound_high_res[1])
         # Otherwise just return default (empty) graph
         else:
             return dash.no_update
@@ -772,7 +769,7 @@ def page_2_plot_graph_high_res_spectrum(
     Input("page-2-graph-high-resolution-spectrum", "relayoutData"),
     Input("boundaries-low-resolution-mz-plot", "data"),
 )
-def tab_2_store_boundaries_mz_from_graph_high_res_spectrum(relayoutData, bound_low_res):
+def page_2_store_boundaries_mz_from_graph_high_res_spectrum(relayoutData, bound_low_res):
 
     # Primarily update high-res boundaries with high-res range slider
     if relayoutData is not None:
@@ -827,24 +824,26 @@ def tab_2_handle_dropdowns(slice_index, name, structure, options_names, options_
         if len(id_input) == 0 or id_input == "dcc-store-slice-index":
             options_names = [
                 {"label": name, "value": name}
-                for name in sorted(app.df_annotation[app.df_annotation["slice"] == slice_index].name.unique())
+                for name in sorted(
+                    data.get_annotations()[data.get_annotations()["slice"] == slice_index].name.unique()
+                )
             ]
             return options_names, [], [], None, None, None
 
         elif name is not None:
             if id_input == "tab-2-dropdown-lipid-names":
-                structures = app.df_annotation[
-                    (app.df_annotation["name"] == name) & (app.df_annotation["slice"] == slice_index)
+                structures = data.get_annotations()[
+                    (data.get_annotations()["name"] == name) & (data.get_annotations()["slice"] == slice_index)
                 ].structure.unique()
                 options_structures = [{"label": structure, "value": structure} for structure in sorted(structures)]
                 return options_names, options_structures, [], name, None, None
 
             elif structure is not None:
                 if id_input == "tab-2-dropdown-lipid-structures":
-                    cations = app.df_annotation[
-                        (app.df_annotation["name"] == name)
-                        & (app.df_annotation["structure"] == structure)
-                        & (app.df_annotation["slice"] == slice_index)
+                    cations = data.get_annotations()[
+                        (data.get_annotations()["name"] == name)
+                        & (data.get_annotations()["structure"] == structure)
+                        & (data.get_annotations()["slice"] == slice_index)
                     ].cation.unique()
                     options_cations = [{"label": cation, "value": cation} for cation in sorted(cations)]
                     return options_names, options_structures, options_cations, name, structure, None
@@ -944,12 +943,16 @@ def tab_2_add_toast_selection(
     elif cation is not None and id_input == "tab-2-dropdown-lipid-cations":
 
         # Find lipid location
-        l_lipid_loc = app.df_annotation.index[
-            (app.df_annotation["name"] == name)
-            & (app.df_annotation["structure"] == structure)
-            & (app.df_annotation["slice"] == slice_index)
-            & (app.df_annotation["cation"] == cation)
-        ].tolist()
+        l_lipid_loc = (
+            data.get_annotations()
+            .index[
+                (data.get_annotations()["name"] == name)
+                & (data.get_annotations()["structure"] == structure)
+                & (data.get_annotations()["slice"] == slice_index)
+                & (data.get_annotations()["cation"] == cation)
+            ]
+            .tolist()
+        )
 
         # If several lipids correspond to the selection, we have a problem...
         if len(l_lipid_loc) > 1:
@@ -1038,21 +1041,23 @@ def tab_2_download(n_clicks, lipid_1_index, lipid_2_index, lipid_3_index, slice_
 
         def to_excel(bytes_io):
             xlsx_writer = pd.ExcelWriter(bytes_io, engine="xlsxwriter")
-            app.df_annotation.iloc[l_lipids_indexes].to_excel(xlsx_writer, index=False, sheet_name="Selected lipids")
+            data.get_annotations().iloc[l_lipids_indexes].to_excel(
+                xlsx_writer, index=False, sheet_name="Selected lipids"
+            )
             for i, index in enumerate(l_lipids_indexes):
                 name = (
-                    app.df_annotation.iloc[index]["name"]
+                    data.get_annotations().iloc[index]["name"]
                     + "_"
-                    + app.df_annotation.iloc[index]["structure"]
+                    + data.get_annotations().iloc[index]["structure"]
                     + "_"
-                    + app.df_annotation.iloc[index]["cation"]
+                    + data.get_annotations().iloc[index]["cation"]
                 )
 
                 # Need to clean name to use it as a sheet name
                 name = name.replace(":", "").replace("/", "")
-                lb = float(app.df_annotation.iloc[index]["min"]) - 10 ** -2
-                hb = float(app.df_annotation.iloc[index]["max"]) + 10 ** -2
-                x, y = app.slice_store.getSlice(slice_index).return_spectrum_high_res(lb, hb, plot=False)
+                lb = float(data.get_annotations().iloc[index]["min"]) - 10 ** -2
+                hb = float(data.get_annotations().iloc[index]["max"]) + 10 ** -2
+                x, y = figures.compute_spectrum_high_res(slice_index, lb, hb, plot=False)
                 df = pd.DataFrame.from_dict({"m/z": x, "Intensity": y})
                 df.to_excel(xlsx_writer, index=False, sheet_name=name[:31])
             xlsx_writer.save()

@@ -14,7 +14,7 @@ from lbae.pages import (
     sidebar,
     home,
     load_slice,
-    # lipid_selection,
+    lipid_selection,
     lipid_selection_all_slices,
     # region_analysis,
     # threeD_exploration,
@@ -104,8 +104,8 @@ app.validation_layout = html.Div(
         main_content,
         home.layout,
         load_slice.return_layout(basic_config=basic_config),
-        # lipid_selection.return_layout(),
-        lipid_selection_all_slices.return_layout(),
+        lipid_selection.return_layout(basic_config=basic_config),
+        lipid_selection_all_slices.return_layout(basic_config=basic_config),
         # region_analysis.return_layout(),
         # threeD_exploration.return_layout(),
     ]
@@ -126,11 +126,11 @@ def render_page_content(pathname):
     elif pathname == "/load-slice":
         page = load_slice.return_layout(basic_config=basic_config)
 
-    # elif pathname == "/lipid-selection":
-    #     page = lipid_selection.return_layout()
+    elif pathname == "/lipid-selection":
+        page = lipid_selection.return_layout(basic_config=basic_config)
 
     elif pathname == "/lipid-selection-all-slices":
-        page = (lipid_selection_all_slices.return_layout(),)
+        page = lipid_selection_all_slices.return_layout(basic_config=basic_config)
 
     # elif pathname == "/region-analysis":
     #     page = region_analysis.return_layout()

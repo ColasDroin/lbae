@@ -1377,7 +1377,7 @@ def page_3_plot_spectrum(cliked_reset, l_spectra, slice_index):
                 grah_scattergl_data = np.array(spectrum, dtype=np.float32)
 
                 # Get df for current slice
-                df_names = app.df_annotation[app.df_annotation["slice"] == slice_index]
+                df_names = data.get_annotations()[data.get_annotations()["slice"] == slice_index]
 
                 # Extract lipid names
                 l_idx_labels = return_index_labels(
@@ -1591,7 +1591,7 @@ def page_3_draw_heatmap_per_lipid_selection(
                 l_idx_lipids = list(df_avg_intensity_lipids.index)
 
                 # Replace idx_lipids by actual name
-                df_names = app.df_annotation[app.df_annotation["slice"] == slice_index]
+                df_names = data.get_annotations()[data.get_annotations()["slice"] == slice_index]
                 df_avg_intensity_lipids.index = df_avg_intensity_lipids.index.map(
                     lambda idx: df_names.iloc[idx]["name"]
                     + "_"
@@ -1694,7 +1694,7 @@ def page_3_fill_dropdown_options(l_idx_lipids, cliked_reset, slice_index, n_clic
     elif id_input == "page-3-dcc-store-lipids-region":
         if l_idx_lipids is not None:
             if len(l_idx_lipids) > 0:
-                df_names = app.df_annotation[app.df_annotation["slice"] == slice_index]
+                df_names = data.get_annotations()[data.get_annotations()["slice"] == slice_index]
                 l_names = [
                     df_names.iloc[idx]["name"]
                     + "_"
@@ -1803,7 +1803,7 @@ def draw_modal_graph(
 
     # Check that at least one lipid has been selected
     if len(l_red_lipids + l_green_lipids + l_blue_lipids) > 0:
-        df_names = app.df_annotation[app.df_annotation["slice"] == slice_index]
+        df_names = data.get_annotations()[data.get_annotations()["slice"] == slice_index]
         # Build the list of mz boundaries for each peak
         l_lipid_bounds = [
             [

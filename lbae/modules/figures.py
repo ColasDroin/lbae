@@ -257,7 +257,9 @@ class Figures:
 
     ###### FUNCTIONS FOR FIGURE IN LIPID_SELECTION PAGE ######
 
-    def return_image_per_lipid(self, slice_index, lb_mz, hb_mz, RGB_format=True):
+    def compute_image_per_lipid(
+        self, slice_index, lb_mz, hb_mz, RGB_format=True, normalize=True, log=False, projected_image=True
+    ):
         # Get image from raw mass spec data
         image = spectra.compute_image_using_index_and_image_lookup(
             lb_mz,
@@ -270,15 +272,30 @@ class Figures:
             self._data.get_divider_lookup(slice_index),
         )
 
-        # Normalize by 99 percentile
-        image = image / np.percentile(image, 99) * 1
-        image = np.clip(0, 1, image)
+        if log:
+            image = np.log(image + 1)
+
+        if normalize:
+            # Normalize by 99 percentile
+            perc = np.percentile(image, 99)
+            if perc == 0:
+                perc = np.max(image)
+            if perc == 0:
+                perc = 1
+            image = image / perc
+            image = np.clip(0, 1, image)
         if RGB_format:
             image *= 255
-        image = np.round(image).astype(np.uint8)
+        if normalize and RGB_format:
+            image = np.round(image).astype(np.uint8)
+
+        # project image into cleaned and higher resolution version
+        if projected_image:
+            image = project_image(slice_index, image, self._atlas.array_projection_correspondence_corrected)
         return image
 
-    def return_heatmap(
+    # ! Check in the end if this function is redundant with return_heatmap_per_lipid_selection
+    def compute_heatmap_per_mz(
         self,
         slice_index,
         lb_mz=None,
@@ -295,13 +312,16 @@ class Figures:
         if hb_mz is None:
             hb_mz = 1800
 
-        image = self.return_image_per_lipid(slice_index, lb_mz, hb_mz, RGB_format=False)
+        # Compute image with largest possible bounds
+        image = self.compute_image_per_lipid(
+            slice_index, lb_mz, hb_mz, RGB_format=True, projected_image=projected_image
+        )
 
-        # project image into cleaned and higher resolution version
-        if projected_image:
-            image = project_image(slice_index, image, self._atlas.array_projection_correspondence_corrected)
+        # Clean memmap memory
+        self._data.clean_memory(slice_index=slice_index)
 
         # Build graph from image
+        # ! Do I want to keep the heatmap option? I think not as it's slower
         if heatmap:
             fig = px.imshow(image, binary_string=binary_string, color_continuous_scale="deep_r")  # , aspect = 'auto')
             if plot_contours:
@@ -318,8 +338,8 @@ class Figures:
             else:
                 array_image_atlas = None
 
-            base64_string = turn_image_into_base64_string(image)
-            fig.add_trace(go.Image(visible=True, source=base64_string, overlay=array_image_atlas))
+            base64_string = turn_image_into_base64_string(image, overlay=array_image_atlas)
+            fig.add_trace(go.Image(visible=True, source=base64_string))
 
         # Improve graph layout
         fig.update_layout(
@@ -336,6 +356,238 @@ class Figures:
         if draw:
             fig.update_layout(dragmode="drawclosedpath")
 
+        return fig
+
+    def compute_heatmap_per_lipid_selection(
+        self, slice_index, ll_t_bounds, normalize_independently=True, projected_image=True
+    ):
+
+        # Start from empty image and add selected lipids
+        image = np.zeros(self.image_shape)
+        for l_t_bounds in ll_t_bounds:
+            if l_t_bounds is not None:
+                for boundaries in l_t_bounds:
+                    if boundaries is not None:
+                        (lb_mz, hb_mz) = boundaries
+                        image_temp = self.compute_image_per_lipid(
+                            slice_index,
+                            lb_mz,
+                            hb_mz,
+                            RGB_format=True,
+                            normalize=normalize_independently,
+                            projected_image=projected_image,
+                        )
+
+                        image += image_temp
+
+        # Clean memmap memory
+        self._data.clean_memory(slice_index=slice_index)
+
+        # Build figure
+        fig = go.Figure()
+        base64_string = turn_image_into_base64_string(image)
+        fig.add_trace(go.Image(visible=True, source=base64_string))
+
+        # Improve graph layout
+        fig.update_layout(
+            title={
+                "text": "Mass spectrometry heatmap",
+                "y": 0.97,
+                "x": 0.5,
+                "xanchor": "center",
+                "yanchor": "top",
+                "font": dict(size=14,),
+            },
+            margin=dict(t=30, r=0, b=10, l=0),
+        )
+        fig.update_xaxes(showticklabels=False)
+        fig.update_yaxes(showticklabels=False)
+        fig.update(layout_coloraxis_showscale=False)
+
+        return fig
+
+    def compute_rgb_array_per_lipid_selection(
+        self,
+        slice_index,
+        ll_t_bounds,
+        normalize_independently=True,
+        projected_image=True,
+        log=False,
+        enrichment=False,
+    ):
+
+        # Build a list of empty images and add selected lipids for each channel
+        l_images = []
+        for l_boundaries in ll_t_bounds:
+            image = np.zeros(self._data.get_image_shape(slice_index))
+            if l_boundaries is not None:
+                for boundaries in l_boundaries:
+                    if boundaries is not None:
+                        (lb_mz, hb_mz) = boundaries
+
+                        image_temp = self.compute_image_per_lipid(
+                            slice_index,
+                            lb_mz,
+                            hb_mz,
+                            RGB_format=True,
+                            normalize=normalize_independently,
+                            projected_image=projected_image,
+                            log=log,
+                        )
+
+                        image += image_temp
+
+            l_images.append(image)
+
+        # Reoder axis to match plotly go.image requirements
+        array_image = np.moveaxis(np.array(l_images), 0, 2)
+
+        # Clean memmap memory
+        self._data.clean_memory(slice_index=slice_index)
+
+        return np.asarray(array_image, dtype=np.uint8)
+
+    def compute_rgb_image_per_lipid_selection(
+        self,
+        slice_index,
+        ll_t_bounds,
+        normalize_independently=True,
+        title=True,
+        projected_image=True,
+        enrichment=False,
+        log=False,
+        return_image=False,
+        use_pil=False,
+    ):
+
+        # Get RGB array for the current lipid selection
+        array_image = self.compute_rgb_array_per_lipid_selection(
+            slice_index,
+            ll_t_bounds,
+            normalize_independently=normalize_independently,
+            projected_image=projected_image,
+            log=log,
+            enrichment=enrichment,
+        )
+
+        if use_pil:
+            base64_string_exp = turn_RGB_image_into_base64_string(array_image)
+            final_image = go.Image(visible=True, source=base64_string_exp,)
+        else:
+            final_image = go.Image(z=array_image)
+
+        if return_image:
+            return final_image
+
+        else:
+            # Build graph from image
+            fig = go.Figure(final_image)
+
+            # Improve graph layout
+            fig.update_layout(
+                title={
+                    "text": "Mass spectrometry heatmap" if title else "",
+                    "y": 0.97,
+                    "x": 0.5,
+                    "xanchor": "center",
+                    "yanchor": "top",
+                    "font": dict(size=14,),
+                },
+                margin=dict(t=30, r=0, b=10, l=0),
+            )
+            fig.update_xaxes(showticklabels=False)
+            fig.update_yaxes(showticklabels=False)
+
+            return fig
+
+    def compute_spectrum_low_res(self, slice_index, annotations=None):
+
+        # Define figure data
+        data = go.Scattergl(
+            x=self._data.get_array_avg_spectrum_downsampled(slice_index)[0, :],
+            y=self._data.get_array_avg_spectrum_downsampled(slice_index)[1, :],
+            visible=True,
+            line_color=dic_colors["blue"],
+            fill="tozeroy",
+        )
+        # Define figure layout
+        layout = go.Layout(
+            margin=dict(t=0, r=0, b=10, l=0),
+            showlegend=False,
+            xaxis=dict(rangeslider={"visible": False}, title="m/z"),
+            yaxis=dict(fixedrange=False, title="Intensity"),
+            template="plotly_white",
+        )
+        # Build figure
+        fig = go.Figure(data=data, layout=layout)
+
+        # Annotate selected lipids with vertical bars
+        if annotations is not None:
+            for color, annot in zip(["red", "green", "blue"], annotations):
+                if annot is not None:
+                    fig.add_vrect(
+                        x0=annot[0],
+                        x1=annot[1],
+                        fillcolor=dic_colors[color],
+                        opacity=0.4,
+                        line_color=dic_colors[color],
+                    )
+        return fig
+
+    def compute_spectrum_high_res(self, slice_index, lb=None, hb=None, annotations=None, force_xlim=False, plot=True):
+
+        # Define default values for graph (empty)
+        if lb is None and hb is None:
+            x = ([],)
+            y = ([],)
+
+        # If boundaries are provided, get their index
+        else:
+            index_lb, index_hb = spectra.compute_index_boundaries(
+                lb,
+                hb,
+                array_mz=self._data.get_array_avg_spectrum(slice_index)[0, :],
+                lookup_table=self._data.get_array_lookup_mz_avg(slice_index),
+            )
+            x = self._data.get_array_avg_spectrum(slice_index)[0, index_lb:index_hb]
+            y = self._data.get_array_avg_spectrum(slice_index)[1, index_lb:index_hb]
+
+        # In case download without plotting
+        if not plot:
+            return x, y
+
+        # Define figure data
+        data = go.Scattergl(x=x, y=y, visible=True, line_color=dic_colors["blue"], fill="tozeroy")
+
+        # Define figure layout
+        layout = go.Layout(
+            margin=dict(t=50, r=0, b=10, l=0),
+            showlegend=False,
+            xaxis=dict(rangeslider={"visible": False}, title="m/z"),
+            yaxis=dict(fixedrange=True, title="Intensity"),
+            template="plotly_white",
+            title={
+                "text": "High resolution spectrum (averaged across pixels)",
+                "y": 0.92,
+                "x": 0.5,
+                "xanchor": "center",
+                "yanchor": "top",
+                "font": dict(size=14,),
+            },
+        )
+        # Build figure layout
+        fig = go.Figure(data=data, layout=layout)
+
+        # Annotate selected lipids with vertical bars
+        if annotations is not None:
+            for color, x in zip(["red", "green", "blue"], annotations):
+                if x is not None:
+                    if x[0] >= lb and x[-1] <= hb:
+                        fig.add_vrect(x0=x[0], x1=x[1], line_width=0, fillcolor=dic_colors[color], opacity=0.4)
+
+        # In case we don't want to zoom in too much on the selected lipid
+        if force_xlim:
+            fig.update_xaxes(range=[lb, hb])
         return fig
 
     # ! I need to order properly these functions
@@ -485,127 +737,6 @@ class Figures:
             showscale=False,
         )
         return surface
-
-    def compute_rgb_array_per_lipid_selection(
-        self,
-        slice_index,
-        ll_t_bounds,
-        normalize_independently=True,
-        projected_image=True,
-        log=False,
-        enrichment=False,
-    ):
-
-        # Build a list of empty images and add selected lipids for each channel
-        l_images = []
-        for l_boundaries in ll_t_bounds:
-            image = np.zeros(self._data.get_image_shape(slice_index))
-            if l_boundaries is not None:
-                for boundaries in l_boundaries:
-                    if boundaries is not None:
-                        (l_mz, h_mz) = boundaries
-
-                        image_temp = spectra.compute_image_using_index_and_image_lookup(
-                            l_mz,
-                            h_mz,
-                            self._data.get_array_spectra(slice_index),
-                            # if not enrichment
-                            # else spectra.compute_normalized_spectra(force_recompute=False), # ! Need to incorporate normalized spectra to the data class?
-                            self._data.get_array_lookup_pixels(slice_index),
-                            self._data.get_image_shape(slice_index),
-                            self._data.get_array_lookup_mz(slice_index),
-                            self._data.get_array_cumulated_lookup_mz_image(slice_index),
-                            self._data.get_divider_lookup(slice_index),
-                            use_full=True,
-                        )
-                        if log:
-                            image_temp = np.log(image_temp + 1)
-                        if normalize_independently:
-                            perc = np.percentile(image_temp, 99.0)
-                            if perc == 0:
-                                perc = np.max(image_temp)
-                            if perc == 0:
-                                perc = 1
-                            image_temp = image_temp / perc * 255
-                            image_temp = np.clip(0, 255, image_temp)
-
-                        image += image_temp
-                        # Close memmap
-
-            if not normalize_independently:
-                perc = np.percentile(image, 99.0)
-                if perc == 0:
-                    perc = np.max(image)
-                if perc == 0:
-                    perc = 1
-                image = image / perc * 255
-                image = np.clip(0, 255, image)
-
-            # project image into cleaned and higher resolution version
-            if projected_image:
-                image = project_image(slice_index, image, self._atlas.array_projection_correspondence_corrected)
-
-            l_images.append(image)
-
-        # Reoder axis to match plotly go.image requirements
-        array_image = np.moveaxis(np.array(l_images), 0, 2)
-
-        # Clean memmap memory
-        self._data.clean_memory(slice_index=slice_index)
-
-        return np.asarray(array_image, dtype=np.uint8)
-
-    def compute_rgb_image_per_lipid_selection(
-        self,
-        slice_index,
-        ll_t_bounds,
-        normalize_independently=True,
-        title=True,
-        projected_image=True,
-        enrichment=False,
-        log=False,
-        return_image=False,
-        use_pil=False,
-    ):
-
-        array_image = self.compute_rgb_array_per_lipid_selection(
-            slice_index,
-            ll_t_bounds,
-            normalize_independently=normalize_independently,
-            projected_image=projected_image,
-            log=log,
-            enrichment=enrichment,
-        )
-
-        if use_pil:
-            base64_string_exp = turn_RGB_image_into_base64_string(array_image)
-            final_image = go.Image(visible=True, source=base64_string_exp,)
-        else:
-            final_image = go.Image(z=array_image)
-
-        if return_image:
-            return final_image
-
-        else:
-            # Build graph from image
-            fig = go.Figure(final_image)
-
-            # Improve graph layout
-            fig.update_layout(
-                title={
-                    "text": "Mass spectrometry heatmap" if title else "",
-                    "y": 0.97,
-                    "x": 0.5,
-                    "xanchor": "center",
-                    "yanchor": "top",
-                    "font": dict(size=14,),
-                },
-                margin=dict(t=30, r=0, b=10, l=0),
-            )
-            fig.update_xaxes(showticklabels=False)
-            fig.update_yaxes(showticklabels=False)
-
-            return fig
 
     def compute_figure_slices_2D(self, ll_t_bounds, normalize_independently=True):
 
@@ -960,161 +1091,9 @@ class Figures:
     ###### FUNCTIONS RETURNING APP GRAPHS ######
     """
 
-    def return_spectrum_low_res(self, annotations=None):
-
-        # Define figure data
-        data = go.Scattergl(
-            x=self.array_averaged_mz_intensity_low_res[0, :],
-            y=self.array_averaged_mz_intensity_low_res[1, :],
-            visible=True,
-            line_color=app.dic_colors["blue"],
-            fill="tozeroy",
-        )
-        # Define figure layout
-        layout = go.Layout(
-            margin=dict(t=0, r=0, b=10, l=0),
-            showlegend=False,
-            xaxis=dict(rangeslider={"visible": False}, title="m/z"),
-            yaxis=dict(fixedrange=False, title="Intensity"),
-            template="plotly_white",
-        )
-        # Build figure
-        fig = go.Figure(data=data, layout=layout)
-
-        # Annotate selected lipids with vertical bars
-        if annotations is not None:
-            for color, annot in zip(["red", "green", "blue"], annotations):
-                if annot is not None:
-                    fig.add_vrect(
-                        x0=annot[0],
-                        x1=annot[1],
-                        fillcolor=app.dic_colors[color],
-                        opacity=0.4,
-                        line_color=app.dic_colors[color],
-                    )
-        return fig
-
-    def return_spectrum_high_res(self, lb=None, hb=None, annotations=None, force_xlim=False, plot=True):
-
-        # Define default values for graph (empty)
-        if lb is None and hb is None:
-            x = ([],)
-            y = ([],)
-
-        # If boundaries are provided, get their index
-        else:
-            index_lb, index_hb = return_index_boundaries(
-                lb,
-                hb,
-                array_mz=self.array_averaged_mz_intensity_high_res[0, :],
-                lookup_table=self.lookup_table_averaged_spectrum_high_res,
-            )
-            x = self.array_averaged_mz_intensity_high_res[0, index_lb:index_hb]
-            y = self.array_averaged_mz_intensity_high_res[1, index_lb:index_hb]
-
-        # In case download without plotting
-        if not plot:
-            return x, y
-
-        # Define figure data
-        data = go.Scattergl(x=x, y=y, visible=True, line_color=app.dic_colors["blue"], fill="tozeroy")
-
-        # Define figure layout
-        layout = go.Layout(
-            margin=dict(t=50, r=0, b=10, l=0),
-            showlegend=False,
-            xaxis=dict(rangeslider={"visible": False}, title="m/z"),
-            yaxis=dict(fixedrange=True, title="Intensity"),
-            template="plotly_white",
-            title={
-                "text": "High resolution spectrum (averaged across pixels)",
-                "y": 0.92,
-                "x": 0.5,
-                "xanchor": "center",
-                "yanchor": "top",
-                "font": dict(size=14,),
-            },
-        )
-        # Build figure layout
-        fig = go.Figure(data=data, layout=layout)
-
-        # Annotate selected lipids with vertical bars
-        if annotations is not None:
-            for color, x in zip(["red", "green", "blue"], annotations):
-                if x is not None:
-                    if x[0] >= lb and x[-1] <= hb:
-                        fig.add_vrect(x0=x[0], x1=x[1], line_width=0, fillcolor=app.dic_colors[color], opacity=0.4)
-
-        # In case we don't want to zoom in too much on the selected lipid
-        if force_xlim:
-            fig.update_xaxes(range=[lb, hb])
-        return fig
-
-
-
  
 
-    def return_heatmap_per_lipid_selection(self, ll_t_bounds, normalize_independently=True, projected_image=True):
-
-        # Start from empty image and add selected lipids
-        image = np.zeros(self.image_shape)
-        for l_t_bounds in ll_t_bounds:
-            if l_t_bounds is not None:
-                for boundaries in l_t_bounds:
-                    if boundaries is not None:
-                        (l_mz, h_mz) = boundaries
-                        image_temp = return_image_using_index_and_image_lookup(
-                            l_mz,
-                            h_mz,
-                            self.array_spectra_high_res,
-                            self.array_pixel_indexes_high_res,
-                            self.image_shape,
-                            self.lookup_table_spectra_high_res,
-                            self.cumulated_image_lookup_table_high_res,
-                            self.divider_lookup,
-                            False,
-                        )
-
-                        if normalize_independently:
-                            # image_temp = image_temp / np.max(image_temp)
-                            image_temp = image_temp / np.percentile(image_temp, 99)  # * 255
-                            image_temp = np.clip(0, 1, image_temp)
-                        image += image_temp
-
-        # project image into cleaned and higher resolution version
-        if projected_image:
-            image = project_image(self.slice_index, image, app.slice_atlas.array_projection_correspondence_corrected)
-
-        # Build graph from image
-        # fig = px.imshow(image, binary_string=False, color_continuous_scale="deep_r")
-
-        fig = go.Figure()
-        img = np.uint8(cm.viridis(image) * 255)
-        pil_img = Image.fromarray(img)  # PIL image object
-        prefix = "data:image/png;base64,"
-        with BytesIO() as stream:
-            pil_img.save(stream, format="png")  # , optimize=True, quality=85)
-            base64_string_exp = prefix + base64.b64encode(stream.getvalue()).decode("utf-8")
-        fig.add_trace(go.Image(visible=True, source=base64_string_exp,))
-
-        # Improve graph layout
-        fig.update_layout(
-            title={
-                "text": "Mass spectrometry heatmap",
-                "y": 0.97,
-                "x": 0.5,
-                "xanchor": "center",
-                "yanchor": "top",
-                "font": dict(size=14,),
-            },
-            margin=dict(t=30, r=0, b=10, l=0),
-        )
-        fig.update_xaxes(showticklabels=False)
-        fig.update_yaxes(showticklabels=False)
-        fig.update(layout_coloraxis_showscale=False)
-
-        return fig
-
+   
 
 
    

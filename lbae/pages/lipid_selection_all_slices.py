@@ -13,7 +13,6 @@ from dash.dependencies import Input, Output, State
 import numpy as np
 
 # Data module
-from lbae.config import basic_config
 from lbae.app import figures
 from lbae import app
 from lbae.modules.tools.misc import return_pickled_object
@@ -21,7 +20,7 @@ from lbae.modules.tools.misc import return_pickled_object
 ###### DEFFINE PAGE LAYOUT ######
 
 
-def return_layout(basic_config=basic_config):
+def return_layout(basic_config):
 
     page = html.Div(
         children=[
