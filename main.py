@@ -25,6 +25,9 @@ from lbae import index
 
 server = index.app.server
 
+
+#! Create a function that delete all pickle files and repickle everything automatically
+
 # Run the app locally
 if __name__ == "__main__":
     logging.info("Starting app" + logmem())

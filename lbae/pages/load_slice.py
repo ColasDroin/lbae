@@ -37,10 +37,6 @@ def return_layout(basic_config, initial_slice=1):
             ],
         },
         children=[
-            # dbc.Row(
-            #    className="d-flex justify-content-center flex-wrap",
-            #    justify="center",
-            #    children=[
             # Toast to explain how zoom works
             dbc.Toast(
                 """On any graph (heatmap or m/z plot), you can draw a square with your mouse to zoom in, 
@@ -80,15 +76,6 @@ def return_layout(basic_config, initial_slice=1):
                 # className="mx-3 mb-3 mt-1",
                 # style={"position": "fixed", "top": 5, "left": 80 + 790, "width": 350},
             ),
-            # ],
-            # ),
-            # dbc.Row(
-            #    # className="d-flex justify-content-center flex-wrap",
-            #    justify="center",
-            #    children=[
-            #        dbc.Col(
-            #            md=6,
-            #            children=[
             dbc.Card(
                 id="page-1-main-toast",
                 style={"width": "100%", "height": "100%"},
@@ -119,11 +106,6 @@ def return_layout(basic_config, initial_slice=1):
                     dbc.CardBody(
                         className="py-0",
                         children=[
-                            ### First row
-                            # dbc.Row(
-                            #    justify="center",
-                            #    className="d-flex align-item-center justify-content-center",
-                            #    children=[
                             ## First column
                             dbc.Col(
                                 width=12,
@@ -172,26 +154,6 @@ def return_layout(basic_config, initial_slice=1):
                                             # )
                                         ],
                                     ),
-                                    ### Second (nested) row
-                                    # dbc.Row(
-                                    #     justify="center",
-                                    #     children=[
-                                    #         ## First column
-                                    #         dbc.Col(
-                                    #             width="auto",
-                                    #             children=[
-                                    #                 dbc.Alert(
-                                    #                     color="light",
-                                    #                     style={"border-radius": "30px"},
-                                    #                     className="d-flex justify-content-center",
-                                    #                     children=[
-                                    #                         "Please select the slice of your choice and load by clicking on the corresponding button"
-                                    #                     ],
-                                    #                 )
-                                    #             ],
-                                    #         ),
-                                    #     ],
-                                    # ),
                                     ### Third (nested) row
                                     dbc.Row(
                                         justify="center",
@@ -241,28 +203,6 @@ def return_layout(basic_config, initial_slice=1):
                                             ),
                                         ],
                                     ),
-                                    ### Fourth (nested) row
-                                    dbc.Row(
-                                        justify="center",
-                                        children=[
-                                            dbc.Col(
-                                                width=3,
-                                                children=[
-                                                    html.Div(
-                                                        id="box-spinner",
-                                                        className="mt-3",
-                                                        children=[
-                                                            dbc.Spinner(
-                                                                color="primary",
-                                                                delay_hide=1000,
-                                                                children=[html.Div(id="tab-1-loading-text"),],
-                                                            ),
-                                                        ],
-                                                    ),
-                                                ],
-                                            )
-                                        ],
-                                    ),
                                 ],
                             ),
                             #    ],
@@ -282,7 +222,6 @@ def return_layout(basic_config, initial_slice=1):
 
 
 ###### CALLBACKS ######
-#! Create a function that pickle everything automatically once
 # Function to update the image from the slider
 @app.app.callback(
     Output("page-1-graph-slice-selection", "figure"),
@@ -352,14 +291,9 @@ def page_1_hover(hoverData, slice_index):
                 (app.atlas.array_coordinates_warped_data[x, y, z] * 1000 / app.atlas.resolution).round(0),
                 dtype=np.int16,
             )
-            if (
-                min(slice_coor_rescaled) >= 0
-                and slice_coor_rescaled[0] < app.atlas.bg_atlas.reference.shape[0]
-                and slice_coor_rescaled[1] < app.atlas.bg_atlas.reference.shape[1]
-                and slice_coor_rescaled[2] < app.atlas.bg_atlas.reference.shape[2]
-            ):
+            try:
                 label = app.atlas.labels[tuple(slice_coor_rescaled)]
-            else:
+            except:
                 label = "undefined"
             return "Hovered region: " + label
 

@@ -52,24 +52,25 @@ class Atlas:
             "allen_mouse_" + str(resolution) + "um", brainglobe_dir=brainglobe_dir, check_latest=False
         )
 
-        logging.info("Atlas object after instantiating BGAtlas" + logmem())
-
         # When computing an array of figures with a slider to explore the atlas, subsample in the longitudinal
         # direction, otherwise it's too heavy
         self.subsampling_block = 20
 
-        # Load string annotation and simplified integer version of the labels for contour plot, for each voxel
-        self.labels = Labels(self.bg_atlas)
-        self.simplified_labels_int = LabelContours(self.bg_atlas)
+        # Load string annotation for contour plot, for each voxel.
+        # These objects are heavy as they force the loading of annotations from the core Atlas class. But they shouldn't
+        # be memory-mapped as they are called when hovering and require very fast response from the server
+        self.labels = Labels(self.bg_atlas, force_init=True)
+        self._simplified_labels_int = None
 
-        logging.info("Atlas object after instantiating labels classes" + logmem())
+        # Load array of coordinates for warped data (can't be pickled as used with hovering)
+        self.array_coordinates_warped_data = np.array(
+            skimage.io.imread("lbae/data/tiff_files/coordinates_warped_data.tif"), dtype=np.float32
+        )
 
-        # Load arrays of images using atlas projection
-        (
-            self.array_projection_corrected,
-            self.array_projection_correspondence_corrected,
-            self.l_original_coor,
-        ) = return_pickled_object(
+    # Load arrays of images using atlas projection
+    @property
+    def array_projection_corrected(self):
+        (array_projection_corrected, _, _,) = return_pickled_object(
             "atlas/atlas_objects",
             "arrays_projection_corrected",
             force_update=False,
@@ -77,25 +78,48 @@ class Atlas:
             nearest_neighbour_correction=True,
             atlas_correction=True,
         )
+        return array_projection_corrected
 
-        logging.info("Atlas object after getting array projections" + logmem())
-
-        # Load array of projected atlas borders
-        self.list_projected_atlas_borders_figures, self.list_projected_atlas_borders_arrays = return_pickled_object(
+    @property
+    def array_projection_correspondence_corrected(self):
+        (_, array_projection_correspondence_corrected, _,) = return_pickled_object(
             "atlas/atlas_objects",
-            "list_projected_atlas_borders_figures",
+            "arrays_projection_corrected",
+            force_update=False,
+            compute_function=self.compute_array_projection,
+            nearest_neighbour_correction=True,
+            atlas_correction=True,
+        )
+        return array_projection_correspondence_corrected
+
+    @property
+    def l_original_coor(self):
+        (_, _, l_original_coor,) = return_pickled_object(
+            "atlas/atlas_objects",
+            "arrays_projection_corrected",
+            force_update=False,
+            compute_function=self.compute_array_projection,
+            nearest_neighbour_correction=True,
+            atlas_correction=True,
+        )
+        return l_original_coor
+
+    # Compute the dictionnary of unique identifiers for the label only if needed
+    @property
+    def simplified_labels_int(self):
+        if self._simplified_labels_int is None:
+            self._simplified_labels_int = LabelContours(self.bg_atlas)
+        return self._simplified_labels_int
+
+    # Load array of projected atlas borders
+    @property
+    def list_projected_atlas_borders_arrays(self):
+        return return_pickled_object(
+            "atlas/atlas_objects",
+            "list_projected_atlas_borders_arrays",
             force_update=False,
             compute_function=self.compute_list_projected_atlas_borders_figures,
         )
-
-        # Temporary variables #! Check if really needed, else delete
-        self.current_dic_name = None
-        self.current_disk_masks_and_spectra = None
-
-    # Load array of coordinates for our data
-    @property
-    def array_coordinates_warped_data(self):
-        return np.array(skimage.io.imread("lbae/data/tiff_files/coordinates_warped_data.tif"), dtype=np.float32)
 
     def compute_hierarchy_list(self):
 
@@ -177,7 +201,6 @@ class Atlas:
         return l_transform_parameters
 
     def compute_list_projected_atlas_borders_figures(self):
-        l_figures = []
         l_array_images = []
         # Load array of atlas images corresponding to our data and how it is projected
         array_projected_images_atlas, array_projected_simplified_id = return_pickled_object(
@@ -211,23 +234,10 @@ class Atlas:
             with BytesIO() as stream:
                 plt.savefig(stream, format="png", dpi=dpi)
                 plt.close()
-                # base64_string = prefix + base64.b64encode(stream.getvalue()).decode("utf-8")
-
-                # Convert image to numpy array
-                # print("ICI", stream.getvalue())
                 img = imread(io.BytesIO(stream.getvalue()))
-
-                # Convert numpy array to PIL img
-                # pil_img = Image.fromarray(img)
-
-                # with BytesIO() as stream:
-                #    # Optimize the quality as the figure will be pickled, so this line of code won't run live
-                #    pil_img.save(stream, format="webp", lossless=True, quality=100, method=6)
-                #    base64_string = "data:image/webp;base64," + base64.b64encode(stream.getvalue()).decode("utf-8")
                 l_array_images.append(img)
-            # l_figures.append(go.Image(visible=True, source=base64_string, zsmooth="fast", hoverinfo="none"))
-            l_figures.append(None)
-        return l_figures, l_array_images
+
+        return l_array_images
 
     def compute_array_images_atlas(self):
         array_images = np.empty(self.array_coordinates_warped_data.shape[:-1], dtype=np.uint8)

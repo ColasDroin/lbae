@@ -7,8 +7,11 @@ import numpy as np
 class Labels:
     """ Class used to access labels data without having to create new arrays"""
 
-    def __init__(self, bg_atlas):
+    def __init__(self, bg_atlas, force_init=True):
         self.bg_atlas = bg_atlas
+        if force_init:
+            _ = self.bg_atlas.annotation
+            _ = self.bg_atlas.structures
 
     def __getitem__(self, key):
         x = self.bg_atlas.annotation[key]

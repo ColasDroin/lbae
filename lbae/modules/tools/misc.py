@@ -9,6 +9,7 @@ from matplotlib import cm
 import base64
 from io import BytesIO
 from PIL import Image
+import shutil
 
 ###### DEFINE MISC FUNCTIONS ######
 from lbae.modules.tools.memuse import logmem
@@ -96,3 +97,33 @@ def base_64_string_conversion(pil_img, optimize, quality, convert_to_RGB=True):
 
     return base64_string
 
+
+def delete_all_files_in_folder(input_folder):
+    for filename in os.listdir(input_folder):
+        file_path = os.path.join(input_folder, filename)
+        try:
+            if os.path.isfile(file_path) or os.path.islink(file_path):
+                os.unlink(file_path)
+            elif os.path.isdir(file_path):
+                shutil.rmtree(file_path)
+        except Exception as e:
+            print("Failed to delete %s. Reason: %s" % (file_path, e))
+
+
+def delete_all_pickle_files(path_data_folder="lbae/data/"):
+
+    # Delete all pickled atlas files
+    path_atlas_object = "atlas/atlas_objects/"
+    delete_all_files_in_folder(path_data_folder + path_atlas_object)
+
+    # Delete all pickled figures from the 3D page
+    path_atlas_object = "figures/3D_page/"
+    delete_all_files_in_folder(path_data_folder + path_atlas_object)
+
+    # Delete all pickled figures from the lipid selection page
+    path_atlas_object = "figures/lipid_selection_page/"
+    delete_all_files_in_folder(path_data_folder + path_atlas_object)
+
+    # Delete all pickled figures from the load page
+    path_atlas_object = "figures/load_page/"
+    delete_all_files_in_folder(path_data_folder + path_atlas_object)
