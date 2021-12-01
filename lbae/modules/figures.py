@@ -73,22 +73,50 @@ class Figures:
 
         return np.array(l_array_slices)
 
-    def compute_figure_basic_image(self, array_image, atlas_contours=None, only_boundaries=False):
+    # For docstring: if only_contours is True, all other arguments (but index_image) are ignored
+    def compute_figure_basic_image(self, type_figure, index_image, plot_atlas_contours=True, only_contours=False):
+
+        # If only boundaries is requested, force the computation of atlas contours
+        if only_contours:
+            plot_atlas_contours = True
+
+        # Get array of images
+        array_images = return_pickled_object(
+            "figures/load_page",
+            "array_basic_images",
+            force_update=False,
+            compute_function=self.compute_array_basic_images,
+            type_figure=type_figure,
+        )
+
+        array_image = array_images[index_image]
+
+        if plot_atlas_contours:
+            array_image_atlas = self._atlas.list_projected_atlas_borders_arrays[index_image]
+        else:
+            array_image_atlas = None
 
         # Create figure
         fig = go.Figure()
 
         # Compute image from our data if not only the atlas annotations are requested
-        if not only_boundaries:
-
-            fig.add_trace(go.Image(visible=True, source=turn_image_into_base64_string(array_image), hoverinfo="none",))
+        if not only_contours:
+            fig.add_trace(
+                go.Image(
+                    visible=True,
+                    source=turn_image_into_base64_string(array_image, overlay=array_image_atlas),
+                    hoverinfo="none",
+                )
+            )
 
             # Add the labels only if it's not a simple annotation illustration
             fig.update_xaxes(title_text=self._atlas.bg_atlas.space.axis_labels[0][1])
             fig.update_yaxes(title_text=self._atlas.bg_atlas.space.axis_labels[0][0])
 
-        if atlas_contours is not None:
-            fig.add_trace(atlas_contours)
+        else:
+            fig.add_trace(
+                go.Image(visible=True, source=turn_image_into_base64_string(array_image_atlas), hoverinfo="none",)
+            )
 
         # Improve layout
         fig.update_xaxes(showticklabels=False)
@@ -109,16 +137,19 @@ class Figures:
             array_images = self.compute_padded_original_images()
         elif type_figure == "warped_data":
             array_images = np.array(io.imread("lbae/data/tiff_files/warped_data.tif"))
-        elif type_figure == "projection":
-            logging.warning("This feature is not implemented anymore.")
-            # array_images = self._atlas.array_projection
         elif type_figure == "projection_corrected":
             array_images = self._atlas.array_projection_corrected
         elif type_figure == "atlas":
-            array_projected_images_atlas, array_projected_simplified_id = self._atlas.compute_array_images_atlas()
+            array_projected_images_atlas, array_projected_simplified_id = return_pickled_object(
+                "atlas/atlas_objects",
+                "array_images_atlas",
+                force_update=False,
+                compute_function=self._atlas.compute_array_images_atlas,
+            )
             array_images = array_projected_images_atlas
         return array_images
 
+    #! Properly drop this function as well? But this one works and may be kept in the future
     def compute_figure_basic_images_with_slider(self, type_figure="warped_data", plot_atlas_contours=False):
         # Get array of images
         array_images = return_pickled_object(
@@ -161,7 +192,7 @@ class Figures:
                     array_images[0],
                     overlay=array_images_atlas[0] if plot_atlas_contours else None,
                     optimize=True,
-                    quality=25,
+                    quality=40,
                 ),
                 hoverinfo="none",
             )
@@ -230,7 +261,7 @@ class Figures:
         if type_figure == "atlas_boundaries":
             return [
                 self.compute_figure_basic_image(
-                    None, atlas_contours=self._atlas.list_projected_atlas_borders_figures[i], only_boundaries=True,
+                    None, atlas_contours=self._atlas.list_projected_atlas_borders_figures[i], only_contours=True,
                 )
                 for i in range(self._data.get_slice_number())
             ]
@@ -245,13 +276,12 @@ class Figures:
                     atlas_contours=self._atlas.list_projected_atlas_borders_figures[i]
                     if plot_atlas_contours
                     else None,
-                    only_boundaries=False,
+                    only_contours=False,
                 )
                 for i in range(self._data.get_slice_number())
             ]
 
     # ! I need to order properly these functions
-
     def compute_figure_slices_3D(self, reduce_resolution_factor=7):
 
         # get transform parameters (a,u,v) for each slice

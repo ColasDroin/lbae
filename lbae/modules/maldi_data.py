@@ -2,7 +2,6 @@
 
 # Standard imports
 import pickle
-import warnings
 import numpy as np
 import pandas as pd
 from lbae.modules.tools.memuse import logmem

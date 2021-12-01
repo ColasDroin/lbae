@@ -52,6 +52,8 @@ class Atlas:
             "allen_mouse_" + str(resolution) + "um", brainglobe_dir=brainglobe_dir, check_latest=False
         )
 
+        logging.info("Atlas object after instantiating BGAtlas" + logmem())
+
         # When computing an array of figures with a slider to explore the atlas, subsample in the longitudinal
         # direction, otherwise it's too heavy
         self.subsampling_block = 20
@@ -60,15 +62,7 @@ class Atlas:
         self.labels = Labels(self.bg_atlas)
         self.simplified_labels_int = LabelContours(self.bg_atlas)
 
-        # Compute hierarchical tree of brain structures -
-        self.l_nodes, self.l_parents, self.dic_name_id = return_pickled_object(
-            "atlas/atlas_objects", "hierarchy", force_update=False, compute_function=self.compute_hierarchy_list
-        )
-
-        # Load array of coordinates for our data
-        self.array_coordinates_warped_data = np.array(
-            skimage.io.imread("lbae/data/tiff_files/coordinates_warped_data.tif"), dtype=np.float32
-        )
+        logging.info("Atlas object after instantiating labels classes" + logmem())
 
         # Load arrays of images using atlas projection
         (
@@ -84,6 +78,8 @@ class Atlas:
             atlas_correction=True,
         )
 
+        logging.info("Atlas object after getting array projections" + logmem())
+
         # Load array of projected atlas borders
         self.list_projected_atlas_borders_figures, self.list_projected_atlas_borders_arrays = return_pickled_object(
             "atlas/atlas_objects",
@@ -95,6 +91,11 @@ class Atlas:
         # Temporary variables #! Check if really needed, else delete
         self.current_dic_name = None
         self.current_disk_masks_and_spectra = None
+
+    # Load array of coordinates for our data
+    @property
+    def array_coordinates_warped_data(self):
+        return np.array(skimage.io.imread("lbae/data/tiff_files/coordinates_warped_data.tif"), dtype=np.float32)
 
     def compute_hierarchy_list(self):
 
@@ -273,7 +274,13 @@ class Atlas:
         slice_coor_rescaled = np.asarray(
             (self.array_coordinates_warped_data[slice_index, :, :] * 1000 / self.resolution).round(0), dtype=np.int16,
         )
-        for mask_name, id_mask in self.dic_name_id.items():
+
+        # Get hierarchical tree of brain structures -
+        l_nodes, l_parents, dic_name_id = return_pickled_object(
+            "atlas/atlas_objects", "hierarchy", force_update=False, compute_function=self.compute_hierarchy_list
+        )
+
+        for mask_name, id_mask in dic_name_id.items():
             # get the array corresponding to the projected mask
             stack_mask = self.get_atlas_mask(id_mask)
             projected_mask = project_atlas_mask(stack_mask, slice_coor_rescaled, self.bg_atlas.reference.shape)

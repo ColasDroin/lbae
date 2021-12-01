@@ -10,13 +10,13 @@ import dash_draggable
 
 # App module
 from lbae import app
-from lbae.app import figures
+from lbae.app import figures, data
 from lbae import config
 from lbae.modules.tools.misc import return_pickled_object
 
 ###### DEFFINE PAGE LAYOUT ######
 
-
+#! Put basic config in config in all page file
 def return_layout(basic_config, initial_slice=1):
 
     page = dash_draggable.ResponsiveGridLayout(
@@ -152,7 +152,15 @@ def return_layout(basic_config, initial_slice=1):
                                                         "scale": 2,
                                                     }
                                                 },
-                                                figure=app.list_array_warped_data[initial_slice - 1],
+                                                figure=return_pickled_object(
+                                                    "figures/load_page",
+                                                    "figure_basic_image",
+                                                    force_update=False,
+                                                    compute_function=figures.compute_figure_basic_image,
+                                                    type_figure="warped_data",
+                                                    index_image=0,
+                                                    plot_atlas_contours=False,
+                                                ),
                                             ),
                                             html.P(
                                                 "Hovered region: ",
@@ -205,7 +213,7 @@ def return_layout(basic_config, initial_slice=1):
                                                         className="px-0 mx-0",
                                                         id="page-1-slider-slice-selection",
                                                         min=1,
-                                                        max=len(app.list_array_warped_data),
+                                                        max=data.get_slice_number(),
                                                         step=None,
                                                         updatemode="drag",
                                                         marks={
@@ -213,7 +221,7 @@ def return_layout(basic_config, initial_slice=1):
                                                                 "label": str(x) if x % 2 == 0 else "",
                                                                 "style": {"color": config.dic_colors["dark"]},
                                                             }
-                                                            for x in range(1, len(app.list_array_warped_data) + 1,)
+                                                            for x in range(1, data.get_slice_number() + 1,)
                                                         },
                                                         value=initial_slice,
                                                     )
@@ -274,7 +282,7 @@ def return_layout(basic_config, initial_slice=1):
 
 
 ###### CALLBACKS ######
-
+#! Create a function that pickle everything automatically once
 # Function to update the image from the slider
 @app.app.callback(
     Output("page-1-graph-slice-selection", "figure"),
@@ -288,37 +296,27 @@ def tab_1_load_image(value_slider, active_tab, display_annotations):
     id_input, value_input = dash.callback_context.triggered[0]["prop_id"].split(".")
 
     if len(id_input) > 0:
-        if not display_annotations:
-            if active_tab[-1] == "0":
-                return app.list_array_original_data[value_slider - 1]
-            if active_tab[-1] == "1":
-                # return app.list_array_warped_data[value_slider - 1]
 
-                return return_pickled_object(
-                    "figures/load_page",
-                    "figure_basic_images_with_slider",
-                    force_update=True,
-                    compute_function=figures.compute_figure_basic_images_with_slider,
-                    type_figure="warped_data",
-                    plot_atlas_contours=True,
-                )
+        # Mapping between tab indices and type figure
+        dic_mapping_tab_indices = {
+            "0": "original_data",
+            "1": "warped_data",
+            "2": "projection_corrected",
+            "3": "atlas",
+        }
 
-                return figures.compute_figure_basic_images_with_slider(plot_atlas_contours=False)
-            elif active_tab[-1] == "2":
-                return app.list_array_projection_corrected[value_slider - 1]
-            elif active_tab[-1] == "3":
-                return app.list_array_images_atlas[value_slider - 1]
-        else:
-            if active_tab[-1] == "0":
-                return app.list_array_original_data_boundaries[value_slider - 1]
-            if active_tab[-1] == "1":
-                return app.list_array_warped_data_boundaries[value_slider - 1]
-            elif active_tab[-1] == "2":
-                return app.list_array_projection_corrected_boundaries[value_slider - 1]
-            elif active_tab[-1] == "3":
-                return app.list_array_images_atlas_boundaries[value_slider - 1]
-    else:
-        return dash.no_update
+        # Force no annotation for the original data
+        return return_pickled_object(
+            "figures/load_page",
+            "figure_basic_image",
+            force_update=False,
+            compute_function=figures.compute_figure_basic_image,
+            type_figure=dic_mapping_tab_indices[active_tab[-1]],
+            index_image=value_slider - 1,
+            plot_atlas_contours=display_annotations if active_tab[-1] != "0" else False,
+        )
+
+    return dash.no_update
 
 
 @app.app.callback(

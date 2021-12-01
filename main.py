@@ -1,5 +1,6 @@
 # TO CORRECT: https://dev.to/codemouse92/dead-simple-python-project-structure-and-imports-38c6
 import logging
+from lbae.modules.tools.memuse import logmem
 
 # Define logging options for print and debug
 logging.basicConfig(
@@ -19,12 +20,14 @@ numba_logger = logging.getLogger("numba")
 numba_logger.setLevel(logging.WARNING)
 
 # Import the app and define server for gunicorn
+logging.info("Starting import chain" + logmem())
 from lbae import index
 
 server = index.app.server
 
 # Run the app locally
 if __name__ == "__main__":
+    logging.info("Starting app" + logmem())
     index.run()
 
 # To run the app from the server, use the following command in the base lbae folder:
