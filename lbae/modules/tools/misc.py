@@ -47,7 +47,7 @@ def turn_image_into_base64_string(
 ):
 
     # Map image to a colormap and convert to uint8
-    img = np.uint8(cm.viridis(image) * 255)
+    img = np.uint8(colormap(image) * 255)
     if reverse_colorscale:
         img = 255 - img
 
@@ -63,18 +63,20 @@ def turn_image_into_base64_string(
     return base_64_string_conversion(pil_img, optimize=optimize, quality=quality)
 
 
-def turn_RGB_image_into_base64_string(image, colormap=cm.viridis, optimize=True, quality=85, RGBA=False):
+def turn_RGB_image_into_base64_string(image, optimize=True, quality=85, RGBA=False):
 
     # Convert image to PIL image
     if RGBA:
         pil_img = Image.fromarray(image, "RGBA")  # PIL image object
-    else:
-        pil_img = Image.fromarray(image, "RGB")  # PIL image object
-    x, y = pil_img.size
 
-    # Decrease resolution to save space
-    x2, y2 = int(round(x / 2)), int(round(y / 2))
-    pil_img = pil_img.resize((x2, y2), Image.ANTIALIAS)
+    else:
+        # ! find out when this part of the code is used
+        pil_img = Image.fromarray(image, "RGB")  # PIL image object
+        x, y = pil_img.size
+
+        # Decrease resolution to save space
+        x2, y2 = int(round(x / 2)), int(round(y / 2))
+        pil_img = pil_img.resize((x2, y2), Image.ANTIALIAS)
 
     # Do the string conversion into base64 string
     return base_64_string_conversion(pil_img, optimize=optimize, quality=quality)

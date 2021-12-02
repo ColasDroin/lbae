@@ -27,14 +27,14 @@ from lbae.modules.tools.atlas import (
 )
 from lbae.modules.tools.spectra import compute_spectrum_per_row_selection
 from lbae.modules.atlas_labels import Labels, LabelContours
-from lbae.modules.tools.misc import return_pickled_object
+from lbae.modules.tools.misc import return_pickled_object, turn_RGB_image_into_base64_string
 from lbae.modules.tools.memuse import logmem
 
 #! Overall, see if I can memmap all the objects in this class
 
 ###### Atlas Class ######
 class Atlas:
-    def __init__(self, resolution=25):
+    def __init__(self, maldi_data, resolution=25):
 
         logging.info("Initializing Atlas object" + logmem())
 
@@ -44,6 +44,8 @@ class Atlas:
         else:
             logging.warning("The resolution you chose is not available, using the default of 25um")
             self.resolution = 25
+
+        self.data = maldi_data
 
         # Load or download the atlas if it's the first time
         brainglobe_dir = "lbae/data/atlas/brain_globe/"
@@ -66,6 +68,8 @@ class Atlas:
         self.array_coordinates_warped_data = np.array(
             skimage.io.imread("lbae/data/tiff_files/coordinates_warped_data.tif"), dtype=np.float32
         )
+
+        self.image_shape = list(self.array_coordinates_warped_data.shape[1:-1])
 
     # Load arrays of images using atlas projection
     @property
@@ -263,8 +267,6 @@ class Atlas:
                         array_images[x, y, z] = 0
         return array_images, array_projected_simplified_id
 
-    """
-
     def get_atlas_mask(self, structure):
 
         structure_id = self.bg_atlas.structures[structure]["id"]
@@ -278,6 +280,42 @@ class Atlas:
         #    mask_stack[bg_atlas.annotation == descendant_id] = structure_id
 
         return mask_stack
+
+    def compute_spectrum_data(
+        self, slice_index, dic_name_id, projected_mask=None, mask_name=None, slice_coor_rescaled=None
+    ):
+        if projected_mask is None and mask_name is None:
+            print("Either a mask or a mask name must be provided")
+            return None
+        elif mask_name is not None:
+            if slice_coor_rescaled is None:
+                slice_coor_rescaled = np.asarray(
+                    (self.array_coordinates_warped_data[slice_index, :, :] * 1000 / self.resolution).round(0),
+                    dtype=np.int16,
+                )
+            stack_mask = self.get_atlas_mask(dic_name_id[mask_name])
+            projected_mask = project_atlas_mask(stack_mask, slice_coor_rescaled, self.bg_atlas.reference.shape)
+
+        # get the list of rows containing the pixels to average
+        original_shape = self.data.get_image_shape(slice_index + 1)
+        mask_remapped = np.zeros(original_shape, dtype=np.uint8)
+        list_index_bound_rows, list_index_bound_column_per_row = get_array_rows_from_atlas_mask(
+            projected_mask, mask_remapped, self.array_projection_correspondence_corrected[slice_index],
+        )
+        if np.sum(list_index_bound_rows) == 0:
+            print("No selection could be found for current mask")
+            grah_scattergl_data = None
+        else:
+            # do the average
+            grah_scattergl_data = compute_spectrum_per_row_selection(
+                list_index_bound_rows,
+                list_index_bound_column_per_row,
+                self.data.get_array_spectra(slice_index + 1),
+                self.data.get_array_lookup_pixels(slice_index + 1),
+                original_shape,
+                zeros_extend=False,
+            )
+        return grah_scattergl_data
 
     def compute_dic_projected_masks_and_spectra(self, slice_index):
         dic = {}
@@ -309,57 +347,16 @@ class Atlas:
             l_images = [normalized_projected_mask * color for c, color in zip(["r", "g", "b", "a"], color_rgb)]
             # Reoder axis to match plotly go.image requirements
             array_image = np.moveaxis(np.array(l_images, dtype=np.uint8), 0, 2)
-            # convert image to string to save space
-            pil_img = Image.fromarray(array_image)  # PIL image object
-            prefix = "data:image/png;base64,"
-            with BytesIO() as stream:
-                pil_img.save(stream, format="png", optimize=True, quality=5)
-                base64_string = prefix + base64.b64encode(stream.getvalue()).decode("utf-8")
+            base64_string = turn_RGB_image_into_base64_string(array_image, optimize=True, quality=5, RGBA=True)
             im = go.Image(visible=True, source=base64_string, hoverinfo="none")
 
             # compute spectrum
-            grah_scattergl_data = self.compute_spectrum_data(slice_index, projected_mask)
+            grah_scattergl_data = self.compute_spectrum_data(slice_index, dic_name_id, projected_mask)
 
             dic[mask_name] = (projected_mask, grah_scattergl_data, im)
         return dic
 
-    def compute_spectrum_data(self, slice_index, projected_mask=None, mask_name=None, slice_coor_rescaled=None):
-        if projected_mask is None and mask_name is None:
-            print("Either a mask or a mask name must be provided")
-            return None
-        elif mask_name is not None:
-            if slice_coor_rescaled is None:
-                slice_coor_rescaled = np.asarray(
-                    (self.array_coordinates_warped_data[slice_index, :, :] * 1000 / self.resolution).round(0),
-                    dtype=np.int16,
-                )
-            stack_mask = app.slice_atlas.get_atlas_mask(app.slice_atlas.dic_name_id[mask_name])
-            projected_mask = project_atlas_mask(
-                stack_mask, slice_coor_rescaled, app.slice_atlas.bg_atlas.reference.shape
-            )
-
-        # get the list of rows containing the pixels to average
-        original_shape = app.slice_store.getSlice(slice_index + 1).image_shape
-        mask_remapped = np.zeros(original_shape, dtype=np.uint8)
-        list_index_bound_rows, list_index_bound_column_per_row = get_array_rows_from_atlas_mask(
-            projected_mask, mask_remapped, self.array_projection_correspondence_corrected[slice_index],
-        )
-        if np.sum(list_index_bound_rows) == 0:
-            print("No selection could be found for current mask")
-            grah_scattergl_data = None
-        else:
-            # print('from mask', list_index_bound_rows, list_index_bound_column_per_row)
-            # do the average
-            grah_scattergl_data = compute_spectrum_per_row_selection(
-                list_index_bound_rows,
-                list_index_bound_column_per_row,
-                app.slice_store.getSlice(slice_index + 1).array_spectra_high_res,
-                app.slice_store.getSlice(slice_index + 1).array_pixel_indexes_high_res,
-                original_shape,
-                zeros_extend=False,
-                sample=False,
-            )
-        return grah_scattergl_data
+    """
 
     def return_dic_projected_masks_and_spectra(self, slice_index, force_recompute=False):
         path = "data/pickled_data/masks_and_spectra/"
