@@ -21,7 +21,7 @@ logging.info("Memory use before any global variable declaration" + logmem())
 
 
 data = MaldiData()
-atlas = Atlas(resolution=25)
+atlas = Atlas(data, resolution=25)
 figures = Figures(data, atlas)
 
 logging.info("Memory use after three main object have been instantiated" + logmem())

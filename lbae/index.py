@@ -16,7 +16,7 @@ from lbae.pages import (
     load_slice,
     lipid_selection,
     lipid_selection_all_slices,
-    # region_analysis,
+    region_analysis,
     # threeD_exploration,
 )
 from lbae.config import basic_config
@@ -24,11 +24,12 @@ from lbae.modules.tools.memuse import logmem
 
 ###### DEFINE APP LAYOUT ######
 
-# list of empty lipid indexes for the dropdown of page 2bis
-empty_lipid_list = [-1 for i in range(data.get_slice_number())]
 
 # Responsive layout
 def return_main_content():
+
+    # list of empty lipid indexes for the dropdown of page 2bis
+    empty_lipid_list = [-1 for i in range(data.get_slice_number())]
 
     # Record session id in case sessions need to be individualized (i.e. we handle better global variables)
     session_id = str(uuid.uuid4())
@@ -106,7 +107,7 @@ app.validation_layout = html.Div(
         load_slice.return_layout(basic_config=basic_config),
         lipid_selection.return_layout(basic_config=basic_config),
         lipid_selection_all_slices.return_layout(basic_config=basic_config),
-        # region_analysis.return_layout(),
+        region_analysis.return_layout(basic_config=basic_config),
         # threeD_exploration.return_layout(),
     ]
 )
@@ -132,8 +133,8 @@ def render_page_content(pathname):
     elif pathname == "/lipid-selection-all-slices":
         page = lipid_selection_all_slices.return_layout(basic_config=basic_config)
 
-    # elif pathname == "/region-analysis":
-    #     page = region_analysis.return_layout()
+    elif pathname == "/region-analysis":
+        page = region_analysis.return_layout(basic_config=basic_config)
 
     # elif pathname == "/3D-exploration":
     #    page = threeD_exploration.return_layout()

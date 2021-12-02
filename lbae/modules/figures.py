@@ -84,16 +84,17 @@ class Figures:
         if only_contours:
             plot_atlas_contours = True
 
-        # Get array of images
-        array_images = return_pickled_object(
-            "figures/load_page",
-            "array_basic_images",
-            force_update=False,
-            compute_function=self.compute_array_basic_images,
-            type_figure=type_figure,
-        )
+        else:
+            # Get array of images
+            array_images = return_pickled_object(
+                "figures/load_page",
+                "array_basic_images",
+                force_update=False,
+                compute_function=self.compute_array_basic_images,
+                type_figure=type_figure,
+            )
 
-        array_image = array_images[index_image]
+            array_image = array_images[index_image]
 
         if plot_atlas_contours:
             array_image_atlas = self._atlas.list_projected_atlas_borders_arrays[index_image]
@@ -277,7 +278,7 @@ class Figures:
 
         if normalize:
             # Normalize by 99 percentile
-            perc = np.percentile(image, 99)
+            perc = np.percentile(image, 99.9)
             if perc == 0:
                 perc = np.max(image)
             if perc == 0:
@@ -306,6 +307,10 @@ class Figures:
         plot_contours=False,
         heatmap=False,
     ):
+        if binary_string:
+            logging.info("binary_string is set to True, therefore the plot will be made as a heatmap")
+            heatmap = True
+
         # Upper bound lower than the lowest m/z value and higher that the highest m/z value
         if lb_mz is None:
             lb_mz = 200
@@ -325,8 +330,10 @@ class Figures:
         if heatmap:
             fig = px.imshow(image, binary_string=binary_string, color_continuous_scale="deep_r")  # , aspect = 'auto')
             if plot_contours:
+                print(logging.warning("Contour plot is not compatible with heatmap plot for now."))
+                # Compute it anyway but won't work
                 b64_string = turn_RGB_image_into_base64_string(
-                    self._atlas.list_projected_atlas_borders_arrays[slice_index], colormap=cm.Oranges, RGBA=True
+                    self._atlas.list_projected_atlas_borders_arrays[slice_index - 1], RGBA=True
                 )
                 fig.add_trace(go.Image(visible=True, source=b64_string))
 
@@ -334,7 +341,7 @@ class Figures:
             fig = go.Figure()
 
             if plot_contours:
-                array_image_atlas = self._atlas.list_projected_atlas_borders_arrays[slice_index]
+                array_image_atlas = self._atlas.list_projected_atlas_borders_arrays[slice_index - 1]
             else:
                 array_image_atlas = None
 
@@ -363,7 +370,7 @@ class Figures:
     ):
 
         # Start from empty image and add selected lipids
-        image = np.zeros(self.image_shape)
+        image = np.zeros(self._atlas.image_shape)
         for l_t_bounds in ll_t_bounds:
             if l_t_bounds is not None:
                 for boundaries in l_t_bounds:
@@ -419,7 +426,7 @@ class Figures:
         # Build a list of empty images and add selected lipids for each channel
         l_images = []
         for l_boundaries in ll_t_bounds:
-            image = np.zeros(self._data.get_image_shape(slice_index))
+            image = np.zeros(self._atlas.image_shape)
             if l_boundaries is not None:
                 for boundaries in l_boundaries:
                     if boundaries is not None:
@@ -546,7 +553,7 @@ class Figures:
             index_lb, index_hb = spectra.compute_index_boundaries(
                 lb,
                 hb,
-                array_mz=self._data.get_array_avg_spectrum(slice_index)[0, :],
+                array_spectra_avg=self._data.get_array_avg_spectrum(slice_index),
                 lookup_table=self._data.get_array_lookup_mz_avg(slice_index),
             )
             x = self._data.get_array_avg_spectrum(slice_index)[0, index_lb:index_hb]
@@ -588,6 +595,35 @@ class Figures:
         # In case we don't want to zoom in too much on the selected lipid
         if force_xlim:
             fig.update_xaxes(range=[lb, hb])
+        return fig
+
+    def return_empty_spectrum(self):
+
+        # Define empty figure data
+        data = (go.Scattergl(x=[], y=[], visible=True),)
+
+        # Define figure layout
+        layout = go.Layout(
+            margin=dict(t=5, r=0, b=10, l=0),
+            showlegend=True,
+            xaxis=dict(title="m/z"),
+            yaxis=dict(title="Intensity"),
+            template="plotly_white",
+        )
+        # Build figure
+        fig = go.Figure(data=data, layout=layout)
+        return fig
+
+    def return_heatmap_lipid(self, fig=None):
+
+        # Build empty figure if not provided
+        if fig is None:
+            fig = go.Figure(data=go.Heatmap(z=[[]], x=[], y=[], visible=True))
+
+        # Improve figure layout
+        fig.update_layout(
+            margin=dict(t=25, r=0, b=10, l=0), template="plotly_white", font_size=8,
+        )
         return fig
 
     # ! I need to order properly these functions
@@ -1093,38 +1129,10 @@ class Figures:
 
  
 
-   
 
 
    
-    def return_empty_spectrum(self):
-
-        # Define empty figure data
-        data = (go.Scattergl(x=[], y=[], visible=True),)
-
-        # Define figure layout
-        layout = go.Layout(
-            margin=dict(t=5, r=0, b=10, l=0),
-            showlegend=True,
-            xaxis=dict(title="m/z"),
-            yaxis=dict(title="Intensity"),
-            template="plotly_white",
-        )
-        # Build figure
-        fig = go.Figure(data=data, layout=layout)
-        return fig
-
-    def return_heatmap_lipid(self, fig=None):
-
-        # Build empty figure if not provided
-        if fig is None:
-            fig = go.Figure(data=go.Heatmap(z=[[]], x=[], y=[], visible=True))
-
-        # Improve figure layout
-        fig.update_layout(
-            margin=dict(t=25, r=0, b=10, l=0), template="plotly_white", font_size=8,
-        )
-        return fig
+  
 
     # This function averages spectra from a drawn selection and pads the remaining peaks with zeros
     def compute_extended_spectrum_per_selection(self, path, debug=False, sample=False, zero_extend=True):

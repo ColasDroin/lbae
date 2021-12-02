@@ -69,7 +69,7 @@ def return_layout(basic_config, slice_index=1):
                                                                     "left": "0",
                                                                 },
                                                                 figure=figures.compute_heatmap_per_mz(
-                                                                    slice_index, binary_string=False
+                                                                    slice_index, 600, 800, binary_string=False
                                                                 ),
                                                             ),
                                                         ],
@@ -511,7 +511,7 @@ def page_2_plot_graph_heatmap_mz_selection(
                 l_t_bounds_sorted = sorted(l_lipid_bounds_clean)
                 for t_bounds_1, t_bounds_2 in zip(l_t_bounds_sorted[:-1], l_t_bounds_sorted[1:]):
                     if t_bounds_1[1] > t_bounds_2[0]:
-                        print("BUG: some pixel annotations intercept each other")
+                        logging.warning("Some pixel annotations intercept each other")
 
             if id_input == "tab-2-colormap-button":
                 return figures.compute_heatmap_per_lipid_selection(slice_index, ll_lipid_bounds)
@@ -533,7 +533,9 @@ def page_2_plot_graph_heatmap_mz_selection(
     # Case trigger is range slider from low resolution spectrum
     elif id_input == "boundaries-low-resolution-mz-plot" and bound_low_res is not None:
         bound_low_res = json.loads(bound_low_res)
-        return figures.compute_heatmap_per_mz(slice_index, bound_low_res[0], bound_low_res[1], binary_string=False)
+        return figures.compute_heatmap_per_mz(
+            slice_index, bound_low_res[0], bound_low_res[1], binary_string=False, heatmap=False, plot_contours=False
+        )
 
     # Case colormap changed (hidden for now)
     elif id_input == "tab-2-colormap-switch":
@@ -578,8 +580,6 @@ def tab_2_plot_graph_low_res_spectrum(
 
     # Find out which input triggered the function
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
-
-    # print("ici,", id_input)
 
     # If a lipid selection has been done
     if (
@@ -878,7 +878,7 @@ def tab_2_handle_dropdowns(slice_index, name, structure, options_names, options_
     State("page-2-toast-lipid-3", "header"),
     State("page-2-last-selected-lipids", "data"),
 )
-def tab_2_add_toast_selection(
+def page_2_add_toast_selection(
     cation,
     bool_toast_1,
     bool_toast_2,
@@ -924,7 +924,7 @@ def tab_2_add_toast_selection(
             l_selected_lipids.remove(lipid_3_index)
             lipid_3_index = -1
         else:
-            print("BUG in tab_2_add_dropdown_selection")
+            logging.warning("Problem in page_2_add_toast_selection")
 
         return (
             header_1,
@@ -982,7 +982,7 @@ def tab_2_add_toast_selection(
                 lipid_3_index = lipid_index
                 bool_toast_3 = True
             else:
-                print("BUG, more than 3 lipids have been selected")
+                logging.warning("More than 3 lipids have been selected")
                 return dash.no_update
 
             return (

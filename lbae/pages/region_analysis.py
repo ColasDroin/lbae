@@ -3,44 +3,36 @@
 # Official modules
 import dash_bootstrap_components as dbc
 from dash import dcc, html
-
-# from dash.dependencies import Input, Output, State
 from dash.dependencies import Input, Output, State
 import dash
 import plotly.graph_objects as go
 import numpy as np
-from matplotlib import cm
-from PIL import Image
 from io import BytesIO
 import base64
 import copy
-from numba import njit
-
-# import orjson
-import json
-import orjson
 import pandas as pd
+import logging
 
-# App module
-import app
-
-# Homemade functions
-from tools.lookup_functions import (
-    return_index_labels,
-    add_zeros_to_spectrum,
-    return_avg_intensity_per_lipid,
-    get_projected_atlas_mask,
-    get_array_rows_from_atlas_mask,
-    compute_spectrum_per_row_selection,
+# Homemade modules
+from lbae import app
+from lbae.app import figures, data, atlas
+from lbae import config
+from lbae.modules.tools.misc import return_pickled_object, turn_RGB_image_into_base64_string
+from lbae.modules.tools.spectra import (
     sample_rows_from_path,
+    compute_spectrum_per_row_selection,
     convert_array_to_fine_grained,
     strip_zeros,
+    return_index_labels,
+    add_zeros_to_spectrum,
+    compute_avg_intensity_per_lipid,
 )
+
 
 ###### DEFFINE PAGE LAYOUT ######
 
 
-def return_layout(basic_config=app.basic_config, slice_index=1):
+def return_layout(basic_config, slice_index=1):
 
     page = html.Div(
         children=[
@@ -93,12 +85,16 @@ def return_layout(basic_config=app.basic_config, slice_index=1):
                                                                             "position": "absolute",
                                                                             "left": "0",
                                                                         },
-                                                                        figure=app.list_atlas_boundaries[
-                                                                            slice_index - 1
-                                                                        ],
-                                                                        # figure=app.list_array_projection_corrected[
-                                                                        #    slice_index - 1
-                                                                        # ],
+                                                                        figure=return_pickled_object(
+                                                                            "figures/load_page",
+                                                                            "figure_basic_image",
+                                                                            force_update=False,
+                                                                            compute_function=figures.compute_figure_basic_image,
+                                                                            type_figure=None,
+                                                                            index_image=slice_index - 1,
+                                                                            plot_atlas_contours=True,
+                                                                            only_contours=True,
+                                                                        ),
                                                                     ),
                                                                     html.P(
                                                                         "Hovered region: ",
@@ -111,7 +107,7 @@ def return_layout(basic_config=app.basic_config, slice_index=1):
                                                             ### First nested row
                                                             dbc.Row(
                                                                 justify="center",
-                                                                className="d-flex align-items-center mt-1 pt-0",  # d-none",
+                                                                className="d-flex align-items-center mt-1 pt-0",
                                                                 children=[
                                                                     ## First column of nested row
                                                                     dbc.Col(
@@ -126,7 +122,14 @@ def return_layout(basic_config=app.basic_config, slice_index=1):
                                                                                     id="page-3-dropdown-brain-regions",
                                                                                     options=[
                                                                                         {"label": node, "value": node}
-                                                                                        for node in app.slice_atlas.l_nodes
+                                                                                        for node in return_pickled_object(
+                                                                                            "atlas/atlas_objects",
+                                                                                            "hierarchy",
+                                                                                            force_update=False,
+                                                                                            compute_function=atlas.compute_hierarchy_list,
+                                                                                        )[
+                                                                                            0
+                                                                                        ]
                                                                                     ],
                                                                                     placeholder="Click on brain regions above.",
                                                                                     multi=True,
@@ -198,8 +201,6 @@ def return_layout(basic_config=app.basic_config, slice_index=1):
                                                                         width=12,
                                                                         className="d-flex flex-row justify-content-center mt-2",
                                                                         children=[
-                                                                            # html.Div(
-                                                                            #    children=[
                                                                             dbc.Switch(
                                                                                 id="page-3-normalize",
                                                                                 label="Normalize",
@@ -211,8 +212,6 @@ def return_layout(basic_config=app.basic_config, slice_index=1):
                                                                                 label="Log-transform",
                                                                                 value=False,
                                                                                 className="ml-1",
-                                                                                #        ),
-                                                                                #    ],
                                                                             ),
                                                                         ],
                                                                     ),
@@ -245,9 +244,15 @@ def return_layout(basic_config=app.basic_config, slice_index=1):
                                                                             "position": "absolute",
                                                                             "left": "0",
                                                                         },
-                                                                        figure=app.list_array_projection_corrected[
-                                                                            slice_index - 1
-                                                                        ],
+                                                                        figure=return_pickled_object(
+                                                                            "figures/load_page",
+                                                                            "figure_basic_image",
+                                                                            force_update=False,
+                                                                            compute_function=figures.compute_figure_basic_image,
+                                                                            type_figure="projection_corrected",
+                                                                            index_image=slice_index - 1,
+                                                                            plot_atlas_contours=False,
+                                                                        ),
                                                                     ),
                                                                     html.P(
                                                                         "Hovered region: ",
@@ -271,9 +276,6 @@ def return_layout(basic_config=app.basic_config, slice_index=1):
                     ### End of first row
                 ],
             ),
-            # dbc.Spinner(
-            #    color="dark",
-            #    children=[
             ### Second row
             dbc.Row(
                 justify="center",
@@ -385,10 +387,6 @@ def return_layout(basic_config=app.basic_config, slice_index=1):
                                                         style={"display": "none"},
                                                         # className="loading-wrapper",
                                                         children=[
-                                                            # html.P(
-                                                            #    "Please select the lipids you want to compare using the colour of your choice. Intensity will be normalized and summed for comparison."
-                                                            # ),
-                                                            # html.Hr(className="my-2"),
                                                             dcc.Dropdown(
                                                                 id="page-3-dropdown-red",
                                                                 options=[],
@@ -458,12 +456,6 @@ def return_layout(basic_config=app.basic_config, slice_index=1):
                         ],
                     ),
                     ### End of second row
-                    #        ],
-                    #    ),
-                    #    ### Third row
-                    #    dbc.Row(
-                    #        justify="center",
-                    #        children=[
                     ## First column
                     dbc.Col(
                         className="mt-2",
@@ -601,12 +593,9 @@ def return_layout(basic_config=app.basic_config, slice_index=1):
                                                                     "position": "absolute",
                                                                     "left": "0",
                                                                 },
-                                                                # figure=app.list_array_projection_corrected[slice_index - 1],
                                                             ),
                                                         ],
                                                     ),
-                                                    # ],
-                                                    # ),
                                                 ],
                                             ),
                                         ],
@@ -650,17 +639,11 @@ def page_3_hover(hoverData, slice_index):
             y = hoverData["points"][0]["y"]
 
             slice_coor_rescaled = np.asarray(
-                (app.slice_atlas.array_coordinates_high_res[x, y, z] * 1000 / app.slice_atlas.resolution).round(0),
-                dtype=np.int16,
+                (atlas.array_coordinates_warped_data[x, y, z] * 1000 / atlas.resolution).round(0), dtype=np.int16,
             )
-            if (
-                min(slice_coor_rescaled) >= 0
-                and slice_coor_rescaled[0] < app.slice_atlas.bg_atlas.reference.shape[0]
-                and slice_coor_rescaled[1] < app.slice_atlas.bg_atlas.reference.shape[1]
-                and slice_coor_rescaled[2] < app.slice_atlas.bg_atlas.reference.shape[2]
-            ):
-                label = app.slice_atlas.labels[tuple(slice_coor_rescaled)]
-            else:
+            try:
+                label = atlas.labels[tuple(slice_coor_rescaled)]
+            except:
                 label = "undefined"
             return "Hovered region: " + label
 
@@ -680,17 +663,11 @@ def page_3_atlas_hover(hoverData, slice_index):
             y = hoverData["points"][0]["y"]
 
             slice_coor_rescaled = np.asarray(
-                (app.slice_atlas.array_coordinates_high_res[x, y, z] * 1000 / app.slice_atlas.resolution).round(0),
-                dtype=np.int16,
+                (atlas.array_coordinates_warped_data[x, y, z] * 1000 / atlas.resolution).round(0), dtype=np.int16,
             )
-            if (
-                min(slice_coor_rescaled) >= 0
-                and slice_coor_rescaled[0] < app.slice_atlas.bg_atlas.reference.shape[0]
-                and slice_coor_rescaled[1] < app.slice_atlas.bg_atlas.reference.shape[1]
-                and slice_coor_rescaled[2] < app.slice_atlas.bg_atlas.reference.shape[2]
-            ):
-                label = app.slice_atlas.labels[tuple(slice_coor_rescaled)]
-            else:
+            try:
+                label = atlas.labels[tuple(slice_coor_rescaled)]
+            except:
                 label = "undefined"
             return "Hovered region: " + label
 
@@ -744,16 +721,10 @@ def tab_3_add_value_dropdown(slice_index, clicked_reset, url, clickData, l_mask_
             y = clickData["points"][0]["y"]
 
             slice_coor_rescaled = np.asarray(
-                (app.slice_atlas.array_coordinates_high_res[x, y, z] * 1000 / app.slice_atlas.resolution).round(0),
-                dtype=np.int16,
+                (atlas.array_coordinates_warped_data[x, y, z] * 1000 / atlas.resolution).round(0), dtype=np.int16,
             )
-            if (
-                min(slice_coor_rescaled) >= 0
-                and slice_coor_rescaled[0] < app.slice_atlas.bg_atlas.reference.shape[0]
-                and slice_coor_rescaled[1] < app.slice_atlas.bg_atlas.reference.shape[1]
-                and slice_coor_rescaled[2] < app.slice_atlas.bg_atlas.reference.shape[2]
-            ):
-                mask_name = label = app.slice_atlas.labels[tuple(slice_coor_rescaled)]
+            try:
+                mask_name = label = atlas.labels[tuple(slice_coor_rescaled)]
                 if l_mask_names is not None:
                     if mask_name in l_mask_names:
                         return dash.no_update
@@ -761,6 +732,8 @@ def tab_3_add_value_dropdown(slice_index, clicked_reset, url, clickData, l_mask_
                 else:
                     l_mask_names = [mask_name]
                 return l_mask_names
+            except:
+                logging.info("The coordinate is out of the ccfv3")
 
     return dash.no_update
 
@@ -800,10 +773,18 @@ def tab_3_plot_heatmap(
         or id_input == "page-3-reset-button"
         or id_input == "url"
     ):
-        fig = copy.copy(app.list_array_projection_corrected[slice_index - 1])
+        fig = return_pickled_object(
+            "figures/load_page",
+            "figure_basic_image",
+            force_update=False,
+            compute_function=figures.compute_figure_basic_image,
+            type_figure="projection_corrected",
+            index_image=slice_index - 1,
+            plot_atlas_contours=False,
+        )
         fig.update_layout(
             dragmode="drawclosedpath",
-            newshape=dict(fillcolor=app.l_colors[0], opacity=0.7, line=dict(color="white", width=1)),
+            newshape=dict(fillcolor=config.l_colors[0], opacity=0.7, line=dict(color="white", width=1)),
             autosize=True,
         )
         return fig, [], True, []
@@ -813,41 +794,53 @@ def tab_3_plot_heatmap(
         return dash.no_update
 
     # fig other bug
-    # if id_input == "page-3-dropdown-brain-regions" and relayoutData == {"autosize": True}:
-    #    # return dash.no_update
-    #    if len(l_shapes_and_masks) > 0:
-    #        relayoutData = {"shapes": [l_shapes_and_masks[-1][2]]}
-    #    if len(l_color_mask) > 0:
-    #        l_color_mask = l_color_mask[-1:]
-    #    if len(l_shapes_and_masks) > 0:
-    #        l_shapes_and_masks = l_shapes_and_masks[-1:]
-
-    # fig other bug
     if (
         id_input == "page-3-dropdown-brain-regions "
         and relayoutData is None
         and cliked_reset is None
         and l_mask_name is None
     ):
-        fig = copy.copy(app.list_array_projection_corrected[slice_index - 1])
+        fig = return_pickled_object(
+            "figures/load_page",
+            "figure_basic_image",
+            force_update=False,
+            compute_function=figures.compute_figure_basic_image,
+            type_figure="projection_corrected",
+            index_image=slice_index - 1,
+            plot_atlas_contours=False,
+        )
+
         fig.update_layout(
             dragmode="drawclosedpath",
-            newshape=dict(fillcolor=app.l_colors[0], opacity=0.7, line=dict(color="white", width=1)),
+            newshape=dict(fillcolor=config.l_colors[0], opacity=0.7, line=dict(color="white", width=1)),
             autosize=True,
         )
         return fig, [], True  # , []
 
     if id_input == "page-3-graph-heatmap-per-sel" or id_input == "page-3-dropdown-brain-regions":
         # Rebuild figure
-        fig = copy.copy(app.list_array_projection_corrected[slice_index - 1])
+        fig = return_pickled_object(
+            "figures/load_page",
+            "figure_basic_image",
+            force_update=False,
+            compute_function=figures.compute_figure_basic_image,
+            type_figure="projection_corrected",
+            index_image=slice_index - 1,
+            plot_atlas_contours=False,
+        )
         color_idx = None
         col_next = None
 
         if l_mask_name is not None:
             if len(l_mask_name) > 0:
+                dic_masks = return_pickled_object(
+                    "atlas/atlas_objects",
+                    "dic_masks_and_spectra",
+                    force_update=False,
+                    compute_function=atlas.compute_dic_projected_masks_and_spectra,
+                    index_image=slice_index - 1,
+                )
                 for idx_mask, mask_name in enumerate(l_mask_name):
-
-                    dic_masks = app.slice_atlas.return_dic_projected_masks_and_spectra(int(slice_index) - 1)
                     if mask_name in dic_masks:
                         projected_mask = dic_masks[mask_name][0]
                     # Build a list of empty images and add selected lipids for each channel
@@ -859,7 +852,7 @@ def tab_3_plot_heatmap(
                         if relayoutData is not None:
                             if "shapes" in relayoutData:
                                 color_idx += len(relayoutData["shapes"])
-                        color = app.l_colors[color_idx % 4][1:]
+                        color = config.l_colors[color_idx % 4][1:]
                         color_rgb = [int(color[i : i + 2], 16) for i in (0, 2, 4)] + [200]
                         l_color_mask.append(color_rgb)
 
@@ -868,11 +861,10 @@ def tab_3_plot_heatmap(
                     array_image = np.moveaxis(np.array(l_images, dtype=np.uint8), 0, 2)
 
                     # convert image to string to save space
-                    pil_img = Image.fromarray(array_image)  # PIL image object
-                    prefix = "data:image/png;base64,"
-                    with BytesIO() as stream:
-                        pil_img.save(stream, format="png")
-                        base64_string = prefix + base64.b64encode(stream.getvalue()).decode("utf-8")
+                    # ! is this image not already in dic_masks?
+                    base64_string = turn_RGB_image_into_base64_string(
+                        array_image, optimize=True, quality=80, RGBA=True
+                    )
                     fig.add_trace(go.Image(visible=True, source=base64_string, hoverinfo="skip"))
                     fig.update_layout(dragmode="drawclosedpath",)
 
@@ -887,9 +879,9 @@ def tab_3_plot_heatmap(
                         if "path" in relayoutData["shapes"][-1]:
                             fig["layout"]["shapes"] = relayoutData["shapes"]  #
                             # if color_idx is not None:
-                            #    col_next = app.l_colors[(color_idx + 1) % 4]
+                            #    col_next = config.l_colors[(color_idx + 1) % 4]
                             # else:
-                            col_next = app.l_colors[(len(relayoutData["shapes"]) + len(l_color_mask)) % 4]
+                            col_next = config.l_colors[(len(relayoutData["shapes"]) + len(l_color_mask)) % 4]
 
                             # compute color and save in l_shapes_and_masks
                             if id_input == "page-3-graph-heatmap-per-sel":
@@ -902,9 +894,9 @@ def tab_3_plot_heatmap(
                                 )
 
         if color_idx is not None and col_next is None:
-            col_next = app.l_colors[(color_idx + 1) % 4]
+            col_next = config.l_colors[(color_idx + 1) % 4]
         elif col_next is None:
-            col_next = app.l_colors[0]
+            col_next = config.l_colors[0]
         fig.update_layout(
             dragmode="drawclosedpath",
             newshape=dict(fillcolor=col_next, opacity=0.7, line=dict(color="white", width=1),),
@@ -948,25 +940,35 @@ def tab_3_plot_masks(
                 y = hoverData["points"][0]["y"]
 
                 slice_coor_rescaled = np.asarray(
-                    (app.slice_atlas.array_coordinates_high_res[x, y, z] * 1000 / app.slice_atlas.resolution).round(0),
-                    dtype=np.int16,
+                    (atlas.array_coordinates_warped_data[x, y, z] * 1000 / atlas.resolution).round(0), dtype=np.int16,
                 )
-                if (
-                    min(slice_coor_rescaled) >= 0
-                    and slice_coor_rescaled[0] < app.slice_atlas.bg_atlas.reference.shape[0]
-                    and slice_coor_rescaled[1] < app.slice_atlas.bg_atlas.reference.shape[1]
-                    and slice_coor_rescaled[2] < app.slice_atlas.bg_atlas.reference.shape[2]
-                ):
-                    mask_name = app.slice_atlas.labels[tuple(slice_coor_rescaled)]
-
-                    dic_masks = app.slice_atlas.return_dic_projected_masks_and_spectra(int(slice_index) - 1)
+                try:
+                    mask_name = atlas.labels[tuple(slice_coor_rescaled)]
+                    dic_masks = return_pickled_object(
+                        "atlas/atlas_objects",
+                        "dic_masks_and_spectra",
+                        force_update=False,
+                        compute_function=atlas.compute_dic_projected_masks_and_spectra,
+                        index_image=slice_index - 1,
+                    )
                     if mask_name not in dic_masks:
                         return dash.no_update
                     else:
                         im = dic_masks[mask_name][2]
-                        fig = copy.copy(app.list_atlas_boundaries[slice_index - 1])
+                        fig = figure = return_pickled_object(
+                            "figures/load_page",
+                            "figure_basic_image",
+                            force_update=False,
+                            compute_function=figures.compute_figure_basic_image,
+                            type_figure=None,
+                            index_image=slice_index - 1,
+                            plot_atlas_contours=True,
+                            only_contours=True,
+                        )
                         fig.add_trace(im)
                         return fig
+                except:
+                    logging.info("The coordinate doesn't belong to the ccfv3")
 
     return dash.no_update
 
@@ -1150,15 +1152,9 @@ def page_3_load_path(clicked_compute, cliked_reset, url, relayoutData, slice_ind
                                 path = [
                                     (
                                         int(
-                                            app.slice_atlas.array_projection_correspondence_corrected[
-                                                slice_index - 1, y, x, 0
-                                            ]
+                                            atlas.array_projection_correspondence_corrected[slice_index - 1, y, x, 0]
                                         ),  # must explicitely cast to int for serialization as numpy int are not accepted
-                                        int(
-                                            app.slice_atlas.array_projection_correspondence_corrected[
-                                                slice_index - 1, y, x, 1
-                                            ]
-                                        ),
+                                        int(atlas.array_projection_correspondence_corrected[slice_index - 1, y, x, 1]),
                                     )
                                     for x, y in zip(path[:-1:2], path[1::2])
                                 ]
@@ -1228,50 +1224,22 @@ def page_3_record_spectra(
                 idx_mask += 1
                 try:
                     mask_name = l_mask_name[idx_mask]
-
-                    id_mask = app.slice_atlas.dic_name_id[mask_name]
-                    dic_masks = app.slice_atlas.return_dic_projected_masks_and_spectra(int(slice_index) - 1)
+                    dic_name_id = return_pickled_object(
+                        "atlas/atlas_objects",
+                        "hierarchy",
+                        force_update=False,
+                        compute_function=atlas.compute_hierarchy_list,
+                    )[2]
+                    id_mask = dic_name_id[mask_name]
+                    dic_masks = return_pickled_object(
+                        "atlas/atlas_objects",
+                        "dic_masks_and_spectra",
+                        force_update=False,
+                        compute_function=atlas.compute_dic_projected_masks_and_spectra,
+                        index_image=slice_index - 1,
+                    )
                     if mask_name in dic_masks:
                         grah_scattergl_data = dic_masks[mask_name][1]
-
-                    # grah_scattergl_data = app.slice_atlas.compute_spectrum_data(
-                    #    int(slice_index) - 1, projected_mask=None, mask_name=mask_name, slice_coor_rescaled=None
-                    # )
-
-                    # original_shape = app.slice_store.getSlice(slice_index).image_shape
-                    # mask_remapped = np.zeros(original_shape, dtype=np.uint8)
-                    # stack_mask = app.slice_atlas.get_atlas_mask(id_mask)
-                    # slice_coor_rescaled = np.asarray(
-                    #    (
-                    #        app.slice_atlas.array_coordinates_high_res[slice_index - 1, :, :]
-                    #        * 1000
-                    #        / app.slice_atlas.resolution
-                    #    ).round(0),
-                    #    dtype=np.int16,
-                    # )
-                    # projected_mask = get_projected_atlas_mask(
-                    #    stack_mask, slice_coor_rescaled, app.slice_atlas.bg_atlas.reference.shape
-                    # )
-                    #
-                    # list_index_bound_rows, list_index_bound_column_per_row = get_array_rows_from_atlas_mask(
-                    #    projected_mask,
-                    #    mask_remapped,
-                    #    app.slice_atlas.array_projection_correspondence_corrected[slice_index - 1],
-                    # )
-                    # print(list_index_bound_rows, list_index_bound_column_per_row)
-                    # if np.sum(list_index_bound_rows) == 0:
-                    #    print("No selection could be found for current mask")
-                    # else:
-                    #    # do the average
-                    #    grah_scattergl_data = compute_spectrum_per_row_selection(
-                    #        list_index_bound_rows,
-                    #        list_index_bound_column_per_row,
-                    #        app.slice_store.getSlice(slice_index).array_spectra_high_res,
-                    #        app.slice_store.getSlice(slice_index).array_pixel_indexes_high_res,
-                    #        original_shape,
-                    #        zeros_extend=False,
-                    #        sample=False,
-                    #    )
 
                 except:
                     print("Bug, the selected mask does't exist")
@@ -1289,11 +1257,10 @@ def page_3_record_spectra(
                         grah_scattergl_data = compute_spectrum_per_row_selection(
                             list_index_bound_rows,
                             list_index_bound_column_per_row,
-                            app.slice_store.getSlice(slice_index).array_spectra_high_res,
-                            app.slice_store.getSlice(slice_index).array_pixel_indexes_high_res,
-                            app.slice_store.getSlice(slice_index).image_shape,
+                            data.get_array_spectra(slice_index - 1),
+                            data.get_array_lookup_pixels(slice_index - 1),
+                            data.get_image_shape(slice_index - 1),
                             zeros_extend=False,
-                            sample=False,
                         )
                 except:
                     print("Bug, the selected path does't exist")
@@ -1313,7 +1280,7 @@ def page_3_record_spectra(
                     # then normalize to the sum of all pixels
                     grah_scattergl_data[1, :] /= (
                         convert_array_to_fine_grained(
-                            app.slice_store.getSlice(slice_index).array_spectra_high_res, 10 ** -3, lb=350, hb=1250,
+                            data.get_array_spectra(slice_index - 1), 10 ** -3, lb=350, hb=1250,
                         )[1, :]
                         + 1
                     )
@@ -1361,7 +1328,7 @@ def page_3_plot_spectrum(cliked_reset, l_spectra, slice_index):
 
     # Delete everything when clicking reset
     elif id_input == "page-3-reset-button" or l_spectra is None:
-        return app.slice_store.getSlice(slice_index).return_empty_spectrum(), [], False
+        return figures.return_empty_spectrum(), [], False
 
     # do nothing if l_spectra is None or []
     elif id_input == "dcc-store-list-mz-spectra":
@@ -1371,7 +1338,7 @@ def page_3_plot_spectrum(cliked_reset, l_spectra, slice_index):
 
             for idx_spectra, spectrum in enumerate(l_spectra):
 
-                col = app.l_colors[idx_spectra % 4]
+                col = config.l_colors[idx_spectra % 4]
 
                 # Get the average spectrum and add it to m/z plot
                 grah_scattergl_data = np.array(spectrum, dtype=np.float32)
@@ -1504,7 +1471,7 @@ def page_3_draw_heatmap_per_lipid_selection(
 
     # Delete everything when clicking reset
     elif id_input == "page-3-reset-button":
-        return app.slice_store.getSlice(slice_index).return_heatmap_lipid(), [], False
+        return figures.return_heatmap_lipid(), [], False
 
     # Otherwise compute lipid expression heatmap from spectrum
     elif (
@@ -1542,7 +1509,7 @@ def page_3_draw_heatmap_per_lipid_selection(
 
                     array_intensity_with_lipids = np.array(spectrum, dtype=np.float32)[1, :]
                     array_idx_labels = np.array(l_idx_labels, dtype=np.int32)
-                    l_lipids_idx, l_avg_intensity = return_avg_intensity_per_lipid(
+                    l_lipids_idx, l_avg_intensity = compute_avg_intensity_per_lipid(
                         array_intensity_with_lipids, array_idx_labels
                     )
                     set_lipids_idx.update(l_lipids_idx)
@@ -1610,7 +1577,7 @@ def page_3_draw_heatmap_per_lipid_selection(
                         colorscale="Blues",
                     )
                 )
-                fig_heatmap_lipids = app.slice_store.getSlice(slice_index).return_heatmap_lipid(fig_heatmap_lipids)
+                fig_heatmap_lipids = figures.return_heatmap_lipid(fig_heatmap_lipids)
 
                 return fig_heatmap_lipids, l_idx_lipids, True
 
@@ -1799,7 +1766,7 @@ def draw_modal_graph(
 
     # Delete everything when clicking reset
     if id_input == "page-3-reset-button":
-        return app.slice_store.getSlice(slice_index).return_empty_spectrum(), False
+        return figures.return_empty_spectrum(), False
 
     # Check that at least one lipid has been selected
     if len(l_red_lipids + l_green_lipids + l_blue_lipids) > 0:
@@ -1813,8 +1780,8 @@ def draw_modal_graph(
             for l_lipids in [l_red_lipids, l_green_lipids, l_blue_lipids]
         ]
 
-        fig = app.slice_store.getSlice(slice_index).compute_rgb_image_per_lipid_selection(
-            l_lipid_bounds, title=False, enrichment=enrichment, log=log
+        fig = figures.compute_rgb_image_per_lipid_selection(
+            slice_index, l_lipid_bounds, title=False, enrichment=enrichment, log=log
         )
         if boolean_mask:
             if l_shapes_and_masks is not None:
