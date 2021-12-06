@@ -120,7 +120,11 @@ class Figures:
 
         else:
             fig.add_trace(
-                go.Image(visible=True, source=turn_image_into_base64_string(array_image_atlas), hoverinfo="none",)
+                go.Image(
+                    visible=True,
+                    source=turn_RGB_image_into_base64_string(array_image_atlas, optimize=True, quality=25, RGBA=True),
+                    hoverinfo="none",
+                )
             )
 
         # Improve layout
@@ -278,7 +282,7 @@ class Figures:
 
         if normalize:
             # Normalize by 99 percentile
-            perc = np.percentile(image, 99.9)
+            perc = np.percentile(image, 99.0)
             if perc == 0:
                 perc = np.max(image)
             if perc == 0:
@@ -330,7 +334,7 @@ class Figures:
         if heatmap:
             fig = px.imshow(image, binary_string=binary_string, color_continuous_scale="deep_r")  # , aspect = 'auto')
             if plot_contours:
-                print(logging.warning("Contour plot is not compatible with heatmap plot for now."))
+                logging.warning("Contour plot is not compatible with heatmap plot for now.")
                 # Compute it anyway but won't work
                 b64_string = turn_RGB_image_into_base64_string(
                     self._atlas.list_projected_atlas_borders_arrays[slice_index - 1], RGBA=True
@@ -426,7 +430,7 @@ class Figures:
         # Build a list of empty images and add selected lipids for each channel
         l_images = []
         for l_boundaries in ll_t_bounds:
-            image = np.zeros(self._atlas.image_shape)
+            image = np.zeros(self._atlas.image_shape if projected_image else self._data.get_image_shape(slice_index))
             if l_boundaries is not None:
                 for boundaries in l_boundaries:
                     if boundaries is not None:
@@ -918,7 +922,7 @@ class Figures:
                 array_data = self.compute_rgb_array_per_lipid_selection(
                     slice_index + 1,
                     ll_t_bounds[slice_index],
-                    normalize_independently=False,
+                    normalize_independently=True,
                     projected_image=False,
                     log=False,
                     enrichment=False,
@@ -937,7 +941,7 @@ class Figures:
                 # Compute the percentile of expression to filter out lowly expressed pixels
                 percentile = np.percentile(array_data_stripped, 60)
 
-                # Get the coordindates of the pixels in the ccfv3
+                # Get the coordinates of the pixels in the ccfv3
                 original_coordinates = self._atlas.l_original_coor[slice_index]
                 original_coordinates_stripped = original_coordinates[array_data != 0]
 

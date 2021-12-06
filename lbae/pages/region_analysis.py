@@ -838,7 +838,7 @@ def tab_3_plot_heatmap(
                     "dic_masks_and_spectra",
                     force_update=False,
                     compute_function=atlas.compute_dic_projected_masks_and_spectra,
-                    index_image=slice_index - 1,
+                    slice_index=slice_index - 1,
                 )
                 for idx_mask, mask_name in enumerate(l_mask_name):
                     if mask_name in dic_masks:
@@ -949,7 +949,7 @@ def tab_3_plot_masks(
                         "dic_masks_and_spectra",
                         force_update=False,
                         compute_function=atlas.compute_dic_projected_masks_and_spectra,
-                        index_image=slice_index - 1,
+                        slice_index=slice_index - 1,
                     )
                     if mask_name not in dic_masks:
                         return dash.no_update
@@ -1236,7 +1236,7 @@ def page_3_record_spectra(
                         "dic_masks_and_spectra",
                         force_update=False,
                         compute_function=atlas.compute_dic_projected_masks_and_spectra,
-                        index_image=slice_index - 1,
+                        slice_index=slice_index - 1,
                     )
                     if mask_name in dic_masks:
                         grah_scattergl_data = dic_masks[mask_name][1]

@@ -19,6 +19,7 @@ numexpr_logger.setLevel(logging.WARNING)
 numba_logger = logging.getLogger("numba")
 numba_logger.setLevel(logging.WARNING)
 
+
 # Import the app and define server for gunicorn
 logging.info("Starting import chain" + logmem())
 from lbae import index
