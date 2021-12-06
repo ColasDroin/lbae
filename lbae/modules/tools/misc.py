@@ -84,8 +84,9 @@ def turn_RGB_image_into_base64_string(image, optimize=True, quality=85, RGBA=Fal
 
 def base_64_string_conversion(pil_img, optimize, quality, convert_to_RGB=True):
     # Convert image from RGBA to RGB if needed
-    if convert_to_RGB:
-        pil_img = pil_img.convert("RGB")
+    # ! Commented out but maybe needed, caution
+    # if convert_to_RGB:
+    #    pil_img = pil_img.convert("RGB")
 
     # Convert to base64 string with webp
     base64_string = None

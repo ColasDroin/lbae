@@ -943,6 +943,7 @@ def tab_3_plot_masks(
                     (atlas.array_coordinates_warped_data[x, y, z] * 1000 / atlas.resolution).round(0), dtype=np.int16,
                 )
                 try:
+                    # This line will trigger an exception if the coordinate doesn't exist
                     mask_name = atlas.labels[tuple(slice_coor_rescaled)]
                     dic_masks = return_pickled_object(
                         "atlas/atlas_objects",
