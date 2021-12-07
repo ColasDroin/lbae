@@ -1256,9 +1256,9 @@ def page_3_record_spectra(
                         grah_scattergl_data = compute_spectrum_per_row_selection(
                             list_index_bound_rows,
                             list_index_bound_column_per_row,
-                            data.get_array_spectra(slice_index - 1),
-                            data.get_array_lookup_pixels(slice_index - 1),
-                            data.get_image_shape(slice_index - 1),
+                            data.get_array_spectra(slice_index),
+                            data.get_array_lookup_pixels(slice_index),
+                            data.get_image_shape(slice_index),
                             zeros_extend=False,
                         )
                 except:

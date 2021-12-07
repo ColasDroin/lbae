@@ -347,7 +347,7 @@ class Atlas:
             l_images = [normalized_projected_mask * color for c, color in zip(["r", "g", "b", "a"], color_rgb)]
             # Reoder axis to match plotly go.image requirements
             array_image = np.moveaxis(np.array(l_images, dtype=np.uint8), 0, 2)
-            base64_string = convert_image_to_base64(array_image, optimize=True, quality=5, type="RGBA")
+            base64_string = convert_image_to_base64(array_image, optimize=True, quality=5, type="RGBA", format="gif")
             im = go.Image(visible=True, source=base64_string, hoverinfo="none")
 
             # compute spectrum

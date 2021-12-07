@@ -48,7 +48,7 @@ def convert_image_to_base64(
     quality=85,
     colormap=cm.viridis,
     type=None,
-    format="webp",
+    format="png",
     overlay=None,
     decrease_resolution_factor=1,
 ):
@@ -81,8 +81,20 @@ def convert_image_to_base64(
     # Convert to base64
     base64_string = None
     with BytesIO() as stream:
-        # Optimize the quality as the figure will be pickled, so this line of code won't run live
-        pil_img.save(stream, format=format, optimize=optimize, quality=quality, method=6, lossless=False)
+        if format == "webp":
+            # Optimize the quality as the figure will be pickled, so this line of code won't run live
+            pil_img.save(stream, format=format, optimize=optimize, quality=quality, method=6, lossless=False)
+        elif format == "gif":
+            # Convert to paletted image to save space
+            pil_img = pil_img.convert("P")
+            # Optimize the quality as the figure will be pickled, so this line of code won't run live
+            pil_img.save(stream, format=format, optimize=optimize, transparency=255)
+        else:
+            # ? Caution, palette-based may not work or cause bug
+            # Convert to paletted image to save space
+            pil_img = pil_img.convert("P")
+            # Optimize the quality as the figure will be pickled, so this line of code won't run live
+            pil_img.save(stream, format=format, optimize=optimize, quality=quality)
         base64_string = "data:image/" + format + ";base64," + base64.b64encode(stream.getvalue()).decode("utf-8")
 
     # Commented code for e.g. conversion with jpeg
