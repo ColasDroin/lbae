@@ -17,7 +17,7 @@ from lbae.pages import (
     lipid_selection,
     lipid_selection_all_slices,
     region_analysis,
-    # threeD_exploration,
+    threeD_exploration,
 )
 from lbae.config import basic_config
 from lbae.modules.tools.memuse import logmem
@@ -108,7 +108,7 @@ app.validation_layout = html.Div(
         lipid_selection.return_layout(basic_config=basic_config),
         lipid_selection_all_slices.return_layout(basic_config=basic_config),
         region_analysis.return_layout(basic_config=basic_config),
-        # threeD_exploration.return_layout(),
+        threeD_exploration.return_layout(basic_config=basic_config),
     ]
 )
 
@@ -136,8 +136,8 @@ def render_page_content(pathname):
     elif pathname == "/region-analysis":
         page = region_analysis.return_layout(basic_config=basic_config)
 
-    # elif pathname == "/3D-exploration":
-    #    page = threeD_exploration.return_layout()
+    elif pathname == "/3D-exploration":
+        page = threeD_exploration.return_layout(basic_config=basic_config)
 
     else:
         # If the user tries to reach a different page, return a 404 message

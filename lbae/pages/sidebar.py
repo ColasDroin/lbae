@@ -92,7 +92,7 @@ layout = html.Div(
                 dbc.Tooltip(children="Analyse brain data in 3D", target="sidebar-page-4", placement="right"),
                 # Copyright
                 html.H4(id="sidebar-copyright", className="sidebar-copyright icon-cc ml-1 mb-3 fs-1"),
-                dbc.Tooltip(children="Copyright EPFL 2021", target="sidebar-copyright", placement="right"),
+                dbc.Tooltip(children="Copyright EPFL 2022", target="sidebar-copyright", placement="right"),
             ],
         ),
     ],

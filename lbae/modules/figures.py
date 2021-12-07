@@ -1008,9 +1008,8 @@ class Figures:
         logging.info("Done" + logmem())
         return fig
 
-    # ! I need to order properly these functions
     def compute_sunburst_figure(self, maxdepth=3):
-        fig = px.sunburst(names=self._atlas.l_nodes, parents=self._atlas.l_parents, maxdepth=3,)
+        fig = px.sunburst(names=self._atlas.l_nodes, parents=self._atlas.l_parents, maxdepth=maxdepth)
         fig.update_layout(margin=dict(t=0, r=0, b=0, l=0),)
         return fig
 
@@ -1127,7 +1126,107 @@ class Figures:
 
         return fig
 
-    ###### FUNCTIONS RETURNING APP GRAPHS ######
+    def compute_root_data(self):
+
+        # Get root data
+        mesh_data_root = self._atlas.bg_atlas.mesh_from_structure("root")
+        vertices_root = mesh_data_root.points
+        triangles_root = mesh_data_root.cells[0].data
+
+        # Compute points and vertices
+        x_root, y_root, z_root = vertices_root.T
+        I_root, J_root, K_root = triangles_root.T
+        # tri_points_root = vertices_root[triangles_root]
+
+        pl_mesh_root = go.Mesh3d(
+            x=x_root,
+            y=y_root,
+            z=z_root,
+            colorscale=([0, "rgb(153, 153, 153)"], [1.0, "rgb(255,255,255)"]),
+            intensity=z_root,
+            flatshading=False,
+            i=I_root,
+            j=J_root,
+            k=K_root,
+            opacity=0.1,
+            name="Mesh CH",
+            showscale=False,
+        )
+        return pl_mesh_root
+
+    def compute_3D_figure(self, structure=None):
+
+        root_lines = return_pickled_object(
+            "atlas/atlas_objects/3D", "root", force_update=False, compute_function=self.compute_root_data
+        )
+
+        layout = go.Layout(
+            # title="3D atlas representation",
+            font=dict(size=16, color="white"),
+            scene_xaxis_visible=False,
+            scene_yaxis_visible=False,
+            scene_zaxis_visible=False,
+            # paper_bgcolor='rgb(50,50,50)',
+            margin=dict(t=10, r=10, b=10, l=10),
+        )
+
+        if structure is not None:
+            # get structure data
+            mesh_data = self._atlas.bg_atlas.mesh_from_structure(structure)
+            vertices = mesh_data.points
+            triangles = mesh_data.cells[0].data
+
+            # compute points and vertices
+            x, y, z = vertices.T
+            I, J, K = triangles.T
+            tri_points = vertices[triangles]
+
+            Xe = []
+            Ye = []
+            Ze = []
+            for T in tri_points:
+                Xe.extend([T[k % 3][0] for k in range(4)] + [None])
+                Ye.extend([T[k % 3][1] for k in range(4)] + [None])
+                Ze.extend([T[k % 3][2] for k in range(4)] + [None])
+
+            pl_mesh = go.Mesh3d(
+                x=x,
+                y=y,
+                z=z,
+                colorscale="Blues",
+                intensity=z,
+                flatshading=True,
+                i=I,
+                j=J,
+                k=K,
+                # name="Mesh CH",
+                showscale=False,
+            )
+
+            pl_mesh.update(
+                cmin=-7,
+                lighting=dict(
+                    ambient=0.2,
+                    diffuse=1,
+                    fresnel=0.1,
+                    specular=1,
+                    roughness=0.05,
+                    facenormalsepsilon=1e-15,
+                    vertexnormalsepsilon=1e-15,
+                ),
+                lightposition=dict(x=100, y=200, z=0),
+            )
+
+            # define the trace for triangle sides
+            # lines = go.Scatter3d(x=Xe, y=Ye, z=Ze, mode="lines", name="", line=dict(color="rgb(70,70,70)", width=1))
+
+        if structure is not None:
+            fig = go.Figure(data=[pl_mesh, root_lines], layout=layout)
+        else:
+            fig = go.Figure(data=[root_lines], layout=layout)
+
+        return fig
+
     """
 
  

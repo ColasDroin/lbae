@@ -69,7 +69,13 @@ class Atlas:
             skimage.io.imread("lbae/data/tiff_files/coordinates_warped_data.tif"), dtype=np.float32
         )
 
+        # Record shape of the warped data
         self.image_shape = list(self.array_coordinates_warped_data.shape[1:-1])
+
+        # Record dict that associate brain region to specific id, along with graph of structures
+        self.l_nodes, self.l_parents, self.dic_name_id = return_pickled_object(
+            "atlas/atlas_objects", "hierarchy", force_update=False, compute_function=self.compute_hierarchy_list
+        )
 
     # Load arrays of images using atlas projection
     @property
@@ -281,9 +287,7 @@ class Atlas:
 
         return mask_stack
 
-    def compute_spectrum_data(
-        self, slice_index, dic_name_id, projected_mask=None, mask_name=None, slice_coor_rescaled=None
-    ):
+    def compute_spectrum_data(self, slice_index, projected_mask=None, mask_name=None, slice_coor_rescaled=None):
         if projected_mask is None and mask_name is None:
             print("Either a mask or a mask name must be provided")
             return None
@@ -293,7 +297,7 @@ class Atlas:
                     (self.array_coordinates_warped_data[slice_index, :, :] * 1000 / self.resolution).round(0),
                     dtype=np.int16,
                 )
-            stack_mask = self.get_atlas_mask(dic_name_id[mask_name])
+            stack_mask = self.get_atlas_mask(self.dic_name_id[mask_name])
             projected_mask = project_atlas_mask(stack_mask, slice_coor_rescaled, self.bg_atlas.reference.shape)
 
         # get the list of rows containing the pixels to average
@@ -324,11 +328,7 @@ class Atlas:
         )
 
         # Get hierarchical tree of brain structures -
-        l_nodes, l_parents, dic_name_id = return_pickled_object(
-            "atlas/atlas_objects", "hierarchy", force_update=False, compute_function=self.compute_hierarchy_list
-        )
-
-        for mask_name, id_mask in dic_name_id.items():
+        for mask_name, id_mask in self.dic_name_id.items():
             # get the array corresponding to the projected mask
             stack_mask = self.get_atlas_mask(id_mask)
             projected_mask = project_atlas_mask(stack_mask, slice_coor_rescaled, self.bg_atlas.reference.shape)
@@ -351,165 +351,17 @@ class Atlas:
             im = go.Image(visible=True, source=base64_string, hoverinfo="none")
 
             # compute spectrum
-            grah_scattergl_data = self.compute_spectrum_data(slice_index, dic_name_id, projected_mask)
+            grah_scattergl_data = self.compute_spectrum_data(slice_index, projected_mask)
 
             dic[mask_name] = (projected_mask, grah_scattergl_data, im)
         return dic
 
     """
 
-    def return_dic_projected_masks_and_spectra(self, slice_index, force_recompute=False):
-        path = "data/pickled_data/masks_and_spectra/"
-        name = "dictionnary_masks_and_spectra_" + str(slice_index) + ".pickle"
-
-        # store the dic temporarily to accelerate things
-        if self.current_dic_name == name:
-            # print("Dictionnary of masks loaded from temporary files")
-            return self.current_disk_masks_and_spectra
-
-        if name in os.listdir(path) and not force_recompute:
-            print("Loading the dictionnary for slice " + str(slice_index) + " of masks from pickle")
-            with open(path + name, "rb") as atlas_file:
-                dic = pickle.load(atlas_file)
-        else:
-            print("Computing the dictionnary of masks and spectra from scrach")
-            dic = self.compute_dic_projected_masks_and_spectra(slice_index)
-            with open(path + name, "wb") as atlas_file:
-                pickle.dump(dic, atlas_file)
-
-        # store dic temporarily
-        self.current_dic_name = name
-        self.current_disk_masks_and_spectra = dic
-        return dic
-
-    def pickle_all_masks_and_spectra(self, force_recompute):
-        for slice_index in range(self.array_projection_corrected.shape[0]):
-            print("Computing mask and spectra for slice ", slice_index)
-            try:
-                self.return_dic_projected_masks_and_spectra(slice_index, force_recompute=force_recompute)
-            except:
-                print("Mask and spectra could not be computed for slice " + str(slice_index))
+   
 
 
-    def compute_root_data(self):
 
-        # Get root data
-        mesh_data_root = self.bg_atlas.mesh_from_structure("root")
-        vertices_root = mesh_data_root.points
-        triangles_root = mesh_data_root.cells[0].data
-
-        # Compute points and vertices
-        x_root, y_root, z_root = vertices_root.T
-        I_root, J_root, K_root = triangles_root.T
-        # tri_points_root = vertices_root[triangles_root]
-
-        pl_mesh_root = go.Mesh3d(
-            x=x_root,
-            y=y_root,
-            z=z_root,
-            colorscale=([0, "rgb(153, 153, 153)"], [1.0, "rgb(255,255,255)"]),
-            intensity=z_root,
-            flatshading=False,
-            i=I_root,
-            j=J_root,
-            k=K_root,
-            opacity=0.1,
-            name="Mesh CH",
-            showscale=False,
-        )
-        return pl_mesh_root
-
-    def return_root_data(self, from_pickle=True, default_force_pickle=True):
-        force_pickle = False
-        path = "data/pickled_data/atlas_3D_data/atlas_3D_root.pickle"
-        if from_pickle:
-            try:
-                with open(path, "rb",) as file_3D:
-                    print("Loading the 3D root atlas file from pickle now")
-                    return pickle.load(file_3D)
-            except:
-                print("The file " + path + " could not be found.")
-                if default_force_pickle:
-                    print("Rebuilding and pickling the root 3D file now.")
-                    force_pickle = True
-
-        root_lines = self.compute_root_data()
-        if force_pickle:
-            print("Pickling the 3D root atlas file now")
-            with open(path, "wb") as file_3D:
-                pickle.dump(root_lines, file_3D)
-
-        return root_lines
-
-    def compute_3D_figure(self, structure=None, root_from_pickle=True):
-        root_lines = self.return_root_data(from_pickle=root_from_pickle)
-
-        layout = go.Layout(
-            # title="3D atlas representation",
-            font=dict(size=16, color="white"),
-            scene_xaxis_visible=False,
-            scene_yaxis_visible=False,
-            scene_zaxis_visible=False,
-            # paper_bgcolor='rgb(50,50,50)',
-            margin=dict(t=10, r=10, b=10, l=10),
-        )
-
-        if structure is not None:
-            # get structure data
-            mesh_data = self.bg_atlas.mesh_from_structure(structure)
-            vertices = mesh_data.points
-            triangles = mesh_data.cells[0].data
-
-            # compute points and vertices
-            x, y, z = vertices.T
-            I, J, K = triangles.T
-            tri_points = vertices[triangles]
-
-            Xe = []
-            Ye = []
-            Ze = []
-            for T in tri_points:
-                Xe.extend([T[k % 3][0] for k in range(4)] + [None])
-                Ye.extend([T[k % 3][1] for k in range(4)] + [None])
-                Ze.extend([T[k % 3][2] for k in range(4)] + [None])
-
-            pl_mesh = go.Mesh3d(
-                x=x,
-                y=y,
-                z=z,
-                colorscale="Blues",
-                intensity=z,
-                flatshading=True,
-                i=I,
-                j=J,
-                k=K,
-                # name="Mesh CH",
-                showscale=False,
-            )
-
-            pl_mesh.update(
-                cmin=-7,
-                lighting=dict(
-                    ambient=0.2,
-                    diffuse=1,
-                    fresnel=0.1,
-                    specular=1,
-                    roughness=0.05,
-                    facenormalsepsilon=1e-15,
-                    vertexnormalsepsilon=1e-15,
-                ),
-                lightposition=dict(x=100, y=200, z=0),
-            )
-
-            # define the trace for triangle sides
-            lines = go.Scatter3d(x=Xe, y=Ye, z=Ze, mode="lines", name="", line=dict(color="rgb(70,70,70)", width=1))
-
-        if structure is not None:
-            fig = go.Figure(data=[pl_mesh, root_lines], layout=layout)
-        else:
-            fig = go.Figure(data=[root_lines], layout=layout)
-
-        return fig
 
     def return_3D_figure(self, structure=None, from_pickle=True, default_force_pickle=True):
         force_pickle = False

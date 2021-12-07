@@ -9,14 +9,14 @@ from dash.dependencies import Input, Output, State
 import dash
 
 # App module
-from lbae import config
-from lbae.app import figures
+from lbae import app
+from lbae.app import figures, atlas
 from lbae.modules.tools.misc import return_pickled_object
 
 ###### DEFFINE PAGE LAYOUT ######
 
 
-def return_layout(basic_config=config.basic_config, slice_index=1):
+def return_layout(basic_config, slice_index=1):
 
     page = html.Div(
         children=[
@@ -168,50 +168,13 @@ def return_layout(basic_config=config.basic_config, slice_index=1):
                                                                     "position": "absolute",
                                                                     "left": "0",
                                                                 },
-                                                                figure=app.slice_atlas.return_3D_figure(
-                                                                    structure=None
+                                                                figure=return_pickled_object(
+                                                                    "figures/3D_page/3D",
+                                                                    "",
+                                                                    force_update=False,
+                                                                    compute_function=figures.compute_3D_figure,
+                                                                    structure=None,
                                                                 ),
-                                                            ),
-                                                        ],
-                                                    ),
-                                                ],
-                                            ),
-                                            html.Div("‎‎‏‏‎ ‎"),
-                                        ],
-                                    ),
-                                ],
-                            ),
-                            dbc.Card(
-                                className="mt-2",
-                                style={"maxWidth": "100%", "margin": "0 auto"},
-                                children=[
-                                    dbc.CardHeader(children="3D slice browsing"),
-                                    dbc.CardBody(
-                                        className="loading-wrapper",
-                                        children=[
-                                            dbc.Spinner(
-                                                color="dark",
-                                                children=[
-                                                    html.Div(
-                                                        className="page-4-fixed-aspect-ratio",
-                                                        children=[
-                                                            dcc.Graph(
-                                                                id="page-4-graph-our-data-3d",
-                                                                config=basic_config
-                                                                | {
-                                                                    "toImageButtonOptions": {
-                                                                        "format": "png",
-                                                                        "filename": "atlas_3D",
-                                                                        "scale": 2,
-                                                                    }
-                                                                },
-                                                                style={
-                                                                    "width": "100%",
-                                                                    "height": "100%",
-                                                                    "position": "absolute",
-                                                                    "left": "0",
-                                                                },
-                                                                figure=SliceData.return_figure_slices_3D(),
                                                             ),
                                                         ],
                                                     ),
@@ -239,14 +202,26 @@ def return_layout(basic_config=config.basic_config, slice_index=1):
     prevent_initial_call=True,
 )
 def tab_content(active_tab):
+    view = None
     if active_tab[-1] == "1":
-        return app.slice_atlas.return_atlas_with_slider(view="frontal", contour=False)
+        view = "frontal"
     elif active_tab[-1] == "2":
-        return app.slice_atlas.return_atlas_with_slider(view="horizontal", contour=False)
+        view = "horizontal"
     elif active_tab[-1] == "3":
-        return app.slice_atlas.return_atlas_with_slider(view="sagittal", contour=False)
+        view = "sagittal"
 
-    return dash.no_update
+    if view is not None:
+        figure = return_pickled_object(
+            "figures/3D_page",
+            "atlas_with_slider",
+            force_update=False,
+            compute_function=figures.compute_atlas_with_slider,
+            view=view,
+            contour=False,
+        )
+        return figure
+    else:
+        return dash.no_update
 
 
 @app.app.callback(
@@ -258,29 +233,21 @@ def page_4_hover(hoverData, active_tab):
     if hoverData is not None:
         if len(hoverData["points"]) > 0:
             if active_tab[-1] == "1":
-                x = hoverData["points"][0]["curveNumber"] * app.slice_atlas.subsampling_block
+                x = hoverData["points"][0]["curveNumber"] * atlas.subsampling_block
                 z = hoverData["points"][0]["x"]
                 y = hoverData["points"][0]["y"]
             elif active_tab[-1] == "2":
-                y = hoverData["points"][0]["curveNumber"] * app.slice_atlas.subsampling_block
+                y = hoverData["points"][0]["curveNumber"] * atlas.subsampling_block
                 z = hoverData["points"][0]["x"]
                 x = hoverData["points"][0]["y"]
             elif active_tab[-1] == "3":
-                z = hoverData["points"][0]["curveNumber"] * app.slice_atlas.subsampling_block
+                z = hoverData["points"][0]["curveNumber"] * atlas.subsampling_block
                 y = hoverData["points"][0]["x"]
                 x = hoverData["points"][0]["y"]
 
-            return "Hovered region: " + app.slice_atlas.labels[x, y, z]
+            return "Hovered region: " + atlas.labels[x, y, z]
 
     return dash.no_update
-
-
-# @app.app.callback(
-#    Output("page-4-graph-hierarchy", "figure"), Input("page-4-graph-3D-atlas-slices", "figure"),
-# )
-# def page_4_hover(fig):
-#    print(fig)
-#    return dash.no_update
 
 
 @app.app.callback(
@@ -290,9 +257,16 @@ def page_4_click(clickData):
     if clickData is not None:
         if "points" in clickData:
             label = clickData["points"][0]["label"]
-            acronym = app.slice_atlas.dic_name_id[label]
+            acronym = atlas.dic_name_id[label]
             print("New 3d figure loading: ", label, acronym)
-            return app.slice_atlas.return_3D_figure(structure=acronym)
+            fig = return_pickled_object(
+                "figures/3D_page/3D",
+                "",
+                force_update=False,
+                compute_function=figures.compute_3D_figure,
+                structure=acronym,
+            )
+            return fig
 
     return dash.no_update
 
