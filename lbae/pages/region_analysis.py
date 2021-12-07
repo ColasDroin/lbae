@@ -17,7 +17,7 @@ import logging
 from lbae import app
 from lbae.app import figures, data, atlas
 from lbae import config
-from lbae.modules.tools.misc import return_pickled_object, turn_RGB_image_into_base64_string
+from lbae.modules.tools.misc import return_pickled_object, convert_image_to_base64
 from lbae.modules.tools.spectra import (
     sample_rows_from_path,
     compute_spectrum_per_row_selection,
@@ -862,9 +862,7 @@ def tab_3_plot_heatmap(
 
                     # convert image to string to save space
                     # ! is this image not already in dic_masks?
-                    base64_string = turn_RGB_image_into_base64_string(
-                        array_image, optimize=True, quality=80, RGBA=True
-                    )
+                    base64_string = convert_image_to_base64(array_image, optimize=True, quality=80, type="RGBA")
                     fig.add_trace(go.Image(visible=True, source=base64_string, hoverinfo="skip"))
                     fig.update_layout(dragmode="drawclosedpath",)
 

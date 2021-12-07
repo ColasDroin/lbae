@@ -42,60 +42,50 @@ def return_pickled_object(data_folder, file_name, force_update, compute_function
         return object
 
 
-def turn_image_into_base64_string(
-    image, colormap=cm.viridis, reverse_colorscale=False, overlay=None, optimize=True, quality=85
+def convert_image_to_base64(
+    image_array,
+    optimize=True,
+    quality=85,
+    colormap=cm.viridis,
+    type=None,
+    format="webp",
+    overlay=None,
+    decrease_resolution_factor=1,
 ):
 
-    # Map image to a colormap and convert to uint8
-    img = np.uint8(colormap(image) * 255)
-    if reverse_colorscale:
-        img = 255 - img
+    # Convert 1D array into a PIL image
+    if type is None:
+        # Map image to a colormap and convert to uint8
+        img = np.uint8(colormap(image_array) * 255)
 
-    # Turn array into PIL image object
-    pil_img = Image.fromarray(img)
+        # Turn array into PIL image object
+        pil_img = Image.fromarray(img)
 
+    # Convert 3D or 4D array into a PIL image
+    elif type == "RGB" or type == "RGBA":
+        pil_img = Image.fromarray(image_array, type)
+
+    # Overlay is transparent, therefore initial image must be converted to RGBA
     if overlay is not None:
-        pil_img = pil_img.convert("RGBA")
+        if type != "RGBA":
+            pil_img = pil_img.convert("RGBA")
         overlay_img = Image.fromarray(overlay, "RGBA")
         pil_img.paste(overlay_img, (0, 0), overlay_img)
 
-    # Do the string conversion into base64 string
-    return base_64_string_conversion(pil_img, optimize=optimize, quality=quality)
-
-
-def turn_RGB_image_into_base64_string(image, optimize=True, quality=85, RGBA=False):
-
-    # Convert image to PIL image
-    if RGBA:
-        pil_img = Image.fromarray(image, "RGBA")  # PIL image object
-
-    else:
-        # ! find out when this part of the code is used
-        pil_img = Image.fromarray(image, "RGB")  # PIL image object
+    # If we want to decrease resolution to save space
+    if decrease_resolution_factor > 1:
         x, y = pil_img.size
-
-        # Decrease resolution to save space
-        x2, y2 = int(round(x / 2)), int(round(y / 2))
+        x2, y2 = int(round(x / decrease_resolution_factor)), int(round(y / decrease_resolution_factor))
         pil_img = pil_img.resize((x2, y2), Image.ANTIALIAS)
 
-    # Do the string conversion into base64 string
-    return base_64_string_conversion(pil_img, optimize=optimize, quality=quality)
-
-
-def base_64_string_conversion(pil_img, optimize, quality, convert_to_RGB=True):
-    # Convert image from RGBA to RGB if needed
-    # ! Commented out but maybe needed, caution
-    # if convert_to_RGB:
-    #    pil_img = pil_img.convert("RGB")
-
-    # Convert to base64 string with webp
+    # Convert to base64
     base64_string = None
     with BytesIO() as stream:
         # Optimize the quality as the figure will be pickled, so this line of code won't run live
-        pil_img.save(stream, format="webp", optimize=optimize, quality=quality, method=6, lossless=False)
-        base64_string = "data:image/webp;base64," + base64.b64encode(stream.getvalue()).decode("utf-8")
+        pil_img.save(stream, format=format, optimize=optimize, quality=quality, method=6, lossless=False)
+        base64_string = "data:image/" + format + ";base64," + base64.b64encode(stream.getvalue()).decode("utf-8")
 
-    # Commented code for conversion with jpeg
+    # Commented code for e.g. conversion with jpeg
     # with BytesIO() as stream:
     #    # Optimize the quality as the figure will be pickled, so this line of code won't run live
     #    pil_img.save(stream, format="jpeg", optimize=optimize, quality=40)
@@ -116,6 +106,7 @@ def delete_all_files_in_folder(input_folder):
             print("Failed to delete %s. Reason: %s" % (file_path, e))
 
 
+# ! To update when code is more stable
 def delete_all_pickle_files(path_data_folder="lbae/data/"):
 
     # Delete all pickled atlas files

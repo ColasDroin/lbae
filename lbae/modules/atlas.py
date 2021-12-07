@@ -27,7 +27,7 @@ from lbae.modules.tools.atlas import (
 )
 from lbae.modules.tools.spectra import compute_spectrum_per_row_selection
 from lbae.modules.atlas_labels import Labels, LabelContours
-from lbae.modules.tools.misc import return_pickled_object, turn_RGB_image_into_base64_string
+from lbae.modules.tools.misc import return_pickled_object, convert_image_to_base64
 from lbae.modules.tools.memuse import logmem
 
 #! Overall, see if I can memmap all the objects in this class
@@ -347,7 +347,7 @@ class Atlas:
             l_images = [normalized_projected_mask * color for c, color in zip(["r", "g", "b", "a"], color_rgb)]
             # Reoder axis to match plotly go.image requirements
             array_image = np.moveaxis(np.array(l_images, dtype=np.uint8), 0, 2)
-            base64_string = turn_RGB_image_into_base64_string(array_image, optimize=True, quality=5, RGBA=True)
+            base64_string = convert_image_to_base64(array_image, optimize=True, quality=5, type="RGBA")
             im = go.Image(visible=True, source=base64_string, hoverinfo="none")
 
             # compute spectrum

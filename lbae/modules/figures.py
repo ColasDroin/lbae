@@ -15,8 +15,7 @@ from matplotlib import cm
 from lbae.modules.tools import spectra
 from lbae.modules.tools.misc import (
     return_pickled_object,
-    turn_image_into_base64_string,
-    turn_RGB_image_into_base64_string,
+    convert_image_to_base64,
 )
 from lbae.modules.tools.atlas import project_image, slice_to_atlas_transform
 from lbae.modules.tools.memuse import logmem
@@ -109,7 +108,7 @@ class Figures:
             fig.add_trace(
                 go.Image(
                     visible=True,
-                    source=turn_image_into_base64_string(array_image, overlay=array_image_atlas),
+                    source=convert_image_to_base64(array_image, overlay=array_image_atlas),
                     hoverinfo="none",
                 )
             )
@@ -122,7 +121,7 @@ class Figures:
             fig.add_trace(
                 go.Image(
                     visible=True,
-                    source=turn_RGB_image_into_base64_string(array_image_atlas, optimize=True, quality=25, RGBA=True),
+                    source=convert_image_to_base64(array_image_atlas, optimize=True, quality=25, type="RGBA"),
                     hoverinfo="none",
                 )
             )
@@ -179,7 +178,7 @@ class Figures:
                     data=[
                         go.Image(
                             visible=True,
-                            source=turn_image_into_base64_string(
+                            source=convert_image_to_base64(
                                 array_images[i],
                                 overlay=array_images_atlas[i] if plot_atlas_contours else None,
                                 optimize=True,
@@ -197,7 +196,7 @@ class Figures:
         fig.add_trace(
             go.Image(
                 visible=True,
-                source=turn_image_into_base64_string(
+                source=convert_image_to_base64(
                     array_images[0],
                     overlay=array_images_atlas[0] if plot_atlas_contours else None,
                     optimize=True,
@@ -336,8 +335,8 @@ class Figures:
             if plot_contours:
                 logging.warning("Contour plot is not compatible with heatmap plot for now.")
                 # Compute it anyway but won't work
-                b64_string = turn_RGB_image_into_base64_string(
-                    self._atlas.list_projected_atlas_borders_arrays[slice_index - 1], RGBA=True
+                b64_string = convert_image_to_base64(
+                    self._atlas.list_projected_atlas_borders_arrays[slice_index - 1], type="RGBA"
                 )
                 fig.add_trace(go.Image(visible=True, source=b64_string))
 
@@ -349,7 +348,7 @@ class Figures:
             else:
                 array_image_atlas = None
 
-            base64_string = turn_image_into_base64_string(image, overlay=array_image_atlas)
+            base64_string = convert_image_to_base64(image, overlay=array_image_atlas)
             fig.add_trace(go.Image(visible=True, source=base64_string))
 
         # Improve graph layout
@@ -396,7 +395,7 @@ class Figures:
 
         # Build figure
         fig = go.Figure()
-        base64_string = turn_image_into_base64_string(image)
+        base64_string = convert_image_to_base64(image)
         fig.add_trace(go.Image(visible=True, source=base64_string))
 
         # Improve graph layout
@@ -482,7 +481,7 @@ class Figures:
         )
 
         if use_pil:
-            base64_string_exp = turn_RGB_image_into_base64_string(array_image)
+            base64_string_exp = convert_image_to_base64(array_image, type="RGB")
             final_image = go.Image(visible=True, source=base64_string_exp,)
         else:
             final_image = go.Image(z=array_image)
@@ -1049,7 +1048,7 @@ class Figures:
             elif view == "sagittal":
                 image_array = self._atlas.bg_atlas.reference[:, :, step]
 
-            base64_string = turn_image_into_base64_string(image_array)
+            base64_string = convert_image_to_base64(image_array)
 
             if not contour:
                 fig.add_trace(go.Image(visible=True, source=base64_string, hoverinfo="none",))
