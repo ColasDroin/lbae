@@ -22,7 +22,6 @@ html {
 }
  */
 
-
 /* make sure the contents of the navlink don't wrap when navbar collapses */
 .sidebar .nav-link {
   width: 100%;
@@ -31,11 +30,10 @@ html {
 }
 
 /* change color of selected pills */
-.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
-background-color:#50bdda !important ; 
+.nav-pills .nav-link.active,
+.nav-pills .show > .nav-link {
+  background-color: #50bdda !important ;
 }
-
-
 
 /* fix the width of the icons 
 .sidebar .nav-link i {
@@ -92,7 +90,7 @@ background-color:#50bdda !important ;
 /* container for the sidebar footbar. make sure the contents don't wrap when
  * the sidebar is collapsed. Keep bar at the lowest position.
  */
- .sidebar-copyright {
+.sidebar-copyright {
   display: flex;
   justify-content: left;
   align-items: center;
@@ -110,7 +108,7 @@ background-color:#50bdda !important ;
 }
 */
 
- /* Show spinner briefly when a link is clicked 
+/* Show spinner briefly when a link is clicked 
  .nav-link:hover + #main-spinner {
   margin-left : 7rem;
   padding-right : 7rem;
@@ -131,9 +129,9 @@ background-color:#50bdda !important ;
 /* min/max size for graphs */
 /*.dash-graph {
   /*min-width: 420px; */
-  /*min-height: 300px;*/
-  /*max-height: 90vh;*/
-  /*max-width: 90vw;*/
+/*min-height: 300px;*/
+/*max-height: 90vh;*/
+/*max-width: 90vw;*/
 /*}*/
 .dash-graph {
   max-height: 85vh;
@@ -181,8 +179,8 @@ background-color:#50bdda !important ;
   background-color: #50bdda;
 }
 
-.rc-slider-dot-active {  
-  border-color:#50bdda;
+.rc-slider-dot-active {
+  border-color: #50bdda;
   border: solid 2px #50bdda;
 }
 
@@ -195,7 +193,6 @@ background-color:#50bdda !important ;
 .rc-slider-handle-click-focused:focus {
   border-color: #74bedb;
 }
-
 
 .rc-slider-handle:hover {
   border-color: #50bdda;
@@ -211,84 +208,82 @@ background-color:#50bdda !important ;
 
 /* correct color for dropdowns */
 #page-3-dropdown-red .Select-value {
-  background-color: rgba(223,80,52, 0.8);
+  background-color: rgba(223, 80, 52, 0.8);
   color: #222222;
 }
 
 #page-3-dropdown-red .Select-control {
-  border-color: rgba(223,80,52, 0.8);
+  border-color: rgba(223, 80, 52, 0.8);
 }
 
 #page-3-dropdown-red .Select-menu-outer {
-  background-color: rgba(223,80,52, 0.8);
+  background-color: rgba(223, 80, 52, 0.8);
   color: #222222;
 }
 
 #page-3-dropdown-green .Select-value {
-  background-color: rgba(95,169,112,0.8);
+  background-color: rgba(95, 169, 112, 0.8);
   color: #222222;
 }
 
 #page-3-dropdown-green .Select-control {
-  border-color: rgba(95,169,112,0.8);
+  border-color: rgba(95, 169, 112, 0.8);
 }
 
 #page-3-dropdown-green .Select-menu-outer {
-  background-color: rgba(95,169,112,0.8);
+  background-color: rgba(95, 169, 112, 0.8);
   color: #222222;
 }
 
 #page-3-dropdown-blue .Select-value {
-  background-color: rgba(58,139,182,0.8);
+  background-color: rgba(58, 139, 182, 0.8);
   color: #222222;
 }
 
 #page-3-dropdown-blue .Select-control {
-  border-color: rgba(58,139,182,0.8);
+  border-color: rgba(58, 139, 182, 0.8);
 }
 
 #page-3-dropdown-blue .Select-menu-outer {
-  background-color: rgba(58,139,182,0.8);
+  background-color: rgba(58, 139, 182, 0.8);
   color: #222222;
 }
 
 /* shift modebar on graph */
-#page-1-graph-slice-selection .js-plotly-plot .plotly .modebar{
+#page-1-graph-slice-selection .js-plotly-plot .plotly .modebar {
   left: 68%;
   top: -0.3rem;
 }
 
 /* shift modebar on graph */
-#page-2-graph-heatmap-mz-selection .js-plotly-plot .plotly .modebar{
+#page-2-graph-heatmap-mz-selection .js-plotly-plot .plotly .modebar {
   left: 65%;
   top: 0rem;
 }
 
-#page-2-graph-low-resolution-spectrum .js-plotly-plot .plotly .modebar{
+#page-2-graph-low-resolution-spectrum .js-plotly-plot .plotly .modebar {
   left: 62%;
   top: 3rem;
 }
 
-#page-2-graph-high-resolution-spectrum .js-plotly-plot .plotly .modebar{
+#page-2-graph-high-resolution-spectrum .js-plotly-plot .plotly .modebar {
   left: 55%;
   top: 3rem;
 }
 
-#page-3-graph-heatmap-per-sel .js-plotly-plot .plotly .modebar{
+#page-3-graph-heatmap-per-sel .js-plotly-plot .plotly .modebar {
   left: 68%;
   top: 0rem;
 }
 
-#page-3-graph-spectrum-per-pixel .js-plotly-plot .plotly .modebar{
+#page-3-graph-spectrum-per-pixel .js-plotly-plot .plotly .modebar {
   left: 53%;
   top: 0.2rem;
 }
 
-
-
-#page-3-graph-heatmap-per-lipid .js-plotly-plot .plotly .modebar{
+#page-3-graph-heatmap-per-lipid .js-plotly-plot .plotly .modebar {
   left: 34%;
-  top: 0.0rem;
+  top: 0rem;
 }
 
 /* dcc.Loading component with transparent background */
@@ -296,9 +291,6 @@ background-color:#50bdda !important ;
 .loading-wrapper > div {
   visibility: visible !important;
 }
-
-
-
 
 /* To fix the aspect ratio of the image graphs, images are initally a multiple 420*300 */
 .page-1-fixed-aspect-ratio {
@@ -327,10 +319,9 @@ background-color:#50bdda !important ;
 
 /* To center main toast header */
 #page-1-main-toast > div.toast-header > strong {
-  margin : auto;
+  margin: auto;
   color: #ffffff;
 }
-
 
 /* For styling all headers the same 
 div.toast-header > strong {
@@ -351,15 +342,17 @@ div.toast-header > button > span {
 */
 
 /* Remove above style for lipid toasts */
-#page-2-toast-lipid-1 > div.toast-header > strong, #page-2-toast-lipid-2 > div.toast-header > strong, #page-2-toast-lipid-3 > div.toast-header > strong {
-  color:#222222;
+#page-2-toast-lipid-1 > div.toast-header > strong,
+#page-2-toast-lipid-2 > div.toast-header > strong,
+#page-2-toast-lipid-3 > div.toast-header > strong {
+  color: #222222;
 }
 
-#page-2-toast-lipid-1 > div.toast-header > button > span, #page-2-toast-lipid-2 > div.toast-header > button > span, #page-2-toast-lipid-3 > div.toast-header > button > span {
+#page-2-toast-lipid-1 > div.toast-header > button > span,
+#page-2-toast-lipid-2 > div.toast-header > button > span,
+#page-2-toast-lipid-3 > div.toast-header > button > span {
   color: #757575;
 }
-
-
 
 /* customize dropdown 
 
@@ -470,7 +463,6 @@ div.toast-header > button > span {
   border-color: rgba(80, 189, 218, 0.5);
 }
 
-
 /* at some point, replace this nasty hack by a dropdown in which you can select 1 value only
 and print the selection next to the dropdown (unerasable, except with reset) 
 div.Select-value > span.Select-value-icon {
@@ -479,15 +471,26 @@ div.Select-value > span.Select-value-icon {
 
 */
 
-
 /* Improve react grid look */
 /* 
 div.item-top{
   transform: translate(0,10px);
 } */
+div.item-top {
+  visibility: hidden;
+}
 
 div.item {
   background: #e9ecef;
   box-shadow: 0px 10px 6px -1px rgb(30 44 57 / 15%);
 }
 
+div.item:focus,
+div.item:active,
+div.item.active,
+div.item:focus:active {
+  background-image: none;
+  outline: none;
+  -webkit-box-shadow: none;
+  box-shadow: 0px 10px 6px -1px rgb(30 44 57 / 15%);
+}

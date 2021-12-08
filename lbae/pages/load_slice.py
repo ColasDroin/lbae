@@ -22,12 +22,14 @@ def return_layout(basic_config, initial_slice=1):
     page = dash_draggable.ResponsiveGridLayout(
         id="draggable",
         clearSavedLayout=True,
+        isDraggable=False,
+        isResizable=False,
         layouts={
             "lg": [
                 {"i": "tab-1-zoom-toast", "x": 0, "y": 0, "w": 5, "h": 3},
                 {"i": "tab-1modebar-toast", "x": 0, "y": 3, "w": 5, "h": 3},
                 {"i": "tab-1-tooltips-toast", "x": 0, "y": 6, "w": 5, "h": 3},
-                {"i": "page-1-main-toast", "x": 5, "y": 0, "w": 7, "h": 19},
+                {"i": "page-1-main-toast", "x": 5, "y": 0, "w": 7, "h": 20},
             ],
             "sm": [
                 {"i": "tab-1-zoom-toast", "x": 1, "y": 0, "w": 5, "h": 3},
@@ -82,6 +84,7 @@ def return_layout(basic_config, initial_slice=1):
                 className="d-flex align-items-stretch",
                 children=[
                     dbc.CardHeader(
+                        className="d-flex align-items-stretch",
                         children=[
                             dbc.Tabs(
                                 [
@@ -99,12 +102,12 @@ def return_layout(basic_config, initial_slice=1):
                                 id="page-1-toggle-annotations",
                                 label="Display annotations",
                                 value=False,
-                                className="mt-2",
+                                className="ml-5 mt-2",
                             ),
                         ],
                     ),
                     dbc.CardBody(
-                        className="py-0",
+                        className="py-0 ",
                         children=[
                             ## First column
                             dbc.Col(
@@ -195,7 +198,7 @@ def return_layout(basic_config, initial_slice=1):
                             ),
                             #    ],
                             # ),
-                            html.Div("‎‎‏‏‎ ‎"),  # Empty span to prevent toast from bugging
+                            html.Div(""),  # Empty span to prevent toast from bugging
                         ],
                     ),
                 ],
