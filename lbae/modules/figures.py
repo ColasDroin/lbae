@@ -399,17 +399,17 @@ class Figures:
         fig.add_trace(go.Image(visible=True, source=base64_string))
 
         # Improve graph layout
-        fig.update_layout(
-            title={
-                "text": "Mass spectrometry heatmap",
-                "y": 0.97,
-                "x": 0.5,
-                "xanchor": "center",
-                "yanchor": "top",
-                "font": dict(size=14,),
-            },
-            margin=dict(t=30, r=0, b=10, l=0),
-        )
+        # fig.update_layout(
+        #     title={
+        #         "text": "Mass spectrometry heatmap",
+        #         "y": 0.97,
+        #         "x": 0.5,
+        #         "xanchor": "center",
+        #         "yanchor": "top",
+        #         "font": dict(size=14,),
+        #     },
+        #     margin=dict(t=30, r=0, b=10, l=0),
+        # )
         fig.update_xaxes(showticklabels=False)
         fig.update_yaxes(showticklabels=False)
         fig.update(layout_coloraxis_showscale=False)
@@ -527,6 +527,7 @@ class Figures:
             xaxis=dict(rangeslider={"visible": False}, title="m/z"),
             yaxis=dict(fixedrange=False, title="Intensity"),
             template="plotly_white",
+            autosize=True,
         )
         # Build figure
         fig = go.Figure(data=data, layout=layout)

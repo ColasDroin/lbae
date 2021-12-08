@@ -7,6 +7,7 @@ from dash.dependencies import Input, Output, State
 import uuid
 import dash_loading_spinners as dls
 import logging
+import dash_mantine_components as dmc
 
 # Homemade modules
 from lbae.app import app, data
@@ -79,6 +80,83 @@ def return_main_content():
                 children=[
                     sidebar.layout,
                     html.Div(id="content"),
+                    dmc.Center(
+                        dmc.Group(
+                            [
+                                dmc.Paper(
+                                    dmc.Group(
+                                        [
+                                            dmc.Text("Slice: "),
+                                            dmc.Slider(
+                                                id="main-slider",
+                                                min=1,
+                                                max=data.get_slice_number(),
+                                                marks=[
+                                                    {"value": i, "label": str(i)}
+                                                    for i in range(1, data.get_slice_number() + 1, 2)
+                                                ],
+                                                style={"width": "60vw"},
+                                                className="pb-3",
+                                                value=1,
+                                            ),
+                                        ],
+                                        direction="row",
+                                    ),
+                                    padding="lg",
+                                    shadow="md",
+                                    radius="xl",
+                                    withBorder=True,
+                                ),
+                                dmc.Button("Toggle documentation", id="button-doc"),
+                                dmc.Space(w=30),
+                            ],
+                        ),
+                        style={
+                            "width": "100%",
+                            "position": "fixed",
+                            "bottom": 0,
+                            "margin-left": "5%",
+                            "margin-right": "5%",
+                            "margin-bottom": "1%",
+                            "left": "0",
+                            "right": "0",
+                        },
+                    ),
+                    # Space to ensure the slider for sections doesn't hide anything
+                    dmc.Space(h=70),
+                    # Documentation
+                    dmc.Drawer(
+                        id="drawer",
+                        padding="md",
+                        position="right",
+                        size=500,
+                        title="Page documentation",
+                        children=[
+                            dmc.Accordion(
+                                children=[
+                                    dmc.AccordionItem(
+                                        children="""On any graph (heatmap or m/z plot), you can draw a square with your mouse to zoom in, 
+        and double click to reset zoom level.""",
+                                        label="Zoom",
+                                    ),
+                                    dmc.AccordionItem(
+                                        children="""You can interact more with the figures (zoom, pan, reset axes, download) 
+        using the modebard above them.""",
+                                        label="Modebar",
+                                    ),
+                                    dmc.AccordionItem(
+                                        children="""Most of the items in the app are embedded with advice.
+            Just position your mouse over an item to get a tip on how to use it.""",
+                                        label="Tooltips",
+                                    ),
+                                ],
+                                iconPosition="right",
+                                multiple=True,
+                                id="acc",
+                                # state={"1": True},
+                            ),
+                        ],
+                    ),
                     dls.Tunnel(
                         id="main-spinner",
                         children=html.Div(id="empty-content"),
@@ -151,8 +229,13 @@ def render_page_content(pathname):
     return page, ""
 
 
+@app.callback(Output("drawer", "opened"), Input("button-doc", "n_clicks"), prevent_initial_call=True)
+def drawer(n_clicks):
+    return True
+
+
 def run():
-    app.run_server(port=8060, debug=False)
+    app.run_server(port=8060, debug=True)
 
 
 # Run app from local console (not gunicorn)

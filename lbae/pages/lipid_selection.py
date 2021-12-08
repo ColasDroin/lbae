@@ -8,400 +8,406 @@ import dash
 import json
 import pandas as pd
 from dash.dependencies import Input, Output, State
+import dash_draggable
+import numpy as np
 
 # Homemade modules
 from lbae.app import figures, data
 from lbae import app
 
+HEIGHT_PLOTS = 280
+N_LINES = int(np.ceil(HEIGHT_PLOTS / 30))
 
 ###### DEFFINE PAGE LAYOUT ######
 
 
 def return_layout(basic_config, slice_index=1):
 
-    page = html.Div(
-        children=[
-            ### First row
-            dbc.Row(
-                className="d-flex justify-content-center flex-wrap",
-                justify="center",
-                children=[
-                    ## First column
-                    dbc.Col(
-                        md=6,
-                        children=[
-                            dbc.Card(
-                                className="no-transition",
-                                # style={"maxWidth": "100%", "margin": "0 auto"},
-                                children=[
-                                    dbc.CardHeader(
-                                        id="page-2-toast-graph-heatmap-mz-selection",
-                                        className="d-flex",
-                                        children=[html.Div("Brain slice n°"),],
-                                    ),
-                                    # header_style={"background-color": "#3a8bb6"},
-                                    # body_style={"padding-top": 0},
-                                    # bodyClassName="loading-wrapper",
-                                    dbc.CardBody(
-                                        className="py-0 mb-0 mt-2",
-                                        children=[
-                                            dbc.Spinner(
-                                                color="dark",
-                                                show_initially=False,
-                                                children=[
-                                                    html.Div(
-                                                        className="fixed-aspect-ratio",
-                                                        children=[
-                                                            dcc.Graph(
-                                                                id="page-2-graph-heatmap-mz-selection",
-                                                                config=basic_config
-                                                                | {
-                                                                    "toImageButtonOptions": {
-                                                                        "format": "png",
-                                                                        "filename": "brain_lipid_selection",
-                                                                        "scale": 2,
-                                                                    }
-                                                                },
-                                                                style={
-                                                                    "width": "100%",
-                                                                    "height": "100%",
-                                                                    "position": "absolute",
-                                                                    "left": "0",
-                                                                },
-                                                                figure=figures.compute_heatmap_per_mz(
-                                                                    slice_index, 600, 800, binary_string=False
-                                                                ),
-                                                            ),
-                                                        ],
-                                                    ),
-                                                ],
-                                            ),
-                                            html.Div(
-                                                className="mt-3 text-center d-none",
-                                                children=dbc.Checklist(
-                                                    options=[{"label": "RGB/colormap", "value": True}],
-                                                    id="tab-2-colormap-switch",
-                                                    switch=True,
-                                                ),
-                                            ),
-                                            dbc.Tooltip(
-                                                children="Switch beetween a RGB representation handling three separate channels \
-                                             (greyscale if no lipids are selected) and a continuous colormap handling a \
-                                             unique channel.",
-                                                target="tab-2-colormap-switch",
-                                                placement="left",
-                                            ),
-                                            html.Div("‎‎‏‏‎ ‎"),  # Empty span to prevent toast from bugging
-                                        ],
-                                    ),
-                                ],
-                            ),
-                            dbc.Card(
-                                style={"maxWidth": "100%", "margin": "0 auto"},
-                                className="mt-4",
-                                children=[
-                                    dbc.CardHeader("Low-resolution mass-spectrometry spectrum"),
-                                    dbc.CardBody(
-                                        children=[
-                                            html.Div(
-                                                className="loading-wrapper",
-                                                children=[
-                                                    dbc.Spinner(
-                                                        color="dark",
-                                                        children=[
-                                                            html.Div(
-                                                                className="px-3 mt-2",
-                                                                children=[
-                                                                    dcc.Graph(
-                                                                        id="page-2-graph-low-resolution-spectrum",
-                                                                        figure=figures.compute_spectrum_low_res(
-                                                                            slice_index
-                                                                        ),
-                                                                        style={"height": "20vh"},
-                                                                        config=basic_config
-                                                                        | {
-                                                                            "toImageButtonOptions": {
-                                                                                "format": "png",
-                                                                                "filename": "full_spectrum_low_res",
-                                                                                "scale": 2,
-                                                                            }
-                                                                        },
-                                                                    ),
-                                                                ],
-                                                            ),
-                                                        ],
-                                                    ),
-                                                ],
-                                            ),
-                                        ],
-                                    ),
-                                ],
-                            ),
-                        ],
-                    ),
-                    ## Second column
-                    dbc.Col(
-                        md=6,
-                        children=[
-                            dbc.Card(
-                                style={"maxWidth": "100%", "margin": "0 auto"},
-                                children=[
-                                    dbc.CardHeader(children="Lipid selection"),
-                                    dbc.CardBody(
-                                        className="pt-1",
-                                        children=[
-                                            html.P(
-                                                children="Please select the lipids of your choice (up to three):",
-                                                className="text-center",
-                                            ),
-                                            # Dropdown must be wrapped in div, otherwise lazy loading creates bug with tooltips
-                                            html.Div(
-                                                id="tab-2-div-dropdown-lipid-names",
-                                                children=[
-                                                    dcc.Dropdown(
-                                                        id="tab-2-dropdown-lipid-names", options=[], multi=False,
-                                                    ),
-                                                ],
-                                            ),
-                                            dbc.Tooltip(
-                                                children="Choose the category of your lipid",
-                                                target="tab-2-div-dropdown-lipid-names",
-                                                placement="left",
-                                            ),
-                                            html.Div(
-                                                id="tab-2-div-dropdown-lipid-structures",
-                                                children=[
-                                                    dcc.Dropdown(
-                                                        id="tab-2-dropdown-lipid-structures",
-                                                        options=[],
-                                                        multi=False,
-                                                        className="mt-2",
-                                                    ),
-                                                ],
-                                            ),
-                                            dbc.Tooltip(
-                                                children="After choosing the lipid category, choose the structure of your lipid",
-                                                target="tab-2-div-dropdown-lipid-structures",
-                                                placement="left",
-                                            ),
-                                            html.Div(
-                                                id="tab-2-div-dropdown-lipid-cations",
-                                                children=[
-                                                    dcc.Dropdown(
-                                                        id="tab-2-dropdown-lipid-cations",
-                                                        options=[],
-                                                        multi=False,
-                                                        className="mt-2",
-                                                    ),
-                                                ],
-                                            ),
-                                            dbc.Tooltip(
-                                                children="After choosing the lipid structure, choose the cation binded to your lipid",
-                                                target="tab-2-div-dropdown-lipid-cations",
-                                                placement="left",
-                                            ),
-                                            # Wrap toasts in div to prevent their expansion
-                                            dbc.Toast(
-                                                id="page-2-toast-lipid-1",
-                                                header="name-lipid-1",
-                                                icon="danger",
-                                                dismissable=True,
-                                                is_open=False,
-                                                bodyClassName="p-0",
-                                                className="mt-3",
-                                                style={"margin": "auto"},
-                                            ),
-                                            dbc.Toast(
-                                                id="page-2-toast-lipid-2",
-                                                header="name-lipid-2",
-                                                icon="success",
-                                                dismissable=True,
-                                                is_open=False,
-                                                bodyClassName="p-0",
-                                                className="mt-1",
-                                                style={"margin": "auto"},
-                                            ),
-                                            dbc.Toast(
-                                                id="page-2-toast-lipid-3",
-                                                header="name-lipid-3",
-                                                icon="primary",
-                                                dismissable=True,
-                                                is_open=False,
-                                                bodyClassName="p-0",
-                                                className="mt-1",
-                                                style={"margin": "auto"},
-                                            ),
-                                            # dbc.Alert(
-                                            #    id="page-2-warning-lipids-number",
-                                            #    children=html.P(
-                                            html.Div(
-                                                id="page-2-warning-lipids-number",
-                                                className="text-center mt-1",
-                                                children=html.Strong(
-                                                    children="Please delete some lipids to choose new ones.",
-                                                    style={"color": "#df5034"},
-                                                ),
-                                            ),
-                                            #    ),
-                                            #    className="mt-1 text-center d-none",
-                                            #    style={"border-radius": "10px"},
-                                            #    color="warning",
-                                            # ),
-                                            dbc.ButtonGroup(
-                                                className="d-flex justify-content-center",
-                                                children=[
-                                                    dbc.Button(
-                                                        children="Display as RGB",
-                                                        id="tab-2-rgb-button",
-                                                        className="mt-1",
-                                                        color="primary",
-                                                        disabled=True,
-                                                        # block=True,
-                                                    ),
-                                                    dbc.Button(
-                                                        children="Display as colormap",
-                                                        id="tab-2-colormap-button",
-                                                        className="mt-1",
-                                                        color="primary",
-                                                        disabled=True,
-                                                        # block=True,
-                                                    ),
-                                                    dbc.Button(
-                                                        children="Download selected data",
-                                                        id="tab-2-download-data-button",
-                                                        className="mt-1",
-                                                        color="primary",
-                                                        disabled=True,
-                                                        # block=True,
-                                                    ),
-                                                ],
-                                            ),
-                                            dcc.Download(id="tab-2-download-data"),
-                                        ],
-                                    ),
-                                ],
-                            ),
-                            dbc.Card(
-                                style={"maxWidth": "100%", "margin": "0 auto"},
-                                className="mt-4",
-                                children=[
-                                    dbc.CardHeader("Range selection"),
-                                    dbc.CardBody(
-                                        className="pt-1",
-                                        children=[
-                                            html.Small(
-                                                children="Please enter the lower and upper bounds of your m/z range selection. Your selection can't exceed a range of 10m/z, and must be comprised in-between 400 and 1200.",
-                                                className="text-center",
-                                            ),
-                                            dbc.InputGroup(
-                                                [
-                                                    dbc.Input(
-                                                        id="page-2-lower-bound", placeholder="Lower bound (m/z value)"
-                                                    ),
-                                                    dbc.Input(
-                                                        id="page-2-upper-bound", placeholder="Upper bound (m/z value)"
-                                                    ),
-                                                    # dbc.InputGroupAddon(
-                                                    dbc.Button(
-                                                        "Display",
-                                                        id="page-2-button-bounds",
-                                                        n_clicks=0,
-                                                        color="primary",
-                                                    ),
-                                                    #    addon_type="prepend",
-                                                    # ),
-                                                ],
-                                                size="sm",
-                                            ),
-                                            html.Small(
-                                                children="Or choose a m/z value with a given range. Your selection can't exceed a range of 10m/z, and must be comprised in-between 400 and 1200.",
-                                                className="text-center",
-                                            ),
-                                            dbc.InputGroup(
-                                                [
-                                                    dbc.Input(id="page-2-mz-value", placeholder="m/z value"),
-                                                    dbc.Input(id="page-2-mz-range", placeholder="Range"),
-                                                    # dbc.InputGroupAddon(
-                                                    dbc.Button(
-                                                        "Display",
-                                                        id="page-2-button-range",
-                                                        n_clicks=0,
-                                                        color="primary",
-                                                    ),
-                                                    #    addon_type="prepend",
-                                                    # ),
-                                                ],
-                                                size="sm",
-                                            ),
-                                        ],
-                                    ),
-                                ],
-                            ),
-                            dbc.Card(
-                                style={"maxWidth": "100%", "margin": "0 auto"},
-                                className="mt-4",
-                                children=[
-                                    dbc.CardHeader("High-resolution mass-spectrometry spectrum"),
-                                    dbc.CardBody(
-                                        children=[
-                                            html.Div(
-                                                className="loading-wrapper",
-                                                children=[
-                                                    dbc.Spinner(
-                                                        color="dark",
-                                                        children=[
-                                                            html.Div(
-                                                                className="",
-                                                                children=[
-                                                                    html.Div(
-                                                                        id="page-2-alert",
-                                                                        className="text-center mt-2",
-                                                                        children=html.Strong(
-                                                                            children="Please select a lipid or zoom more on the left graph to display the high-resolution spectrum",
-                                                                            style={"color": "#df5034"},
-                                                                        ),
-                                                                    ),
-                                                                ],
-                                                            ),
-                                                            dcc.Graph(
-                                                                id="page-2-graph-high-resolution-spectrum",
-                                                                style={"display": "none"},
-                                                                config=basic_config
-                                                                | {
-                                                                    "toImageButtonOptions": {
-                                                                        "format": "png",
-                                                                        "filename": "spectrum_selection_high_res",
-                                                                        "scale": 2,
-                                                                    }
-                                                                },
-                                                            ),
-                                                        ],
-                                                    ),
-                                                ],
-                                            ),
-                                        ],
-                                    ),
-                                ],
-                            ),
-                        ],
-                    ),
-                    # Enf of first row
+    page = (
+        dash_draggable.ResponsiveGridLayout(
+            id="draggable",
+            clearSavedLayout=True,
+            isDraggable=False,
+            isResizable=False,
+            containerPadding=[2, 2],
+            layouts={
+                # x sets the lateral position, y the vertical one, w is in columns (whose size depends on the dimension), h is in rows (30px)
+                # nb columns go 12->10->6->4->2
+                "lg": [
+                    {"i": "page-2-card-heatmap", "x": 0, "y": 0, "w": 7, "h": 15},
+                    {"i": "page-2-card-lipid-selection", "x": 8, "y": 0, "w": 5, "h": 7},
+                    {"i": "page-2-card-range-selection", "x": 8, "y": 8, "w": 5, "h": 5},
+                    {"i": "page-2-card-low-res", "x": 0, "y": 15, "w": 6, "h": N_LINES},
+                    {"i": "page-2-card-high-res", "x": 6, "y": 15, "w": 6, "h": N_LINES},
                 ],
-            ),
-            ### Second row
-            dbc.Row(
-                className="d-flex justify-content-center flex-wrap",
-                justify="center",
-                # className="d-flex align-items-center",
-                children=[
-                    ## First column
-                    dbc.Col(md=6, children=[],),
-                    ## Second column
-                    dbc.Col(md=6, children=[],),
-                    ### End of second row
+                "md": [
+                    {"i": "page-2-card-heatmap", "x": 0, "y": 0, "w": 6, "h": 14},
+                    {"i": "page-2-card-lipid-selection", "x": 6, "y": 0, "w": 4, "h": 8},
+                    {"i": "page-2-card-range-selection", "x": 6, "y": 8, "w": 4, "h": 6},
+                    {"i": "page-2-card-low-res", "x": 0, "y": 14, "w": 5, "h": N_LINES},
+                    {"i": "page-2-card-high-res", "x": 5, "y": 14, "w": 5, "h": N_LINES},
                 ],
-            ),
-        ],
+                "sm": [
+                    {"i": "page-2-card-heatmap", "x": 0, "y": 0, "w": 6, "h": 19},
+                    {"i": "page-2-card-lipid-selection", "x": 0, "y": 19, "w": 6, "h": 7},
+                    {"i": "page-2-card-range-selection", "x": 0, "y": 19 + 7, "w": 6, "h": 5},
+                    {"i": "page-2-card-low-res", "x": 0, "y": 19 + 7 + 5, "w": 6, "h": N_LINES},
+                    {"i": "page-2-card-high-res", "x": 0, "y": 19 + 7 + 5 + N_LINES, "w": 6, "h": N_LINES},
+                ],
+                "xs": [
+                    {"i": "page-2-card-heatmap", "x": 0, "y": 0, "w": 4, "h": 14},
+                    {"i": "page-2-card-lipid-selection", "x": 0, "y": 0, "w": 4, "h": 7},
+                    {"i": "page-2-card-range-selection", "x": 0, "y": 14 + 7, "w": 4, "h": 5},
+                    {"i": "page-2-card-low-res", "x": 0, "y": 14 + 7 + 5, "w": 4, "h": N_LINES},
+                    {"i": "page-2-card-high-res", "x": 0, "y": 14 + 7 + 5 + N_LINES, "w": 4, "h": N_LINES},
+                ],
+                "xxs": [
+                    {"i": "page-2-card-heatmap", "x": 0, "y": 0, "w": 2, "h": 9},
+                    {"i": "page-2-card-lipid-selection", "x": 0, "y": 0, "w": 2, "h": 7},
+                    {"i": "page-2-card-range-selection", "x": 0, "y": 9 + 7, "w": 2, "h": 5},
+                    {"i": "page-2-card-low-res", "x": 0, "y": 9 + 7 + 5, "w": 2, "h": N_LINES},
+                    {"i": "page-2-card-high-res", "x": 0, "y": 9 + 7 + 5 + N_LINES, "w": 2, "h": N_LINES},
+                ],
+            },
+            children=[
+                dbc.Card(
+                    id="page-2-card-heatmap",
+                    className="no-transition",
+                    style={"width": "100%", "height": "100%"},
+                    children=[
+                        dbc.CardHeader(
+                            id="page-2-toast-graph-heatmap-mz-selection",
+                            className="d-flex",
+                            children=[html.Div("Brain slice n°"),],
+                        ),
+                        # header_style={"background-color": "#3a8bb6"},
+                        # body_style={"padding-top": 0},
+                        # bodyClassName="loading-wrapper",
+                        dbc.CardBody(
+                            className="py-0 mb-0 mt-2",
+                            children=[
+                                dbc.Spinner(
+                                    color="dark",
+                                    show_initially=False,
+                                    children=[
+                                        html.Div(
+                                            className="page-1-fixed-aspect-ratio",
+                                            children=[
+                                                dcc.Graph(
+                                                    id="page-2-graph-heatmap-mz-selection",
+                                                    config=basic_config
+                                                    | {
+                                                        "toImageButtonOptions": {
+                                                            "format": "png",
+                                                            "filename": "brain_lipid_selection",
+                                                            "scale": 2,
+                                                        }
+                                                    },
+                                                    style={
+                                                        "width": "100%",
+                                                        "height": "100%",
+                                                        "position": "absolute",
+                                                        "left": "0",
+                                                    },
+                                                    figure=figures.compute_heatmap_per_mz(
+                                                        slice_index, 600, 800, binary_string=False
+                                                    ),
+                                                ),
+                                            ],
+                                        ),
+                                    ],
+                                ),
+                                # html.Div(
+                                #     className="mt-3 text-center d-none",
+                                #     children=dbc.Checklist(
+                                #         options=[{"label": "RGB/colormap", "value": True}],
+                                #         id="tab-2-colormap-switch",
+                                #         switch=True,
+                                #     ),
+                                # ),
+                                # dbc.Tooltip(
+                                #     children="Switch beetween a RGB representation handling three separate channels \
+                                #              (greyscale if no lipids are selected) and a continuous colormap handling a \
+                                #              unique channel.",
+                                #     target="tab-2-colormap-switch",
+                                #     placement="left",
+                                # ),
+                                html.Div("‎‎‏‏‎ ‎"),  # Empty span to prevent toast from bugging
+                            ],
+                        ),
+                    ],
+                ),
+                dbc.Card(
+                    style={"maxWidth": "100%", "margin": "0 auto", "width": "100%", "height": "100%"},
+                    # className="mt-4",
+                    id="page-2-card-low-res",
+                    children=[
+                        dbc.CardHeader("Low-resolution mass-spectrometry spectrum"),
+                        dbc.CardBody(
+                            children=[
+                                html.Div(
+                                    className="loading-wrapper",
+                                    children=[
+                                        dbc.Spinner(
+                                            color="dark",
+                                            children=[
+                                                html.Div(
+                                                    # className="px-3 mt-2",
+                                                    children=[
+                                                        dcc.Graph(
+                                                            id="page-2-graph-low-resolution-spectrum",
+                                                            figure=figures.compute_spectrum_low_res(slice_index),
+                                                            style={"height": HEIGHT_PLOTS, "width": "100%"},
+                                                            responsive=True,
+                                                            config=basic_config
+                                                            | {
+                                                                "toImageButtonOptions": {
+                                                                    "format": "png",
+                                                                    "filename": "full_spectrum_low_res",
+                                                                    "scale": 2,
+                                                                }
+                                                            },
+                                                        ),
+                                                    ],
+                                                ),
+                                            ],
+                                        ),
+                                    ],
+                                ),
+                            ],
+                        ),
+                    ],
+                ),
+                dbc.Card(
+                    style={"maxWidth": "100%", "margin": "0 auto", "width": "100%", "height": "100%"},
+                    id="page-2-card-lipid-selection",
+                    children=[
+                        dbc.CardHeader(children="Lipid selection"),
+                        dbc.CardBody(
+                            className="pt-1",
+                            children=[
+                                # html.P(
+                                # children="Please select the lipids of your choice (3 max):", # TODO : put this as tooltip
+                                #    className="text-center",
+                                # ),
+                                # Dropdown must be wrapped in div, otherwise lazy loading creates bug with tooltips
+                                html.Div(
+                                    id="tab-2-div-dropdown-lipid-names",
+                                    children=[
+                                        dcc.Dropdown(id="tab-2-dropdown-lipid-names", options=[], multi=False,),
+                                    ],
+                                ),
+                                dbc.Tooltip(
+                                    children="Choose the category of your lipid",
+                                    target="tab-2-div-dropdown-lipid-names",
+                                    placement="left",
+                                ),
+                                html.Div(
+                                    id="tab-2-div-dropdown-lipid-structures",
+                                    children=[
+                                        dcc.Dropdown(
+                                            id="tab-2-dropdown-lipid-structures",
+                                            options=[],
+                                            multi=False,
+                                            className="mt-2",
+                                        ),
+                                    ],
+                                ),
+                                dbc.Tooltip(
+                                    children="After choosing the lipid category, choose the structure of your lipid",
+                                    target="tab-2-div-dropdown-lipid-structures",
+                                    placement="left",
+                                ),
+                                html.Div(
+                                    id="tab-2-div-dropdown-lipid-cations",
+                                    children=[
+                                        dcc.Dropdown(
+                                            id="tab-2-dropdown-lipid-cations",
+                                            options=[],
+                                            multi=False,
+                                            className="mt-2",
+                                        ),
+                                    ],
+                                ),
+                                dbc.Tooltip(
+                                    children="After choosing the lipid structure, choose the cation binded to your lipid",
+                                    target="tab-2-div-dropdown-lipid-cations",
+                                    placement="left",
+                                ),
+                                # Wrap toasts in div to prevent their expansion
+                                dbc.Toast(
+                                    id="page-2-toast-lipid-1",
+                                    header="name-lipid-1",
+                                    icon="danger",
+                                    dismissable=True,
+                                    is_open=False,
+                                    bodyClassName="p-0",
+                                    className="mt-3",
+                                    style={"margin": "auto"},
+                                ),
+                                dbc.Toast(
+                                    id="page-2-toast-lipid-2",
+                                    header="name-lipid-2",
+                                    icon="success",
+                                    dismissable=True,
+                                    is_open=False,
+                                    bodyClassName="p-0",
+                                    className="mt-1",
+                                    style={"margin": "auto"},
+                                ),
+                                dbc.Toast(
+                                    id="page-2-toast-lipid-3",
+                                    header="name-lipid-3",
+                                    icon="primary",
+                                    dismissable=True,
+                                    is_open=False,
+                                    bodyClassName="p-0",
+                                    className="mt-1",
+                                    style={"margin": "auto"},
+                                ),
+                                # dbc.Alert(
+                                #    id="page-2-warning-lipids-number",
+                                #    children=html.P(
+                                html.Div(
+                                    id="page-2-warning-lipids-number",
+                                    className="text-center mt-1",
+                                    children=html.Strong(
+                                        children="Please delete some lipids to choose new ones.",
+                                        style={"color": "#df5034"},
+                                    ),
+                                ),
+                                #    ),
+                                #    className="mt-1 text-center d-none",
+                                #    style={"border-radius": "10px"},
+                                #    color="warning",
+                                # ),
+                                dbc.ButtonGroup(
+                                    className="d-flex justify-content-center mt-2",
+                                    children=[
+                                        dbc.Button(
+                                            children="Display as RGB",
+                                            id="tab-2-rgb-button",
+                                            className="mt-1",
+                                            color="primary",
+                                            disabled=True,
+                                            # block=True,
+                                        ),
+                                        dbc.Button(
+                                            children="Display as colormap",
+                                            id="tab-2-colormap-button",
+                                            className="mt-1",
+                                            color="primary",
+                                            disabled=True,
+                                            # block=True,
+                                        ),
+                                        dbc.Button(
+                                            children="Download data",
+                                            id="tab-2-download-data-button",
+                                            className="mt-1",
+                                            color="primary",
+                                            disabled=True,
+                                            # block=True,
+                                        ),
+                                    ],
+                                ),
+                                dcc.Download(id="tab-2-download-data"),
+                            ],
+                        ),
+                    ],
+                ),
+                dbc.Card(
+                    style={"maxWidth": "100%", "margin": "0 auto", "width": "100%", "height": "100%"},
+                    id="page-2-card-range-selection",
+                    # className="mt-4",
+                    children=[
+                        dbc.CardHeader("Range selection"),
+                        dbc.CardBody(
+                            className="pt-1",
+                            children=[
+                                # TODO : put all commented text as tooltip
+                                html.Small(
+                                    children="Please enter the lower and upper bounds of your m/z range selection.",  # Your selection can't exceed a range of 10m/z, and must be comprised in-between 400 and 1200.",
+                                    className="text-center",
+                                ),
+                                dbc.InputGroup(
+                                    [
+                                        dbc.Input(id="page-2-lower-bound", placeholder="Lower bound (m/z value)"),
+                                        dbc.Input(id="page-2-upper-bound", placeholder="Upper bound (m/z value)"),
+                                        # dbc.InputGroupAddon(
+                                        dbc.Button("Display", id="page-2-button-bounds", n_clicks=0, color="primary",),
+                                        #    addon_type="prepend",
+                                        # ),
+                                    ],
+                                    size="sm",
+                                ),
+                                html.Small(
+                                    children="Or choose a m/z value with a given range.",  # Your selection can't exceed a range of 10m/z, and must be comprised in-between 400 and 1200.",
+                                    className="text-center",
+                                ),
+                                dbc.InputGroup(
+                                    [
+                                        dbc.Input(id="page-2-mz-value", placeholder="m/z value"),
+                                        dbc.Input(id="page-2-mz-range", placeholder="Range"),
+                                        # dbc.InputGroupAddon(
+                                        dbc.Button("Display", id="page-2-button-range", n_clicks=0, color="primary",),
+                                        #    addon_type="prepend",
+                                        # ),
+                                    ],
+                                    size="sm",
+                                ),
+                            ],
+                        ),
+                    ],
+                ),
+                dbc.Card(
+                    style={"maxWidth": "100%", "margin": "0 auto", "width": "100%", "height": "100%"},
+                    # className="mt-4",
+                    id="page-2-card-high-res",
+                    children=[
+                        dbc.CardHeader("High-resolution mass-spectrometry spectrum"),
+                        dbc.CardBody(
+                            children=[
+                                html.Div(
+                                    className="loading-wrapper",
+                                    children=[
+                                        dbc.Spinner(
+                                            color="dark",
+                                            children=[
+                                                html.Div(
+                                                    className="",
+                                                    children=[
+                                                        html.Div(
+                                                            id="page-2-alert",
+                                                            className="text-center mt-2",
+                                                            children=html.Strong(
+                                                                children="Please select a lipid or zoom more on the left graph to display the high-resolution spectrum",
+                                                                style={"color": "#df5034"},
+                                                            ),
+                                                        ),
+                                                    ],
+                                                ),
+                                                dcc.Graph(
+                                                    id="page-2-graph-high-resolution-spectrum",
+                                                    style={"display": "none"},
+                                                    config=basic_config
+                                                    | {
+                                                        "toImageButtonOptions": {
+                                                            "format": "png",
+                                                            "filename": "spectrum_selection_high_res",
+                                                            "scale": 2,
+                                                        }
+                                                    },
+                                                ),
+                                            ],
+                                        ),
+                                    ],
+                                ),
+                            ],
+                        ),
+                    ],
+                ),
+            ],
+        ),
     )
 
     return page
@@ -1008,7 +1014,8 @@ def page_2_add_toast_selection(
 def tab_2_display_high_res_mz_plot(figure):
     if figure is not None:
         if figure["data"][0]["x"] != [[]]:
-            return {"height": "20vh"}
+            return {"height": HEIGHT_PLOTS}
+            # return {"height": "100%"}
 
     return {"display": "none"}
 
