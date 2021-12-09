@@ -399,17 +399,17 @@ class Figures:
         fig.add_trace(go.Image(visible=True, source=base64_string))
 
         # Improve graph layout
-        # fig.update_layout(
-        #     title={
-        #         "text": "Mass spectrometry heatmap",
-        #         "y": 0.97,
-        #         "x": 0.5,
-        #         "xanchor": "center",
-        #         "yanchor": "top",
-        #         "font": dict(size=14,),
-        #     },
-        #     margin=dict(t=30, r=0, b=10, l=0),
-        # )
+        fig.update_layout(
+            #     title={
+            #         "text": "Mass spectrometry heatmap",
+            #         "y": 0.97,
+            #         "x": 0.5,
+            #         "xanchor": "center",
+            #         "yanchor": "top",
+            #         "font": dict(size=14,),
+            #     },
+            margin=dict(t=10, r=0, b=10, l=0),
+        )
         fig.update_xaxes(showticklabels=False)
         fig.update_yaxes(showticklabels=False)
         fig.update(layout_coloraxis_showscale=False)
@@ -498,15 +498,15 @@ class Figures:
 
             # Improve graph layout
             fig.update_layout(
-                title={
-                    "text": "Mass spectrometry heatmap" if title else "",
-                    "y": 0.97,
-                    "x": 0.5,
-                    "xanchor": "center",
-                    "yanchor": "top",
-                    "font": dict(size=14,),
-                },
-                margin=dict(t=30, r=0, b=10, l=0),
+                # title={
+                #    "text": "Mass spectrometry heatmap" if title else "",
+                #    "y": 0.97,
+                #    "x": 0.5,
+                #    "xanchor": "center",
+                #    "yanchor": "top",
+                #    "font": dict(size=14,),
+                # },
+                margin=dict(t=10, r=0, b=10, l=0),
             )
             fig.update_xaxes(showticklabels=False)
             fig.update_yaxes(showticklabels=False)
@@ -881,6 +881,9 @@ class Figures:
             compute_function=self._atlas.compute_projection_parameters,
         )
 
+        # get list of original coordinates foe each slice
+        l_original_coor = self._atlas.l_original_coor
+
         # Initialize empty arrays with a large estimate of 400*400 for the orginal acquisition size
         max_size = 400 * 400 * self._data.get_slice_number()
         array_x = np.empty(max_size, dtype=np.float32)
@@ -945,7 +948,7 @@ class Figures:
                 percentile = np.percentile(array_data_stripped, 60)
 
                 # Get the coordinates of the pixels in the ccfv3
-                original_coordinates = self._atlas.l_original_coor[slice_index]
+                original_coordinates = l_original_coor[slice_index]
                 original_coordinates_stripped = original_coordinates[array_data != 0]
 
                 array_x, array_y, array_z, array_c, total_index = return_final_array(

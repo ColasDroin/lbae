@@ -34,36 +34,36 @@ def return_layout(basic_config, slice_index=1):
                 # x sets the lateral position, y the vertical one, w is in columns (whose size depends on the dimension), h is in rows (30px)
                 # nb columns go 12->10->6->4->2
                 "lg": [
-                    {"i": "page-2-card-heatmap", "x": 0, "y": 0, "w": 7, "h": 15},
-                    {"i": "page-2-card-lipid-selection", "x": 8, "y": 0, "w": 5, "h": 8},
+                    {"i": "page-2-card-heatmap", "x": 0, "y": 0, "w": 7, "h": 16},
+                    {"i": "page-2-card-lipid-selection", "x": 8, "y": 0, "w": 5, "h": 10},
                     {"i": "page-2-card-range-selection", "x": 8, "y": 8, "w": 5, "h": 5},
                     {"i": "page-2-card-low-res", "x": 0, "y": 15, "w": 6, "h": N_LINES},
                     {"i": "page-2-card-high-res", "x": 6, "y": 15, "w": 6, "h": N_LINES},
                 ],
                 "md": [
                     {"i": "page-2-card-heatmap", "x": 0, "y": 0, "w": 6, "h": 14},
-                    {"i": "page-2-card-lipid-selection", "x": 6, "y": 0, "w": 4, "h": 9},
+                    {"i": "page-2-card-lipid-selection", "x": 6, "y": 0, "w": 4, "h": 11},
                     {"i": "page-2-card-range-selection", "x": 6, "y": 8, "w": 4, "h": 6},
                     {"i": "page-2-card-low-res", "x": 0, "y": 14, "w": 5, "h": N_LINES},
                     {"i": "page-2-card-high-res", "x": 5, "y": 14, "w": 5, "h": N_LINES},
                 ],
                 "sm": [
                     {"i": "page-2-card-heatmap", "x": 0, "y": 0, "w": 6, "h": 19},
-                    {"i": "page-2-card-lipid-selection", "x": 0, "y": 19, "w": 6, "h": 8},
+                    {"i": "page-2-card-lipid-selection", "x": 0, "y": 19, "w": 6, "h": 10},
                     {"i": "page-2-card-range-selection", "x": 0, "y": 19 + 7, "w": 6, "h": 5},
                     {"i": "page-2-card-low-res", "x": 0, "y": 19 + 7 + 5, "w": 6, "h": N_LINES},
                     {"i": "page-2-card-high-res", "x": 0, "y": 19 + 7 + 5 + N_LINES, "w": 6, "h": N_LINES},
                 ],
                 "xs": [
                     {"i": "page-2-card-heatmap", "x": 0, "y": 0, "w": 4, "h": 14},
-                    {"i": "page-2-card-lipid-selection", "x": 0, "y": 0, "w": 4, "h": 8},
+                    {"i": "page-2-card-lipid-selection", "x": 0, "y": 0, "w": 4, "h": 10},
                     {"i": "page-2-card-range-selection", "x": 0, "y": 14 + 7, "w": 4, "h": 5},
                     {"i": "page-2-card-low-res", "x": 0, "y": 14 + 7 + 5, "w": 4, "h": N_LINES},
                     {"i": "page-2-card-high-res", "x": 0, "y": 14 + 7 + 5 + N_LINES, "w": 4, "h": N_LINES},
                 ],
                 "xxs": [
                     {"i": "page-2-card-heatmap", "x": 0, "y": 0, "w": 2, "h": 9},
-                    {"i": "page-2-card-lipid-selection", "x": 0, "y": 0, "w": 2, "h": 8},
+                    {"i": "page-2-card-lipid-selection", "x": 0, "y": 0, "w": 2, "h": 10},
                     {"i": "page-2-card-range-selection", "x": 0, "y": 9 + 7, "w": 2, "h": 5},
                     {"i": "page-2-card-low-res", "x": 0, "y": 9 + 7 + 5, "w": 2, "h": N_LINES},
                     {"i": "page-2-card-high-res", "x": 0, "y": 9 + 7 + 5 + N_LINES, "w": 2, "h": N_LINES},
@@ -558,7 +558,7 @@ def page_2_plot_graph_heatmap_mz_selection(
 # Function to plot page-2-graph-low-resolution-spectrum when its state get updated, i.e. when load button get clicked
 @app.app.callback(
     Output("page-2-graph-low-resolution-spectrum", "figure"),
-    Input("dcc-store-slice-index", "data"),
+    Input("main-slider", "value"),
     Input("page-2-selected-lipid-1", "data"),
     Input("page-2-selected-lipid-2", "data"),
     Input("page-2-selected-lipid-3", "data"),
@@ -596,6 +596,7 @@ def tab_2_plot_graph_low_res_spectrum(
         or id_input == "page-2-selected-lipid-3"
         or id_input == "tab-2-rgb-button"
         or id_input == "tab-2-colormap-button"
+        or id_input == "main-slider"
     ):
 
         if lipid_1_index >= 0 or lipid_2_index >= 0 or lipid_3_index >= 0:
@@ -638,7 +639,7 @@ def tab_2_plot_graph_low_res_spectrum(
 @app.app.callback(
     Output("boundaries-low-resolution-mz-plot", "data"),
     Input("page-2-graph-low-resolution-spectrum", "relayoutData"),
-    State("dcc-store-slice-index", "data"),
+    State("main-slider", "value"),
 )
 def page_2_store_boundaries_mz_from_graph_low_res_spectrum(relayoutData, slice_index):
     if relayoutData is not None:
@@ -666,7 +667,7 @@ def page_2_store_boundaries_mz_from_graph_low_res_spectrum(relayoutData, slice_i
 # high-enough on page-2-graph-low-resolution-spectrum
 @app.app.callback(
     Output("page-2-graph-high-resolution-spectrum", "figure"),
-    Input("dcc-store-slice-index", "data"),
+    Input("main-slider", "value"),
     Input("boundaries-low-resolution-mz-plot", "data"),
     Input("page-2-selected-lipid-1", "data"),
     Input("page-2-selected-lipid-2", "data"),
@@ -709,6 +710,7 @@ def page_2_plot_graph_high_res_spectrum(
         or id_input == "tab-2-rgb-button"
         or id_input == "tab-2-colormap-button"
         or id_input == "page-2-last-selected-lipids"
+        or id_input == "main-slider"
     ):
         if lipid_1_index >= 0 or lipid_2_index >= 0 or lipid_3_index >= 0:
 
@@ -804,6 +806,7 @@ def page_2_store_boundaries_mz_from_graph_high_res_spectrum(relayoutData, bound_
         return dash.no_update
 
 
+# ! This need to be corrected to put all lipid names
 # Function to refine dropdown names choices
 @app.app.callback(
     Output("tab-2-dropdown-lipid-names", "options"),
@@ -1039,7 +1042,7 @@ def tab_2_display_alert(figure):
     State("page-2-selected-lipid-1", "data"),
     State("page-2-selected-lipid-2", "data"),
     State("page-2-selected-lipid-3", "data"),
-    State("dcc-store-slice-index", "data"),
+    State("main-slider", "value"),
     prevent_initial_call=True,
 )
 def tab_2_download(n_clicks, lipid_1_index, lipid_2_index, lipid_3_index, slice_index):
