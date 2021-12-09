@@ -633,7 +633,6 @@ class Figures:
         )
         return fig
 
-    # ! I need to order properly these functions
     def compute_figure_slices_3D(self, reduce_resolution_factor=7):
 
         # get transform parameters (a,u,v) for each slice
@@ -686,7 +685,7 @@ class Figures:
 
         sliders = [
             {
-                "pad": {"b": 10, "t": 60},
+                "pad": {"b": 5, "t": 10},
                 "len": 0.9,
                 "x": 0.1,
                 "y": 0,
@@ -694,6 +693,7 @@ class Figures:
                     {"args": [[f.name], frame_args(0)], "label": str(k), "method": "animate",}
                     for k, f in enumerate(fig.frames)
                 ],
+                "currentvalue": {"visible": False,},
             }
         ]
 
@@ -717,20 +717,20 @@ class Figures:
                     range=[0.0 / 7 * reduce_resolution_factor, 0.28 / 7 * reduce_resolution_factor], autorange=False
                 ),
             ),
-            margin=dict(t=25, r=0, b=0, l=0),
-            updatemenus=[
-                {
-                    "buttons": [
-                        {"args": [None, frame_args(50)], "label": "&#9654;", "method": "animate",},  # play symbol
-                        {"args": [[None], frame_args(0)], "label": "&#9724;", "method": "animate",},  # pause symbol
-                    ],
-                    "direction": "left",
-                    "pad": {"r": 10, "t": 70},
-                    "type": "buttons",
-                    "x": 0.1,
-                    "y": 0,
-                }
-            ],
+            margin=dict(t=5, r=0, b=0, l=0),
+            # updatemenus=[
+            #     {
+            #         "buttons": [
+            #             {"args": [None, frame_args(50)], "label": "&#9654;", "method": "animate",},  # play symbol
+            #             {"args": [[None], frame_args(0)], "label": "&#9724;", "method": "animate",},  # pause symbol
+            #         ],
+            #         "direction": "left",
+            #         "pad": {"r": 10, "t": 70},
+            #         "type": "buttons",
+            #         "x": 0.1,
+            #         "y": 0,
+            #     }
+            # ],
             sliders=sliders,
         )
 
@@ -832,7 +832,7 @@ class Figures:
 
         sliders = [
             {
-                "pad": {"b": 10, "t": 10},
+                "pad": {"b": 5, "t": 10},
                 "len": 0.9,
                 "x": 0.1,
                 "y": 0,
@@ -840,26 +840,27 @@ class Figures:
                     {"args": [[f.name], frame_args(0)], "label": f.name, "method": "animate",}
                     for k, f in enumerate(fig.frames)
                 ],
+                "currentvalue": {"visible": False,},
             }
         ]
 
         # Improve graph layout
         fig.update_layout(
             title={"text": "", "y": 0.97, "x": 0.5, "xanchor": "center", "yanchor": "top", "font": dict(size=14,),},
-            margin=dict(t=0, r=0, b=0, l=0),
-            updatemenus=[
-                {
-                    "buttons": [
-                        {"args": [None, frame_args(50)], "label": "&#9654;", "method": "animate",},  # play symbol
-                        {"args": [[None], frame_args(0)], "label": "&#9724;", "method": "animate",},  # pause symbol
-                    ],
-                    "direction": "left",
-                    "pad": {"r": 10, "t": 10},
-                    "type": "buttons",
-                    "x": 0.1,
-                    "y": 0,
-                }
-            ],
+            margin=dict(t=5, r=0, b=0, l=0),
+            # updatemenus=[
+            #    {
+            #        "buttons": [
+            #            {"args": [None, frame_args(50)], "label": "&#9654;", "method": "animate",},  # play symbol
+            #            {"args": [[None], frame_args(0)], "label": "&#9724;", "method": "animate",},  # pause symbol
+            #        ],
+            #        "direction": "left",
+            #        "pad": {"r": 10, "t": 10},
+            #        "type": "buttons",
+            #        "x": 0.1,
+            #        "y": 0,
+            #    }
+            # ],
             sliders=sliders,
             paper_bgcolor="rgba(0,0,0,0)",
             plot_bgcolor="rgba(0,0,0,0)",
@@ -1003,7 +1004,7 @@ class Figures:
                 #    range=[0.0 / 7 * reduce_resolution_factor, 0.28 / 7 * reduce_resolution_factor], autorange=False
                 # ),
             ),
-            margin=dict(t=0, r=0, b=0, l=0),
+            margin=dict(t=5, r=0, b=0, l=0),
             # title="Planets!",
             # scene=dict(
             #    xaxis=dict(title="Distance from Sun", titlefont_color="white"),
@@ -1102,7 +1103,7 @@ class Figures:
             dict(
                 active=10,
                 currentvalue={"visible": False,},
-                pad={"t": 50, "l": 100, "r": 100},
+                pad={"t": 10, "l": 100, "r": 100},
                 steps=steps,
                 # len = 0.4,
                 # xanchor = 'center',
@@ -1123,7 +1124,7 @@ class Figures:
                 "yanchor": "top",
                 "font": dict(size=14,),
             },
-            margin=dict(t=25, r=0, b=0, l=0),
+            margin=dict(t=5, r=0, b=0, l=0),
         )
 
         fig.update_xaxes(title_text=axis_labels[1])
@@ -1175,6 +1176,9 @@ class Figures:
             scene_zaxis_visible=False,
             # paper_bgcolor='rgb(50,50,50)',
             margin=dict(t=10, r=10, b=10, l=10),
+            # Zoom by 2 initially
+            # ! Find a fix
+            # scene={"aspectratio": {"x": 1.5, "y": 1.5, "z": 1.5}},
         )
 
         if structure is not None:
