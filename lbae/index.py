@@ -16,7 +16,7 @@ from lbae.pages import (
     home,
     load_slice,
     lipid_selection,
-    lipid_selection_all_slices,
+    atlas_exploration,
     region_analysis,
     threeD_exploration,
 )
@@ -184,9 +184,9 @@ app.validation_layout = html.Div(
         home.layout,
         load_slice.return_layout(basic_config=basic_config),
         lipid_selection.return_layout(basic_config=basic_config),
-        lipid_selection_all_slices.return_layout(basic_config=basic_config),
         region_analysis.return_layout(basic_config=basic_config),
         threeD_exploration.return_layout(basic_config=basic_config),
+        atlas_exploration.return_layout(basic_config=basic_config),
     ]
 )
 
@@ -208,17 +208,17 @@ def render_page_content(pathname):
     elif pathname == "/lipid-selection":
         page = lipid_selection.return_layout(basic_config=basic_config)
 
-    elif pathname == "/lipid-selection-all-slices":
-        page = lipid_selection_all_slices.return_layout(basic_config=basic_config)
-
     elif pathname == "/region-analysis":
         page = region_analysis.return_layout(basic_config=basic_config)
 
     elif pathname == "/3D-exploration":
         page = threeD_exploration.return_layout(basic_config=basic_config)
+    elif pathname == "/atlas-exploration":
+        page = atlas_exploration.return_layout(basic_config=basic_config)
 
     else:
         # If the user tries to reach a different page, return a 404 message
+        # ! To Fix, Jumbotron doesn't exist anymore
         page = dbc.Jumbotron(
             children=[
                 html.H1("404: Not found", className="text-danger"),
