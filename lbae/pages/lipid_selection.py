@@ -35,28 +35,28 @@ def return_layout(basic_config, slice_index=1):
                 # nb columns go 12->10->6->4->2
                 "lg": [
                     {"i": "page-2-card-heatmap", "x": 0, "y": 0, "w": 7, "h": 16},
-                    {"i": "page-2-card-lipid-selection", "x": 8, "y": 0, "w": 5, "h": 10},
+                    {"i": "page-2-card-lipid-selection", "x": 8, "y": 0, "w": 5, "h": 11},
                     {"i": "page-2-card-range-selection", "x": 8, "y": 8, "w": 5, "h": 5},
                     {"i": "page-2-card-low-res", "x": 0, "y": 15, "w": 6, "h": N_LINES},
                     {"i": "page-2-card-high-res", "x": 6, "y": 15, "w": 6, "h": N_LINES},
                 ],
                 "md": [
                     {"i": "page-2-card-heatmap", "x": 0, "y": 0, "w": 6, "h": 14},
-                    {"i": "page-2-card-lipid-selection", "x": 6, "y": 0, "w": 4, "h": 11},
+                    {"i": "page-2-card-lipid-selection", "x": 6, "y": 0, "w": 4, "h": 12},
                     {"i": "page-2-card-range-selection", "x": 6, "y": 8, "w": 4, "h": 6},
                     {"i": "page-2-card-low-res", "x": 0, "y": 14, "w": 5, "h": N_LINES},
                     {"i": "page-2-card-high-res", "x": 5, "y": 14, "w": 5, "h": N_LINES},
                 ],
                 "sm": [
                     {"i": "page-2-card-heatmap", "x": 0, "y": 0, "w": 6, "h": 19},
-                    {"i": "page-2-card-lipid-selection", "x": 0, "y": 19, "w": 6, "h": 10},
+                    {"i": "page-2-card-lipid-selection", "x": 0, "y": 19, "w": 6, "h": 11},
                     {"i": "page-2-card-range-selection", "x": 0, "y": 19 + 7, "w": 6, "h": 5},
                     {"i": "page-2-card-low-res", "x": 0, "y": 19 + 7 + 5, "w": 6, "h": N_LINES},
                     {"i": "page-2-card-high-res", "x": 0, "y": 19 + 7 + 5 + N_LINES, "w": 6, "h": N_LINES},
                 ],
                 "xs": [
                     {"i": "page-2-card-heatmap", "x": 0, "y": 0, "w": 4, "h": 14},
-                    {"i": "page-2-card-lipid-selection", "x": 0, "y": 0, "w": 4, "h": 10},
+                    {"i": "page-2-card-lipid-selection", "x": 0, "y": 0, "w": 4, "h": 11},
                     {"i": "page-2-card-range-selection", "x": 0, "y": 14 + 7, "w": 4, "h": 5},
                     {"i": "page-2-card-low-res", "x": 0, "y": 14 + 7 + 5, "w": 4, "h": N_LINES},
                     {"i": "page-2-card-high-res", "x": 0, "y": 14 + 7 + 5 + N_LINES, "w": 4, "h": N_LINES},

@@ -1,3 +1,5 @@
+# ! Update this file with the latest version of zip from fontello 
+
 Font license info
 
 ## Entypo
