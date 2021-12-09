@@ -235,7 +235,7 @@ def drawer(n_clicks):
 
 
 def run():
-    app.run_server(port=8060, debug=True)
+    app.run_server(port=8060, debug=False)
 
 
 # Run app from local console (not gunicorn)

@@ -35,35 +35,35 @@ def return_layout(basic_config, slice_index=1):
                 # nb columns go 12->10->6->4->2
                 "lg": [
                     {"i": "page-2-card-heatmap", "x": 0, "y": 0, "w": 7, "h": 15},
-                    {"i": "page-2-card-lipid-selection", "x": 8, "y": 0, "w": 5, "h": 7},
+                    {"i": "page-2-card-lipid-selection", "x": 8, "y": 0, "w": 5, "h": 8},
                     {"i": "page-2-card-range-selection", "x": 8, "y": 8, "w": 5, "h": 5},
                     {"i": "page-2-card-low-res", "x": 0, "y": 15, "w": 6, "h": N_LINES},
                     {"i": "page-2-card-high-res", "x": 6, "y": 15, "w": 6, "h": N_LINES},
                 ],
                 "md": [
                     {"i": "page-2-card-heatmap", "x": 0, "y": 0, "w": 6, "h": 14},
-                    {"i": "page-2-card-lipid-selection", "x": 6, "y": 0, "w": 4, "h": 8},
+                    {"i": "page-2-card-lipid-selection", "x": 6, "y": 0, "w": 4, "h": 9},
                     {"i": "page-2-card-range-selection", "x": 6, "y": 8, "w": 4, "h": 6},
                     {"i": "page-2-card-low-res", "x": 0, "y": 14, "w": 5, "h": N_LINES},
                     {"i": "page-2-card-high-res", "x": 5, "y": 14, "w": 5, "h": N_LINES},
                 ],
                 "sm": [
                     {"i": "page-2-card-heatmap", "x": 0, "y": 0, "w": 6, "h": 19},
-                    {"i": "page-2-card-lipid-selection", "x": 0, "y": 19, "w": 6, "h": 7},
+                    {"i": "page-2-card-lipid-selection", "x": 0, "y": 19, "w": 6, "h": 8},
                     {"i": "page-2-card-range-selection", "x": 0, "y": 19 + 7, "w": 6, "h": 5},
                     {"i": "page-2-card-low-res", "x": 0, "y": 19 + 7 + 5, "w": 6, "h": N_LINES},
                     {"i": "page-2-card-high-res", "x": 0, "y": 19 + 7 + 5 + N_LINES, "w": 6, "h": N_LINES},
                 ],
                 "xs": [
                     {"i": "page-2-card-heatmap", "x": 0, "y": 0, "w": 4, "h": 14},
-                    {"i": "page-2-card-lipid-selection", "x": 0, "y": 0, "w": 4, "h": 7},
+                    {"i": "page-2-card-lipid-selection", "x": 0, "y": 0, "w": 4, "h": 8},
                     {"i": "page-2-card-range-selection", "x": 0, "y": 14 + 7, "w": 4, "h": 5},
                     {"i": "page-2-card-low-res", "x": 0, "y": 14 + 7 + 5, "w": 4, "h": N_LINES},
                     {"i": "page-2-card-high-res", "x": 0, "y": 14 + 7 + 5 + N_LINES, "w": 4, "h": N_LINES},
                 ],
                 "xxs": [
                     {"i": "page-2-card-heatmap", "x": 0, "y": 0, "w": 2, "h": 9},
-                    {"i": "page-2-card-lipid-selection", "x": 0, "y": 0, "w": 2, "h": 7},
+                    {"i": "page-2-card-lipid-selection", "x": 0, "y": 0, "w": 2, "h": 8},
                     {"i": "page-2-card-range-selection", "x": 0, "y": 9 + 7, "w": 2, "h": 5},
                     {"i": "page-2-card-low-res", "x": 0, "y": 9 + 7 + 5, "w": 2, "h": N_LINES},
                     {"i": "page-2-card-high-res", "x": 0, "y": 9 + 7 + 5 + N_LINES, "w": 2, "h": N_LINES},
@@ -417,7 +417,7 @@ def return_layout(basic_config, slice_index=1):
 
 # Function to update the heatmap toast name
 @app.app.callback(
-    Output("page-2-toast-graph-heatmap-mz-selection", "children"), Input("dcc-store-slice-index", "data"),
+    Output("page-2-toast-graph-heatmap-mz-selection", "children"), Input("main-slider", "value"),
 )
 def page_2_update_graph_heatmap_mz_selection(slice_index):
     if slice_index is not None:
@@ -432,13 +432,13 @@ def page_2_update_graph_heatmap_mz_selection(slice_index):
 # Function to plot page-2-graph-heatmap-mz-selection when its state get updated
 @app.app.callback(
     Output("page-2-graph-heatmap-mz-selection", "figure"),
-    Input("dcc-store-slice-index", "data"),
+    Input("main-slider", "value"),
     Input("boundaries-high-resolution-mz-plot", "data"),
     Input("boundaries-low-resolution-mz-plot", "data"),
     Input("page-2-selected-lipid-1", "data"),
     Input("page-2-selected-lipid-2", "data"),
     Input("page-2-selected-lipid-3", "data"),
-    Input("tab-2-colormap-switch", "value"),
+    # Input("tab-2-colormap-switch", "value"),
     Input("tab-2-rgb-button", "n_clicks"),
     Input("tab-2-colormap-button", "n_clicks"),
     Input("page-2-button-range", "n_clicks"),
@@ -447,7 +447,7 @@ def page_2_update_graph_heatmap_mz_selection(slice_index):
     State("page-2-upper-bound", "value"),
     State("page-2-mz-value", "value"),
     State("page-2-mz-range", "value"),
-    State("page-2-graph-heatmap-mz-selection", "figure"),
+    # State("page-2-graph-heatmap-mz-selection", "figure"),
 )
 def page_2_plot_graph_heatmap_mz_selection(
     slice_index,
@@ -456,7 +456,7 @@ def page_2_plot_graph_heatmap_mz_selection(
     lipid_1_index,
     lipid_2_index,
     lipid_3_index,
-    colorbool,
+    # colorbool,
     n_clicks_button_rgb,
     n_clicks_button_colormap,
     n_clicks_button_range,
@@ -465,9 +465,9 @@ def page_2_plot_graph_heatmap_mz_selection(
     hb,
     mz,
     mz_range,
-    fig,
+    # fig,
 ):
-
+    logging.info("Entering function to plot heatmap or RGB depending on lipid selection")
     # Find out which input triggered the function
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
 
@@ -498,6 +498,7 @@ def page_2_plot_graph_heatmap_mz_selection(
         or id_input == "page-2-selected-lipid-3"
         or id_input == "tab-2-rgb-button"
         or id_input == "tab-2-colormap-button"
+        or id_input == "main-slider"
     ):
         if lipid_1_index >= 0 or lipid_2_index >= 0 or lipid_3_index >= 0:
 
@@ -524,6 +525,7 @@ def page_2_plot_graph_heatmap_mz_selection(
             elif id_input == "tab-2-rgb-button":
                 return figures.compute_rgb_image_per_lipid_selection(slice_index, ll_lipid_bounds)
             else:
+                logging.info("Right before calling the graphing function")
                 return figures.compute_rgb_image_per_lipid_selection(slice_index, ll_lipid_bounds)
 
         else:
@@ -544,8 +546,8 @@ def page_2_plot_graph_heatmap_mz_selection(
         )
 
     # Case colormap changed (hidden for now)
-    elif id_input == "tab-2-colormap-switch":
-        return dash.no_update
+    # elif id_input == "tab-2-colormap-switch":
+    #    return dash.no_update
 
     # If no trigger, it means the page has just been loaded, so load new figure with default parameters
     else:

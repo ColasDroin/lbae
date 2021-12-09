@@ -467,8 +467,9 @@ class Figures:
         enrichment=False,
         log=False,
         return_image=False,
-        use_pil=False,
+        use_pil=True,
     ):
+        logging.info("Started RGB image computation for slice " + str(slice_index) + logmem())
 
         # Get RGB array for the current lipid selection
         array_image = self.compute_rgb_array_per_lipid_selection(
@@ -479,6 +480,7 @@ class Figures:
             log=log,
             enrichment=enrichment,
         )
+        logging.info("array_image acquired for slice " + str(slice_index) + logmem())
 
         if use_pil:
             base64_string_exp = convert_image_to_base64(array_image, type="RGB")
@@ -490,6 +492,7 @@ class Figures:
             return final_image
 
         else:
+            logging.info("Started building graph for slice " + str(slice_index) + logmem())
             # Build graph from image
             fig = go.Figure(final_image)
 
@@ -507,7 +510,7 @@ class Figures:
             )
             fig.update_xaxes(showticklabels=False)
             fig.update_yaxes(showticklabels=False)
-
+            logging.info("Returning fig for slice " + str(slice_index) + logmem())
             return fig
 
     def compute_spectrum_low_res(self, slice_index, annotations=None):

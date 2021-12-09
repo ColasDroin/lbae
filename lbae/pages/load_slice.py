@@ -7,6 +7,7 @@ from dash.dependencies import Input, Output, State
 import dash
 import numpy as np
 import dash_draggable
+import logging
 
 # Homemade modules
 from lbae import app
@@ -177,7 +178,7 @@ def return_layout(basic_config, initial_slice=1):
     Input("page-1-toggle-annotations", "value"),
 )
 def tab_1_load_image(value_slider, active_tab, display_annotations):
-
+    logging.info("Slider changed to value " + str(value_slider))
     # Find out which input triggered the function
     id_input, value_input = dash.callback_context.triggered[0]["prop_id"].split(".")
 

@@ -77,6 +77,16 @@ class Atlas:
             "atlas/atlas_objects", "hierarchy", force_update=False, compute_function=self.compute_hierarchy_list
         )
 
+        # Array_projection_corrected is used a lot
+        self.array_projection_correspondence_corrected = return_pickled_object(
+            "atlas/atlas_objects",
+            "arrays_projection_corrected",
+            force_update=False,
+            compute_function=self.compute_array_projection,
+            nearest_neighbour_correction=True,
+            atlas_correction=True,
+        )[1]
+
     # Load arrays of images using atlas projection
     @property
     def array_projection_corrected(self):
@@ -90,6 +100,7 @@ class Atlas:
         )
         return array_projection_corrected
 
+    """
     @property
     def array_projection_correspondence_corrected(self):
         (_, array_projection_correspondence_corrected, _,) = return_pickled_object(
@@ -101,6 +112,7 @@ class Atlas:
             atlas_correction=True,
         )
         return array_projection_correspondence_corrected
+    """
 
     @property
     def l_original_coor(self):
