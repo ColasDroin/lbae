@@ -53,10 +53,10 @@ def return_main_content():
             dcc.Store(id="page-2-selected-lipid-3", data=-1),
             dcc.Store(id="page-2-last-selected-lipids", data=[]),
             # Record the lipids selected in page 2bis
-            dcc.Store(id="page-2bis-selected-lipid-1", data=empty_lipid_list),
-            dcc.Store(id="page-2bis-selected-lipid-2", data=empty_lipid_list),
-            dcc.Store(id="page-2bis-selected-lipid-3", data=empty_lipid_list),
-            dcc.Store(id="page-2bis-last-selected-lipids", data=[]),
+            dcc.Store(id="page-4-selected-lipid-1", data=empty_lipid_list),
+            dcc.Store(id="page-4-selected-lipid-2", data=empty_lipid_list),
+            dcc.Store(id="page-4-selected-lipid-3", data=empty_lipid_list),
+            dcc.Store(id="page-4-last-selected-lipids", data=[]),
             # Record the shapes drawn in page 3
             dcc.Store(id="dcc-store-color-mask", data=[]),
             dcc.Store(id="dcc-store-reset", data=False),

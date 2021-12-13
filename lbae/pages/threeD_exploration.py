@@ -602,8 +602,9 @@ def page_2bis_add_toast_selection(
     Input("page-4-selected-lipid-2", "data"),
     Input("page-4-selected-lipid-3", "data"),
 )
-def page_2bis_disable_dropdowns(l_lipid_1_index, l_lipid_2_index, l_lipid_3_index):
+def page_4_disable_dropdowns(l_lipid_1_index, l_lipid_2_index, l_lipid_3_index):
 
+    print(l_lipid_1_index)
     # If all slots are taken, disable all dropdowns
     if (
         np.sum(l_lipid_1_index) > -app.data.get_slice_number()
