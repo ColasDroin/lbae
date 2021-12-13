@@ -193,7 +193,7 @@ def return_layout(basic_config, slice_index=1):
                                                             "filename": "atlas_3D",
                                                             "scale": 2,
                                                         },
-                                                        "scrollZoom": False,
+                                                        # "scrollZoom": False,
                                                     },
                                                     style={
                                                         "width": "100%",

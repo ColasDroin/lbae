@@ -81,7 +81,8 @@ def return_main_content():
                     sidebar.layout,
                     html.Div(id="content"),
                     dmc.Center(
-                        dmc.Group(
+                        id="main-slider-center",
+                        children=dmc.Group(
                             [
                                 dmc.Paper(
                                     dmc.Group(
@@ -232,6 +233,17 @@ def render_page_content(pathname):
 @app.callback(Output("drawer", "opened"), Input("button-doc", "n_clicks"), prevent_initial_call=True)
 def drawer(n_clicks):
     return True
+
+
+@app.callback(Output("main-slider-center", "className"), Input("url", "pathname"), prevent_initial_call=False)
+def hide_slider(pathname):
+    l_path_with_slider = ["/load-slice", "/lipid-selection", "/region-analysis"]
+    # Set the content according to the current pathname
+    if pathname in l_path_with_slider:
+        return ""
+
+    else:
+        return "d-none"
 
 
 def run():

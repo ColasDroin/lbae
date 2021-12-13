@@ -1165,7 +1165,7 @@ class Figures:
     def compute_3D_figure(self, structure=None):
 
         root_lines = return_pickled_object(
-            "atlas/atlas_objects/3D", "root", force_update=False, compute_function=self.compute_root_data
+            "figures/atlas_page/3D", "root", force_update=False, compute_function=self.compute_root_data
         )
 
         layout = go.Layout(
@@ -1178,7 +1178,7 @@ class Figures:
             margin=dict(t=10, r=10, b=10, l=10),
             # Zoom by 2 initially
             # ! Find a fix
-            # scene={"aspectratio": {"x": 1.5, "y": 1.5, "z": 1.5}},
+            # scene={"aspectratio": {"x": 1, "y": 1.0, "z": 1.0}, "aspectmode": "cube"},
         )
 
         if structure is not None:
