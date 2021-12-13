@@ -18,7 +18,7 @@ from lbae.modules.tools.misc import (
     convert_image_to_base64,
 )
 from lbae.modules.tools.atlas import project_image, slice_to_atlas_transform
-from lbae.modules.tools.memuse import logmem
+from lbae.modules.tools.misc import logmem
 from lbae.config import dic_colors, l_colors
 
 ###### DEFINE FIGURES CLASS ######

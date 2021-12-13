@@ -4,7 +4,7 @@
 import pickle
 import numpy as np
 import pandas as pd
-from lbae.modules.tools.memuse import logmem
+from lbae.modules.tools.misc import logmem
 import logging
 
 ###### DEFINE MaldiData CLASS ######

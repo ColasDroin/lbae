@@ -21,7 +21,7 @@ from lbae.pages import (
     threeD_exploration,
 )
 from lbae.config import basic_config
-from lbae.modules.tools.memuse import logmem
+from lbae.modules.tools.misc import logmem
 
 ###### DEFINE APP LAYOUT ######
 

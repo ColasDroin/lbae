@@ -7,9 +7,6 @@ from dash.dependencies import Input, Output, State
 import dash
 import plotly.graph_objects as go
 import numpy as np
-from io import BytesIO
-import base64
-import copy
 import pandas as pd
 import logging
 
@@ -943,27 +940,11 @@ def tab_3_plot_masks(
                 try:
                     # This line will trigger an exception if the coordinate doesn't exist
                     mask_name = atlas.labels[tuple(slice_coor_rescaled)]
-                    dic_masks = return_pickled_object(
-                        "atlas/atlas_objects",
-                        "dic_masks_and_spectra",
-                        force_update=False,
-                        compute_function=atlas.compute_dic_projected_masks_and_spectra,
-                        slice_index=slice_index - 1,
-                    )
-                    if mask_name not in dic_masks:
+                    if mask_name not in atlas.dic_mask_images[slice_index - 1]:
                         return dash.no_update
                     else:
-                        im = dic_masks[mask_name][2]
-                        fig = figure = return_pickled_object(
-                            "figures/load_page",
-                            "figure_basic_image",
-                            force_update=False,
-                            compute_function=figures.compute_figure_basic_image,
-                            type_figure=None,
-                            index_image=slice_index - 1,
-                            plot_atlas_contours=True,
-                            only_contours=True,
-                        )
+                        im = atlas.dic_mask_images[slice_index - 1]
+                        fig = atlas.dic_fig_contours[slice_index - 1]
                         fig.add_trace(im)
                         return fig
                 except:

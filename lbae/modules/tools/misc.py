@@ -10,12 +10,18 @@ import base64
 from io import BytesIO
 from PIL import Image
 import shutil
+import psutil
 
 ###### DEFINE MISC FUNCTIONS ######
-from lbae.modules.tools.memuse import logmem
+
+# for dosctring: this function has been benchmarked and takes about 0.5ms to run
+def logmem():
+    memory = psutil.Process(os.getpid()).memory_info().rss / (1024 * 1024)
+    memory_string = "MemTotal: " + str(memory)
+    return "\t" + memory_string
 
 
-def return_pickled_object(data_folder, file_name, force_update, compute_function, **compute_function_args):
+def return_pickled_object(data_folder, file_name, force_update, compute_function=None, **compute_function_args):
 
     # Create folder containing the object if it doesn't already exist
     path_folder = "lbae/data/" + data_folder + "/"
@@ -31,7 +37,7 @@ def return_pickled_object(data_folder, file_name, force_update, compute_function
         logging.info("Returning " + file_name + " from pickled file." + logmem())
         with open(path_folder + file_name, "rb") as file:
             return pickle.load(file)
-    else:
+    elif compute_function is not None:
         logging.info(
             file_name + " could not be found or force_update is True. Computing the object and pickling it now."
         )
@@ -40,6 +46,11 @@ def return_pickled_object(data_folder, file_name, force_update, compute_function
         with open(path_folder + file_name, "wb") as file:
             pickle.dump(object, file)
         return object
+    else:
+        logging.warn(
+            file_name + " could not be found or force_update is True. But no compute_function has been provided"
+        )
+        return None
 
 
 def convert_image_to_base64(

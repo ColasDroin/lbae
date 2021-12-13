@@ -1,6 +1,6 @@
 # TO CORRECT: https://dev.to/codemouse92/dead-simple-python-project-structure-and-imports-38c6
 import logging
-from lbae.modules.tools.memuse import logmem
+from lbae.modules.tools.misc import logmem
 
 # Define logging options for print and debug
 logging.basicConfig(
@@ -37,6 +37,5 @@ if __name__ == "__main__":
 # To run the app from the server, use the following command in the base lbae folder:
 # gunicorn main:server -b:8050 --workers=1
 
-# TODO replace dic_masks_and_spectra by a unique dict, always in memory, for the masks
 # TODO accelerate Lipid selection per Slice in 2D and maybe 3D if possible, maybe precompute every lipid?
 # TODO better handle memory

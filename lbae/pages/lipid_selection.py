@@ -186,10 +186,11 @@ def return_layout(basic_config, slice_index=1):
                         dbc.CardBody(
                             className="pt-1",
                             children=[
-                                # html.P(
-                                # children="Please select the lipids of your choice (3 max):", # TODO : put this as tooltip
-                                #    className="text-center",
-                                # ),
+                                dbc.Tooltip(
+                                    children="Please select the lipids of your choice (3 max):",
+                                    target="page-2-card-lipid-selection",
+                                    placement="left",
+                                ),
                                 # Dropdown must be wrapped in div, otherwise lazy loading creates bug with tooltips
                                 html.Div(
                                     id="tab-2-div-dropdown-lipid-names",
@@ -324,10 +325,15 @@ def return_layout(basic_config, slice_index=1):
                         dbc.CardBody(
                             className="pt-1",
                             children=[
-                                # TODO : put all commented text as tooltip
                                 html.Small(
-                                    children="Please enter the lower and upper bounds of your m/z range selection.",  # Your selection can't exceed a range of 10m/z, and must be comprised in-between 400 and 1200.",
+                                    id="page-2-text-bounds",
+                                    children="Please enter the lower and upper bounds of your m/z range selection.",
                                     className="text-center",
+                                ),
+                                dbc.Tooltip(
+                                    children="Your selection can't exceed a range of 10m/z, and must be comprised in-between 400 and 1200.",
+                                    target="page-2-text-bounds",
+                                    placement="left",
                                 ),
                                 dbc.InputGroup(
                                     [
@@ -341,8 +347,14 @@ def return_layout(basic_config, slice_index=1):
                                     size="sm",
                                 ),
                                 html.Small(
-                                    children="Or choose a m/z value with a given range.",  # Your selection can't exceed a range of 10m/z, and must be comprised in-between 400 and 1200.",
+                                    children="Or choose a m/z value with a given range.",
                                     className="text-center",
+                                    id="page-2-text-range",
+                                ),
+                                dbc.Tooltip(
+                                    children="Your selection can't exceed a range of 10m/z, and must be comprised in-between 400 and 1200.",
+                                    target="page-2-text-range",
+                                    placement="left",
                                 ),
                                 dbc.InputGroup(
                                     [

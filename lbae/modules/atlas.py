@@ -28,7 +28,7 @@ from lbae.modules.tools.atlas import (
 from lbae.modules.tools.spectra import compute_spectrum_per_row_selection
 from lbae.modules.atlas_labels import Labels, LabelContours
 from lbae.modules.tools.misc import return_pickled_object, convert_image_to_base64
-from lbae.modules.tools.memuse import logmem
+from lbae.modules.tools.misc import logmem
 
 #! Overall, see if I can memmap all the objects in this class
 
@@ -87,6 +87,30 @@ class Atlas:
             atlas_correction=True,
         )[1]
 
+        # Dic of mask images (must be ultra fast)
+        # * warning, very long to compute
+        self.dic_mask_images = return_pickled_object(
+            "atlas/atlas_objects",
+            "dic_mask_images",
+            force_update=False,
+            compute_function=self.compute_dic_mask_images,
+        )
+
+        # Initialize to None to avoid circular import when precomputing object from class Figures
+        self._dic_fig_contours = None
+
+    # Dic of basic contours figure (must be ultra fast as well)
+    @property
+    def dic_fig_contours(self):
+        if self._dic_fig_contours is None:
+            self._dic_fig_contours = return_pickled_object(
+                "atlas/atlas_objects",
+                "dic_fig_contours",
+                force_update=False,
+                compute_function=self.compute_dic_fig_contours,
+            )
+        return self._dic_fig_contours
+
     # Load arrays of images using atlas projection
     @property
     def array_projection_corrected(self):
@@ -99,20 +123,6 @@ class Atlas:
             atlas_correction=True,
         )
         return array_projection_corrected
-
-    """
-    @property
-    def array_projection_correspondence_corrected(self):
-        (_, array_projection_correspondence_corrected, _,) = return_pickled_object(
-            "atlas/atlas_objects",
-            "arrays_projection_corrected",
-            force_update=False,
-            compute_function=self.compute_array_projection,
-            nearest_neighbour_correction=True,
-            atlas_correction=True,
-        )
-        return array_projection_correspondence_corrected
-    """
 
     @property
     def l_original_coor(self):
@@ -333,6 +343,57 @@ class Atlas:
             )
         return grah_scattergl_data
 
+    def compute_dic_mask_images(self):
+        dic = {}
+        for slice_index in range(self.data.get_slice_number()):
+            dic[slice_index] = {}
+            slice_coor_rescaled = np.asarray(
+                (self.array_coordinates_warped_data[slice_index, :, :] * 1000 / self.resolution).round(0),
+                dtype=np.int16,
+            )
+
+            # Get hierarchical tree of brain structures -
+            for mask_name, id_mask in self.dic_name_id.items():
+                # get the array corresponding to the projected mask
+                stack_mask = self.get_atlas_mask(id_mask)
+                projected_mask = project_atlas_mask(stack_mask, slice_coor_rescaled, self.bg_atlas.reference.shape)
+                if np.sum(projected_mask) == 0:
+                    continue
+
+                # compute orange image
+                normalized_projected_mask = projected_mask / np.max(projected_mask)
+                # clean mask
+                normalized_projected_mask[:, :10] = 0
+                normalized_projected_mask[:, -10:] = 0
+                normalized_projected_mask[:10, :] = 0
+                normalized_projected_mask[-10:, :] = 0
+
+                color_rgb = [255, 140, 0, 200]
+                l_images = [normalized_projected_mask * color for c, color in zip(["r", "g", "b", "a"], color_rgb)]
+                # Reoder axis to match plotly go.image requirements
+                array_image = np.moveaxis(np.array(l_images, dtype=np.uint8), 0, 2)
+                base64_string = convert_image_to_base64(
+                    array_image, optimize=True, quality=5, type="RGBA", format="png"
+                )
+                im = go.Image(visible=True, source=base64_string, hoverinfo="none")
+                dic[slice_index][mask_name] = im
+        return dic
+
+    def compute_dic_fig_contours(self):
+        dic = {}
+        for slice_index in range(self.data.get_slice_number()):
+            fig = return_pickled_object(
+                "figures/load_page",
+                "figure_basic_image",
+                force_update=False,
+                compute_function=None,  # can't provide the function because of circular import
+                type_figure=None,
+                index_image=slice_index,
+                plot_atlas_contours=True,
+                only_contours=True,
+            )
+            dic[slice_index] = fig
+
     def compute_dic_projected_masks_and_spectra(self, slice_index):
         dic = {}
         slice_coor_rescaled = np.asarray(
@@ -347,58 +408,13 @@ class Atlas:
             if np.sum(projected_mask) == 0:
                 continue
 
-            # compute orange image
-            normalized_projected_mask = projected_mask / np.max(projected_mask)
-            # clean mask
-            normalized_projected_mask[:, :10] = 0
-            normalized_projected_mask[:, -10:] = 0
-            normalized_projected_mask[:10, :] = 0
-            normalized_projected_mask[-10:, :] = 0
-
-            color_rgb = [255, 140, 0, 200]
-            l_images = [normalized_projected_mask * color for c, color in zip(["r", "g", "b", "a"], color_rgb)]
-            # Reoder axis to match plotly go.image requirements
-            array_image = np.moveaxis(np.array(l_images, dtype=np.uint8), 0, 2)
-            base64_string = convert_image_to_base64(array_image, optimize=True, quality=5, type="RGBA", format="gif")
-            im = go.Image(visible=True, source=base64_string, hoverinfo="none")
-
             # compute spectrum
             grah_scattergl_data = self.compute_spectrum_data(slice_index, projected_mask)
 
-            dic[mask_name] = (projected_mask, grah_scattergl_data, im)
+            dic[mask_name] = (projected_mask, grah_scattergl_data)
         return dic
 
     """
-
-   
-
-
-
-
-    def return_3D_figure(self, structure=None, from_pickle=True, default_force_pickle=True):
-        force_pickle = False
-        # quick fix when no structure is provided
-        if structure is None:
-            path = "data/pickled_data/atlas_3D_data/figure_atlas_3D" + ".pickle"
-        else:
-            path = "data/pickled_data/atlas_3D_data/figure_atlas_3D_" + structure.replace("/", "-") + ".pickle"
-        if from_pickle:
-            try:
-                with open(path, "rb",) as file:
-                    return pickle.load(file)
-            except:
-                print("The file " + path + " could not be found. Rebuilding the 3D figure now.")
-                if default_force_pickle:
-                    print("The 3D figure will also be pickled.")
-                force_pickle = True
-
-        fig = self.compute_3D_figure(structure=structure, root_from_pickle=True)
-        if force_pickle:
-            print("Pickling the 3D figure now")
-            with open(path, "wb") as file:
-                pickle.dump(fig, file)
-        return fig
-
     def pickle_all_3D_figures(self, force_recompute=False):
         path = "data/pickled_data/atlas_3D_data/"
         existing_figures = set([x.split("_")[-1].split(".pickle")[0].replace("-", "/") for x in os.listdir(path)])

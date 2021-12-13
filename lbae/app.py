@@ -11,7 +11,7 @@ import logging
 from lbae.modules.maldi_data import MaldiData
 from lbae.modules.figures import Figures
 from lbae.modules.atlas import Atlas
-from lbae.modules.tools.memuse import logmem
+from lbae.modules.tools.misc import logmem
 
 
 ###### APP PRE-COMPUTATIONS ######
