@@ -96,21 +96,6 @@ class Atlas:
             compute_function=self.compute_dic_mask_images,
         )
 
-        # Initialize to None to avoid circular import when precomputing object from class Figures
-        self._dic_fig_contours = None
-
-    # Dic of basic contours figure (must be ultra fast as well)
-    @property
-    def dic_fig_contours(self):
-        if self._dic_fig_contours is None:
-            self._dic_fig_contours = return_pickled_object(
-                "atlas/atlas_objects",
-                "dic_fig_contours",
-                force_update=False,
-                compute_function=self.compute_dic_fig_contours,
-            )
-        return self._dic_fig_contours
-
     # Load arrays of images using atlas projection
     @property
     def array_projection_corrected(self):
@@ -378,21 +363,6 @@ class Atlas:
                 im = go.Image(visible=True, source=base64_string, hoverinfo="none")
                 dic[slice_index][mask_name] = im
         return dic
-
-    def compute_dic_fig_contours(self):
-        dic = {}
-        for slice_index in range(self.data.get_slice_number()):
-            fig = return_pickled_object(
-                "figures/load_page",
-                "figure_basic_image",
-                force_update=False,
-                compute_function=None,  # can't provide the function because of circular import
-                type_figure=None,
-                index_image=slice_index,
-                plot_atlas_contours=True,
-                only_contours=True,
-            )
-            dic[slice_index] = fig
 
     def compute_dic_projected_masks_and_spectra(self, slice_index):
         dic = {}

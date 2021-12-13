@@ -17,7 +17,7 @@ from lbae.modules.tools.misc import return_pickled_object
 ###### DEFFINE PAGE LAYOUT ######
 
 
-def return_layout(basic_config):
+def return_layout(basic_config, slice_index):
 
     page = (
         dash_draggable.ResponsiveGridLayout(

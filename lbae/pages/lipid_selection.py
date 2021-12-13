@@ -21,7 +21,7 @@ N_LINES = int(np.ceil(HEIGHT_PLOTS / 30))
 ###### DEFFINE PAGE LAYOUT ######
 
 
-def return_layout(basic_config, slice_index=1):
+def return_layout(basic_config, slice_index):
 
     page = (
         dash_draggable.ResponsiveGridLayout(

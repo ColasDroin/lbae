@@ -21,7 +21,7 @@ def logmem():
     return "\t" + memory_string
 
 
-def return_pickled_object(data_folder, file_name, force_update, compute_function=None, **compute_function_args):
+def return_pickled_object(data_folder, file_name, force_update, compute_function, **compute_function_args):
 
     # Create folder containing the object if it doesn't already exist
     path_folder = "lbae/data/" + data_folder + "/"
@@ -37,7 +37,7 @@ def return_pickled_object(data_folder, file_name, force_update, compute_function
         logging.info("Returning " + file_name + " from pickled file." + logmem())
         with open(path_folder + file_name, "rb") as file:
             return pickle.load(file)
-    elif compute_function is not None:
+    else:
         logging.info(
             file_name + " could not be found or force_update is True. Computing the object and pickling it now."
         )
@@ -46,11 +46,6 @@ def return_pickled_object(data_folder, file_name, force_update, compute_function
         with open(path_folder + file_name, "wb") as file:
             pickle.dump(object, file)
         return object
-    else:
-        logging.warn(
-            file_name + " could not be found or force_update is True. But no compute_function has been provided"
-        )
-        return None
 
 
 def convert_image_to_base64(

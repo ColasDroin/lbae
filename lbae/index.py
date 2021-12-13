@@ -183,11 +183,12 @@ app.validation_layout = html.Div(
     [
         main_content,
         home.layout,
-        load_slice.return_layout(basic_config=basic_config),
-        lipid_selection.return_layout(basic_config=basic_config),
-        region_analysis.return_layout(basic_config=basic_config),
-        threeD_exploration.return_layout(basic_config=basic_config),
-        atlas_exploration.return_layout(basic_config=basic_config),
+        # Layout is computed assuming slice 1 is selected
+        load_slice.return_layout(basic_config, 1),
+        lipid_selection.return_layout(basic_config, 1),
+        region_analysis.return_layout(basic_config, 1),
+        threeD_exploration.return_layout(basic_config, 1),
+        atlas_exploration.return_layout(basic_config, 1),
     ]
 )
 
@@ -195,8 +196,13 @@ app.validation_layout = html.Div(
 ###### APP CALLBACK FOR URL ######
 
 
-@app.callback(Output("content", "children"), Output("empty-content", "children"), Input("url", "pathname"))
-def render_page_content(pathname):
+@app.callback(
+    Output("content", "children"),
+    Output("empty-content", "children"),
+    Input("url", "pathname"),
+    State("main-slider", "value"),
+)
+def render_page_content(pathname, slice_index):
     logging.info("Page" + pathname + "has been selected" + logmem())
 
     # Set the content according to the current pathname
@@ -204,18 +210,18 @@ def render_page_content(pathname):
         page = home.layout
 
     elif pathname == "/load-slice":
-        page = load_slice.return_layout(basic_config=basic_config)
+        page = load_slice.return_layout(basic_config, slice_index)
 
     elif pathname == "/lipid-selection":
-        page = lipid_selection.return_layout(basic_config=basic_config)
+        page = lipid_selection.return_layout(basic_config, slice_index)
 
     elif pathname == "/region-analysis":
-        page = region_analysis.return_layout(basic_config=basic_config)
+        page = region_analysis.return_layout(basic_config, slice_index)
 
     elif pathname == "/3D-exploration":
-        page = threeD_exploration.return_layout(basic_config=basic_config)
+        page = threeD_exploration.return_layout(basic_config, slice_index)
     elif pathname == "/atlas-exploration":
-        page = atlas_exploration.return_layout(basic_config=basic_config)
+        page = atlas_exploration.return_layout(basic_config, slice_index)
 
     else:
         # If the user tries to reach a different page, return a 404 message

@@ -17,7 +17,7 @@ from lbae.modules.tools.misc import return_pickled_object
 ###### DEFFINE PAGE LAYOUT ######
 
 #! Put basic config in config in all page file
-def return_layout(basic_config, initial_slice=1):
+def return_layout(basic_config, slice_index):
 
     page = dash_draggable.ResponsiveGridLayout(
         id="draggable",
@@ -100,7 +100,7 @@ def return_layout(basic_config, initial_slice=1):
                                                     force_update=False,
                                                     compute_function=figures.compute_figure_basic_image,
                                                     type_figure="warped_data",
-                                                    index_image=0,
+                                                    index_image=slice_index,
                                                     plot_atlas_contours=False,
                                                 ),
                                             ),

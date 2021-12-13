@@ -9,6 +9,7 @@ import plotly.graph_objects as go
 import numpy as np
 import pandas as pd
 import logging
+import copy
 
 # Homemade modules
 from lbae import app
@@ -614,7 +615,7 @@ def return_layout(basic_config, slice_index=1):
 
 # Function to update the heatmap toast name
 @app.app.callback(
-    Output("page-3-toast-graph-heatmap-mz-selection", "children"), Input("dcc-store-slice-index", "data"),
+    Output("page-3-toast-graph-heatmap-mz-selection", "children"), Input("main-slider", "value"),
 )
 def page_3_plot_graph_heatmap_mz_selection(slice_index):
     if slice_index is not None:
@@ -626,7 +627,7 @@ def page_3_plot_graph_heatmap_mz_selection(slice_index):
 @app.app.callback(
     Output("page-3-graph-hover-text", "children"),
     Input("page-3-graph-heatmap-per-sel", "hoverData"),
-    State("dcc-store-slice-index", "data"),
+    Input("main-slider", "value"),
 )
 def page_3_hover(hoverData, slice_index):
     if hoverData is not None:
@@ -650,7 +651,7 @@ def page_3_hover(hoverData, slice_index):
 @app.app.callback(
     Output("page-3-graph-atlas-hover-text", "children"),
     Input("page-3-graph-atlas-per-sel", "hoverData"),
-    State("dcc-store-slice-index", "data"),
+    Input("main-slider", "value"),
 )
 def page_3_atlas_hover(hoverData, slice_index):
     if hoverData is not None:
@@ -685,7 +686,7 @@ def tab_3_reset_layout(cliked_reset, url):
 # Function to add clicked regions to selected options in dropdown
 @app.app.callback(
     Output("page-3-dropdown-brain-regions", "value"),
-    Input("dcc-store-slice-index", "data"),
+    Input("main-slider", "value"),
     Input("page-3-reset-button", "n_clicks"),
     Input("url", "pathname"),
     Input("page-3-graph-atlas-per-sel", "clickData"),
@@ -697,12 +698,7 @@ def tab_3_add_value_dropdown(slice_index, clicked_reset, url, clickData, l_mask_
     # Find out which input triggered the function
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
     value_input = dash.callback_context.triggered[0]["prop_id"].split(".")[1]
-    if (
-        id_input == "dcc-store-slice-index"
-        or len(id_input) == 0
-        or id_input == "page-3-reset-button"
-        or id_input == "url"
-    ):
+    if id_input == "main-slider" or len(id_input) == 0 or id_input == "page-3-reset-button" or id_input == "url":
         return []
 
     if clickData is not None:
@@ -742,7 +738,7 @@ def tab_3_add_value_dropdown(slice_index, clicked_reset, url, clickData, l_mask_
     Output("dcc-store-reset", "data"),
     Output("dcc-store-shapes-and-masks", "data"),
     Input("page-3-graph-heatmap-per-sel", "relayoutData"),
-    Input("dcc-store-slice-index", "data"),
+    Input("main-slider", "value"),
     Input("page-3-reset-button", "n_clicks"),
     Input("page-3-dropdown-brain-regions", "value"),
     Input("url", "pathname"),
@@ -764,12 +760,7 @@ def tab_3_plot_heatmap(
 
     # If a new slice is loaded or the page just got loaded
     # do nothing because of automatic relayout of the heatmap which is automatically triggered when the page is loaded
-    if (
-        id_input == "dcc-store-slice-index"
-        or len(id_input) == 0
-        or id_input == "page-3-reset-button"
-        or id_input == "url"
-    ):
+    if id_input == "main-slider" or len(id_input) == 0 or id_input == "page-3-reset-button" or id_input == "url":
         fig = return_pickled_object(
             "figures/load_page",
             "figure_basic_image",
@@ -913,7 +904,7 @@ def tab_3_plot_heatmap(
 # Function to plot the maks annotation on the initial heatmap
 @app.app.callback(
     Output("page-3-graph-atlas-per-sel", "figure"),
-    Input("dcc-store-slice-index", "data"),
+    Input("main-slider", "value"),
     Input("url", "pathname"),
     Input("page-3-graph-atlas-per-sel", "hoverData"),
     prevent_inital_call=True,
@@ -925,6 +916,10 @@ def tab_3_plot_masks(
     # Find out which input triggered the function
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
     value_input = dash.callback_context.triggered[0]["prop_id"].split(".")[1]
+
+    # slider has been moved
+    if id_input == "main-slider":
+        return figures.dic_fig_contours[slice_index - 1]
 
     # Get hover data
     if value_input == "hoverData":
@@ -940,15 +935,16 @@ def tab_3_plot_masks(
                 try:
                     # This line will trigger an exception if the coordinate doesn't exist
                     mask_name = atlas.labels[tuple(slice_coor_rescaled)]
-                    if mask_name not in atlas.dic_mask_images[slice_index - 1]:
-                        return dash.no_update
-                    else:
-                        im = atlas.dic_mask_images[slice_index - 1]
-                        fig = atlas.dic_fig_contours[slice_index - 1]
-                        fig.add_trace(im)
-                        return fig
                 except:
                     logging.info("The coordinate doesn't belong to the ccfv3")
+                    return dash.no_update
+                if mask_name not in atlas.dic_mask_images[slice_index - 1]:
+                    return dash.no_update
+                else:
+                    im = atlas.dic_mask_images[slice_index - 1][mask_name]
+                    fig = copy.copy(figures.dic_fig_contours[slice_index - 1])
+                    fig.add_trace(im)
+                    return fig
 
     return dash.no_update
 
@@ -1091,7 +1087,7 @@ def page_3_display_alert(clicked_compute, clicked_reset, relayoutData, mask):
     Input("page-3-reset-button", "n_clicks"),
     Input("url", "pathname"),
     State("page-3-graph-heatmap-per-sel", "relayoutData"),
-    State("dcc-store-slice-index", "data"),
+    Input("main-slider", "value"),
     prevent_initial_call=True,
 )
 def page_3_load_path(clicked_compute, cliked_reset, url, relayoutData, slice_index):
@@ -1161,7 +1157,7 @@ def page_3_load_path(clicked_compute, cliked_reset, url, relayoutData, slice_ind
     Input("page-3-reset-button", "n_clicks"),
     Input("url", "pathname"),
     State("page-3-dropdown-brain-regions", "value"),
-    State("dcc-store-slice-index", "data"),
+    Input("main-slider", "value"),
     State("dcc-store-list-mz-spectra", "data"),
     State("dcc-store-shapes-and-masks", "data"),
     State("page-3-normalize", "value"),
@@ -1293,7 +1289,7 @@ def page_3_record_spectra(
     Output("page-3-dcc-store-loading-3", "data"),
     Input("page-3-reset-button", "n_clicks"),
     Input("dcc-store-list-mz-spectra", "data"),
-    State("dcc-store-slice-index", "data"),
+    Input("main-slider", "value"),
     prevent_intial_call=True,
 )
 def page_3_plot_spectrum(cliked_reset, l_spectra, slice_index):
@@ -1435,7 +1431,7 @@ def page_3_plot_spectrum(cliked_reset, l_spectra, slice_index):
     # Input("page-3-scale-by-mean-switch", "value"),
     Input("page-4-slider", "value"),
     State("dcc-store-list-mz-spectra", "data"),
-    State("dcc-store-slice-index", "data"),
+    Input("main-slider", "value"),
     prevent_intial_call=True,
 )
 def page_3_draw_heatmap_per_lipid_selection(
@@ -1620,7 +1616,7 @@ def page_3_reset_download(fig_mz):
     Output("page-3-open-modal", "n_clicks"),
     Input("page-3-dcc-store-lipids-region", "data"),
     Input("page-3-reset-button", "n_clicks"),
-    Input("dcc-store-slice-index", "data"),
+    Input("main-slider", "value"),
     State("page-3-open-modal", "n_clicks"),
 )
 def page_3_fill_dropdown_options(l_idx_lipids, cliked_reset, slice_index, n_clicks):
@@ -1717,11 +1713,11 @@ def toggle_visibility_graph(n1, cliked_reset, l_red_lipids, l_green_lipids, l_bl
     Input("page-3-open-modal", "n_clicks"),
     Input("page-3-reset-button", "n_clicks"),
     Input("page-3-toggle-mask", "value"),
+    Input("main-slider", "value"),
     State("page-3-dropdown-red", "value"),
     State("page-3-dropdown-green", "value"),
     State("page-3-dropdown-blue", "value"),
     State("dcc-store-shapes-and-masks", "data"),
-    State("dcc-store-slice-index", "data"),
     State("page-3-dropdown-brain-regions", "value"),
     State("dcc-store-color-mask", "data"),
     State("page-3-log", "value"),
@@ -1731,11 +1727,11 @@ def draw_modal_graph(
     n1,
     cliked_reset,
     boolean_mask,
+    slice_index,
     l_red_lipids,
     l_green_lipids,
     l_blue_lipids,
     l_shapes_and_masks,
-    slice_index,
     l_mask_name,
     l_color_mask,
     log,
@@ -1744,8 +1740,8 @@ def draw_modal_graph(
     # Find out which input triggered the function
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
 
-    # Delete everything when clicking reset
-    if id_input == "page-3-reset-button":
+    # Delete everything when clicking reset or changing slice index
+    if id_input == "page-3-reset-button" or "main-slider":
         return figures.return_empty_spectrum(), False
 
     # Check that at least one lipid has been selected

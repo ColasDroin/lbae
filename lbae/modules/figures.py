@@ -23,12 +23,20 @@ from lbae.config import dic_colors, l_colors
 
 ###### DEFINE FIGURES CLASS ######
 class Figures:
-    __slots__ = ["_data", "_atlas"]
+    __slots__ = ["_data", "_atlas", "dic_fig_contours"]
 
     def __init__(self, maldi_data, atlas):
         logging.info("Initializing Figures object" + logmem())
         self._data = maldi_data
         self._atlas = atlas
+
+        # Dic of basic contours figure (must be ultra fast because used with hovering)
+        self.dic_fig_contours = return_pickled_object(
+            "figures/region_analysis",
+            "dic_fig_contours",
+            force_update=False,
+            compute_function=self.compute_dic_fig_contours,
+        )
 
     ###### FUNCTIONS FOR FIGURE IN LOAD_SLICE PAGE ######
 
@@ -138,6 +146,23 @@ class Figures:
         )
 
         return fig
+
+    # This function is needed to hover fast when manually selecting regions
+    def compute_dic_fig_contours(self):
+        dic = {}
+        for slice_index in range(self._data.get_slice_number()):
+            fig = return_pickled_object(
+                "figures/load_page",
+                "figure_basic_image",
+                force_update=True,
+                compute_function=self.compute_figure_basic_image,
+                type_figure=None,
+                index_image=slice_index,
+                plot_atlas_contours=True,
+                only_contours=True,
+            )
+            dic[slice_index] = fig
+        return dic
 
     def compute_array_basic_images(self, type_figure="warped_data"):
         array_images = None
