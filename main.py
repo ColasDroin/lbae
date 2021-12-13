@@ -37,5 +37,8 @@ if __name__ == "__main__":
 # To run the app from the server, use the following command in the base lbae folder:
 # gunicorn main:server -b:8050 --workers=1
 
+# TODO understand why mask loading is so long
+# TODO update lipid list to have all lipids in dropdown
+# TODO write missing docstrings
 # TODO accelerate Lipid selection per Slice in 2D and maybe 3D if possible, maybe precompute every lipid?
 # TODO better handle memory
