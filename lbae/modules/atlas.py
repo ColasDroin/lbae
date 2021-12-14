@@ -357,11 +357,12 @@ class Atlas:
                 l_images = [normalized_projected_mask * color for c, color in zip(["r", "g", "b", "a"], color_rgb)]
                 # Reoder axis to match plotly go.image requirements
                 array_image = np.moveaxis(np.array(l_images, dtype=np.uint8), 0, 2)
-                base64_string = convert_image_to_base64(
-                    array_image, optimize=True, quality=5, type="RGBA", format="png"
-                )
+                # gif format as it supports palette compression and we only use one color
+                base64_string = convert_image_to_base64(array_image, optimize=True, type="RGBA", format="gif")
                 im = go.Image(visible=True, source=base64_string, hoverinfo="none")
                 dic[slice_index][mask_name] = im
+            break
+
         return dic
 
     def compute_dic_projected_masks_and_spectra(self, slice_index):
