@@ -27,8 +27,6 @@ from lbae import index
 server = index.app.server
 
 
-#! Create a function that delete all pickle files and repickle everything automatically
-
 # Run the app locally
 if __name__ == "__main__":
     logging.info("Starting app" + logmem())
@@ -37,11 +35,12 @@ if __name__ == "__main__":
 # To run the app from the server, use the following command in the base lbae folder:
 # gunicorn main:server -b:8050 --workers=1
 
-# TODO debug region selection
-# TODO update lipid list to have all lipids in dropdown
-# TODO write missing docstrings
-# TODO update layout with react grid where needed
+# TODO recompute mask with greyscale images
+# TODO Make a radiobutton input choice for the lipid selection page
+# TODO debug manual region selection page
 # TODO accelerate Lipid selection per Slice in 2D and maybe 3D if possible, maybe precompute every lipid?
 # TODO make a careful memory analysis
-# TODO have the documentation always open on the left on very big screens
-# TODO make mask hovering client side
+# TODO write missing docstrings
+# TODO have the documentation always open on the right on very big screens to fill emptyness
+# TODO (if I have time) make mask hovering client side in javascript
+# TODO when everything is stable, create a function that delete all pickle files and repickle everything automatically
