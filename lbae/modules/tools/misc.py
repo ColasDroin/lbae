@@ -57,6 +57,7 @@ def convert_image_to_base64(
     format="png",
     overlay=None,
     decrease_resolution_factor=1,
+    binary=False,
 ):
 
     # Convert 1D array into a PIL image
@@ -88,19 +89,30 @@ def convert_image_to_base64(
     base64_string = None
     with BytesIO() as stream:
         if format == "webp":
+            logging.info("Webp mode selected, binary or paletted modes are not supported")
             # Optimize the quality as the figure will be pickled, so this line of code won't run live
             pil_img.save(stream, format=format, optimize=optimize, quality=quality, method=6, lossless=False)
         elif format == "gif":
             # Convert to paletted image to save space
             pil_img = pil_img.convert("P")
             # Optimize the quality as the figure will be pickled, so this line of code won't run live
+            logging.info("gif mode selected, quality argument is not supported")
             pil_img.save(stream, format=format, optimize=optimize, transparency=255)
-        else:
-            # ? Caution, palette-based may not work or cause bug
+        elif format == "jpeg":
             # Convert to paletted image to save space
             pil_img = pil_img.convert("P")
             # Optimize the quality as the figure will be pickled, so this line of code won't run live
             pil_img.save(stream, format=format, optimize=optimize, quality=quality)
+        else:
+            # ? Caution, palette-based may not work or cause bug
+            # Convert to paletted image to save space
+            if binary:
+                pil_img = pil_img.convert("L")
+            else:
+                pil_img = pil_img.convert("P")
+            # Optimize the quality as the figure will be pickled, so this line of code won't run live
+            logging.info("png mode selected, quality argument is not supported")
+            pil_img.save(stream, format=format, optimize=optimize)
         base64_string = "data:image/" + format + ";base64," + base64.b64encode(stream.getvalue()).decode("utf-8")
 
     # Commented code for e.g. conversion with jpeg

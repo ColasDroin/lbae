@@ -117,11 +117,14 @@ html {
 
 /* default settings for content */
 #content {
-  margin-left: 5rem;
-  margin-right: 1rem;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: auto;
+  margin-top: auto;
   /*padding: 1rem 1rem;*/
-  padding-left: 1rem;
+  padding-left: 5rem;
   white-space: normal;
+  max-width: 1800px;
   /*white-space: normal;*/
   /*transition: margin-left 0.2s ease-in-out;*/
 }

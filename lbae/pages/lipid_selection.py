@@ -30,9 +30,19 @@ def return_layout(basic_config, slice_index):
             isDraggable=False,
             isResizable=False,
             containerPadding=[2, 2],
+            breakpoints={"xxl": 1600, "lg": 1200, "md": 996, "sm": 768, "xs": 480, "xxs": 0},
+            ncols={"xxl": 6, "lg": 6, "md": 5, "sm": 3, "xs": 4, "xxs": 2},
+            gridCols={"xxl": 12, "lg": 12, "md": 10, "sm": 6, "xs": 4, "xxs": 2},
             layouts={
                 # x sets the lateral position, y the vertical one, w is in columns (whose size depends on the dimension), h is in rows (30px)
                 # nb columns go 12->10->6->4->2
+                "xxl": [
+                    {"i": "page-2-card-heatmap", "x": 0, "y": 0, "w": 7, "h": 20},
+                    {"i": "page-2-card-lipid-selection", "x": 8, "y": 0, "w": 5, "h": 13},
+                    {"i": "page-2-card-range-selection", "x": 8, "y": 8, "w": 5, "h": 7},
+                    {"i": "page-2-card-low-res", "x": 0, "y": 15, "w": 6, "h": N_LINES},
+                    {"i": "page-2-card-high-res", "x": 6, "y": 15, "w": 6, "h": N_LINES},
+                ],
                 "lg": [
                     {"i": "page-2-card-heatmap", "x": 0, "y": 0, "w": 7, "h": 16},
                     {"i": "page-2-card-lipid-selection", "x": 8, "y": 0, "w": 5, "h": 11},
