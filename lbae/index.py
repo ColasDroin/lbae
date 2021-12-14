@@ -64,6 +64,7 @@ def return_main_content():
             dcc.Store(id="dcc-store-list-idx-lipids", data=[]),
             # Record the annotated paths drawn in page 3
             dcc.Store(id="page-3-dcc-store-path-heatmap"),
+            dcc.Store(id="page-3-dcc-store-basic-figure", data=True),
             # Record the computed spectra drawn in page 3
             dcc.Store(id="dcc-store-list-mz-spectra", data=[]),
             # Record the lipids expressed in the region in page 3

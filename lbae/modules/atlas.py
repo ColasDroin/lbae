@@ -361,7 +361,6 @@ class Atlas:
                 base64_string = convert_image_to_base64(array_image, optimize=True, type="RGBA", format="gif")
                 im = go.Image(visible=True, source=base64_string, hoverinfo="none")
                 dic[slice_index][mask_name] = im
-            break
 
         return dic
 

@@ -26,6 +26,9 @@ from lbae.modules.tools.spectra import (
     compute_avg_intensity_per_lipid,
 )
 
+HEIGHT_PLOTS = 280
+N_LINES = int(np.ceil(HEIGHT_PLOTS / 30))
+
 
 ###### DEFFINE PAGE LAYOUT ######
 
@@ -148,7 +151,7 @@ def return_layout(basic_config, slice_index=1):
                                                                                 children=[
                                                                                     dbc.Button(
                                                                                         children="Compute spectra",
-                                                                                        id="tab-3-compute-spectra",
+                                                                                        id="page-3-button-compute-spectra",
                                                                                         disabled=True,
                                                                                         className="",
                                                                                         color="primary",
@@ -331,7 +334,7 @@ def return_layout(basic_config, slice_index=1):
                                                             html.Div(id="page-3-graph-spectrum-per-pixel-wait"),
                                                             dcc.Graph(
                                                                 id="page-3-graph-spectrum-per-pixel",
-                                                                style={"height": "35vh"} | {"display": "none"},
+                                                                style={"height": HEIGHT_PLOTS} | {"display": "none"},
                                                                 config=basic_config
                                                                 | {
                                                                     "toImageButtonOptions": {
@@ -485,7 +488,8 @@ def return_layout(basic_config, slice_index=1):
                                                             dcc.Graph(
                                                                 id="page-3-graph-heatmap-per-lipid",
                                                                 className="mb-1",
-                                                                style={"height": "75vh"} | {"display": "none"},
+                                                                style={"height": 2 * HEIGHT_PLOTS}
+                                                                | {"display": "none"},
                                                                 config=basic_config
                                                                 | {
                                                                     "toImageButtonOptions": {
@@ -747,7 +751,7 @@ def tab_3_add_value_dropdown(slice_index, clicked_reset, url, clickData, l_mask_
     State("dcc-store-shapes-and-masks", "data"),
     prevent_inital_call=True,
 )
-def tab_3_plot_heatmap(
+def page_3_plot_heatmap(
     relayoutData, slice_index, cliked_reset, l_mask_name, url, l_color_mask, reset, l_shapes_and_masks,
 ):
 
@@ -803,7 +807,7 @@ def tab_3_plot_heatmap(
             newshape=dict(fillcolor=config.l_colors[0], opacity=0.7, line=dict(color="white", width=1)),
             autosize=True,
         )
-        return fig, [], True  # , []
+        return fig, [], True, []
 
     if id_input == "page-3-graph-heatmap-per-sel" or id_input == "page-3-dropdown-brain-regions":
         # Rebuild figure
@@ -820,6 +824,7 @@ def tab_3_plot_heatmap(
         col_next = None
 
         if l_mask_name is not None:
+
             if len(l_mask_name) > 0:
                 dic_masks = return_pickled_object(
                     "atlas/atlas_objects",
@@ -828,9 +833,11 @@ def tab_3_plot_heatmap(
                     compute_function=atlas.compute_dic_projected_masks_and_spectra,
                     slice_index=slice_index - 1,
                 )
+
                 for idx_mask, mask_name in enumerate(l_mask_name):
                     if mask_name in dic_masks:
                         projected_mask = dic_masks[mask_name][0]
+
                     # Build a list of empty images and add selected lipids for each channel
                     normalized_projected_mask = projected_mask / np.max(projected_mask)
                     if idx_mask < len(l_color_mask):
@@ -848,9 +855,8 @@ def tab_3_plot_heatmap(
                     # Reoder axis to match plotly go.image requirements
                     array_image = np.moveaxis(np.array(l_images, dtype=np.uint8), 0, 2)
 
-                    # convert image to string to save space
-                    # ! is this image not already in dic_masks?
-                    base64_string = convert_image_to_base64(array_image, optimize=True, quality=80, type="RGBA")
+                    # convert image to string to save space (new image as each mask must have a different color)
+                    base64_string = convert_image_to_base64(array_image, optimize=True, format="gif", type="RGBA")
                     fig.add_trace(go.Image(visible=True, source=base64_string, hoverinfo="skip"))
                     fig.update_layout(dragmode="drawclosedpath",)
 
@@ -904,14 +910,14 @@ def tab_3_plot_heatmap(
 # Function to plot the maks annotation on the initial heatmap
 @app.app.callback(
     Output("page-3-graph-atlas-per-sel", "figure"),
+    Output("page-3-dcc-store-basic-figure", "data"),
     Input("main-slider", "value"),
     Input("url", "pathname"),
     Input("page-3-graph-atlas-per-sel", "hoverData"),
+    State("page-3-dcc-store-basic-figure", "data"),
     prevent_inital_call=True,
 )
-def tab_3_plot_masks(
-    slice_index, url, hoverData,
-):
+def page_3_plot_masks(slice_index, url, hoverData, basic_figure_plotted):
 
     # Find out which input triggered the function
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
@@ -919,7 +925,7 @@ def tab_3_plot_masks(
 
     # slider has been moved
     if id_input == "main-slider":
-        return figures.dic_fig_contours[slice_index - 1]
+        return figures.dic_fig_contours[slice_index - 1], True
 
     # Get hover data
     if value_input == "hoverData":
@@ -935,23 +941,28 @@ def tab_3_plot_masks(
                 try:
                     # This line will trigger an exception if the coordinate doesn't exist
                     mask_name = atlas.labels[tuple(slice_coor_rescaled)]
+                    exception = mask_name not in atlas.dic_mask_images[slice_index - 1]
                 except:
                     logging.info("The coordinate doesn't belong to the ccfv3")
-                    return dash.no_update
-                if mask_name not in atlas.dic_mask_images[slice_index - 1]:
-                    return dash.no_update
+                    exception = True
+
+                if exception:
+                    if basic_figure_plotted:
+                        return dash.no_update
+                    else:
+                        return figures.dic_fig_contours[slice_index - 1], True
                 else:
                     im = atlas.dic_mask_images[slice_index - 1][mask_name]
                     fig = copy.copy(figures.dic_fig_contours[slice_index - 1])
                     fig.add_trace(im)
-                    return fig
+                    return fig, False
 
     return dash.no_update
 
 
 # Function that activate the button to compute spectra
 @app.app.callback(
-    Output("tab-3-compute-spectra", "disabled"),
+    Output("page-3-button-compute-spectra", "disabled"),
     Input("page-3-graph-heatmap-per-sel", "relayoutData"),
     Input("page-3-reset-button", "n_clicks"),
     Input("page-3-dropdown-brain-regions", "value"),
@@ -983,7 +994,7 @@ def page_3_button_compute_spectra(relayoutData, clicked_reset, mask):
     Output("page-3-graph-heatmap-per-lipid", "style"),
     Output("page-3-div-dropdown", "style"),
     Input("page-3-reset-button", "n_clicks"),
-    Input("tab-3-compute-spectra", "n_clicks"),
+    Input("page-3-button-compute-spectra", "n_clicks"),
     State("page-3-dropdown-brain-regions", "value"),
     State("page-3-graph-heatmap-per-sel", "relayoutData"),
 )
@@ -995,16 +1006,20 @@ def tab_3_display_high_res_mz_plot(clicked_reset, clicked_compute, mask, relayou
     if id_input == "page-3-reset-button":
         return {"display": "none"}, {"display": "none"}, {"display": "none"}, {"display": "none"}
 
-    elif id_input == "tab-3-compute-spectra":
+    elif id_input == "page-3-button-compute-spectra":
+        logging.info("Compute spectra button has been clicked")
+
         if mask is not None:
             if mask != []:
-                return {"height": "35vh"}, {"display": "none"}, {"height": "85vh"}, {}
+                logging.info("One or several masks have been selected, displaying graphs")
+                return {"height": HEIGHT_PLOTS}, {"display": "none"}, {"height": 2 * HEIGHT_PLOTS}, {}
 
         if relayoutData is not None:
             if "shapes" in relayoutData:
                 if len(relayoutData["shapes"]) > 0:
                     if len(relayoutData["shapes"]) <= 4:
-                        return {"height": "35vh"}, {"display": "none"}, {"height": "85vh"}, {}
+                        logging.info("One or several shapes have been selected, displaying graphs")
+                        return {"height": HEIGHT_PLOTS}, {"display": "none"}, {"height": 2 * HEIGHT_PLOTS}, {}
                     else:
                         return {"display": "none"}, {}, {"display": "none"}, {"display": "none"}
 
@@ -1014,7 +1029,7 @@ def tab_3_display_high_res_mz_plot(clicked_reset, clicked_compute, mask, relayou
 # Function to make visible the sorting switch for the lipid heatmap
 @app.app.callback(
     Output("page-3-switches", "className"),
-    # Input("tab-3-compute-spectra", "n_clicks"),
+    # Input("page-3-button-compute-spectra", "n_clicks"),
     Input("page-3-reset-button", "n_clicks"),
     Input("page-3-graph-heatmap-per-lipid", "figure"),
     State("page-3-graph-heatmap-per-sel", "relayoutData"),
@@ -1027,7 +1042,7 @@ def page_3_display_switch(clicked_reset, fig_heatmap, relayoutData):
     if id_input == "page-3-reset-button":
         return "d-none"
 
-    # elif id_input == "tab-3-compute-spectra":
+    # elif id_input == "page-3-button-compute-spectra":
 
     # If limit number of selection is done, just hide it
     if relayoutData is not None:
@@ -1054,7 +1069,7 @@ def page_3_display_switch(clicked_reset, fig_heatmap, relayoutData):
     Output("page-3-alert-3", "style"),
     Output("page-3-alert-4", "style"),
     Output("page-3-alert-5", "style"),
-    Input("tab-3-compute-spectra", "n_clicks"),
+    Input("page-3-button-compute-spectra", "n_clicks"),
     Input("page-3-reset-button", "n_clicks"),
     State("page-3-graph-heatmap-per-sel", "relayoutData"),
     State("page-3-dropdown-brain-regions", "value"),
@@ -1067,7 +1082,7 @@ def page_3_display_alert(clicked_compute, clicked_reset, relayoutData, mask):
     if id_input == "page-3-reset-button":
         return {}, {}, {}, {}
 
-    elif id_input == "tab-3-compute-spectra":
+    elif id_input == "page-3-button-compute-spectra":
         if mask is not None:
             if mask != []:
                 return {"display": "none"}, {"display": "none"}, {"display": "none"}, {"display": "none"}
@@ -1083,7 +1098,7 @@ def page_3_display_alert(clicked_compute, clicked_reset, relayoutData, mask):
 @app.app.callback(
     Output("page-3-dcc-store-path-heatmap", "data"),
     Output("page-3-dcc-store-loading-1", "data"),
-    Input("tab-3-compute-spectra", "n_clicks"),
+    Input("page-3-button-compute-spectra", "n_clicks"),
     Input("page-3-reset-button", "n_clicks"),
     Input("url", "pathname"),
     State("page-3-graph-heatmap-per-sel", "relayoutData"),
@@ -1111,7 +1126,7 @@ def page_3_load_path(clicked_compute, cliked_reset, url, relayoutData, slice_ind
     if id_input == "page-3-reset-button" or id_input == "url":
         return [], False
 
-    if id_input == "tab-3-compute-spectra":
+    if id_input == "page-3-button-compute-spectra":
 
         # If an annotation has been drawn, compute the average spectrum in the annotation
         if relayoutData is not None:
@@ -1152,7 +1167,7 @@ def page_3_load_path(clicked_compute, cliked_reset, url, relayoutData, slice_ind
 @app.app.callback(
     Output("dcc-store-list-mz-spectra", "data"),
     Output("page-3-dcc-store-loading-2", "data"),
-    Input("tab-3-compute-spectra", "n_clicks"),
+    Input("page-3-button-compute-spectra", "n_clicks"),
     Input("page-3-dcc-store-path-heatmap", "data"),
     Input("page-3-reset-button", "n_clicks"),
     Input("url", "pathname"),
@@ -1189,7 +1204,7 @@ def page_3_record_spectra(
     elif id_input == "page-3-reset-button" or id_input == "url":
         return [], False
 
-    elif id_input == "tab-3-compute-spectra":
+    elif id_input == "page-3-button-compute-spectra":
         l_spectra = []
         idx_mask = -1
         idx_path = -1
@@ -1740,12 +1755,16 @@ def draw_modal_graph(
     # Find out which input triggered the function
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
 
+    logging.info(id_input)
+
     # Delete everything when clicking reset or changing slice index
-    if id_input == "page-3-reset-button" or "main-slider":
+    if id_input == "page-3-reset-button" or id_input == "main-slider":
+        logging.info("Resetting modal graph")
         return figures.return_empty_spectrum(), False
 
     # Check that at least one lipid has been selected
     if len(l_red_lipids + l_green_lipids + l_blue_lipids) > 0:
+        logging.info("At least one lipid has been selected, plotting graph now.")
         df_names = data.get_annotations()[data.get_annotations()["slice"] == slice_index]
         # Build the list of mz boundaries for each peak
         l_lipid_bounds = [
@@ -1776,6 +1795,7 @@ def draw_modal_graph(
 
         return fig, True
 
+    logging.info("No lipid were selected, ignoring update.")
     return dash.no_update
 
 
@@ -1788,13 +1808,13 @@ def draw_modal_graph(
     State("page-3-dcc-store-loading-4", "data"),
     Input("page-3-dcc-store-loading-5", "data"),
 )
-# CAREFUL: loading-4 is a state now
+# * CAREFUL: loading-4 is a state now
 def update_loading_bar(state_1, state_2, state_3, state_4, state_5):
 
     # Find out which input triggered the function
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
 
-    # print(id_input, state_1, state_2, state_3, state_4, state_5)
+    print(id_input, state_1, state_2, state_3, state_4, state_5)
 
     if id_input == "page-3-dcc-store-loading-1" and state_1:
         return 40
@@ -1816,7 +1836,7 @@ def update_loading_bar(state_1, state_2, state_3, state_4, state_5):
     Output("page-3-progress", "className"),
     Input("page-3-progress", "value"),
     Input("page-3-reset-button", "n_clicks"),
-    Input("tab-3-compute-spectra", "n_clicks"),
+    Input("page-3-button-compute-spectra", "n_clicks"),
 )
 def update_loading_visibility(value, clicked_reset, clicked_compute):
 
@@ -1825,7 +1845,7 @@ def update_loading_visibility(value, clicked_reset, clicked_compute):
 
     if id_input == "page-3-progress" and value == 100:
         return "", "d-none"
-    elif id_input == "tab-3-compute-spectra":
+    elif id_input == "page-3-button-compute-spectra":
         return "d-none", "mt-1"
     else:
         return "d-none", "mt-1"
