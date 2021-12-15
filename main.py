@@ -35,9 +35,9 @@ if __name__ == "__main__":
 # To run the app from the server, use the following command in the base lbae folder:
 # gunicorn main:server -b:8050 --workers=1
 
-# TODO Make a radiobutton input choice for the lipid selection page
 # TODO debug/accelerate manual region selection page
 # TODO make manuael region selection page responsive
+# TODO Make lipid expression comparison between 3D structure
 # TODO accelerate Lipid selection per Slice in 2D and maybe 3D if possible, maybe precompute every lipid?
 # TODO make a careful memory analysis to free more memory
 # TODO incoportate new slices

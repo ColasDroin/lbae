@@ -30,12 +30,12 @@ def return_layout(basic_config, slice_index):
                 "lg": [
                     {"i": "page-5-card-hierarchy", "x": 0, "y": 0, "w": 6, "h": 15},
                     {"i": "page-5-card-atlas-sections", "x": 6, "y": 0, "w": 6, "h": 15},
-                    {"i": "page-5-card-atlas-3D", "x": 0, "y": 12, "w": 12, "h": 15},
+                    {"i": "page-5-card-atlas-3D", "x": 0, "y": 12, "w": 12, "h": 17},
                 ],
                 "md": [
                     {"i": "page-5-card-hierarchy", "x": 0, "y": 0, "w": 5, "h": 13},
                     {"i": "page-5-card-atlas-sections", "x": 6, "y": 0, "w": 5, "h": 13},
-                    {"i": "page-5-card-atlas-3D", "x": 6, "y": 10, "w": 10, "h": 13},
+                    {"i": "page-5-card-atlas-3D", "x": 6, "y": 10, "w": 10, "h": 15},
                 ],
                 "sm": [
                     {"i": "page-5-card-hierarchy", "x": 0, "y": 12, "w": 6, "h": 19},

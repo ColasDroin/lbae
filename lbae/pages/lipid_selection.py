@@ -48,14 +48,14 @@ def return_layout(basic_config, slice_index):
                 "lg": [
                     {"i": "page-2-card-heatmap", "x": 0, "y": 0, "w": 7, "h": 16},
                     {"i": "page-2-card-input-selection", "x": 8, "y": 12, "w": 12, "h": 4},
-                    {"i": "page-2-card-lipid-selection", "x": 8, "y": 4, "w": 5, "h": 9},
+                    {"i": "page-2-card-lipid-selection", "x": 8, "y": 4, "w": 5, "h": 11},
                     {"i": "page-2-card-range-selection", "x": 8, "y": 8, "w": 5, "h": 5},
                     {"i": "page-2-card-low-res", "x": 0, "y": 15, "w": 6, "h": N_LINES},
                     {"i": "page-2-card-high-res", "x": 6, "y": 15, "w": 6, "h": N_LINES},
                 ],
                 "md": [
                     {"i": "page-2-card-heatmap", "x": 0, "y": 0, "w": 6, "h": 14},
-                    {"i": "page-2-card-input-selection", "x": 6, "y": 0, "w": 4, "h": 4},
+                    {"i": "page-2-card-input-selection", "x": 6, "y": 12, "w": 6, "h": 4},
                     {"i": "page-2-card-lipid-selection", "x": 6, "y": 4, "w": 4, "h": 9},
                     {"i": "page-2-card-range-selection", "x": 6, "y": 8, "w": 4, "h": 6},
                     {"i": "page-2-card-low-res", "x": 0, "y": 14, "w": 5, "h": N_LINES},
@@ -1057,73 +1057,22 @@ def page_2_add_toast_selection(
                         for i, x in enumerate(data.get_annotations().iloc[l_lipid_loc_temp]["slice"] == slice_index)
                         if x
                     ]
+
                     # Fill list with first annotation that exists if it can't find one for the current slice
                     if len(l_lipid_loc) == 0:
                         l_lipid_loc = l_lipid_loc_temp[:1]
-            else:
-                return dash.no_update
 
-        elif id_input == "tab-2-dropdown-lipid-cations":
-            # Find lipid location
-            l_lipid_loc = (
-                data.get_annotations()
-                .index[
-                    (data.get_annotations()["name"] == name)
-                    & (data.get_annotations()["structure"] == structure)
-                    & (data.get_annotations()["slice"] == slice_index)
-                    & (data.get_annotations()["cation"] == cation)
-                ]
-                .tolist()
-            )
+                    # Record location and lipid name
+                    lipid_index = l_lipid_loc[0]
 
-        # If several lipids correspond to the selection, we have a problem...
-        if len(l_lipid_loc) > 1:
-            logging.warning("More than one lipid corresponds to the selection")
-            l_lipid_loc = [l_lipid_loc[-1]]
+                    # If lipid has already been selected before, replace the index
+                    if header_1 == header:
+                        lipid_1_index = lipid_index
+                    elif header_2 == header:
+                        lipid_2_index = lipid_index
+                    elif header_3 == header:
+                        lipid_3_index = lipid_index
 
-        if len(l_lipid_loc) < 1:
-            logging.warning("No lipid annotation exist")
-            return dash.normal
-        # Record location and lipid name
-        lipid_index = l_lipid_loc[0]
-        lipid_string = name + " " + structure + " " + cation
-
-        change_made = False
-
-        # If lipid has already been selected before, replace the index
-        if header_1 == lipid_string:
-            lipid_1_index = lipid_index
-            change_made = True
-        elif header_2 == lipid_string:
-            lipid_2_index = lipid_index
-            change_made = True
-        elif header_3 == lipid_string:
-            lipid_3_index = lipid_index
-            change_made = True
-
-        # If it's a new lipid selection, fill the first available header
-        if lipid_string not in [header_1, header_2, header_2]:
-
-            # Check first slot available
-            if not bool_toast_1:
-                header_1 = lipid_string
-                lipid_1_index = lipid_index
-                bool_toast_1 = True
-            elif not bool_toast_2:
-                header_2 = lipid_string
-                lipid_2_index = lipid_index
-                bool_toast_2 = True
-            elif not bool_toast_3:
-                header_3 = lipid_string
-                lipid_3_index = lipid_index
-                bool_toast_3 = True
-            else:
-                logging.warning("More than 3 lipids have been selected")
-                return dash.no_update
-            change_made = True
-
-        if change_made:
-            logging.info("Changes have been made to the lipid selection or indexation, propagating callback.")
             return (
                 header_1,
                 header_2,
@@ -1138,8 +1087,85 @@ def page_2_add_toast_selection(
                 None,
                 None,
             )
-        else:
-            return dash.no_update
+
+        elif id_input == "tab-2-dropdown-lipid-cations":
+            # Find lipid location
+            l_lipid_loc = (
+                data.get_annotations()
+                .index[
+                    (data.get_annotations()["name"] == name)
+                    & (data.get_annotations()["structure"] == structure)
+                    & (data.get_annotations()["slice"] == slice_index)
+                    & (data.get_annotations()["cation"] == cation)
+                ]
+                .tolist()
+            )
+
+            # If several lipids correspond to the selection, we have a problem...
+            if len(l_lipid_loc) > 1:
+                logging.warning("More than one lipid corresponds to the selection")
+                l_lipid_loc = [l_lipid_loc[-1]]
+
+            if len(l_lipid_loc) < 1:
+                logging.warning("No lipid annotation exist")
+                return dash.no_update
+
+            # Record location and lipid name
+            lipid_index = l_lipid_loc[0]
+            lipid_string = name + " " + structure + " " + cation
+
+            change_made = False
+
+            # If lipid has already been selected before, replace the index
+            if header_1 == lipid_string:
+                lipid_1_index = lipid_index
+                change_made = True
+            elif header_2 == lipid_string:
+                lipid_2_index = lipid_index
+                change_made = True
+            elif header_3 == lipid_string:
+                lipid_3_index = lipid_index
+                change_made = True
+
+            # If it's a new lipid selection, fill the first available header
+            if lipid_string not in [header_1, header_2, header_2]:
+
+                # Check first slot available
+                if not bool_toast_1:
+                    header_1 = lipid_string
+                    lipid_1_index = lipid_index
+                    bool_toast_1 = True
+                elif not bool_toast_2:
+                    header_2 = lipid_string
+                    lipid_2_index = lipid_index
+                    bool_toast_2 = True
+                elif not bool_toast_3:
+                    header_3 = lipid_string
+                    lipid_3_index = lipid_index
+                    bool_toast_3 = True
+                else:
+                    logging.warning("More than 3 lipids have been selected")
+                    return dash.no_update
+                change_made = True
+
+            if change_made:
+                logging.info("Changes have been made to the lipid selection or indexation, propagating callback.")
+                return (
+                    header_1,
+                    header_2,
+                    header_3,
+                    lipid_1_index,
+                    lipid_2_index,
+                    lipid_3_index,
+                    bool_toast_1,
+                    bool_toast_2,
+                    bool_toast_3,
+                    None,
+                    None,
+                    None,
+                )
+            else:
+                return dash.no_update
 
     return dash.no_update
 
