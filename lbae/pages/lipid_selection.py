@@ -10,6 +10,7 @@ import pandas as pd
 from dash.dependencies import Input, Output, State
 import dash_draggable
 import numpy as np
+import dash_mantine_components as dmc
 
 # Homemade modules
 from lbae.app import figures, data
@@ -38,27 +39,31 @@ def return_layout(basic_config, slice_index):
                 # nb columns go 12->10->6->4->2
                 "xxl": [
                     {"i": "page-2-card-heatmap", "x": 0, "y": 0, "w": 7, "h": 20},
-                    {"i": "page-2-card-lipid-selection", "x": 8, "y": 0, "w": 5, "h": 13},
-                    {"i": "page-2-card-range-selection", "x": 8, "y": 8, "w": 5, "h": 7},
+                    {"i": "page-2-card-input-selection", "x": 8, "y": 0, "w": 5, "h": 4},
+                    {"i": "page-2-card-lipid-selection", "x": 8, "y": 4, "w": 5, "h": 11},
+                    {"i": "page-2-card-range-selection", "x": 8, "y": 8, "w": 5, "h": 5},
                     {"i": "page-2-card-low-res", "x": 0, "y": 15, "w": 6, "h": N_LINES},
                     {"i": "page-2-card-high-res", "x": 6, "y": 15, "w": 6, "h": N_LINES},
                 ],
                 "lg": [
                     {"i": "page-2-card-heatmap", "x": 0, "y": 0, "w": 7, "h": 16},
-                    {"i": "page-2-card-lipid-selection", "x": 8, "y": 0, "w": 5, "h": 11},
+                    {"i": "page-2-card-input-selection", "x": 8, "y": 12, "w": 12, "h": 4},
+                    {"i": "page-2-card-lipid-selection", "x": 8, "y": 4, "w": 5, "h": 9},
                     {"i": "page-2-card-range-selection", "x": 8, "y": 8, "w": 5, "h": 5},
                     {"i": "page-2-card-low-res", "x": 0, "y": 15, "w": 6, "h": N_LINES},
                     {"i": "page-2-card-high-res", "x": 6, "y": 15, "w": 6, "h": N_LINES},
                 ],
                 "md": [
                     {"i": "page-2-card-heatmap", "x": 0, "y": 0, "w": 6, "h": 14},
-                    {"i": "page-2-card-lipid-selection", "x": 6, "y": 0, "w": 4, "h": 12},
+                    {"i": "page-2-card-input-selection", "x": 6, "y": 0, "w": 4, "h": 4},
+                    {"i": "page-2-card-lipid-selection", "x": 6, "y": 4, "w": 4, "h": 9},
                     {"i": "page-2-card-range-selection", "x": 6, "y": 8, "w": 4, "h": 6},
                     {"i": "page-2-card-low-res", "x": 0, "y": 14, "w": 5, "h": N_LINES},
                     {"i": "page-2-card-high-res", "x": 5, "y": 14, "w": 5, "h": N_LINES},
                 ],
                 "sm": [
                     {"i": "page-2-card-heatmap", "x": 0, "y": 0, "w": 6, "h": 19},
+                    {"i": "page-2-card-input-selection", "x": 0, "y": 10, "w": 6, "h": 4},
                     {"i": "page-2-card-lipid-selection", "x": 0, "y": 19, "w": 6, "h": 11},
                     {"i": "page-2-card-range-selection", "x": 0, "y": 19 + 7, "w": 6, "h": 5},
                     {"i": "page-2-card-low-res", "x": 0, "y": 19 + 7 + 5, "w": 6, "h": N_LINES},
@@ -66,6 +71,7 @@ def return_layout(basic_config, slice_index):
                 ],
                 "xs": [
                     {"i": "page-2-card-heatmap", "x": 0, "y": 0, "w": 4, "h": 14},
+                    {"i": "page-2-card-input-selection", "x": 0, "y": 4, "w": 4, "h": 4},
                     {"i": "page-2-card-lipid-selection", "x": 0, "y": 0, "w": 4, "h": 11},
                     {"i": "page-2-card-range-selection", "x": 0, "y": 14 + 7, "w": 4, "h": 5},
                     {"i": "page-2-card-low-res", "x": 0, "y": 14 + 7 + 5, "w": 4, "h": N_LINES},
@@ -73,6 +79,7 @@ def return_layout(basic_config, slice_index):
                 ],
                 "xxs": [
                     {"i": "page-2-card-heatmap", "x": 0, "y": 0, "w": 2, "h": 9},
+                    {"i": "page-2-card-input-selection", "x": 0, "y": 4, "w": 2, "h": 4},
                     {"i": "page-2-card-lipid-selection", "x": 0, "y": 0, "w": 2, "h": 10},
                     {"i": "page-2-card-range-selection", "x": 0, "y": 9 + 7, "w": 2, "h": 5},
                     {"i": "page-2-card-low-res", "x": 0, "y": 9 + 7 + 5, "w": 2, "h": N_LINES},
@@ -120,7 +127,7 @@ def return_layout(basic_config, slice_index):
                                                         "left": "0",
                                                     },
                                                     figure=figures.compute_heatmap_per_mz(
-                                                        slice_index, 600, 800, binary_string=False
+                                                        slice_index, 600, 605, binary_string=False
                                                     ),
                                                 ),
                                             ],
@@ -183,6 +190,33 @@ def return_layout(basic_config, slice_index):
                                             ],
                                         ),
                                     ],
+                                ),
+                            ],
+                        ),
+                    ],
+                ),
+                dbc.Card(
+                    style={"maxWidth": "100%", "margin": "0 auto", "width": "100%", "height": "100%"},
+                    # className="mt-4",
+                    id="page-2-card-input-selection",
+                    children=[
+                        dbc.CardHeader("Input selection"),
+                        dbc.CardBody(
+                            className="pt-0 mt-3",
+                            children=[
+                                dbc.RadioItems(
+                                    options=[
+                                        {"label": "Lipid selection colormap", "value": 0},
+                                        {"label": "Lipid selection RGB", "value": 1},
+                                        {"label": "m/z boundaries", "value": 3},
+                                        {"label": "m/z range", "value": 2},
+                                        {"label": "Selection from low-res m/z graph", "value": 5},
+                                        {"label": "Selection from high-res m/z graph", "value": 4},
+                                    ],
+                                    value=3,
+                                    id="page-2-radioitems-input",
+                                    inline=True,
+                                    # className="pb-1 mt-0 pt-0",
                                 ),
                             ],
                         ),
@@ -347,8 +381,12 @@ def return_layout(basic_config, slice_index):
                                 ),
                                 dbc.InputGroup(
                                     [
-                                        dbc.Input(id="page-2-lower-bound", placeholder="Lower bound (m/z value)"),
-                                        dbc.Input(id="page-2-upper-bound", placeholder="Upper bound (m/z value)"),
+                                        dbc.Input(
+                                            id="page-2-lower-bound", placeholder="Lower bound (m/z value)", value=600
+                                        ),
+                                        dbc.Input(
+                                            id="page-2-upper-bound", placeholder="Upper bound (m/z value)", value=605
+                                        ),
                                         # dbc.InputGroupAddon(
                                         dbc.Button("Display", id="page-2-button-bounds", n_clicks=0, color="primary",),
                                         #    addon_type="prepend",
@@ -454,6 +492,7 @@ def page_2_update_graph_heatmap_mz_selection(slice_index):
 # Function to plot page-2-graph-heatmap-mz-selection when its state get updated
 @app.app.callback(
     Output("page-2-graph-heatmap-mz-selection", "figure"),
+    Output("page-2-radioitems-input", "value"),
     Input("main-slider", "value"),
     Input("boundaries-high-resolution-mz-plot", "data"),
     Input("boundaries-low-resolution-mz-plot", "data"),
@@ -468,6 +507,7 @@ def page_2_update_graph_heatmap_mz_selection(slice_index):
     State("page-2-upper-bound", "value"),
     State("page-2-mz-value", "value"),
     State("page-2-mz-range", "value"),
+    State("page-2-radioitems-input", "value"),
 )
 def page_2_plot_graph_heatmap_mz_selection(
     slice_index,
@@ -485,40 +525,45 @@ def page_2_plot_graph_heatmap_mz_selection(
     hb,
     mz,
     mz_range,
-    # fig,
+    graph_input,
 ):
     logging.info("Entering function to plot heatmap or RGB depending on lipid selection")
     # Find out which input triggered the function
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
 
     # case a mz value and a manual range have been inputed
-    if id_input == "page-2-button-range":
-        mz = float(mz)
-        mz_range = float(mz_range)
-        if mz > 400 and mz < 1200 and mz_range < 10:
-            # ? Could I not use return_heatmap_per_lipid_selection instead ?
-            return figures.compute_heatmap_per_mz(
-                slice_index, mz - mz_range / 2, mz + mz_range / 2, binary_string=False
-            )
-        else:
-            return dash.no_update
+    if id_input == "page-2-button-range" or (id_input == "main-slider" and graph_input == 2):
+        if mz is not None and mz_range is not None:
+            mz = float(mz)
+            mz_range = float(mz_range)
+            if mz > 400 and mz < 1200 and mz_range < 10:
+                # ? Could I not use return_heatmap_per_lipid_selection instead ?
+                return (
+                    figures.compute_heatmap_per_mz(
+                        slice_index, mz - mz_range / 2, mz + mz_range / 2, binary_string=False
+                    ),
+                    2,
+                )
+
+        return dash.no_update
 
     # case a two mz bounds values have been inputed
-    elif id_input == "page-2-button-bounds":
-        lb, hb = float(lb), float(hb)
-        if lb > 400 and hb < 1200 and hb - lb > 0 and hb - lb < 10:
-            return figures.compute_heatmap_per_mz(slice_index, lb, hb, binary_string=False)
-        else:
-            return dash.no_update
+    elif id_input == "page-2-button-bounds" or (id_input == "main-slider" and graph_input == 3):
+        if lb is not None and hb is not None:
+            lb, hb = float(lb), float(hb)
+            if lb > 400 and hb < 1200 and hb - lb > 0 and hb - lb < 10:
+                return figures.compute_heatmap_per_mz(slice_index, lb, hb, binary_string=False), 3
+
+        return dash.no_update
 
     # If a lipid selection has been done
-    elif (
+    if (
         id_input == "page-2-selected-lipid-1"
         or id_input == "page-2-selected-lipid-2"
         or id_input == "page-2-selected-lipid-3"
         or id_input == "tab-2-rgb-button"
         or id_input == "tab-2-colormap-button"
-        or id_input == "main-slider"
+        or (id_input == "main-slider" and (graph_input == 0 or graph_input == 1))
     ):
         if lipid_1_index >= 0 or lipid_2_index >= 0 or lipid_3_index >= 0:
 
@@ -530,7 +575,6 @@ def page_2_plot_graph_heatmap_mz_selection(
                 for index in [lipid_1_index, lipid_2_index, lipid_3_index]
             ]
 
-            print(ll_lipid_bounds)
             # Check that annotations do not intercept with each other
             l_lipid_bounds_clean = [
                 x for l_lipid_bounds in ll_lipid_bounds if l_lipid_bounds is not None for x in l_lipid_bounds
@@ -542,13 +586,13 @@ def page_2_plot_graph_heatmap_mz_selection(
                     if t_bounds_1[1] > t_bounds_2[0]:
                         logging.warning("Some pixel annotations intercept each other")
 
-            if id_input == "tab-2-colormap-button":
-                return figures.compute_heatmap_per_lipid_selection(slice_index, ll_lipid_bounds)
-            elif id_input == "tab-2-rgb-button":
-                return figures.compute_rgb_image_per_lipid_selection(slice_index, ll_lipid_bounds)
+            if id_input == "tab-2-colormap-button" or (id_input == "main-slider" and graph_input == 0):
+                return figures.compute_heatmap_per_lipid_selection(slice_index, ll_lipid_bounds), 0
+            elif id_input == "tab-2-rgb-button" or (id_input == "main-slider" and graph_input == 1):
+                return figures.compute_rgb_image_per_lipid_selection(slice_index, ll_lipid_bounds), 1
             else:
                 logging.info("Right before calling the graphing function")
-                return figures.compute_rgb_image_per_lipid_selection(slice_index, ll_lipid_bounds)
+                return figures.compute_rgb_image_per_lipid_selection(slice_index, ll_lipid_bounds), 1
 
         else:
             # probably the page has just been loaded, so do nothing
@@ -556,20 +600,29 @@ def page_2_plot_graph_heatmap_mz_selection(
             return dash.no_update
 
     # Case trigger is range slider from high resolution spectrum
-    elif id_input == "boundaries-high-resolution-mz-plot" and bound_high_res is not None:
-        bound_high_res = json.loads(bound_high_res)
-        return figures.compute_heatmap_per_mz(slice_index, bound_high_res[0], bound_high_res[1], binary_string=False)
+    if id_input == "boundaries-high-resolution-mz-plot" or (id_input == "main-slider" and graph_input == 4):
+        if bound_high_res is not None:
+            bound_high_res = json.loads(bound_high_res)
+            return (
+                figures.compute_heatmap_per_mz(slice_index, bound_high_res[0], bound_high_res[1], binary_string=False),
+                4,
+            )
 
     # Case trigger is range slider from low resolution spectrum
-    elif id_input == "boundaries-low-resolution-mz-plot" and bound_low_res is not None:
-        bound_low_res = json.loads(bound_low_res)
-        return figures.compute_heatmap_per_mz(
-            slice_index, bound_low_res[0], bound_low_res[1], binary_string=False, heatmap=False, plot_contours=False
-        )
-
-    # Case colormap changed (hidden for now)
-    # elif id_input == "tab-2-colormap-switch":
-    #    return dash.no_update
+    if id_input == "boundaries-low-resolution-mz-plot" or (id_input == "main-slider" and graph_input == 5):
+        if bound_low_res is not None:
+            bound_low_res = json.loads(bound_low_res)
+            return (
+                figures.compute_heatmap_per_mz(
+                    slice_index,
+                    bound_low_res[0],
+                    bound_low_res[1],
+                    binary_string=False,
+                    heatmap=False,
+                    plot_contours=False,
+                ),
+                5,
+            )
 
     # If no trigger, it means the page has just been loaded, so load new figure with default parameters
     else:
@@ -592,6 +645,8 @@ def page_2_plot_graph_heatmap_mz_selection(
     State("page-2-upper-bound", "value"),
     State("page-2-mz-value", "value"),
     State("page-2-mz-range", "value"),
+    State("page-2-radioitems-input", "value"),
+    State("page-2-graph-low-resolution-spectrum", "relayoutData"),
 )
 def tab_2_plot_graph_low_res_spectrum(
     slice_index,
@@ -606,6 +661,8 @@ def tab_2_plot_graph_low_res_spectrum(
     hb,
     mz,
     mz_range,
+    graph_input,
+    relayoutData,
 ):
 
     # Find out which input triggered the function
@@ -618,7 +675,7 @@ def tab_2_plot_graph_low_res_spectrum(
         or id_input == "page-2-selected-lipid-3"
         or id_input == "tab-2-rgb-button"
         or id_input == "tab-2-colormap-button"
-        or id_input == "main-slider"
+        or (id_input == "main-slider" and (graph_input == 0 or graph_input == 1))
     ):
 
         if lipid_1_index >= 0 or lipid_2_index >= 0 or lipid_3_index >= 0:
@@ -637,23 +694,24 @@ def tab_2_plot_graph_low_res_spectrum(
             return dash.no_update
             # return figures.compute_spectrum_low_res(slice_index,)
 
-    elif id_input == "page-2-button-range":
+    elif id_input == "page-2-button-range" or (id_input == "main-slider" and graph_input == 2):
         mz = float(mz)
         mz_range = float(mz_range)
         if mz > 400 and mz < 1200 and mz_range < 10:
             l_lipid_bounds = [(mz - mz_range / 2, mz + mz_range / 2), None, None]
             return figures.compute_spectrum_low_res(slice_index, l_lipid_bounds)
 
-    elif id_input == "page-2-button-bounds":
+    elif id_input == "page-2-button-bounds" or (id_input == "main-slider" and graph_input == 3):
         lb, hb = float(lb), float(hb)
         if lb > 400 and hb < 1200 and hb - lb > 0 and hb - lb < 10:
             l_lipid_bounds = [(lb, hb), None, None]
             return figures.compute_spectrum_low_res(slice_index, l_lipid_bounds)
 
-    # If no trigger, it means the page has just been loaded, so load new figure with default parameters
-    else:
-        # return figures.compute_spectrum_low_res(slice_index,)
-        return dash.no_update
+    elif id_input == "main-slider" and graph_input == 5:
+        # TODO : find a way to set relayoutdata properly
+        pass
+
+    return dash.no_update
 
 
 # Function to update the dcc store boundaries-low-resolution-mz-plot from
@@ -702,6 +760,7 @@ def page_2_store_boundaries_mz_from_graph_low_res_spectrum(relayoutData, slice_i
     State("page-2-upper-bound", "value"),
     State("page-2-mz-value", "value"),
     State("page-2-mz-range", "value"),
+    State("page-2-radioitems-input", "value"),
 )
 def page_2_plot_graph_high_res_spectrum(
     slice_index,
@@ -717,6 +776,7 @@ def page_2_plot_graph_high_res_spectrum(
     hb,
     mz,
     mz_range,
+    graph_input,
 ):
 
     # Find out which input triggered the function
@@ -730,7 +790,7 @@ def page_2_plot_graph_high_res_spectrum(
         or id_input == "tab-2-rgb-button"
         or id_input == "tab-2-colormap-button"
         or id_input == "page-2-last-selected-lipids"
-        or id_input == "main-slider"
+        or (id_input == "main-slider" and (graph_input == 0 or graph_input == 1))
     ):
         if lipid_1_index >= 0 or lipid_2_index >= 0 or lipid_3_index >= 0:
 
@@ -756,7 +816,7 @@ def page_2_plot_graph_high_res_spectrum(
                 force_xlim=True,
             )
 
-    elif id_input == "page-2-button-range":
+    elif id_input == "page-2-button-range" or (id_input == "main-slider" and graph_input == 2):
         mz = float(mz)
         mz_range = float(mz_range)
         if mz > 400 and mz < 1200 and mz_range < 10:
@@ -769,7 +829,7 @@ def page_2_plot_graph_high_res_spectrum(
                 force_xlim=True,
             )
 
-    elif id_input == "page-2-button-bounds":
+    elif id_input == "page-2-button-bounds" or (id_input == "main-slider" and graph_input == 3):
         lb, hb = float(lb), float(hb)
         if lb > 400 and hb < 1200 and hb - lb > 0 and hb - lb < 10:
             # l_lipid_bounds = [(lb, hb), None, None]
@@ -1021,11 +1081,15 @@ def page_2_add_toast_selection(
             logging.warning("More than one lipid corresponds to the selection")
             l_lipid_loc = [l_lipid_loc[-1]]
 
+        if len(l_lipid_loc) < 1:
+            logging.warning("No lipid annotation exist")
+            return dash.normal
         # Record location and lipid name
         lipid_index = l_lipid_loc[0]
         lipid_string = name + " " + structure + " " + cation
 
         change_made = False
+
         # If lipid has already been selected before, replace the index
         if header_1 == lipid_string:
             lipid_1_index = lipid_index

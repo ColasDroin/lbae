@@ -30,22 +30,22 @@ def return_layout(basic_config, slice_index):
                 "lg": [
                     {"i": "page-5-card-hierarchy", "x": 0, "y": 0, "w": 6, "h": 15},
                     {"i": "page-5-card-atlas-sections", "x": 6, "y": 0, "w": 6, "h": 15},
-                    {"i": "page-5-card-atlas-3D", "x": 0, "y": 12, "w": 12, "h": 14},
+                    {"i": "page-5-card-atlas-3D", "x": 0, "y": 12, "w": 12, "h": 15},
                 ],
                 "md": [
                     {"i": "page-5-card-hierarchy", "x": 0, "y": 0, "w": 5, "h": 13},
                     {"i": "page-5-card-atlas-sections", "x": 6, "y": 0, "w": 5, "h": 13},
-                    {"i": "page-5-card-atlas-3D", "x": 6, "y": 10, "w": 10, "h": 12},
+                    {"i": "page-5-card-atlas-3D", "x": 6, "y": 10, "w": 10, "h": 13},
                 ],
                 "sm": [
                     {"i": "page-5-card-hierarchy", "x": 0, "y": 12, "w": 6, "h": 19},
                     {"i": "page-5-card-atlas-sections", "x": 0, "y": 0, "w": 6, "h": 19},
-                    {"i": "page-5-card-atlas-3D", "x": 0, "y": 12 + 12, "w": 6, "h": 14},
+                    {"i": "page-5-card-atlas-3D", "x": 0, "y": 12 + 12, "w": 6, "h": 15},
                 ],
                 "xs": [
                     {"i": "page-5-card-hierarchy", "x": 0, "y": 10, "w": 4, "h": 12},
                     {"i": "page-5-card-atlas-sections", "x": 0, "y": 0, "w": 4, "h": 12},
-                    {"i": "page-5-card-atlas-3D", "x": 0, "y": 10 + 10, "w": 4, "h": 12},
+                    {"i": "page-5-card-atlas-3D", "x": 0, "y": 10 + 10, "w": 4, "h": 14},
                 ],
                 "xxs": [
                     {"i": "page-5-card-hierarchy", "x": 0, "y": 6, "w": 2, "h": 6},
@@ -103,7 +103,7 @@ def return_layout(basic_config, slice_index):
                 dbc.Card(
                     id="page-5-card-atlas-sections",
                     style={"maxWidth": "100%", "margin": "0 auto", "width": "100%", "height": "100%"},
-                    className="mt-2",
+                    # className="mt-2",
                     children=[
                         dbc.CardHeader(
                             className="d-flex",

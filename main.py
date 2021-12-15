@@ -35,12 +35,13 @@ if __name__ == "__main__":
 # To run the app from the server, use the following command in the base lbae folder:
 # gunicorn main:server -b:8050 --workers=1
 
-# TODO recompute mask with greyscale images
 # TODO Make a radiobutton input choice for the lipid selection page
-# TODO debug manual region selection page
+# TODO debug/accelerate manual region selection page
+# TODO make manuael region selection page responsive
 # TODO accelerate Lipid selection per Slice in 2D and maybe 3D if possible, maybe precompute every lipid?
-# TODO make a careful memory analysis
-# TODO write missing docstrings
+# TODO make a careful memory analysis to free more memory
+# TODO incoportate new slices
 # TODO have the documentation always open on the right on very big screens to fill emptyness
 # TODO (if I have time) make mask hovering client side in javascript
 # TODO when everything is stable, create a function that delete all pickle files and repickle everything automatically
+# TODO write missing docstrings

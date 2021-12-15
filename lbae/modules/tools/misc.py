@@ -107,7 +107,7 @@ def convert_image_to_base64(
             # ? Caution, palette-based may not work or cause bug
             # Convert to paletted image to save space
             if binary:
-                pil_img = pil_img.convert("L")
+                pil_img = pil_img.convert("LA")
             else:
                 pil_img = pil_img.convert("P")
             # Optimize the quality as the figure will be pickled, so this line of code won't run live
