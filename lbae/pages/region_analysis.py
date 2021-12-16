@@ -1132,6 +1132,7 @@ def page_3_load_path(clicked_compute, cliked_reset, url, relayoutData, slice_ind
         if relayoutData is not None:
             if "shapes" in relayoutData:
                 if len(relayoutData["shapes"]) > 0 and len(relayoutData["shapes"]) <= 4:
+                    logging.info("Starting to compute path")
                     l_paths = []
                     for shape in relayoutData["shapes"]:
                         if "path" in shape:
@@ -1158,6 +1159,8 @@ def page_3_load_path(clicked_compute, cliked_reset, url, relayoutData, slice_ind
                             if len(path) > 0:
                                 path.append(path[0])  # to close the path
                             l_paths.append(path)
+
+                    logging.info("Returning path")
                     return l_paths, True
 
     return dash.no_update
@@ -1205,6 +1208,7 @@ def page_3_record_spectra(
         return [], False
 
     elif id_input == "page-3-button-compute-spectra":
+        logging.info("Starting to compute spectrum")
         l_spectra = []
         idx_mask = -1
         idx_path = -1
@@ -1215,13 +1219,6 @@ def page_3_record_spectra(
                 idx_mask += 1
                 try:
                     mask_name = l_mask_name[idx_mask]
-                    dic_name_id = return_pickled_object(
-                        "atlas/atlas_objects",
-                        "hierarchy",
-                        force_update=False,
-                        compute_function=atlas.compute_hierarchy_list,
-                    )[2]
-                    id_mask = dic_name_id[mask_name]
                     dic_masks = return_pickled_object(
                         "atlas/atlas_objects",
                         "dic_masks_and_spectra",
@@ -1231,9 +1228,8 @@ def page_3_record_spectra(
                     )
                     if mask_name in dic_masks:
                         grah_scattergl_data = dic_masks[mask_name][1]
-
                 except:
-                    print("Bug, the selected mask does't exist")
+                    logging.warning("Bug, the selected mask does't exist")
                     return dash.no_update
             elif shape[0] == "shape":
                 idx_path += 1
@@ -1254,10 +1250,10 @@ def page_3_record_spectra(
                             zeros_extend=False,
                         )
                 except:
-                    print("Bug, the selected path does't exist")
+                    logging.warning("Bug, the selected path does't exist")
                     return dash.no_update
             else:
-                print("Bug, the shape type doesn't exit")
+                logging.warning("Bug, the shape type doesn't exit")
 
             # Do the selected transformations
             if grah_scattergl_data is not None:
@@ -1289,6 +1285,7 @@ def page_3_record_spectra(
                 l_spectra.append(grah_scattergl_data)
 
         if l_spectra != []:
+            logging.info("Spectra computed, returning it now")
             return l_spectra, True
 
     return [], False
@@ -1324,6 +1321,7 @@ def page_3_plot_spectrum(cliked_reset, l_spectra, slice_index):
     # do nothing if l_spectra is None or []
     elif id_input == "dcc-store-list-mz-spectra":
         if len(l_spectra) > 0:
+            logging.info("Starting spectra plotting now")
             fig_mz = go.Figure()
             ll_idx_labels = []
 
@@ -1429,6 +1427,7 @@ def page_3_plot_spectrum(cliked_reset, l_spectra, slice_index):
                 legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1.1),
             )
 
+            logging.info("Spectra plotted. Returning it now")
             return fig_mz, ll_idx_labels, True
 
     return dash.no_update
@@ -1471,6 +1470,8 @@ def page_3_draw_heatmap_per_lipid_selection(
         or id_input == "page-3-scale-by-mean-switch"
         or id_input == "page-4-slider"
     ):
+
+        logging.info("Starting computing heatmap now")
 
         # Correct for selector values
         if len(sort_switch) > 0:
@@ -1516,9 +1517,6 @@ def page_3_draw_heatmap_per_lipid_selection(
                 df_avg_intensity_lipids = pd.DataFrame.from_dict(
                     dic_avg_lipids, orient="index", columns=[l_sel[i] for i in range(n_sel)]
                 )
-
-                # print("ici", ll_lipids_idx[0])
-                # print("ICI", df_avg_intensity_lipids)
 
                 # Exclude very lowly expressed lipids
                 df_min_expression = df_avg_intensity_lipids.min(axis=1)
@@ -1570,6 +1568,7 @@ def page_3_draw_heatmap_per_lipid_selection(
                 )
                 fig_heatmap_lipids = figures.return_heatmap_lipid(fig_heatmap_lipids)
 
+                logging.info("Heatmap computed. Returning it now")
                 return fig_heatmap_lipids, l_idx_lipids, True
 
     return dash.no_update
@@ -1652,6 +1651,7 @@ def page_3_fill_dropdown_options(l_idx_lipids, cliked_reset, slice_index, n_clic
     elif id_input == "page-3-dcc-store-lipids-region":
         if l_idx_lipids is not None:
             if len(l_idx_lipids) > 0:
+                logging.info("Starting computing lipid dropdown now.")
                 df_names = data.get_annotations()[data.get_annotations()["slice"] == slice_index]
                 l_names = [
                     df_names.iloc[idx]["name"]
@@ -1669,6 +1669,7 @@ def page_3_fill_dropdown_options(l_idx_lipids, cliked_reset, slice_index, n_clic
                 if n_clicks is None:
                     n_clicks = 0
                 if len(options) > 0:
+                    logging.info("Dropdown values computed. Updating it with new lipids now.")
                     return (
                         options,
                         options,
@@ -1755,7 +1756,7 @@ def draw_modal_graph(
     # Find out which input triggered the function
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
 
-    logging.info(id_input)
+    logging.info("Modal graph function triggered with input " + str(id_input))
 
     # Delete everything when clicking reset or changing slice index
     if id_input == "page-3-reset-button" or id_input == "main-slider":
@@ -1764,7 +1765,7 @@ def draw_modal_graph(
 
     # Check that at least one lipid has been selected
     if len(l_red_lipids + l_green_lipids + l_blue_lipids) > 0:
-        logging.info("At least one lipid has been selected, plotting graph now.")
+        logging.info("At least one lipid has been selected, starting computing modal graph now.")
         df_names = data.get_annotations()[data.get_annotations()["slice"] == slice_index]
         # Build the list of mz boundaries for each peak
         l_lipid_bounds = [
@@ -1792,7 +1793,7 @@ def draw_modal_graph(
                 fig["layout"]["shapes"] = tuple(l_draw)
                 # else:
                 #    fig["layout"]["shapes"] = tuple(list(fig["layout"]["shapes"]).append(draw))
-
+        logging.info("Modal graph computed. Returning it now")
         return fig, True
 
     logging.info("No lipid were selected, ignoring update.")
