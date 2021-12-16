@@ -26,7 +26,6 @@ def return_layout(basic_config, slice_index):
         isResizable=False,
         containerPadding=[2, 2],
         breakpoints={"xxl": 1600, "lg": 1200, "md": 996, "sm": 768, "xs": 480, "xxs": 0},
-        ncols={"xxl": 6, "lg": 6, "md": 5, "sm": 3, "xs": 4, "xxs": 2},
         gridCols={"xxl": 12, "lg": 12, "md": 10, "sm": 6, "xs": 4, "xxs": 2},
         layouts={
             # x sets the lateral position, y the vertical one, w is in columns (whose size depends on the dimension), h is in rows (30px)

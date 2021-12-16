@@ -10,6 +10,7 @@ import numpy as np
 import pandas as pd
 import logging
 import copy
+import dash_draggable
 
 # Homemade modules
 from lbae import app
@@ -26,590 +27,587 @@ from lbae.modules.tools.spectra import (
     compute_avg_intensity_per_lipid,
 )
 
-HEIGHT_PLOTS = 280
+HEIGHT_PLOTS = 300
 N_LINES = int(np.ceil(HEIGHT_PLOTS / 30))
-
 
 ###### DEFFINE PAGE LAYOUT ######
 
 
 def return_layout(basic_config, slice_index=1):
 
-    page = html.Div(
-        children=[
-            ### First row
-            dbc.Row(
-                justify="center",
-                children=[
-                    ## First column
-                    dbc.Col(
-                        # xl=6,
-                        xs=12,
-                        md=12,
-                        lg=12,
-                        xl=12,
-                        xxl=11,
-                        children=[
-                            dbc.Card(
-                                style={"maxWidth": "100%", "margin": "0 auto"},
-                                children=[
-                                    dbc.CardHeader(
-                                        className="d-flex justify-content-between",
-                                        children=[
-                                            html.Div(
-                                                id="page-3-toast-graph-heatmap-mz-selection", children="Brain slice n°"
-                                            ),
-                                        ],
-                                    ),
-                                    dbc.CardBody(
-                                        className="loading-wrapper pt-0 mt-0 pb-0 mb-1 px-0 mx-0",
-                                        children=[
-                                            ### First nested row
-                                            dbc.Row(
-                                                justify="center",
-                                                children=[
-                                                    ## First column of nested row
-                                                    dbc.Col(
-                                                        width=4,
-                                                        className="mt-1 pt-0",
-                                                        children=[
-                                                            html.Div(
-                                                                className="page-1-fixed-aspect-ratio",
-                                                                children=[
-                                                                    dcc.Graph(
-                                                                        id="page-3-graph-atlas-per-sel",
-                                                                        config=basic_config
-                                                                        | {"displayModeBar": False},
-                                                                        style={
-                                                                            "width": "100%",
-                                                                            "height": "100%",
-                                                                            "position": "absolute",
-                                                                            "left": "0",
-                                                                        },
-                                                                        figure=return_pickled_object(
-                                                                            "figures/load_page",
-                                                                            "figure_basic_image",
-                                                                            force_update=False,
-                                                                            compute_function=figures.compute_figure_basic_image,
-                                                                            type_figure=None,
-                                                                            index_image=slice_index - 1,
-                                                                            plot_atlas_contours=True,
-                                                                            only_contours=True,
-                                                                        ),
-                                                                    ),
-                                                                    html.P(
-                                                                        "Hovered region: ",
-                                                                        id="page-3-graph-atlas-hover-text",
-                                                                        className="text-warning font-weight-bold position-absolute",
-                                                                        style={"left": "15%", "top": "1em"},
-                                                                    ),
-                                                                ],
-                                                            ),
-                                                            ### First nested row
-                                                            dbc.Row(
-                                                                justify="center",
-                                                                className="d-flex align-items-center mt-1 pt-0",
-                                                                children=[
-                                                                    ## First column of nested row
-                                                                    dbc.Col(
-                                                                        width=12,
-                                                                        className="d-flex justify-content-center",
-                                                                        children=[
-                                                                            html.Div(
-                                                                                style={
-                                                                                    "width": "80%",
-                                                                                },  # "minWidth": "8em",},
-                                                                                children=dcc.Dropdown(
-                                                                                    id="page-3-dropdown-brain-regions",
-                                                                                    options=[
-                                                                                        {"label": node, "value": node}
-                                                                                        for node in return_pickled_object(
-                                                                                            "atlas/atlas_objects",
-                                                                                            "hierarchy",
-                                                                                            force_update=False,
-                                                                                            compute_function=atlas.compute_hierarchy_list,
-                                                                                        )[
-                                                                                            0
-                                                                                        ]
-                                                                                    ],
-                                                                                    placeholder="Click on brain regions above.",
-                                                                                    multi=True,
-                                                                                    clearable=False,
-                                                                                    disabled=True,
-                                                                                    # className="ml-5",
-                                                                                ),
-                                                                            ),
-                                                                        ],
-                                                                    ),
-                                                                    ## Second column of nested row
-                                                                    dbc.Col(
-                                                                        width=12,
-                                                                        className="d-flex justify-content-center mt-1",
-                                                                        children=[
-                                                                            html.Div(
-                                                                                className="d-grid gap-2 col-10 mx-auto",
-                                                                                children=[
-                                                                                    dbc.Button(
-                                                                                        children="Compute spectra",
-                                                                                        id="page-3-button-compute-spectra",
-                                                                                        disabled=True,
-                                                                                        className="",
-                                                                                        color="primary",
-                                                                                    ),
-                                                                                ],
-                                                                            ),
-                                                                        ],
-                                                                    ),
-                                                                    ## Third column of nested row
-                                                                    dbc.Col(
-                                                                        width=12,
-                                                                        className="d-flex justify-content-center mt-2",
-                                                                        children=[
-                                                                            html.Div(
-                                                                                className="d-grid gap-2 col-10 mx-auto",
-                                                                                children=[
-                                                                                    dbc.Button(
-                                                                                        children="Download spectrum data",
-                                                                                        id="tab-3-download-data-button",
-                                                                                        disabled=True,
-                                                                                        className="",
-                                                                                        color="primary",
-                                                                                    ),
-                                                                                ],
-                                                                            ),
-                                                                        ],
-                                                                    ),
-                                                                    dcc.Download(id="tab-3-download-data"),
-                                                                    ## Fourth column of nested row
-                                                                    dbc.Col(
-                                                                        width=12,
-                                                                        className="d-flex justify-content-center mt-2",
-                                                                        children=[
-                                                                            html.Div(
-                                                                                className="d-grid gap-2 col-10 mx-auto",
-                                                                                children=[
-                                                                                    dbc.Button(
-                                                                                        children="Reset",
-                                                                                        id="page-3-reset-button",
-                                                                                        color="primary",
-                                                                                    )
-                                                                                ],
-                                                                            ),
-                                                                        ],
-                                                                    ),
-                                                                    ## Fifth column of nested row
-                                                                    dbc.Col(
-                                                                        width=12,
-                                                                        className="d-flex flex-row justify-content-center mt-2",
-                                                                        children=[
-                                                                            dbc.Switch(
-                                                                                id="page-3-normalize",
-                                                                                label="Normalize",
-                                                                                value=False,
-                                                                                className="mr-1",
-                                                                            ),
-                                                                            dbc.Switch(
-                                                                                id="page-3-log",
-                                                                                label="Log-transform",
-                                                                                value=False,
-                                                                                className="ml-1",
-                                                                            ),
-                                                                        ],
-                                                                    ),
-                                                                    ### End of first nested row
-                                                                ],
-                                                            ),
-                                                        ],
-                                                    ),
-                                                    ## Second column of nested row
-                                                    dbc.Col(
-                                                        width=8,
-                                                        className="mx-0 px-0",
-                                                        children=[
-                                                            html.Div(
-                                                                className="fixed-aspect-ratio",
-                                                                children=[
-                                                                    dcc.Graph(
-                                                                        id="page-3-graph-heatmap-per-sel",
-                                                                        config=basic_config
-                                                                        | {
-                                                                            "toImageButtonOptions": {
-                                                                                "format": "png",
-                                                                                "filename": "annotated_brain_slice",
-                                                                                "scale": 2,
-                                                                            }
-                                                                        },
-                                                                        style={
-                                                                            "width": "100%",
-                                                                            "height": "100%",
-                                                                            "position": "absolute",
-                                                                            "left": "0",
-                                                                        },
-                                                                        figure=return_pickled_object(
-                                                                            "figures/load_page",
-                                                                            "figure_basic_image",
-                                                                            force_update=False,
-                                                                            compute_function=figures.compute_figure_basic_image,
-                                                                            type_figure="projection_corrected",
-                                                                            index_image=slice_index - 1,
-                                                                            plot_atlas_contours=False,
-                                                                        ),
-                                                                    ),
-                                                                    html.P(
-                                                                        "Hovered region: ",
-                                                                        id="page-3-graph-hover-text",
-                                                                        className="text-warning font-weight-bold position-absolute",
-                                                                        style={"left": "15%", "top": "1em"},
-                                                                    ),
-                                                                ],
-                                                            ),
-                                                        ],
-                                                    ),
-                                                ],
-                                            ),
-                                        ],
-                                    ),
-                                ],
-                            ),
-                            ## End of first column
-                        ],
-                    ),
-                    ### End of first row
+    page = (
+        dash_draggable.ResponsiveGridLayout(
+            id="draggable",
+            clearSavedLayout=True,
+            isDraggable=False,
+            isResizable=False,
+            containerPadding=[2, 2],
+            breakpoints={"xxl": 1600, "lg": 1200, "md": 996, "sm": 768, "xs": 480, "xxs": 0},
+            gridCols={"xxl": 12, "lg": 12, "md": 10, "sm": 6, "xs": 4, "xxs": 2},
+            layouts={
+                # x sets the lateral position, y the vertical one, w is in columns (whose size depends on the dimension), h is in rows (30px)
+                # nb columns go 12->12->10->6->4->2
+                "xxl": [
+                    {"i": "page-3-card-mask-selection", "x": 0, "y": 0, "w": 12, "h": 20},
+                    {"i": "page-3-card-spectrum", "x": 0, "y": 15, "w": 9, "h": N_LINES},
+                    {"i": "page-3-card-dropdowns", "x": 9, "y": 15, "w": 3, "h": int(N_LINES) / 2 + 2},
+                    {"i": "page-3-card-filtering", "x": 9, "y": 16, "w": 3, "h": N_LINES - int(N_LINES) / 2 - 2},
+                    {"i": "page-3-card-heatmap", "x": 0, "y": 17, "w": 6, "h": 2 * N_LINES - 2},
+                    {"i": "page-3-card-graph-lipid-comparison", "x": 6, "y": 17, "w": 6, "h": 2 * N_LINES - 2},
                 ],
-            ),
-            ### Second row
-            dbc.Row(
-                justify="center",
-                children=dbc.Col(
-                    xs=8, children=dbc.Progress(value=0, id="page-3-progress", animated=True, striped=True)
-                ),
-            ),
-            dbc.Row(
-                id="page-3-row-main-computations",
-                justify="center",
-                children=[
-                    ##First column
-                    dbc.Col(
-                        xs=12,
-                        md=9,
-                        xxl=8,
-                        children=[
-                            dbc.Card(
-                                style={"maxWidth": "100%", "margin": "0 auto"},
-                                className="mt-4",
-                                children=[
-                                    dbc.CardHeader("High-resolution spectrum for current selection"),
-                                    dbc.CardBody(
-                                        className="loading-wrapper py-0",
-                                        children=[
-                                            html.Div(
-                                                children=[
-                                                    dbc.Spinner(
-                                                        color="dark",
-                                                        children=[
-                                                            html.Div(
-                                                                className="px-5",
-                                                                children=[
-                                                                    html.Div(
-                                                                        id="page-3-alert",
-                                                                        className="text-center my-2",
-                                                                        children=html.Strong(
-                                                                            children="Please draw at least one region on the heatmap and clicked on 'compute spectra'.. and clicked on 'compute spectra'.",
-                                                                            style={"color": "#df5034"},
-                                                                        ),
-                                                                    ),
-                                                                    html.Div(
-                                                                        id="page-3-alert-2",
-                                                                        className="text-center my-2",
-                                                                        style={"display": "none"},
-                                                                        children=[
-                                                                            html.Strong(
-                                                                                children="Too many regions selected, please reset the annotations.",
-                                                                                style={"color": "#df5034"},
-                                                                            ),
-                                                                        ],
-                                                                    ),
-                                                                ],
+                "lg": [
+                    {"i": "page-3-card-mask-selection", "x": 0, "y": 0, "w": 7, "h": 16},
+                    {"i": "page-3-card-spectrum", "x": 8, "y": 12, "w": 12, "h": 4},
+                    {"i": "page-3-card-dropdowns", "x": 8, "y": 4, "w": 5, "h": 11},
+                    {"i": "page-3-card-filtering", "x": 8, "y": 8, "w": 5, "h": 5},
+                    {"i": "page-3-card-heatmap", "x": 0, "y": 15, "w": 6, "h": N_LINES},
+                    {"i": "page-3-card-graph-lipid-comparison", "x": 6, "y": 15, "w": 6, "h": N_LINES},
+                ],
+                "md": [
+                    {"i": "page-3-card-mask-selection", "x": 0, "y": 0, "w": 6, "h": 14},
+                    {"i": "page-3-card-spectrum", "x": 6, "y": 12, "w": 6, "h": 4},
+                    {"i": "page-3-card-dropdowns", "x": 6, "y": 4, "w": 4, "h": 9},
+                    {"i": "page-3-card-filtering", "x": 6, "y": 8, "w": 4, "h": 6},
+                    {"i": "page-3-card-heatmap", "x": 0, "y": 14, "w": 5, "h": N_LINES},
+                    {"i": "page-3-card-graph-lipid-comparison", "x": 5, "y": 14, "w": 5, "h": N_LINES},
+                ],
+                "sm": [
+                    {"i": "page-3-card-mask-selection", "x": 0, "y": 0, "w": 6, "h": 19},
+                    {"i": "page-3-card-spectrum", "x": 0, "y": 10, "w": 6, "h": 4},
+                    {"i": "page-3-card-dropdowns", "x": 0, "y": 19, "w": 6, "h": 11},
+                    {"i": "page-3-card-filtering", "x": 0, "y": 19 + 7, "w": 6, "h": 5},
+                    {"i": "page-3-card-heatmap", "x": 0, "y": 19 + 7 + 5, "w": 6, "h": N_LINES},
+                    {
+                        "i": "page-3-card-graph-lipid-comparison",
+                        "x": 0,
+                        "y": 19 + 7 + 5 + N_LINES,
+                        "w": 6,
+                        "h": N_LINES,
+                    },
+                ],
+                "xs": [
+                    {"i": "page-3-card-mask-selection", "x": 0, "y": 0, "w": 4, "h": 14},
+                    {"i": "page-3-card-spectrum", "x": 0, "y": 4, "w": 4, "h": 4},
+                    {"i": "page-3-card-dropdowns", "x": 0, "y": 0, "w": 4, "h": 11},
+                    {"i": "page-3-card-filtering", "x": 0, "y": 14 + 7, "w": 4, "h": 5},
+                    {"i": "page-3-card-heatmap", "x": 0, "y": 14 + 7 + 5, "w": 4, "h": N_LINES},
+                    {
+                        "i": "page-3-card-graph-lipid-comparison",
+                        "x": 0,
+                        "y": 14 + 7 + 5 + N_LINES,
+                        "w": 4,
+                        "h": N_LINES,
+                    },
+                ],
+                "xxs": [
+                    {"i": "page-3-card-mask-selection", "x": 0, "y": 0, "w": 2, "h": 9},
+                    {"i": "page-3-card-spectrum", "x": 0, "y": 4, "w": 2, "h": 4},
+                    {"i": "page-3-card-dropdowns", "x": 0, "y": 0, "w": 2, "h": 10},
+                    {"i": "page-3-card-filtering", "x": 0, "y": 9 + 7, "w": 2, "h": 5},
+                    {"i": "page-3-card-heatmap", "x": 0, "y": 9 + 7 + 5, "w": 2, "h": N_LINES},
+                    {
+                        "i": "page-3-card-graph-lipid-comparison",
+                        "x": 0,
+                        "y": 9 + 7 + 5 + N_LINES,
+                        "w": 2,
+                        "h": N_LINES,
+                    },
+                ],
+            },
+            children=[
+                dbc.Card(
+                    id="page-3-card-mask-selection",
+                    style={"margin": "0 auto", "width": "100%", "height": "100%"},
+                    children=[
+                        dbc.CardHeader(
+                            className="d-flex justify-content-between",
+                            children=[
+                                html.Div(id="page-3-toast-graph-heatmap-mz-selection", children="Brain slice n°"),
+                            ],
+                        ),
+                        dbc.CardBody(
+                            className="loading-wrapper pt-0 mt-0 pb-0 mb-1 px-0 mx-0",
+                            children=[
+                                ### First nested row
+                                dbc.Row(
+                                    justify="center",
+                                    className="px-0 mx-0",
+                                    children=[
+                                        ## First column of nested row
+                                        dbc.Col(
+                                            width=4,
+                                            className="mt-1 pt-0",
+                                            children=[
+                                                html.Div(
+                                                    className="page-1-fixed-aspect-ratio",
+                                                    children=[
+                                                        dcc.Graph(
+                                                            id="page-3-graph-atlas-per-sel",
+                                                            config=basic_config | {"displayModeBar": False},
+                                                            style={
+                                                                "width": "100%",
+                                                                "height": "100%",
+                                                                "position": "absolute",
+                                                                "left": "0",
+                                                            },
+                                                            figure=return_pickled_object(
+                                                                "figures/load_page",
+                                                                "figure_basic_image",
+                                                                force_update=False,
+                                                                compute_function=figures.compute_figure_basic_image,
+                                                                type_figure=None,
+                                                                index_image=slice_index - 1,
+                                                                plot_atlas_contours=True,
+                                                                only_contours=True,
                                                             ),
-                                                            html.Div(id="page-3-graph-spectrum-per-pixel-wait"),
-                                                            dcc.Graph(
-                                                                id="page-3-graph-spectrum-per-pixel",
-                                                                style={"height": HEIGHT_PLOTS} | {"display": "none"},
-                                                                config=basic_config
-                                                                | {
-                                                                    "toImageButtonOptions": {
-                                                                        "format": "png",
-                                                                        "filename": "spectrum_from_custom_region",
-                                                                        "scale": 2,
-                                                                    }
-                                                                },
-                                                            ),
-                                                        ],
-                                                    ),
-                                                ],
-                                            ),
-                                        ],
-                                    ),
-                                ],
-                            ),
-                        ],
-                    ),
-                    ## Second column
-                    dbc.Col(
-                        xs=12,
-                        md=3,
-                        xl=3,
-                        xxl=3,
-                        children=[
-                            dbc.Card(
-                                # style={"maxWidth": "100%", "margin": "0 auto"},
-                                className="mt-4",
-                                children=[
-                                    dbc.CardHeader("Lipid comparison"),
-                                    dbc.CardBody(
-                                        # className="loading-wrapper  py-0",
-                                        className="py-0",
-                                        children=[
-                                            dbc.Spinner(
-                                                color="sucess",
-                                                delay_hide=100,
-                                                children=[
-                                                    html.Div(
-                                                        id="page-3-alert-4",
-                                                        className="text-center my-2",
-                                                        children=html.Strong(
-                                                            children="Please draw at least one region on the heatmap and clicked on 'compute spectra'..",
-                                                            style={"color": "#df5034"},
                                                         ),
-                                                    ),
-                                                    html.Div(id="page-3-div-dropdown-wait"),
-                                                    html.Div(
-                                                        id="page-3-div-dropdown",
-                                                        style={"display": "none"},
-                                                        # className="loading-wrapper",
-                                                        children=[
-                                                            dcc.Dropdown(
-                                                                id="page-3-dropdown-red",
-                                                                options=[],
-                                                                value=[],
-                                                                multi=True,
-                                                            ),
-                                                            # html.Hr(className="my-2"),
-                                                            dcc.Dropdown(
-                                                                id="page-3-dropdown-green",
-                                                                options=[],
-                                                                value=[],
-                                                                multi=True,
-                                                            ),
-                                                            # html.Hr(className="my-2"),
-                                                            dcc.Dropdown(
-                                                                id="page-3-dropdown-blue",
-                                                                options=[],
-                                                                value=[],
-                                                                multi=True,
-                                                            ),
-                                                            html.Hr(className="my-2"),
-                                                            html.P(
-                                                                className="lead d-flex justify-content-center",
-                                                                children=[
-                                                                    dbc.Button(
-                                                                        id="page-3-open-modal",
-                                                                        children="Visualize and compare",
-                                                                        color="primary",
-                                                                        disabled=True,
-                                                                    ),
-                                                                ],
-                                                            ),
-                                                        ],
-                                                    ),
-                                                ],
-                                            ),
-                                        ],
-                                    ),
-                                ],
-                            ),
-                            dbc.Card(
-                                # style={"maxWidth": "100%", "margin": "0 auto"},
-                                className="mt-1",
-                                children=[
-                                    dbc.CardHeader("Lipid filtering per percentile"),
-                                    dbc.CardBody(
-                                        # className="loading-wrapper  py-0",
-                                        className="py-0",
-                                        children=[
-                                            dcc.Slider(
-                                                id="page-4-slider",
-                                                min=0,
-                                                max=99,
-                                                value=10,
-                                                marks={
-                                                    0: {"label": "No filtering"},
-                                                    25: {"label": "25%"},
-                                                    50: {"label": "50%"},
-                                                    75: {"label": "75%"},
-                                                    99: {"label": "99%", "style": {"color": "#f50"}},
-                                                },
-                                            )
-                                        ],
-                                    ),
-                                ],
-                            ),
-                        ],
-                    ),
-                    ### End of second row
-                    ## First column
-                    dbc.Col(
-                        className="mt-2",
-                        xl=4,
-                        md=4,
-                        xs=12,
-                        children=[
-                            dbc.Card(
-                                # style={"maxWidth": "100%", "margin": "0 auto"},
-                                children=[
-                                    dbc.CardHeader("Average lipid expression per selection"),
-                                    dbc.CardBody(
-                                        className="loading-wrapper py-0",
-                                        children=[
-                                            html.Div(
-                                                id="page-3-alert-3",
-                                                className="text-center my-2",
-                                                children=html.Strong(
-                                                    children="Please draw at least one region on the heatmap and clicked on 'compute spectra'.",
-                                                    style={"color": "#df5034"},
+                                                        html.P(
+                                                            "Hovered region: ",
+                                                            id="page-3-graph-atlas-hover-text",
+                                                            className="text-warning font-weight-bold position-absolute",
+                                                            style={"left": "15%", "top": "1em"},
+                                                        ),
+                                                    ],
                                                 ),
-                                            ),
-                                            html.Div(
-                                                children=[
-                                                    dbc.Spinner(
-                                                        color="sucess",
-                                                        children=[
-                                                            html.Div(id="page-3-graph-heatmap-per-lipid-wait"),
-                                                            dcc.Graph(
-                                                                id="page-3-graph-heatmap-per-lipid",
-                                                                className="mb-1",
-                                                                style={"height": 2 * HEIGHT_PLOTS}
-                                                                | {"display": "none"},
-                                                                config=basic_config
-                                                                | {
-                                                                    "toImageButtonOptions": {
-                                                                        "format": "png",
-                                                                        "filename": "annotated_brain_slice",
-                                                                        "scale": 2,
-                                                                    }
-                                                                },
-                                                            ),
-                                                            html.Div(
-                                                                id="page-3-switches",
-                                                                className="d-none",
-                                                                children=[
-                                                                    # dbc.Checklist(
-                                                                    #    options=[
-                                                                    #        {"label": "mean-rescale", "value": True,}
-                                                                    #    ],
-                                                                    #    id="page-3-scale-by-mean-switch",
-                                                                    #    switch=True,
-                                                                    #    value=[],
-                                                                    #    className="mr-5",
-                                                                    # ),
-                                                                    dbc.Checklist(
+                                                ### First nested row
+                                                dbc.Row(
+                                                    justify="center",
+                                                    className="d-flex align-items-center mt-1 pt-0",
+                                                    children=[
+                                                        ## First column of nested row
+                                                        dbc.Col(
+                                                            width=12,
+                                                            className="d-flex justify-content-center",
+                                                            children=[
+                                                                html.Div(
+                                                                    style={"width": "80%",},  # "minWidth": "8em",},
+                                                                    children=dcc.Dropdown(
+                                                                        id="page-3-dropdown-brain-regions",
                                                                         options=[
-                                                                            {
-                                                                                "label": "Sort by relative std",
-                                                                                "value": True,
-                                                                            }
+                                                                            {"label": node, "value": node}
+                                                                            for node in return_pickled_object(
+                                                                                "atlas/atlas_objects",
+                                                                                "hierarchy",
+                                                                                force_update=False,
+                                                                                compute_function=atlas.compute_hierarchy_list,
+                                                                            )[0]
                                                                         ],
-                                                                        id="page-3-sort-by-diff-switch",
-                                                                        switch=True,
-                                                                        value=[True],
-                                                                        className="ml-5",
+                                                                        placeholder="Click on brain regions above.",
+                                                                        multi=True,
+                                                                        clearable=False,
+                                                                        disabled=True,
+                                                                        # className="ml-5",
                                                                     ),
-                                                                ],
-                                                            ),
-                                                        ],
-                                                    ),
-                                                ],
-                                            ),
-                                        ],
-                                    ),
-                                ],
-                            ),
-                        ],
-                    ),
-                    ## Second column
-                    dbc.Col(
-                        xxl=7,
-                        md=8,
-                        xs=12,
-                        className="mt-2",
-                        children=[
-                            dbc.Card(
-                                style={"maxWidth": "100%", "margin": "0 auto"},
-                                children=[
-                                    dbc.CardHeader(
-                                        className="d-flex justify-content-between",
-                                        children=[
-                                            html.Div("Lipid intensity comparison", className="mr-5"),
-                                            dbc.Switch(
-                                                id="page-3-toggle-mask",
-                                                label="Toggle masks and shape display",
-                                                value=False,
-                                                className="ml-5",
-                                            ),
-                                        ],
-                                    ),
-                                    dbc.CardBody(
-                                        id="page-3-graph-lipid-comparison",
-                                        className="loading-wrapper pt-0 mt-0 pb-0 mb-1 px-0 mx-0",
-                                        children=[
-                                            html.Div(
-                                                id="page-3-alert-5",
-                                                className="text-center my-2",
-                                                children=html.Strong(
-                                                    children="Please draw at least one region on the heatmap and clicked on 'compute spectra'..",
-                                                    style={"color": "#df5034"},
+                                                                ),
+                                                            ],
+                                                        ),
+                                                        ## Second column of nested row
+                                                        dbc.Col(
+                                                            width=12,
+                                                            className="d-flex justify-content-center mt-1",
+                                                            children=[
+                                                                html.Div(
+                                                                    className="d-grid gap-2 col-10 mx-auto",
+                                                                    children=[
+                                                                        dbc.Button(
+                                                                            children="Compute spectra",
+                                                                            id="page-3-button-compute-spectra",
+                                                                            disabled=True,
+                                                                            className="",
+                                                                            color="primary",
+                                                                        ),
+                                                                    ],
+                                                                ),
+                                                            ],
+                                                        ),
+                                                        ## Third column of nested row
+                                                        dbc.Col(
+                                                            width=12,
+                                                            className="d-flex justify-content-center mt-2",
+                                                            children=[
+                                                                html.Div(
+                                                                    className="d-grid gap-2 col-10 mx-auto",
+                                                                    children=[
+                                                                        dbc.Button(
+                                                                            children="Download spectrum data",
+                                                                            id="tab-3-download-data-button",
+                                                                            disabled=True,
+                                                                            className="",
+                                                                            color="primary",
+                                                                        ),
+                                                                    ],
+                                                                ),
+                                                            ],
+                                                        ),
+                                                        dcc.Download(id="tab-3-download-data"),
+                                                        ## Fourth column of nested row
+                                                        dbc.Col(
+                                                            width=12,
+                                                            className="d-flex justify-content-center mt-2",
+                                                            children=[
+                                                                html.Div(
+                                                                    className="d-grid gap-2 col-10 mx-auto",
+                                                                    children=[
+                                                                        dbc.Button(
+                                                                            children="Reset",
+                                                                            id="page-3-reset-button",
+                                                                            color="primary",
+                                                                        )
+                                                                    ],
+                                                                ),
+                                                            ],
+                                                        ),
+                                                        ## Fifth column of nested row
+                                                        dbc.Col(
+                                                            width=12,
+                                                            className="d-flex flex-row justify-content-center mt-2",
+                                                            children=[
+                                                                dbc.Switch(
+                                                                    id="page-3-normalize",
+                                                                    label="Normalize",
+                                                                    value=False,
+                                                                    className="mr-1",
+                                                                ),
+                                                                dbc.Switch(
+                                                                    id="page-3-log",
+                                                                    label="Log-transform",
+                                                                    value=False,
+                                                                    className="ml-1",
+                                                                ),
+                                                            ],
+                                                        ),
+                                                        ### End of first nested row
+                                                    ],
                                                 ),
-                                            ),
-                                            dbc.Spinner(
-                                                color="dark",
-                                                children=[
-                                                    html.Div(id="page-3-graph-lipid--comparison-wait"),
-                                                    html.Div(
-                                                        className="page-1-fixed-aspect-ratio",
-                                                        id="page-3-div-graph-lipid-comparison",
-                                                        style={"display": "none"},
-                                                        children=[
-                                                            dcc.Graph(
-                                                                id="page-3-heatmap-lipid-comparison",
-                                                                config=basic_config
-                                                                | {
-                                                                    "toImageButtonOptions": {
-                                                                        "format": "png",
-                                                                        "filename": "brain_lipid_selection",
-                                                                        "scale": 2,
-                                                                    }
-                                                                },
-                                                                style={
-                                                                    "width": "100%",
-                                                                    "height": "100%",
-                                                                    "position": "absolute",
-                                                                    "left": "0",
-                                                                },
+                                            ],
+                                        ),
+                                        ## Second column of nested row
+                                        dbc.Col(
+                                            width=8,
+                                            className="mx-0 px-0",
+                                            children=[
+                                                html.Div(
+                                                    className="fixed-aspect-ratio",
+                                                    children=[
+                                                        dcc.Graph(
+                                                            id="page-3-graph-heatmap-per-sel",
+                                                            config=basic_config
+                                                            | {
+                                                                "toImageButtonOptions": {
+                                                                    "format": "png",
+                                                                    "filename": "annotated_brain_slice",
+                                                                    "scale": 2,
+                                                                }
+                                                            },
+                                                            style={
+                                                                "width": "100%",
+                                                                "height": "100%",
+                                                                "position": "absolute",
+                                                                "left": "0",
+                                                            },
+                                                            figure=return_pickled_object(
+                                                                "figures/load_page",
+                                                                "figure_basic_image",
+                                                                force_update=False,
+                                                                compute_function=figures.compute_figure_basic_image,
+                                                                type_figure="projection_corrected",
+                                                                index_image=slice_index - 1,
+                                                                plot_atlas_contours=False,
                                                             ),
-                                                        ],
-                                                    ),
-                                                ],
+                                                        ),
+                                                        html.P(
+                                                            "Hovered region: ",
+                                                            id="page-3-graph-hover-text",
+                                                            className="text-warning font-weight-bold position-absolute",
+                                                            style={"left": "15%", "top": "1em"},
+                                                        ),
+                                                    ],
+                                                ),
+                                            ],
+                                        ),
+                                    ],
+                                ),
+                            ],
+                        ),
+                    ],
+                ),
+                # dbc.Progress(value=0, id="page-3-progress", animated=True, striped=True),
+                dbc.Card(
+                    id="page-3-card-spectrum",
+                    style={"maxWidth": "100%", "margin": "0 auto", "width": "100%", "height": "100%"},
+                    children=[
+                        dbc.CardHeader("High-resolution spectrum for current selection"),
+                        dbc.CardBody(
+                            className="loading-wrapper py-0 my-0",
+                            children=[
+                                html.Div(
+                                    children=[
+                                        dbc.Spinner(
+                                            color="dark",
+                                            children=[
+                                                html.Div(
+                                                    className="px-5",
+                                                    children=[
+                                                        html.Div(
+                                                            id="page-3-alert",
+                                                            className="text-center my-2",
+                                                            children=html.Strong(
+                                                                children="Please draw at least one region on the heatmap and clicked on 'compute spectra'.. and clicked on 'compute spectra'.",
+                                                                style={"color": "#df5034"},
+                                                            ),
+                                                        ),
+                                                        html.Div(
+                                                            id="page-3-alert-2",
+                                                            className="text-center my-2",
+                                                            style={"display": "none"},
+                                                            children=[
+                                                                html.Strong(
+                                                                    children="Too many regions selected, please reset the annotations.",
+                                                                    style={"color": "#df5034"},
+                                                                ),
+                                                            ],
+                                                        ),
+                                                    ],
+                                                ),
+                                                html.Div(id="page-3-graph-spectrum-per-pixel-wait"),
+                                                dcc.Graph(
+                                                    id="page-3-graph-spectrum-per-pixel",
+                                                    style={"height": HEIGHT_PLOTS} | {"display": "none"},
+                                                    config=basic_config
+                                                    | {
+                                                        "toImageButtonOptions": {
+                                                            "format": "png",
+                                                            "filename": "spectrum_from_custom_region",
+                                                            "scale": 2,
+                                                        }
+                                                    },
+                                                ),
+                                            ],
+                                        ),
+                                    ],
+                                ),
+                            ],
+                        ),
+                    ],
+                ),
+                dbc.Card(
+                    id="page-3-card-dropdowns",
+                    style={"maxWidth": "100%", "margin": "0 auto", "width": "100%", "height": "100%"},
+                    # className="mt-4",
+                    children=[
+                        dbc.CardHeader("Lipid comparison"),
+                        dbc.CardBody(
+                            # className="loading-wrapper  py-0",
+                            className="py-0 mt-2",
+                            children=[
+                                dbc.Spinner(
+                                    color="sucess",
+                                    delay_hide=100,
+                                    children=[
+                                        html.Div(
+                                            id="page-3-alert-4",
+                                            className="text-center my-2",
+                                            children=html.Strong(
+                                                children="Please draw at least one region on the heatmap and clicked on 'compute spectra'..",
+                                                style={"color": "#df5034"},
                                             ),
-                                        ],
+                                        ),
+                                        html.Div(id="page-3-div-dropdown-wait"),
+                                        html.Div(
+                                            id="page-3-div-dropdown",
+                                            style={"display": "none"},
+                                            # className="loading-wrapper",
+                                            children=[
+                                                dcc.Dropdown(
+                                                    id="page-3-dropdown-red", options=[], value=[], multi=True,
+                                                ),
+                                                # html.Hr(className="my-2"),
+                                                dcc.Dropdown(
+                                                    id="page-3-dropdown-green", options=[], value=[], multi=True,
+                                                ),
+                                                # html.Hr(className="my-2"),
+                                                dcc.Dropdown(
+                                                    id="page-3-dropdown-blue", options=[], value=[], multi=True,
+                                                ),
+                                                html.Hr(className="my-2"),
+                                                html.P(
+                                                    className="lead d-flex justify-content-center",
+                                                    children=[
+                                                        dbc.Button(
+                                                            id="page-3-open-modal",
+                                                            children="Visualize and compare",
+                                                            color="primary",
+                                                            disabled=True,
+                                                        ),
+                                                    ],
+                                                ),
+                                            ],
+                                        ),
+                                    ],
+                                ),
+                            ],
+                        ),
+                    ],
+                ),
+                dbc.Card(
+                    id="page-3-card-filtering",
+                    style={"maxWidth": "100%", "margin": "0 auto", "width": "100%", "height": "100%"},
+                    # className="mt-1",
+                    children=[
+                        dbc.CardHeader("Lipid filtering per percentile"),
+                        dbc.CardBody(
+                            # className="loading-wrapper  py-0",
+                            className="py-0",
+                            children=[
+                                dcc.Slider(
+                                    id="page-4-slider",
+                                    className="mt-2",
+                                    min=0,
+                                    max=99,
+                                    value=10,
+                                    marks={
+                                        0: {"label": "No filtering"},
+                                        25: {"label": "25%"},
+                                        50: {"label": "50%"},
+                                        75: {"label": "75%"},
+                                        99: {"label": "99%", "style": {"color": "#f50"}},
+                                    },
+                                )
+                            ],
+                        ),
+                    ],
+                ),
+                dbc.Card(
+                    id="page-3-card-heatmap",
+                    style={"maxWidth": "100%", "margin": "0 auto", "width": "100%", "height": "100%"},
+                    children=[
+                        dbc.CardHeader("Average lipid expression per selection"),
+                        dbc.CardBody(
+                            className="loading-wrapper mb-0 pb-0",
+                            children=[
+                                html.Div(
+                                    id="page-3-alert-3",
+                                    className="text-center my-2",
+                                    children=html.Strong(
+                                        children="Please draw at least one region on the heatmap and clicked on 'compute spectra'.",
+                                        style={"color": "#df5034"},
                                     ),
-                                ],
-                            ),
-                        ],
-                    ),
-                    ### End of third row
-                ],
-            ),
-        ]
+                                ),
+                                html.Div(
+                                    children=[
+                                        dbc.Spinner(
+                                            color="sucess",
+                                            children=[
+                                                html.Div(id="page-3-graph-heatmap-per-lipid-wait"),
+                                                dcc.Graph(
+                                                    id="page-3-graph-heatmap-per-lipid",
+                                                    className="mb-1",
+                                                    style={"height": 2 * HEIGHT_PLOTS} | {"display": "none"},
+                                                    config=basic_config
+                                                    | {
+                                                        "toImageButtonOptions": {
+                                                            "format": "png",
+                                                            "filename": "annotated_brain_slice",
+                                                            "scale": 2,
+                                                        }
+                                                    },
+                                                ),
+                                                html.Div(
+                                                    id="page-3-switches",
+                                                    className="d-none",
+                                                    children=[
+                                                        # dbc.Checklist(
+                                                        #    options=[
+                                                        #        {"label": "mean-rescale", "value": True,}
+                                                        #    ],
+                                                        #    id="page-3-scale-by-mean-switch",
+                                                        #    switch=True,
+                                                        #    value=[],
+                                                        #    className="mr-5",
+                                                        # ),
+                                                        dbc.Checklist(
+                                                            options=[
+                                                                {"label": "Sort by relative std", "value": True,}
+                                                            ],
+                                                            id="page-3-sort-by-diff-switch",
+                                                            switch=True,
+                                                            value=[True],
+                                                            className="ml-5",
+                                                        ),
+                                                    ],
+                                                ),
+                                            ],
+                                        ),
+                                    ],
+                                ),
+                            ],
+                        ),
+                    ],
+                ),
+                dbc.Card(
+                    id="page-3-card-graph-lipid-comparison",
+                    style={"maxWidth": "100%", "margin": "0 auto", "width": "100%", "height": "100%"},
+                    children=[
+                        dbc.CardHeader(
+                            className="d-flex justify-content-between",
+                            children=[
+                                html.Div("Lipid intensity comparison", className="mr-5"),
+                                dbc.Switch(
+                                    id="page-3-toggle-mask",
+                                    label="Toggle masks and shape display",
+                                    value=False,
+                                    className="ml-5",
+                                ),
+                            ],
+                        ),
+                        dbc.CardBody(
+                            id="page-3-graph-lipid-comparison",
+                            className="loading-wrapper pt-0 mt-0 pb-0 mb-1 px-0 mx-0",
+                            children=[
+                                html.Div(
+                                    id="page-3-alert-5",
+                                    className="text-center my-2",
+                                    children=html.Strong(
+                                        children="Please draw at least one region on the heatmap and clicked on 'compute spectra'..",
+                                        style={"color": "#df5034"},
+                                    ),
+                                ),
+                                dbc.Spinner(
+                                    color="dark",
+                                    children=[
+                                        html.Div(id="page-3-graph-lipid--comparison-wait"),
+                                        html.Div(
+                                            className="page-1-fixed-aspect-ratio",
+                                            id="page-3-div-graph-lipid-comparison",
+                                            style={"display": "none"},
+                                            children=[
+                                                dcc.Graph(
+                                                    id="page-3-heatmap-lipid-comparison",
+                                                    config=basic_config
+                                                    | {
+                                                        "toImageButtonOptions": {
+                                                            "format": "png",
+                                                            "filename": "brain_lipid_selection",
+                                                            "scale": 2,
+                                                        }
+                                                    },
+                                                    style={
+                                                        "width": "100%",
+                                                        "height": "100%",
+                                                        "position": "absolute",
+                                                        "left": "0",
+                                                    },
+                                                ),
+                                            ],
+                                        ),
+                                    ],
+                                ),
+                            ],
+                        ),
+                    ],
+                ),
+            ],
+        ),
     )
 
     return page
@@ -1327,23 +1325,32 @@ def page_3_plot_spectrum(cliked_reset, l_spectra, slice_index):
 
             for idx_spectra, spectrum in enumerate(l_spectra):
 
+                logging.info("Checkpoint 1")
+
                 col = config.l_colors[idx_spectra % 4]
 
                 # Get the average spectrum and add it to m/z plot
                 grah_scattergl_data = np.array(spectrum, dtype=np.float32)
 
+                logging.info("Checkpoint 2")
+
                 # Get df for current slice
                 df_names = data.get_annotations()[data.get_annotations()["slice"] == slice_index]
+
+                logging.info("Checkpoint 3")
 
                 # Extract lipid names
                 l_idx_labels = return_index_labels(
                     df_names["min"].to_numpy(), df_names["max"].to_numpy(), grah_scattergl_data[0, :],
                 )
 
+                logging.info("Checkpoint 4")
+
                 # It's ok to do two loops since l_idx_labels is relatively small
                 l_idx_kept = [i for i, x in enumerate(l_idx_labels) if x >= 0]
                 l_idx_unkept = [i for i, x in enumerate(l_idx_labels) if x < 0]
 
+                logging.info("Checkpoint 5")
                 # Pad annotated trace with zeros
                 (grah_scattergl_data_padded_annotated, array_index_padding,) = add_zeros_to_spectrum(
                     grah_scattergl_data[:, l_idx_kept], pad_individual_peaks=True, padding=10 ** -4,
@@ -1353,6 +1360,8 @@ def page_3_plot_spectrum(cliked_reset, l_spectra, slice_index):
                 l_idx_labels_kept = l_idx_labels[l_idx_kept]
 
                 ll_idx_labels.append(l_idx_labels)
+
+                logging.info("Checkpoint 6")
 
                 # @njit #we need to wait for the support of np.insert
                 def pad_l_idx_labels(l_idx_labels_kept, array_index_padding):
@@ -1368,6 +1377,9 @@ def page_3_plot_spectrum(cliked_reset, l_spectra, slice_index):
 
                 l_idx_labels_kept = list(pad_l_idx_labels(l_idx_labels_kept, array_index_padding))
 
+                logging.info("Checkpoint 7")
+
+                # ! This step is extremely long
                 # Rebuild lipid name from structure, cation, etc.
                 l_labels = [
                     df_names.iloc[idx]["name"]
@@ -1380,6 +1392,7 @@ def page_3_plot_spectrum(cliked_reset, l_spectra, slice_index):
                     for idx in l_idx_labels_kept
                 ]
 
+                logging.info("Checkpoint 7.5")
                 # Add annotated trace to plot
                 fig_mz.add_trace(
                     go.Scattergl(
@@ -1395,6 +1408,8 @@ def page_3_plot_spectrum(cliked_reset, l_spectra, slice_index):
                     )
                 )
 
+                logging.info("Checkpoint 8")
+
                 # Pad not annotated traces peaks with zeros
                 grah_scattergl_data_padded, array_index_padding = add_zeros_to_spectrum(
                     grah_scattergl_data[:, l_idx_unkept], pad_individual_peaks=True, padding=10 ** -4,
@@ -1402,6 +1417,7 @@ def page_3_plot_spectrum(cliked_reset, l_spectra, slice_index):
                 l_mz_without_lipids = grah_scattergl_data_padded[0, :]
                 l_intensity_without_lipids = grah_scattergl_data_padded[1, :]
 
+                logging.info("Checkpoint 9")
                 # Add not-annotated trace to plot.
                 fig_mz.add_trace(
                     go.Scattergl(
@@ -1417,6 +1433,8 @@ def page_3_plot_spectrum(cliked_reset, l_spectra, slice_index):
                         # text=l_idx_labels_kept,
                     )
                 )
+
+            logging.info("Checkpoint 10")
             # Define figure layout
             fig_mz.update_layout(
                 margin=dict(t=5, r=0, b=10, l=0),
@@ -1800,6 +1818,7 @@ def draw_modal_graph(
     return dash.no_update
 
 
+"""
 # Function that handle loading bar
 @app.app.callback(
     Output("page-3-progress", "value"),
@@ -1829,8 +1848,8 @@ def update_loading_bar(state_1, state_2, state_3, state_4, state_5):
         return 100
 
     return 0
-
-
+"""
+"""
 # Function that handles loading bar and row visibility
 @app.app.callback(
     Output("page-3-row-main-computations", "className"),
@@ -1850,4 +1869,4 @@ def update_loading_visibility(value, clicked_reset, clicked_compute):
         return "d-none", "mt-1"
     else:
         return "d-none", "mt-1"
-
+"""

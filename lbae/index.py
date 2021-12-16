@@ -204,7 +204,8 @@ app.validation_layout = html.Div(
     State("main-slider", "value"),
 )
 def render_page_content(pathname, slice_index):
-    logging.info("Page" + pathname + "has been selected" + logmem())
+    if pathname is not None:
+        logging.info("Page" + pathname + "has been selected" + logmem())
 
     # Set the content according to the current pathname
     if pathname == "/":
