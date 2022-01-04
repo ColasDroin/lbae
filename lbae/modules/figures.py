@@ -895,7 +895,7 @@ class Figures:
 
         return fig
 
-    # This function sums over three lipids for now
+    # This function sums over the selected lipids for now
     def compute_figure_bubbles_3D(self, ll_t_bounds, normalize_independently=True, reduce_resolution_factor=7):
 
         logging.info("Starting computing 3D figure" + logmem())
@@ -1009,7 +1009,7 @@ class Figures:
                     color=array_c,
                     colorscale="Viridis",
                     colorbar_title="Expression",
-                    # line_color="rgb(140, 140, 170)",
+                    line_color="rgba(140, 140, 170, 0.01)",
                 ),
             )
         )

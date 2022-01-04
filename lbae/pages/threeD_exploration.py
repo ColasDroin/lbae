@@ -67,11 +67,11 @@ def return_layout(basic_config, slice_index):
                             children=[
                                 dbc.Tabs(
                                     [
-                                        dbc.Tab(label="TIC per slice in 3D", tab_id="page-4-tab-1"),
+                                        # dbc.Tab(label="TIC per slice in 3D", tab_id="page-4-tab-1"),
                                         dbc.Tab(label="Lipid selection in 3D", tab_id="page-4-tab-3"),
                                     ],
                                     id="page-4-card-tabs",
-                                    active_tab="page-4-tab-1",
+                                    active_tab="page-4-tab-3",
                                 ),
                             ],
                         ),
@@ -85,6 +85,14 @@ def return_layout(basic_config, slice_index):
                                         html.Div(
                                             className="page-1-fixed-aspect-ratio",
                                             children=[
+                                                html.Div(
+                                                    id="page-4-alert",
+                                                    className="text-center my-2",
+                                                    children=html.Strong(
+                                                        children="Please select at least one lipid.",
+                                                        style={"color": "#df5034"},
+                                                    ),
+                                                ),
                                                 dcc.Graph(
                                                     id="page-4-graph-heatmap-mz-selection",
                                                     config=basic_config
@@ -101,12 +109,12 @@ def return_layout(basic_config, slice_index):
                                                         "position": "absolute",
                                                         "left": "0",
                                                     },
-                                                    figure=return_pickled_object(
-                                                        "figures/3D_page",
-                                                        "slices_3D",
-                                                        force_update=False,
-                                                        compute_function=figures.compute_figure_slices_3D,
-                                                    ),
+                                                    # figure=return_pickled_object(
+                                                    #    "figures/3D_page",
+                                                    #    "slices_3D",
+                                                    #    force_update=False,
+                                                    #    compute_function=figures.compute_figure_slices_3D,
+                                                    # ),
                                                 ),
                                             ],
                                         ),
@@ -295,6 +303,7 @@ def return_layout(basic_config, slice_index):
 
 ###### APP CALLBACKS ######
 
+"""
 # Function to update the heatmap toast name
 @app.app.callback(
     Output("page-4-toast-graph-heatmap-mz-selection", "children"), Input("dcc-store-slice-index", "data"),
@@ -304,16 +313,43 @@ def page_2_update_graph_heatmap_mz_selection(slice_index):
         return [
             dbc.Tabs(
                 [
-                    dbc.Tab(label="TIC per slice in 3D", tab_id="page-4-tab-1"),
+                    # dbc.Tab(label="TIC per slice in 3D", tab_id="page-4-tab-1"),
                     dbc.Tab(label="Lipid selection in 3D", tab_id="page-4-tab-3"),
                 ],
                 id="page-4-card-tabs",
-                active_tab="page-4-tab-1",
+                active_tab="page-4-tab-3",
             ),
         ]
 
     else:
         return dash.no_update
+"""
+
+# Function to make visible the alert regarding the plot page 4
+@app.app.callback(
+    Output("page-4-alert", "style"),
+    Output("page-4-graph-heatmap-mz-selection", "style"),
+    Input("page-4-display-button", "n_clicks"),
+    State("page-4-last-selected-lipids", "data"),
+)
+def page_4_display_alert(clicked_compute, l_lipids):
+
+    # Find out which input triggered the function
+    id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
+
+    # if id_input is None:
+    #    return {}, {"display": "none"}
+    print("ICI FDP", id_input, l_lipids)
+    if len(l_lipids) > 0:
+        return (
+            {"display": "none"},
+            {"width": "100%", "height": "100%", "position": "absolute", "left": "0",},
+        )
+
+    else:
+        return {}, {"display": "none"}
+
+    return dash.no_update
 
 
 # Function to plot page-4-graph-heatmap-mz-selection when its state get updated

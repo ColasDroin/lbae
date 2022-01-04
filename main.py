@@ -36,13 +36,17 @@ if __name__ == "__main__":
 # gunicorn main:server -b:8050 --workers=1
 
 # TODO debug/accelerate manual region selection page
-# TODO Finish layout where it needs to be finished (especially region analysis, where it was only done for XXL size)
-# TODO make manual region selection page responsive
+# TODO Implement progress bar for slow callbacks with @app.long_callback
+# TODO Improve visualization for 3D scatter plot (on hold for now as plotly has a bug)
 # TODO Make lipid expression comparison between 3D structure
-# TODO accelerate Lipid selection per Slice in 2D and maybe 3D if possible, maybe precompute every lipid?
+# TODO accelerate lipid selection per slice in 2D and maybe 3D if possible. Maybe precompute every lipid?
 # TODO make a careful memory analysis to free more memory
-# TODO incoportate new slices
+# TODO incoporate new slices
+# TODO implement the app as a multipage app when the feature is available on Dash
 # TODO have the documentation always open on the right on very big screens to fill emptyness
-# TODO (if I have time) make mask hovering client side in javascript
+# TODO make mask hovering client side in javascript to speed up things a lot. As it is, unusable remotely for now :(
+# TODO Implement a "fast mode" with lower resolution images and spectra to have a faster app (for slow connections)
+# TODO make layout perfect for every screen size
 # TODO when everything is stable, create a function that delete all pickle files and repickle everything automatically
 # TODO write missing docstrings
+# TODO write a brief documentation
