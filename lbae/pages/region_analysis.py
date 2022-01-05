@@ -917,6 +917,7 @@ def page_3_plot_heatmap(
 )
 def page_3_plot_masks(slice_index, url, hoverData, basic_figure_plotted):
 
+    logging.info("Start hover function")
     # Find out which input triggered the function
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
     value_input = dash.callback_context.triggered[0]["prop_id"].split(".")[1]
@@ -930,8 +931,8 @@ def page_3_plot_masks(slice_index, url, hoverData, basic_figure_plotted):
         if hoverData is not None:
             if len(hoverData["points"]) > 0:
                 x = int(slice_index) - 1
-                z = hoverData["points"][0]["x"]
-                y = hoverData["points"][0]["y"]
+                z = int(round(hoverData["points"][0]["x"] * 8))
+                y = int(round(hoverData["points"][0]["y"] * 8))
 
                 slice_coor_rescaled = np.asarray(
                     (atlas.array_coordinates_warped_data[x, y, z] * 1000 / atlas.resolution).round(0), dtype=np.int16,
@@ -953,6 +954,7 @@ def page_3_plot_masks(slice_index, url, hoverData, basic_figure_plotted):
                     im = atlas.dic_mask_images[slice_index - 1][mask_name]
                     fig = copy.copy(figures.dic_fig_contours[slice_index - 1])
                     fig.add_trace(im)
+                    logging.info("End hover function")
                     return fig, False
 
     return dash.no_update

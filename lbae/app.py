@@ -3,9 +3,11 @@
 # Standard imports
 import dash
 import dash_bootstrap_components as dbc
+from dash.long_callback import DiskcacheLongCallbackManager
 import flask
 import numpy as np
 import logging
+import diskcache
 
 # Homemade modules
 from lbae.modules.maldi_data import MaldiData
@@ -49,11 +51,17 @@ list_array_atlas_boundaries = return_pickled_object(
 
 ###### INSTANTIATE APP ######
 server = flask.Flask(__name__)
+
+# For long callback support
+cache = diskcache.Cache("./cache")
+long_callback_manager = DiskcacheLongCallbackManager(cache)
+
 app = dash.Dash(
     title="Lipids Brain Atlas Explorer",
     external_stylesheets=[dbc.themes.SANDSTONE],
     meta_tags=[{"name": "viewport", "content": "width=device-width, initial-scale=1"}],
     server=server,
     suppress_callback_exceptions=False,
+    long_callback_manager=long_callback_manager,
 )
 

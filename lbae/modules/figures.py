@@ -129,7 +129,9 @@ class Figures:
             fig.add_trace(
                 go.Image(
                     visible=True,
-                    source=convert_image_to_base64(array_image_atlas, optimize=True, binary=True, type="RGBA"),
+                    source=convert_image_to_base64(
+                        array_image_atlas, optimize=True, binary=True, type="RGBA", decrease_resolution_factor=8
+                    ),
                     hoverinfo="none",
                 )
             )

@@ -359,10 +359,11 @@ class Atlas:
                 array_image = np.moveaxis(np.array(l_images, dtype=np.uint8), 0, 2)
                 # convert to string using binary format to get lightweight result
                 base64_string = convert_image_to_base64(
-                    array_image, optimize=True, type="RGBA", binary=True
+                    array_image, optimize=True, type="RGBA", binary=True, decrease_resolution_factor=8
                 )  # , format="gif")
                 im = go.Image(visible=True, source=base64_string, hoverinfo="none")
                 dic[slice_index][mask_name] = im
+            break
 
         return dic
 
