@@ -67,7 +67,7 @@ def return_layout(basic_config, slice_index):
                             children=[
                                 dbc.Tabs(
                                     [
-                                        # dbc.Tab(label="TIC per slice in 3D", tab_id="page-4-tab-1"),
+                                        dbc.Tab(label="TIC per slice in 3D", tab_id="page-4-tab-1"),
                                         dbc.Tab(label="Lipid selection in 3D", tab_id="page-4-tab-3"),
                                     ],
                                     id="page-4-card-tabs",
@@ -109,12 +109,6 @@ def return_layout(basic_config, slice_index):
                                                         "position": "absolute",
                                                         "left": "0",
                                                     },
-                                                    # figure=return_pickled_object(
-                                                    #    "figures/3D_page",
-                                                    #    "slices_3D",
-                                                    #    force_update=False,
-                                                    #    compute_function=figures.compute_figure_slices_3D,
-                                                    # ),
                                                 ),
                                             ],
                                         ),
@@ -330,17 +324,24 @@ def page_2_update_graph_heatmap_mz_selection(slice_index):
     Output("page-4-alert", "style"),
     Output("page-4-graph-heatmap-mz-selection", "style"),
     Input("page-4-display-button", "n_clicks"),
+    Input("page-4-card-tabs", "active_tab"),
     State("page-4-last-selected-lipids", "data"),
 )
-def page_4_display_alert(clicked_compute, l_lipids):
+def page_4_display_alert(clicked_compute, active_tab, l_lipids):
 
     # Find out which input triggered the function
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
 
     # if id_input is None:
     #    return {}, {"display": "none"}
-    print("ICI FDP", id_input, l_lipids)
-    if len(l_lipids) > 0:
+
+    if active_tab == "page-4-tab-1":
+        return (
+            {"display": "none"},
+            {"width": "100%", "height": "100%", "position": "absolute", "left": "0",},
+        )
+
+    elif active_tab == "page-4-tab-3" and len(l_lipids) > 0:
         return (
             {"display": "none"},
             {"width": "100%", "height": "100%", "position": "absolute", "left": "0",},
@@ -408,7 +409,7 @@ def page_2bis_plot_graph_heatmap_mz_selection(
             return dash.no_update
 
     # If a lipid selection has been done
-    elif id_input == "page-4-display-button":
+    elif id_input == "page-4-display-button" or (id_input == "page-4-card-tabs" and active_tab == "page-4-tab-3"):
 
         if (
             np.sum(l_lipid_1_index) > -app.data.get_slice_number()
@@ -441,6 +442,12 @@ def page_2bis_plot_graph_heatmap_mz_selection(
             # probably the page has just been loaded, so do nothing
             # return app.slice_store.getSlice(slice_index).return_heatmap(binary_string=False)
             return dash.no_update
+
+    elif id_input == "page-4-card-tabs":
+        if active_tab == "page-4-tab-1":
+            return return_pickled_object(
+                "figures/3D_page", "slices_3D", force_update=False, compute_function=figures.compute_figure_slices_3D
+            )
 
     return dash.no_update
 
