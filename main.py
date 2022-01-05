@@ -37,7 +37,6 @@ if __name__ == "__main__":
 
 # TODO debug/accelerate manual region selection page
 # TODO Implement progress bar for slow callbacks with @app.long_callback
-# TODO Improve visualization for 3D scatter plot (on hold for now as plotly has a bug)
 # TODO Make lipid expression comparison between 3D structure
 # TODO accelerate lipid selection per slice in 2D and maybe 3D if possible. Maybe precompute every lipid?
 # TODO make a careful memory analysis to free more memory

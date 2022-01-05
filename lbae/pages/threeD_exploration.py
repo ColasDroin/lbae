@@ -30,7 +30,7 @@ def return_layout(basic_config, slice_index):
                 # x sets the lateral position, y the vertical one, w is in columns (whose size depends on the dimension), h is in rows (30px)
                 # nb columns go 12->10->6->4->2
                 "lg": [
-                    {"i": "page-4-card-main-graph", "x": 0, "y": 0, "w": 7, "h": 16},
+                    {"i": "page-4-card-main-graph", "x": 0, "y": 0, "w": 7, "h": 20},
                     {"i": "page-4-card-lipid-selection", "x": 8, "y": 0, "w": 5, "h": 11},
                     {"i": "page-4-card-range-selection", "x": 8, "y": 8, "w": 5, "h": 5},
                 ],

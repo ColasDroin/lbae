@@ -1003,13 +1003,13 @@ class Figures:
                 z=array_z,
                 mode="markers",
                 marker=dict(
-                    sizemode="diameter",
-                    sizeref=40,
-                    size=array_c,
+                    # sizemode="diameter",
+                    # sizeref=40,
+                    size=3,  # array_c,
                     color=array_c,
                     colorscale="Viridis",
                     colorbar_title="Expression",
-                    line_color="rgba(140, 140, 170, 0.01)",
+                    # line_color="rgba(140, 140, 170, 0.01)",
                 ),
             )
         )
