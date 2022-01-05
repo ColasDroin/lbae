@@ -23,14 +23,21 @@ def return_layout(basic_config, slice_index):
             clearSavedLayout=True,
             isDraggable=False,
             isResizable=False,
+            breakpoints={"xxl": 1600, "lg": 1200, "md": 996, "sm": 768, "xs": 480, "xxs": 0},
+            gridCols={"xxl": 12, "lg": 12, "md": 10, "sm": 6, "xs": 4, "xxs": 2},
             containerPadding=[2, 2],
             layouts={
                 # x sets the lateral position, y the vertical one, w is in columns (whose size depends on the dimension), h is in rows (30px)
                 # nb columns go 12->10->6->4->2
+                "xxl": [
+                    {"i": "page-5-card-hierarchy", "x": 0, "y": 0, "w": 6, "h": 19},
+                    {"i": "page-5-card-atlas-sections", "x": 6, "y": 0, "w": 6, "h": 19},
+                    {"i": "page-5-card-atlas-3D", "x": 0, "y": 12, "w": 12, "h": 31},
+                ],
                 "lg": [
-                    {"i": "page-5-card-hierarchy", "x": 0, "y": 0, "w": 6, "h": 15},
-                    {"i": "page-5-card-atlas-sections", "x": 6, "y": 0, "w": 6, "h": 15},
-                    {"i": "page-5-card-atlas-3D", "x": 0, "y": 12, "w": 12, "h": 17},
+                    {"i": "page-5-card-hierarchy", "x": 0, "y": 0, "w": 6, "h": 17},
+                    {"i": "page-5-card-atlas-sections", "x": 6, "y": 0, "w": 6, "h": 17},
+                    {"i": "page-5-card-atlas-3D", "x": 0, "y": 12, "w": 12, "h": 19},
                 ],
                 "md": [
                     {"i": "page-5-card-hierarchy", "x": 0, "y": 0, "w": 5, "h": 13},
