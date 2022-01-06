@@ -76,7 +76,7 @@ def return_layout(basic_config, slice_index=1):
                 ],
                 "sm": [
                     {"i": "page-3-card-main-graph", "x": 0, "y": 0, "w": 6, "h": 15},
-                    {"i": "page-3-card-mask-selection", "x": 0, "y": 0, "w": 6, "h": 14},
+                    {"i": "page-3-card-mask-selection", "x": 0, "y": 0, "w": 6, "h": 11},
                     {"i": "page-3-card-spectrum", "x": 0, "y": 12, "w": 6, "h": N_LINES},
                     {"i": "page-3-card-dropdowns", "x": 0, "y": 19, "w": 6, "h": 7},
                     {"i": "page-3-card-filtering", "x": 0, "y": 19 + 7, "w": 6, "h": 4},
@@ -91,7 +91,7 @@ def return_layout(basic_config, slice_index=1):
                 ],
                 "xs": [
                     {"i": "page-3-card-main-graph", "x": 0, "y": 0, "w": 4, "h": 15},
-                    {"i": "page-3-card-mask-selection", "x": 0, "y": 0, "w": 4, "h": 14},
+                    {"i": "page-3-card-mask-selection", "x": 0, "y": 0, "w": 4, "h": 11},
                     {"i": "page-3-card-spectrum", "x": 0, "y": 10, "w": 4, "h": N_LINES},
                     {"i": "page-3-card-dropdowns", "x": 0, "y": 15, "w": 4, "h": 7},
                     {"i": "page-3-card-filtering", "x": 0, "y": 14 + 7, "w": 4, "h": 4},
