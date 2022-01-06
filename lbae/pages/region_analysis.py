@@ -138,37 +138,37 @@ def return_layout(basic_config, slice_index=1):
                                             width=4,
                                             className="mt-1 pt-0",
                                             children=[
-                                                html.Div(
-                                                    className="page-1-fixed-aspect-ratio",
-                                                    children=[
-                                                        dcc.Graph(
-                                                            id="page-3-graph-atlas-per-sel",
-                                                            config=basic_config | {"displayModeBar": False},
-                                                            style={
-                                                                "width": "100%",
-                                                                "height": "100%",
-                                                                "position": "absolute",
-                                                                "left": "0",
-                                                            },
-                                                            figure=return_pickled_object(
-                                                                "figures/load_page",
-                                                                "figure_basic_image",
-                                                                force_update=False,
-                                                                compute_function=figures.compute_figure_basic_image,
-                                                                type_figure=None,
-                                                                index_image=slice_index - 1,
-                                                                plot_atlas_contours=True,
-                                                                only_contours=True,
-                                                            ),
-                                                        ),
-                                                        html.P(
-                                                            "Hovered region: ",
-                                                            id="page-3-graph-atlas-hover-text",
-                                                            className="text-warning font-weight-bold position-absolute",
-                                                            style={"left": "15%", "top": "1em"},
-                                                        ),
-                                                    ],
-                                                ),
+                                                # html.Div(
+                                                #     className="page-1-fixed-aspect-ratio",
+                                                #     children=[
+                                                #         dcc.Graph(
+                                                #             id="page-3-graph-atlas-per-sel",
+                                                #             config=basic_config | {"displayModeBar": False},
+                                                #             style={
+                                                #                 "width": "100%",
+                                                #                 "height": "100%",
+                                                #                 "position": "absolute",
+                                                #                 "left": "0",
+                                                #             },
+                                                #             figure=return_pickled_object(
+                                                #                 "figures/load_page",
+                                                #                 "figure_basic_image",
+                                                #                 force_update=False,
+                                                #                 compute_function=figures.compute_figure_basic_image,
+                                                #                 type_figure=None,
+                                                #                 index_image=slice_index - 1,
+                                                #                 plot_atlas_contours=True,
+                                                #                 only_contours=True,
+                                                #             ),
+                                                #         ),
+                                                #         html.P(
+                                                #             "Hovered region: ",
+                                                #             id="page-3-graph-atlas-hover-text",
+                                                #             className="text-warning font-weight-bold position-absolute",
+                                                #             style={"left": "15%", "top": "1em"},
+                                                #         ),
+                                                #     ],
+                                                # ),
                                                 ### First nested row
                                                 dbc.Row(
                                                     justify="center",
@@ -187,16 +187,17 @@ def return_layout(basic_config, slice_index=1):
                                                                             {"label": node, "value": node}
                                                                             for node in return_pickled_object(
                                                                                 "atlas/atlas_objects",
-                                                                                "hierarchy",
+                                                                                "set_masks",
                                                                                 force_update=False,
-                                                                                compute_function=atlas.compute_hierarchy_list,
-                                                                            )[0]
+                                                                                compute_function=atlas.compute_set_projected_masks,
+                                                                                slice_index=slice_index - 1,
+                                                                            )
                                                                         ],
                                                                         placeholder="Click on brain regions above.",
                                                                         multi=True,
                                                                         clearable=False,
-                                                                        disabled=True,
-                                                                        # className="ml-5",
+                                                                        disabled=False,
+                                                                        className="my-3",
                                                                     ),
                                                                 ),
                                                             ],
@@ -650,6 +651,7 @@ def page_3_hover(hoverData, slice_index):
     return dash.no_update
 
 
+"""
 @app.app.callback(
     Output("page-3-graph-atlas-hover-text", "children"),
     Input("page-3-graph-atlas-per-sel", "hoverData"),
@@ -672,7 +674,7 @@ def page_3_atlas_hover(hoverData, slice_index):
             return "Hovered region: " + label
 
     return dash.no_update
-
+"""
 
 # Function to plot the initial heatmap
 @app.app.callback(
@@ -685,6 +687,7 @@ def tab_3_reset_layout(cliked_reset, url):
     return {}
 
 
+"""
 # Function to add clicked regions to selected options in dropdown
 @app.app.callback(
     Output("page-3-dropdown-brain-regions", "value"),
@@ -731,7 +734,7 @@ def tab_3_add_value_dropdown(slice_index, clicked_reset, url, clickData, l_mask_
                 logging.info("The coordinate is out of the ccfv3")
 
     return dash.no_update
-
+"""
 
 # Function to plot the initial heatmap
 @app.app.callback(
@@ -835,6 +838,8 @@ def page_3_plot_heatmap(
                 for idx_mask, mask_name in enumerate(l_mask_name):
                     if mask_name in dic_masks:
                         projected_mask = dic_masks[mask_name][0]
+                    else:
+                        logging.warning("The mask " + str(mask_name) + " couldn't be found")
 
                     # Build a list of empty images and add selected lipids for each channel
                     normalized_projected_mask = projected_mask / np.max(projected_mask)
@@ -905,7 +910,8 @@ def page_3_plot_heatmap(
     return dash.no_update
 
 
-# Function to plot the maks annotation on the initial heatmap
+"""
+# Function to plot the mask annotation on the initial heatmap
 @app.app.callback(
     Output("page-3-graph-atlas-per-sel", "figure"),
     Output("page-3-dcc-store-basic-figure", "data"),
@@ -958,6 +964,59 @@ def page_3_plot_masks(slice_index, url, hoverData, basic_figure_plotted):
                     return fig, False
 
     return dash.no_update
+"""
+
+# Function that update dropdown options
+@app.app.callback(
+    Output("page-3-dropdown-brain-regions", "options"), Input("main-slider", "value"),
+)
+def page_3_update_dropdown_option(slice_index):
+
+    if slice_index is not None:
+        return [
+            {"label": node, "value": node}
+            for node in return_pickled_object(
+                "atlas/atlas_objects",
+                "set_masks",
+                force_update=False,
+                compute_function=atlas.compute_set_projected_masks,
+                slice_index=slice_index - 1,
+            )
+        ]
+    else:
+        return dash.no_update
+
+
+# Function that limits dropdown selection to 4
+@app.app.callback(
+    Output("page-3-dropdown-brain-regions", "disabled"),
+    Input("page-3-dropdown-brain-regions", "value"),
+    Input("page-3-reset-button", "n_clicks"),
+)
+def page_3_disable_dropdown(l_selection, clicked_reset):
+
+    # Find out which input triggered the function
+    id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
+
+    if id_input == "page-3-reset-button":
+        return False
+
+    if l_selection is not None:
+        if len(l_selection) > 0 and len(l_selection) < 4:
+            return False
+        elif len(l_selection) >= 4:
+            return True
+    return dash.no_update
+
+
+# Function that empties dropdown selection
+@app.app.callback(
+    Output("page-3-dropdown-brain-regions", "value"),
+    Input("page-3-reset-button", "n_clicks"),
+    Input("main-slider", "value"),
+)
+def page_3_empty_dropdown(clicked_reset, slice_index):
+    return []
 
 
 # Function that activate the button to compute spectra

@@ -45,7 +45,7 @@ if __name__ == "__main__":
 # TODO have the documentation always open on the right on very big screens to fill emptyness
 # TODO make mask hovering client side in javascript to speed up things a lot. As it is, unusable remotely for now :(
 # TODO Implement a "fast mode" with lower resolution images and spectra to have a faster app (for slow connections)
-# TODO make layout perfect for every screen size
+# TODO make layout perfect for every screen size. Maybe automate the process for a given figure shape?
 # TODO when everything is stable, create a function that delete all pickle files and repickle everything automatically
 # TODO write missing docstrings
 # TODO write a brief documentation

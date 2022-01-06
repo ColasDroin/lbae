@@ -367,7 +367,9 @@ class Atlas:
 
         return dic
 
+    # ! caution as this function is not explicitely precomputed for every slice anywere
     def compute_dic_projected_masks_and_spectra(self, slice_index):
+
         dic = {}
         slice_coor_rescaled = np.asarray(
             (self.array_coordinates_warped_data[slice_index, :, :] * 1000 / self.resolution).round(0), dtype=np.int16,
@@ -386,6 +388,17 @@ class Atlas:
 
             dic[mask_name] = (projected_mask, grah_scattergl_data)
         return dic
+
+    # ! caution as this function is not explicitely precomputed for every slice anywere
+    def compute_set_projected_masks(self, slice_index):
+        dic_masks = return_pickled_object(
+            "atlas/atlas_objects",
+            "dic_masks_and_spectra",
+            force_update=False,
+            compute_function=self.compute_dic_projected_masks_and_spectra,
+            slice_index=slice_index,
+        )
+        return set(dic_masks.keys())
 
     """
     def pickle_all_3D_figures(self, force_recompute=False):
