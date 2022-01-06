@@ -48,7 +48,8 @@ def return_layout(basic_config, slice_index=1):
                 # x sets the lateral position, y the vertical one, w is in columns (whose size depends on the dimension), h is in rows (30px)
                 # nb columns go 12->12->10->6->4->2
                 "xxl": [
-                    {"i": "page-3-card-mask-selection", "x": 0, "y": 0, "w": 12, "h": 20},
+                    {"i": "page-3-card-main-graph", "x": 0, "y": 0, "w": 9, "h": 20},
+                    {"i": "page-3-card-mask-selection", "x": 9, "y": 0, "w": 3, "h": 20},
                     {"i": "page-3-card-spectrum", "x": 0, "y": 15, "w": 9, "h": N_LINES},
                     {"i": "page-3-card-dropdowns", "x": 9, "y": 15, "w": 3, "h": int(N_LINES) / 2 + 2},
                     {"i": "page-3-card-filtering", "x": 9, "y": 16, "w": 3, "h": N_LINES - int(N_LINES) / 2 - 2},
@@ -56,7 +57,8 @@ def return_layout(basic_config, slice_index=1):
                     {"i": "page-3-card-graph-lipid-comparison", "x": 6, "y": 17, "w": 6, "h": 2 * N_LINES - 2},
                 ],
                 "lg": [
-                    {"i": "page-3-card-mask-selection", "x": 0, "y": 0, "w": 12, "h": 16},
+                    {"i": "page-3-card-main-graph", "x": 0, "y": 0, "w": 9, "h": 16},
+                    {"i": "page-3-card-mask-selection", "x": 9, "y": 0, "w": 3, "h": 16},
                     {"i": "page-3-card-spectrum", "x": 0, "y": 15, "w": 9, "h": N_LINES},
                     {"i": "page-3-card-dropdowns", "x": 9, "y": 15, "w": 3, "h": int(N_LINES) / 2 + 2},
                     {"i": "page-3-card-filtering", "x": 9, "y": 16, "w": 3, "h": N_LINES - int(N_LINES) / 2 - 2},
@@ -64,7 +66,8 @@ def return_layout(basic_config, slice_index=1):
                     {"i": "page-3-card-graph-lipid-comparison", "x": 6, "y": 17, "w": 6, "h": 2 * N_LINES - 5},
                 ],
                 "md": [
-                    {"i": "page-3-card-mask-selection", "x": 0, "y": 0, "w": 10, "h": 15},
+                    {"i": "page-3-card-main-graph", "x": 0, "y": 0, "w": 7, "h": 15},
+                    {"i": "page-3-card-mask-selection", "x": 9, "y": 0, "w": 3, "h": 15},
                     {"i": "page-3-card-spectrum", "x": 0, "y": 15, "w": 7, "h": N_LINES},
                     {"i": "page-3-card-dropdowns", "x": 7, "y": 15, "w": 3, "h": int(N_LINES) / 2 + 2},
                     {"i": "page-3-card-filtering", "x": 7, "y": 16, "w": 3, "h": N_LINES - int(N_LINES) / 2 - 2},
@@ -72,7 +75,8 @@ def return_layout(basic_config, slice_index=1):
                     {"i": "page-3-card-graph-lipid-comparison", "x": 5, "y": 17, "w": 5, "h": 2 * N_LINES - 7},
                 ],
                 "sm": [
-                    {"i": "page-3-card-mask-selection", "x": 0, "y": 0, "w": 6, "h": 15},
+                    {"i": "page-3-card-main-graph", "x": 0, "y": 0, "w": 6, "h": 15},
+                    {"i": "page-3-card-mask-selection", "x": 0, "y": 0, "w": 6, "h": 14},
                     {"i": "page-3-card-spectrum", "x": 0, "y": 12, "w": 6, "h": N_LINES},
                     {"i": "page-3-card-dropdowns", "x": 0, "y": 19, "w": 6, "h": 7},
                     {"i": "page-3-card-filtering", "x": 0, "y": 19 + 7, "w": 6, "h": 4},
@@ -86,7 +90,8 @@ def return_layout(basic_config, slice_index=1):
                     },
                 ],
                 "xs": [
-                    {"i": "page-3-card-mask-selection", "x": 0, "y": 0, "w": 4, "h": 15},
+                    {"i": "page-3-card-main-graph", "x": 0, "y": 0, "w": 4, "h": 15},
+                    {"i": "page-3-card-mask-selection", "x": 0, "y": 0, "w": 4, "h": 14},
                     {"i": "page-3-card-spectrum", "x": 0, "y": 10, "w": 4, "h": N_LINES},
                     {"i": "page-3-card-dropdowns", "x": 0, "y": 15, "w": 4, "h": 7},
                     {"i": "page-3-card-filtering", "x": 0, "y": 14 + 7, "w": 4, "h": 4},
@@ -100,7 +105,8 @@ def return_layout(basic_config, slice_index=1):
                     },
                 ],
                 "xxs": [
-                    {"i": "page-3-card-mask-selection", "x": 0, "y": 0, "w": 2, "h": 13},
+                    {"i": "page-3-card-main-graph", "x": 0, "y": 0, "w": 2, "h": 13},
+                    {"i": "page-3-card-mask-selection", "x": 0, "y": 0, "w": 2, "h": 12},
                     {"i": "page-3-card-spectrum", "x": 0, "y": 4, "w": 2, "h": N_LINES},
                     {"i": "page-3-card-dropdowns", "x": 0, "y": 9, "w": 2, "h": 7},
                     {"i": "page-3-card-filtering", "x": 0, "y": 9 + 7, "w": 2, "h": 4},
@@ -120,211 +126,162 @@ def return_layout(basic_config, slice_index=1):
                     style={"margin": "0 auto", "width": "100%", "height": "100%"},
                     children=[
                         dbc.CardHeader(
+                            className="d-flex justify-content-between", children=[html.Div("Brain region selection"),],
+                        ),
+                        dbc.CardBody(
+                            className="loading-wrapper",
+                            children=[
+                                # html.Div(
+                                #     className="page-1-fixed-aspect-ratio",
+                                #     children=[
+                                #         dcc.Graph(
+                                #             id="page-3-graph-atlas-per-sel",
+                                #             config=basic_config | {"displayModeBar": False},
+                                #             style={
+                                #                 "width": "100%",
+                                #                 "height": "100%",
+                                #                 "position": "absolute",
+                                #                 "left": "0",
+                                #             },
+                                #             figure=return_pickled_object(
+                                #                 "figures/load_page",
+                                #                 "figure_basic_image",
+                                #                 force_update=False,
+                                #                 compute_function=figures.compute_figure_basic_image,
+                                #                 type_figure=None,
+                                #                 index_image=slice_index - 1,
+                                #                 plot_atlas_contours=True,
+                                #                 only_contours=True,
+                                #             ),
+                                #         ),
+                                #         html.P(
+                                #             "Hovered region: ",
+                                #             id="page-3-graph-atlas-hover-text",
+                                #             className="text-warning font-weight-bold position-absolute",
+                                #             style={"left": "15%", "top": "1em"},
+                                #         ),
+                                #     ],
+                                # ),
+                                html.Div(
+                                    children=dcc.Dropdown(
+                                        id="page-3-dropdown-brain-regions",
+                                        options=[
+                                            {"label": node, "value": node}
+                                            for node in return_pickled_object(
+                                                "atlas/atlas_objects",
+                                                "set_masks",
+                                                force_update=False,
+                                                compute_function=atlas.compute_set_projected_masks,
+                                                slice_index=slice_index - 1,
+                                            )
+                                        ],
+                                        placeholder="Click on brain regions above.",
+                                        multi=True,
+                                        clearable=False,
+                                        disabled=False,
+                                        className="my-3 mx-auto",
+                                    ),
+                                ),
+                                html.Div(
+                                    className="d-grid gap-2 col-10 mx-auto mt-2",
+                                    children=[
+                                        dbc.Button(
+                                            children="Compute spectra",
+                                            id="page-3-button-compute-spectra",
+                                            disabled=True,
+                                            className="",
+                                            color="primary",
+                                        ),
+                                    ],
+                                ),
+                                html.Div(
+                                    className="d-grid gap-2 col-10 mx-auto mt-2",
+                                    children=[
+                                        dbc.Button(
+                                            children="Download spectrum data",
+                                            id="tab-3-download-data-button",
+                                            disabled=True,
+                                            className="",
+                                            color="primary",
+                                        ),
+                                    ],
+                                ),
+                                dcc.Download(id="tab-3-download-data"),
+                                ## Fourth column of nested row
+                                html.Div(
+                                    className="d-grid gap-2 col-10 mx-auto mt-2",
+                                    children=[
+                                        dbc.Button(children="Reset", id="page-3-reset-button", color="primary",)
+                                    ],
+                                ),
+                                html.Div(
+                                    className="d-flex flex-column",
+                                    children=[
+                                        dbc.Switch(
+                                            id="page-3-normalize",
+                                            label="Normalize",
+                                            value=False,
+                                            className="mt-2 mx-auto",
+                                        ),
+                                        dbc.Switch(
+                                            id="page-3-log",
+                                            label="Log-transform",
+                                            value=False,
+                                            className="mt-2 mx-auto",
+                                        ),
+                                    ],
+                                ),
+                            ],
+                        ),
+                    ],
+                ),
+                dbc.Card(
+                    id="page-3-card-main-graph",
+                    style={"margin": "0 auto", "width": "100%", "height": "100%"},
+                    children=[
+                        dbc.CardHeader(
                             className="d-flex justify-content-between",
                             children=[
                                 html.Div(id="page-3-toast-graph-heatmap-mz-selection", children="Brain slice n°"),
                             ],
                         ),
                         dbc.CardBody(
-                            className="loading-wrapper pt-0 mt-0 pb-0 mb-1 px-0 mx-0",
+                            className="loading-wrapper py-0 mb-0 mt-2",
                             children=[
-                                ### First nested row
-                                dbc.Row(
-                                    justify="center",
-                                    className="px-0 mx-0",
+                                html.Div(
+                                    className="fixed-aspect-ratio",
                                     children=[
-                                        ## First column of nested row
-                                        dbc.Col(
-                                            width=4,
-                                            className="mt-1 pt-0",
-                                            children=[
-                                                # html.Div(
-                                                #     className="page-1-fixed-aspect-ratio",
-                                                #     children=[
-                                                #         dcc.Graph(
-                                                #             id="page-3-graph-atlas-per-sel",
-                                                #             config=basic_config | {"displayModeBar": False},
-                                                #             style={
-                                                #                 "width": "100%",
-                                                #                 "height": "100%",
-                                                #                 "position": "absolute",
-                                                #                 "left": "0",
-                                                #             },
-                                                #             figure=return_pickled_object(
-                                                #                 "figures/load_page",
-                                                #                 "figure_basic_image",
-                                                #                 force_update=False,
-                                                #                 compute_function=figures.compute_figure_basic_image,
-                                                #                 type_figure=None,
-                                                #                 index_image=slice_index - 1,
-                                                #                 plot_atlas_contours=True,
-                                                #                 only_contours=True,
-                                                #             ),
-                                                #         ),
-                                                #         html.P(
-                                                #             "Hovered region: ",
-                                                #             id="page-3-graph-atlas-hover-text",
-                                                #             className="text-warning font-weight-bold position-absolute",
-                                                #             style={"left": "15%", "top": "1em"},
-                                                #         ),
-                                                #     ],
-                                                # ),
-                                                ### First nested row
-                                                dbc.Row(
-                                                    justify="center",
-                                                    className="d-flex align-items-center mt-1 pt-0",
-                                                    children=[
-                                                        ## First column of nested row
-                                                        dbc.Col(
-                                                            width=12,
-                                                            className="d-flex justify-content-center",
-                                                            children=[
-                                                                html.Div(
-                                                                    style={"width": "80%",},  # "minWidth": "8em",},
-                                                                    children=dcc.Dropdown(
-                                                                        id="page-3-dropdown-brain-regions",
-                                                                        options=[
-                                                                            {"label": node, "value": node}
-                                                                            for node in return_pickled_object(
-                                                                                "atlas/atlas_objects",
-                                                                                "set_masks",
-                                                                                force_update=False,
-                                                                                compute_function=atlas.compute_set_projected_masks,
-                                                                                slice_index=slice_index - 1,
-                                                                            )
-                                                                        ],
-                                                                        placeholder="Click on brain regions above.",
-                                                                        multi=True,
-                                                                        clearable=False,
-                                                                        disabled=False,
-                                                                        className="my-3",
-                                                                    ),
-                                                                ),
-                                                            ],
-                                                        ),
-                                                        ## Second column of nested row
-                                                        dbc.Col(
-                                                            width=12,
-                                                            className="d-flex justify-content-center mt-1",
-                                                            children=[
-                                                                html.Div(
-                                                                    className="d-grid gap-2 col-10 mx-auto",
-                                                                    children=[
-                                                                        dbc.Button(
-                                                                            children="Compute spectra",
-                                                                            id="page-3-button-compute-spectra",
-                                                                            disabled=True,
-                                                                            className="",
-                                                                            color="primary",
-                                                                        ),
-                                                                    ],
-                                                                ),
-                                                            ],
-                                                        ),
-                                                        ## Third column of nested row
-                                                        dbc.Col(
-                                                            width=12,
-                                                            className="d-flex justify-content-center mt-2",
-                                                            children=[
-                                                                html.Div(
-                                                                    className="d-grid gap-2 col-10 mx-auto",
-                                                                    children=[
-                                                                        dbc.Button(
-                                                                            children="Download spectrum data",
-                                                                            id="tab-3-download-data-button",
-                                                                            disabled=True,
-                                                                            className="",
-                                                                            color="primary",
-                                                                        ),
-                                                                    ],
-                                                                ),
-                                                            ],
-                                                        ),
-                                                        dcc.Download(id="tab-3-download-data"),
-                                                        ## Fourth column of nested row
-                                                        dbc.Col(
-                                                            width=12,
-                                                            className="d-flex justify-content-center mt-2",
-                                                            children=[
-                                                                html.Div(
-                                                                    className="d-grid gap-2 col-10 mx-auto",
-                                                                    children=[
-                                                                        dbc.Button(
-                                                                            children="Reset",
-                                                                            id="page-3-reset-button",
-                                                                            color="primary",
-                                                                        )
-                                                                    ],
-                                                                ),
-                                                            ],
-                                                        ),
-                                                        ## Fifth column of nested row
-                                                        dbc.Col(
-                                                            width=12,
-                                                            className="d-flex flex-row justify-content-center mt-2",
-                                                            children=[
-                                                                dbc.Switch(
-                                                                    id="page-3-normalize",
-                                                                    label="Normalize",
-                                                                    value=False,
-                                                                    className="mr-1",
-                                                                ),
-                                                                dbc.Switch(
-                                                                    id="page-3-log",
-                                                                    label="Log-transform",
-                                                                    value=False,
-                                                                    className="ml-1",
-                                                                ),
-                                                            ],
-                                                        ),
-                                                        ### End of first nested row
-                                                    ],
-                                                ),
-                                            ],
+                                        dcc.Graph(
+                                            id="page-3-graph-heatmap-per-sel",
+                                            config=basic_config
+                                            | {
+                                                "toImageButtonOptions": {
+                                                    "format": "png",
+                                                    "filename": "annotated_brain_slice",
+                                                    "scale": 2,
+                                                }
+                                            },
+                                            style={
+                                                "width": "100%",
+                                                "height": "100%",
+                                                "position": "absolute",
+                                                "left": "0",
+                                            },
+                                            figure=return_pickled_object(
+                                                "figures/load_page",
+                                                "figure_basic_image",
+                                                force_update=False,
+                                                compute_function=figures.compute_figure_basic_image,
+                                                type_figure="projection_corrected",
+                                                index_image=slice_index - 1,
+                                                plot_atlas_contours=False,
+                                            ),
                                         ),
-                                        ## Second column of nested row
-                                        dbc.Col(
-                                            width=8,
-                                            className="mx-0 px-0",
-                                            children=[
-                                                html.Div(
-                                                    className="fixed-aspect-ratio",
-                                                    children=[
-                                                        dcc.Graph(
-                                                            id="page-3-graph-heatmap-per-sel",
-                                                            config=basic_config
-                                                            | {
-                                                                "toImageButtonOptions": {
-                                                                    "format": "png",
-                                                                    "filename": "annotated_brain_slice",
-                                                                    "scale": 2,
-                                                                }
-                                                            },
-                                                            style={
-                                                                "width": "100%",
-                                                                "height": "100%",
-                                                                "position": "absolute",
-                                                                "left": "0",
-                                                            },
-                                                            figure=return_pickled_object(
-                                                                "figures/load_page",
-                                                                "figure_basic_image",
-                                                                force_update=False,
-                                                                compute_function=figures.compute_figure_basic_image,
-                                                                type_figure="projection_corrected",
-                                                                index_image=slice_index - 1,
-                                                                plot_atlas_contours=False,
-                                                            ),
-                                                        ),
-                                                        html.P(
-                                                            "Hovered region: ",
-                                                            id="page-3-graph-hover-text",
-                                                            className="text-warning font-weight-bold position-absolute",
-                                                            style={"left": "15%", "top": "1em"},
-                                                        ),
-                                                    ],
-                                                ),
-                                            ],
+                                        html.P(
+                                            "Hovered region: ",
+                                            id="page-3-graph-hover-text",
+                                            className="text-warning font-weight-bold position-absolute",
+                                            style={"left": "15%", "top": "1em"},
                                         ),
                                     ],
                                 ),
