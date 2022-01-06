@@ -21,15 +21,18 @@ def logmem():
     return "\t" + memory_string
 
 
-def return_pickled_object(data_folder, file_name, force_update, compute_function, **compute_function_args):
+def return_pickled_object(
+    data_folder, file_name, force_update, compute_function, ignore_arguments_naming=False, **compute_function_args
+):
 
     # Create folder containing the object if it doesn't already exist
     path_folder = "lbae/data/" + data_folder + "/"
     os.makedirs(path_folder, exist_ok=True)
 
     # Complete filename with function arguments
-    for key, value in compute_function_args.items():
-        file_name += "_" + str(value)
+    if not ignore_arguments_naming:
+        for key, value in compute_function_args.items():
+            file_name += "_" + str(value)
     file_name += ".pickle"
 
     # Check if the object is in the folder already and return it

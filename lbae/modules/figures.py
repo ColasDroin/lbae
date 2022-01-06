@@ -1265,31 +1265,72 @@ class Figures:
 
         return fig
 
-    """
+    ###### PICKLING FUNCTIONS ######
+    def pickle_all_figure_bubbles_3D(self):
 
- 
+        # simulate a click on all lipid names
+        for name in sorted(self._data.get_annotations().name.unique()):
+            structures = self._data.get_annotations()[self._data.get_annotations()["name"] == name].structure.unique()
+            for structure in sorted(structures):
+                cations = self._data.get_annotations()[
+                    (self._data.get_annotations()["name"] == name)
+                    & (self._data.get_annotations()["structure"] == structure)
+                ].cation.unique()
+                for cation in sorted(cations):
+                    l_selected_lipids = []
+                    for slice_index in range(self._data.get_slice_number()):
+                        # Find lipid location
+                        l_lipid_loc = (
+                            self._data.get_annotations()
+                            .index[
+                                (self._data.get_annotations()["name"] == name)
+                                & (self._data.get_annotations()["structure"] == structure)
+                                & (self._data.get_annotations()["slice"] == slice_index)
+                                & (self._data.get_annotations()["cation"] == cation)
+                            ]
+                            .tolist()
+                        )
 
+                        # If several lipids correspond to the selection, we have a problem...
+                        if len(l_lipid_loc) > 1:
+                            logging.warning("More than one lipid corresponds to the selection")
+                            l_lipid_loc = [l_lipid_loc[-1]]
+                        # If no lipid correspond to the selection, set to -1
+                        if len(l_lipid_loc) == 0:
+                            l_lipid_loc = [-1]
 
+                        # add lipid index for each slice
+                        l_selected_lipids.append(l_lipid_loc[0])
 
-   
-  
+                    # get final lipid name
+                    lipid_string = name + " " + structure + " " + cation
 
-    # This function averages spectra from a drawn selection and pads the remaining peaks with zeros
-    def compute_extended_spectrum_per_selection(self, path, debug=False, sample=False, zero_extend=True):
-        list_index_bound_rows, list_index_bound_column_per_row = sample_rows_from_path(path)
-        l_mz_intensities = compute_spectrum_per_row_selection(
-            list_index_bound_rows,
-            list_index_bound_column_per_row,
-            self.array_spectra_high_res,
-            self.array_pixel_indexes_high_res,
-            self.image_shape,
-            zeros_extend=zero_extend,
-            sample=sample,
-        )
-        if debug:
-            return list_index_bound_rows, list_index_bound_column_per_row, l_mz_intensities
-        else:
-            return l_mz_intensities
-   
+                    # if lipid is present in at least one slice
+                    if np.sum(l_selected_lipids) > -self._data.get_slice_number():
 
-    """
+                        # Build the list of mz boundaries for each peak and each index
+                        lll_lipid_bounds = [
+                            [
+                                [
+                                    (
+                                        float(self._data.get_annotations().iloc[index]["min"]),
+                                        float(self._data.get_annotations().iloc[index]["max"]),
+                                    )
+                                ]
+                                if index != -1
+                                else None
+                                for index in [lipid_1_index, -1, -1]
+                            ]
+                            for lipid_1_index in l_selected_lipids
+                        ]
+
+                        # compute figure
+                        return_pickled_object(
+                            "figures/3D_page",
+                            "scatter_3D_" + lipid_string + "_" + "" + "_" + "",
+                            force_update=False,
+                            compute_function=self.compute_figure_bubbles_3D,
+                            ignore_arguments_naming=True,
+                            ll_t_bounds=lll_lipid_bounds,
+                            normalize_independently=False,
+                        )

@@ -369,6 +369,9 @@ def page_4_display_alert(clicked_compute, active_tab, l_lipids):
     State("page-4-upper-bound", "value"),
     State("page-4-mz-value", "value"),
     State("page-4-mz-range", "value"),
+    State("page-4-toast-lipid-1", "header"),
+    State("page-4-toast-lipid-2", "header"),
+    State("page-4-toast-lipid-3", "header"),
 )
 def page_2bis_plot_graph_heatmap_mz_selection(
     active_tab,
@@ -384,6 +387,9 @@ def page_2bis_plot_graph_heatmap_mz_selection(
     hb,
     mz,
     mz_range,
+    name_lipid_1,
+    name_lipid_2,
+    name_lipid_3,
 ):
 
     # Find out which input triggered the function
@@ -436,7 +442,16 @@ def page_2bis_plot_graph_heatmap_mz_selection(
             ]
 
             if active_tab == "page-4-tab-3":
-                return figures.compute_figure_bubbles_3D(lll_lipid_bounds, normalize_independently=False)
+                return return_pickled_object(
+                    "figures/3D_page",
+                    "scatter_3D_" + name_lipid_1 + "_" + name_lipid_2 + "_" + name_lipid_3,
+                    force_update=False,
+                    compute_function=figures.compute_figure_bubbles_3D,
+                    ignore_arguments_naming=True,
+                    ll_t_bounds=lll_lipid_bounds,
+                    normalize_independently=False,
+                )
+                # return figures.compute_figure_bubbles_3D(lll_lipid_bounds, normalize_independently=False)
 
         else:
             # probably the page has just been loaded, so do nothing
@@ -659,7 +674,6 @@ def page_2bis_add_toast_selection(
 )
 def page_4_disable_dropdowns(l_lipid_1_index, l_lipid_2_index, l_lipid_3_index):
 
-    print(l_lipid_1_index)
     # If all slots are taken, disable all dropdowns
     if (
         np.sum(l_lipid_1_index) > -app.data.get_slice_number()

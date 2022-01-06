@@ -38,14 +38,16 @@ if __name__ == "__main__":
 # TODO debug/accelerate manual region selection page
 # TODO accelerate lipid selection per slice in 2D and maybe 3D if possible. Maybe precompute every lipid?
 # TODO Make lipid expression comparison between 3D structure
+# TODO Create a vtk widget to explore 3D lipid data with a transparent continous colormap
 # TODO Implement progress bar for slow callbacks with @app.long_callback -> not possible for now as context manager is not supported
 # TODO make a careful memory analysis to free more memory
 # TODO incoporate new slices
 # TODO implement the app as a multipage app when the feature is available on Dash
-# TODO have the documentation always open on the right on very big screens to fill emptyness
+# TODO have the documentation always open on the right on very big screens to fill empty space
 # TODO make mask hovering client side in javascript to speed up things a lot. As it is, unusable remotely for now :(
 # TODO Implement a "fast mode" with lower resolution images and spectra to have a faster app (for slow connections)
 # TODO make layout perfect for every screen size. Maybe automate the process for a given figure shape?
 # TODO when everything is stable, create a function that delete all pickle files and repickle everything automatically
+# TODO do quality control, especially when several users are on the app in parallel
 # TODO write missing docstrings
 # TODO write a brief documentation

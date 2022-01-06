@@ -30,6 +30,8 @@ figures = Figures(data, atlas)
 
 logging.info("Memory use after three main object have been instantiated" + logmem())
 
+
+# figures.pickle_all_figure_bubbles_3D()
 """
 # pickle all slice files and images
 force_pickle = False
