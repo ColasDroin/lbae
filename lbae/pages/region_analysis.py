@@ -1397,18 +1397,9 @@ def page_3_plot_spectrum(cliked_reset, l_spectra, slice_index):
 
                 logging.info("Checkpoint 7")
 
-                # ! This step is extremely long
                 # Rebuild lipid name from structure, cation, etc.
-                l_labels = [
-                    df_names.iloc[idx]["name"]
-                    + "_"
-                    + df_names.iloc[idx]["structure"]
-                    + "_"
-                    + df_names.iloc[idx]["cation"]
-                    if idx != -1
-                    else ""
-                    for idx in l_idx_labels_kept
-                ]
+                l_labels_all_lipids = data.compute_l_labels()
+                l_labels = [l_labels_all_lipids[idx] if idx != -1 else "" for idx in l_idx_labels_kept]
 
                 logging.info("Checkpoint 7.5")
                 # Add annotated trace to plot

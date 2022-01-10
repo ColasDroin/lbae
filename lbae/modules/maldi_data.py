@@ -103,6 +103,8 @@ class MaldiData:
         self._df_annotations = pd.read_csv(path_annotations + "lipid_annotation.csv")
         self._df_annotations["name"] = self._df_annotations["name"].map(lambda x: x.split("_")[1])
 
+        # Build a list of lipid names for faster access and numba manipulation
+
     def get_annotations(self):
         return self._df_annotations
 
@@ -315,3 +317,12 @@ class MaldiData:
                     shape=self._dic_lightweight[slice_index][array + "_shape"],
                 )
 
+    def compute_l_labels(self):
+        l_labels = (
+            self._df_annotations["name"]
+            + "_"
+            + self._df_annotations["structure"]
+            + "_"
+            + self._df_annotations["cation"]
+        ).to_list()
+        return l_labels
