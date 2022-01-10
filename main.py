@@ -36,7 +36,9 @@ if __name__ == "__main__":
 # gunicorn main:server -b:8050 --workers=1
 
 # TODO debug/accelerate manual region selection page
-# TODO accelerate lipid selection per slice in 2D and maybe 3D if possible. Maybe precompute every lipid?
+# TODO accelerate lipid selection per slice in 2D. Maybe precompute every lipid?
+
+
 # TODO Make lipid expression comparison between 3D structure
 # TODO Create a vtk widget to explore 3D lipid data with a transparent continous colormap
 # TODO Implement progress bar for slow callbacks with @app.long_callback -> not possible for now as context manager is not supported
