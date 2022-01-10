@@ -15,7 +15,7 @@ from lbae.app import figures, data
 from lbae.modules.tools.misc import return_pickled_object
 
 ###### DEFFINE PAGE LAYOUT ######
-
+# ! It seems that some things (useless?) are loaded at startup and take time
 #! Put basic config in config in all page file
 def return_layout(basic_config, slice_index):
 

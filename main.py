@@ -50,6 +50,7 @@ if __name__ == "__main__":
 # TODO Implement a "fast mode" with lower resolution images and spectra to have a faster app (for slow connections)
 # TODO make layout perfect for every screen size. Maybe automate the process for a given figure shape?
 # TODO when everything is stable, create a function that delete all pickle files and repickle everything automatically
+# TODO adress all #! comments in the code
 # TODO do quality control, especially when several users are on the app in parallel
 # TODO write missing docstrings
 # TODO write a brief documentation

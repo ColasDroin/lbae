@@ -11,6 +11,7 @@ import pandas as pd
 import logging
 import copy
 import dash_draggable
+from numba import njit
 
 # Homemade modules
 from lbae import app
@@ -31,6 +32,9 @@ HEIGHT_PLOTS = 300
 N_LINES = int(np.ceil(HEIGHT_PLOTS / 30))
 
 ###### DEFFINE PAGE LAYOUT ######
+
+# ! This page is very slow even at first loading, so probably so automatic callbacks are triggered... Investigate that
+# ! With throttling tool from Chrome
 
 
 def return_layout(basic_config, slice_index=1):
@@ -1307,6 +1311,9 @@ def page_3_record_spectra(
     return [], False
 
 
+# ! A lot of time is lost in the transfer between these two functions... Plus this will be WAY worse for slow connections
+# ! I need to make the spectrum transfer server side
+
 # Function that takes path and plot spectrum
 @app.app.callback(
     Output("page-3-graph-spectrum-per-pixel", "figure"),
@@ -1343,32 +1350,41 @@ def page_3_plot_spectrum(cliked_reset, l_spectra, slice_index):
 
             for idx_spectra, spectrum in enumerate(l_spectra):
 
-                logging.info("Checkpoint 1")
+                # logging.info("Checkpoint 1")
 
                 col = config.l_colors[idx_spectra % 4]
 
                 # Get the average spectrum and add it to m/z plot
                 grah_scattergl_data = np.array(spectrum, dtype=np.float32)
 
-                logging.info("Checkpoint 2")
+                # logging.info("Checkpoint 2")
 
                 # Get df for current slice
                 df_names = data.get_annotations()[data.get_annotations()["slice"] == slice_index]
 
-                logging.info("Checkpoint 3")
+                # logging.info("Checkpoint 3")
 
                 # Extract lipid names
                 l_idx_labels = return_index_labels(
                     df_names["min"].to_numpy(), df_names["max"].to_numpy(), grah_scattergl_data[0, :],
                 )
 
-                logging.info("Checkpoint 4")
+                # logging.info("Checkpoint 4")
 
-                # It's ok to do two loops since l_idx_labels is relatively small
-                l_idx_kept = [i for i, x in enumerate(l_idx_labels) if x >= 0]
-                l_idx_unkept = [i for i, x in enumerate(l_idx_labels) if x < 0]
+                # almost no gain with numba :'(
+                # two different functions so that's there's a unique output for each numba function
+                @njit
+                def return_idx_sup(l_idx_labels):
+                    return [i for i, x in enumerate(l_idx_labels) if x >= 0]
 
-                logging.info("Checkpoint 5")
+                @njit
+                def return_idx_inf(l_idx_labels):
+                    return [i for i, x in enumerate(l_idx_labels) if x < 0]
+
+                l_idx_kept = return_idx_sup(l_idx_labels)
+                l_idx_unkept = return_idx_inf(l_idx_labels)
+
+                # logging.info("Checkpoint 5")
                 # Pad annotated trace with zeros
                 (grah_scattergl_data_padded_annotated, array_index_padding,) = add_zeros_to_spectrum(
                     grah_scattergl_data[:, l_idx_kept], pad_individual_peaks=True, padding=10 ** -4,
@@ -1379,7 +1395,7 @@ def page_3_plot_spectrum(cliked_reset, l_spectra, slice_index):
 
                 ll_idx_labels.append(l_idx_labels)
 
-                logging.info("Checkpoint 6")
+                # logging.info("Checkpoint 6")
 
                 # @njit #we need to wait for the support of np.insert
                 def pad_l_idx_labels(l_idx_labels_kept, array_index_padding):
@@ -1395,13 +1411,13 @@ def page_3_plot_spectrum(cliked_reset, l_spectra, slice_index):
 
                 l_idx_labels_kept = list(pad_l_idx_labels(l_idx_labels_kept, array_index_padding))
 
-                logging.info("Checkpoint 7")
+                # logging.info("Checkpoint 7")
 
                 # Rebuild lipid name from structure, cation, etc.
                 l_labels_all_lipids = data.compute_l_labels()
                 l_labels = [l_labels_all_lipids[idx] if idx != -1 else "" for idx in l_idx_labels_kept]
 
-                logging.info("Checkpoint 7.5")
+                # logging.info("Checkpoint 7.5")
                 # Add annotated trace to plot
                 fig_mz.add_trace(
                     go.Scattergl(
@@ -1417,7 +1433,7 @@ def page_3_plot_spectrum(cliked_reset, l_spectra, slice_index):
                     )
                 )
 
-                logging.info("Checkpoint 8")
+                # logging.info("Checkpoint 8")
 
                 # Pad not annotated traces peaks with zeros
                 grah_scattergl_data_padded, array_index_padding = add_zeros_to_spectrum(
@@ -1426,7 +1442,7 @@ def page_3_plot_spectrum(cliked_reset, l_spectra, slice_index):
                 l_mz_without_lipids = grah_scattergl_data_padded[0, :]
                 l_intensity_without_lipids = grah_scattergl_data_padded[1, :]
 
-                logging.info("Checkpoint 9")
+                # logging.info("Checkpoint 9")
                 # Add not-annotated trace to plot.
                 fig_mz.add_trace(
                     go.Scattergl(
@@ -1443,7 +1459,7 @@ def page_3_plot_spectrum(cliked_reset, l_spectra, slice_index):
                     )
                 )
 
-            logging.info("Checkpoint 10")
+            # logging.info("Checkpoint 10")
             # Define figure layout
             fig_mz.update_layout(
                 margin=dict(t=5, r=0, b=10, l=0),
@@ -1459,6 +1475,8 @@ def page_3_plot_spectrum(cliked_reset, l_spectra, slice_index):
 
     return dash.no_update
 
+
+# ! Even more time is lost here... Again, server-side implementation would help a lot here
 
 # Function that plots heatmap representing lipid intensity from the current selection
 @app.app.callback(
@@ -1646,6 +1664,8 @@ def page_3_reset_download(fig_mz):
     return True
 
 
+# ! Also need to update the function below with server-side computing...
+
 # Function that create the dropdown lipids selections
 @app.app.callback(
     Output("page-3-dropdown-red", "options"),
@@ -1725,6 +1745,7 @@ def toggle_button_modal(l_red_lipids, l_green_lipids, l_blue_lipids):
         return True
 
 
+# ! And update this function
 # Function that display the graph for lipid comparison
 @app.app.callback(
     Output("page-3-div-graph-lipid-comparison", "style"),

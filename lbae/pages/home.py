@@ -31,6 +31,10 @@ layout = html.Div(
                                             "Please start exploring our data by using the navigation bar on the right",
                                             className="lead d-flex justify-content-center",
                                         ),
+                                        dbc.Alert(
+                                            "Warning: a connection of at least 10Mbps is recommended to comfortably use the application.",
+                                            color="warning",
+                                        ),
                                         # Separation and button to documentation
                                         # html.Hr(className="my-2"),
                                         # html.P(
