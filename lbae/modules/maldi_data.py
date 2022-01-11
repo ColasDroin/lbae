@@ -318,6 +318,7 @@ class MaldiData:
                 )
 
     def compute_l_labels(self):
+
         l_labels = (
             self._df_annotations["name"]
             + "_"

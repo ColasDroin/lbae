@@ -1,6 +1,7 @@
 ###### IMPORT MODULES ######
 
 # Official modules
+from click.decorators import pass_context
 import dash_bootstrap_components as dbc
 from dash import dcc, html
 
@@ -1017,6 +1018,7 @@ def global_path_store(slice_index, relayoutData):
     return l_paths
 
 
+# ? Is this callback really needed? I could save ~100ms by incorporating it in the the next. Computations are almost instantaneous here
 # Function to compute path when heatmap has been annotated
 @app.app.callback(
     Output("page-3-dcc-store-path-heatmap", "data"),
@@ -1055,23 +1057,105 @@ def page_3_load_path(clicked_compute, cliked_reset, url, relayoutData, slice_ind
                     logging.info("Starting to compute path")
                     global_path_store(slice_index, relayoutData)
                     logging.info("Returning path")
-
                     # Return a dummy string as a signal that l_paths has been updated
                     return "ok", True
 
     return dash.no_update
 
 
+# Global function to memoize/compute spectrum
+@cache.memoize()
+def global_spectrum_store(slice_index, l_shapes_and_masks, l_mask_name, relayoutData, as_enrichment, log_transform):
+    l_spectra = []
+    idx_mask = -1
+    idx_path = -1
+    for shape in l_shapes_and_masks:
+        grah_scattergl_data = None
+        # Compute average spectrum from mask
+        if shape[0] == "mask":
+            idx_mask += 1
+            try:
+                mask_name = l_mask_name[idx_mask]
+                dic_masks = return_pickled_object(
+                    "atlas/atlas_objects",
+                    "dic_masks_and_spectra",
+                    force_update=False,
+                    compute_function=atlas.compute_dic_projected_masks_and_spectra,
+                    slice_index=slice_index - 1,
+                )
+                if mask_name in dic_masks:
+                    grah_scattergl_data = dic_masks[mask_name][1]
+            except:
+                logging.warning("Bug, the selected mask does't exist")
+                return dash.no_update
+        elif shape[0] == "shape":
+            idx_path += 1
+            l_paths = global_path_store(slice_index, relayoutData)
+            try:
+                path = l_paths[idx_path]
+                if len(path) > 0:
+                    list_index_bound_rows, list_index_bound_column_per_row = sample_rows_from_path(
+                        np.array(path, dtype=np.int32)
+                    )
+
+                    grah_scattergl_data = compute_spectrum_per_row_selection(
+                        list_index_bound_rows,
+                        list_index_bound_column_per_row,
+                        data.get_array_spectra(slice_index),
+                        data.get_array_lookup_pixels(slice_index),
+                        data.get_image_shape(slice_index),
+                        zeros_extend=False,
+                    )
+            except:
+                logging.warning("Bug, the selected path does't exist")
+                return None
+        else:
+            logging.warning("Bug, the shape type doesn't exit")
+            return None
+
+        # Do the selected transformations
+        if grah_scattergl_data is not None:
+            if as_enrichment:
+                # first normalize with respect to itself
+                grah_scattergl_data[1, :] /= np.sum(grah_scattergl_data[1, :])
+
+                # then convert to uncompressed version
+                grah_scattergl_data = convert_array_to_fine_grained(grah_scattergl_data, 10 ** -3, lb=350, hb=1250)
+
+                # then normalize to the sum of all pixels
+                grah_scattergl_data[1, :] /= (
+                    convert_array_to_fine_grained(data.get_array_spectra(slice_index - 1), 10 ** -3, lb=350, hb=1250,)[
+                        1, :
+                    ]
+                    + 1
+                )
+
+                # go back to compressed
+                grah_scattergl_data = strip_zeros(grah_scattergl_data)
+
+                # re-normalize with respect to the number of values in the spectrum
+                # so that pixels with more lipids do no have lower peaks
+                grah_scattergl_data[1, :] *= len(grah_scattergl_data[1, :])
+
+            # log-transform
+            if log_transform:
+                grah_scattergl_data[1, :] = np.log(grah_scattergl_data[1, :] + 1)
+            l_spectra.append(grah_scattergl_data)
+        else:
+            return None
+    return l_spectra
+
+
 # Function that takes path or mask and compute corresponding spectrum
 @app.app.callback(
     Output("dcc-store-list-mz-spectra", "data"),
     Output("page-3-dcc-store-loading-2", "data"),
-    Input("page-3-button-compute-spectra", "n_clicks"),
+    # Input("page-3-button-compute-spectra", "n_clicks"),
     Input("page-3-dcc-store-path-heatmap", "data"),
     Input("page-3-reset-button", "n_clicks"),
     Input("url", "pathname"),
-    State("page-3-dropdown-brain-regions", "value"),
     Input("main-slider", "value"),
+    State("page-3-dropdown-brain-regions", "value"),
     State("dcc-store-shapes-and-masks", "data"),
     State("page-3-normalize", "value"),
     State("page-3-log", "value"),
@@ -1079,17 +1163,18 @@ def page_3_load_path(clicked_compute, cliked_reset, url, relayoutData, slice_ind
     prevent_intial_call=True,
 )
 def page_3_record_spectra(
-    clicked_compute,
+    # clicked_compute,
     l_paths,
     cliked_reset,
     url,
-    l_mask_name,
     slice_index,
+    l_mask_name,
     l_shapes_and_masks,
     as_enrichment,
     log_transform,
     relayoutData,
 ):
+
     # Find out which input triggered the function
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
     value_input = dash.callback_context.triggered[0]["prop_id"].split(".")[1]
@@ -1103,105 +1188,63 @@ def page_3_record_spectra(
     elif id_input == "page-3-reset-button" or id_input == "url":
         return [], False
 
-    elif id_input == "page-3-button-compute-spectra":
+    elif id_input == "page-3-button-compute-spectra" or id_input == "page-3-dcc-store-path-heatmap":
         logging.info("Starting to compute spectrum")
-        l_spectra = []
-        idx_mask = -1
-        idx_path = -1
-        for shape in l_shapes_and_masks:
-            grah_scattergl_data = None
-            # Compute average spectrum from mask
-            if shape[0] == "mask":
-                idx_mask += 1
-                try:
-                    mask_name = l_mask_name[idx_mask]
-                    dic_masks = return_pickled_object(
-                        "atlas/atlas_objects",
-                        "dic_masks_and_spectra",
-                        force_update=False,
-                        compute_function=atlas.compute_dic_projected_masks_and_spectra,
-                        slice_index=slice_index - 1,
-                    )
-                    if mask_name in dic_masks:
-                        grah_scattergl_data = dic_masks[mask_name][1]
-                except:
-                    logging.warning("Bug, the selected mask does't exist")
-                    return dash.no_update
-            elif shape[0] == "shape":
-                idx_path += 1
-                l_paths = global_path_store(slice_index, relayoutData)
-                try:
-                    path = l_paths[idx_path]
-                    if len(path) > 0:
-                        list_index_bound_rows, list_index_bound_column_per_row = sample_rows_from_path(
-                            np.array(path, dtype=np.int32)
-                        )
-                        # print("from selection", list_index_bound_rows, list_index_bound_column_per_row)
-
-                        grah_scattergl_data = compute_spectrum_per_row_selection(
-                            list_index_bound_rows,
-                            list_index_bound_column_per_row,
-                            data.get_array_spectra(slice_index),
-                            data.get_array_lookup_pixels(slice_index),
-                            data.get_image_shape(slice_index),
-                            zeros_extend=False,
-                        )
-                except:
-                    logging.warning("Bug, the selected path does't exist")
-                    return dash.no_update
-            else:
-                logging.warning("Bug, the shape type doesn't exit")
-
-            # Do the selected transformations
-            if grah_scattergl_data is not None:
-                if as_enrichment:
-                    # first normalize with respect to itself
-                    grah_scattergl_data[1, :] /= np.sum(grah_scattergl_data[1, :])
-
-                    # then convert to uncompressed version
-                    grah_scattergl_data = convert_array_to_fine_grained(grah_scattergl_data, 10 ** -3, lb=350, hb=1250)
-
-                    # then normalize to the sum of all pixels
-                    grah_scattergl_data[1, :] /= (
-                        convert_array_to_fine_grained(
-                            data.get_array_spectra(slice_index - 1), 10 ** -3, lb=350, hb=1250,
-                        )[1, :]
-                        + 1
-                    )
-
-                    # go back to compressed
-                    grah_scattergl_data = strip_zeros(grah_scattergl_data)
-
-                    # re-normalize with respect to the number of values in the spectrum
-                    # so that pixels with more lipids do no have lower peaks
-                    grah_scattergl_data[1, :] *= len(grah_scattergl_data[1, :])
-
-                # log-transform
-                if log_transform:
-                    grah_scattergl_data[1, :] = np.log(grah_scattergl_data[1, :] + 1)
-                l_spectra.append(grah_scattergl_data)
-
-        if l_spectra != []:
-            logging.info("Spectra computed, returning it now")
-            return l_spectra, True
+        l_spectra = global_spectrum_store(
+            slice_index, l_shapes_and_masks, l_mask_name, relayoutData, as_enrichment, log_transform
+        )
+        if l_spectra is not None:
+            if l_spectra != []:
+                logging.info("Spectra computed, returning it now")
+                # return a dummy variable to indicate that the spectrum has been computed and trigger the callback
+                return "ok", True
+        logging.warning("A bug appeared during spectrum computation")
 
     return [], False
 
 
-# ! A lot of time is lost in the transfer between these two functions... Plus this will be WAY worse for slow connections
-# ! I need to make the spectrum transfer server side
+# Global function to memoize/compute lipid label indexes
+@cache.memoize()
+def global_lipid_index_store(slice_index, l_spectra):
+    logging.info("Starting computing ll_idx_labels")
+    ll_idx_labels = []
+    for spectrum in l_spectra:
+
+        # Get the average spectrum and add it to m/z plot
+        grah_scattergl_data = np.array(spectrum, dtype=np.float32)
+
+        # Get df for current slice
+        df_names = data.get_annotations()[data.get_annotations()["slice"] == slice_index]
+
+        # Extract lipid names
+        l_idx_labels = return_index_labels(
+            df_names["min"].to_numpy(), df_names["max"].to_numpy(), grah_scattergl_data[0, :],
+        )
+
+        # Save in a list of lists
+        ll_idx_labels.append(l_idx_labels)
+    logging.info("Returning ll_idx_labels")
+    return ll_idx_labels
+
 
 # Function that takes path and plot spectrum
 @app.app.callback(
     Output("page-3-graph-spectrum-per-pixel", "figure"),
-    Output("dcc-store-list-idx-lipids", "data"),
+    # Output("dcc-store-list-idx-lipids", "data"),
     Output("page-3-dcc-store-loading-3", "data"),
     Input("page-3-reset-button", "n_clicks"),
     Input("dcc-store-list-mz-spectra", "data"),
     Input("main-slider", "value"),
+    State("page-3-dropdown-brain-regions", "value"),
+    State("dcc-store-shapes-and-masks", "data"),
+    State("page-3-normalize", "value"),
+    State("page-3-log", "value"),
+    State("page-3-graph-heatmap-per-sel", "relayoutData"),
     prevent_intial_call=True,
 )
-def page_3_plot_spectrum(cliked_reset, l_spectra, slice_index):
+def page_3_plot_spectrum(
+    cliked_reset, l_spectra, slice_index, l_mask_name, l_shapes_and_masks, as_enrichment, log_transform, relayoutData,
+):
 
     # Find out which input triggered the function
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
@@ -1212,38 +1255,25 @@ def page_3_plot_spectrum(cliked_reset, l_spectra, slice_index):
         return dash.no_update
 
     # Delete everything when clicking reset
-    elif id_input == "page-3-reset-button" or l_spectra is None:
-        return figures.return_empty_spectrum(), [], False
+    elif id_input == "page-3-reset-button" or l_spectra is None or l_spectra == []:
+        return figures.return_empty_spectrum(), False  # [], False
 
     # do nothing if l_spectra is None or []
     elif id_input == "dcc-store-list-mz-spectra":
-        if len(l_spectra) > 0:
+        if len(l_spectra) > 0 or l_spectra == "ok":
             logging.info("Starting spectra plotting now")
             fig_mz = go.Figure()
-            ll_idx_labels = []
+            l_spectra = global_spectrum_store(
+                slice_index, l_shapes_and_masks, l_mask_name, relayoutData, as_enrichment, log_transform
+            )
+            ll_idx_labels = global_lipid_index_store(slice_index, l_spectra)
+            for idx_spectra, (spectrum, l_idx_labels) in enumerate(zip(l_spectra, ll_idx_labels)):
 
-            for idx_spectra, spectrum in enumerate(l_spectra):
-
-                # logging.info("Checkpoint 1")
-
+                # Find color of the current spectrum
                 col = config.l_colors[idx_spectra % 4]
 
-                # Get the average spectrum and add it to m/z plot
+                # Compute (again) the numpy array of the spectrum
                 grah_scattergl_data = np.array(spectrum, dtype=np.float32)
-
-                # logging.info("Checkpoint 2")
-
-                # Get df for current slice
-                df_names = data.get_annotations()[data.get_annotations()["slice"] == slice_index]
-
-                # logging.info("Checkpoint 3")
-
-                # Extract lipid names
-                l_idx_labels = return_index_labels(
-                    df_names["min"].to_numpy(), df_names["max"].to_numpy(), grah_scattergl_data[0, :],
-                )
-
-                # logging.info("Checkpoint 4")
 
                 # almost no gain with numba :'(
                 # two different functions so that's there's a unique output for each numba function
@@ -1258,7 +1288,6 @@ def page_3_plot_spectrum(cliked_reset, l_spectra, slice_index):
                 l_idx_kept = return_idx_sup(l_idx_labels)
                 l_idx_unkept = return_idx_inf(l_idx_labels)
 
-                # logging.info("Checkpoint 5")
                 # Pad annotated trace with zeros
                 (grah_scattergl_data_padded_annotated, array_index_padding,) = add_zeros_to_spectrum(
                     grah_scattergl_data[:, l_idx_kept], pad_individual_peaks=True, padding=10 ** -4,
@@ -1266,10 +1295,6 @@ def page_3_plot_spectrum(cliked_reset, l_spectra, slice_index):
                 l_mz_with_lipids = grah_scattergl_data_padded_annotated[0, :]
                 l_intensity_with_lipids = grah_scattergl_data_padded_annotated[1, :]
                 l_idx_labels_kept = l_idx_labels[l_idx_kept]
-
-                ll_idx_labels.append(l_idx_labels)
-
-                # logging.info("Checkpoint 6")
 
                 # @njit #we need to wait for the support of np.insert
                 def pad_l_idx_labels(l_idx_labels_kept, array_index_padding):
@@ -1285,13 +1310,10 @@ def page_3_plot_spectrum(cliked_reset, l_spectra, slice_index):
 
                 l_idx_labels_kept = list(pad_l_idx_labels(l_idx_labels_kept, array_index_padding))
 
-                # logging.info("Checkpoint 7")
-
                 # Rebuild lipid name from structure, cation, etc.
                 l_labels_all_lipids = data.compute_l_labels()
                 l_labels = [l_labels_all_lipids[idx] if idx != -1 else "" for idx in l_idx_labels_kept]
 
-                # logging.info("Checkpoint 7.5")
                 # Add annotated trace to plot
                 fig_mz.add_trace(
                     go.Scattergl(
@@ -1307,8 +1329,6 @@ def page_3_plot_spectrum(cliked_reset, l_spectra, slice_index):
                     )
                 )
 
-                # logging.info("Checkpoint 8")
-
                 # Pad not annotated traces peaks with zeros
                 grah_scattergl_data_padded, array_index_padding = add_zeros_to_spectrum(
                     grah_scattergl_data[:, l_idx_unkept], pad_individual_peaks=True, padding=10 ** -4,
@@ -1316,7 +1336,6 @@ def page_3_plot_spectrum(cliked_reset, l_spectra, slice_index):
                 l_mz_without_lipids = grah_scattergl_data_padded[0, :]
                 l_intensity_without_lipids = grah_scattergl_data_padded[1, :]
 
-                # logging.info("Checkpoint 9")
                 # Add not-annotated trace to plot.
                 fig_mz.add_trace(
                     go.Scattergl(
@@ -1333,7 +1352,6 @@ def page_3_plot_spectrum(cliked_reset, l_spectra, slice_index):
                     )
                 )
 
-            # logging.info("Checkpoint 10")
             # Define figure layout
             fig_mz.update_layout(
                 margin=dict(t=5, r=0, b=10, l=0),
@@ -1345,30 +1363,43 @@ def page_3_plot_spectrum(cliked_reset, l_spectra, slice_index):
             )
 
             logging.info("Spectra plotted. Returning it now")
-            return fig_mz, ll_idx_labels, True
+            # Return dummy variable for ll_idx_labels to confirm that it has been computed
+            # return fig_mz, "ok", True
+            return fig_mz, True
 
     return dash.no_update
 
-
-# ! Even more time is lost here... Again, server-side implementation would help a lot here
 
 # Function that plots heatmap representing lipid intensity from the current selection
 @app.app.callback(
     Output("page-3-graph-heatmap-per-lipid", "figure"),
     Output("page-3-dcc-store-lipids-region", "data"),
-    # Output("page-3-graph-spectrum-per-pixel-wait", "children"),  # empty output to synchronize graphs spinners
     Output("page-3-dcc-store-loading-4", "data"),
-    Input("dcc-store-list-idx-lipids", "data"),
+    # Input("dcc-store-list-idx-lipids", "data"),
     Input("page-3-reset-button", "n_clicks"),
     Input("page-3-sort-by-diff-switch", "value"),
-    # Input("page-3-scale-by-mean-switch", "value"),
     Input("page-4-slider", "value"),
-    State("dcc-store-list-mz-spectra", "data"),
     Input("main-slider", "value"),
+    Input("dcc-store-list-mz-spectra", "data"),
+    State("page-3-dropdown-brain-regions", "value"),
+    State("dcc-store-shapes-and-masks", "data"),
+    State("page-3-normalize", "value"),
+    State("page-3-log", "value"),
+    State("page-3-graph-heatmap-per-sel", "relayoutData"),
     prevent_intial_call=True,
 )
 def page_3_draw_heatmap_per_lipid_selection(
-    ll_idx_labels, cliked_reset, sort_switch, percentile, l_spectra, slice_index
+    # ll_idx_labels,
+    cliked_reset,
+    sort_switch,
+    percentile,
+    slice_index,
+    l_spectra,
+    l_mask_name,
+    l_shapes_and_masks,
+    as_enrichment,
+    log_transform,
+    relayoutData,
 ):
     # Find out which input triggered the function
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
@@ -1388,6 +1419,7 @@ def page_3_draw_heatmap_per_lipid_selection(
         or id_input == "page-3-sort-by-diff-switch"
         or id_input == "page-3-scale-by-mean-switch"
         or id_input == "page-4-slider"
+        or id_input == "dcc-store-list-mz-spectra"
     ):
 
         logging.info("Starting computing heatmap now")
@@ -1405,7 +1437,14 @@ def page_3_draw_heatmap_per_lipid_selection(
         scale_switch = False
 
         # Load figure
-        if l_spectra is not None and ll_idx_labels is not None:
+        if l_spectra == "ok":  # and ll_idx_labels == "ok":
+
+            # get the actual values for l_spectra and ll_idx_labels and not just the dummy fillings
+            l_spectra = global_spectrum_store(
+                slice_index, l_shapes_and_masks, l_mask_name, relayoutData, as_enrichment, log_transform
+            )
+            ll_idx_labels = global_lipid_index_store(slice_index, l_spectra)
+
             if len(l_spectra) > 0:
                 if len(ll_idx_labels) != len(l_spectra):
                     print("BUG: the number of received spectra is different from the number of received annotations")
@@ -1619,7 +1658,6 @@ def toggle_button_modal(l_red_lipids, l_green_lipids, l_blue_lipids):
         return True
 
 
-# ! And update this function
 # Function that display the graph for lipid comparison
 @app.app.callback(
     Output("page-3-div-graph-lipid-comparison", "style"),
