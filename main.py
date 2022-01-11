@@ -1,3 +1,4 @@
+# ! check this
 # TO CORRECT: https://dev.to/codemouse92/dead-simple-python-project-structure-and-imports-38c6
 import logging
 from lbae.modules.tools.misc import logmem
@@ -54,3 +55,4 @@ if __name__ == "__main__":
 # TODO do quality control, especially when several users are on the app in parallel
 # TODO write missing docstrings
 # TODO write a brief documentation
+# TODO make a docker container for the very final version of the app

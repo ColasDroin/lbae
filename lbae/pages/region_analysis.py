@@ -3,6 +3,7 @@
 # Official modules
 import dash_bootstrap_components as dbc
 from dash import dcc, html
+
 from dash.dependencies import Input, Output, State
 import dash
 import plotly.graph_objects as go
@@ -15,7 +16,7 @@ from numba import njit
 
 # Homemade modules
 from lbae import app
-from lbae.app import figures, data, atlas
+from lbae.app import figures, data, atlas, cache
 from lbae import config
 from lbae.modules.tools.misc import return_pickled_object, convert_image_to_base64
 from lbae.modules.tools.spectra import (
@@ -588,6 +589,7 @@ def page_3_plot_graph_heatmap_mz_selection(slice_index):
         return dash.no_update
 
 
+# Function to display the hovered region
 @app.app.callback(
     Output("page-3-graph-hover-text", "children"),
     Input("page-3-graph-heatmap-per-sel", "hoverData"),
@@ -612,7 +614,7 @@ def page_3_hover(hoverData, slice_index):
     return dash.no_update
 
 
-# Function to plot the initial heatmap
+# Function to reset the layout of the heatmap
 @app.app.callback(
     Output("page-3-graph-heatmap-per-sel", "relayoutData"),
     Input("page-3-reset-button", "n_clicks"),
@@ -984,6 +986,37 @@ def page_3_display_alert(clicked_compute, clicked_reset, relayoutData, mask):
     return dash.no_update
 
 
+# Global function to memoize/compute path
+@cache.memoize()
+def global_path_store(slice_index, relayoutData):
+    l_paths = []
+    for shape in relayoutData["shapes"]:
+        if "path" in shape:
+            # get condensed path version of the annotation
+            parsed_path = shape["path"][1:-1].replace("L", ",").split(",")
+            path = [round(float(x)) for x in parsed_path]
+
+            # Work with image projection (check previous version if need to work with original image)
+            path = [
+                (
+                    int(
+                        atlas.array_projection_correspondence_corrected[slice_index - 1, y, x, 0]
+                    ),  # must explicitely cast to int for serialization as numpy int are not accepted
+                    int(atlas.array_projection_correspondence_corrected[slice_index - 1, y, x, 1]),
+                )
+                for x, y in zip(path[:-1:2], path[1::2])
+            ]
+            # clean path from artefacts due to projection
+            path = [
+                t for t in list(dict.fromkeys(path)) if -1 not in t
+            ]  # use dic key to remove duplicates created by the correction of the projection
+
+            if len(path) > 0:
+                path.append(path[0])  # to close the path
+            l_paths.append(path)
+    return l_paths
+
+
 # Function to compute path when heatmap has been annotated
 @app.app.callback(
     Output("page-3-dcc-store-path-heatmap", "data"),
@@ -996,9 +1029,6 @@ def page_3_display_alert(clicked_compute, clicked_reset, relayoutData, mask):
     prevent_initial_call=True,
 )
 def page_3_load_path(clicked_compute, cliked_reset, url, relayoutData, slice_index):
-
-    # Most likely, we will only work with the projected data from now on
-    PROJECT_IMAGE = True
 
     # Find out which input triggered the function
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
@@ -1023,35 +1053,11 @@ def page_3_load_path(clicked_compute, cliked_reset, url, relayoutData, slice_ind
             if "shapes" in relayoutData:
                 if len(relayoutData["shapes"]) > 0 and len(relayoutData["shapes"]) <= 4:
                     logging.info("Starting to compute path")
-                    l_paths = []
-                    for shape in relayoutData["shapes"]:
-                        if "path" in shape:
-                            # get condensed path version of the annotation
-                            parsed_path = shape["path"][1:-1].replace("L", ",").split(",")
-                            path = [round(float(x)) for x in parsed_path]
-
-                            if PROJECT_IMAGE:
-                                path = [
-                                    (
-                                        int(
-                                            atlas.array_projection_correspondence_corrected[slice_index - 1, y, x, 0]
-                                        ),  # must explicitely cast to int for serialization as numpy int are not accepted
-                                        int(atlas.array_projection_correspondence_corrected[slice_index - 1, y, x, 1]),
-                                    )
-                                    for x, y in zip(path[:-1:2], path[1::2])
-                                ]
-                                # clean path from artefacts due to projection
-                                path = [
-                                    t for t in list(dict.fromkeys(path)) if -1 not in t
-                                ]  # use dic key to remove duplicates created by the correction of the projection
-                            else:
-                                path = [(y, x) for x, y in zip(path[:-1:2], path[1::2])]
-                            if len(path) > 0:
-                                path.append(path[0])  # to close the path
-                            l_paths.append(path)
-
+                    global_path_store(slice_index, relayoutData)
                     logging.info("Returning path")
-                    return l_paths, True
+
+                    # Return a dummy string as a signal that l_paths has been updated
+                    return "ok", True
 
     return dash.no_update
 
@@ -1066,10 +1072,10 @@ def page_3_load_path(clicked_compute, cliked_reset, url, relayoutData, slice_ind
     Input("url", "pathname"),
     State("page-3-dropdown-brain-regions", "value"),
     Input("main-slider", "value"),
-    State("dcc-store-list-mz-spectra", "data"),
     State("dcc-store-shapes-and-masks", "data"),
     State("page-3-normalize", "value"),
     State("page-3-log", "value"),
+    State("page-3-graph-heatmap-per-sel", "relayoutData"),
     prevent_intial_call=True,
 )
 def page_3_record_spectra(
@@ -1079,10 +1085,10 @@ def page_3_record_spectra(
     url,
     l_mask_name,
     slice_index,
-    l_spectra,
     l_shapes_and_masks,
     as_enrichment,
     log_transform,
+    relayoutData,
 ):
     # Find out which input triggered the function
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
@@ -1123,6 +1129,7 @@ def page_3_record_spectra(
                     return dash.no_update
             elif shape[0] == "shape":
                 idx_path += 1
+                l_paths = global_path_store(slice_index, relayoutData)
                 try:
                     path = l_paths[idx_path]
                     if len(path) > 0:
@@ -1187,9 +1194,6 @@ def page_3_record_spectra(
 # Function that takes path and plot spectrum
 @app.app.callback(
     Output("page-3-graph-spectrum-per-pixel", "figure"),
-    # Output("page-3-graph-heatmap-per-lipid-wait", "children"),  # second (empty) output to synchronize graphs spinners
-    # Output("page-3-div-dropdown-wait", "children"),  # third(empty) output to synchronize graphs spinners
-    # Output("page-3-graph-lipid--comparison-wait", "children"),
     Output("dcc-store-list-idx-lipids", "data"),
     Output("page-3-dcc-store-loading-3", "data"),
     Input("page-3-reset-button", "n_clicks"),

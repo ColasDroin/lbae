@@ -6,6 +6,7 @@ import dash_bootstrap_components as dbc
 
 # from dash.long_callback import DiskcacheLongCallbackManager
 import flask
+from flask_caching import Cache
 import numpy as np
 import logging
 
@@ -30,7 +31,7 @@ figures = Figures(data, atlas)
 
 logging.info("Memory use after three main object have been instantiated" + logmem())
 
-
+# TODO clean this
 # figures.pickle_all_figure_bubbles_3D()
 """
 # pickle all slice files and images
@@ -69,3 +70,11 @@ app = dash.Dash(
     # long_callback_manager=long_callback_manager,
 )
 
+CACHE_CONFIG = {
+    # We use 'FileSystemCache' as we want to keep the application very lightweight in term of RAM memory
+    "CACHE_TYPE": "FileSystemCache",
+    "CACHE_DIR": "lbae/data/temp/cache-directory",
+    "CACHE_THRESHOLD": 200,
+}
+cache = Cache()
+cache.init_app(app.server, config=CACHE_CONFIG)
