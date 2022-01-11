@@ -612,31 +612,6 @@ def page_3_hover(hoverData, slice_index):
     return dash.no_update
 
 
-"""
-@app.app.callback(
-    Output("page-3-graph-atlas-hover-text", "children"),
-    Input("page-3-graph-atlas-per-sel", "hoverData"),
-    Input("main-slider", "value"),
-)
-def page_3_atlas_hover(hoverData, slice_index):
-    if hoverData is not None:
-        if len(hoverData["points"]) > 0:
-            x = int(slice_index) - 1
-            z = hoverData["points"][0]["x"]
-            y = hoverData["points"][0]["y"]
-
-            slice_coor_rescaled = np.asarray(
-                (atlas.array_coordinates_warped_data[x, y, z] * 1000 / atlas.resolution).round(0), dtype=np.int16,
-            )
-            try:
-                label = atlas.labels[tuple(slice_coor_rescaled)]
-            except:
-                label = "undefined"
-            return "Hovered region: " + label
-
-    return dash.no_update
-"""
-
 # Function to plot the initial heatmap
 @app.app.callback(
     Output("page-3-graph-heatmap-per-sel", "relayoutData"),
@@ -647,55 +622,6 @@ def page_3_atlas_hover(hoverData, slice_index):
 def tab_3_reset_layout(cliked_reset, url):
     return {}
 
-
-"""
-# Function to add clicked regions to selected options in dropdown
-@app.app.callback(
-    Output("page-3-dropdown-brain-regions", "value"),
-    Input("main-slider", "value"),
-    Input("page-3-reset-button", "n_clicks"),
-    Input("url", "pathname"),
-    Input("page-3-graph-atlas-per-sel", "clickData"),
-    State("page-3-dropdown-brain-regions", "value"),
-    prevent_initial_call=True,
-)
-def tab_3_add_value_dropdown(slice_index, clicked_reset, url, clickData, l_mask_names):
-
-    # Find out which input triggered the function
-    id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
-    value_input = dash.callback_context.triggered[0]["prop_id"].split(".")[1]
-    if id_input == "main-slider" or len(id_input) == 0 or id_input == "page-3-reset-button" or id_input == "url":
-        return []
-
-    if clickData is not None:
-
-        # no more than 4 annotations otherwise it's too heavy for the server
-        if l_mask_names is not None:
-            if len(l_mask_names) > 3:
-                return dash.no_update
-
-        if len(clickData["points"]) > 0:
-            x = int(slice_index) - 1
-            z = clickData["points"][0]["x"]
-            y = clickData["points"][0]["y"]
-
-            slice_coor_rescaled = np.asarray(
-                (atlas.array_coordinates_warped_data[x, y, z] * 1000 / atlas.resolution).round(0), dtype=np.int16,
-            )
-            try:
-                mask_name = label = atlas.labels[tuple(slice_coor_rescaled)]
-                if l_mask_names is not None:
-                    if mask_name in l_mask_names:
-                        return dash.no_update
-                    l_mask_names.append(mask_name)
-                else:
-                    l_mask_names = [mask_name]
-                return l_mask_names
-            except:
-                logging.info("The coordinate is out of the ccfv3")
-
-    return dash.no_update
-"""
 
 # Function to plot the initial heatmap
 @app.app.callback(
@@ -870,62 +796,6 @@ def page_3_plot_heatmap(
     # either graph is already here
     return dash.no_update
 
-
-"""
-# Function to plot the mask annotation on the initial heatmap
-@app.app.callback(
-    Output("page-3-graph-atlas-per-sel", "figure"),
-    Output("page-3-dcc-store-basic-figure", "data"),
-    Input("main-slider", "value"),
-    Input("url", "pathname"),
-    Input("page-3-graph-atlas-per-sel", "hoverData"),
-    State("page-3-dcc-store-basic-figure", "data"),
-    prevent_inital_call=True,
-)
-def page_3_plot_masks(slice_index, url, hoverData, basic_figure_plotted):
-
-    logging.info("Start hover function")
-    # Find out which input triggered the function
-    id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
-    value_input = dash.callback_context.triggered[0]["prop_id"].split(".")[1]
-
-    # slider has been moved
-    if id_input == "main-slider":
-        return figures.dic_fig_contours[slice_index - 1], True
-
-    # Get hover data
-    if value_input == "hoverData":
-        if hoverData is not None:
-            if len(hoverData["points"]) > 0:
-                x = int(slice_index) - 1
-                z = int(round(hoverData["points"][0]["x"] * 8))
-                y = int(round(hoverData["points"][0]["y"] * 8))
-
-                slice_coor_rescaled = np.asarray(
-                    (atlas.array_coordinates_warped_data[x, y, z] * 1000 / atlas.resolution).round(0), dtype=np.int16,
-                )
-                try:
-                    # This line will trigger an exception if the coordinate doesn't exist
-                    mask_name = atlas.labels[tuple(slice_coor_rescaled)]
-                    exception = mask_name not in atlas.dic_mask_images[slice_index - 1]
-                except:
-                    logging.info("The coordinate doesn't belong to the ccfv3")
-                    exception = True
-
-                if exception:
-                    if basic_figure_plotted:
-                        return dash.no_update
-                    else:
-                        return figures.dic_fig_contours[slice_index - 1], True
-                else:
-                    im = atlas.dic_mask_images[slice_index - 1][mask_name]
-                    fig = copy.copy(figures.dic_fig_contours[slice_index - 1])
-                    fig.add_trace(im)
-                    logging.info("End hover function")
-                    return fig, False
-
-    return dash.no_update
-"""
 
 # Function that update dropdown options
 @app.app.callback(
