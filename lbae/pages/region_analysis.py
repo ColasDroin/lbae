@@ -237,6 +237,8 @@ def return_layout(basic_config, slice_index=1):
                                         ),
                                     ],
                                 ),
+                                dbc.Progress(value=0, id="page-3-progress", animated=True, striped=True),
+                                dmc.Notification(),
                             ],
                         ),
                     ],
@@ -295,7 +297,6 @@ def return_layout(basic_config, slice_index=1):
                         ),
                     ],
                 ),
-                # dbc.Progress(value=0, id="page-3-progress", animated=True, striped=True),
                 dbc.Card(
                     id="page-3-card-spectrum",
                     style={"maxWidth": "100%", "margin": "0 auto", "width": "100%", "height": "100%"},
@@ -987,82 +988,6 @@ def page_3_display_alert(clicked_compute, clicked_reset, relayoutData, mask):
     return dash.no_update
 
 
-# Global function to memoize/compute path
-@cache.memoize()
-def global_path_store(slice_index, relayoutData):
-    l_paths = []
-    for shape in relayoutData["shapes"]:
-        if "path" in shape:
-            # get condensed path version of the annotation
-            parsed_path = shape["path"][1:-1].replace("L", ",").split(",")
-            path = [round(float(x)) for x in parsed_path]
-
-            # Work with image projection (check previous version if need to work with original image)
-            path = [
-                (
-                    int(
-                        atlas.array_projection_correspondence_corrected[slice_index - 1, y, x, 0]
-                    ),  # must explicitely cast to int for serialization as numpy int are not accepted
-                    int(atlas.array_projection_correspondence_corrected[slice_index - 1, y, x, 1]),
-                )
-                for x, y in zip(path[:-1:2], path[1::2])
-            ]
-            # clean path from artefacts due to projection
-            path = [
-                t for t in list(dict.fromkeys(path)) if -1 not in t
-            ]  # use dic key to remove duplicates created by the correction of the projection
-
-            if len(path) > 0:
-                path.append(path[0])  # to close the path
-            l_paths.append(path)
-    return l_paths
-
-
-# ? Is this callback really needed? I could save ~100ms by incorporating it in the the next. Computations are almost instantaneous here
-# Function to compute path when heatmap has been annotated
-@app.app.callback(
-    Output("page-3-dcc-store-path-heatmap", "data"),
-    Output("page-3-dcc-store-loading-1", "data"),
-    Input("page-3-button-compute-spectra", "n_clicks"),
-    Input("page-3-reset-button", "n_clicks"),
-    Input("url", "pathname"),
-    State("page-3-graph-heatmap-per-sel", "relayoutData"),
-    Input("main-slider", "value"),
-    prevent_initial_call=True,
-)
-def page_3_load_path(clicked_compute, cliked_reset, url, relayoutData, slice_index):
-
-    # Find out which input triggered the function
-    id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
-    value_input = dash.callback_context.triggered[0]["prop_id"].split(".")[1]
-
-    # If a new slice is loaded or the page just got loaded, do nothing because
-    # of automatic relayout of the heatmap which is automatically triggered when the page is loaded
-    if len(id_input) == 0:
-        return dash.no_update
-
-    if value_input == "relayoutData" and relayoutData == {"autosize": True}:
-        return dash.no_update
-
-    # If the figure has been reset
-    if id_input == "page-3-reset-button" or id_input == "url":
-        return [], False
-
-    if id_input == "page-3-button-compute-spectra":
-
-        # If an annotation has been drawn, compute the average spectrum in the annotation
-        if relayoutData is not None:
-            if "shapes" in relayoutData:
-                if len(relayoutData["shapes"]) > 0 and len(relayoutData["shapes"]) <= 4:
-                    logging.info("Starting to compute path")
-                    global_path_store(slice_index, relayoutData)
-                    logging.info("Returning path")
-                    # Return a dummy string as a signal that l_paths has been updated
-                    return "ok", True
-
-    return dash.no_update
-
-
 # Global function to memoize/compute spectrum
 @cache.memoize()
 def global_spectrum_store(slice_index, l_shapes_and_masks, l_mask_name, relayoutData, as_enrichment, log_transform):
@@ -1090,7 +1015,35 @@ def global_spectrum_store(slice_index, l_shapes_and_masks, l_mask_name, relayout
                 return dash.no_update
         elif shape[0] == "shape":
             idx_path += 1
-            l_paths = global_path_store(slice_index, relayoutData)
+
+            logging.info("Start computing path")
+            l_paths = []
+            for shape in relayoutData["shapes"]:
+                if "path" in shape:
+                    # get condensed path version of the annotation
+                    parsed_path = shape["path"][1:-1].replace("L", ",").split(",")
+                    path = [round(float(x)) for x in parsed_path]
+
+                    # Work with image projection (check previous version if need to work with original image)
+                    path = [
+                        (
+                            int(
+                                atlas.array_projection_correspondence_corrected[slice_index - 1, y, x, 0]
+                            ),  # must explicitely cast to int for serialization as numpy int are not accepted
+                            int(atlas.array_projection_correspondence_corrected[slice_index - 1, y, x, 1]),
+                        )
+                        for x, y in zip(path[:-1:2], path[1::2])
+                    ]
+                    # clean path from artefacts due to projection
+                    path = [
+                        t for t in list(dict.fromkeys(path)) if -1 not in t
+                    ]  # use dic key to remove duplicates created by the correction of the projection
+
+                    if len(path) > 0:
+                        path.append(path[0])  # to close the path
+                    l_paths.append(path)
+            logging.info("Computing path finished")
+
             try:
                 path = l_paths[idx_path]
                 if len(path) > 0:
@@ -1150,7 +1103,7 @@ def global_spectrum_store(slice_index, l_shapes_and_masks, l_mask_name, relayout
 @app.app.callback(
     Output("dcc-store-list-mz-spectra", "data"),
     Output("page-3-dcc-store-loading-2", "data"),
-    # Input("page-3-button-compute-spectra", "n_clicks"),
+    Input("page-3-button-compute-spectra", "n_clicks"),
     Input("page-3-dcc-store-path-heatmap", "data"),
     Input("page-3-reset-button", "n_clicks"),
     Input("url", "pathname"),
@@ -1163,7 +1116,7 @@ def global_spectrum_store(slice_index, l_shapes_and_masks, l_mask_name, relayout
     prevent_intial_call=True,
 )
 def page_3_record_spectra(
-    # clicked_compute,
+    clicked_compute,
     l_paths,
     cliked_reset,
     url,
@@ -1179,16 +1132,16 @@ def page_3_record_spectra(
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
     value_input = dash.callback_context.triggered[0]["prop_id"].split(".")[1]
 
-    # print(id_input, value_input, path, cliked_reset, l_mask_name, slice_index)
-    # If a new slice is loaded or the page just got loaded, do nothing
-    if len(id_input) == 0:
-        return [], False
+    # If a new slice is loaded or the page just got loaded, do nothing because
+    # of automatic relayout of the heatmap which is automatically triggered when the page is loaded
+    if len(id_input) == 0 or (value_input == "relayoutData" and relayoutData == {"autosize": True}):
+        return dash.no_update
 
     # Delete everything when clicking reset
     elif id_input == "page-3-reset-button" or id_input == "url":
         return [], False
 
-    elif id_input == "page-3-button-compute-spectra" or id_input == "page-3-dcc-store-path-heatmap":
+    elif id_input == "page-3-button-compute-spectra":
         logging.info("Starting to compute spectrum")
         l_spectra = global_spectrum_store(
             slice_index, l_shapes_and_masks, l_mask_name, relayoutData, as_enrichment, log_transform
@@ -1204,7 +1157,8 @@ def page_3_record_spectra(
 
 
 # Global function to memoize/compute lipid label indexes
-@cache.memoize()
+# Not cached as the caching/retrieving takes as long as the function itself
+# @cache.memoize()
 def global_lipid_index_store(slice_index, l_spectra):
     logging.info("Starting computing ll_idx_labels")
     ll_idx_labels = []
@@ -1760,7 +1714,6 @@ def draw_modal_graph(
     return dash.no_update
 
 
-"""
 # Function that handle loading bar
 @app.app.callback(
     Output("page-3-progress", "value"),
@@ -1790,8 +1743,8 @@ def update_loading_bar(state_1, state_2, state_3, state_4, state_5):
         return 100
 
     return 0
-"""
-"""
+
+
 # Function that handles loading bar and row visibility
 @app.app.callback(
     Output("page-3-row-main-computations", "className"),
@@ -1811,4 +1764,4 @@ def update_loading_visibility(value, clicked_reset, clicked_compute):
         return "d-none", "mt-1"
     else:
         return "d-none", "mt-1"
-"""
+
