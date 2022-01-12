@@ -909,7 +909,7 @@ class Figures:
             compute_function=self._atlas.compute_projection_parameters,
         )
 
-        # get list of original coordinates foe each slice
+        # get list of original coordinates for each slice
         l_original_coor = self._atlas.l_original_coor
 
         # Initialize empty arrays with a large estimate of 400*400 for the orginal acquisition size
@@ -939,6 +939,7 @@ class Figures:
             total_index_temp = 0
             for i in range(array_data_stripped.shape[0]):
                 x_atlas, y_atlas, z_atlas = original_coordinates_stripped[i] / 1000
+                # ! Should I filter out the pixels that are outside of the annotations
                 if array_data_stripped[i] >= percentile:
                     array_x[total_index + total_index_temp] = z_atlas
                     array_y[total_index + total_index_temp] = x_atlas
@@ -973,7 +974,7 @@ class Figures:
                     continue
 
                 # Compute the percentile of expression to filter out lowly expressed pixels
-                percentile = np.percentile(array_data_stripped, 60)
+                percentile = np.percentile(array_data_stripped, 80)
 
                 # Get the coordinates of the pixels in the ccfv3
                 original_coordinates = l_original_coor[slice_index]
@@ -1007,7 +1008,7 @@ class Figures:
                 marker=dict(
                     # sizemode="diameter",
                     # sizeref=40,
-                    size=3,  # array_c,
+                    size=2,  # array_c,
                     color=array_c,
                     colorscale="Viridis",
                     colorbar_title="Expression",

@@ -1,6 +1,7 @@
 # ! check this
 # TO CORRECT: https://dev.to/codemouse92/dead-simple-python-project-structure-and-imports-38c6
 import logging
+import os
 from lbae.modules.tools.misc import logmem
 
 # Define logging options for print and debug
@@ -20,6 +21,8 @@ numexpr_logger.setLevel(logging.WARNING)
 numba_logger = logging.getLogger("numba")
 numba_logger.setLevel(logging.WARNING)
 
+# Launch Redis server
+os.system("nohup ../redis/redis-6.2.6/src/redis-server &")
 
 # Import the app and define server for gunicorn
 logging.info("Starting import chain" + logmem())
@@ -31,7 +34,12 @@ server = index.app.server
 # Run the app locally
 if __name__ == "__main__":
     logging.info("Starting app" + logmem())
-    index.run()
+    try:
+        index.run()
+    except:
+        # Shut reddis server
+        os.system("../redis/redis-6.2.6/src/redis-cli shutdown")
+
 
 # To run the app from the server, use the following command in the base lbae folder:
 # gunicorn main:server -b:8050 --workers=1

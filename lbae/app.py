@@ -9,6 +9,7 @@ import flask
 from flask_caching import Cache
 import logging
 import os
+import redis
 
 # import diskcache
 
@@ -80,3 +81,6 @@ CACHE_CONFIG = {
 }
 cache = Cache()
 cache.init_app(app.server, config=CACHE_CONFIG)
+
+# Redis object for get and set
+r = redis.Redis()

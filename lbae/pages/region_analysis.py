@@ -16,7 +16,7 @@ from numba import njit
 
 # Homemade modules
 from lbae import app
-from lbae.app import figures, data, atlas, cache
+from lbae.app import figures, data, atlas, cache, r
 from lbae import config
 from lbae.modules.tools.misc import return_pickled_object, convert_image_to_base64
 from lbae.modules.tools.spectra import (
@@ -237,6 +237,7 @@ def return_layout(basic_config, slice_index=1):
                                     ],
                                 ),
                                 dbc.Progress(value=0, id="page-3-progress", animated=True, striped=True),
+                                dcc.Interval(id="page-3-interval-component", interval=100, n_intervals=0),
                             ],
                         ),
                     ],
@@ -580,9 +581,15 @@ def return_layout(basic_config, slice_index=1):
 
 # Function to update the heatmap toast name
 @app.app.callback(
-    Output("page-3-toast-graph-heatmap-mz-selection", "children"), Input("main-slider", "value"),
+    Output("page-3-toast-graph-heatmap-mz-selection", "children"),
+    Input("main-slider", "value"),
+    State("session-id", "data"),
 )
-def page_3_plot_graph_heatmap_mz_selection(slice_index):
+def page_3_plot_graph_heatmap_mz_selection(slice_index, session_id):
+    # Set progress bar to 0 in redis db (in this function since it's the first being called)
+    r.set(session_id + "page-3-progress", 0)
+
+    # Return proper slice index
     if slice_index is not None:
         return "Brain slice n°" + str(slice_index)
     else:
@@ -879,6 +886,23 @@ def page_3_button_compute_spectra(relayoutData, clicked_reset, mask):
     return True
 
 
+# Function to activate the dcc.interval for the progress bar
+# Function to make visible the m/z plot in tab 3
+@app.app.callback(
+    Output("page-3-interval-component", "disabled"), Input("page-3-button-compute-spectra", "n_clicks"),
+)
+def tab_3_activate_interval(n_clicks):
+
+    # Find out which input triggered the function
+    id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
+
+    if n_clicks is not None:
+        if n_clicks > 0:
+            return False
+    else:
+        return True
+
+
 # Function to make visible the m/z plot in tab 3
 @app.app.callback(
     Output("page-3-graph-spectrum-per-pixel", "style"),
@@ -1111,6 +1135,7 @@ def global_spectrum_store(slice_index, l_shapes_and_masks, l_mask_name, relayout
     State("page-3-normalize", "value"),
     State("page-3-log", "value"),
     State("page-3-graph-heatmap-per-sel", "relayoutData"),
+    State("session-id", "data"),
     prevent_intial_call=True,
 )
 def page_3_record_spectra(
@@ -1124,6 +1149,7 @@ def page_3_record_spectra(
     as_enrichment,
     log_transform,
     relayoutData,
+    session_id,
 ):
 
     # Find out which input triggered the function
@@ -1141,9 +1167,17 @@ def page_3_record_spectra(
 
     elif id_input == "page-3-button-compute-spectra":
         logging.info("Starting to compute spectrum")
+
+        # Set progress bar to 0 in redis db
+        r.set(session_id + "page-3-progress", 0)
+
         l_spectra = global_spectrum_store(
             slice_index, l_shapes_and_masks, l_mask_name, relayoutData, as_enrichment, log_transform
         )
+
+        # Set progress bar to 40 in redis db
+        r.set(session_id + "page-3-progress", 40)
+
         if l_spectra is not None:
             if l_spectra != []:
                 logging.info("Spectra computed, returning it now")
@@ -1338,6 +1372,7 @@ def page_3_plot_spectrum(
     State("page-3-normalize", "value"),
     State("page-3-log", "value"),
     State("page-3-graph-heatmap-per-sel", "relayoutData"),
+    State("session-id", "data"),
     prevent_intial_call=True,
 )
 def page_3_draw_heatmap_per_lipid_selection(
@@ -1352,6 +1387,7 @@ def page_3_draw_heatmap_per_lipid_selection(
     as_enrichment,
     log_transform,
     relayoutData,
+    session_id,
 ):
     # Find out which input triggered the function
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
@@ -1479,6 +1515,9 @@ def page_3_draw_heatmap_per_lipid_selection(
                 fig_heatmap_lipids = figures.return_heatmap_lipid(fig_heatmap_lipids)
 
                 logging.info("Heatmap computed. Returning it now")
+
+                # Set progress bar to 70 in redis db
+                r.set(session_id + "page-3-progress", 70)
                 return fig_heatmap_lipids, l_idx_lipids, True
 
     return dash.no_update
@@ -1528,8 +1567,6 @@ def page_3_reset_download(fig_mz):
             return False
     return True
 
-
-# ! Also need to update the function below with server-side computing...
 
 # Function that create the dropdown lipids selections
 @app.app.callback(
@@ -1650,6 +1687,7 @@ def toggle_visibility_graph(n1, cliked_reset, l_red_lipids, l_green_lipids, l_bl
     State("dcc-store-color-mask", "data"),
     State("page-3-log", "value"),
     State("page-3-normalize", "value"),
+    State("session-id", "data"),
 )
 def draw_modal_graph(
     n1,
@@ -1664,6 +1702,7 @@ def draw_modal_graph(
     l_color_mask,
     log,
     enrichment,
+    session_id,
 ):
     # Find out which input triggered the function
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
@@ -1706,12 +1745,17 @@ def draw_modal_graph(
                 # else:
                 #    fig["layout"]["shapes"] = tuple(list(fig["layout"]["shapes"]).append(draw))
         logging.info("Modal graph computed. Returning it now")
+
+        # Set progress bar to 90 in redis db
+        r.set(session_id + "page-3-progress", 90)
+
         return fig, True
 
     logging.info("No lipid were selected, ignoring update.")
     return dash.no_update
 
 
+"""
 # Function that handle loading bar
 @app.app.callback(
     Output("page-3-progress", "value"),
@@ -1740,9 +1784,9 @@ def update_loading_bar(state_1, state_2, state_3, state_4, state_5):
         return 100
 
     return 0
+"""
 
-
-# Function that handles loading bar and row visibility
+# Function that handle loading bar
 @app.app.callback(
     Output("page-3-progress", "className"),
     Input("page-3-progress", "value"),
@@ -1761,3 +1805,11 @@ def update_loading_visibility(value, clicked_reset, clicked_compute):
     else:
         return "mt-1"
 
+
+# Function that handles loading bar and row visibility
+@app.app.callback(
+    Output("page-3-progress", "value"), Input("page-3-interval-component", "n_intervals"), State("session-id", "data"),
+)
+def update_loading_bar(n_intervals, session_id):
+    print("TEST TEST")
+    return int(r.get(session_id + "page-3-progress"))
