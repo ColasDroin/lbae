@@ -7,8 +7,8 @@ import dash_bootstrap_components as dbc
 # from dash.long_callback import DiskcacheLongCallbackManager
 import flask
 from flask_caching import Cache
-import numpy as np
 import logging
+import os
 
 # import diskcache
 
@@ -72,9 +72,11 @@ app = dash.Dash(
 
 CACHE_CONFIG = {
     # We use 'FileSystemCache' as we want to keep the application very lightweight in term of RAM memory
-    "CACHE_TYPE": "FileSystemCache",
-    "CACHE_DIR": "lbae/data/temp/cache-directory",
-    "CACHE_THRESHOLD": 200,
+    # "CACHE_TYPE": "FileSystemCache",
+    # "CACHE_DIR": "lbae/data/temp/cache-directory",
+    "CACHE_TYPE": "redis",
+    "CACHE_REDIS_URL": os.environ.get("REDIS_URL", "redis://localhost:6379"),
+    # "CACHE_THRESHOLD": 200,
 }
 cache = Cache()
 cache.init_app(app.server, config=CACHE_CONFIG)

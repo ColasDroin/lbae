@@ -11,7 +11,6 @@ import plotly.graph_objects as go
 import numpy as np
 import pandas as pd
 import logging
-import copy
 import dash_draggable
 from numba import njit
 
@@ -238,7 +237,6 @@ def return_layout(basic_config, slice_index=1):
                                     ],
                                 ),
                                 dbc.Progress(value=0, id="page-3-progress", animated=True, striped=True),
-                                dmc.Notification(),
                             ],
                         ),
                     ],
@@ -1720,10 +1718,9 @@ def draw_modal_graph(
     Input("page-3-dcc-store-loading-1", "data"),
     Input("page-3-dcc-store-loading-2", "data"),
     Input("page-3-dcc-store-loading-3", "data"),
-    State("page-3-dcc-store-loading-4", "data"),
+    Input("page-3-dcc-store-loading-4", "data"),
     Input("page-3-dcc-store-loading-5", "data"),
 )
-# * CAREFUL: loading-4 is a state now
 def update_loading_bar(state_1, state_2, state_3, state_4, state_5):
 
     # Find out which input triggered the function
@@ -1731,14 +1728,14 @@ def update_loading_bar(state_1, state_2, state_3, state_4, state_5):
 
     print(id_input, state_1, state_2, state_3, state_4, state_5)
 
-    if id_input == "page-3-dcc-store-loading-1" and state_1:
-        return 40
-    if id_input == "page-3-dcc-store-loading-2" and state_2:
-        return 50
-    if id_input == "page-3-dcc-store-loading-3" and state_3:
-        return 60
-    if id_input == "page-3-dcc-store-loading-4" and state_4:
-        return 70
+    # if id_input == "page-3-dcc-store-loading-1" and state_1:
+    #     return 40
+    # if id_input == "page-3-dcc-store-loading-2" and state_2:
+    #     return 50
+    # if id_input == "page-3-dcc-store-loading-3" and state_3:
+    #     return 60
+    # if id_input == "page-3-dcc-store-loading-4" and state_4:
+    #     return 70
     if id_input == "page-3-dcc-store-loading-5" and state_5:
         return 100
 
@@ -1747,7 +1744,6 @@ def update_loading_bar(state_1, state_2, state_3, state_4, state_5):
 
 # Function that handles loading bar and row visibility
 @app.app.callback(
-    Output("page-3-row-main-computations", "className"),
     Output("page-3-progress", "className"),
     Input("page-3-progress", "value"),
     Input("page-3-reset-button", "n_clicks"),
@@ -1759,9 +1755,9 @@ def update_loading_visibility(value, clicked_reset, clicked_compute):
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
 
     if id_input == "page-3-progress" and value == 100:
-        return "", "d-none"
+        return "d-none"
     elif id_input == "page-3-button-compute-spectra":
-        return "d-none", "mt-1"
+        return "mt-1"
     else:
-        return "d-none", "mt-1"
+        return "mt-1"
 
