@@ -43,11 +43,10 @@ if __name__ == "__main__":
 
 # To run the app from the server, use the following command in the base lbae folder:
 # gunicorn main:server -b:8050 --workers=4
+# pkill -P1 gunicorn
 
-# TODO debug/accelerate manual region selection page
-# TODO accelerate lipid selection per slice in 2D. Maybe precompute every lipid?
-
-
+# TODO State of the art 3D representation of lipid expression
+# TODO debug manual region selection page
 # TODO Make lipid expression comparison between 3D structure
 # TODO Create a vtk widget to explore 3D lipid data with a transparent continous colormap
 # TODO Implement progress bar for slow callbacks with @app.long_callback -> not possible for now as context manager is not supported
@@ -55,7 +54,6 @@ if __name__ == "__main__":
 # TODO incoporate new slices
 # TODO implement the app as a multipage app when the feature is available on Dash
 # TODO have the documentation always open on the right on very big screens to fill empty space
-# TODO make mask hovering client side in javascript to speed up things a lot. As it is, unusable remotely for now :(
 # TODO Implement a "fast mode" with lower resolution images and spectra to have a faster app (for slow connections)
 # TODO make layout perfect for every screen size. Maybe automate the process for a given figure shape?
 # TODO when everything is stable, create a function that delete all pickle files and repickle everything automatically

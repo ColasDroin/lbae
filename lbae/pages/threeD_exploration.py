@@ -30,14 +30,14 @@ def return_layout(basic_config, slice_index):
                 # x sets the lateral position, y the vertical one, w is in columns (whose size depends on the dimension), h is in rows (30px)
                 # nb columns go 12->10->6->4->2
                 "lg": [
-                    {"i": "page-4-card-main-graph", "x": 0, "y": 0, "w": 7, "h": 20},
-                    {"i": "page-4-card-lipid-selection", "x": 8, "y": 0, "w": 5, "h": 11},
-                    {"i": "page-4-card-range-selection", "x": 8, "y": 8, "w": 5, "h": 5},
+                    {"i": "page-4-card-main-graph", "x": 0, "y": 0, "w": 8, "h": 20},
+                    {"i": "page-4-card-lipid-selection", "x": 8, "y": 0, "w": 4, "h": 11},
+                    {"i": "page-4-card-range-selection", "x": 8, "y": 8, "w": 4, "h": 6},
                 ],
                 "md": [
-                    {"i": "page-4-card-main-graph", "x": 0, "y": 0, "w": 6, "h": 14},
-                    {"i": "page-4-card-lipid-selection", "x": 6, "y": 0, "w": 4, "h": 12},
-                    {"i": "page-4-card-range-selection", "x": 6, "y": 8, "w": 4, "h": 6},
+                    {"i": "page-4-card-main-graph", "x": 0, "y": 0, "w": 7, "h": 14},
+                    {"i": "page-4-card-lipid-selection", "x": 6, "y": 0, "w": 3, "h": 12},
+                    {"i": "page-4-card-range-selection", "x": 6, "y": 8, "w": 3, "h": 6},
                 ],
                 "sm": [
                     {"i": "page-4-card-main-graph", "x": 0, "y": 0, "w": 6, "h": 19},

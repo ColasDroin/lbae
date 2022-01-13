@@ -251,9 +251,3 @@ def hide_slider(pathname):
 def run():
     app.run_server(port=8070, debug=False)
 
-
-# Run app from local console (not gunicorn)
-# if __name__ == "__main__":
-#    app.run_server(port=8060, debug=False)
-
-# pkill -P1 gunicorn

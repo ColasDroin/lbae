@@ -292,6 +292,7 @@ def return_layout(basic_config, slice_index=1):
                                                 type_figure="projection_corrected",
                                                 index_image=slice_index - 1,
                                                 plot_atlas_contours=False,
+                                                draw=True,
                                             ),
                                         ),
                                         html.P(
@@ -324,7 +325,7 @@ def return_layout(basic_config, slice_index=1):
                                                     children=[
                                                         html.Div(
                                                             id="page-3-alert",
-                                                            className="text-center my-2",
+                                                            className="text-center my-5",
                                                             children=html.Strong(
                                                                 children="Please draw at least one region on the heatmap and clicked on 'compute spectra'.. and clicked on 'compute spectra'.",
                                                                 style={"color": "#df5034"},
@@ -380,7 +381,7 @@ def return_layout(basic_config, slice_index=1):
                                     children=[
                                         html.Div(
                                             id="page-3-alert-4",
-                                            className="text-center my-2",
+                                            className="text-center my-4",
                                             children=html.Strong(
                                                 children="Please draw at least one region on the heatmap and clicked on 'compute spectra'..",
                                                 style={"color": "#df5034"},
@@ -461,7 +462,7 @@ def return_layout(basic_config, slice_index=1):
                             children=[
                                 html.Div(
                                     id="page-3-alert-3",
-                                    className="text-center my-2",
+                                    className="text-center my-5",
                                     children=html.Strong(
                                         children="Please draw at least one region on the heatmap and clicked on 'compute spectra'.",
                                         style={"color": "#df5034"},
@@ -540,7 +541,7 @@ def return_layout(basic_config, slice_index=1):
                             children=[
                                 html.Div(
                                     id="page-3-alert-5",
-                                    className="text-center my-2",
+                                    className="text-center my-5",
                                     children=html.Strong(
                                         children="Please draw at least one region on the heatmap and clicked on 'compute spectra'..",
                                         style={"color": "#df5034"},
@@ -666,6 +667,7 @@ def page_3_plot_heatmap(
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
     value_input = dash.callback_context.triggered[0]["prop_id"].split(".")[1]
 
+    print("ICI", id_input)
     # if value_input != "hoverData":
     #    print(id_input, value_input, slice_index, cliked_reset, l_mask_name, url, l_color_mask, reset)
 
@@ -680,6 +682,7 @@ def page_3_plot_heatmap(
             type_figure="projection_corrected",
             index_image=slice_index - 1,
             plot_atlas_contours=False,
+            draw = True,
         )
         fig.update_layout(
             dragmode="drawclosedpath",
@@ -1175,7 +1178,7 @@ def page_3_record_spectra(
             if l_spectra != []:
                 logging.info("Spectra computed, returning it now")
                 # return a dummy variable to indicate that the spectrum has been computed and trigger the callback
-                return "ok", True
+                return "ok"
         logging.warning("A bug appeared during spectrum computation")
 
     return []
@@ -1212,7 +1215,6 @@ def global_lipid_index_store(slice_index, l_spectra):
     # Output("dcc-store-list-idx-lipids", "data"),
     Output("page-3-empty-div-load", "children"),  # empty div to trigger spinner
     Input("page-3-reset-button", "n_clicks"),
-    Input("page-3-button-compute-spectra", "n_clicks"),  # to trigger spinner right after click
     Input("dcc-store-list-mz-spectra", "data"),
     Input("main-slider", "value"),
     State("page-3-dropdown-brain-regions", "value"),
@@ -1223,15 +1225,7 @@ def global_lipid_index_store(slice_index, l_spectra):
     prevent_intial_call=True,
 )
 def page_3_plot_spectrum(
-    cliked_reset,
-    clicked_compute,
-    l_spectra,
-    slice_index,
-    l_mask_name,
-    l_shapes_and_masks,
-    as_enrichment,
-    log_transform,
-    relayoutData,
+    cliked_reset, l_spectra, slice_index, l_mask_name, l_shapes_and_masks, as_enrichment, log_transform, relayoutData,
 ):
 
     # Find out which input triggered the function
@@ -1247,7 +1241,7 @@ def page_3_plot_spectrum(
         return figures.return_empty_spectrum(), ""
 
     # do nothing if l_spectra is None or []
-    elif id_input == "dcc-store-list-mz-spectra" or id_input == "page-3-button-compute-spectra":
+    elif id_input == "dcc-store-list-mz-spectra":
         if len(l_spectra) > 0 or l_spectra == "ok":
             logging.info("Starting spectra plotting now")
             fig_mz = go.Figure()
@@ -1423,16 +1417,13 @@ def page_3_draw_heatmap_per_lipid_selection(
         # else:
         #    scale_switch = False
         scale_switch = False
-
         # Load figure
         if l_spectra == "ok":  # and ll_idx_labels == "ok":
-
             # get the actual values for l_spectra and ll_idx_labels and not just the dummy fillings
             l_spectra = global_spectrum_store(
                 slice_index, l_shapes_and_masks, l_mask_name, relayoutData, as_enrichment, log_transform
             )
             ll_idx_labels = global_lipid_index_store(slice_index, l_spectra)
-
             if len(l_spectra) > 0:
                 if len(ll_idx_labels) != len(l_spectra):
                     print("BUG: the number of received spectra is different from the number of received annotations")
@@ -1807,4 +1798,20 @@ def update_loading_bar(n_intervals, session_id):
         return int(val)
     else:
         return 0
+"""
+"""
+# Function that handles cards visibility
+@app.app.callback(
+    Output("page-3-card-spectrum", "className"),
+    Output("page-3-card-dropdowns", "className"),
+    Output("page-3-card-filtering", "className"),
+    Output("page-3-card-heatmap", "className"),
+    Output("page-3-card-graph-lipid-comparison", "className"),
+    Input("page-3-empty-div-load", "children"),
+)
+def update_loading_bar(div):
+    if div == "":
+        return "", "", "", "", ""
+    else:
+        return "d-none", "d-none", "d-none", "d-none", "d-none"
 """

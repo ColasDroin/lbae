@@ -85,7 +85,9 @@ class Figures:
         return np.array(l_array_slices)
 
     # For docstring: if only_contours is True, all other arguments (but index_image) are ignored
-    def compute_figure_basic_image(self, type_figure, index_image, plot_atlas_contours=True, only_contours=False):
+    def compute_figure_basic_image(
+        self, type_figure, index_image, plot_atlas_contours=True, only_contours=False, draw=False
+    ):
 
         # If only boundaries is requested, force the computation of atlas contours
         if only_contours:
@@ -146,6 +148,13 @@ class Figures:
             paper_bgcolor="rgba(0,0,0,0)",
             plot_bgcolor="rgba(0,0,0,0)",
         )
+
+        if draw:
+            fig.update_layout(
+                dragmode="drawclosedpath",
+                newshape=dict(fillcolor=l_colors[0], opacity=0.7, line=dict(color="white", width=1)),
+                autosize=True,
+            )
 
         return fig
 
@@ -922,6 +931,10 @@ class Figures:
         logging.debug(f"Size array_x: {array_x.nbytes / 1024 / 1024 :.2f}")
         logging.info("Starting slice iteration" + logmem())
 
+        # get atlas shape and resolution
+        reference_shape = self._atlas.bg_atlas.reference.shape
+        resolution = self._atlas.resolution
+
         # Define a numba function to accelerate the loop in which the ccfv3 coordinates are computed and the final
         # arrays are filled
         @njit
@@ -934,12 +947,26 @@ class Figures:
             array_z,
             array_c,
             total_index,
+            reference_shape,
+            resolution,
         ):
             # Keep track of the array indexing even outside of this function
             total_index_temp = 0
             for i in range(array_data_stripped.shape[0]):
                 x_atlas, y_atlas, z_atlas = original_coordinates_stripped[i] / 1000
-                # ! Should I filter out the pixels that are outside of the annotations
+
+                # Filter out voxels that are not in the atlas
+                x_temp = int(round(x_atlas * 1000000 / resolution))
+                y_temp = int(round(y_atlas * 1000000 / resolution))
+                z_temp = int(round(z_atlas * 1000000 / resolution))
+                if x_temp < 0 or x_temp >= reference_shape[0]:
+                    continue
+                if y_temp < 0 or y_temp >= reference_shape[1]:
+                    continue
+                if z_temp < 0 or z_temp >= reference_shape[2]:
+                    continue
+
+                # ! Should I filter out the pixels that are outside of the annotations?
                 if array_data_stripped[i] >= percentile:
                     array_x[total_index + total_index_temp] = z_atlas
                     array_y[total_index + total_index_temp] = x_atlas
@@ -989,6 +1016,8 @@ class Figures:
                     array_z,
                     array_c,
                     total_index,
+                    reference_shape,
+                    resolution,
                 )
                 logging.info("Slice " + str(slice_index) + " done" + logmem())
 
@@ -1008,9 +1037,10 @@ class Figures:
                 marker=dict(
                     # sizemode="diameter",
                     # sizeref=40,
-                    size=2,  # array_c,
+                    size=1.5,  # array_c,
                     color=array_c,
                     colorscale="Viridis",
+                    reversescale=True,
                     colorbar_title="Expression",
                     # line_color="rgba(140, 140, 170, 0.01)",
                 ),
@@ -1018,6 +1048,9 @@ class Figures:
         )
         fig.update_layout(
             scene=dict(
+                xaxis=dict(backgroundcolor="rgba(0,0,0,0)", color="grey", gridcolor="grey"),
+                yaxis=dict(backgroundcolor="rgba(0,0,0,0)", color="grey", gridcolor="grey"),
+                zaxis=dict(backgroundcolor="rgba(0,0,0,0)", color="grey", gridcolor="grey"),
                 # zaxis=dict(autorange=False),
                 # aspectratio=dict(x=1.5, y=1, z=1),
                 # zaxis_autorange="reversed",
@@ -1033,6 +1066,8 @@ class Figures:
                 # ),
             ),
             margin=dict(t=5, r=0, b=0, l=0),
+            plot_bgcolor="rgba(0,0,0,0)",
+            paper_bgcolor="rgba(0,0,0,0)",
             # title="Planets!",
             # scene=dict(
             #    xaxis=dict(title="Distance from Sun", titlefont_color="white"),
@@ -1041,6 +1076,7 @@ class Figures:
             #    bgcolor="rgb(20, 24, 54)",
             # ),
         )
+
         logging.info("Done" + logmem())
         return fig
 
