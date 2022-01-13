@@ -249,7 +249,7 @@ def tab_content(active_tab):
 
     if view is not None:
         figure = return_pickled_object(
-            "figures/3D_page",
+            "figures/atlas_page/3D",
             "atlas_with_slider",
             force_update=False,
             compute_function=figures.compute_atlas_with_slider,

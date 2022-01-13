@@ -1167,7 +1167,7 @@ class Figures:
             dict(
                 active=10,
                 currentvalue={"visible": False,},
-                pad={"t": 10, "l": 100, "r": 100},
+                pad={"t": 30, "l": 100, "r": 100},
                 steps=steps,
                 # len = 0.4,
                 # xanchor = 'center',
@@ -1188,7 +1188,7 @@ class Figures:
                 "yanchor": "top",
                 "font": dict(size=14,),
             },
-            margin=dict(t=5, r=0, b=0, l=0),
+            margin=dict(t=30, r=0, b=0, l=0),
         )
 
         fig.update_xaxes(title_text=axis_labels[1])

@@ -442,3 +442,38 @@
 143463:M 13 Jan 2022 16:15:28.660 * monotonic clock: POSIX clock_gettime
 143463:M 13 Jan 2022 16:15:28.661 # Warning: Could not create server TCP listening socket *:6379: bind: Address already in use
 143463:M 13 Jan 2022 16:15:28.661 # Failed listening on port 6379 (TCP), aborting.
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments

@@ -22,7 +22,7 @@ numba_logger = logging.getLogger("numba")
 numba_logger.setLevel(logging.WARNING)
 
 # Launch Redis server
-os.system("nohup ../redis/redis-6.2.6/src/redis-server &")
+os.system("nohup ../redis/redis-6.2.6/src/redis-server ../redis/redis-6.2.6/src/redis.conf &")
 
 # Import the app and define server for gunicorn
 logging.info("Starting import chain" + logmem())
@@ -46,20 +46,17 @@ if __name__ == "__main__":
 # pkill -P1 gunicorn
 
 # TODO State of the art 3D representation of lipid expression
-# TODO debug manual region selection page
 # TODO Make lipid expression comparison between 3D structure
-# TODO Create a vtk widget to explore 3D lipid data with a transparent continous colormap
-# TODO Implement progress bar for slow callbacks with @app.long_callback -> not possible for now as context manager is not supported
 # TODO make a careful memory analysis to free more memory
-# TODO incoporate new slices
-# TODO implement the app as a multipage app when the feature is available on Dash
-# TODO have the documentation always open on the right on very big screens to fill empty space
-# TODO Implement a "fast mode" with lower resolution images and spectra to have a faster app (for slow connections)
-# TODO make layout perfect for every screen size. Maybe automate the process for a given figure shape?
-# TODO when everything is stable, create a function that delete all pickle files and repickle everything automatically
+# TODO incoporate new brain slices
 # TODO adress all #! comments in the code
-# TODO limit Redis entries to e.g. 50
+# TODO when everything is stable, create a function that delete all pickle files and repickle everything automatically
 # TODO do quality control, especially when several users are on the app in parallel
 # TODO write missing docstrings
-# TODO write a brief documentation
+# TODO write documentation
 # TODO make a docker container for the very final version of the app
+
+# ? implement the app as a multipage app when the feature is available on Dash
+# ? Implement a "fast mode" with lower resolution images and spectra to have a faster app (for slow connections)
+# ? make layout perfect for every screen size. Maybe automate the process for a given figure shape?
+# ? have the documentation always open on the right on very big screens to fill empty space
