@@ -45,6 +45,7 @@ class Atlas:
             logging.warning("The resolution you chose is not available, using the default of 25um")
             self.resolution = 25
 
+        # Load our data
         self.data = maldi_data
 
         # Load or download the atlas if it's the first time
