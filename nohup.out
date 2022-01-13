@@ -40,3 +40,177 @@
 57113:M 12 Jan 2022 17:38:43.460 * monotonic clock: POSIX clock_gettime
 57113:M 12 Jan 2022 17:38:43.460 # Warning: Could not create server TCP listening socket *:6379: bind: Address already in use
 57113:M 12 Jan 2022 17:38:43.460 # Failed listening on port 6379 (TCP), aborting.
+65043:C 12 Jan 2022 17:49:18.867 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+65043:C 12 Jan 2022 17:49:18.867 # Redis version=6.2.6, bits=64, commit=00000000, modified=0, pid=65043, just started
+65043:C 12 Jan 2022 17:49:18.867 # Warning: no config file specified, using the default config. In order to specify a config file use ../redis/redis-6.2.6/src/redis-server /path/to/redis.conf
+65043:M 12 Jan 2022 17:49:18.867 * monotonic clock: POSIX clock_gettime
+65043:M 12 Jan 2022 17:49:18.868 # Warning: Could not create server TCP listening socket *:6379: bind: Address already in use
+65043:M 12 Jan 2022 17:49:18.868 # Failed listening on port 6379 (TCP), aborting.
+66725:C 12 Jan 2022 17:52:35.241 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+66725:C 12 Jan 2022 17:52:35.241 # Redis version=6.2.6, bits=64, commit=00000000, modified=0, pid=66725, just started
+66725:C 12 Jan 2022 17:52:35.241 # Warning: no config file specified, using the default config. In order to specify a config file use ../redis/redis-6.2.6/src/redis-server /path/to/redis.conf
+66725:M 12 Jan 2022 17:52:35.242 * monotonic clock: POSIX clock_gettime
+66725:M 12 Jan 2022 17:52:35.242 # Warning: Could not create server TCP listening socket *:6379: bind: Address already in use
+66725:M 12 Jan 2022 17:52:35.242 # Failed listening on port 6379 (TCP), aborting.
+48589:C 13 Jan 2022 09:52:30.835 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+48589:C 13 Jan 2022 09:52:30.835 # Redis version=6.2.6, bits=64, commit=00000000, modified=0, pid=48589, just started
+48589:C 13 Jan 2022 09:52:30.835 # Warning: no config file specified, using the default config. In order to specify a config file use ../redis/redis-6.2.6/src/redis-server /path/to/redis.conf
+48589:M 13 Jan 2022 09:52:30.836 * monotonic clock: POSIX clock_gettime
+48589:M 13 Jan 2022 09:52:30.836 # Warning: Could not create server TCP listening socket *:6379: bind: Address already in use
+48589:M 13 Jan 2022 09:52:30.836 # Failed listening on port 6379 (TCP), aborting.
+53310:C 13 Jan 2022 09:59:33.997 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+53310:C 13 Jan 2022 09:59:33.997 # Redis version=6.2.6, bits=64, commit=00000000, modified=0, pid=53310, just started
+53310:C 13 Jan 2022 09:59:33.997 # Warning: no config file specified, using the default config. In order to specify a config file use ../redis/redis-6.2.6/src/redis-server /path/to/redis.conf
+53310:M 13 Jan 2022 09:59:33.998 * monotonic clock: POSIX clock_gettime
+53310:M 13 Jan 2022 09:59:33.998 # Warning: Could not create server TCP listening socket *:6379: bind: Address already in use
+53310:M 13 Jan 2022 09:59:33.998 # Failed listening on port 6379 (TCP), aborting.
+58220:C 13 Jan 2022 10:08:43.736 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+58220:C 13 Jan 2022 10:08:43.736 # Redis version=6.2.6, bits=64, commit=00000000, modified=0, pid=58220, just started
+58220:C 13 Jan 2022 10:08:43.736 # Warning: no config file specified, using the default config. In order to specify a config file use ../redis/redis-6.2.6/src/redis-server /path/to/redis.conf
+58220:M 13 Jan 2022 10:08:43.737 * monotonic clock: POSIX clock_gettime
+58220:M 13 Jan 2022 10:08:43.737 # Warning: Could not create server TCP listening socket *:6379: bind: Address already in use
+58220:M 13 Jan 2022 10:08:43.737 # Failed listening on port 6379 (TCP), aborting.
+60399:C 13 Jan 2022 10:11:27.904 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+60399:C 13 Jan 2022 10:11:27.904 # Redis version=6.2.6, bits=64, commit=00000000, modified=0, pid=60399, just started
+60399:C 13 Jan 2022 10:11:27.904 # Warning: no config file specified, using the default config. In order to specify a config file use ../redis/redis-6.2.6/src/redis-server /path/to/redis.conf
+60399:M 13 Jan 2022 10:11:27.905 * monotonic clock: POSIX clock_gettime
+60399:M 13 Jan 2022 10:11:27.905 # Warning: Could not create server TCP listening socket *:6379: bind: Address already in use
+60399:M 13 Jan 2022 10:11:27.905 # Failed listening on port 6379 (TCP), aborting.
+63290:C 13 Jan 2022 10:17:26.353 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+63290:C 13 Jan 2022 10:17:26.353 # Redis version=6.2.6, bits=64, commit=00000000, modified=0, pid=63290, just started
+63290:C 13 Jan 2022 10:17:26.353 # Warning: no config file specified, using the default config. In order to specify a config file use ../redis/redis-6.2.6/src/redis-server /path/to/redis.conf
+63290:M 13 Jan 2022 10:17:26.354 * monotonic clock: POSIX clock_gettime
+63290:M 13 Jan 2022 10:17:26.354 # Warning: Could not create server TCP listening socket *:6379: bind: Address already in use
+63290:M 13 Jan 2022 10:17:26.354 # Failed listening on port 6379 (TCP), aborting.
+63665:C 13 Jan 2022 10:17:48.426 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+63665:C 13 Jan 2022 10:17:48.427 # Redis version=6.2.6, bits=64, commit=00000000, modified=0, pid=63665, just started
+63665:C 13 Jan 2022 10:17:48.427 # Warning: no config file specified, using the default config. In order to specify a config file use ../redis/redis-6.2.6/src/redis-server /path/to/redis.conf
+63665:M 13 Jan 2022 10:17:48.427 * monotonic clock: POSIX clock_gettime
+63665:M 13 Jan 2022 10:17:48.427 # Warning: Could not create server TCP listening socket *:6379: bind: Address already in use
+63665:M 13 Jan 2022 10:17:48.427 # Failed listening on port 6379 (TCP), aborting.
+67568:C 13 Jan 2022 10:24:28.156 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+67568:C 13 Jan 2022 10:24:28.156 # Redis version=6.2.6, bits=64, commit=00000000, modified=0, pid=67568, just started
+67568:C 13 Jan 2022 10:24:28.156 # Warning: no config file specified, using the default config. In order to specify a config file use ../redis/redis-6.2.6/src/redis-server /path/to/redis.conf
+67568:M 13 Jan 2022 10:24:28.157 * monotonic clock: POSIX clock_gettime
+67568:M 13 Jan 2022 10:24:28.157 # Warning: Could not create server TCP listening socket *:6379: bind: Address already in use
+67568:M 13 Jan 2022 10:24:28.157 # Failed listening on port 6379 (TCP), aborting.
+72788:C 13 Jan 2022 10:34:07.641 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+72788:C 13 Jan 2022 10:34:07.641 # Redis version=6.2.6, bits=64, commit=00000000, modified=0, pid=72788, just started
+72788:C 13 Jan 2022 10:34:07.641 # Warning: no config file specified, using the default config. In order to specify a config file use ../redis/redis-6.2.6/src/redis-server /path/to/redis.conf
+72788:M 13 Jan 2022 10:34:07.642 * monotonic clock: POSIX clock_gettime
+72788:M 13 Jan 2022 10:34:07.643 # Warning: Could not create server TCP listening socket *:6379: bind: Address already in use
+72788:M 13 Jan 2022 10:34:07.643 # Failed listening on port 6379 (TCP), aborting.
+74586:C 13 Jan 2022 10:37:13.174 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+74586:C 13 Jan 2022 10:37:13.174 # Redis version=6.2.6, bits=64, commit=00000000, modified=0, pid=74586, just started
+74586:C 13 Jan 2022 10:37:13.174 # Warning: no config file specified, using the default config. In order to specify a config file use ../redis/redis-6.2.6/src/redis-server /path/to/redis.conf
+74586:M 13 Jan 2022 10:37:13.176 * monotonic clock: POSIX clock_gettime
+74586:M 13 Jan 2022 10:37:13.176 # Warning: Could not create server TCP listening socket *:6379: bind: Address already in use
+74586:M 13 Jan 2022 10:37:13.176 # Failed listening on port 6379 (TCP), aborting.
+74589:C 13 Jan 2022 10:37:13.219 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+74589:C 13 Jan 2022 10:37:13.219 # Redis version=6.2.6, bits=64, commit=00000000, modified=0, pid=74589, just started
+74589:C 13 Jan 2022 10:37:13.219 # Warning: no config file specified, using the default config. In order to specify a config file use ../redis/redis-6.2.6/src/redis-server /path/to/redis.conf
+74589:M 13 Jan 2022 10:37:13.220 * monotonic clock: POSIX clock_gettime
+74589:M 13 Jan 2022 10:37:13.220 # Warning: Could not create server TCP listening socket *:6379: bind: Address already in use
+74589:M 13 Jan 2022 10:37:13.220 # Failed listening on port 6379 (TCP), aborting.
+74591:C 13 Jan 2022 10:37:13.285 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+74591:C 13 Jan 2022 10:37:13.285 # Redis version=6.2.6, bits=64, commit=00000000, modified=0, pid=74591, just started
+74591:C 13 Jan 2022 10:37:13.285 # Warning: no config file specified, using the default config. In order to specify a config file use ../redis/redis-6.2.6/src/redis-server /path/to/redis.conf
+74591:M 13 Jan 2022 10:37:13.286 * monotonic clock: POSIX clock_gettime
+74591:M 13 Jan 2022 10:37:13.286 # Warning: Could not create server TCP listening socket *:6379: bind: Address already in use
+74591:M 13 Jan 2022 10:37:13.286 # Failed listening on port 6379 (TCP), aborting.
+74593:C 13 Jan 2022 10:37:13.341 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+74593:C 13 Jan 2022 10:37:13.341 # Redis version=6.2.6, bits=64, commit=00000000, modified=0, pid=74593, just started
+74593:C 13 Jan 2022 10:37:13.341 # Warning: no config file specified, using the default config. In order to specify a config file use ../redis/redis-6.2.6/src/redis-server /path/to/redis.conf
+74593:M 13 Jan 2022 10:37:13.342 * monotonic clock: POSIX clock_gettime
+74593:M 13 Jan 2022 10:37:13.342 # Warning: Could not create server TCP listening socket *:6379: bind: Address already in use
+74593:M 13 Jan 2022 10:37:13.342 # Failed listening on port 6379 (TCP), aborting.
+75549:C 13 Jan 2022 10:41:54.284 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+75549:C 13 Jan 2022 10:41:54.284 # Redis version=6.2.6, bits=64, commit=00000000, modified=0, pid=75549, just started
+75549:C 13 Jan 2022 10:41:54.284 # Warning: no config file specified, using the default config. In order to specify a config file use ../redis/redis-6.2.6/src/redis-server /path/to/redis.conf
+75549:M 13 Jan 2022 10:41:54.285 * monotonic clock: POSIX clock_gettime
+75549:M 13 Jan 2022 10:41:54.285 # Warning: Could not create server TCP listening socket *:6379: bind: Address already in use
+75549:M 13 Jan 2022 10:41:54.285 # Failed listening on port 6379 (TCP), aborting.
+75552:C 13 Jan 2022 10:41:54.321 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+75552:C 13 Jan 2022 10:41:54.321 # Redis version=6.2.6, bits=64, commit=00000000, modified=0, pid=75552, just started
+75552:C 13 Jan 2022 10:41:54.321 # Warning: no config file specified, using the default config. In order to specify a config file use ../redis/redis-6.2.6/src/redis-server /path/to/redis.conf
+75552:M 13 Jan 2022 10:41:54.322 * monotonic clock: POSIX clock_gettime
+75552:M 13 Jan 2022 10:41:54.323 # Warning: Could not create server TCP listening socket *:6379: bind: Address already in use
+75552:M 13 Jan 2022 10:41:54.323 # Failed listening on port 6379 (TCP), aborting.
+75554:C 13 Jan 2022 10:41:54.411 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+75554:C 13 Jan 2022 10:41:54.411 # Redis version=6.2.6, bits=64, commit=00000000, modified=0, pid=75554, just started
+75554:C 13 Jan 2022 10:41:54.411 # Warning: no config file specified, using the default config. In order to specify a config file use ../redis/redis-6.2.6/src/redis-server /path/to/redis.conf
+75554:M 13 Jan 2022 10:41:54.412 * monotonic clock: POSIX clock_gettime
+75554:M 13 Jan 2022 10:41:54.412 # Warning: Could not create server TCP listening socket *:6379: bind: Address already in use
+75554:M 13 Jan 2022 10:41:54.412 # Failed listening on port 6379 (TCP), aborting.
+75556:C 13 Jan 2022 10:41:54.496 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+75556:C 13 Jan 2022 10:41:54.496 # Redis version=6.2.6, bits=64, commit=00000000, modified=0, pid=75556, just started
+75556:C 13 Jan 2022 10:41:54.496 # Warning: no config file specified, using the default config. In order to specify a config file use ../redis/redis-6.2.6/src/redis-server /path/to/redis.conf
+75556:M 13 Jan 2022 10:41:54.497 * monotonic clock: POSIX clock_gettime
+75556:M 13 Jan 2022 10:41:54.497 # Warning: Could not create server TCP listening socket *:6379: bind: Address already in use
+75556:M 13 Jan 2022 10:41:54.497 # Failed listening on port 6379 (TCP), aborting.
+76562:C 13 Jan 2022 10:49:35.171 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+76562:C 13 Jan 2022 10:49:35.171 # Redis version=6.2.6, bits=64, commit=00000000, modified=0, pid=76562, just started
+76562:C 13 Jan 2022 10:49:35.171 # Warning: no config file specified, using the default config. In order to specify a config file use ../redis/redis-6.2.6/src/redis-server /path/to/redis.conf
+76562:M 13 Jan 2022 10:49:35.172 * monotonic clock: POSIX clock_gettime
+76562:M 13 Jan 2022 10:49:35.172 # Warning: Could not create server TCP listening socket *:6379: bind: Address already in use
+76562:M 13 Jan 2022 10:49:35.172 # Failed listening on port 6379 (TCP), aborting.
+76564:C 13 Jan 2022 10:49:35.242 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+76564:C 13 Jan 2022 10:49:35.242 # Redis version=6.2.6, bits=64, commit=00000000, modified=0, pid=76564, just started
+76564:C 13 Jan 2022 10:49:35.242 # Warning: no config file specified, using the default config. In order to specify a config file use ../redis/redis-6.2.6/src/redis-server /path/to/redis.conf
+76564:M 13 Jan 2022 10:49:35.243 * monotonic clock: POSIX clock_gettime
+76564:M 13 Jan 2022 10:49:35.244 # Warning: Could not create server TCP listening socket *:6379: bind: Address already in use
+76564:M 13 Jan 2022 10:49:35.244 # Failed listening on port 6379 (TCP), aborting.
+76566:C 13 Jan 2022 10:49:35.281 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+76566:C 13 Jan 2022 10:49:35.281 # Redis version=6.2.6, bits=64, commit=00000000, modified=0, pid=76566, just started
+76566:C 13 Jan 2022 10:49:35.281 # Warning: no config file specified, using the default config. In order to specify a config file use ../redis/redis-6.2.6/src/redis-server /path/to/redis.conf
+76566:M 13 Jan 2022 10:49:35.282 * monotonic clock: POSIX clock_gettime
+76566:M 13 Jan 2022 10:49:35.282 # Warning: Could not create server TCP listening socket *:6379: bind: Address already in use
+76566:M 13 Jan 2022 10:49:35.282 # Failed listening on port 6379 (TCP), aborting.
+76568:C 13 Jan 2022 10:49:35.298 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+76568:C 13 Jan 2022 10:49:35.298 # Redis version=6.2.6, bits=64, commit=00000000, modified=0, pid=76568, just started
+76568:C 13 Jan 2022 10:49:35.298 # Warning: no config file specified, using the default config. In order to specify a config file use ../redis/redis-6.2.6/src/redis-server /path/to/redis.conf
+76568:M 13 Jan 2022 10:49:35.299 * monotonic clock: POSIX clock_gettime
+76568:M 13 Jan 2022 10:49:35.299 # Warning: Could not create server TCP listening socket *:6379: bind: Address already in use
+76568:M 13 Jan 2022 10:49:35.299 # Failed listening on port 6379 (TCP), aborting.
+77108:C 13 Jan 2022 10:51:28.315 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+77108:C 13 Jan 2022 10:51:28.315 # Redis version=6.2.6, bits=64, commit=00000000, modified=0, pid=77108, just started
+77108:C 13 Jan 2022 10:51:28.315 # Warning: no config file specified, using the default config. In order to specify a config file use ../redis/redis-6.2.6/src/redis-server /path/to/redis.conf
+77108:M 13 Jan 2022 10:51:28.316 * monotonic clock: POSIX clock_gettime
+77108:M 13 Jan 2022 10:51:28.317 # Warning: Could not create server TCP listening socket *:6379: bind: Address already in use
+77108:M 13 Jan 2022 10:51:28.317 # Failed listening on port 6379 (TCP), aborting.
+77111:C 13 Jan 2022 10:51:28.327 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+77111:C 13 Jan 2022 10:51:28.327 # Redis version=6.2.6, bits=64, commit=00000000, modified=0, pid=77111, just started
+77111:C 13 Jan 2022 10:51:28.327 # Warning: no config file specified, using the default config. In order to specify a config file use ../redis/redis-6.2.6/src/redis-server /path/to/redis.conf
+77111:M 13 Jan 2022 10:51:28.327 * monotonic clock: POSIX clock_gettime
+77111:M 13 Jan 2022 10:51:28.328 # Warning: Could not create server TCP listening socket *:6379: bind: Address already in use
+77111:M 13 Jan 2022 10:51:28.328 # Failed listening on port 6379 (TCP), aborting.
+77114:C 13 Jan 2022 10:51:28.421 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+77114:C 13 Jan 2022 10:51:28.421 # Redis version=6.2.6, bits=64, commit=00000000, modified=0, pid=77114, just started
+77114:C 13 Jan 2022 10:51:28.421 # Warning: no config file specified, using the default config. In order to specify a config file use ../redis/redis-6.2.6/src/redis-server /path/to/redis.conf
+77115:C 13 Jan 2022 10:51:28.421 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+77115:C 13 Jan 2022 10:51:28.421 # Redis version=6.2.6, bits=64, commit=00000000, modified=0, pid=77115, just started
+77115:C 13 Jan 2022 10:51:28.421 # Warning: no config file specified, using the default config. In order to specify a config file use ../redis/redis-6.2.6/src/redis-server /path/to/redis.conf
+77114:M 13 Jan 2022 10:51:28.422 * monotonic clock: POSIX clock_gettime
+77115:M 13 Jan 2022 10:51:28.422 * monotonic clock: POSIX clock_gettime
+77114:M 13 Jan 2022 10:51:28.422 # Warning: Could not create server TCP listening socket *:6379: bind: Address already in use
+77114:M 13 Jan 2022 10:51:28.422 # Failed listening on port 6379 (TCP), aborting.
+77115:M 13 Jan 2022 10:51:28.422 # Warning: Could not create server TCP listening socket *:6379: bind: Address already in use
+77115:M 13 Jan 2022 10:51:28.422 # Failed listening on port 6379 (TCP), aborting.
+77487:C 13 Jan 2022 10:52:46.250 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+77487:C 13 Jan 2022 10:52:46.250 # Redis version=6.2.6, bits=64, commit=00000000, modified=0, pid=77487, just started
+77487:C 13 Jan 2022 10:52:46.250 # Warning: no config file specified, using the default config. In order to specify a config file use ../redis/redis-6.2.6/src/redis-server /path/to/redis.conf
+77487:M 13 Jan 2022 10:52:46.251 * monotonic clock: POSIX clock_gettime
+77487:M 13 Jan 2022 10:52:46.251 # Warning: Could not create server TCP listening socket *:6379: bind: Address already in use
+77487:M 13 Jan 2022 10:52:46.251 # Failed listening on port 6379 (TCP), aborting.
+79908:C 13 Jan 2022 10:57:10.892 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+79908:C 13 Jan 2022 10:57:10.892 # Redis version=6.2.6, bits=64, commit=00000000, modified=0, pid=79908, just started
+79908:C 13 Jan 2022 10:57:10.892 # Warning: no config file specified, using the default config. In order to specify a config file use ../redis/redis-6.2.6/src/redis-server /path/to/redis.conf
+79908:M 13 Jan 2022 10:57:10.894 * monotonic clock: POSIX clock_gettime
+79908:M 13 Jan 2022 10:57:10.894 # Warning: Could not create server TCP listening socket *:6379: bind: Address already in use
+79908:M 13 Jan 2022 10:57:10.894 # Failed listening on port 6379 (TCP), aborting.
+80085:C 13 Jan 2022 10:58:14.708 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+80085:C 13 Jan 2022 10:58:14.708 # Redis version=6.2.6, bits=64, commit=00000000, modified=0, pid=80085, just started
+80085:C 13 Jan 2022 10:58:14.708 # Warning: no config file specified, using the default config. In order to specify a config file use ../redis/redis-6.2.6/src/redis-server /path/to/redis.conf
+80085:M 13 Jan 2022 10:58:14.709 * monotonic clock: POSIX clock_gettime
+80085:M 13 Jan 2022 10:58:14.709 # Warning: Could not create server TCP listening socket *:6379: bind: Address already in use
+80085:M 13 Jan 2022 10:58:14.709 # Failed listening on port 6379 (TCP), aborting.

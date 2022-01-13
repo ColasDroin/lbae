@@ -69,12 +69,6 @@ def return_main_content():
             dcc.Store(id="dcc-store-list-mz-spectra", data=[]),
             # Record the lipids expressed in the region in page 3
             dcc.Store(id="page-3-dcc-store-lipids-region", data=[]),
-            # List of stores to compute loading bar
-            dcc.Store(id="page-3-dcc-store-loading-1", data=False),
-            dcc.Store(id="page-3-dcc-store-loading-2", data=False),
-            dcc.Store(id="page-3-dcc-store-loading-3", data=False),
-            dcc.Store(id="page-3-dcc-store-loading-4", data=False),
-            dcc.Store(id="page-3-dcc-store-loading-5", data=False),
             # Actual app layout
             dbc.Container(
                 fluid=True,

@@ -236,8 +236,18 @@ def return_layout(basic_config, slice_index=1):
                                         ),
                                     ],
                                 ),
-                                dbc.Progress(value=0, id="page-3-progress", animated=True, striped=True),
-                                dcc.Interval(id="page-3-interval-component", interval=100, n_intervals=0),
+                                # dbc.Progress(value=0, id="page-3-progress", animated=True, striped=True),
+                                # dcc.Interval(id="page-3-interval-component", interval=100, n_intervals=0),
+                                html.Div(
+                                    children=[
+                                        dbc.Spinner(
+                                            color="dark",
+                                            children=[
+                                                html.Div(id="page-3-empty-div-load", className="p-5", children=[])
+                                            ],
+                                        )
+                                    ]
+                                ),
                             ],
                         ),
                     ],
@@ -587,7 +597,7 @@ def return_layout(basic_config, slice_index=1):
 )
 def page_3_plot_graph_heatmap_mz_selection(slice_index, session_id):
     # Set progress bar to 0 in redis db (in this function since it's the first being called)
-    r.set(session_id + "page-3-progress", 0)
+    # r.set(session_id + "page-3-progress", 0)
 
     # Return proper slice index
     if slice_index is not None:
@@ -865,6 +875,7 @@ def page_3_empty_dropdown(clicked_reset, slice_index):
     Input("page-3-graph-heatmap-per-sel", "relayoutData"),
     Input("page-3-reset-button", "n_clicks"),
     Input("page-3-dropdown-brain-regions", "value"),
+    prevent_intial_call=True,
 )
 def page_3_button_compute_spectra(relayoutData, clicked_reset, mask):
 
@@ -884,23 +895,6 @@ def page_3_button_compute_spectra(relayoutData, clicked_reset, mask):
                 return False
 
     return True
-
-
-# Function to activate the dcc.interval for the progress bar
-# Function to make visible the m/z plot in tab 3
-@app.app.callback(
-    Output("page-3-interval-component", "disabled"), Input("page-3-button-compute-spectra", "n_clicks"),
-)
-def tab_3_activate_interval(n_clicks):
-
-    # Find out which input triggered the function
-    id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
-
-    if n_clicks is not None:
-        if n_clicks > 0:
-            return False
-    else:
-        return True
 
 
 # Function to make visible the m/z plot in tab 3
@@ -1124,7 +1118,6 @@ def global_spectrum_store(slice_index, l_shapes_and_masks, l_mask_name, relayout
 # Function that takes path or mask and compute corresponding spectrum
 @app.app.callback(
     Output("dcc-store-list-mz-spectra", "data"),
-    Output("page-3-dcc-store-loading-2", "data"),
     Input("page-3-button-compute-spectra", "n_clicks"),
     Input("page-3-dcc-store-path-heatmap", "data"),
     Input("page-3-reset-button", "n_clicks"),
@@ -1163,20 +1156,20 @@ def page_3_record_spectra(
 
     # Delete everything when clicking reset
     elif id_input == "page-3-reset-button" or id_input == "url":
-        return [], False
+        return []
 
     elif id_input == "page-3-button-compute-spectra":
         logging.info("Starting to compute spectrum")
 
         # Set progress bar to 0 in redis db
-        r.set(session_id + "page-3-progress", 0)
+        # r.set(session_id + "page-3-progress", 10)
 
         l_spectra = global_spectrum_store(
             slice_index, l_shapes_and_masks, l_mask_name, relayoutData, as_enrichment, log_transform
         )
 
         # Set progress bar to 40 in redis db
-        r.set(session_id + "page-3-progress", 40)
+        # r.set(session_id + "page-3-progress", 40)
 
         if l_spectra is not None:
             if l_spectra != []:
@@ -1185,7 +1178,7 @@ def page_3_record_spectra(
                 return "ok", True
         logging.warning("A bug appeared during spectrum computation")
 
-    return [], False
+    return []
 
 
 # Global function to memoize/compute lipid label indexes
@@ -1217,8 +1210,9 @@ def global_lipid_index_store(slice_index, l_spectra):
 @app.app.callback(
     Output("page-3-graph-spectrum-per-pixel", "figure"),
     # Output("dcc-store-list-idx-lipids", "data"),
-    Output("page-3-dcc-store-loading-3", "data"),
+    Output("page-3-empty-div-load", "children"),  # empty div to trigger spinner
     Input("page-3-reset-button", "n_clicks"),
+    Input("page-3-button-compute-spectra", "n_clicks"),  # to trigger spinner right after click
     Input("dcc-store-list-mz-spectra", "data"),
     Input("main-slider", "value"),
     State("page-3-dropdown-brain-regions", "value"),
@@ -1229,7 +1223,15 @@ def global_lipid_index_store(slice_index, l_spectra):
     prevent_intial_call=True,
 )
 def page_3_plot_spectrum(
-    cliked_reset, l_spectra, slice_index, l_mask_name, l_shapes_and_masks, as_enrichment, log_transform, relayoutData,
+    cliked_reset,
+    clicked_compute,
+    l_spectra,
+    slice_index,
+    l_mask_name,
+    l_shapes_and_masks,
+    as_enrichment,
+    log_transform,
+    relayoutData,
 ):
 
     # Find out which input triggered the function
@@ -1242,10 +1244,10 @@ def page_3_plot_spectrum(
 
     # Delete everything when clicking reset
     elif id_input == "page-3-reset-button" or l_spectra is None or l_spectra == []:
-        return figures.return_empty_spectrum(), False  # [], False
+        return figures.return_empty_spectrum(), ""
 
     # do nothing if l_spectra is None or []
-    elif id_input == "dcc-store-list-mz-spectra":
+    elif id_input == "dcc-store-list-mz-spectra" or id_input == "page-3-button-compute-spectra":
         if len(l_spectra) > 0 or l_spectra == "ok":
             logging.info("Starting spectra plotting now")
             fig_mz = go.Figure()
@@ -1350,8 +1352,7 @@ def page_3_plot_spectrum(
 
             logging.info("Spectra plotted. Returning it now")
             # Return dummy variable for ll_idx_labels to confirm that it has been computed
-            # return fig_mz, "ok", True
-            return fig_mz, True
+            return fig_mz, ""
 
     return dash.no_update
 
@@ -1360,7 +1361,6 @@ def page_3_plot_spectrum(
 @app.app.callback(
     Output("page-3-graph-heatmap-per-lipid", "figure"),
     Output("page-3-dcc-store-lipids-region", "data"),
-    Output("page-3-dcc-store-loading-4", "data"),
     # Input("dcc-store-list-idx-lipids", "data"),
     Input("page-3-reset-button", "n_clicks"),
     Input("page-3-sort-by-diff-switch", "value"),
@@ -1399,7 +1399,7 @@ def page_3_draw_heatmap_per_lipid_selection(
 
     # Delete everything when clicking reset
     elif id_input == "page-3-reset-button":
-        return figures.return_heatmap_lipid(), [], False
+        return figures.return_heatmap_lipid(), []
 
     # Otherwise compute lipid expression heatmap from spectrum
     elif (
@@ -1517,8 +1517,8 @@ def page_3_draw_heatmap_per_lipid_selection(
                 logging.info("Heatmap computed. Returning it now")
 
                 # Set progress bar to 70 in redis db
-                r.set(session_id + "page-3-progress", 70)
-                return fig_heatmap_lipids, l_idx_lipids, True
+                # r.set(session_id + "page-3-progress", 70)
+                return fig_heatmap_lipids, l_idx_lipids
 
     return dash.no_update
 
@@ -1674,7 +1674,6 @@ def toggle_visibility_graph(n1, cliked_reset, l_red_lipids, l_green_lipids, l_bl
 # Function that draws modal graph according to selected lipids
 @app.app.callback(
     Output("page-3-heatmap-lipid-comparison", "figure"),
-    Output("page-3-dcc-store-loading-5", "data"),
     Input("page-3-open-modal", "n_clicks"),
     Input("page-3-reset-button", "n_clicks"),
     Input("page-3-toggle-mask", "value"),
@@ -1712,7 +1711,7 @@ def draw_modal_graph(
     # Delete everything when clicking reset or changing slice index
     if id_input == "page-3-reset-button" or id_input == "main-slider":
         logging.info("Resetting modal graph")
-        return figures.return_empty_spectrum(), False
+        return figures.return_empty_spectrum()
 
     # Check that at least one lipid has been selected
     if len(l_red_lipids + l_green_lipids + l_blue_lipids) > 0:
@@ -1747,44 +1746,33 @@ def draw_modal_graph(
         logging.info("Modal graph computed. Returning it now")
 
         # Set progress bar to 90 in redis db
-        r.set(session_id + "page-3-progress", 90)
+        # r.set(session_id + "page-3-progress", 100)
 
-        return fig, True
+        return fig
 
     logging.info("No lipid were selected, ignoring update.")
     return dash.no_update
 
 
 """
-# Function that handle loading bar
+# Function to activate the dcc.interval for the progress bar
 @app.app.callback(
-    Output("page-3-progress", "value"),
-    Input("page-3-dcc-store-loading-1", "data"),
-    Input("page-3-dcc-store-loading-2", "data"),
-    Input("page-3-dcc-store-loading-3", "data"),
-    Input("page-3-dcc-store-loading-4", "data"),
-    Input("page-3-dcc-store-loading-5", "data"),
+    Output("page-3-interval-component", "disabled"),
+    Input("page-3-button-compute-spectra", "n_clicks"),
+    Input("page-3-progress", "value"),
 )
-def update_loading_bar(state_1, state_2, state_3, state_4, state_5):
+def tab_3_activate_interval(n_clicks, progress):
 
     # Find out which input triggered the function
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
 
-    print(id_input, state_1, state_2, state_3, state_4, state_5)
+    if n_clicks is not None and progress != 100:
+        if n_clicks > 0:
+            return False
+    else:
+        return True
 
-    # if id_input == "page-3-dcc-store-loading-1" and state_1:
-    #     return 40
-    # if id_input == "page-3-dcc-store-loading-2" and state_2:
-    #     return 50
-    # if id_input == "page-3-dcc-store-loading-3" and state_3:
-    #     return 60
-    # if id_input == "page-3-dcc-store-loading-4" and state_4:
-    #     return 70
-    if id_input == "page-3-dcc-store-loading-5" and state_5:
-        return 100
 
-    return 0
-"""
 
 # Function that handle loading bar
 @app.app.callback(
@@ -1792,16 +1780,18 @@ def update_loading_bar(state_1, state_2, state_3, state_4, state_5):
     Input("page-3-progress", "value"),
     Input("page-3-reset-button", "n_clicks"),
     Input("page-3-button-compute-spectra", "n_clicks"),
+    Input("page-3-interval-component", "disabled"),
 )
-def update_loading_visibility(value, clicked_reset, clicked_compute):
+def update_loading_visibility(value, clicked_reset, clicked_compute, disabled_bar):
 
     # Find out which input triggered the function
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
 
-    if id_input == "page-3-progress" and value == 100:
+    # if id_input == "page-3-progress" and value == 100:
+    if disabled_bar:
         return "d-none"
-    elif id_input == "page-3-button-compute-spectra":
-        return "mt-1"
+    # elif id_input == "page-3-button-compute-spectra":
+    #    return "mt-1"
     else:
         return "mt-1"
 
@@ -1812,4 +1802,9 @@ def update_loading_visibility(value, clicked_reset, clicked_compute):
 )
 def update_loading_bar(n_intervals, session_id):
     print("TEST TEST")
-    return int(r.get(session_id + "page-3-progress"))
+    val = r.get(session_id + "page-3-progress")
+    if val is not None:
+        return int(val)
+    else:
+        return 0
+"""

@@ -42,7 +42,7 @@ if __name__ == "__main__":
 
 
 # To run the app from the server, use the following command in the base lbae folder:
-# gunicorn main:server -b:8050 --workers=1
+# gunicorn main:server -b:8050 --workers=4
 
 # TODO debug/accelerate manual region selection page
 # TODO accelerate lipid selection per slice in 2D. Maybe precompute every lipid?
@@ -60,6 +60,7 @@ if __name__ == "__main__":
 # TODO make layout perfect for every screen size. Maybe automate the process for a given figure shape?
 # TODO when everything is stable, create a function that delete all pickle files and repickle everything automatically
 # TODO adress all #! comments in the code
+# TODO limit Redis entries to e.g. 50
 # TODO do quality control, especially when several users are on the app in parallel
 # TODO write missing docstrings
 # TODO write a brief documentation
