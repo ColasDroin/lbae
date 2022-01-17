@@ -69,6 +69,7 @@ app = dash.Dash(
     server=server,
     suppress_callback_exceptions=False,
     # long_callback_manager=long_callback_manager,
+    compress=True,
 )
 
 CACHE_CONFIG = {
