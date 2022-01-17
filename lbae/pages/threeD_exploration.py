@@ -449,7 +449,7 @@ def page_2bis_plot_graph_heatmap_mz_selection(
                     compute_function=figures.compute_figure_bubbles_3D,
                     ignore_arguments_naming=True,
                     ll_t_bounds=lll_lipid_bounds,
-                    normalize_independently=False,
+                    normalize_independently=True,
                 )
                 # return figures.compute_figure_bubbles_3D(lll_lipid_bounds, normalize_independently=False)
 

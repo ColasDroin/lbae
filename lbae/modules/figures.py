@@ -907,7 +907,9 @@ class Figures:
         return fig
 
     # This function sums over the selected lipids for now
-    def compute_figure_bubbles_3D(self, ll_t_bounds, normalize_independently=True, reduce_resolution_factor=7):
+    def compute_figure_bubbles_3D(self, ll_t_bounds, normalize_independently=True, return_arrays=False):
+
+        print(ll_t_bounds)
 
         logging.info("Starting computing 3D figure" + logmem())
         # get transform parameters (a,u,v) for each slice
@@ -934,6 +936,7 @@ class Figures:
         # get atlas shape and resolution
         reference_shape = self._atlas.bg_atlas.reference.shape
         resolution = self._atlas.resolution
+        array_annotations = np.array(self._atlas.bg_atlas.annotation, dtype=np.int32)
 
         # Define a numba function to accelerate the loop in which the ccfv3 coordinates are computed and the final
         # arrays are filled
@@ -941,6 +944,7 @@ class Figures:
         def return_final_array(
             array_data_stripped,
             original_coordinates_stripped,
+            array_annotations,
             percentile,
             array_x,
             array_y,
@@ -959,6 +963,8 @@ class Figures:
                 x_temp = int(round(x_atlas * 1000000 / resolution))
                 y_temp = int(round(y_atlas * 1000000 / resolution))
                 z_temp = int(round(z_atlas * 1000000 / resolution))
+
+                # Voxels not even in the atlas array
                 if x_temp < 0 or x_temp >= reference_shape[0]:
                     continue
                 if y_temp < 0 or y_temp >= reference_shape[1]:
@@ -966,8 +972,12 @@ class Figures:
                 if z_temp < 0 or z_temp >= reference_shape[2]:
                     continue
 
-                # ! Should I filter out the pixels that are outside of the annotations?
-                if array_data_stripped[i] >= percentile:
+                # Voxels in the atlas but which don't correspond to a structure
+                if array_annotations[x_temp, y_temp, z_temp] == 0:
+                    continue
+
+                # if array_data_stripped[i] >= percentile:
+                if True:
                     array_x[total_index + total_index_temp] = z_atlas
                     array_y[total_index + total_index_temp] = x_atlas
                     array_z[total_index + total_index_temp] = y_atlas
@@ -984,7 +994,7 @@ class Figures:
                 array_data = self.compute_rgb_array_per_lipid_selection(
                     slice_index + 1,
                     ll_t_bounds[slice_index],
-                    normalize_independently=True,
+                    normalize_independently=normalize_independently,
                     projected_image=False,
                     log=False,
                     enrichment=False,
@@ -1010,6 +1020,7 @@ class Figures:
                 array_x, array_y, array_z, array_c, total_index = return_final_array(
                     array_data_stripped,
                     original_coordinates_stripped,
+                    array_annotations,
                     percentile,
                     array_x,
                     array_y,
@@ -1027,7 +1038,11 @@ class Figures:
         array_z = array_z[:total_index]
         array_c = array_c[:total_index].tolist()
 
-        # Reopen all memaps
+        # Just return the arrays for the 3D figure without the figure
+        if return_arrays:
+            return array_x, array_y, array_z, array_c
+
+        # Build figure
         fig = go.Figure(
             data=go.Scatter3d(
                 x=array_x,
@@ -1369,5 +1384,5 @@ class Figures:
                             compute_function=self.compute_figure_bubbles_3D,
                             ignore_arguments_naming=True,
                             ll_t_bounds=lll_lipid_bounds,
-                            normalize_independently=False,
+                            normalize_independently=True,
                         )
