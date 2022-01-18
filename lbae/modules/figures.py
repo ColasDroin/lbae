@@ -912,6 +912,8 @@ class Figures:
         print(ll_t_bounds)
 
         logging.info("Starting computing 3D figure" + logmem())
+
+        """
         # get transform parameters (a,u,v) for each slice
         l_transform_parameters = return_pickled_object(
             "atlas/atlas_objects",
@@ -919,6 +921,7 @@ class Figures:
             force_update=False,
             compute_function=self._atlas.compute_projection_parameters,
         )
+        """
 
         # get list of original coordinates for each slice
         l_original_coor = self._atlas.l_original_coor
@@ -991,11 +994,12 @@ class Figures:
         for slice_index in range(0, self._data.get_slice_number(), 1):
             if ll_t_bounds[slice_index] != [None, None, None]:
 
+                # ! Fix bug when providing normalize_independently as a parameter
                 # Get the data as an expression image per lipid
                 array_data = self.compute_rgb_array_per_lipid_selection(
                     slice_index + 1,
                     ll_t_bounds[slice_index],
-                    normalize_independently=normalize_independently,
+                    normalize_independently=True,
                     projected_image=False,
                     log=False,
                     enrichment=False,
