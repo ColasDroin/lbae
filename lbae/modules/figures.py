@@ -978,6 +978,7 @@ class Figures:
 
                 # if array_data_stripped[i] >= percentile:
                 if True:
+                    # * careful, x,y,z are switched
                     array_x[total_index + total_index_temp] = z_atlas
                     array_y[total_index + total_index_temp] = x_atlas
                     array_z[total_index + total_index_temp] = y_atlas
