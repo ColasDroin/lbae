@@ -249,7 +249,7 @@ def compute_image_using_index_and_image_lookup(
             the following mapping: lookup_table_spectra[i,j] contains the first m/z index of pixel j such that 
             m/z >= i * divider_lookup.
         lookup_table_image (np.ndarray or pytables.array): An array of shape (k,m) representing a lookup table with 
-            the following mapping: lookup_table_image[i,j] contains,nfor the pixel of index j, the cumulated intensities 
+            the following mapping: lookup_table_image[i,j] contains, for the pixel of index j, the cumulated intensities 
             from the lowest possible m/z until the first m/z such that m/z >= i * divider_lookup.
         divider_lookup (int): Integer used to set the resolution when building the lookup table.
 
