@@ -994,12 +994,11 @@ class Figures:
         for slice_index in range(0, self._data.get_slice_number(), 1):
             if ll_t_bounds[slice_index] != [None, None, None]:
 
-                # ! Fix bug when providing normalize_independently as a parameter
                 # Get the data as an expression image per lipid
                 array_data = self.compute_rgb_array_per_lipid_selection(
                     slice_index + 1,
                     ll_t_bounds[slice_index],
-                    normalize_independently=True,
+                    normalize_independently=normalize_independently,
                     projected_image=False,
                     log=False,
                     enrichment=False,
