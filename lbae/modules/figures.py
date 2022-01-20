@@ -987,7 +987,8 @@ class Figures:
                 if array_annotations[x_temp, y_temp, z_temp] == 0:
                     continue
 
-                if array_data_stripped[i] >= percentile:
+                # if array_data_stripped[i] >= percentile:
+                if True:
                     # * careful, x,y,z are switched
                     array_x[total_index + total_index_temp] = z_atlas
                     array_y[total_index + total_index_temp] = x_atlas
@@ -1013,12 +1014,13 @@ class Figures:
 
                 # Sum array colors (i.e. lipids)
                 array_data = np.sum(array_data, axis=-1)
-
                 # Remove pixels for which lipid expression is zero
-                array_data_stripped = array_data[array_data != 0]
+                # ! Commented temporarily
+                # array_data_stripped = array_data[array_data != 0]
+                array_data_stripped = array_data.flatten()
 
                 # Skip the current slice if expression is very sparse
-                if len(array_data_stripped) < 10:
+                if len(array_data_stripped) < 10 or np.sum(array_data_stripped) < 1:
                     continue
 
                 # Compute the percentile of expression to filter out lowly expressed pixels
@@ -1026,7 +1028,9 @@ class Figures:
 
                 # Get the coordinates of the pixels in the ccfv3
                 coordinates = l_coor[slice_index]
-                coordinates_stripped = coordinates[array_data != 0]
+                # ! Same here
+                # coordinates_stripped = coordinates[array_data != 0]
+                coordinates_stripped = coordinates.reshape(-1, coordinates.shape[-1])
 
                 array_x, array_y, array_z, array_c, total_index = return_final_array(
                     array_data_stripped,
