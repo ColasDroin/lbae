@@ -42,6 +42,7 @@ if __name__ == "__main__":
 # TODO Make lipid expression comparison between 3D structure
 # TODO make a careful memory analysis to free more memory
 # TODO incoporate new brain slices
+# TODO check that the orientation has not been reversed
 # TODO adress all # ! and # ? comments in the code
 # TODO when everything is stable, create a function that delete all pickle files and repickle everything automatically
 # TODO update notebooks with up-to-date classes

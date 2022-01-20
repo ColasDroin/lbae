@@ -907,7 +907,9 @@ class Figures:
         return fig
 
     # This function sums over the selected lipids for now
-    def compute_figure_bubbles_3D(self, ll_t_bounds, normalize_independently=True, return_arrays=False):
+    def compute_figure_bubbles_3D(
+        self, ll_t_bounds, normalize_independently=True, high_res=False, return_arrays=False
+    ):
 
         print(ll_t_bounds)
 
@@ -924,10 +926,16 @@ class Figures:
         """
 
         # get list of original coordinates for each slice
-        l_original_coor = self._atlas.l_original_coor
+        if not high_res:
+            l_coor = self._atlas.l_original_coor
+            estimate = 400 * 400
+        else:
+            estimate = 1311 * 918
+            l_coor = self._atlas.array_coordinates_warped_data
 
-        # Initialize empty arrays with a large estimate of 400*400 for the orginal acquisition size
-        max_size = 400 * 400 * self._data.get_slice_number()
+        # Initialize empty arrays with a large estimate for the orginal acquisition size
+
+        max_size = estimate * self._data.get_slice_number()
         array_x = np.empty(max_size, dtype=np.float32)
         array_y = np.empty(max_size, dtype=np.float32)
         array_z = np.empty(max_size, dtype=np.float32)
@@ -946,7 +954,7 @@ class Figures:
         @njit
         def return_final_array(
             array_data_stripped,
-            original_coordinates_stripped,
+            coordinates_stripped,
             array_annotations,
             percentile,
             array_x,
@@ -960,7 +968,7 @@ class Figures:
             # Keep track of the array indexing even outside of this function
             total_index_temp = 0
             for i in range(array_data_stripped.shape[0]):
-                x_atlas, y_atlas, z_atlas = original_coordinates_stripped[i] / 1000
+                x_atlas, y_atlas, z_atlas = coordinates_stripped[i] / 1000
 
                 # Filter out voxels that are not in the atlas
                 x_temp = int(round(x_atlas * 1000000 / resolution))
@@ -979,8 +987,7 @@ class Figures:
                 if array_annotations[x_temp, y_temp, z_temp] == 0:
                     continue
 
-                # if array_data_stripped[i] >= percentile:
-                if True:
+                if array_data_stripped[i] >= percentile:
                     # * careful, x,y,z are switched
                     array_x[total_index + total_index_temp] = z_atlas
                     array_y[total_index + total_index_temp] = x_atlas
@@ -999,7 +1006,7 @@ class Figures:
                     slice_index + 1,
                     ll_t_bounds[slice_index],
                     normalize_independently=normalize_independently,
-                    projected_image=False,
+                    projected_image=high_res,
                     log=False,
                     enrichment=False,
                 )
@@ -1015,15 +1022,15 @@ class Figures:
                     continue
 
                 # Compute the percentile of expression to filter out lowly expressed pixels
-                percentile = np.percentile(array_data_stripped, 80)
+                percentile = np.percentile(array_data_stripped, 10)
 
                 # Get the coordinates of the pixels in the ccfv3
-                original_coordinates = l_original_coor[slice_index]
-                original_coordinates_stripped = original_coordinates[array_data != 0]
+                coordinates = l_coor[slice_index]
+                coordinates_stripped = coordinates[array_data != 0]
 
                 array_x, array_y, array_z, array_c, total_index = return_final_array(
                     array_data_stripped,
-                    original_coordinates_stripped,
+                    coordinates_stripped,
                     array_annotations,
                     percentile,
                     array_x,
