@@ -632,6 +632,7 @@ Bad directive or wrong number of arguments
 Reading the configuration file, at line 993
 >>> 'allkeys-lru'
 Bad directive or wrong number of arguments
+<<<<<<< HEAD
 
 *** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
 Reading the configuration file, at line 993
@@ -662,3 +663,5 @@ Bad directive or wrong number of arguments
 Reading the configuration file, at line 993
 >>> 'allkeys-lru'
 Bad directive or wrong number of arguments
+=======
+>>>>>>> f1c22d240d28ea349cc651a936adf96d91f3d6c5

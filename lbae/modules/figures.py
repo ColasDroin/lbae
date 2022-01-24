@@ -906,7 +906,16 @@ class Figures:
 
         return fig
 
+<<<<<<< HEAD
     def compute_array_3D(self, ll_t_bounds, normalize_independently=True, high_res=False):
+=======
+    # This function sums over the selected lipids for now
+    def compute_figure_bubbles_3D(
+        self, ll_t_bounds, normalize_independently=True, high_res=False, return_arrays=False
+    ):
+
+        print(ll_t_bounds)
+>>>>>>> f1c22d240d28ea349cc651a936adf96d91f3d6c5
 
         logging.info("Starting computing 3D arrays" + logmem())
 
@@ -917,9 +926,15 @@ class Figures:
         else:
             estimate = 1311 * 918
             l_coor = self._atlas.array_coordinates_warped_data
+<<<<<<< HEAD
 
         # Initialize empty arrays with a large estimate for the orginal acquisition size
 
+=======
+
+        # Initialize empty arrays with a large estimate for the orginal acquisition size
+
+>>>>>>> f1c22d240d28ea349cc651a936adf96d91f3d6c5
         max_size = estimate * self._data.get_slice_number()
         array_x = np.empty(max_size, dtype=np.float32)
         array_y = np.empty(max_size, dtype=np.float32)
