@@ -443,6 +443,7 @@ def page_2bis_plot_graph_heatmap_mz_selection(
                     l_lipid_1_index, l_lipid_2_index, l_lipid_3_index
                 )
             ]
+            print("ICI", active_tab)
 
             if active_tab == "page-4-tab-3":
                 return return_pickled_object(
