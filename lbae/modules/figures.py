@@ -906,28 +906,21 @@ class Figures:
 
         return fig
 
-    # This function sums over the selected lipids for now
-    def compute_figure_bubbles_3D(self, ll_t_bounds, normalize_independently=True, return_arrays=False):
+    def compute_array_3D(self, ll_t_bounds, normalize_independently=True, high_res=False):
 
-        print(ll_t_bounds)
-
-        logging.info("Starting computing 3D figure" + logmem())
-
-        """
-        # get transform parameters (a,u,v) for each slice
-        l_transform_parameters = return_pickled_object(
-            "atlas/atlas_objects",
-            "l_transform_parameters",
-            force_update=False,
-            compute_function=self._atlas.compute_projection_parameters,
-        )
-        """
+        logging.info("Starting computing 3D arrays" + logmem())
 
         # get list of original coordinates for each slice
-        l_original_coor = self._atlas.l_original_coor
+        if not high_res:
+            l_coor = self._atlas.l_original_coor
+            estimate = 400 * 400
+        else:
+            estimate = 1311 * 918
+            l_coor = self._atlas.array_coordinates_warped_data
 
-        # Initialize empty arrays with a large estimate of 400*400 for the orginal acquisition size
-        max_size = 400 * 400 * self._data.get_slice_number()
+        # Initialize empty arrays with a large estimate for the orginal acquisition size
+
+        max_size = estimate * self._data.get_slice_number()
         array_x = np.empty(max_size, dtype=np.float32)
         array_y = np.empty(max_size, dtype=np.float32)
         array_z = np.empty(max_size, dtype=np.float32)
@@ -946,7 +939,7 @@ class Figures:
         @njit
         def return_final_array(
             array_data_stripped,
-            original_coordinates_stripped,
+            coordinates_stripped,
             array_annotations,
             percentile,
             array_x,
@@ -960,7 +953,7 @@ class Figures:
             # Keep track of the array indexing even outside of this function
             total_index_temp = 0
             for i in range(array_data_stripped.shape[0]):
-                x_atlas, y_atlas, z_atlas = original_coordinates_stripped[i] / 1000
+                x_atlas, y_atlas, z_atlas = coordinates_stripped[i] / 1000
 
                 # Filter out voxels that are not in the atlas
                 x_temp = int(round(x_atlas * 1000000 / resolution))
@@ -999,31 +992,34 @@ class Figures:
                     slice_index + 1,
                     ll_t_bounds[slice_index],
                     normalize_independently=normalize_independently,
-                    projected_image=False,
+                    projected_image=high_res,
                     log=False,
                     enrichment=False,
                 )
 
                 # Sum array colors (i.e. lipids)
                 array_data = np.sum(array_data, axis=-1)
-
                 # Remove pixels for which lipid expression is zero
-                array_data_stripped = array_data[array_data != 0]
+                # ! Commented temporarily
+                # array_data_stripped = array_data[array_data != 0]
+                array_data_stripped = array_data.flatten()
 
                 # Skip the current slice if expression is very sparse
-                if len(array_data_stripped) < 10:
+                if len(array_data_stripped) < 10 or np.sum(array_data_stripped) < 1:
                     continue
 
                 # Compute the percentile of expression to filter out lowly expressed pixels
-                percentile = np.percentile(array_data_stripped, 80)
+                percentile = np.percentile(array_data_stripped, 10)
 
                 # Get the coordinates of the pixels in the ccfv3
-                original_coordinates = l_original_coor[slice_index]
-                original_coordinates_stripped = original_coordinates[array_data != 0]
+                coordinates = l_coor[slice_index]
+                # ! Same here
+                # coordinates_stripped = coordinates[array_data != 0]
+                coordinates_stripped = coordinates.reshape(-1, coordinates.shape[-1])
 
                 array_x, array_y, array_z, array_c, total_index = return_final_array(
                     array_data_stripped,
-                    original_coordinates_stripped,
+                    coordinates_stripped,
                     array_annotations,
                     percentile,
                     array_x,
@@ -1042,9 +1038,31 @@ class Figures:
         array_z = array_z[:total_index]
         array_c = array_c[:total_index].tolist()
 
-        # Just return the arrays for the 3D figure without the figure
-        if return_arrays:
-            return array_x, array_y, array_z, array_c
+        # Return the arrays for the 3D figure
+        return array_x, array_y, array_z, array_c
+
+    # This function sums over the selected lipids for now
+    def compute_figure_bubbles_3D(
+        self,
+        ll_t_bounds,
+        normalize_independently=True,
+        high_res=False,
+        name_lipid_1="",
+        name_lipid_2="",
+        name_lipid_3="",
+    ):
+
+        # Get 3D arrays for lipid distribution
+        array_x, array_y, array_z, array_c = return_pickled_object(
+            "figures/3D_page",
+            "arrays_3D_" + name_lipid_1 + "_" + name_lipid_2 + "_" + name_lipid_3,
+            force_update=False,
+            compute_function=self.compute_array_3D,
+            ignore_arguments_naming=True,
+            ll_t_bounds=ll_t_bounds,
+            normalize_independently=normalize_independently,
+            high_res=high_res,
+        )
 
         # Build figure
         fig = go.Figure(
@@ -1070,33 +1088,13 @@ class Figures:
                 xaxis=dict(backgroundcolor="rgba(0,0,0,0)", color="grey", gridcolor="grey"),
                 yaxis=dict(backgroundcolor="rgba(0,0,0,0)", color="grey", gridcolor="grey"),
                 zaxis=dict(backgroundcolor="rgba(0,0,0,0)", color="grey", gridcolor="grey"),
-                # zaxis=dict(autorange=False),
-                # aspectratio=dict(x=1.5, y=1, z=1),
-                # zaxis_autorange="reversed",
-                # aspectmode = "data",
-                # yaxis=dict(
-                #    range=[0.0 / 7 * reduce_resolution_factor, 0.33 / 7 * reduce_resolution_factor], autorange=False
-                # ),
-                # zaxis=dict(
-                #    range=[0.3 / 7 * reduce_resolution_factor, -0.02 / 7 * reduce_resolution_factor], autorange=False
-                # ),
-                # xaxis=dict(
-                #    range=[0.0 / 7 * reduce_resolution_factor, 0.28 / 7 * reduce_resolution_factor], autorange=False
-                # ),
             ),
             margin=dict(t=5, r=0, b=0, l=0),
             plot_bgcolor="rgba(0,0,0,0)",
             paper_bgcolor="rgba(0,0,0,0)",
-            # title="Planets!",
-            # scene=dict(
-            #    xaxis=dict(title="Distance from Sun", titlefont_color="white"),
-            #    yaxis=dict(title="Density", titlefont_color="white"),
-            #    zaxis=dict(title="Gravity", titlefont_color="white"),
-            #    bgcolor="rgb(20, 24, 54)",
-            # ),
         )
 
-        logging.info("Done" + logmem())
+        logging.info("Done computing 3D bubble figure" + logmem())
         return fig
 
     def compute_sunburst_figure(self, maxdepth=3):
@@ -1321,8 +1319,173 @@ class Figures:
 
         return fig
 
+    def compute_3D_volume_figure(
+        self, ll_t_bounds, name_lipid_1="", name_lipid_2="", name_lipid_3="", decrease_dimensionality_factor=7
+    ):
+
+        # Get subsampled array of annotations
+        array_annotation = np.array(
+            self._atlas.bg_atlas.annotation[
+                ::decrease_dimensionality_factor, ::decrease_dimensionality_factor, ::decrease_dimensionality_factor
+            ],
+            dtype=np.int32,
+        )
+
+        # bug correction for the last slice
+        array_annotation = np.concatenate(
+            (array_annotation, np.zeros((1, array_annotation.shape[1], array_annotation.shape[2])))
+        )
+
+        # Compute an array of boundaries
+        @njit
+        def fill_array_borders(array_annotation, differentiate_borders=False):
+            array_atlas_borders = np.full_like(array_annotation, -2.0, dtype=np.float32)
+            for x in range(1, array_annotation.shape[0] - 1):
+                for y in range(1, array_annotation.shape[1] - 1):
+                    for z in range(1, array_annotation.shape[2] - 1):
+                        if array_annotation[x, y, z] > 0:
+
+                            # If we want to plot the brain border with a different shade
+                            if differentiate_borders:
+                                # check if border in a cube of size 2
+                                found = False
+                                for xt in range(x - 1, x + 2):
+                                    for yt in range(y - 1, y + 2):
+                                        for zt in range(z - 1, z + 2):
+                                            # there's a border around
+                                            if array_annotation[xt, yt, zt] == 0:
+                                                found = True
+                                if found:
+                                    array_atlas_borders[x, y, z] = -0.1
+                                # inside the brain but not a border
+                                else:
+                                    array_atlas_borders[x, y, z] = -0.01
+                            else:
+                                array_atlas_borders[x, y, z] = -0.01
+
+            return array_atlas_borders
+
+        array_atlas_borders = fill_array_borders(array_annotation)
+
+        # Return the lipid expression in 3D
+        array_x, array_y, array_z, array_c = return_pickled_object(
+            "figures/3D_page",
+            "arrays_3D_" + name_lipid_1 + "_" + name_lipid_2 + "_" + name_lipid_3,
+            force_update=False,
+            compute_function=self.compute_array_3D,
+            ignore_arguments_naming=True,
+            ll_t_bounds=ll_t_bounds,
+            normalize_independently=True,
+            high_res=False,
+        )
+
+        # Compute the rescaled array of expression for each slice averaged over projected lipids
+        array_slices = np.copy(array_atlas_borders)
+        array_for_avg = np.full_like(array_atlas_borders, 1)
+        array_x_scaled = array_x * 1000000 / self._atlas.resolution / decrease_dimensionality_factor
+        array_y_scaled = array_y * 1000000 / self._atlas.resolution / decrease_dimensionality_factor
+        array_z_scaled = array_z * 1000000 / self._atlas.resolution / decrease_dimensionality_factor
+
+        for x, y, z, c in zip(array_x_scaled, array_y_scaled, array_z_scaled, array_c):
+            x_scaled = int(round(y))
+            y_scaled = int(round(z))
+            z_scaled = int(round(x))
+            # if inside the brain but not a border
+            if array_slices[x_scaled, y_scaled, z_scaled] > -0.05:
+                # if inside the brain and not assigned before
+                if abs(array_slices[x_scaled, y_scaled, z_scaled] - (-0.01)) < 10 ** -4:
+                    array_slices[x_scaled, y_scaled, z_scaled] = c / 100
+                # inside the brain but already assigned, in which case average
+                else:
+                    array_slices[x_scaled, y_scaled, z_scaled] += c / 100
+                    array_for_avg[x_scaled, y_scaled, z_scaled] += 1
+
+        array_slices = array_slices / array_for_avg
+
+        # Do interpolation between the slices
+        @njit
+        def fill_array_interpolation(array_annotation, array_slices):
+            array_interpolated = np.copy(array_slices)
+            for x in range(0, array_annotation.shape[0]):
+                for y in range(0, array_annotation.shape[1]):
+                    for z in range(0, array_annotation.shape[2]):
+                        # If we are in a unfilled region of the brain or just inside the brain
+                        if (np.abs(array_slices[x, y, z] - (-0.01)) < 10 ** -4) or array_slices[x, y, z] >= 0:
+                            # Check all datapoints in the same structure, and do a distance-weighted average
+                            value_voxel = 0
+                            sum_weights = 0
+                            size_radius = int(array_annotation.shape[0] / 5)
+                            for xt in range(
+                                max(0, x - size_radius), min(array_annotation.shape[0], x + size_radius + 1)
+                            ):
+                                for yt in range(
+                                    max(0, y - size_radius), min(array_annotation.shape[1], y + size_radius + 1)
+                                ):
+                                    for zt in range(
+                                        max(0, z - size_radius), min(array_annotation.shape[2], z + size_radius + 1)
+                                    ):
+                                        # If we are inside of the shere of radius size_radius
+                                        if np.sqrt((x - xt) ** 2 + (y - yt) ** 2 + (z - zt) ** 2) <= size_radius:
+                                            # The voxel has data
+                                            if array_slices[xt, yt, zt] >= 0:
+                                                # The structure is identical
+                                                if (
+                                                    np.abs(array_annotation[x, y, z] - array_annotation[xt, yt, zt])
+                                                    < 10 ** -4
+                                                ):
+                                                    d = np.sqrt((x - xt) ** 2 + (y - yt) ** 2 + (z - zt) ** 2)
+                                                    value_voxel += np.exp(-d) * array_slices[xt, yt, zt]
+                                                    sum_weights += np.exp(-d)
+                            if sum_weights == 0:
+                                pass
+                                # print("No other voxel was found for structure ", array_annotation[x, y, z])
+                            else:
+                                # print('Voxel found for structure', array_annotation[x, y, z])
+                                value_voxel = value_voxel / sum_weights
+                                array_interpolated[x, y, z] = value_voxel
+
+            return array_interpolated
+
+        # Compute an array containing the lipid expression interpolated for every voxel
+        array_interpolated = fill_array_interpolation(array_annotation, array_slices)
+
+        # Get the corresponding coordinates
+        X, Y, Z = np.mgrid[
+            0 : array_interpolated.shape[0] / 1000 * 25 : array_interpolated.shape[0] * 1j,
+            0 : array_interpolated.shape[1] / 1000 * 25 : array_interpolated.shape[1] * 1j,
+            0 : array_interpolated.shape[2] / 1000 * 25 : array_interpolated.shape[2] * 1j,
+        ]
+
+        # Build figure
+        fig = go.Figure(
+            data=go.Volume(
+                x=X.flatten(),
+                y=Y.flatten(),
+                z=Z.flatten(),
+                value=array_interpolated.flatten(),
+                isomin=-0.11,
+                isomax=1.5,
+                opacity=0.5,  # max opacity
+                opacityscale="uniform",
+                surface_count=10,
+                colorscale="Bluyl",  # "RdBu_r",
+                flatshading=False,
+            )
+        )
+
+        # Hide grey background
+        fig.update_layout(
+            margin=dict(t=0, r=0, b=0, l=0),
+            scene=dict(
+                xaxis=dict(backgroundcolor="rgba(0,0,0,0)", color="grey", gridcolor="grey"),
+                yaxis=dict(backgroundcolor="rgba(0,0,0,0)", color="grey", gridcolor="grey"),
+                zaxis=dict(backgroundcolor="rgba(0,0,0,0)", color="grey", gridcolor="grey"),
+            ),
+        )
+        return fig
+
     ###### PICKLING FUNCTIONS ######
-    def pickle_all_figure_bubbles_3D(self):
+    def pickle_all_figure_3D(self, force_update=False):
 
         # simulate a click on all lipid names
         for name in sorted(self._data.get_annotations().name.unique()):
@@ -1380,13 +1543,32 @@ class Figures:
                             for lipid_1_index in l_selected_lipids
                         ]
 
-                        # compute figure
+                        # compute 3D figures
+                        name_lipid_1 = lipid_string
+                        name_lipid_2 = ""
+                        name_lipid_3 = ""
+
                         return_pickled_object(
                             "figures/3D_page",
-                            "scatter_3D_" + lipid_string + "_" + "" + "_" + "",
-                            force_update=False,
+                            "scatter_3D_" + name_lipid_1 + "_" + name_lipid_2 + "_" + name_lipid_3,
+                            force_update=force_update,
                             compute_function=self.compute_figure_bubbles_3D,
                             ignore_arguments_naming=True,
                             ll_t_bounds=lll_lipid_bounds,
                             normalize_independently=True,
+                            name_lipid_1=name_lipid_1,
+                            name_lipid_2=name_lipid_2,
+                            name_lipid_3=name_lipid_3,
+                        )
+
+                        return_pickled_object(
+                            "figures/3D_page",
+                            "volume_interpolated_3D_" + name_lipid_1 + "_" + name_lipid_2 + "_" + name_lipid_3,
+                            force_update=force_update,
+                            compute_function=self.compute_3D_volume_figure,
+                            ignore_arguments_naming=True,
+                            ll_t_bounds=lll_lipid_bounds,
+                            name_lipid_1=name_lipid_1,
+                            name_lipid_2=name_lipid_2,
+                            name_lipid_3=name_lipid_3,
                         )

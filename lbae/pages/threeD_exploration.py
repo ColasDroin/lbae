@@ -68,7 +68,8 @@ def return_layout(basic_config, slice_index):
                                 dbc.Tabs(
                                     [
                                         dbc.Tab(label="TIC per slice in 3D", tab_id="page-4-tab-1"),
-                                        dbc.Tab(label="Lipid selection in 3D", tab_id="page-4-tab-3"),
+                                        dbc.Tab(label="Lipid selection per slice in 3D", tab_id="page-4-tab-3"),
+                                        dbc.Tab(label="Lipid selection interpolated in 3D", tab_id="page-4-tab-4"),
                                     ],
                                     id="page-4-card-tabs",
                                     active_tab="page-4-tab-3",
@@ -341,7 +342,7 @@ def page_4_display_alert(clicked_compute, active_tab, l_lipids):
             {"width": "100%", "height": "100%", "position": "absolute", "left": "0",},
         )
 
-    elif active_tab == "page-4-tab-3" and len(l_lipids) > 0:
+    elif (active_tab == "page-4-tab-3" or active_tab == "page-4-tab-4") and len(l_lipids) > 0:
         return (
             {"display": "none"},
             {"width": "100%", "height": "100%", "position": "absolute", "left": "0",},
@@ -415,7 +416,9 @@ def page_2bis_plot_graph_heatmap_mz_selection(
             return dash.no_update
 
     # If a lipid selection has been done
-    elif id_input == "page-4-display-button" or (id_input == "page-4-card-tabs" and active_tab == "page-4-tab-3"):
+    elif id_input == "page-4-display-button" or (
+        id_input == "page-4-card-tabs" and (active_tab == "page-4-tab-3" or active_tab == "page-4-tab-4")
+    ):
 
         if (
             np.sum(l_lipid_1_index) > -app.data.get_slice_number()
@@ -450,8 +453,23 @@ def page_2bis_plot_graph_heatmap_mz_selection(
                     ignore_arguments_naming=True,
                     ll_t_bounds=lll_lipid_bounds,
                     normalize_independently=True,
+                    name_lipid_1=name_lipid_1,
+                    name_lipid_2=name_lipid_2,
+                    name_lipid_3=name_lipid_3,
                 )
-                # return figures.compute_figure_bubbles_3D(lll_lipid_bounds, normalize_independently=False)
+
+            elif active_tab == "page-4-tab-4":
+                return return_pickled_object(
+                    "figures/3D_page",
+                    "volume_interpolated_3D_" + name_lipid_1 + "_" + name_lipid_2 + "_" + name_lipid_3,
+                    force_update=False,
+                    compute_function=figures.compute_3D_volume_figure,
+                    ignore_arguments_naming=True,
+                    ll_t_bounds=lll_lipid_bounds,
+                    name_lipid_1=name_lipid_1,
+                    name_lipid_2=name_lipid_2,
+                    name_lipid_3=name_lipid_3,
+                )
 
         else:
             # probably the page has just been loaded, so do nothing
