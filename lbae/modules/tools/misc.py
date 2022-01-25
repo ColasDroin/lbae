@@ -44,10 +44,12 @@ def return_pickled_object(
         logging.info(
             file_name + " could not be found or force_update is True. Computing the object and pickling it now."
         )
+
         object = compute_function(**compute_function_args)
 
         with open(path_folder + file_name, "wb") as file:
             pickle.dump(object, file)
+        logging.info(file_name + " being returned now from computation.")
         return object
 
 

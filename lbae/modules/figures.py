@@ -1051,6 +1051,7 @@ class Figures:
         name_lipid_2="",
         name_lipid_3="",
     ):
+        logging.info("Starting computing figure bubbles 3D")
 
         # Get 3D arrays for lipid distribution
         array_x, array_y, array_z, array_c = return_pickled_object(
@@ -1060,7 +1061,7 @@ class Figures:
             compute_function=self.compute_array_3D,
             ignore_arguments_naming=True,
             ll_t_bounds=ll_t_bounds,
-            normalize_independently=normalize_independently,
+            normalize_independently=normalize_independently,  # normalize_independently,
             high_res=high_res,
         )
 
@@ -1105,7 +1106,7 @@ class Figures:
     def compute_atlas_with_slider(self, view="frontal", contour=False):
         # Check that the given view exists
         if view not in ("frontal", "horizontal", "sagittal"):
-            print(
+            logging.warning(
                 "The provided view must be of of the following: frontal, horizontal, or sagittal. Back to default, i.e. frontal"
             )
             view = "frontal"
