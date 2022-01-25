@@ -33,26 +33,31 @@ def return_layout(basic_config, slice_index):
                     {"i": "page-4-card-main-graph", "x": 0, "y": 0, "w": 8, "h": 20},
                     {"i": "page-4-card-lipid-selection", "x": 8, "y": 0, "w": 4, "h": 11},
                     {"i": "page-4-card-range-selection", "x": 8, "y": 8, "w": 4, "h": 6},
+                    {"i": "page-4-card-input-selection", "x": 8, "y": 10, "w": 4, "h": 3},
                 ],
                 "md": [
                     {"i": "page-4-card-main-graph", "x": 0, "y": 0, "w": 7, "h": 14},
                     {"i": "page-4-card-lipid-selection", "x": 6, "y": 0, "w": 3, "h": 12},
                     {"i": "page-4-card-range-selection", "x": 6, "y": 8, "w": 3, "h": 6},
+                    {"i": "page-4-card-input-selection", "x": 6, "y": 10, "w": 3, "h": 3},
                 ],
                 "sm": [
                     {"i": "page-4-card-main-graph", "x": 0, "y": 0, "w": 6, "h": 19},
                     {"i": "page-4-card-lipid-selection", "x": 0, "y": 19, "w": 6, "h": 11},
                     {"i": "page-4-card-range-selection", "x": 0, "y": 19 + 7, "w": 6, "h": 5},
+                    {"i": "page-4-card-input-selection", "x": 0, "y": 19 + 7 + 5, "w": 6, "h": 3},
                 ],
                 "xs": [
                     {"i": "page-4-card-main-graph", "x": 0, "y": 0, "w": 4, "h": 14},
                     {"i": "page-4-card-lipid-selection", "x": 0, "y": 0, "w": 4, "h": 11},
                     {"i": "page-4-card-range-selection", "x": 0, "y": 14 + 7, "w": 4, "h": 5},
+                    {"i": "page-4-card-input-selection", "x": 0, "y": 14 + 7 + 5, "w": 4, "h": 3},
                 ],
                 "xxs": [
                     {"i": "page-4-card-main-graph", "x": 0, "y": 0, "w": 2, "h": 9},
                     {"i": "page-4-card-lipid-selection", "x": 0, "y": 0, "w": 2, "h": 10},
                     {"i": "page-4-card-range-selection", "x": 0, "y": 9 + 7, "w": 2, "h": 5},
+                    {"i": "page-4-card-input-selection", "x": 0, "y": 9 + 7 + 5, "w": 2, "h": 3},
                 ],
             },
             children=[
@@ -289,6 +294,29 @@ def return_layout(basic_config, slice_index):
                         ),
                     ],
                 ),
+                dbc.Card(
+                    style={"maxWidth": "100%", "margin": "0 auto", "width": "100%", "height": "100%"},
+                    id="page-4-card-input-selection",
+                    children=[
+                        dbc.CardHeader("Input selection"),
+                        dbc.CardBody(
+                            className="pt-0 mt-3",
+                            children=[
+                                dbc.RadioItems(
+                                    options=[
+                                        {"label": "Lipid selection", "value": 1},
+                                        {"label": "m/z boundaries", "value": 2},
+                                        {"label": "m/z range", "value": 3},
+                                    ],
+                                    value=1,
+                                    id="page-4-radioitems-input",
+                                    inline=True,
+                                    # className="pb-1 mt-0 pt-0",
+                                ),
+                            ],
+                        ),
+                    ],
+                ),
             ],
         ),
     )
@@ -326,9 +354,10 @@ def page_2_update_graph_heatmap_mz_selection(slice_index):
     Output("page-4-graph-heatmap-mz-selection", "style"),
     Input("page-4-display-button", "n_clicks"),
     Input("page-4-card-tabs", "active_tab"),
+    Input("page-4-radioitems-input", "value"),
     State("page-4-last-selected-lipids", "data"),
 )
-def page_4_display_alert(clicked_compute, active_tab, l_lipids):
+def page_4_display_alert(clicked_compute, active_tab, input, l_lipids):
 
     # Find out which input triggered the function
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
@@ -342,7 +371,10 @@ def page_4_display_alert(clicked_compute, active_tab, l_lipids):
             {"width": "100%", "height": "100%", "position": "absolute", "left": "0",},
         )
 
-    elif (active_tab == "page-4-tab-3" or active_tab == "page-4-tab-4") and len(l_lipids) > 0:
+    # TODO : add the need to have the text field of the input range filled
+    elif (active_tab == "page-4-tab-3" or active_tab == "page-4-tab-4") and (
+        (input == 1 and len(l_lipids) > 0) or input == 2 or input == 3
+    ):
         return (
             {"display": "none"},
             {"width": "100%", "height": "100%", "position": "absolute", "left": "0",},
@@ -351,12 +383,11 @@ def page_4_display_alert(clicked_compute, active_tab, l_lipids):
     else:
         return {}, {"display": "none"}
 
-    return dash.no_update
-
 
 # Function to plot page-4-graph-heatmap-mz-selection when its state get updated
 @app.app.callback(
     Output("page-4-graph-heatmap-mz-selection", "figure"),
+    Output("page-4-radioitems-input", "value"),
     Input("page-4-card-tabs", "active_tab"),
     Input("boundaries-high-resolution-mz-plot", "data"),
     Input("boundaries-low-resolution-mz-plot", "data"),
@@ -366,6 +397,7 @@ def page_4_display_alert(clicked_compute, active_tab, l_lipids):
     Input("page-4-button-range", "n_clicks"),
     Input("page-4-button-bounds", "n_clicks"),
     Input("page-4-display-button", "n_clicks"),
+    Input("page-4-radioitems-input", "value"),
     State("page-4-lower-bound", "value"),
     State("page-4-upper-bound", "value"),
     State("page-4-mz-value", "value"),
@@ -384,6 +416,7 @@ def page_2bis_plot_graph_heatmap_mz_selection(
     n_clicks_button_range,
     n_clicks_button_bounds,
     n_clicks_button_display,
+    input,
     lb,
     hb,
     mz,
@@ -395,31 +428,36 @@ def page_2bis_plot_graph_heatmap_mz_selection(
 
     # Find out which input triggered the function
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
-
-    logging.info(id_input)
+    value_input = dash.callback_context.triggered[0]["prop_id"].split(".")[1]
 
     # case a mz value and a manual range have been inputed
-    if id_input == "page-4-button-range":
-        mz = float(mz)
-        mz_range = float(mz_range)
-        if mz > 400 and mz < 1200 and mz_range < 10:
-            return dash.no_update
-            # return app.slice_store.getSlice(slice_index).return_heatmap(mz - mz_range / 2, mz + mz_range / 2, binary_string=False)
-        else:
-            return dash.no_update
+    if id_input == "page-4-button-range" or (id_input == "page-4-radioitems-input" and value_input == 3):
+        if mz is not None and mz_range is not None:
+            mz = float(mz)
+            mz_range = float(mz_range)
+            if mz > 400 and mz < 1200 and mz_range < 10:
+                return (
+                    figures.compute_3D_volume_figure(
+                        [[[(mz - mz_range / 2, mz + mz_range / 2)], None, None]] * app.data.get_slice_number()
+                    ),
+                    3,
+                )
+
+        return dash.no_update
 
     # case a two mz bounds values have been inputed
-    elif id_input == "page-4-button-bounds":
-        lb, hb = float(lb), float(hb)
-        if lb > 400 and hb < 1200 and hb - lb > 0 and hb - lb < 10:
-            return dash.no_update
-            # return app.slice_store.getSlice(slice_index).return_heatmap(lb, hb, binary_string=False)
-        else:
-            return dash.no_update
+    elif id_input == "page-4-button-bounds" or (id_input == "page-4-radioitems-input" and value_input == 2):
+        if lb is not None and hb is not None:
+            lb, hb = float(lb), float(hb)
+            if lb > 400 and hb < 1200 and hb - lb > 0 and hb - lb < 10:
+                return figures.compute_3D_volume_figure([[[(lb, hb)], None, None]] * app.data.get_slice_number()), 2
+        return dash.no_update
 
     # If a lipid selection has been done
-    elif id_input == "page-4-display-button" or (
-        id_input == "page-4-card-tabs" and (active_tab == "page-4-tab-3" or active_tab == "page-4-tab-4")
+    elif (
+        id_input == "page-4-display-button"
+        or (id_input == "page-4-card-tabs" and (active_tab == "page-4-tab-3" or active_tab == "page-4-tab-4"))
+        or (id_input == "page-4-radioitems-input" and value_input == 1)
     ):
 
         if (
@@ -449,30 +487,36 @@ def page_2bis_plot_graph_heatmap_mz_selection(
             if active_tab == "page-4-tab-3":
                 # ! There seems to be a bug where the figure is computed twice (the callback is repeated) but can't figure out why...
                 # ! On hold for now as, most likely this figure won't be kept in the app
-                return return_pickled_object(
-                    "figures/3D_page",
-                    "scatter_3D_" + name_lipid_1 + "_" + name_lipid_2 + "_" + name_lipid_3,
-                    force_update=False,
-                    compute_function=figures.compute_figure_bubbles_3D,
-                    ignore_arguments_naming=True,
-                    ll_t_bounds=lll_lipid_bounds,
-                    normalize_independently=True,
-                    name_lipid_1=name_lipid_1,
-                    name_lipid_2=name_lipid_2,
-                    name_lipid_3=name_lipid_3,
+                return (
+                    return_pickled_object(
+                        "figures/3D_page",
+                        "scatter_3D_" + name_lipid_1 + "_" + name_lipid_2 + "_" + name_lipid_3,
+                        force_update=False,
+                        compute_function=figures.compute_figure_bubbles_3D,
+                        ignore_arguments_naming=True,
+                        ll_t_bounds=lll_lipid_bounds,
+                        normalize_independently=True,
+                        name_lipid_1=name_lipid_1,
+                        name_lipid_2=name_lipid_2,
+                        name_lipid_3=name_lipid_3,
+                    ),
+                    1,
                 )
 
             elif active_tab == "page-4-tab-4":
-                return return_pickled_object(
-                    "figures/3D_page",
-                    "volume_interpolated_3D_" + name_lipid_1 + "_" + name_lipid_2 + "_" + name_lipid_3,
-                    force_update=False,
-                    compute_function=figures.compute_3D_volume_figure,
-                    ignore_arguments_naming=True,
-                    ll_t_bounds=lll_lipid_bounds,
-                    name_lipid_1=name_lipid_1,
-                    name_lipid_2=name_lipid_2,
-                    name_lipid_3=name_lipid_3,
+                return (
+                    return_pickled_object(
+                        "figures/3D_page",
+                        "volume_interpolated_3D_" + name_lipid_1 + "_" + name_lipid_2 + "_" + name_lipid_3,
+                        force_update=False,
+                        compute_function=figures.compute_3D_volume_figure,
+                        ignore_arguments_naming=True,
+                        ll_t_bounds=lll_lipid_bounds,
+                        name_lipid_1=name_lipid_1,
+                        name_lipid_2=name_lipid_2,
+                        name_lipid_3=name_lipid_3,
+                    ),
+                    1,
                 )
 
         else:
@@ -482,8 +526,14 @@ def page_2bis_plot_graph_heatmap_mz_selection(
 
     elif id_input == "page-4-card-tabs":
         if active_tab == "page-4-tab-1":
-            return return_pickled_object(
-                "figures/3D_page", "slices_3D", force_update=False, compute_function=figures.compute_figure_slices_3D
+            return (
+                return_pickled_object(
+                    "figures/3D_page",
+                    "slices_3D",
+                    force_update=False,
+                    compute_function=figures.compute_figure_slices_3D,
+                ),
+                1,
             )
 
     return dash.no_update
