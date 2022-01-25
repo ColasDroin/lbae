@@ -68,11 +68,11 @@ def return_layout(basic_config, slice_index):
                                 dbc.Tabs(
                                     [
                                         dbc.Tab(label="TIC per slice in 3D", tab_id="page-4-tab-1"),
-                                        dbc.Tab(label="Lipid selection per slice in 3D", tab_id="page-4-tab-3"),
+                                        # dbc.Tab(label="Lipid selection per slice in 3D", tab_id="page-4-tab-3"),
                                         dbc.Tab(label="Lipid selection interpolated in 3D", tab_id="page-4-tab-4"),
                                     ],
                                     id="page-4-card-tabs",
-                                    active_tab="page-4-tab-3",
+                                    active_tab="page-4-tab-4",
                                 ),
                             ],
                         ),
@@ -396,6 +396,8 @@ def page_2bis_plot_graph_heatmap_mz_selection(
     # Find out which input triggered the function
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
 
+    logging.info(id_input)
+
     # case a mz value and a manual range have been inputed
     if id_input == "page-4-button-range":
         mz = float(mz)
@@ -443,9 +445,10 @@ def page_2bis_plot_graph_heatmap_mz_selection(
                     l_lipid_1_index, l_lipid_2_index, l_lipid_3_index
                 )
             ]
-            print("ICI", active_tab)
 
             if active_tab == "page-4-tab-3":
+                # ! There seems to be a bug where the figure is computed twice (the callback is repeated) but can't figure out why...
+                # ! On hold for now as, most likely this figure won't be kept in the app
                 return return_pickled_object(
                     "figures/3D_page",
                     "scatter_3D_" + name_lipid_1 + "_" + name_lipid_2 + "_" + name_lipid_3,
