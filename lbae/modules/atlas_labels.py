@@ -3,7 +3,10 @@
 # Standard imports
 import numpy as np
 
+# ! Investigate the usefulness of both these classes
+
 ###### Labels Class ######
+# ? Do I really need this class... Investigate
 class Labels:
     """ Class used to access labels data without having to create new arrays"""
 
@@ -29,6 +32,7 @@ class Labels:
 
 
 ###### LabelContours Class ######
+# ? Do I really need this class... Investigate
 class LabelContours:
     """ Class used to map labels to increasing integers"""
 
