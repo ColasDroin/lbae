@@ -64,6 +64,9 @@ class Atlas:
         # be memory-mapped as they are called when hovering and require very fast response from the server
         self.labels = Labels(self.bg_atlas, force_init=True)
         self._simplified_labels_int = None
+        self.dic_label_id = return_pickled_object(
+            "atlas/atlas_objects", "dic_label_id", force_update=False, compute_function=self.compute_dic_label_id
+        )
 
         # Load array of coordinates for warped data (can't be pickled as used with hovering)
         self.array_coordinates_warped_data = np.array(
@@ -138,6 +141,14 @@ class Atlas:
             force_update=False,
             compute_function=self.compute_list_projected_atlas_borders_figures,
         )
+
+    # Compute a dictionnary that associate a label (key) to its default unique id (value)
+    def compute_dic_label_id(self):
+        dic_label_id = {
+            self.bg_atlas.structures[id]["name"]: id for id in set(self.bg_atlas.annotation.flatten()) if id != 0
+        }
+        dic_label_id["root"] = 0
+        return dic_label_id
 
     def compute_hierarchy_list(self):
 

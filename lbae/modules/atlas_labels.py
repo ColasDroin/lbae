@@ -17,6 +17,7 @@ class Labels:
             _ = self.bg_atlas.structures
 
     def __getitem__(self, key):
+        """ For every coordinate (key) passed as a parameter, a label is returned"""
         x = self.bg_atlas.annotation[key]
         if isinstance(x, np.uint32):
             if x != 0:
