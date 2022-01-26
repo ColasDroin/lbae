@@ -1180,15 +1180,15 @@ class Figures:
         # tri_points_root = vertices_root[triangles_root]
 
         pl_mesh_root = go.Mesh3d(
-            x=x_root,
-            y=y_root,
-            z=z_root,
+            x=x_root / 1000 / 1000 * 25 * 10,
+            y=y_root / 1000 / 1000 * 25 * 10,
+            z=z_root / 1000 / 1000 * 25 * 10,
             colorscale=([0, "rgb(153, 153, 153)"], [1.0, "rgb(255,255,255)"]),
             intensity=z_root,
             flatshading=False,
-            i=I_root,
-            j=J_root,
-            k=K_root,
+            i=I_root / 1000 / 1000 * 25 * 10,
+            j=J_root / 1000 / 1000 * 25 * 10,
+            k=K_root / 1000 / 1000 * 25 * 10,
             opacity=0.1,
             name="Mesh CH",
             showscale=False,

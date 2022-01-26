@@ -62,7 +62,7 @@ def filter_voxels(
 
 # Compute an array of boundaries for volume plot
 @njit
-def fill_array_borders(array_annotation, differentiate_borders=False):
+def fill_array_borders(array_annotation, differentiate_borders=False, color_near_borders=False):
     array_atlas_borders = np.full_like(array_annotation, -2.0, dtype=np.float32)
     for x in range(1, array_annotation.shape[0] - 1):
         for y in range(1, array_annotation.shape[1] - 1):
@@ -86,6 +86,17 @@ def fill_array_borders(array_annotation, differentiate_borders=False):
                             array_atlas_borders[x, y, z] = -0.01
                     else:
                         array_atlas_borders[x, y, z] = -0.01
+    if color_near_borders:
+        for x in range(1, array_annotation.shape[0] - 1):
+            for y in range(1, array_annotation.shape[1] - 1):
+                for z in range(1, array_annotation.shape[2] - 1):
+                    if np.abs(array_atlas_borders[x, y, z] - (-0.1)) < 10 ** -4:
+                        for xt in range(x - 1, x + 2):
+                            for yt in range(y - 1, y + 2):
+                                for zt in range(z - 1, z + 2):
+                                    # not on the border
+                                    if np.abs(array_atlas_borders[xt, yt, zt] - (-0.1)) > 10 ** -4:
+                                        array_atlas_borders[xt, yt, zt] = -0.2
 
     return array_atlas_borders
 
