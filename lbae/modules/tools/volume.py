@@ -61,13 +61,21 @@ def filter_voxels(
 
 
 # Compute an array of boundaries for volume plot
+# -2 is outside brain
+# -0.1 is border
+# -0.01 is inside brain/structure
+# the -0.01 numbers get changed after assignment to lipid expression
 @njit
-def fill_array_borders(array_annotation, differentiate_borders=False, color_near_borders=False):
+def fill_array_borders(
+    array_annotation, differentiate_borders=False, color_near_borders=False, keep_structure_id=None
+):
     array_atlas_borders = np.full_like(array_annotation, -2.0, dtype=np.float32)
     for x in range(1, array_annotation.shape[0] - 1):
         for y in range(1, array_annotation.shape[1] - 1):
             for z in range(1, array_annotation.shape[2] - 1):
-                if array_annotation[x, y, z] > 0:
+                if array_annotation[x, y, z] > 0 and (
+                    keep_structure_id is None or array_annotation[x, y, z] == keep_structure_id
+                ):
 
                     # If we want to plot the brain border with a different shade
                     if differentiate_borders:
@@ -77,33 +85,37 @@ def fill_array_borders(array_annotation, differentiate_borders=False, color_near
                             for yt in range(y - 1, y + 2):
                                 for zt in range(z - 1, z + 2):
                                     # there's a border around
-                                    if array_annotation[xt, yt, zt] == 0:
+                                    if (array_annotation[xt, yt, zt] == 0 and keep_structure_id is None) or (
+                                        array_annotation[xt, yt, zt] != keep_structure_id
+                                        and keep_structure_id is not None
+                                    ):
                                         found = True
                         if found:
                             array_atlas_borders[x, y, z] = -0.1
-                        # inside the brain but not a border
+                        # inside the brain/structure but not a border
                         else:
                             array_atlas_borders[x, y, z] = -0.01
                     else:
                         array_atlas_borders[x, y, z] = -0.01
-    if color_near_borders:
-        for x in range(1, array_annotation.shape[0] - 1):
-            for y in range(1, array_annotation.shape[1] - 1):
-                for z in range(1, array_annotation.shape[2] - 1):
-                    if np.abs(array_atlas_borders[x, y, z] - (-0.1)) < 10 ** -4:
-                        for xt in range(x - 1, x + 2):
-                            for yt in range(y - 1, y + 2):
-                                for zt in range(z - 1, z + 2):
-                                    # not on the border
-                                    if np.abs(array_atlas_borders[xt, yt, zt] - (-0.1)) > 10 ** -4:
-                                        array_atlas_borders[xt, yt, zt] = -0.2
+
+    # if color_near_borders:
+    #     for x in range(1, array_annotation.shape[0] - 1):
+    #         for y in range(1, array_annotation.shape[1] - 1):
+    #             for z in range(1, array_annotation.shape[2] - 1):
+    #                 if np.abs(array_atlas_borders[x, y, z] - (-0.1)) < 10 ** -4:
+    #                     for xt in range(x - 1, x + 2):
+    #                         for yt in range(y - 1, y + 2):
+    #                             for zt in range(z - 1, z + 2):
+    #                                 # not on the border
+    #                                 if np.abs(array_atlas_borders[xt, yt, zt] - (-0.1)) > 10 ** -4:
+    #                                     array_atlas_borders[xt, yt, zt] = -0.2
 
     return array_atlas_borders
 
 
 # Do interpolation between the slices
 @njit
-def fill_array_interpolation(array_annotation, array_slices):
+def fill_array_interpolation(array_annotation, array_slices, divider_radius=5):
     array_interpolated = np.copy(array_slices)
     for x in range(0, array_annotation.shape[0]):
         for y in range(0, array_annotation.shape[1]):
@@ -113,7 +125,7 @@ def fill_array_interpolation(array_annotation, array_slices):
                     # Check all datapoints in the same structure, and do a distance-weighted average
                     value_voxel = 0
                     sum_weights = 0
-                    size_radius = int(array_annotation.shape[0] / 5)
+                    size_radius = int(array_annotation.shape[0] / divider_radius)
                     for xt in range(max(0, x - size_radius), min(array_annotation.shape[0], x + size_radius + 1)):
                         for yt in range(max(0, y - size_radius), min(array_annotation.shape[1], y + size_radius + 1)):
                             for zt in range(
