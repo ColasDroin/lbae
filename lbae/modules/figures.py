@@ -1345,11 +1345,11 @@ class Figures:
                 value=array_interpolated.flatten(),
                 isomin=-0.11,
                 isomax=1.5,
-                opacity=0.5,  # max opacity
-                opacityscale="uniform",
+                # opacity=0.5,  # max opacity
+                opacityscale=[[-0.11, 0.01], [0.0, 0.01], [0.1, 0.7], [2.5, 0.7]],  # "uniform",
                 surface_count=10,
                 colorscale="Bluyl",  # "RdBu_r",
-                flatshading=False,
+                flatshading=True,
             )
         )
 

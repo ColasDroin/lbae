@@ -8,6 +8,7 @@ import dash
 import numpy as np
 import dash_draggable
 import logging
+import dash_mantine_components as dmc
 
 # Homemade modules
 from lbae import app
@@ -64,7 +65,51 @@ def return_layout(basic_config, slice_index):
                                 value=False,
                                 className="ml-5 mt-2",
                             ),
+                            dmc.Button(
+                                "Display 3D slice distribution",
+                                id="page-1-modal-button",
+                                n_clicks=0,
+                                className="ml-5",
+                            ),
                         ],
+                    ),
+                    dbc.Modal(
+                        [
+                            dbc.ModalHeader(dbc.ModalTitle("3D slice distribution")),
+                            dbc.ModalBody(
+                                dbc.Spinner(
+                                    color="dark",
+                                    show_initially=False,
+                                    children=[
+                                        html.Div(
+                                            className="page-1-fixed-aspect-ratio",
+                                            children=[
+                                                dcc.Graph(
+                                                    id="page-1-graph-modal",
+                                                    config=basic_config
+                                                    | {
+                                                        "toImageButtonOptions": {
+                                                            "format": "png",
+                                                            "filename": "brain_lipid_selection",
+                                                            "scale": 2,
+                                                        }
+                                                    },
+                                                    style={
+                                                        "width": "100%",
+                                                        "height": "100%",
+                                                        "position": "absolute",
+                                                        "left": "0",
+                                                    },
+                                                ),
+                                            ],
+                                        ),
+                                    ],
+                                ),
+                            ),
+                        ],
+                        id="page-1-modal",
+                        size="xl",
+                        is_open=False,
                     ),
                     dbc.CardBody(
                         className="py-0 ",
@@ -248,5 +293,26 @@ def page_1_hover(hoverData, slice_index):
                 label = "undefined"
             return "Hovered region: " + label
 
+    return dash.no_update
+
+
+@app.app.callback(
+    Output("page-1-modal", "is_open"), Input("page-1-modal-button", "n_clicks"), State("page-1-modal", "is_open"),
+)
+def toggle_modal(n1, is_open):
+    if n1:
+        return not is_open
+    return is_open
+
+
+# Function to plot page-4-graph-heatmap-mz-selection when its state get updated
+@app.app.callback(
+    Output("page-1-graph-modal", "figure"), Input("page-1-modal-button", "n_clicks"),
+)
+def page_1_plot_graph_modal(n1):
+    if n1:
+        return return_pickled_object(
+            "figures/3D_page", "slices_3D", force_update=False, compute_function=figures.compute_figure_slices_3D
+        )
     return dash.no_update
 

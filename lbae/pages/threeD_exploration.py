@@ -69,17 +69,18 @@ def return_layout(basic_config, slice_index):
                         dbc.CardHeader(
                             id="page-4-toast-graph-heatmap-mz-selection",
                             className="d-flex",
-                            children=[
-                                dbc.Tabs(
-                                    [
-                                        dbc.Tab(label="TIC per slice in 3D", tab_id="page-4-tab-1"),
-                                        # dbc.Tab(label="Lipid selection per slice in 3D", tab_id="page-4-tab-3"),
-                                        dbc.Tab(label="Lipid selection interpolated in 3D", tab_id="page-4-tab-4"),
-                                    ],
-                                    id="page-4-card-tabs",
-                                    active_tab="page-4-tab-4",
-                                ),
-                            ],
+                            children="Lipid selection interpolated in 3D",
+                            # [
+                            #     dbc.Tabs(
+                            #         [
+                            #             dbc.Tab(label="TIC per slice in 3D", tab_id="page-4-tab-1"),
+                            #             # dbc.Tab(label="Lipid selection per slice in 3D", tab_id="page-4-tab-3"),
+                            #             dbc.Tab(label="Lipid selection interpolated in 3D", tab_id="page-4-tab-4"),
+                            #         ],
+                            #         id="page-4-card-tabs",
+                            #         active_tab="page-4-tab-4",
+                            #     ),
+                            # ],
                         ),
                         dbc.CardBody(
                             className="py-0 mb-0 mt-2",
@@ -353,11 +354,11 @@ def page_2_update_graph_heatmap_mz_selection(slice_index):
     Output("page-4-alert", "style"),
     Output("page-4-graph-heatmap-mz-selection", "style"),
     Input("page-4-display-button", "n_clicks"),
-    Input("page-4-card-tabs", "active_tab"),
+    # Input("page-4-card-tabs", "active_tab"),
     Input("page-4-radioitems-input", "value"),
     State("page-4-last-selected-lipids", "data"),
 )
-def page_4_display_alert(clicked_compute, active_tab, input, l_lipids):
+def page_4_display_alert(clicked_compute, input, l_lipids):
 
     # Find out which input triggered the function
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
@@ -365,16 +366,17 @@ def page_4_display_alert(clicked_compute, active_tab, input, l_lipids):
     # if id_input is None:
     #    return {}, {"display": "none"}
 
-    if active_tab == "page-4-tab-1":
-        return (
-            {"display": "none"},
-            {"width": "100%", "height": "100%", "position": "absolute", "left": "0",},
-        )
+    # if active_tab == "page-4-tab-1":
+    #     return (
+    #         {"display": "none"},
+    #         {"width": "100%", "height": "100%", "position": "absolute", "left": "0",},
+    #     )
 
     # TODO : add the need to have the text field of the input range filled
-    elif (active_tab == "page-4-tab-3" or active_tab == "page-4-tab-4") and (
-        (input == 1 and len(l_lipids) > 0) or input == 2 or input == 3
-    ):
+    # elif (active_tab == "page-4-tab-3" or active_tab == "page-4-tab-4") and (
+    #     (input == 1 and len(l_lipids) > 0) or input == 2 or input == 3
+    # ):
+    if (input == 1 and len(l_lipids) > 0) or input == 2 or input == 3:
         return (
             {"display": "none"},
             {"width": "100%", "height": "100%", "position": "absolute", "left": "0",},
@@ -388,7 +390,7 @@ def page_4_display_alert(clicked_compute, active_tab, input, l_lipids):
 @app.app.callback(
     Output("page-4-graph-heatmap-mz-selection", "figure"),
     Output("page-4-radioitems-input", "value"),
-    Input("page-4-card-tabs", "active_tab"),
+    # Input("page-4-card-tabs", "active_tab"),
     Input("boundaries-high-resolution-mz-plot", "data"),
     Input("boundaries-low-resolution-mz-plot", "data"),
     Input("page-4-selected-lipid-1", "data"),
@@ -407,7 +409,7 @@ def page_4_display_alert(clicked_compute, active_tab, input, l_lipids):
     State("page-4-toast-lipid-3", "header"),
 )
 def page_2bis_plot_graph_heatmap_mz_selection(
-    active_tab,
+    # active_tab,
     bound_high_res,
     bound_low_res,
     l_lipid_1_index,
@@ -456,7 +458,7 @@ def page_2bis_plot_graph_heatmap_mz_selection(
     # If a lipid selection has been done
     elif (
         id_input == "page-4-display-button"
-        or (id_input == "page-4-card-tabs" and (active_tab == "page-4-tab-3" or active_tab == "page-4-tab-4"))
+        # or (id_input == "page-4-card-tabs" and (active_tab == "page-4-tab-3" or active_tab == "page-4-tab-4"))
         or (id_input == "page-4-radioitems-input" and value_input == 1)
     ):
 
@@ -484,57 +486,44 @@ def page_2bis_plot_graph_heatmap_mz_selection(
                 )
             ]
 
-            if active_tab == "page-4-tab-3":
-                # ! There seems to be a bug where the figure is computed twice (the callback is repeated) but can't figure out why...
-                # ! On hold for now as, most likely this figure won't be kept in the app
-                return (
-                    return_pickled_object(
-                        "figures/3D_page",
-                        "scatter_3D_" + name_lipid_1 + "_" + name_lipid_2 + "_" + name_lipid_3,
-                        force_update=False,
-                        compute_function=figures.compute_figure_bubbles_3D,
-                        ignore_arguments_naming=True,
-                        ll_t_bounds=lll_lipid_bounds,
-                        normalize_independently=True,
-                        name_lipid_1=name_lipid_1,
-                        name_lipid_2=name_lipid_2,
-                        name_lipid_3=name_lipid_3,
-                    ),
-                    1,
-                )
+            # if active_tab == "page-4-tab-3":
+            #     # ! There seems to be a bug where the figure is computed twice (the callback is repeated) but can't figure out why...
+            #     # ! On hold for now as, most likely this figure won't be kept in the app
+            #     return (
+            #         return_pickled_object(
+            #             "figures/3D_page",
+            #             "scatter_3D_" + name_lipid_1 + "_" + name_lipid_2 + "_" + name_lipid_3,
+            #             force_update=False,
+            #             compute_function=figures.compute_figure_bubbles_3D,
+            #             ignore_arguments_naming=True,
+            #             ll_t_bounds=lll_lipid_bounds,
+            #             normalize_independently=True,
+            #             name_lipid_1=name_lipid_1,
+            #             name_lipid_2=name_lipid_2,
+            #             name_lipid_3=name_lipid_3,
+            #         ),
+            #         1,
+            #     )
 
-            elif active_tab == "page-4-tab-4":
-                return (
-                    return_pickled_object(
-                        "figures/3D_page",
-                        "volume_interpolated_3D_" + name_lipid_1 + "_" + name_lipid_2 + "_" + name_lipid_3,
-                        force_update=False,
-                        compute_function=figures.compute_3D_volume_figure,
-                        ignore_arguments_naming=True,
-                        ll_t_bounds=lll_lipid_bounds,
-                        name_lipid_1=name_lipid_1,
-                        name_lipid_2=name_lipid_2,
-                        name_lipid_3=name_lipid_3,
-                    ),
-                    1,
-                )
+            return (
+                return_pickled_object(
+                    "figures/3D_page",
+                    "volume_interpolated_3D_" + name_lipid_1 + "_" + name_lipid_2 + "_" + name_lipid_3,
+                    force_update=False,
+                    compute_function=figures.compute_3D_volume_figure,
+                    ignore_arguments_naming=True,
+                    ll_t_bounds=lll_lipid_bounds,
+                    name_lipid_1=name_lipid_1,
+                    name_lipid_2=name_lipid_2,
+                    name_lipid_3=name_lipid_3,
+                ),
+                1,
+            )
 
         else:
             # probably the page has just been loaded, so do nothing
             # return app.slice_store.getSlice(slice_index).return_heatmap(binary_string=False)
             return dash.no_update
-
-    elif id_input == "page-4-card-tabs":
-        if active_tab == "page-4-tab-1":
-            return (
-                return_pickled_object(
-                    "figures/3D_page",
-                    "slices_3D",
-                    force_update=False,
-                    compute_function=figures.compute_figure_slices_3D,
-                ),
-                1,
-            )
 
     return dash.no_update
 
