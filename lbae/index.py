@@ -56,6 +56,10 @@ def return_main_content():
             dcc.Store(id="page-4-selected-lipid-1", data=empty_lipid_list),
             dcc.Store(id="page-4-selected-lipid-2", data=empty_lipid_list),
             dcc.Store(id="page-4-selected-lipid-3", data=empty_lipid_list),
+            dcc.Store(id="page-4-last-selected-regions", data=[]),
+            dcc.Store(id="page-4-selected-region-1", data=""),
+            dcc.Store(id="page-4-selected-region-2", data=""),
+            dcc.Store(id="page-4-selected-region-3", data=""),
             dcc.Store(id="page-4-last-selected-lipids", data=[]),
             # Record the shapes drawn in page 3
             dcc.Store(id="dcc-store-color-mask", data=[]),
@@ -249,5 +253,5 @@ def hide_slider(pathname):
 
 
 def run():
-    app.run_server(port=8070, debug=False)
+    app.run_server(port=8070, debug=True)
 

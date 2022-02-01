@@ -1054,6 +1054,14 @@ class Figures:
         fig.update_layout(margin=dict(t=0, r=0, b=0, l=0),)
         return fig
 
+    def compute_treemaps_figure(self, maxdepth=7):
+        fig = px.treemap(names=self._atlas.l_nodes, parents=self._atlas.l_parents, maxdepth=maxdepth)
+        fig.update_layout(
+            uniformtext=dict(minsize=15), margin=dict(t=20, r=0, b=0, l=0),
+        )
+        fig.update_traces(root_color="lightgrey")
+        return fig
+
     def compute_atlas_with_slider(self, view="frontal", contour=False):
         # Check that the given view exists
         if view not in ("frontal", "horizontal", "sagittal"):

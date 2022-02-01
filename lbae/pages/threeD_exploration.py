@@ -10,7 +10,7 @@ import numpy as np
 import dash
 
 # Data module
-from lbae.app import figures
+from lbae.app import figures, atlas
 from lbae import app
 from lbae.modules.tools.misc import return_pickled_object
 
@@ -30,58 +30,47 @@ def return_layout(basic_config, slice_index):
                 # x sets the lateral position, y the vertical one, w is in columns (whose size depends on the dimension), h is in rows (30px)
                 # nb columns go 12->10->6->4->2
                 "lg": [
-                    {"i": "page-4-card-main-graph", "x": 0, "y": 0, "w": 8, "h": 20},
+                    {"i": "page-4-card-region-selection", "x": 0, "y": 0, "w": 8, "h": 20},
                     {"i": "page-4-card-lipid-selection", "x": 8, "y": 0, "w": 4, "h": 11},
                     {"i": "page-4-card-range-selection", "x": 8, "y": 8, "w": 4, "h": 6},
                     {"i": "page-4-card-input-selection", "x": 8, "y": 10, "w": 4, "h": 3},
+                    {"i": "page-4-card-main-graph", "x": 0, "y": 20, "w": 12, "h": 24},
                 ],
                 "md": [
-                    {"i": "page-4-card-main-graph", "x": 0, "y": 0, "w": 7, "h": 14},
+                    {"i": "page-4-card-region-selection", "x": 0, "y": 0, "w": 7, "h": 14},
                     {"i": "page-4-card-lipid-selection", "x": 6, "y": 0, "w": 3, "h": 12},
                     {"i": "page-4-card-range-selection", "x": 6, "y": 8, "w": 3, "h": 6},
                     {"i": "page-4-card-input-selection", "x": 6, "y": 10, "w": 3, "h": 3},
+                    {"i": "page-4-card-main-graph", "x": 0, "y": 14, "w": 10, "h": 14},
                 ],
                 "sm": [
-                    {"i": "page-4-card-main-graph", "x": 0, "y": 0, "w": 6, "h": 19},
+                    {"i": "page-4-card-region-selection", "x": 0, "y": 0, "w": 6, "h": 19},
                     {"i": "page-4-card-lipid-selection", "x": 0, "y": 19, "w": 6, "h": 11},
                     {"i": "page-4-card-range-selection", "x": 0, "y": 19 + 7, "w": 6, "h": 5},
                     {"i": "page-4-card-input-selection", "x": 0, "y": 19 + 7 + 5, "w": 6, "h": 3},
+                    {"i": "page-4-card-main-graph", "x": 0, "y": 19, "w": 6, "h": 19},
                 ],
                 "xs": [
-                    {"i": "page-4-card-main-graph", "x": 0, "y": 0, "w": 4, "h": 14},
+                    {"i": "page-4-card-region-selection", "x": 0, "y": 0, "w": 4, "h": 14},
                     {"i": "page-4-card-lipid-selection", "x": 0, "y": 0, "w": 4, "h": 11},
                     {"i": "page-4-card-range-selection", "x": 0, "y": 14 + 7, "w": 4, "h": 5},
                     {"i": "page-4-card-input-selection", "x": 0, "y": 14 + 7 + 5, "w": 4, "h": 3},
+                    {"i": "page-4-card-main-graph", "x": 0, "y": 14, "w": 4, "h": 14},
                 ],
                 "xxs": [
-                    {"i": "page-4-card-main-graph", "x": 0, "y": 0, "w": 2, "h": 9},
+                    {"i": "page-4-card-region-selection", "x": 0, "y": 0, "w": 2, "h": 9},
                     {"i": "page-4-card-lipid-selection", "x": 0, "y": 0, "w": 2, "h": 10},
                     {"i": "page-4-card-range-selection", "x": 0, "y": 9 + 7, "w": 2, "h": 5},
                     {"i": "page-4-card-input-selection", "x": 0, "y": 9 + 7 + 5, "w": 2, "h": 3},
+                    {"i": "page-4-card-main-graph", "x": 0, "y": 9, "w": 2, "h": 9},
                 ],
             },
             children=[
                 dbc.Card(
-                    id="page-4-card-main-graph",
-                    className="no-transition",
+                    id="page-4-card-region-selection",
                     style={"width": "100%", "height": "100%"},
                     children=[
-                        dbc.CardHeader(
-                            id="page-4-toast-graph-heatmap-mz-selection",
-                            className="d-flex",
-                            children="Lipid selection interpolated in 3D",
-                            # [
-                            #     dbc.Tabs(
-                            #         [
-                            #             dbc.Tab(label="TIC per slice in 3D", tab_id="page-4-tab-1"),
-                            #             # dbc.Tab(label="Lipid selection per slice in 3D", tab_id="page-4-tab-3"),
-                            #             dbc.Tab(label="Lipid selection interpolated in 3D", tab_id="page-4-tab-4"),
-                            #         ],
-                            #         id="page-4-card-tabs",
-                            #         active_tab="page-4-tab-4",
-                            #     ),
-                            # ],
-                        ),
+                        dbc.CardHeader(children="Structure selection",),
                         dbc.CardBody(
                             className="py-0 mb-0 mt-2",
                             children=[
@@ -90,38 +79,73 @@ def return_layout(basic_config, slice_index):
                                     show_initially=False,
                                     children=[
                                         html.Div(
-                                            className="page-1-fixed-aspect-ratio",
+                                            # className="page-1-fixed-aspect-ratio",
                                             children=[
-                                                html.Div(
-                                                    id="page-4-alert",
-                                                    className="text-center my-2",
-                                                    children=html.Strong(
-                                                        children="Please select at least one lipid.",
-                                                        style={"color": "#df5034"},
-                                                    ),
-                                                ),
                                                 dcc.Graph(
-                                                    id="page-4-graph-heatmap-mz-selection",
-                                                    config=basic_config
-                                                    | {
-                                                        "toImageButtonOptions": {
-                                                            "format": "png",
-                                                            "filename": "brain_lipid_selection",
-                                                            "scale": 2,
-                                                        }
-                                                    },
-                                                    style={
-                                                        "width": "100%",
-                                                        "height": "100%",
-                                                        "position": "absolute",
-                                                        "left": "0",
-                                                    },
+                                                    id="page-4-graph-region-selection",
+                                                    config=basic_config,
+                                                    # style={
+                                                    #    "width": "100%",
+                                                    #    "height": "100%",
+                                                    #    "position": "absolute",
+                                                    #    "left": "0",
+                                                    # },
+                                                    figure=return_pickled_object(
+                                                        "figures/atlas_page/3D",
+                                                        "treemaps",
+                                                        force_update=True,
+                                                        compute_function=figures.compute_treemaps_figure,
+                                                    ),
                                                 ),
                                             ],
                                         ),
                                     ],
                                 ),
-                                html.Div("‎‎‏‏‎ ‎"),  # Empty span to prevent toast from bugging
+                                dbc.ButtonGroup(
+                                    className="d-flex justify-content-center",
+                                    children=[
+                                        dbc.Button(
+                                            children="Please choose a structure above",
+                                            id="page-4-add-structure-button",
+                                            className="mt-1",
+                                            color="primary",
+                                            disabled=True,
+                                            # block=True,
+                                        ),
+                                    ],
+                                ),
+                                # Wrap toasts in div to prevent their expansion
+                                dbc.Toast(
+                                    id="page-4-toast-region-1",
+                                    header="name-region-1",
+                                    icon="primary",
+                                    dismissable=True,
+                                    is_open=False,
+                                    bodyClassName="p-0",
+                                    className="mt-3",
+                                    style={"margin": "auto"},
+                                ),
+                                dbc.Toast(
+                                    id="page-4-toast-region-2",
+                                    header="name-region-2",
+                                    icon="primary",
+                                    dismissable=True,
+                                    is_open=False,
+                                    bodyClassName="p-0",
+                                    className="mt-1",
+                                    style={"margin": "auto"},
+                                ),
+                                dbc.Toast(
+                                    id="page-4-toast-region-3",
+                                    header="name-region-3",
+                                    icon="primary",
+                                    dismissable=True,
+                                    is_open=False,
+                                    bodyClassName="p-0",
+                                    className="mt-1",
+                                    style={"margin": "auto"},
+                                ),
+                                # html.Div("‎‎‏‏‎ ‎"),  # Empty span to prevent toast from bugging
                             ],
                         ),
                     ],
@@ -187,7 +211,7 @@ def return_layout(basic_config, slice_index):
                                 dbc.Toast(
                                     id="page-4-toast-lipid-1",
                                     header="name-lipid-1",
-                                    icon="danger",
+                                    icon="primary",
                                     dismissable=True,
                                     is_open=False,
                                     bodyClassName="p-0",
@@ -197,7 +221,7 @@ def return_layout(basic_config, slice_index):
                                 dbc.Toast(
                                     id="page-4-toast-lipid-2",
                                     header="name-lipid-2",
-                                    icon="success",
+                                    icon="primary",
                                     dismissable=True,
                                     is_open=False,
                                     bodyClassName="p-0",
@@ -318,6 +342,70 @@ def return_layout(basic_config, slice_index):
                         ),
                     ],
                 ),
+                dbc.Card(
+                    id="page-4-card-main-graph",
+                    className="no-transition",
+                    style={"width": "100%", "height": "100%"},
+                    children=[
+                        dbc.CardHeader(
+                            className="d-flex",
+                            children="Lipid selection interpolated in 3D",
+                            # [
+                            #     dbc.Tabs(
+                            #         [
+                            #             dbc.Tab(label="TIC per slice in 3D", tab_id="page-4-tab-1"),
+                            #             # dbc.Tab(label="Lipid selection per slice in 3D", tab_id="page-4-tab-3"),
+                            #             dbc.Tab(label="Lipid selection interpolated in 3D", tab_id="page-4-tab-4"),
+                            #         ],
+                            #         id="page-4-card-tabs",
+                            #         active_tab="page-4-tab-4",
+                            #     ),
+                            # ],
+                        ),
+                        dbc.CardBody(
+                            className="py-0 mb-0 mt-2",
+                            children=[
+                                dbc.Spinner(
+                                    color="dark",
+                                    show_initially=False,
+                                    children=[
+                                        html.Div(
+                                            className="page-1-fixed-aspect-ratio",
+                                            children=[
+                                                html.Div(
+                                                    id="page-4-alert",
+                                                    className="text-center my-2",
+                                                    children=html.Strong(
+                                                        children="Please select at least one lipid.",
+                                                        style={"color": "#df5034"},
+                                                    ),
+                                                ),
+                                                dcc.Graph(
+                                                    id="page-4-graph-heatmap-mz-selection",
+                                                    config=basic_config
+                                                    | {
+                                                        "toImageButtonOptions": {
+                                                            "format": "png",
+                                                            "filename": "brain_lipid_selection",
+                                                            "scale": 2,
+                                                        }
+                                                    },
+                                                    style={
+                                                        "width": "100%",
+                                                        "height": "100%",
+                                                        "position": "absolute",
+                                                        "left": "0",
+                                                    },
+                                                ),
+                                            ],
+                                        ),
+                                    ],
+                                ),
+                                html.Div("‎‎‏‏‎ ‎"),  # Empty span to prevent toast from bugging
+                            ],
+                        ),
+                    ],
+                ),
             ],
         ),
     )
@@ -326,28 +414,6 @@ def return_layout(basic_config, slice_index):
 
 
 ###### APP CALLBACKS ######
-
-"""
-# Function to update the heatmap toast name
-@app.app.callback(
-    Output("page-4-toast-graph-heatmap-mz-selection", "children"), Input("dcc-store-slice-index", "data"),
-)
-def page_2_update_graph_heatmap_mz_selection(slice_index):
-    if slice_index is not None:
-        return [
-            dbc.Tabs(
-                [
-                    # dbc.Tab(label="TIC per slice in 3D", tab_id="page-4-tab-1"),
-                    dbc.Tab(label="Lipid selection in 3D", tab_id="page-4-tab-3"),
-                ],
-                id="page-4-card-tabs",
-                active_tab="page-4-tab-3",
-            ),
-        ]
-
-    else:
-        return dash.no_update
-"""
 
 # Function to make visible the alert regarding the plot page 4
 @app.app.callback(
@@ -384,6 +450,158 @@ def page_4_display_alert(clicked_compute, input, l_lipids):
 
     else:
         return {}, {"display": "none"}
+
+
+# Function to update label of the add structure button
+@app.app.callback(
+    Output("page-4-add-structure-button", "children"),
+    Output("page-4-add-structure-button", "disabled"),
+    Input("page-4-graph-region-selection", "clickData"),
+    Input("page-4-selected-region-1", "data"),
+    Input("page-4-selected-region-2", "data"),
+    Input("page-4-selected-region-3", "data"),
+)
+def page_4_click(clickData, region_1_id, region_2_id, region_3_id):
+    # Find out which input triggered the function
+    id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
+
+    if id_input == "page-4-graph-region-selection":
+        if clickData is not None:
+            if "points" in clickData:
+                label = clickData["points"][0]["label"]
+                # acronym = atlas.dic_name_id[label]
+                # print("New 3d figure loading: ", label, acronym)
+                return "Add " + label + " to selection", False
+        return "Please choose a structure above", True
+
+    # If lipids has been selected from the dropdown, activate button
+    if region_1_id != "" and region_2_id != "" and region_3_id != "":
+        return "Delete some structures to select new ones", True
+
+    if region_1_id != "" or region_2_id != "" or region_3_id != "":
+        return "Please choose a structure above", True
+
+
+# Function to add region choice to selection
+@app.app.callback(
+    Output("page-4-toast-region-1", "header"),
+    Output("page-4-toast-region-2", "header"),
+    Output("page-4-toast-region-3", "header"),
+    Output("page-4-selected-region-1", "data"),
+    Output("page-4-selected-region-2", "data"),
+    Output("page-4-selected-region-3", "data"),
+    Output("page-4-toast-region-1", "is_open"),
+    Output("page-4-toast-region-2", "is_open"),
+    Output("page-4-toast-region-3", "is_open"),
+    Output("page-4-last-selected-regions", "data"),
+    Input("page-4-add-structure-button", "n_clicks"),
+    Input("page-4-toast-region-1", "is_open"),
+    Input("page-4-toast-region-2", "is_open"),
+    Input("page-4-toast-region-3", "is_open"),
+    State("page-4-selected-region-1", "data"),
+    State("page-4-selected-region-2", "data"),
+    State("page-4-selected-region-3", "data"),
+    State("page-4-toast-region-1", "header"),
+    State("page-4-toast-region-2", "header"),
+    State("page-4-toast-region-3", "header"),
+    State("page-4-last-selected-regions", "data"),
+    State("page-4-add-structure-button", "children"),
+)
+def page_4_add_toast_region_selection(
+    clicked_add,
+    bool_toast_1,
+    bool_toast_2,
+    bool_toast_3,
+    region_1_id,
+    region_2_id,
+    region_3_id,
+    header_1,
+    header_2,
+    header_3,
+    l_selected_regions,
+    label_region,
+):
+
+    # Find out which input triggered the function
+    id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
+    value_input = dash.callback_context.triggered[0]["prop_id"].split(".")[1]
+
+    if len(id_input) == 0:
+        return "", "", "", "", "", "", False, False, False, []
+
+    # If a region has been deleted from a toast
+    if value_input == "is_open":
+
+        # Delete corressponding header and index
+        if id_input == "page-4-toast-region-1":
+            header_1 = ""
+            l_selected_regions.remove(region_1_id)
+            region_1_id = ""
+
+        elif id_input == "page-4-toast-region-2":
+            header_2 = ""
+            l_selected_regions.remove(region_2_id)
+            region_2_id = ""
+
+        elif id_input == "page-4-toast-region-3":
+            header_3 = ""
+            l_selected_regions.remove(region_3_id)
+            l_region_3_index = ""
+        else:
+            print("BUG in tab_2_add_dropdown_selection")
+
+        return (
+            header_1,
+            header_2,
+            header_3,
+            region_1_id,
+            region_2_id,
+            region_3_id,
+            bool_toast_1,
+            bool_toast_2,
+            bool_toast_3,
+            l_selected_regions,
+        )
+
+    # Otherwise, add region to selection
+    elif id_input == "page-4-add-structure-button":
+        if label_region != "Please choose a structure above":
+            region = label_region.split("Add ")[1].split(" to selection")[0]
+            region_id = atlas.dic_name_id[region]
+            if region_id not in l_selected_regions:
+                l_selected_regions.append(region_id)
+
+                # Check first slot available
+                if not bool_toast_1:
+                    header_1 = region
+                    region_1_id = region_id
+                    bool_toast_1 = True
+                elif not bool_toast_2:
+                    header_2 = region
+                    region_2_id = region_id
+                    bool_toast_2 = True
+                elif not bool_toast_3:
+                    header_3 = region
+                    region_3_id = region_id
+                    bool_toast_3 = True
+                else:
+                    print("BUG, more than 3 regions have been selected")
+                    return dash.no_update
+
+                return (
+                    header_1,
+                    header_2,
+                    header_3,
+                    region_1_id,
+                    region_2_id,
+                    region_3_id,
+                    bool_toast_1,
+                    bool_toast_2,
+                    bool_toast_3,
+                    l_selected_regions,
+                )
+
+    return dash.no_update
 
 
 # Function to plot page-4-graph-heatmap-mz-selection when its state get updated
@@ -752,7 +970,7 @@ def page_4_disable_dropdowns(l_lipid_1_index, l_lipid_2_index, l_lipid_3_index):
     Input("page-4-selected-lipid-2", "data"),
     Input("page-4-selected-lipid-3", "data"),
 )
-def tab_2_active_download(l_lipid_1_index, l_lipid_2_index, l_lipid_3_index):
+def tab_2_active_display(l_lipid_1_index, l_lipid_2_index, l_lipid_3_index):
     # If lipids has been selected from the dropdown, activate button
     if np.sum(l_lipid_1_index + l_lipid_2_index + l_lipid_3_index) > -3 * app.data.get_slice_number():
         return False
