@@ -1279,8 +1279,71 @@ class Figures:
 
         return fig
 
+    def compute_3D_root_volume(self, decrease_dimensionality_factor=7):
+        # Get array of annotations, which associate coordinate to id
+        array_annotation_root = np.array(self._atlas.bg_atlas.annotation, dtype=np.int32)
+
+        # Subsample array of annotation the same way array_atlas was subsampled
+        array_annotation_root = array_annotation_root[
+            ::decrease_dimensionality_factor, ::decrease_dimensionality_factor, ::decrease_dimensionality_factor
+        ]
+
+        # Bug correction for the last slice
+        array_annotation_root = np.concatenate(
+            (array_annotation_root, np.zeros((1, array_annotation_root.shape[1], array_annotation_root.shape[2])))
+        )
+
+        # Get the volume array
+        array_atlas_borders_root = fill_array_borders(
+            array_annotation_root, differentiate_borders=False, color_near_borders=False, keep_structure_id=None
+        )
+
+        # Compute the 3D grid
+        X_root, Y_root, Z_root = np.mgrid[
+            0 : array_atlas_borders_root.shape[0]
+            / 1000
+            * 25
+            * decrease_dimensionality_factor : array_atlas_borders_root.shape[0]
+            * 1j,
+            0 : array_atlas_borders_root.shape[1]
+            / 1000
+            * 25
+            * decrease_dimensionality_factor : array_atlas_borders_root.shape[1]
+            * 1j,
+            0 : array_atlas_borders_root.shape[2]
+            / 1000
+            * 25
+            * decrease_dimensionality_factor : array_atlas_borders_root.shape[2]
+            * 1j,
+        ]
+
+        # Compute the plot
+        brain_root_data = go.Isosurface(
+            x=X_root.flatten(),  # [[1,2,3], [1,2,3], [1,2,3]],
+            y=Y_root.flatten(),  # [[1,2,3], [1,2,3], [1,2,3]],
+            z=Z_root.flatten(),  # [[1,1,1], [2,2,2], [3,3,3]],
+            value=array_atlas_borders_root.flatten(),
+            isomin=-0.21,
+            isomax=2.55,
+            opacity=0.15,  # max opacity
+            # opacityscale=[[-0.0, 0], [1., 1]],
+            # opacityscale = "uniform",
+            surface_count=2,
+            colorscale="Blues",  # colorscale,
+            flatshading=True,
+        )
+
+        # Return figure
+        return brain_root_data
+
     def compute_3D_volume_figure(
-        self, ll_t_bounds, name_lipid_1="", name_lipid_2="", name_lipid_3="", decrease_dimensionality_factor=7
+        self,
+        ll_t_bounds,
+        name_lipid_1="",
+        name_lipid_2="",
+        name_lipid_3="",
+        set_id_regions=None,
+        decrease_dimensionality_factor=7,
     ):
 
         # Get subsampled array of annotations
@@ -1297,7 +1360,7 @@ class Figures:
         )
 
         # Compute an array of boundaries
-        array_atlas_borders = fill_array_borders(array_annotation)
+        array_atlas_borders = fill_array_borders(array_annotation, keep_structure_id=set_id_regions)
 
         # Return the lipid expression in 3D
         array_x, array_y, array_z, array_c = return_pickled_object(
@@ -1334,31 +1397,126 @@ class Figures:
 
         array_slices = array_slices / array_for_avg
 
-        # Compute an array containing the lipid expression interpolated for every voxel
-        array_interpolated = fill_array_interpolation(array_annotation, array_slices)
-
         # Get the corresponding coordinates
         X, Y, Z = np.mgrid[
-            0 : array_interpolated.shape[0] / 1000 * 25 : array_interpolated.shape[0] * 1j,
-            0 : array_interpolated.shape[1] / 1000 * 25 : array_interpolated.shape[1] * 1j,
-            0 : array_interpolated.shape[2] / 1000 * 25 : array_interpolated.shape[2] * 1j,
+            0 : array_atlas_borders.shape[0]
+            / 1000
+            * 25
+            * decrease_dimensionality_factor : array_atlas_borders.shape[0]
+            * 1j,
+            0 : array_atlas_borders.shape[1]
+            / 1000
+            * 25
+            * decrease_dimensionality_factor : array_atlas_borders.shape[1]
+            * 1j,
+            0 : array_atlas_borders.shape[2]
+            / 1000
+            * 25
+            * decrease_dimensionality_factor : array_atlas_borders.shape[2]
+            * 1j,
         ]
+
+        if set_id_regions is not None:
+            # Crop the figure to shorten interpolation time
+            x_min, x_max, y_min, y_max, z_min, z_max = (
+                0,
+                array_annotation.shape[0],
+                0,
+                array_annotation.shape[1],
+                0,
+                array_annotation.shape[2],
+            )
+
+            # Crop unfilled parts to save space
+            found = False
+            for x in range(0, array_annotation.shape[0]):
+                for id_structure in set_id_regions:
+                    if id_structure in array_annotation[x, :, :]:
+                        x_min = max(x_min, x - 1)
+                        found = True
+                if found:
+                    break
+
+            found = False
+            for x in range(array_annotation.shape[0] - 1, -1, -1):
+                for id_structure in set_id_regions:
+                    if id_structure in array_annotation[x, :, :]:
+                        x_max = min(x + 1, x_max)
+                        found = True
+                if found:
+                    break
+
+            found = False
+            for y in range(0, array_annotation.shape[1]):
+                for id_structure in set_id_regions:
+                    if id_structure in array_annotation[:, y, :]:
+                        y_min = max(y - 1, y_min)
+                        found = True
+                if found:
+                    break
+
+            found = False
+            for y in range(array_annotation.shape[1] - 1, -1, -1):
+                for id_structure in set_id_regions:
+                    if id_structure in array_annotation[:, y, :]:
+                        y_max = min(y + 1, y_max)
+                        found = True
+                if found:
+                    break
+
+            found = False
+            for z in range(0, array_annotation.shape[2]):
+                for id_structure in set_id_regions:
+                    if id_structure in array_annotation[:, :, z]:
+                        z_min = max(z - 1, z_min)
+                        found = True
+                if found:
+                    break
+
+            found = False
+            for z in range(array_annotation.shape[2] - 1, -1, -1):
+                for id_structure in set_id_regions:
+                    if id_structure in array_annotation[:, :, z]:
+                        z_max = min(z + 1, z_max)
+                        found = True
+                if found:
+                    break
+
+            if x_min is None:
+                print("Bug, no voxel value has been assigned")
+            else:
+                array_annotation = array_annotation[x_min : x_max + 1, y_min : y_max + 1, z_min : z_max + 1]
+                array_slices = array_slices[x_min : x_max + 1, y_min : y_max + 1, z_min : z_max + 1]
+                X = X[x_min : x_max + 1, y_min : y_max + 1, z_min : z_max + 1]
+                Y = Y[x_min : x_max + 1, y_min : y_max + 1, z_min : z_max + 1]
+                Z = Z[x_min : x_max + 1, y_min : y_max + 1, z_min : z_max + 1]
+
+        # Compute an array containing the lipid expression interpolated for every voxel
+        array_interpolated = fill_array_interpolation(array_annotation, array_slices, divider_radius=1)
+
+        # Get root figure
+        root_data = return_pickled_object(
+            "figures/3D_page", "volume_root", force_update=False, compute_function=self.compute_3D_root_volume,
+        )
 
         # Build figure
         fig = go.Figure(
-            data=go.Volume(
-                x=X.flatten(),
-                y=Y.flatten(),
-                z=Z.flatten(),
-                value=array_interpolated.flatten(),
-                isomin=-0.11,
-                isomax=1.5,
-                # opacity=0.5,  # max opacity
-                opacityscale=[[-0.11, 0.01], [0.0, 0.01], [0.1, 0.7], [2.5, 0.7]],  # "uniform",
-                surface_count=10,
-                colorscale="Bluyl",  # "RdBu_r",
-                flatshading=True,
-            )
+            data=[
+                go.Volume(
+                    x=X.flatten(),
+                    y=Y.flatten(),
+                    z=Z.flatten(),
+                    value=array_interpolated.flatten(),
+                    isomin=0.01,
+                    isomax=1.5,
+                    # opacity=0.5,  # max opacity
+                    opacityscale=[[-0.11, 0.01], [0.0, 0.01], [0.1, 0.7], [2.5, 0.7]],  # "uniform",
+                    surface_count=10,
+                    colorscale="viridis",  # "RdBu_r",
+                    flatshading=True,
+                ),
+                root_data,
+            ]
         )
 
         # Hide grey background

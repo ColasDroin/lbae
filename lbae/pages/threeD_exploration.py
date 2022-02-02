@@ -590,8 +590,6 @@ def page_4_add_toast_region_selection(
                     print("BUG, more than 3 regions have been selected")
                     return dash.no_update
 
-                print("ici", l_selected_regions)
-
                 return (
                     header_1,
                     header_2,
@@ -629,6 +627,7 @@ def page_4_add_toast_region_selection(
     State("page-4-toast-lipid-1", "header"),
     State("page-4-toast-lipid-2", "header"),
     State("page-4-toast-lipid-3", "header"),
+    State("page-4-last-selected-regions", "data"),
 )
 def page_2bis_plot_graph_heatmap_mz_selection(
     # active_tab,
@@ -648,11 +647,28 @@ def page_2bis_plot_graph_heatmap_mz_selection(
     name_lipid_1,
     name_lipid_2,
     name_lipid_3,
+    l_selected_regions,
 ):
 
     # Find out which input triggered the function
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
     value_input = dash.callback_context.triggered[0]["prop_id"].split(".")[1]
+
+    # Compute set of ids for the volume plot if it is going to be plotted
+    if (
+        id_input == "page-4-button-range"
+        or (id_input == "page-4-radioitems-input" and value_input == 3)
+        or id_input == "page-4-button-bounds"
+        or (id_input == "page-4-radioitems-input" and value_input == 2)
+        or id_input == "page-4-display-button"
+        or (id_input == "page-4-radioitems-input" and value_input == 1)
+    ):
+        set_id = set([])
+        for acronym in l_selected_regions:
+            set_id.add(atlas.dic_acronym_children_id[acronym])
+        # if no region was selected, put them all
+        if len(set_id) == 0:
+            set_id = None
 
     # case a mz value and a manual range have been inputed
     if id_input == "page-4-button-range" or (id_input == "page-4-radioitems-input" and value_input == 3):

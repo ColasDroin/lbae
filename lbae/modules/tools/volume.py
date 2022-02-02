@@ -73,9 +73,10 @@ def fill_array_borders(
     for x in range(1, array_annotation.shape[0] - 1):
         for y in range(1, array_annotation.shape[1] - 1):
             for z in range(1, array_annotation.shape[2] - 1):
-                if array_annotation[x, y, z] > 0 and (
-                    keep_structure_id is None or array_annotation[x, y, z] == keep_structure_id
-                ):
+                if array_annotation[x, y, z] > 0:
+                    if keep_structure_id is not None:
+                        if array_annotation[x, y, z] not in keep_structure_id:
+                            continue
 
                     # If we want to plot the brain border with a different shade
                     if differentiate_borders:
@@ -84,12 +85,13 @@ def fill_array_borders(
                         for xt in range(x - 1, x + 2):
                             for yt in range(y - 1, y + 2):
                                 for zt in range(z - 1, z + 2):
-                                    # there's a border around
-                                    if (array_annotation[xt, yt, zt] == 0 and keep_structure_id is None) or (
-                                        array_annotation[xt, yt, zt] != keep_structure_id
-                                        and keep_structure_id is not None
-                                    ):
-                                        found = True
+                                    # two cases in which there's a border around, depending if keep_structure_id is defined
+                                    if keep_structure_id is None:
+                                        if array_annotation[xt, yt, zt] == 0:
+                                            found = True
+                                    else:
+                                        if array_annotation[xt, yt, zt] not in keep_structure_id:
+                                            found = True
                         if found:
                             array_atlas_borders[x, y, z] = -0.1
                         # inside the brain/structure but not a border
