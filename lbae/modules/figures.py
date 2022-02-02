@@ -745,13 +745,25 @@ class Figures:
                 # zaxis_autorange="reversed",
                 # aspectmode = "data",
                 yaxis=dict(
-                    range=[0.05 / 7 * reduce_resolution_factor, 0.33 / 7 * reduce_resolution_factor], autorange=False
+                    range=[0.05 / 7 * reduce_resolution_factor, 0.33 / 7 * reduce_resolution_factor],
+                    autorange=False,
+                    backgroundcolor="rgba(0,0,0,0)",
+                    color="grey",
+                    gridcolor="grey",
                 ),
                 zaxis=dict(
-                    range=[0.2 / 7 * reduce_resolution_factor, -0.02 / 7 * reduce_resolution_factor], autorange=False
+                    range=[0.2 / 7 * reduce_resolution_factor, -0.02 / 7 * reduce_resolution_factor],
+                    autorange=False,
+                    backgroundcolor="rgba(0,0,0,0)",
+                    color="grey",
+                    gridcolor="grey",
                 ),
                 xaxis=dict(
-                    range=[0.0 / 7 * reduce_resolution_factor, 0.28 / 7 * reduce_resolution_factor], autorange=False
+                    range=[0.0 / 7 * reduce_resolution_factor, 0.28 / 7 * reduce_resolution_factor],
+                    autorange=False,
+                    backgroundcolor="rgba(0,0,0,0)",
+                    color="grey",
+                    gridcolor="grey",
                 ),
             ),
             margin=dict(t=5, r=0, b=0, l=0),

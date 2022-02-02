@@ -5,7 +5,7 @@ from click.decorators import pass_context
 import dash_bootstrap_components as dbc
 from dash import dcc, html
 
-from dash.dependencies import Input, Output, State
+from dash.dependencies import Input, Output, State, ALL
 import dash
 import plotly.graph_objects as go
 import numpy as np
@@ -635,7 +635,7 @@ def page_3_hover(hoverData, slice_index):
 # Function to reset the layout of the heatmap
 @app.app.callback(
     Output("page-3-graph-heatmap-per-sel", "relayoutData"),
-    Input("page-3-reset-button", "n_clicks"),
+    Input({"type": "page-3-reset-button", "index": ALL}, "n_clicks"),
     Input("url", "pathname"),
     prevent_initial_call=True,
 )
@@ -649,9 +649,9 @@ def tab_3_reset_layout(cliked_reset, url):
     Output("dcc-store-color-mask", "data"),
     Output("dcc-store-reset", "data"),
     Output("dcc-store-shapes-and-masks", "data"),
-    Input("page-3-graph-heatmap-per-sel", "relayoutData"),
+    Input({"type": "page-3-graph-heatmap-per-sel", "index": ALL}, "relayoutData"),
     Input("main-slider", "value"),
-    Input("page-3-reset-button", "n_clicks"),
+    Input({"type": "page-3-reset-button", "index": ALL}, "n_clicks"),
     Input("page-3-dropdown-brain-regions", "value"),
     Input("url", "pathname"),
     State("dcc-store-color-mask", "data"),
@@ -682,7 +682,7 @@ def page_3_plot_heatmap(
             type_figure="projection_corrected",
             index_image=slice_index - 1,
             plot_atlas_contours=False,
-            draw = True,
+            draw=True,
         )
         fig.update_layout(
             dragmode="drawclosedpath",
@@ -844,7 +844,8 @@ def page_3_update_dropdown_option(slice_index):
 @app.app.callback(
     Output("page-3-dropdown-brain-regions", "disabled"),
     Input("page-3-dropdown-brain-regions", "value"),
-    Input("page-3-reset-button", "n_clicks"),
+    Input({"type": "page-3-reset-button", "index": ALL}, "n_clicks"),
+    prevent_intial_call=True,
 )
 def page_3_disable_dropdown(l_selection, clicked_reset):
 
@@ -865,8 +866,9 @@ def page_3_disable_dropdown(l_selection, clicked_reset):
 # Function that empties dropdown selection
 @app.app.callback(
     Output("page-3-dropdown-brain-regions", "value"),
-    Input("page-3-reset-button", "n_clicks"),
+    Input({"type": "page-3-reset-button", "index": ALL}, "n_clicks"),
     Input("main-slider", "value"),
+    prevent_initial_call=True,
 )
 def page_3_empty_dropdown(clicked_reset, slice_index):
     return []
@@ -875,8 +877,8 @@ def page_3_empty_dropdown(clicked_reset, slice_index):
 # Function that activate the button to compute spectra
 @app.app.callback(
     Output("page-3-button-compute-spectra", "disabled"),
-    Input("page-3-graph-heatmap-per-sel", "relayoutData"),
-    Input("page-3-reset-button", "n_clicks"),
+    Input({"type": "page-3-graph-heatmap-per-sel", "index": ALL}, "relayoutData"),
+    Input({"type": "page-3-reset-button", "index": ALL}, "n_clicks"),
     Input("page-3-dropdown-brain-regions", "value"),
     prevent_intial_call=True,
 )
@@ -906,10 +908,11 @@ def page_3_button_compute_spectra(relayoutData, clicked_reset, mask):
     Output("page-3-alert-2", "style"),
     Output("page-3-graph-heatmap-per-lipid", "style"),
     Output("page-3-div-dropdown", "style"),
-    Input("page-3-reset-button", "n_clicks"),
-    Input("page-3-button-compute-spectra", "n_clicks"),
+    Input({"type": "page-3-reset-button", "index": ALL}, "n_clicks"),
+    Input({"type": "page-3-button-compute-spectra", "index": ALL}, "n_clicks"),
     State("page-3-dropdown-brain-regions", "value"),
     State("page-3-graph-heatmap-per-sel", "relayoutData"),
+    prevent_initial_call=True,
 )
 def tab_3_display_high_res_mz_plot(clicked_reset, clicked_compute, mask, relayoutData):
 
@@ -942,10 +945,11 @@ def tab_3_display_high_res_mz_plot(clicked_reset, clicked_compute, mask, relayou
 # Function to make visible the sorting switch for the lipid heatmap
 @app.app.callback(
     Output("page-3-switches", "className"),
-    # Input("page-3-button-compute-spectra", "n_clicks"),
-    Input("page-3-reset-button", "n_clicks"),
-    Input("page-3-graph-heatmap-per-lipid", "figure"),
+    # Input({"type":"page-3-button-compute-spectra", "index":ALL}, "n_clicks"),
+    Input({"type": "page-3-reset-button", "index": ALL}, "n_clicks"),
+    Input({"type": "page-3-graph-heatmap-per-lipid", "index": ALL}, "figure"),
     State("page-3-graph-heatmap-per-sel", "relayoutData"),
+    prevent_initial_call=True,
 )
 def page_3_display_switch(clicked_reset, fig_heatmap, relayoutData):
 
@@ -982,10 +986,11 @@ def page_3_display_switch(clicked_reset, fig_heatmap, relayoutData):
     Output("page-3-alert-3", "style"),
     Output("page-3-alert-4", "style"),
     Output("page-3-alert-5", "style"),
-    Input("page-3-button-compute-spectra", "n_clicks"),
-    Input("page-3-reset-button", "n_clicks"),
+    Input({"type": "page-3-button-compute-spectra", "index": ALL}, "n_clicks"),
+    Input({"type": "page-3-reset-button", "index": ALL}, "n_clicks"),
     State("page-3-graph-heatmap-per-sel", "relayoutData"),
     State("page-3-dropdown-brain-regions", "value"),
+    prevent_initial_call=True,
 )
 def page_3_display_alert(clicked_compute, clicked_reset, relayoutData, mask):
 
@@ -1121,9 +1126,9 @@ def global_spectrum_store(slice_index, l_shapes_and_masks, l_mask_name, relayout
 # Function that takes path or mask and compute corresponding spectrum
 @app.app.callback(
     Output("dcc-store-list-mz-spectra", "data"),
-    Input("page-3-button-compute-spectra", "n_clicks"),
+    Input({"type": "page-3-button-compute-spectra", "index": ALL}, "n_clicks"),
     Input("page-3-dcc-store-path-heatmap", "data"),
-    Input("page-3-reset-button", "n_clicks"),
+    Input({"type": "page-3-reset-button", "index": ALL}, "n_clicks"),
     Input("url", "pathname"),
     Input("main-slider", "value"),
     State("page-3-dropdown-brain-regions", "value"),
@@ -1214,7 +1219,7 @@ def global_lipid_index_store(slice_index, l_spectra):
     Output("page-3-graph-spectrum-per-pixel", "figure"),
     # Output("dcc-store-list-idx-lipids", "data"),
     Output("page-3-empty-div-load", "children"),  # empty div to trigger spinner
-    Input("page-3-reset-button", "n_clicks"),
+    Input({"type": "page-3-reset-button", "index": ALL}, "n_clicks"),
     Input("dcc-store-list-mz-spectra", "data"),
     Input("main-slider", "value"),
     State("page-3-dropdown-brain-regions", "value"),
@@ -1356,9 +1361,9 @@ def page_3_plot_spectrum(
     Output("page-3-graph-heatmap-per-lipid", "figure"),
     Output("page-3-dcc-store-lipids-region", "data"),
     # Input("dcc-store-list-idx-lipids", "data"),
-    Input("page-3-reset-button", "n_clicks"),
-    Input("page-3-sort-by-diff-switch", "value"),
-    Input("page-4-slider", "value"),
+    Input({"type": "page-3-reset-button", "index": ALL}, "n_clicks"),
+    Input({"type": "page-3-sort-by-diff-switch", "index": ALL}, "value"),
+    Input({"type": "page-4-slider", "index": ALL}, "value"),
     Input("main-slider", "value"),
     Input("dcc-store-list-mz-spectra", "data"),
     State("page-3-dropdown-brain-regions", "value"),
@@ -1569,9 +1574,10 @@ def page_3_reset_download(fig_mz):
     Output("page-3-dropdown-blue", "value"),
     Output("page-3-open-modal", "n_clicks"),
     Input("page-3-dcc-store-lipids-region", "data"),
-    Input("page-3-reset-button", "n_clicks"),
+    Input({"type": "page-3-reset-button", "index": ALL}, "n_clicks"),
     Input("main-slider", "value"),
     State("page-3-open-modal", "n_clicks"),
+    prevent_initial_call=True,
 )
 def page_3_fill_dropdown_options(l_idx_lipids, cliked_reset, slice_index, n_clicks):
 
@@ -1642,10 +1648,11 @@ def toggle_button_modal(l_red_lipids, l_green_lipids, l_blue_lipids):
 @app.app.callback(
     Output("page-3-div-graph-lipid-comparison", "style"),
     Input("page-3-open-modal", "n_clicks"),
-    Input("page-3-reset-button", "n_clicks"),
+    Input({"type": "page-3-reset-button", "index": ALL}, "n_clicks"),
     State("page-3-dropdown-red", "value"),
     State("page-3-dropdown-green", "value"),
     State("page-3-dropdown-blue", "value"),
+    prevent_initial_call=True,
 )
 def toggle_visibility_graph(n1, cliked_reset, l_red_lipids, l_green_lipids, l_blue_lipids):
     # Find out which input triggered the function
@@ -1666,7 +1673,7 @@ def toggle_visibility_graph(n1, cliked_reset, l_red_lipids, l_green_lipids, l_bl
 @app.app.callback(
     Output("page-3-heatmap-lipid-comparison", "figure"),
     Input("page-3-open-modal", "n_clicks"),
-    Input("page-3-reset-button", "n_clicks"),
+    Input({"type": "page-3-reset-button", "index": ALL}, "n_clicks"),
     Input("page-3-toggle-mask", "value"),
     Input("main-slider", "value"),
     State("page-3-dropdown-red", "value"),
@@ -1678,6 +1685,7 @@ def toggle_visibility_graph(n1, cliked_reset, l_red_lipids, l_green_lipids, l_bl
     State("page-3-log", "value"),
     State("page-3-normalize", "value"),
     State("session-id", "data"),
+    prevent_initial_call=True,
 )
 def draw_modal_graph(
     n1,
@@ -1749,7 +1757,7 @@ def draw_modal_graph(
 # Function to activate the dcc.interval for the progress bar
 @app.app.callback(
     Output("page-3-interval-component", "disabled"),
-    Input("page-3-button-compute-spectra", "n_clicks"),
+    Input({"type":"page-3-button-compute-spectra", "index":ALL}, "n_clicks"),
     Input("page-3-progress", "value"),
 )
 def tab_3_activate_interval(n_clicks, progress):
@@ -1769,8 +1777,8 @@ def tab_3_activate_interval(n_clicks, progress):
 @app.app.callback(
     Output("page-3-progress", "className"),
     Input("page-3-progress", "value"),
-    Input("page-3-reset-button", "n_clicks"),
-    Input("page-3-button-compute-spectra", "n_clicks"),
+    Input({"type":"page-3-reset-button", "index":ALL}, "n_clicks"),
+    Input({"type":"page-3-button-compute-spectra", "index":ALL}, "n_clicks"),
     Input("page-3-interval-component", "disabled"),
 )
 def update_loading_visibility(value, clicked_reset, clicked_compute, disabled_bar):

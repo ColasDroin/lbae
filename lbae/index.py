@@ -8,6 +8,7 @@ import uuid
 import dash_loading_spinners as dls
 import logging
 import dash_mantine_components as dmc
+from flask import request
 
 # Homemade modules
 from lbae.app import app, data
@@ -253,5 +254,5 @@ def hide_slider(pathname):
 
 
 def run():
-    app.run_server(port=8070, debug=True)
+    app.run_server(port=8071, debug=False)
 
