@@ -1325,7 +1325,7 @@ class Figures:
             value=array_atlas_borders_root.flatten(),
             isomin=-0.21,
             isomax=2.55,
-            opacity=0.15,  # max opacity
+            opacity=0.1,  # max opacity
             # opacityscale=[[-0.0, 0], [1., 1]],
             # opacityscale = "uniform",
             surface_count=2,
@@ -1389,22 +1389,28 @@ class Figures:
         array_y_scaled = array_y * 1000000 / self._atlas.resolution / decrease_dimensionality_factor
         array_z_scaled = array_z * 1000000 / self._atlas.resolution / decrease_dimensionality_factor
 
-        for x, y, z, c in zip(array_x_scaled, array_y_scaled, array_z_scaled, array_c):
-            x_scaled = int(round(y))
-            y_scaled = int(round(z))
-            z_scaled = int(round(x))
-            # if inside the brain but not a border
-            if array_slices[x_scaled, y_scaled, z_scaled] > -0.05:
-                # if inside the brain and not assigned before
-                if abs(array_slices[x_scaled, y_scaled, z_scaled] - (-0.01)) < 10 ** -4:
-                    array_slices[x_scaled, y_scaled, z_scaled] = c / 100
-                # inside the brain but already assigned, in which case average
-                else:
-                    array_slices[x_scaled, y_scaled, z_scaled] += c / 100
-                    array_for_avg[x_scaled, y_scaled, z_scaled] += 1
+        @njit
+        def fill_array_slices(array_x_scaled, array_y_scaled, array_z_scaled, array_c, array_slices, array_for_avg):
+            for x, y, z, c in zip(array_x_scaled, array_y_scaled, array_z_scaled, array_c):
+                x_scaled = int(round(y))
+                y_scaled = int(round(z))
+                z_scaled = int(round(x))
+                # if inside the brain but not a border
+                if array_slices[x_scaled, y_scaled, z_scaled] > -0.05:
+                    # if inside the brain and not assigned before
+                    if abs(array_slices[x_scaled, y_scaled, z_scaled] - (-0.01)) < 10 ** -4:
+                        array_slices[x_scaled, y_scaled, z_scaled] = c / 100
+                    # inside the brain but already assigned, in which case average
+                    else:
+                        array_slices[x_scaled, y_scaled, z_scaled] += c / 100
+                        array_for_avg[x_scaled, y_scaled, z_scaled] += 1
 
-        array_slices = array_slices / array_for_avg
+            array_slices = array_slices / array_for_avg
+            return array_slices
 
+        array_slices = fill_array_slices(
+            array_x_scaled, array_y_scaled, array_z_scaled, np.array(array_c), array_slices, array_for_avg
+        )
         logging.info("Filled basic structure array with array of expression")
 
         # Get the corresponding coordinates
@@ -1522,7 +1528,7 @@ class Figures:
                     isomin=0.01,
                     isomax=1.5,
                     # opacity=0.5,  # max opacity
-                    opacityscale=[[-0.11, 0.01], [0.0, 0.01], [0.1, 0.7], [2.5, 0.7]],  # "uniform",
+                    opacityscale=[[-0.11, 0.00], [0.01, 0.0], [0.5, 0.2], [2.5, 0.7]],  # "uniform",
                     surface_count=10,
                     colorscale="viridis",  # "RdBu_r",
                     flatshading=True,

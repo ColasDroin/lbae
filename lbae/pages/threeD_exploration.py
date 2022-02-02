@@ -672,10 +672,24 @@ def page_2bis_plot_graph_heatmap_mz_selection(
         set_id = set([])
         for acronym in l_selected_regions:
             set_id = set_id.union(atlas.dic_acronym_children_id[acronym])
+        print(set_id)
+        if len(set_id) < 5:
+            decrease_resolution_factor = 3
+        elif len(set_id) < 10:
+            decrease_resolution_factor = 4
+        elif len(set_id) < 50:
+            decrease_resolution_factor = 5
+        elif len(set_id) < 100:
+            decrease_resolution_factor = 6
+        else:
+            decrease_resolution_factor = 7
         # if no region was selected, put them all
         if len(set_id) == 0:
             set_id = None
-
+            decrease_resolution_factor = 7
+        logging.info(
+            "For the computation of 3D volume, decrease_resolution_factor is " + str(decrease_resolution_factor)
+        )
     # case a mz value and a manual range have been inputed
     if id_input == "page-4-button-range" or (id_input == "page-4-radioitems-input" and value_input == 3):
         if mz is not None and mz_range is not None:
@@ -686,6 +700,7 @@ def page_2bis_plot_graph_heatmap_mz_selection(
                     figures.compute_3D_volume_figure(
                         [[[(mz - mz_range / 2, mz + mz_range / 2)], None, None]] * app.data.get_slice_number(),
                         set_id_regions=set_id,
+                        decrease_dimensionality_factor=decrease_resolution_factor,
                     ),
                     3,
                 )
@@ -699,7 +714,9 @@ def page_2bis_plot_graph_heatmap_mz_selection(
             if lb > 400 and hb < 1200 and hb - lb > 0 and hb - lb < 10:
                 return (
                     figures.compute_3D_volume_figure(
-                        [[[(lb, hb)], None, None]] * app.data.get_slice_number(), set_id_regions=set_id,
+                        [[[(lb, hb)], None, None]] * app.data.get_slice_number(),
+                        set_id_regions=set_id,
+                        decrease_dimensionality_factor=decrease_resolution_factor,
                     ),
                     2,
                 )
@@ -778,6 +795,7 @@ def page_2bis_plot_graph_heatmap_mz_selection(
                     name_lipid_2=name_lipid_2,
                     name_lipid_3=name_lipid_3,
                     set_id_regions=set_id,
+                    decrease_dimensionality_factor=decrease_resolution_factor,
                 ),
                 1,
             )
