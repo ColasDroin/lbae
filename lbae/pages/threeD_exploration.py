@@ -34,7 +34,7 @@ def return_layout(basic_config, slice_index):
                     {"i": "page-4-card-lipid-selection", "x": 8, "y": 0, "w": 4, "h": 11},
                     {"i": "page-4-card-range-selection", "x": 8, "y": 8, "w": 4, "h": 6},
                     {"i": "page-4-card-input-selection", "x": 8, "y": 10, "w": 4, "h": 3},
-                    {"i": "page-4-card-main-graph", "x": 0, "y": 20, "w": 12, "h": 24},
+                    {"i": "page-4-card-main-graph", "x": 0, "y": 20, "w": 12, "h": 32},
                 ],
                 "md": [
                     {"i": "page-4-card-region-selection", "x": 0, "y": 0, "w": 7, "h": 14},
@@ -392,7 +392,7 @@ def return_layout(basic_config, slice_index):
                                                     },
                                                     style={
                                                         "width": "100%",
-                                                        "height": "100%",
+                                                        "height": "95%",
                                                         "position": "absolute",
                                                         "left": "0",
                                                     },
@@ -480,6 +480,8 @@ def page_4_click(clickData, region_1_id, region_2_id, region_3_id):
 
     if region_1_id != "" or region_2_id != "" or region_3_id != "":
         return "Please choose a structure above", True
+
+    return dash.no_update
 
 
 # Function to add region choice to selection
@@ -587,6 +589,8 @@ def page_4_add_toast_region_selection(
                 else:
                     print("BUG, more than 3 regions have been selected")
                     return dash.no_update
+
+                print("ici", l_selected_regions)
 
                 return (
                     header_1,
