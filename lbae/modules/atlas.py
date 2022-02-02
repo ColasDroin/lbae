@@ -64,8 +64,13 @@ class Atlas:
         # be memory-mapped as they are called when hovering and require very fast response from the server
         self.labels = Labels(self.bg_atlas, force_init=True)
         self._simplified_labels_int = None
-        self.dic_label_id = return_pickled_object(
-            "atlas/atlas_objects", "dic_label_id", force_update=False, compute_function=self.compute_dic_label_id
+
+        # Compute a dictionnary that associates to each structure (acronym) the set of ids (int) of all os its children
+        self.dic_acronym_children_id = return_pickled_object(
+            "atlas/atlas_objects",
+            "dic_acronym_children_id",
+            force_update=False,
+            compute_function=self.compute_dic_acronym_children_id,
         )
 
         # Load array of coordinates for warped data (can't be pickled as used with hovering)
@@ -76,7 +81,7 @@ class Atlas:
         # Record shape of the warped data
         self.image_shape = list(self.array_coordinates_warped_data.shape[1:-1])
 
-        # Record dict that associate brain region to specific id, along with graph of structures
+        # Record dict that associate brain region (complete string) to specific id (short label), along with graph of structures
         self.l_nodes, self.l_parents, self.dic_name_id = return_pickled_object(
             "atlas/atlas_objects", "hierarchy", force_update=False, compute_function=self.compute_hierarchy_list
         )
@@ -142,13 +147,38 @@ class Atlas:
             compute_function=self.compute_list_projected_atlas_borders_figures,
         )
 
-    # Compute a dictionnary that associate a label (key) to its default unique id (value)
-    def compute_dic_label_id(self):
-        dic_label_id = {
-            self.bg_atlas.structures[id]["name"]: id for id in set(self.bg_atlas.annotation.flatten()) if id != 0
-        }
-        dic_label_id["root"] = 0
-        return dic_label_id
+    # # Compute a dictionnary that associate a long label (key) to its default unique id (int value)
+    # def compute_dic_label_id(self):
+    #     dic_label_id = {
+    #         self.bg_atlas.structures[id]["name"]: id for id in set(self.bg_atlas.annotation.flatten()) if id != 0
+    #     }
+    #     dic_label_id["root"] = 0
+    #     return dic_label_id
+
+    # Compute a dictionnary that associate to each structure (acronym) the set of ids (int) of all os its children
+    def compute_dic_acronym_children_id(self):
+        def fill_dic_acronym_children_id(dic_acronym_children_id, l_id_leaves):
+            older_leave_id = l_id_leaves[0]
+            acronym = self.atlas.bg_atlas.structures[older_leave_id]["acronym"]
+            for id_leave in l_id_leaves:
+                # fill dic with current acronym and id
+                if acronym in dic_acronym_children_id:
+                    dic_acronym_children_id[acronym].add(id_leave)
+                else:
+                    dic_acronym_children_id[acronym] = set([id_leave])
+            # while root is not reached, climb back the ancestor tree
+            if len(self.atlas.bg_atlas.structures[older_leave_id]["structure_id_path"]) >= 2:
+                id_parent = self.atlas.bg_atlas.structures[older_leave_id]["structure_id_path"][-2]
+                dic_acronym_children_id = fill_dic_acronym_children_id(
+                    dic_acronym_children_id, [id_parent] + l_id_leaves
+                )
+            return dic_acronym_children_id
+
+        dic_acronym_children_id = {}
+        for id in set(self.atlas.bg_atlas.annotation.flatten()):
+            if id != 0:
+                dic_acronym_children_id = fill_dic_acronym_children_id(dic_acronym_children_id, [id])
+        return dic_acronym_children_id
 
     def compute_hierarchy_list(self):
 
