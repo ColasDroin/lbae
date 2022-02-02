@@ -672,7 +672,6 @@ def page_2bis_plot_graph_heatmap_mz_selection(
         set_id = set([])
         for acronym in l_selected_regions:
             set_id = set_id.union(atlas.dic_acronym_children_id[acronym])
-        print(set_id)
         if len(set_id) < 5:
             decrease_resolution_factor = 3
         elif len(set_id) < 10:

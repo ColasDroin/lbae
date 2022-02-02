@@ -40,6 +40,7 @@ class MaldiData:
         _n_slices (int): number of slices present in the dataset.
         _df_annotations (pd.dataframe): a dataframe containing for each slice and each annotated peak the name of 
             the lipid inbetween the two annotated peak boundaries.
+        _path_data (str): path were the data files are stored.
 
     Methods:
         get_annotations(): getter for the lipid annotation of each slice, contained in a pandas dataframe.
@@ -318,7 +319,6 @@ class MaldiData:
                 )
 
     def compute_l_labels(self):
-
         l_labels = (
             self._df_annotations["name"]
             + "_"

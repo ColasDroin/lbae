@@ -1528,7 +1528,7 @@ class Figures:
                     isomin=0.01,
                     isomax=1.5,
                     # opacity=0.5,  # max opacity
-                    opacityscale=[[-0.11, 0.00], [0.01, 0.0], [0.5, 0.2], [2.5, 0.7]],  # "uniform",
+                    opacityscale=[[-0.11, 0.00], [0.01, 0.0], [0.5, 0.05], [2.5, 0.7]],  # "uniform",
                     surface_count=10,
                     colorscale="viridis",  # "RdBu_r",
                     flatshading=True,

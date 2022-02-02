@@ -1,6 +1,6 @@
 BSD 3-Clause License
 
-Copyright (c) 2021, Lipid Brain Atlas Explorer
+Copyright (c) 2022, Lipid Brain Atlas Explorer
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
