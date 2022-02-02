@@ -65,6 +65,8 @@ def filter_voxels(
 # -0.1 is border
 # -0.01 is inside brain/structure
 # the -0.01 numbers get changed after assignment to lipid expression
+
+# ! need to opitmize by turning keep_structure_id into a set
 @njit
 def fill_array_borders(
     array_annotation, differentiate_borders=False, color_near_borders=False, keep_structure_id=None

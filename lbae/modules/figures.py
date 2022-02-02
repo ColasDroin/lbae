@@ -1331,6 +1331,7 @@ class Figures:
             surface_count=2,
             colorscale="Blues",  # colorscale,
             flatshading=True,
+            showscale=False,
         )
 
         # Return figure
@@ -1346,6 +1347,8 @@ class Figures:
         decrease_dimensionality_factor=7,
     ):
 
+        logging.info("Starting 3D volume computation")
+
         # Get subsampled array of annotations
         array_annotation = np.array(
             self._atlas.bg_atlas.annotation[
@@ -1360,7 +1363,11 @@ class Figures:
         )
 
         # Compute an array of boundaries
-        array_atlas_borders = fill_array_borders(array_annotation, keep_structure_id=set_id_regions)
+        array_atlas_borders = fill_array_borders(
+            array_annotation, keep_structure_id=np.array(list(set_id_regions), dtype=np.int64)
+        )
+
+        logging.info("Computed basic structure array")
 
         # Return the lipid expression in 3D
         array_x, array_y, array_z, array_c = return_pickled_object(
@@ -1374,6 +1381,7 @@ class Figures:
             high_res=False,
         )
 
+        logging.info("Computed array of expression in original space")
         # Compute the rescaled array of expression for each slice averaged over projected lipids
         array_slices = np.copy(array_atlas_borders)
         array_for_avg = np.full_like(array_atlas_borders, 1)
@@ -1396,6 +1404,8 @@ class Figures:
                     array_for_avg[x_scaled, y_scaled, z_scaled] += 1
 
         array_slices = array_slices / array_for_avg
+
+        logging.info("Filled basic structure array with array of expression")
 
         # Get the corresponding coordinates
         X, Y, Z = np.mgrid[
@@ -1491,14 +1501,16 @@ class Figures:
                 Y = Y[x_min : x_max + 1, y_min : y_max + 1, z_min : z_max + 1]
                 Z = Z[x_min : x_max + 1, y_min : y_max + 1, z_min : z_max + 1]
 
+            logging.info("Cropped the figure to only keep areas in which lipids are expressed")
         # Compute an array containing the lipid expression interpolated for every voxel
-        array_interpolated = fill_array_interpolation(array_annotation, array_slices, divider_radius=1)
+        array_interpolated = fill_array_interpolation(array_annotation, array_slices, divider_radius=4)
 
         # Get root figure
         root_data = return_pickled_object(
             "figures/3D_page", "volume_root", force_update=False, compute_function=self.compute_3D_root_volume,
         )
 
+        logging.info("Building final figure")
         # Build figure
         fig = go.Figure(
             data=[
@@ -1528,6 +1540,9 @@ class Figures:
                 zaxis=dict(backgroundcolor="rgba(0,0,0,0)", color="grey", gridcolor="grey"),
             ),
         )
+
+        logging.info("Done computing 3D volume figure")
+
         return fig
 
     ###### PICKLING FUNCTIONS ######

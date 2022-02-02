@@ -628,6 +628,9 @@ def page_4_add_toast_region_selection(
     State("page-4-toast-lipid-2", "header"),
     State("page-4-toast-lipid-3", "header"),
     State("page-4-last-selected-regions", "data"),
+    State("page-4-selected-region-1", "data"),
+    State("page-4-selected-region-2", "data"),
+    State("page-4-selected-region-3", "data"),
 )
 def page_2bis_plot_graph_heatmap_mz_selection(
     # active_tab,
@@ -648,6 +651,9 @@ def page_2bis_plot_graph_heatmap_mz_selection(
     name_lipid_2,
     name_lipid_3,
     l_selected_regions,
+    name_region_1,
+    name_region_2,
+    name_region_3,
 ):
 
     # Find out which input triggered the function
@@ -665,7 +671,7 @@ def page_2bis_plot_graph_heatmap_mz_selection(
     ):
         set_id = set([])
         for acronym in l_selected_regions:
-            set_id.add(atlas.dic_acronym_children_id[acronym])
+            set_id = set_id.union(atlas.dic_acronym_children_id[acronym])
         # if no region was selected, put them all
         if len(set_id) == 0:
             set_id = None
@@ -678,7 +684,8 @@ def page_2bis_plot_graph_heatmap_mz_selection(
             if mz > 400 and mz < 1200 and mz_range < 10:
                 return (
                     figures.compute_3D_volume_figure(
-                        [[[(mz - mz_range / 2, mz + mz_range / 2)], None, None]] * app.data.get_slice_number()
+                        [[[(mz - mz_range / 2, mz + mz_range / 2)], None, None]] * app.data.get_slice_number(),
+                        set_id_regions=set_id,
                     ),
                     3,
                 )
@@ -690,7 +697,12 @@ def page_2bis_plot_graph_heatmap_mz_selection(
         if lb is not None and hb is not None:
             lb, hb = float(lb), float(hb)
             if lb > 400 and hb < 1200 and hb - lb > 0 and hb - lb < 10:
-                return figures.compute_3D_volume_figure([[[(lb, hb)], None, None]] * app.data.get_slice_number()), 2
+                return (
+                    figures.compute_3D_volume_figure(
+                        [[[(lb, hb)], None, None]] * app.data.get_slice_number(), set_id_regions=set_id,
+                    ),
+                    2,
+                )
         return dash.no_update
 
     # If a lipid selection has been done
@@ -746,7 +758,18 @@ def page_2bis_plot_graph_heatmap_mz_selection(
             return (
                 return_pickled_object(
                     "figures/3D_page",
-                    "volume_interpolated_3D_" + name_lipid_1 + "_" + name_lipid_2 + "_" + name_lipid_3,
+                    "volume_interpolated_3D_"
+                    + name_lipid_1
+                    + "_"
+                    + name_lipid_2
+                    + "_"
+                    + name_lipid_3
+                    + "_"
+                    + name_region_1
+                    + "_"
+                    + name_region_2
+                    + "_"
+                    + name_region_3,
                     force_update=False,
                     compute_function=figures.compute_3D_volume_figure,
                     ignore_arguments_naming=True,
@@ -754,6 +777,7 @@ def page_2bis_plot_graph_heatmap_mz_selection(
                     name_lipid_1=name_lipid_1,
                     name_lipid_2=name_lipid_2,
                     name_lipid_3=name_lipid_3,
+                    set_id_regions=set_id,
                 ),
                 1,
             )

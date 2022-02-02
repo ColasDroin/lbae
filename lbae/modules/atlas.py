@@ -159,7 +159,7 @@ class Atlas:
     def compute_dic_acronym_children_id(self):
         def fill_dic_acronym_children_id(dic_acronym_children_id, l_id_leaves):
             older_leave_id = l_id_leaves[0]
-            acronym = self.atlas.bg_atlas.structures[older_leave_id]["acronym"]
+            acronym = self.bg_atlas.structures[older_leave_id]["acronym"]
             for id_leave in l_id_leaves:
                 # fill dic with current acronym and id
                 if acronym in dic_acronym_children_id:
@@ -167,15 +167,15 @@ class Atlas:
                 else:
                     dic_acronym_children_id[acronym] = set([id_leave])
             # while root is not reached, climb back the ancestor tree
-            if len(self.atlas.bg_atlas.structures[older_leave_id]["structure_id_path"]) >= 2:
-                id_parent = self.atlas.bg_atlas.structures[older_leave_id]["structure_id_path"][-2]
+            if len(self.bg_atlas.structures[older_leave_id]["structure_id_path"]) >= 2:
+                id_parent = self.bg_atlas.structures[older_leave_id]["structure_id_path"][-2]
                 dic_acronym_children_id = fill_dic_acronym_children_id(
                     dic_acronym_children_id, [id_parent] + l_id_leaves
                 )
             return dic_acronym_children_id
 
         dic_acronym_children_id = {}
-        for id in set(self.atlas.bg_atlas.annotation.flatten()):
+        for id in set(self.bg_atlas.annotation.flatten()):
             if id != 0:
                 dic_acronym_children_id = fill_dic_acronym_children_id(dic_acronym_children_id, [id])
         return dic_acronym_children_id
