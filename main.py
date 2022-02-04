@@ -38,6 +38,7 @@ if __name__ == "__main__":
         # Shut reddis server
         os.system("../redis/redis-6.2.6/src/redis-cli shutdown")
 
+# TODO Fix the bug with the region analysis part. Get rid of reddis?
 # TODO Make lipid expression comparison between 3D structure
 # TODO make a careful memory analysis to free more memory
 # TODO incoporate new brain slices
@@ -62,4 +63,5 @@ if __name__ == "__main__":
 # To kill gunicorn if it doesn't want to die
 # pkill -P1 gunicorn
 
-#http://cajal.epfl.ch:8050/
+# http://cajal.epfl.ch:8050/
+

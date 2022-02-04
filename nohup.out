@@ -1680,3 +1680,398 @@ Bad directive or wrong number of arguments
 Reading the configuration file, at line 993
 >>> 'allkeys-lru'
 Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+[2022-02-03 13:56:38 +0100] [88111] [INFO] Starting gunicorn 20.1.0
+[2022-02-03 13:56:38 +0100] [88111] [INFO] Listening at: http://0.0.0.0:8050 (88111)
+[2022-02-03 13:56:38 +0100] [88111] [INFO] Using worker: sync
+[2022-02-03 13:56:38 +0100] [88112] [INFO] Booting worker with pid: 88112
+[2022-02-03 13:56:38 +0100] [88113] [INFO] Booting worker with pid: 88113
+[2022-02-03 13:56:38 +0100] [88114] [INFO] Booting worker with pid: 88114
+[2022-02-03 13:56:38 +0100] [88115] [INFO] Booting worker with pid: 88115
+2022-02-03 13:56:38.290 INFO main - <module>: Starting import chain	MemTotal: 53.83984375
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+2022-02-03 13:56:38.327 INFO main - <module>: Starting import chain	MemTotal: 53.83984375
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+2022-02-03 13:56:38.376 INFO main - <module>: Starting import chain	MemTotal: 53.84375
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+2022-02-03 13:56:38.453 INFO main - <module>: Starting import chain	MemTotal: 53.83984375
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+2022-02-03 13:56:39.649 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 169.453125
+2022-02-03 13:56:39.649 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 169.453125
+2022-02-03 13:56:39.742 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 169.453125
+2022-02-03 13:56:39.743 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 169.453125
+2022-02-03 13:56:39.753 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 169.44140625
+2022-02-03 13:56:39.753 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 169.44140625
+2022-02-03 13:56:39.826 INFO atlas - __init__: Initializing Atlas object	MemTotal: 206.46875
+2022-02-03 13:56:39.846 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 169.453125
+2022-02-03 13:56:39.847 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 169.453125
+2022-02-03 13:56:39.855 INFO atlas - __init__: Initializing Atlas object	MemTotal: 206.47265625
+2022-02-03 13:56:39.880 INFO atlas - __init__: Initializing Atlas object	MemTotal: 206.46484375
+2022-02-03 13:56:39.974 INFO atlas - __init__: Initializing Atlas object	MemTotal: 206.484375
+2022-02-03 13:56:40.197 INFO misc - return_pickled_object: Returning dic_acronym_children_id.pickle from pickled file.	MemTotal: 502.7421875
+2022-02-03 13:56:40.287 INFO misc - return_pickled_object: Returning dic_acronym_children_id.pickle from pickled file.	MemTotal: 502.7421875
+2022-02-03 13:56:40.324 INFO misc - return_pickled_object: Returning dic_acronym_children_id.pickle from pickled file.	MemTotal: 502.734375
+2022-02-03 13:56:40.426 INFO misc - return_pickled_object: Returning dic_acronym_children_id.pickle from pickled file.	MemTotal: 502.74609375
+2022-02-03 13:56:41.401 INFO misc - return_pickled_object: Returning hierarchy.pickle from pickled file.	MemTotal: 943.90234375
+2022-02-03 13:56:41.402 INFO misc - return_pickled_object: Returning arrays_projection_corrected_True_True.pickle from pickled file.	MemTotal: 944.0234375
+2022-02-03 13:56:41.404 INFO misc - return_pickled_object: Returning hierarchy.pickle from pickled file.	MemTotal: 943.90234375
+2022-02-03 13:56:41.405 INFO misc - return_pickled_object: Returning arrays_projection_corrected_True_True.pickle from pickled file.	MemTotal: 943.96875
+2022-02-03 13:56:41.585 INFO misc - return_pickled_object: Returning hierarchy.pickle from pickled file.	MemTotal: 943.89453125
+2022-02-03 13:56:41.585 INFO misc - return_pickled_object: Returning arrays_projection_corrected_True_True.pickle from pickled file.	MemTotal: 944.0234375
+2022-02-03 13:56:41.637 INFO misc - return_pickled_object: Returning dic_mask_images.pickle from pickled file.	MemTotal: 1091.078125
+2022-02-03 13:56:41.646 INFO figures - __init__: Initializing Figures object	MemTotal: 1091.20703125
+2022-02-03 13:56:41.646 INFO misc - return_pickled_object: Returning dic_fig_contours.pickle from pickled file.	MemTotal: 1091.20703125
+2022-02-03 13:56:41.646 INFO misc - return_pickled_object: Returning dic_mask_images.pickle from pickled file.	MemTotal: 1091.078125
+2022-02-03 13:56:41.651 INFO figures - __init__: Initializing Figures object	MemTotal: 1091.1484375
+2022-02-03 13:56:41.651 INFO misc - return_pickled_object: Returning dic_fig_contours.pickle from pickled file.	MemTotal: 1091.1484375
+2022-02-03 13:56:41.712 INFO misc - return_pickled_object: Returning hierarchy.pickle from pickled file.	MemTotal: 943.91015625
+2022-02-03 13:56:41.712 INFO misc - return_pickled_object: Returning arrays_projection_corrected_True_True.pickle from pickled file.	MemTotal: 944.03515625
+2022-02-03 13:56:41.907 INFO misc - return_pickled_object: Returning dic_mask_images.pickle from pickled file.	MemTotal: 1091.0703125
+2022-02-03 13:56:41.913 INFO figures - __init__: Initializing Figures object	MemTotal: 1091.203125
+2022-02-03 13:56:41.913 INFO misc - return_pickled_object: Returning dic_fig_contours.pickle from pickled file.	MemTotal: 1091.203125
+2022-02-03 13:56:42.022 INFO misc - return_pickled_object: Returning dic_mask_images.pickle from pickled file.	MemTotal: 1091.0859375
+2022-02-03 13:56:42.027 INFO figures - __init__: Initializing Figures object	MemTotal: 1091.21484375
+2022-02-03 13:56:42.027 INFO misc - return_pickled_object: Returning dic_fig_contours.pickle from pickled file.	MemTotal: 1091.21484375
+2022-02-03 13:56:42.367 INFO app - <module>: Memory use after three main object have been instantiated	MemTotal: 1128.02734375
+2022-02-03 13:56:42.375 INFO app - <module>: Memory use after three main object have been instantiated	MemTotal: 1128.0234375
+2022-02-03 13:56:42.388 INFO misc - return_pickled_object: Returning figure_basic_image_warped_data_1_False.pickle from pickled file.	MemTotal: 1128.76171875
+2022-02-03 13:56:42.394 INFO misc - return_pickled_object: Returning figure_basic_image_warped_data_1_False.pickle from pickled file.	MemTotal: 1128.76171875
+2022-02-03 13:56:42.708 INFO app - <module>: Memory use after three main object have been instantiated	MemTotal: 1128.0234375
+2022-02-03 13:56:42.728 INFO misc - return_pickled_object: Returning figure_basic_image_warped_data_1_False.pickle from pickled file.	MemTotal: 1128.765625
+2022-02-03 13:56:42.793 INFO app - <module>: Memory use after three main object have been instantiated	MemTotal: 1128.03515625
+2022-02-03 13:56:42.814 INFO misc - return_pickled_object: Returning figure_basic_image_warped_data_1_False.pickle from pickled file.	MemTotal: 1128.796875
+2022-02-03 13:56:43.909 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-02-03 13:56:43.980 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-02-03 13:56:44.013 INFO misc - return_pickled_object: Returning set_masks_0.pickle from pickled file.	MemTotal: 1172.62890625
+2022-02-03 13:56:44.014 INFO misc - return_pickled_object: Returning figure_basic_image_projection_corrected_0_False_True.pickle from pickled file.	MemTotal: 1172.69921875
+2022-02-03 13:56:44.025 INFO misc - return_pickled_object: treemaps.pickle could not be found or force_update is True. Computing the object and pickling it now.
+2022-02-03 13:56:44.081 INFO misc - return_pickled_object: treemaps.pickle being returned now from computation.
+2022-02-03 13:56:44.083 INFO misc - return_pickled_object: Returning sunburst.pickle from pickled file.	MemTotal: 1174.3359375
+2022-02-03 13:56:44.092 INFO misc - return_pickled_object: Returning set_masks_0.pickle from pickled file.	MemTotal: 1172.6796875
+2022-02-03 13:56:44.093 INFO misc - return_pickled_object: Returning figure_basic_image_projection_corrected_0_False_True.pickle from pickled file.	MemTotal: 1172.6796875
+2022-02-03 13:56:44.097 INFO misc - return_pickled_object: Returning atlas_with_slider_frontal_False.pickle from pickled file.	MemTotal: 1174.53125
+2022-02-03 13:56:44.105 INFO misc - return_pickled_object: treemaps.pickle could not be found or force_update is True. Computing the object and pickling it now.
+2022-02-03 13:56:44.117 INFO misc - return_pickled_object: Returning _None.pickle from pickled file.	MemTotal: 1174.98828125
+2022-02-03 13:56:44.157 INFO misc - return_pickled_object: treemaps.pickle being returned now from computation.
+2022-02-03 13:56:44.159 INFO misc - return_pickled_object: Returning sunburst.pickle from pickled file.	MemTotal: 1174.23828125
+2022-02-03 13:56:44.173 INFO misc - return_pickled_object: Returning atlas_with_slider_frontal_False.pickle from pickled file.	MemTotal: 1174.44921875
+2022-02-03 13:56:44.179 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-02-03 13:56:44.194 INFO misc - return_pickled_object: Returning _None.pickle from pickled file.	MemTotal: 1174.9609375
+2022-02-03 13:56:44.287 INFO misc - return_pickled_object: Returning set_masks_0.pickle from pickled file.	MemTotal: 1172.69140625
+2022-02-03 13:56:44.288 INFO misc - return_pickled_object: Returning figure_basic_image_projection_corrected_0_False_True.pickle from pickled file.	MemTotal: 1172.69140625
+2022-02-03 13:56:44.299 INFO misc - return_pickled_object: treemaps.pickle could not be found or force_update is True. Computing the object and pickling it now.
+2022-02-03 13:56:44.330 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-02-03 13:56:44.355 INFO misc - return_pickled_object: treemaps.pickle being returned now from computation.
+2022-02-03 13:56:44.356 INFO misc - return_pickled_object: Returning sunburst.pickle from pickled file.	MemTotal: 1174.30078125
+2022-02-03 13:56:44.370 INFO misc - return_pickled_object: Returning atlas_with_slider_frontal_False.pickle from pickled file.	MemTotal: 1174.5
+2022-02-03 13:56:44.390 INFO misc - return_pickled_object: Returning _None.pickle from pickled file.	MemTotal: 1174.98828125
+2022-02-03 13:56:44.438 INFO misc - return_pickled_object: Returning set_masks_0.pickle from pickled file.	MemTotal: 1172.6796875
+2022-02-03 13:56:44.439 INFO misc - return_pickled_object: Returning figure_basic_image_projection_corrected_0_False_True.pickle from pickled file.	MemTotal: 1172.6953125
+2022-02-03 13:56:44.451 INFO misc - return_pickled_object: treemaps.pickle could not be found or force_update is True. Computing the object and pickling it now.
+2022-02-03 13:56:44.503 INFO misc - return_pickled_object: treemaps.pickle being returned now from computation.
+2022-02-03 13:56:44.504 INFO misc - return_pickled_object: Returning sunburst.pickle from pickled file.	MemTotal: 1174.3203125
+2022-02-03 13:56:44.518 INFO misc - return_pickled_object: Returning atlas_with_slider_frontal_False.pickle from pickled file.	MemTotal: 1174.44921875
+2022-02-03 13:56:44.543 INFO misc - return_pickled_object: Returning _None.pickle from pickled file.	MemTotal: 1174.96484375
+[2022-02-03 13:57:10 +0100] [88217] [INFO] Starting gunicorn 20.1.0
+[2022-02-03 13:57:10 +0100] [88217] [ERROR] Connection in use: ('', 8050)
+[2022-02-03 13:57:10 +0100] [88217] [ERROR] Retrying in 1 second.
+[2022-02-03 13:57:11 +0100] [88217] [ERROR] Connection in use: ('', 8050)
+[2022-02-03 13:57:11 +0100] [88217] [ERROR] Retrying in 1 second.
+[2022-02-03 13:57:12 +0100] [88217] [ERROR] Connection in use: ('', 8050)
+[2022-02-03 13:57:12 +0100] [88217] [ERROR] Retrying in 1 second.
+[2022-02-03 13:57:13 +0100] [88217] [ERROR] Connection in use: ('', 8050)
+[2022-02-03 13:57:13 +0100] [88217] [ERROR] Retrying in 1 second.
+[2022-02-03 13:57:14 +0100] [88217] [ERROR] Connection in use: ('', 8050)
+[2022-02-03 13:57:14 +0100] [88217] [ERROR] Retrying in 1 second.
+[2022-02-03 13:57:15 +0100] [88217] [ERROR] Can't connect to ('', 8050)
+2022-02-03 13:57:20.659 INFO index - render_page_content: Page/3D-explorationhas been selected	MemTotal: 1175.67578125
+2022-02-03 13:57:20.659 INFO misc - return_pickled_object: treemaps.pickle could not be found or force_update is True. Computing the object and pickling it now.
+2022-02-03 13:57:20.691 INFO misc - return_pickled_object: treemaps.pickle being returned now from computation.
+2022-02-03 13:57:27.421 WARNING threeD_exploration - page_2bis_add_toast_selection: More than one lipid corresponds to the selection
+2022-02-03 13:57:27.432 WARNING threeD_exploration - page_2bis_add_toast_selection: More than one lipid corresponds to the selection
+2022-02-03 13:57:27.447 WARNING threeD_exploration - page_2bis_add_toast_selection: More than one lipid corresponds to the selection
+2022-02-03 13:57:28.234 INFO threeD_exploration - page_2bis_plot_graph_heatmap_mz_selection: For the computation of 3D volume, decrease_resolution_factor is 6
+2022-02-03 13:57:28.240 INFO misc - return_pickled_object: Returning volume_interpolated_3D_CER 2010008_40:1 H___SS__.pickle from pickled file.	MemTotal: 1176.04296875
+2022-02-03 14:00:55.859 INFO index - render_page_content: Page/3D-explorationhas been selected	MemTotal: 1176.265625
+2022-02-03 14:00:55.860 INFO misc - return_pickled_object: treemaps.pickle could not be found or force_update is True. Computing the object and pickling it now.
+2022-02-03 14:00:55.897 INFO misc - return_pickled_object: treemaps.pickle being returned now from computation.
+2022-02-03 14:01:00.053 INFO index - render_page_content: Page/atlas-explorationhas been selected	MemTotal: 1175.68359375
+2022-02-03 14:01:00.053 INFO misc - return_pickled_object: Returning sunburst.pickle from pickled file.	MemTotal: 1175.68359375
+2022-02-03 14:01:00.067 INFO misc - return_pickled_object: Returning atlas_with_slider_frontal_False.pickle from pickled file.	MemTotal: 1175.80078125
+2022-02-03 14:01:00.083 INFO misc - return_pickled_object: Returning _None.pickle from pickled file.	MemTotal: 1176.0546875
+2022-02-03 14:01:04.318 INFO misc - return_pickled_object: Returning _mfbs.pickle from pickled file.	MemTotal: 1186.01953125
+2022-02-03 14:01:09.499 INFO misc - return_pickled_object: atlas_with_slider_horizontal_False.pickle could not be found or force_update is True. Computing the object and pickling it now.
+2022-02-03 14:01:09.664 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-02-03 14:01:09.672 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-02-03 14:01:09.684 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-02-03 14:01:09.702 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-02-03 14:01:09.725 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-02-03 14:01:09.751 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-02-03 14:01:09.781 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-02-03 14:01:09.815 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-02-03 14:01:09.854 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-02-03 14:01:09.893 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-02-03 14:01:09.934 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-02-03 14:01:09.984 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-02-03 14:01:10.030 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-02-03 14:01:10.081 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-02-03 14:01:10.120 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-02-03 14:01:10.143 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-02-03 14:01:10.162 INFO misc - return_pickled_object: atlas_with_slider_horizontal_False.pickle being returned now from computation.
+2022-02-03 14:01:11.153 INFO misc - return_pickled_object: Returning atlas_with_slider_frontal_False.pickle from pickled file.	MemTotal: 1191.95703125
+2022-02-03 14:01:12.667 INFO index - render_page_content: Page/3D-explorationhas been selected	MemTotal: 1191.95703125
+2022-02-03 14:01:12.667 INFO misc - return_pickled_object: treemaps.pickle could not be found or force_update is True. Computing the object and pickling it now.
+2022-02-03 14:01:12.702 INFO misc - return_pickled_object: treemaps.pickle being returned now from computation.
+2022-02-03 14:02:55.415 INFO index - render_page_content: Page/lipid-selectionhas been selected	MemTotal: 1196.6640625
+2022-02-03 14:02:55.614 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-02-03 14:02:56.570 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-02-03 14:02:58.746 INFO index - render_page_content: Page/region-analysishas been selected	MemTotal: 1191.95703125
+2022-02-03 14:02:58.747 INFO misc - return_pickled_object: Returning set_masks_0.pickle from pickled file.	MemTotal: 1191.95703125
+2022-02-03 14:02:58.748 INFO misc - return_pickled_object: Returning figure_basic_image_projection_corrected_0_False_True.pickle from pickled file.	MemTotal: 1191.95703125
+2022-02-03 14:02:59.074 INFO misc - return_pickled_object: Returning set_masks_0.pickle from pickled file.	MemTotal: 1325.3515625
+2022-02-03 14:02:59.074 INFO misc - return_pickled_object: Returning figure_basic_image_projection_corrected_0_False.pickle from pickled file.	MemTotal: 1176.2734375
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+[2022-02-03 16:08:30 +0100] [88111] [INFO] Handling signal: hup
+[2022-02-03 16:08:30 +0100] [88111] [INFO] Hang up: Master
+[2022-02-03 16:08:30 +0100] [99241] [INFO] Booting worker with pid: 99241
+[2022-02-03 16:08:30 +0100] [99242] [INFO] Booting worker with pid: 99242
+[2022-02-03 16:08:31 +0100] [99243] [INFO] Booting worker with pid: 99243
+[2022-02-03 16:08:31 +0100] [99244] [INFO] Booting worker with pid: 99244
+[2022-02-03 16:08:31 +0100] [88111] [WARNING] Worker with pid 88115 was terminated due to signal 1
+[2022-02-03 16:08:31 +0100] [88111] [WARNING] Worker with pid 88113 was terminated due to signal 1
+[2022-02-03 16:08:31 +0100] [88111] [WARNING] Worker with pid 88114 was terminated due to signal 1
+[2022-02-03 16:08:31 +0100] [88111] [WARNING] Worker with pid 88112 was terminated due to signal 1
+2022-02-03 16:08:31.307 INFO main - <module>: Starting import chain	MemTotal: 53.8671875
+2022-02-03 16:08:31.309 INFO main - <module>: Starting import chain	MemTotal: 53.87109375
+2022-02-03 16:08:31.311 INFO main - <module>: Starting import chain	MemTotal: 53.8671875
+2022-02-03 16:08:31.311 INFO main - <module>: Starting import chain	MemTotal: 53.8671875
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Reading the configuration file, at line 993
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+>>> 'allkeys-lru'
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+Bad directive or wrong number of arguments
+Bad directive or wrong number of arguments
+2022-02-03 16:08:33.214 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 169.46875
+2022-02-03 16:08:33.214 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 169.4765625
+2022-02-03 16:08:33.214 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 169.46875
+2022-02-03 16:08:33.214 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 169.4765625
+2022-02-03 16:08:33.214 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 169.46875
+2022-02-03 16:08:33.214 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 169.4765625
+2022-02-03 16:08:33.214 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 169.46875
+2022-02-03 16:08:33.214 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 169.4765625
+2022-02-03 16:08:33.331 INFO atlas - __init__: Initializing Atlas object	MemTotal: 206.51171875
+2022-02-03 16:08:33.332 INFO atlas - __init__: Initializing Atlas object	MemTotal: 206.5078125
+2022-02-03 16:08:33.333 INFO atlas - __init__: Initializing Atlas object	MemTotal: 206.49609375
+2022-02-03 16:08:33.333 INFO atlas - __init__: Initializing Atlas object	MemTotal: 206.515625
+2022-02-03 16:08:33.966 INFO misc - return_pickled_object: Returning dic_acronym_children_id.pickle from pickled file.	MemTotal: 502.76953125
+2022-02-03 16:08:33.966 INFO misc - return_pickled_object: Returning dic_acronym_children_id.pickle from pickled file.	MemTotal: 502.765625
+2022-02-03 16:08:33.966 INFO misc - return_pickled_object: Returning dic_acronym_children_id.pickle from pickled file.	MemTotal: 502.7734375
+2022-02-03 16:08:33.966 INFO misc - return_pickled_object: Returning dic_acronym_children_id.pickle from pickled file.	MemTotal: 502.7734375
+2022-02-03 16:08:35.235 INFO misc - return_pickled_object: Returning hierarchy.pickle from pickled file.	MemTotal: 943.921875
+2022-02-03 16:08:35.237 INFO misc - return_pickled_object: Returning arrays_projection_corrected_True_True.pickle from pickled file.	MemTotal: 944.04296875
+2022-02-03 16:08:35.239 INFO misc - return_pickled_object: Returning hierarchy.pickle from pickled file.	MemTotal: 943.92578125
+2022-02-03 16:08:35.239 INFO misc - return_pickled_object: Returning hierarchy.pickle from pickled file.	MemTotal: 943.91796875
+2022-02-03 16:08:35.239 INFO misc - return_pickled_object: Returning hierarchy.pickle from pickled file.	MemTotal: 943.92578125
+2022-02-03 16:08:35.240 INFO misc - return_pickled_object: Returning arrays_projection_corrected_True_True.pickle from pickled file.	MemTotal: 944.0390625
+2022-02-03 16:08:35.240 INFO misc - return_pickled_object: Returning arrays_projection_corrected_True_True.pickle from pickled file.	MemTotal: 944.046875
+2022-02-03 16:08:35.240 INFO misc - return_pickled_object: Returning arrays_projection_corrected_True_True.pickle from pickled file.	MemTotal: 944.046875
+2022-02-03 16:08:35.685 INFO misc - return_pickled_object: Returning dic_mask_images.pickle from pickled file.	MemTotal: 1091.1015625
+2022-02-03 16:08:35.685 INFO misc - return_pickled_object: Returning dic_mask_images.pickle from pickled file.	MemTotal: 1091.09765625
+2022-02-03 16:08:35.685 INFO misc - return_pickled_object: Returning dic_mask_images.pickle from pickled file.	MemTotal: 1091.1015625
+2022-02-03 16:08:35.686 INFO misc - return_pickled_object: Returning dic_mask_images.pickle from pickled file.	MemTotal: 1091.09375
+2022-02-03 16:08:35.697 INFO figures - __init__: Initializing Figures object	MemTotal: 1091.1953125
+2022-02-03 16:08:35.697 INFO figures - __init__: Initializing Figures object	MemTotal: 1091.234375
+2022-02-03 16:08:35.697 INFO figures - __init__: Initializing Figures object	MemTotal: 1091.1875
+2022-02-03 16:08:35.697 INFO figures - __init__: Initializing Figures object	MemTotal: 1091.1953125
+2022-02-03 16:08:35.698 INFO misc - return_pickled_object: Returning dic_fig_contours.pickle from pickled file.	MemTotal: 1091.25390625
+2022-02-03 16:08:35.698 INFO misc - return_pickled_object: Returning dic_fig_contours.pickle from pickled file.	MemTotal: 1091.234375
+2022-02-03 16:08:35.698 INFO misc - return_pickled_object: Returning dic_fig_contours.pickle from pickled file.	MemTotal: 1091.1875
+2022-02-03 16:08:35.698 INFO misc - return_pickled_object: Returning dic_fig_contours.pickle from pickled file.	MemTotal: 1091.24609375
+2022-02-03 16:08:36.829 INFO app - <module>: Memory use after three main object have been instantiated	MemTotal: 1127.84765625
+2022-02-03 16:08:36.831 INFO app - <module>: Memory use after three main object have been instantiated	MemTotal: 1127.91796875
+2022-02-03 16:08:36.832 INFO app - <module>: Memory use after three main object have been instantiated	MemTotal: 1128.0546875
+2022-02-03 16:08:36.832 INFO app - <module>: Memory use after three main object have been instantiated	MemTotal: 1128.05859375
+2022-02-03 16:08:36.855 INFO misc - return_pickled_object: Returning figure_basic_image_warped_data_1_False.pickle from pickled file.	MemTotal: 1128.77734375
+2022-02-03 16:08:36.855 INFO misc - return_pickled_object: Returning figure_basic_image_warped_data_1_False.pickle from pickled file.	MemTotal: 1128.73046875
+2022-02-03 16:08:36.855 INFO misc - return_pickled_object: Returning figure_basic_image_warped_data_1_False.pickle from pickled file.	MemTotal: 1128.8125
+2022-02-03 16:08:36.858 INFO misc - return_pickled_object: Returning figure_basic_image_warped_data_1_False.pickle from pickled file.	MemTotal: 1128.83984375
+2022-02-03 16:08:38.337 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-02-03 16:08:38.349 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-02-03 16:08:38.363 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-02-03 16:08:38.367 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-02-03 16:08:38.466 INFO misc - return_pickled_object: Returning set_masks_0.pickle from pickled file.	MemTotal: 1172.4765625
+2022-02-03 16:08:38.466 INFO misc - return_pickled_object: Returning set_masks_0.pickle from pickled file.	MemTotal: 1172.56640625
+2022-02-03 16:08:38.467 INFO misc - return_pickled_object: Returning figure_basic_image_projection_corrected_0_False_True.pickle from pickled file.	MemTotal: 1172.4765625
+2022-02-03 16:08:38.467 INFO misc - return_pickled_object: Returning figure_basic_image_projection_corrected_0_False_True.pickle from pickled file.	MemTotal: 1172.56640625
+2022-02-03 16:08:38.480 INFO misc - return_pickled_object: treemaps.pickle could not be found or force_update is True. Computing the object and pickling it now.
+2022-02-03 16:08:38.480 INFO misc - return_pickled_object: treemaps.pickle could not be found or force_update is True. Computing the object and pickling it now.
+2022-02-03 16:08:38.492 INFO misc - return_pickled_object: Returning set_masks_0.pickle from pickled file.	MemTotal: 1172.58984375
+2022-02-03 16:08:38.492 INFO misc - return_pickled_object: Returning set_masks_0.pickle from pickled file.	MemTotal: 1172.58203125
+2022-02-03 16:08:38.493 INFO misc - return_pickled_object: Returning figure_basic_image_projection_corrected_0_False_True.pickle from pickled file.	MemTotal: 1172.609375
+2022-02-03 16:08:38.493 INFO misc - return_pickled_object: Returning figure_basic_image_projection_corrected_0_False_True.pickle from pickled file.	MemTotal: 1172.58203125
+2022-02-03 16:08:38.507 INFO misc - return_pickled_object: treemaps.pickle could not be found or force_update is True. Computing the object and pickling it now.
+2022-02-03 16:08:38.507 INFO misc - return_pickled_object: treemaps.pickle could not be found or force_update is True. Computing the object and pickling it now.
+2022-02-03 16:08:38.567 INFO misc - return_pickled_object: treemaps.pickle being returned now from computation.
+2022-02-03 16:08:38.567 INFO misc - return_pickled_object: treemaps.pickle being returned now from computation.
+2022-02-03 16:08:38.567 INFO misc - return_pickled_object: treemaps.pickle being returned now from computation.
+2022-02-03 16:08:38.568 INFO misc - return_pickled_object: treemaps.pickle being returned now from computation.
+2022-02-03 16:08:38.569 INFO misc - return_pickled_object: Returning sunburst.pickle from pickled file.	MemTotal: 1174.21484375
+2022-02-03 16:08:38.569 INFO misc - return_pickled_object: Returning sunburst.pickle from pickled file.	MemTotal: 1174.1015625
+2022-02-03 16:08:38.569 INFO misc - return_pickled_object: Returning sunburst.pickle from pickled file.	MemTotal: 1174.1875
+2022-02-03 16:08:38.570 INFO misc - return_pickled_object: Returning sunburst.pickle from pickled file.	MemTotal: 1174.1875
+2022-02-03 16:08:38.589 INFO misc - return_pickled_object: Returning atlas_with_slider_frontal_False.pickle from pickled file.	MemTotal: 1174.3671875
+2022-02-03 16:08:38.589 INFO misc - return_pickled_object: Returning atlas_with_slider_frontal_False.pickle from pickled file.	MemTotal: 1174.19921875
+2022-02-03 16:08:38.590 INFO misc - return_pickled_object: Returning atlas_with_slider_frontal_False.pickle from pickled file.	MemTotal: 1174.4765625
+2022-02-03 16:08:38.591 INFO misc - return_pickled_object: Returning atlas_with_slider_frontal_False.pickle from pickled file.	MemTotal: 1174.3046875
+2022-02-03 16:08:38.619 INFO misc - return_pickled_object: Returning _None.pickle from pickled file.	MemTotal: 1174.75
+2022-02-03 16:08:38.619 INFO misc - return_pickled_object: Returning _None.pickle from pickled file.	MemTotal: 1174.75
+2022-02-03 16:08:38.619 INFO misc - return_pickled_object: Returning _None.pickle from pickled file.	MemTotal: 1174.83984375
+2022-02-03 16:08:38.619 INFO misc - return_pickled_object: Returning _None.pickle from pickled file.	MemTotal: 1174.71484375
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments

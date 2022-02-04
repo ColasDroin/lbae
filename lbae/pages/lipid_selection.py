@@ -959,7 +959,7 @@ def tab_2_handle_dropdowns(slice_index, name, structure, options_names, options_
     Output("tab-2-dropdown-lipid-cations", "value"),
     Output("tab-2-dropdown-lipid-names", "value"),
     Output("tab-2-dropdown-lipid-structures", "value"),
-    Input({"type": "tab-2-dropdown-lipid-cations", "index": ALL}, "value"),
+    Input("tab-2-dropdown-lipid-cations", "value"),
     Input("page-2-toast-lipid-1", "is_open"),
     Input("page-2-toast-lipid-2", "is_open"),
     Input("page-2-toast-lipid-3", "is_open"),
