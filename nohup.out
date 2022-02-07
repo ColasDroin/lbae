@@ -2075,3 +2075,515 @@ Bad directive or wrong number of arguments
 Reading the configuration file, at line 993
 >>> 'allkeys-lru'
 Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+[2022-02-07 10:52:53 +0100] [88111] [INFO] Handling signal: term
+[2022-02-07 10:52:53 +0100] [99241] [INFO] Worker exiting (pid: 99241)
+[2022-02-07 10:52:53 +0100] [99242] [INFO] Worker exiting (pid: 99242)
+[2022-02-07 10:52:53 +0100] [99243] [INFO] Worker exiting (pid: 99243)
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+[2022-02-07 10:52:53 +0100] [99244] [INFO] Worker exiting (pid: 99244)
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+[2022-02-07 10:52:54 +0100] [88111] [INFO] Shutting down: Master
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+[2022-02-07 10:55:19 +0100] [74586] [INFO] Starting gunicorn 20.1.0
+[2022-02-07 10:55:19 +0100] [74586] [INFO] Listening at: http://0.0.0.0:8050 (74586)
+[2022-02-07 10:55:19 +0100] [74586] [INFO] Using worker: sync
+[2022-02-07 10:55:19 +0100] [74587] [INFO] Booting worker with pid: 74587
+[2022-02-07 10:55:19 +0100] [74588] [INFO] Booting worker with pid: 74588
+2022-02-07 10:55:19.852 INFO main - <module>: Starting import chain	MemTotal: 53.84375
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+2022-02-07 10:55:19.949 INFO main - <module>: Starting import chain	MemTotal: 53.84375
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+2022-02-07 10:55:21.232 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 169.46484375
+2022-02-07 10:55:21.233 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 169.46484375
+2022-02-07 10:55:21.294 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 169.45703125
+2022-02-07 10:55:21.295 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 169.45703125
+2022-02-07 10:55:21.312 INFO atlas - __init__: Initializing Atlas object	MemTotal: 206.47265625
+2022-02-07 10:55:21.376 INFO atlas - __init__: Initializing Atlas object	MemTotal: 206.46875
+2022-02-07 10:55:21.633 INFO misc - return_pickled_object: Returning dic_acronym_children_id.pickle from pickled file.	MemTotal: 502.74609375
+2022-02-07 10:55:21.689 INFO misc - return_pickled_object: Returning dic_acronym_children_id.pickle from pickled file.	MemTotal: 502.73828125
+2022-02-07 10:55:22.445 INFO misc - return_pickled_object: Returning hierarchy.pickle from pickled file.	MemTotal: 943.8984375
+2022-02-07 10:55:22.446 INFO misc - return_pickled_object: Returning arrays_projection_corrected_True_True.pickle from pickled file.	MemTotal: 944.01953125
+2022-02-07 10:55:22.449 INFO misc - return_pickled_object: Returning hierarchy.pickle from pickled file.	MemTotal: 943.90625
+2022-02-07 10:55:22.450 INFO misc - return_pickled_object: Returning arrays_projection_corrected_True_True.pickle from pickled file.	MemTotal: 943.9609375
+2022-02-07 10:55:22.648 INFO misc - return_pickled_object: Returning dic_mask_images.pickle from pickled file.	MemTotal: 1091.07421875
+2022-02-07 10:55:22.649 INFO misc - return_pickled_object: Returning dic_mask_images.pickle from pickled file.	MemTotal: 1091.08203125
+2022-02-07 10:55:22.653 INFO figures - __init__: Initializing Figures object	MemTotal: 1091.14453125
+2022-02-07 10:55:22.653 INFO misc - return_pickled_object: Returning dic_fig_contours.pickle from pickled file.	MemTotal: 1091.14453125
+2022-02-07 10:55:22.654 INFO figures - __init__: Initializing Figures object	MemTotal: 1091.15234375
+2022-02-07 10:55:22.654 INFO misc - return_pickled_object: Returning dic_fig_contours.pickle from pickled file.	MemTotal: 1091.21875
+2022-02-07 10:55:23.357 INFO app - <module>: Memory use after three main object have been instantiated	MemTotal: 1127.796875
+2022-02-07 10:55:23.375 INFO misc - return_pickled_object: Returning figure_basic_image_warped_data_1_False.pickle from pickled file.	MemTotal: 1128.80859375
+2022-02-07 10:55:23.384 INFO app - <module>: Memory use after three main object have been instantiated	MemTotal: 1128.015625
+2022-02-07 10:55:23.401 INFO misc - return_pickled_object: Returning figure_basic_image_warped_data_1_False.pickle from pickled file.	MemTotal: 1128.76953125
+2022-02-07 10:55:24.653 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-02-07 10:55:24.720 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-02-07 10:55:24.754 INFO misc - return_pickled_object: Returning set_masks_0.pickle from pickled file.	MemTotal: 1172.66015625
+2022-02-07 10:55:24.755 INFO misc - return_pickled_object: Returning figure_basic_image_projection_corrected_0_False_True.pickle from pickled file.	MemTotal: 1172.66015625
+2022-02-07 10:55:24.766 INFO misc - return_pickled_object: treemaps.pickle could not be found or force_update is True. Computing the object and pickling it now.
+2022-02-07 10:55:24.814 INFO misc - return_pickled_object: treemaps.pickle being returned now from computation.
+2022-02-07 10:55:24.815 INFO misc - return_pickled_object: Returning sunburst.pickle from pickled file.	MemTotal: 1174.26171875
+2022-02-07 10:55:24.825 INFO misc - return_pickled_object: Returning set_masks_0.pickle from pickled file.	MemTotal: 1172.52734375
+2022-02-07 10:55:24.826 INFO misc - return_pickled_object: Returning figure_basic_image_projection_corrected_0_False_True.pickle from pickled file.	MemTotal: 1172.55078125
+2022-02-07 10:55:24.828 INFO misc - return_pickled_object: Returning atlas_with_slider_frontal_False.pickle from pickled file.	MemTotal: 1174.47265625
+2022-02-07 10:55:24.838 INFO misc - return_pickled_object: treemaps.pickle could not be found or force_update is True. Computing the object and pickling it now.
+2022-02-07 10:55:24.847 INFO misc - return_pickled_object: Returning _None.pickle from pickled file.	MemTotal: 1174.98046875
+2022-02-07 10:55:24.888 INFO misc - return_pickled_object: treemaps.pickle being returned now from computation.
+2022-02-07 10:55:24.890 INFO misc - return_pickled_object: Returning sunburst.pickle from pickled file.	MemTotal: 1174.16796875
+2022-02-07 10:55:24.903 INFO misc - return_pickled_object: Returning atlas_with_slider_frontal_False.pickle from pickled file.	MemTotal: 1174.3359375
+2022-02-07 10:55:24.922 INFO misc - return_pickled_object: Returning _None.pickle from pickled file.	MemTotal: 1174.8046875
+2022-02-07 10:55:38.741 INFO index - render_page_content: Page/has been selected	MemTotal: 1176.25390625
+2022-02-07 10:55:41.311 INFO index - render_page_content: Page/lipid-selectionhas been selected	MemTotal: 1175.52734375
+2022-02-07 10:55:41.504 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-02-07 10:55:42.915 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-02-07 10:55:43.331 INFO index - render_page_content: Page/region-analysishas been selected	MemTotal: 1183.15625
+2022-02-07 10:55:43.331 INFO misc - return_pickled_object: Returning set_masks_0.pickle from pickled file.	MemTotal: 1183.15625
+2022-02-07 10:55:43.332 INFO misc - return_pickled_object: Returning figure_basic_image_projection_corrected_0_False_True.pickle from pickled file.	MemTotal: 1183.15625
+2022-02-07 10:55:43.527 INFO region_analysis - page_3_record_spectra: Starting to compute spectrum
+2022-02-07 10:55:43.527 INFO misc - return_pickled_object: Returning set_masks_0.pickle from pickled file.	MemTotal: 1183.26171875
+2022-02-07 10:55:43.528 ERROR __init__ - decorated_function: Exception possibly due to cache backend.
+Traceback (most recent call last):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/redis/connection.py", line 607, in connect
+    sock = self._connect()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/redis/connection.py", line 671, in _connect
+    raise err
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/redis/connection.py", line 659, in _connect
+    sock.connect(socket_address)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask_caching/__init__.py", line 912, in decorated_function
+    cache_key = decorated_function.make_cache_key(
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask_caching/__init__.py", line 667, in make_cache_key
+    fname, version_data = self._memoize_version(
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask_caching/__init__.py", line 617, in _memoize_version
+    version_data_list = list(self.cache.get_many(*fetch_keys))
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask_caching/backends/rediscache.py", line 153, in get_many
+    return [self.load_object(x) for x in self._read_clients.mget(keys)]
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/redis/commands/core.py", line 1422, in mget
+    return self.execute_command("MGET", *args, **options)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/redis/client.py", line 1170, in execute_command
+    conn = self.connection or pool.get_connection(command_name, **options)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/redis/connection.py", line 1311, in get_connection
+    connection.connect()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/redis/connection.py", line 611, in connect
+    raise ConnectionError(self._error_message(e))
+redis.exceptions.ConnectionError: Error 111 connecting to localhost:6379. Connection refused.
+2022-02-07 10:55:43.530 WARNING region_analysis - page_3_record_spectra: A bug appeared during spectrum computation
+2022-02-07 10:55:43.537 INFO misc - return_pickled_object: Returning figure_basic_image_projection_corrected_0_False.pickle from pickled file.	MemTotal: 1183.26171875
+2022-02-07 10:55:43.585 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Starting computing heatmap now
+2022-02-07 10:55:45.179 INFO misc - return_pickled_object: Returning figure_basic_image_projection_corrected_0_False.pickle from pickled file.	MemTotal: 1183.5390625
+2022-02-07 10:55:46.155 INFO region_analysis - tab_3_display_high_res_mz_plot: Compute spectra button has been clicked
+2022-02-07 10:55:46.155 INFO region_analysis - tab_3_display_high_res_mz_plot: One or several shapes have been selected, displaying graphs
+2022-02-07 10:55:46.156 INFO region_analysis - page_3_record_spectra: Starting to compute spectrum
+2022-02-07 10:55:46.157 ERROR __init__ - decorated_function: Exception possibly due to cache backend.
+Traceback (most recent call last):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/redis/connection.py", line 607, in connect
+    sock = self._connect()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/redis/connection.py", line 671, in _connect
+    raise err
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/redis/connection.py", line 659, in _connect
+    sock.connect(socket_address)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask_caching/__init__.py", line 912, in decorated_function
+    cache_key = decorated_function.make_cache_key(
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask_caching/__init__.py", line 667, in make_cache_key
+    fname, version_data = self._memoize_version(
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask_caching/__init__.py", line 617, in _memoize_version
+    version_data_list = list(self.cache.get_many(*fetch_keys))
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask_caching/backends/rediscache.py", line 153, in get_many
+    return [self.load_object(x) for x in self._read_clients.mget(keys)]
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/redis/commands/core.py", line 1422, in mget
+    return self.execute_command("MGET", *args, **options)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/redis/client.py", line 1170, in execute_command
+    conn = self.connection or pool.get_connection(command_name, **options)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/redis/connection.py", line 1311, in get_connection
+    connection.connect()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/redis/connection.py", line 611, in connect
+    raise ConnectionError(self._error_message(e))
+redis.exceptions.ConnectionError: Error 111 connecting to localhost:6379. Connection refused.
+2022-02-07 10:55:46.158 INFO region_analysis - global_spectrum_store: Start computing path
+2022-02-07 10:55:46.158 INFO region_analysis - global_spectrum_store: Computing path finished
+2022-02-07 10:55:51.553 INFO region_analysis - page_3_record_spectra: Spectra computed, returning it now
+2022-02-07 10:55:51.779 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Starting computing heatmap now
+2022-02-07 10:55:51.780 ERROR __init__ - decorated_function: Exception possibly due to cache backend.
+Traceback (most recent call last):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/redis/connection.py", line 607, in connect
+    sock = self._connect()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/redis/connection.py", line 671, in _connect
+    raise err
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/redis/connection.py", line 659, in _connect
+    sock.connect(socket_address)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask_caching/__init__.py", line 912, in decorated_function
+    cache_key = decorated_function.make_cache_key(
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask_caching/__init__.py", line 667, in make_cache_key
+    fname, version_data = self._memoize_version(
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask_caching/__init__.py", line 617, in _memoize_version
+    version_data_list = list(self.cache.get_many(*fetch_keys))
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask_caching/backends/rediscache.py", line 153, in get_many
+    return [self.load_object(x) for x in self._read_clients.mget(keys)]
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/redis/commands/core.py", line 1422, in mget
+    return self.execute_command("MGET", *args, **options)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/redis/client.py", line 1170, in execute_command
+    conn = self.connection or pool.get_connection(command_name, **options)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/redis/connection.py", line 1311, in get_connection
+    connection.connect()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/redis/connection.py", line 611, in connect
+    raise ConnectionError(self._error_message(e))
+redis.exceptions.ConnectionError: Error 111 connecting to localhost:6379. Connection refused.
+2022-02-07 10:55:51.780 INFO region_analysis - global_spectrum_store: Start computing path
+2022-02-07 10:55:51.780 INFO region_analysis - global_spectrum_store: Computing path finished
+2022-02-07 10:55:51.783 INFO region_analysis - page_3_plot_spectrum: Starting spectra plotting now
+2022-02-07 10:55:51.785 ERROR __init__ - decorated_function: Exception possibly due to cache backend.
+Traceback (most recent call last):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/redis/connection.py", line 607, in connect
+    sock = self._connect()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/redis/connection.py", line 671, in _connect
+    raise err
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/redis/connection.py", line 659, in _connect
+    sock.connect(socket_address)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask_caching/__init__.py", line 912, in decorated_function
+    cache_key = decorated_function.make_cache_key(
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask_caching/__init__.py", line 667, in make_cache_key
+    fname, version_data = self._memoize_version(
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask_caching/__init__.py", line 617, in _memoize_version
+    version_data_list = list(self.cache.get_many(*fetch_keys))
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask_caching/backends/rediscache.py", line 153, in get_many
+    return [self.load_object(x) for x in self._read_clients.mget(keys)]
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/redis/commands/core.py", line 1422, in mget
+    return self.execute_command("MGET", *args, **options)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/redis/client.py", line 1170, in execute_command
+    conn = self.connection or pool.get_connection(command_name, **options)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/redis/connection.py", line 1311, in get_connection
+    connection.connect()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/redis/connection.py", line 611, in connect
+    raise ConnectionError(self._error_message(e))
+redis.exceptions.ConnectionError: Error 111 connecting to localhost:6379. Connection refused.
+2022-02-07 10:55:51.785 INFO region_analysis - global_spectrum_store: Start computing path
+2022-02-07 10:55:51.785 INFO region_analysis - global_spectrum_store: Computing path finished
+2022-02-07 10:55:52.032 INFO region_analysis - global_lipid_index_store: Starting computing ll_idx_labels
+2022-02-07 10:55:52.224 INFO region_analysis - global_lipid_index_store: Returning ll_idx_labels
+2022-02-07 10:55:52.896 INFO region_analysis - page_3_plot_spectrum: Spectra plotted. Returning it now
+2022-02-07 10:55:57.305 INFO region_analysis - global_lipid_index_store: Starting computing ll_idx_labels
+2022-02-07 10:55:57.504 INFO region_analysis - global_lipid_index_store: Returning ll_idx_labels
+2022-02-07 10:55:57.790 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Heatmap computed. Returning it now
+2022-02-07 10:55:57.994 INFO region_analysis - page_3_fill_dropdown_options: Starting computing lipid dropdown now.
+2022-02-07 10:55:58.132 INFO region_analysis - page_3_fill_dropdown_options: Dropdown values computed. Updating it with new lipids now.
+2022-02-07 10:55:58.474 INFO region_analysis - draw_modal_graph: Modal graph function triggered with input page-3-open-modal
+2022-02-07 10:55:58.474 INFO region_analysis - draw_modal_graph: At least one lipid has been selected, starting computing modal graph now.
+2022-02-07 10:55:58.475 INFO figures - compute_rgb_image_per_lipid_selection: Started RGB image computation for slice 1	MemTotal: 1279.76171875
+2022-02-07 10:55:59.302 INFO figures - compute_rgb_image_per_lipid_selection: array_image acquired for slice 1	MemTotal: 1251.5078125
+2022-02-07 10:55:59.334 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-02-07 10:55:59.357 INFO figures - compute_rgb_image_per_lipid_selection: Started building graph for slice 1	MemTotal: 1251.546875
+2022-02-07 10:55:59.361 INFO figures - compute_rgb_image_per_lipid_selection: Returning fig for slice 1	MemTotal: 1251.546875
+2022-02-07 10:55:59.361 INFO region_analysis - draw_modal_graph: Modal graph computed. Returning it now
+2022-02-07 10:56:01.589 INFO misc - return_pickled_object: Returning figure_basic_image_projection_corrected_0_False_True.pickle from pickled file.	MemTotal: 1229.99609375
+2022-02-07 10:56:01.725 INFO region_analysis - draw_modal_graph: Modal graph function triggered with input page-3-reset-button
+2022-02-07 10:56:01.725 INFO region_analysis - draw_modal_graph: Resetting modal graph
+2022-02-07 10:56:02.915 INFO misc - return_pickled_object: Returning figure_basic_image_projection_corrected_0_False.pickle from pickled file.	MemTotal: 1251.296875
+2022-02-07 10:56:02.926 INFO misc - return_pickled_object: Returning dic_masks_and_spectra_0.pickle from pickled file.	MemTotal: 1251.296875
+2022-02-07 10:56:03.350 INFO misc - convert_image_to_base64: gif mode selected, quality argument is not supported
+2022-02-07 10:56:06.890 INFO misc - return_pickled_object: Returning figure_basic_image_projection_corrected_0_False.pickle from pickled file.	MemTotal: 1229.99609375
+2022-02-07 10:56:12.598 INFO misc - return_pickled_object: Returning figure_basic_image_projection_corrected_0_False.pickle from pickled file.	MemTotal: 1229.99609375
+2022-02-07 10:56:12.610 INFO misc - return_pickled_object: Returning dic_masks_and_spectra_0.pickle from pickled file.	MemTotal: 1229.99609375
+2022-02-07 10:56:12.819 INFO misc - convert_image_to_base64: gif mode selected, quality argument is not supported
+2022-02-07 10:56:14.455 INFO region_analysis - page_3_record_spectra: Starting to compute spectrum
+2022-02-07 10:56:14.456 ERROR __init__ - decorated_function: Exception possibly due to cache backend.
+Traceback (most recent call last):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/redis/connection.py", line 607, in connect
+    sock = self._connect()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/redis/connection.py", line 671, in _connect
+    raise err
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/redis/connection.py", line 659, in _connect
+    sock.connect(socket_address)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask_caching/__init__.py", line 912, in decorated_function
+    cache_key = decorated_function.make_cache_key(
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask_caching/__init__.py", line 667, in make_cache_key
+    fname, version_data = self._memoize_version(
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask_caching/__init__.py", line 617, in _memoize_version
+    version_data_list = list(self.cache.get_many(*fetch_keys))
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask_caching/backends/rediscache.py", line 153, in get_many
+    return [self.load_object(x) for x in self._read_clients.mget(keys)]
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/redis/commands/core.py", line 1422, in mget
+    return self.execute_command("MGET", *args, **options)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/redis/client.py", line 1170, in execute_command
+    conn = self.connection or pool.get_connection(command_name, **options)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/redis/connection.py", line 1311, in get_connection
+    connection.connect()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/redis/connection.py", line 611, in connect
+    raise ConnectionError(self._error_message(e))
+redis.exceptions.ConnectionError: Error 111 connecting to localhost:6379. Connection refused.
+2022-02-07 10:56:14.456 INFO misc - return_pickled_object: Returning dic_masks_and_spectra_0.pickle from pickled file.	MemTotal: 1204.84765625
+2022-02-07 10:56:14.459 INFO region_analysis - tab_3_display_high_res_mz_plot: Compute spectra button has been clicked
+2022-02-07 10:56:14.459 INFO region_analysis - tab_3_display_high_res_mz_plot: One or several masks have been selected, displaying graphs
+2022-02-07 10:56:14.602 INFO region_analysis - page_3_record_spectra: Spectra computed, returning it now
+2022-02-07 10:56:14.648 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Starting computing heatmap now
+2022-02-07 10:56:14.649 ERROR __init__ - decorated_function: Exception possibly due to cache backend.
+Traceback (most recent call last):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/redis/connection.py", line 607, in connect
+    sock = self._connect()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/redis/connection.py", line 671, in _connect
+    raise err
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/redis/connection.py", line 659, in _connect
+    sock.connect(socket_address)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask_caching/__init__.py", line 912, in decorated_function
+    cache_key = decorated_function.make_cache_key(
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask_caching/__init__.py", line 667, in make_cache_key
+    fname, version_data = self._memoize_version(
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask_caching/__init__.py", line 617, in _memoize_version
+    version_data_list = list(self.cache.get_many(*fetch_keys))
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask_caching/backends/rediscache.py", line 153, in get_many
+    return [self.load_object(x) for x in self._read_clients.mget(keys)]
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/redis/commands/core.py", line 1422, in mget
+    return self.execute_command("MGET", *args, **options)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/redis/client.py", line 1170, in execute_command
+    conn = self.connection or pool.get_connection(command_name, **options)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/redis/connection.py", line 1311, in get_connection
+    connection.connect()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/redis/connection.py", line 611, in connect
+    raise ConnectionError(self._error_message(e))
+redis.exceptions.ConnectionError: Error 111 connecting to localhost:6379. Connection refused.
+2022-02-07 10:56:14.649 INFO misc - return_pickled_object: Returning dic_masks_and_spectra_0.pickle from pickled file.	MemTotal: 1214.546875
+2022-02-07 10:56:14.650 INFO region_analysis - page_3_plot_spectrum: Starting spectra plotting now
+2022-02-07 10:56:14.651 ERROR __init__ - decorated_function: Exception possibly due to cache backend.
+Traceback (most recent call last):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/redis/connection.py", line 607, in connect
+    sock = self._connect()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/redis/connection.py", line 671, in _connect
+    raise err
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/redis/connection.py", line 659, in _connect
+    sock.connect(socket_address)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask_caching/__init__.py", line 912, in decorated_function
+    cache_key = decorated_function.make_cache_key(
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask_caching/__init__.py", line 667, in make_cache_key
+    fname, version_data = self._memoize_version(
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask_caching/__init__.py", line 617, in _memoize_version
+    version_data_list = list(self.cache.get_many(*fetch_keys))
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask_caching/backends/rediscache.py", line 153, in get_many
+    return [self.load_object(x) for x in self._read_clients.mget(keys)]
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/redis/commands/core.py", line 1422, in mget
+    return self.execute_command("MGET", *args, **options)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/redis/client.py", line 1170, in execute_command
+    conn = self.connection or pool.get_connection(command_name, **options)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/redis/connection.py", line 1311, in get_connection
+    connection.connect()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/redis/connection.py", line 611, in connect
+    raise ConnectionError(self._error_message(e))
+redis.exceptions.ConnectionError: Error 111 connecting to localhost:6379. Connection refused.
+2022-02-07 10:56:14.652 INFO misc - return_pickled_object: Returning dic_masks_and_spectra_0.pickle from pickled file.	MemTotal: 1240.421875
+2022-02-07 10:56:14.799 INFO region_analysis - global_lipid_index_store: Starting computing ll_idx_labels
+2022-02-07 10:56:14.802 INFO region_analysis - global_lipid_index_store: Returning ll_idx_labels
+2022-02-07 10:56:14.828 INFO region_analysis - global_lipid_index_store: Starting computing ll_idx_labels
+2022-02-07 10:56:14.832 INFO region_analysis - global_lipid_index_store: Returning ll_idx_labels
+2022-02-07 10:56:15.085 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Heatmap computed. Returning it now
+2022-02-07 10:56:15.257 INFO region_analysis - page_3_fill_dropdown_options: Starting computing lipid dropdown now.
+2022-02-07 10:56:15.333 INFO region_analysis - page_3_plot_spectrum: Spectra plotted. Returning it now
+2022-02-07 10:56:15.437 INFO region_analysis - page_3_fill_dropdown_options: Dropdown values computed. Updating it with new lipids now.
+2022-02-07 10:56:15.847 INFO region_analysis - draw_modal_graph: Modal graph function triggered with input page-3-open-modal
+2022-02-07 10:56:15.847 INFO region_analysis - draw_modal_graph: At least one lipid has been selected, starting computing modal graph now.
+2022-02-07 10:56:15.849 INFO figures - compute_rgb_image_per_lipid_selection: Started RGB image computation for slice 1	MemTotal: 1217.66796875
+2022-02-07 10:56:16.538 INFO figures - compute_rgb_image_per_lipid_selection: array_image acquired for slice 1	MemTotal: 1233.5859375
+2022-02-07 10:56:16.572 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-02-07 10:56:16.595 INFO figures - compute_rgb_image_per_lipid_selection: Started building graph for slice 1	MemTotal: 1233.62890625
+2022-02-07 10:56:16.600 INFO figures - compute_rgb_image_per_lipid_selection: Returning fig for slice 1	MemTotal: 1233.68359375
+2022-02-07 10:56:16.600 INFO region_analysis - draw_modal_graph: Modal graph computed. Returning it now
+2022-02-07 10:56:19.002 INFO index - render_page_content: Page/lipid-selectionhas been selected	MemTotal: 1243.03515625
+2022-02-07 10:56:19.099 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Starting computing heatmap now
+2022-02-07 10:56:19.158 INFO misc - return_pickled_object: Returning figure_basic_image_projection_corrected_0_False_True.pickle from pickled file.	MemTotal: 1235.3359375
+2022-02-07 10:56:19.191 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-02-07 10:56:19.977 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-02-07 10:56:27.778 INFO index - render_page_content: Page/has been selected	MemTotal: 1248.03515625
+2022-02-07 10:59:26.619 INFO index - render_page_content: Page/has been selected	MemTotal: 1243.03515625
+2022-02-07 10:59:30.149 INFO index - render_page_content: Page/atlas-explorationhas been selected	MemTotal: 1243.03515625
+2022-02-07 10:59:30.149 INFO misc - return_pickled_object: Returning sunburst.pickle from pickled file.	MemTotal: 1243.03515625
+2022-02-07 10:59:30.163 INFO misc - return_pickled_object: Returning atlas_with_slider_frontal_False.pickle from pickled file.	MemTotal: 1243.03515625
+2022-02-07 10:59:30.177 INFO misc - return_pickled_object: Returning _None.pickle from pickled file.	MemTotal: 1243.03515625
+2022-02-07 10:59:33.311 INFO index - render_page_content: Page/3D-explorationhas been selected	MemTotal: 1243.03515625
+2022-02-07 10:59:33.311 INFO misc - return_pickled_object: treemaps.pickle could not be found or force_update is True. Computing the object and pickling it now.
+2022-02-07 10:59:33.338 INFO misc - return_pickled_object: treemaps.pickle being returned now from computation.
+[2022-02-07 13:06:38 +0100] [74586] [INFO] Handling signal: hup
+[2022-02-07 13:06:38 +0100] [74586] [INFO] Hang up: Master
+[2022-02-07 13:06:38 +0100] [84273] [INFO] Booting worker with pid: 84273
+[2022-02-07 13:06:38 +0100] [84274] [INFO] Booting worker with pid: 84274
+[2022-02-07 13:06:38 +0100] [74586] [WARNING] Worker with pid 74588 was terminated due to signal 1
+2022-02-07 13:06:38.414 INFO main - <module>: Starting import chain	MemTotal: 53.87890625
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+[2022-02-07 13:06:38 +0100] [74586] [WARNING] Worker with pid 74587 was terminated due to signal 1
+2022-02-07 13:06:38.421 INFO main - <module>: Starting import chain	MemTotal: 53.87890625
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+2022-02-07 13:06:39.669 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 169.4921875
+2022-02-07 13:06:39.669 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 169.4921875
+2022-02-07 13:06:39.674 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 169.5078125
+2022-02-07 13:06:39.675 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 169.5078125
+2022-02-07 13:06:39.757 INFO atlas - __init__: Initializing Atlas object	MemTotal: 206.51171875
+2022-02-07 13:06:39.757 INFO atlas - __init__: Initializing Atlas object	MemTotal: 206.5234375
+2022-02-07 13:06:40.094 INFO misc - return_pickled_object: Returning dic_acronym_children_id.pickle from pickled file.	MemTotal: 502.765625
+2022-02-07 13:06:40.094 INFO misc - return_pickled_object: Returning dic_acronym_children_id.pickle from pickled file.	MemTotal: 502.77734375
+2022-02-07 13:06:40.896 INFO misc - return_pickled_object: Returning hierarchy.pickle from pickled file.	MemTotal: 943.9375
+2022-02-07 13:06:40.897 INFO misc - return_pickled_object: Returning arrays_projection_corrected_True_True.pickle from pickled file.	MemTotal: 944.05078125
+2022-02-07 13:06:40.921 INFO misc - return_pickled_object: Returning hierarchy.pickle from pickled file.	MemTotal: 943.92578125
+2022-02-07 13:06:40.922 INFO misc - return_pickled_object: Returning arrays_projection_corrected_True_True.pickle from pickled file.	MemTotal: 944.0390625
+2022-02-07 13:06:41.072 INFO misc - return_pickled_object: Returning dic_mask_images.pickle from pickled file.	MemTotal: 1091.10546875
+2022-02-07 13:06:41.076 INFO figures - __init__: Initializing Figures object	MemTotal: 1091.203125
+2022-02-07 13:06:41.076 INFO misc - return_pickled_object: Returning dic_fig_contours.pickle from pickled file.	MemTotal: 1091.203125
+2022-02-07 13:06:41.115 INFO misc - return_pickled_object: Returning dic_mask_images.pickle from pickled file.	MemTotal: 1091.09375
+2022-02-07 13:06:41.120 INFO figures - __init__: Initializing Figures object	MemTotal: 1091.19140625
+2022-02-07 13:06:41.120 INFO misc - return_pickled_object: Returning dic_fig_contours.pickle from pickled file.	MemTotal: 1091.19140625
+2022-02-07 13:06:41.796 INFO app - <module>: Memory use after three main object have been instantiated	MemTotal: 1128.0625
+2022-02-07 13:06:41.804 INFO app - <module>: Memory use after three main object have been instantiated	MemTotal: 1127.9609375
+2022-02-07 13:06:41.815 INFO misc - return_pickled_object: Returning figure_basic_image_warped_data_1_False.pickle from pickled file.	MemTotal: 1128.83203125
+2022-02-07 13:06:41.822 INFO misc - return_pickled_object: Returning figure_basic_image_warped_data_1_False.pickle from pickled file.	MemTotal: 1128.76171875
+2022-02-07 13:06:43.136 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-02-07 13:06:43.238 INFO misc - return_pickled_object: Returning set_masks_0.pickle from pickled file.	MemTotal: 1172.6171875
+2022-02-07 13:06:43.239 INFO misc - return_pickled_object: Returning figure_basic_image_projection_corrected_0_False_True.pickle from pickled file.	MemTotal: 1172.6171875
+2022-02-07 13:06:43.244 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-02-07 13:06:43.250 INFO misc - return_pickled_object: treemaps.pickle could not be found or force_update is True. Computing the object and pickling it now.
+2022-02-07 13:06:43.299 INFO misc - return_pickled_object: treemaps.pickle being returned now from computation.
+2022-02-07 13:06:43.300 INFO misc - return_pickled_object: Returning sunburst.pickle from pickled file.	MemTotal: 1174.296875
+2022-02-07 13:06:43.313 INFO misc - return_pickled_object: Returning atlas_with_slider_frontal_False.pickle from pickled file.	MemTotal: 1174.48046875
+2022-02-07 13:06:43.332 INFO misc - return_pickled_object: Returning _None.pickle from pickled file.	MemTotal: 1174.96484375
+2022-02-07 13:06:43.354 INFO misc - return_pickled_object: Returning set_masks_0.pickle from pickled file.	MemTotal: 1172.55078125
+2022-02-07 13:06:43.354 INFO misc - return_pickled_object: Returning figure_basic_image_projection_corrected_0_False_True.pickle from pickled file.	MemTotal: 1172.55078125
+2022-02-07 13:06:43.367 INFO misc - return_pickled_object: treemaps.pickle could not be found or force_update is True. Computing the object and pickling it now.
+2022-02-07 13:06:43.417 INFO misc - return_pickled_object: treemaps.pickle being returned now from computation.
+2022-02-07 13:06:43.419 INFO misc - return_pickled_object: Returning sunburst.pickle from pickled file.	MemTotal: 1174.015625
+2022-02-07 13:06:43.433 INFO misc - return_pickled_object: Returning atlas_with_slider_frontal_False.pickle from pickled file.	MemTotal: 1174.42578125
+2022-02-07 13:06:43.453 INFO misc - return_pickled_object: Returning _None.pickle from pickled file.	MemTotal: 1174.65234375
+2022-02-07 14:20:34.967 INFO index - render_page_content: Page/has been selected	MemTotal: 1175.4765625
+2022-02-07 14:20:51.098 INFO index - render_page_content: Page/load-slicehas been selected	MemTotal: 1176.2890625
+2022-02-07 14:20:51.099 INFO misc - return_pickled_object: Returning figure_basic_image_warped_data_1_False.pickle from pickled file.	MemTotal: 1176.2890625
+2022-02-07 14:20:51.211 INFO load_slice - tab_1_load_image: Slider changed to value 1
+2022-02-07 14:20:57.192 INFO load_slice - tab_1_load_image: Slider changed to value 3
+2022-02-07 14:20:57.193 INFO misc - return_pickled_object: Returning figure_basic_image_warped_data_2_False.pickle from pickled file.	MemTotal: 1175.515625
+2022-02-07 14:20:57.687 INFO load_slice - tab_1_load_image: Slider changed to value 6
+2022-02-07 14:20:57.688 INFO misc - return_pickled_object: Returning figure_basic_image_warped_data_5_False.pickle from pickled file.	MemTotal: 1175.609375
+2022-02-07 14:20:58.350 INFO load_slice - tab_1_load_image: Slider changed to value 8
+2022-02-07 14:20:58.350 INFO misc - return_pickled_object: Returning figure_basic_image_warped_data_7_False.pickle from pickled file.	MemTotal: 1175.7734375
+2022-02-07 14:20:58.943 INFO load_slice - tab_1_load_image: Slider changed to value 11
+2022-02-07 14:20:58.944 INFO misc - return_pickled_object: Returning figure_basic_image_warped_data_10_False.pickle from pickled file.	MemTotal: 1175.7734375
+2022-02-07 14:20:59.518 INFO load_slice - tab_1_load_image: Slider changed to value 15
+2022-02-07 14:20:59.518 INFO misc - return_pickled_object: Returning figure_basic_image_warped_data_14_False.pickle from pickled file.	MemTotal: 1175.7734375
+2022-02-07 14:21:01.237 INFO load_slice - tab_1_load_image: Slider changed to value 20
+2022-02-07 14:21:01.238 INFO misc - return_pickled_object: Returning figure_basic_image_warped_data_19_False.pickle from pickled file.	MemTotal: 1175.97265625
+2022-02-07 14:21:01.785 INFO load_slice - tab_1_load_image: Slider changed to value 23
+2022-02-07 14:21:01.785 INFO misc - return_pickled_object: Returning figure_basic_image_warped_data_22_False.pickle from pickled file.	MemTotal: 1175.97265625
+2022-02-07 14:21:04.487 INFO load_slice - tab_1_load_image: Slider changed to value 23
+2022-02-07 14:21:04.487 INFO misc - return_pickled_object: Returning figure_basic_image_projection_corrected_22_False.pickle from pickled file.	MemTotal: 1176.2265625
+2022-02-07 14:21:05.247 INFO load_slice - tab_1_load_image: Slider changed to value 23
+2022-02-07 14:21:05.247 INFO misc - return_pickled_object: Returning figure_basic_image_atlas_22_False.pickle from pickled file.	MemTotal: 1176.2265625
+2022-02-07 14:21:08.426 INFO load_slice - tab_1_load_image: Slider changed to value 25
+2022-02-07 14:21:08.426 INFO misc - return_pickled_object: Returning figure_basic_image_atlas_24_False.pickle from pickled file.	MemTotal: 1176.2265625
+2022-02-07 14:21:08.909 INFO load_slice - tab_1_load_image: Slider changed to value 29
+2022-02-07 14:21:08.910 INFO misc - return_pickled_object: Returning figure_basic_image_atlas_28_False.pickle from pickled file.	MemTotal: 1176.2265625
+2022-02-07 14:21:10.056 INFO load_slice - tab_1_load_image: Slider changed to value 16
+2022-02-07 14:21:10.056 INFO misc - return_pickled_object: Returning figure_basic_image_atlas_15_False.pickle from pickled file.	MemTotal: 1176.2265625
+2022-02-07 14:21:10.535 INFO load_slice - tab_1_load_image: Slider changed to value 12
+2022-02-07 14:21:10.536 INFO misc - return_pickled_object: Returning figure_basic_image_atlas_11_False.pickle from pickled file.	MemTotal: 1176.2265625
+2022-02-07 14:21:12.858 INFO index - render_page_content: Page/lipid-selectionhas been selected	MemTotal: 1176.43359375
+2022-02-07 14:21:14.120 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-02-07 14:21:15.310 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-02-07 14:21:18.128 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-02-07 14:21:20.660 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-02-07 14:21:33.086 WARNING lipid_selection - page_2_add_toast_selection: No lipid annotation exist
+2022-02-07 14:21:44.689 WARNING lipid_selection - page_2_add_toast_selection: No lipid annotation exist
+2022-02-07 14:21:48.539 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-02-07 14:21:48.834 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-02-07 14:21:58.594 WARNING lipid_selection - page_2_add_toast_selection: No lipid annotation exist
+2022-02-07 14:22:01.086 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-02-07 14:22:02.132 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments

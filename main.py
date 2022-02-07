@@ -59,7 +59,7 @@ if __name__ == "__main__":
 
 
 # To run the app from the server, use the following command in the base lbae folder:
-# gunicorn main:server -b:8050 --workers=4
+# gunicorn main:server -b:8050 --workers=2
 # To kill gunicorn if it doesn't want to die
 # pkill -P1 gunicorn
 
