@@ -82,7 +82,7 @@ class Atlas:
         self.image_shape = list(self.array_coordinates_warped_data.shape[1:-1])
 
         # Record dict that associate brain region (complete string) to specific id (short label), along with graph of structures
-        self.l_nodes, self.l_parents, self.dic_name_id = return_pickled_object(
+        self.l_nodes, self.l_parents, self.dic_name_id, self.dic_id_name = return_pickled_object(
             "atlas/atlas_objects", "hierarchy", force_update=False, compute_function=self.compute_hierarchy_list
         )
 
@@ -186,6 +186,7 @@ class Atlas:
         l_nodes = []
         l_parents = []
         dic_name_id = {}
+        dic_id_name = {}
         idx = 0
         for x, v in self.bg_atlas.structures.items():
             if len(self.bg_atlas.get_structure_ancestors(v["acronym"])) > 0:
@@ -198,8 +199,9 @@ class Atlas:
             l_nodes.append(current_name)
             l_parents.append(ancestor_name)
             dic_name_id[current_name] = v["acronym"]
+            dic_id_name[v["acronym"]] = current_name
 
-        return l_nodes, l_parents, dic_name_id
+        return l_nodes, l_parents, dic_name_id, dic_id_name
 
     def compute_array_projection(self, nearest_neighbour_correction=False, atlas_correction=False):
 
@@ -330,9 +332,9 @@ class Atlas:
         mask_stack = np.zeros(self.bg_atlas.shape, self.bg_atlas.annotation.dtype)
         mask_stack[self.bg_atlas.annotation == structure_id] = structure_id
 
-        # for descendant in descendants:
-        #    descendant_id = bg_atlas.structures[descendant]["id"]
-        #    mask_stack[bg_atlas.annotation == descendant_id] = structure_id
+        for descendant in descendants:
+            descendant_id = self.bg_atlas.structures[descendant]["id"]
+            mask_stack[self.bg_atlas.annotation == descendant_id] = structure_id
 
         return mask_stack
 
@@ -423,6 +425,7 @@ class Atlas:
             stack_mask = self.get_atlas_mask(id_mask)
             projected_mask = project_atlas_mask(stack_mask, slice_coor_rescaled, self.bg_atlas.reference.shape)
             if np.sum(projected_mask) == 0:
+                logging.info("The structure " + mask_name + " is not present in slice " + str(slice_index))
                 continue
 
             # compute spectrum

@@ -22,8 +22,7 @@ from lbae.modules.tools.atlas import project_image, slice_to_atlas_transform
 from lbae.modules.tools.misc import logmem
 from lbae.modules.tools.volume import filter_voxels, fill_array_borders, fill_array_interpolation
 from lbae.config import dic_colors, l_colors
-from lbae.pages.region_analysis import global_lipid_index_store
-from lbae.modules.tools.spectra import compute_avg_intensity_per_lipid
+from lbae.modules.tools.spectra import compute_avg_intensity_per_lipid, global_lipid_index_store
 
 ###### DEFINE FIGURES CLASS ######
 class Figures:
@@ -1569,6 +1568,7 @@ class Figures:
     def compute_clustergram_figure(self, l_selected_regions, percentile=10):
         logging.info("Starting computing clustergram figure")
         dic_avg_lipids = {}
+
         for slice_index in range(self._data.get_slice_number()):
             dic_masks = return_pickled_object(
                 "atlas/atlas_objects",
@@ -1578,10 +1578,15 @@ class Figures:
                 slice_index=slice_index,
             )
             l_spectra = []
+
             for region in l_selected_regions:
-                grah_scattergl_data = dic_masks[region][1]
-                l_spectra.append(grah_scattergl_data)
-            ll_idx_labels = global_lipid_index_store(slice_index, l_spectra)
+                long_region = self._atlas.dic_id_name[region]
+                if long_region in dic_masks:
+                    grah_scattergl_data = dic_masks[long_region][1]
+                    l_spectra.append(grah_scattergl_data)
+                else:
+                    l_spectra.append(None)
+            ll_idx_labels = global_lipid_index_store(self._data, slice_index, l_spectra)
 
             # Compute average expression for each lipid and each selection
             set_lipids_idx = set()
@@ -1590,23 +1595,29 @@ class Figures:
             n_sel = len(l_spectra)
             for spectrum, l_idx_labels in zip(l_spectra, ll_idx_labels):
 
-                array_intensity_with_lipids = np.array(spectrum, dtype=np.float32)[1, :]
-                array_idx_labels = np.array(l_idx_labels, dtype=np.int32)
-                l_lipids_idx, l_avg_intensity = compute_avg_intensity_per_lipid(
-                    array_intensity_with_lipids, array_idx_labels
-                )
-                set_lipids_idx.update(l_lipids_idx)
+                if spectrum is not None:
+                    array_intensity_with_lipids = np.array(spectrum, dtype=np.float32)[1, :]
+                    array_idx_labels = np.array(l_idx_labels, dtype=np.int32)
+                    l_lipids_idx, l_avg_intensity = compute_avg_intensity_per_lipid(
+                        array_intensity_with_lipids, array_idx_labels
+                    )
+                    set_lipids_idx.update(l_lipids_idx)
+                else:
+                    l_lipids_idx = None
+                    l_avg_intensity = None
+
                 ll_lipids_idx.append(l_lipids_idx)
                 ll_avg_intensity.append(l_avg_intensity)
 
             # dic_avg_lipids = {idx: [0] * n_sel for idx in set_lipids_idx}
             for i, (l_lipids, l_avg_intensity) in enumerate(zip(ll_lipids_idx, ll_avg_intensity)):
-                for lipid, intensity in zip(l_lipids, l_avg_intensity):
-                    if lipid not in dic_avg_lipids:
-                        dic_avg_lipids[lipid] = []
-                        for j in range(n_sel):
-                            dic_avg_lipids[lipid].append([])
-                    dic_avg_lipids[lipid][i].append(intensity)
+                if l_lipids is not None:
+                    for lipid, intensity in zip(l_lipids, l_avg_intensity):
+                        if lipid not in dic_avg_lipids:
+                            dic_avg_lipids[lipid] = []
+                            for j in range(n_sel):
+                                dic_avg_lipids[lipid].append([])
+                        dic_avg_lipids[lipid][i].append(intensity)
 
         logging.info("Averaging all lipid values across slices")
         # Average intensity per slice
@@ -1642,6 +1653,9 @@ class Figures:
             + df_names.iloc[idx]["cation"]
         )
 
+        print("1", df_avg_intensity_lipids.to_numpy())
+        print("2", df_avg_intensity_lipids.index)
+        print("3", df_avg_intensity_lipids.columns)
         # Plot
         fig_heatmap_lipids = dashbio.Clustergram(
             data=df_avg_intensity_lipids.to_numpy(),

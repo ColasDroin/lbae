@@ -2652,3 +2652,573 @@ Bad directive or wrong number of arguments
 Reading the configuration file, at line 993
 >>> 'allkeys-lru'
 Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+2022-02-08 20:08:08.039 INFO index - render_page_content: Page/3D-explorationhas been selected	MemTotal: 1185.53515625
+2022-02-08 20:08:08.039 INFO misc - return_pickled_object: treemaps.pickle could not be found or force_update is True. Computing the object and pickling it now.
+2022-02-08 20:08:08.067 INFO misc - return_pickled_object: treemaps.pickle being returned now from computation.
+2022-02-08 20:08:14.928 INFO index - render_page_content: Page/has been selected	MemTotal: 1185.53515625
+2022-02-08 20:08:16.701 INFO index - render_page_content: Page/load-slicehas been selected	MemTotal: 1185.53515625
+2022-02-08 20:08:16.702 INFO misc - return_pickled_object: Returning figure_basic_image_warped_data_1_False.pickle from pickled file.	MemTotal: 1185.53515625
+2022-02-08 20:08:16.998 INFO load_slice - tab_1_load_image: Slider changed to value 1
+2022-02-08 20:08:20.843 INFO load_slice - tab_1_load_image: Slider changed to value 3
+2022-02-08 20:08:20.844 INFO misc - return_pickled_object: Returning figure_basic_image_warped_data_2_False.pickle from pickled file.	MemTotal: 1191.83203125
+2022-02-08 20:08:22.059 INFO load_slice - tab_1_load_image: Slider changed to value 6
+2022-02-08 20:08:22.060 INFO misc - return_pickled_object: Returning figure_basic_image_warped_data_5_False.pickle from pickled file.	MemTotal: 1191.83203125
+2022-02-08 20:08:28.398 INFO load_slice - tab_1_load_image: Slider changed to value 9
+2022-02-08 20:08:28.399 INFO misc - return_pickled_object: Returning figure_basic_image_warped_data_8_False.pickle from pickled file.	MemTotal: 1191.83203125
+2022-02-08 20:08:31.940 INFO load_slice - tab_1_load_image: Slider changed to value 10
+2022-02-08 20:08:31.941 INFO misc - return_pickled_object: Returning figure_basic_image_warped_data_9_False.pickle from pickled file.	MemTotal: 1191.83203125
+2022-02-08 20:08:34.297 INFO load_slice - tab_1_load_image: Slider changed to value 11
+2022-02-08 20:08:34.297 INFO misc - return_pickled_object: Returning figure_basic_image_warped_data_10_False.pickle from pickled file.	MemTotal: 1191.83203125
+2022-02-08 20:08:36.472 INFO load_slice - tab_1_load_image: Slider changed to value 12
+2022-02-08 20:08:36.473 INFO misc - return_pickled_object: Returning figure_basic_image_warped_data_11_False.pickle from pickled file.	MemTotal: 1191.83203125
+2022-02-08 20:08:55.567 INFO load_slice - tab_1_load_image: Slider changed to value 15
+2022-02-08 20:08:55.567 INFO misc - return_pickled_object: Returning figure_basic_image_warped_data_14_False.pickle from pickled file.	MemTotal: 1185.55078125
+2022-02-08 20:08:58.913 INFO load_slice - tab_1_load_image: Slider changed to value 17
+2022-02-08 20:08:58.914 INFO misc - return_pickled_object: Returning figure_basic_image_warped_data_16_False.pickle from pickled file.	MemTotal: 1191.83203125
+2022-02-08 20:09:00.910 INFO load_slice - tab_1_load_image: Slider changed to value 19
+2022-02-08 20:09:00.910 INFO misc - return_pickled_object: Returning figure_basic_image_warped_data_18_False.pickle from pickled file.	MemTotal: 1191.83203125
+2022-02-08 20:09:03.028 INFO load_slice - tab_1_load_image: Slider changed to value 21
+2022-02-08 20:09:03.028 INFO misc - return_pickled_object: Returning figure_basic_image_warped_data_20_False.pickle from pickled file.	MemTotal: 1191.83203125
+2022-02-08 20:09:04.320 INFO load_slice - tab_1_load_image: Slider changed to value 23
+2022-02-08 20:09:04.320 INFO misc - return_pickled_object: Returning figure_basic_image_warped_data_22_False.pickle from pickled file.	MemTotal: 1191.83203125
+2022-02-08 20:09:05.911 INFO load_slice - tab_1_load_image: Slider changed to value 24
+2022-02-08 20:09:05.911 INFO misc - return_pickled_object: Returning figure_basic_image_warped_data_23_False.pickle from pickled file.	MemTotal: 1191.83203125
+2022-02-08 20:09:07.390 INFO load_slice - tab_1_load_image: Slider changed to value 26
+2022-02-08 20:09:07.391 INFO misc - return_pickled_object: Returning figure_basic_image_warped_data_25_False.pickle from pickled file.	MemTotal: 1191.83203125
+2022-02-08 20:09:08.700 INFO load_slice - tab_1_load_image: Slider changed to value 27
+2022-02-08 20:09:08.700 INFO misc - return_pickled_object: Returning figure_basic_image_warped_data_26_False.pickle from pickled file.	MemTotal: 1191.83203125
+2022-02-08 20:09:10.242 INFO load_slice - tab_1_load_image: Slider changed to value 28
+2022-02-08 20:09:10.243 INFO misc - return_pickled_object: Returning figure_basic_image_warped_data_27_False.pickle from pickled file.	MemTotal: 1191.83203125
+2022-02-08 20:09:11.291 INFO load_slice - tab_1_load_image: Slider changed to value 30
+2022-02-08 20:09:11.291 INFO misc - return_pickled_object: Returning figure_basic_image_warped_data_29_False.pickle from pickled file.	MemTotal: 1191.83203125
+2022-02-08 20:09:12.510 INFO load_slice - tab_1_load_image: Slider changed to value 31
+2022-02-08 20:09:12.510 INFO misc - return_pickled_object: Returning figure_basic_image_warped_data_30_False.pickle from pickled file.	MemTotal: 1191.83203125
+2022-02-08 20:09:14.147 INFO load_slice - tab_1_load_image: Slider changed to value 32
+2022-02-08 20:09:14.147 INFO misc - return_pickled_object: Returning figure_basic_image_warped_data_31_False.pickle from pickled file.	MemTotal: 1191.83203125
+2022-02-08 20:09:18.335 INFO load_slice - tab_1_load_image: Slider changed to value 32
+2022-02-08 20:09:18.335 INFO misc - return_pickled_object: Returning figure_basic_image_original_data_31_False.pickle from pickled file.	MemTotal: 1191.83203125
+2022-02-08 20:09:19.941 INFO load_slice - tab_1_load_image: Slider changed to value 1
+2022-02-08 20:09:19.941 INFO misc - return_pickled_object: Returning figure_basic_image_original_data_0_False.pickle from pickled file.	MemTotal: 1185.55078125
+2022-02-08 20:09:21.045 INFO load_slice - tab_1_load_image: Slider changed to value 3
+2022-02-08 20:09:21.046 INFO misc - return_pickled_object: Returning figure_basic_image_original_data_2_False.pickle from pickled file.	MemTotal: 1191.83203125
+2022-02-08 20:09:22.154 INFO load_slice - tab_1_load_image: Slider changed to value 4
+2022-02-08 20:09:22.155 INFO misc - return_pickled_object: figure_basic_image_original_data_3_False.pickle could not be found or force_update is True. Computing the object and pickling it now.
+2022-02-08 20:09:22.155 INFO misc - return_pickled_object: Returning array_basic_images_original_data.pickle from pickled file.	MemTotal: 1191.83203125
+2022-02-08 20:09:22.242 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-02-08 20:09:22.285 INFO misc - return_pickled_object: figure_basic_image_original_data_3_False.pickle being returned now from computation.
+2022-02-08 20:09:22.890 INFO load_slice - tab_1_load_image: Slider changed to value 5
+2022-02-08 20:09:22.891 INFO misc - return_pickled_object: figure_basic_image_original_data_4_False.pickle could not be found or force_update is True. Computing the object and pickling it now.
+2022-02-08 20:09:22.891 INFO misc - return_pickled_object: Returning array_basic_images_original_data.pickle from pickled file.	MemTotal: 1191.8515625
+2022-02-08 20:09:22.957 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-02-08 20:09:22.991 INFO misc - return_pickled_object: figure_basic_image_original_data_4_False.pickle being returned now from computation.
+2022-02-08 20:09:31.362 INFO load_slice - tab_1_load_image: Slider changed to value 5
+2022-02-08 20:09:31.363 INFO misc - return_pickled_object: Returning figure_basic_image_warped_data_4_False.pickle from pickled file.	MemTotal: 1185.55078125
+2022-02-08 20:09:36.504 INFO load_slice - tab_1_load_image: Slider changed to value 5
+2022-02-08 20:09:36.505 INFO misc - return_pickled_object: Returning figure_basic_image_original_data_4_False.pickle from pickled file.	MemTotal: 1185.55078125
+2022-02-08 20:09:38.680 INFO load_slice - tab_1_load_image: Slider changed to value 7
+2022-02-08 20:09:38.680 INFO misc - return_pickled_object: figure_basic_image_original_data_6_False.pickle could not be found or force_update is True. Computing the object and pickling it now.
+2022-02-08 20:09:38.681 INFO misc - return_pickled_object: Returning array_basic_images_original_data.pickle from pickled file.	MemTotal: 1185.55078125
+2022-02-08 20:09:38.761 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-02-08 20:09:38.795 INFO misc - return_pickled_object: figure_basic_image_original_data_6_False.pickle being returned now from computation.
+2022-02-08 20:09:39.520 INFO load_slice - tab_1_load_image: Slider changed to value 9
+2022-02-08 20:09:39.520 INFO misc - return_pickled_object: figure_basic_image_original_data_8_False.pickle could not be found or force_update is True. Computing the object and pickling it now.
+2022-02-08 20:09:39.520 INFO misc - return_pickled_object: Returning array_basic_images_original_data.pickle from pickled file.	MemTotal: 1185.5703125
+2022-02-08 20:09:39.590 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-02-08 20:09:39.631 INFO misc - return_pickled_object: figure_basic_image_original_data_8_False.pickle being returned now from computation.
+2022-02-08 20:09:40.299 INFO load_slice - tab_1_load_image: Slider changed to value 11
+2022-02-08 20:09:40.300 INFO misc - return_pickled_object: figure_basic_image_original_data_10_False.pickle could not be found or force_update is True. Computing the object and pickling it now.
+2022-02-08 20:09:40.300 INFO misc - return_pickled_object: Returning array_basic_images_original_data.pickle from pickled file.	MemTotal: 1202.57421875
+2022-02-08 20:09:40.358 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-02-08 20:09:40.394 INFO misc - return_pickled_object: figure_basic_image_original_data_10_False.pickle being returned now from computation.
+2022-02-08 20:09:41.481 INFO load_slice - tab_1_load_image: Slider changed to value 9
+2022-02-08 20:09:41.481 INFO misc - return_pickled_object: Returning figure_basic_image_original_data_8_False.pickle from pickled file.	MemTotal: 1202.57421875
+2022-02-08 20:09:43.135 INFO load_slice - tab_1_load_image: Slider changed to value 11
+2022-02-08 20:09:43.135 INFO misc - return_pickled_object: Returning figure_basic_image_original_data_10_False.pickle from pickled file.	MemTotal: 1202.57421875
+2022-02-08 20:09:43.930 INFO load_slice - tab_1_load_image: Slider changed to value 13
+2022-02-08 20:09:43.931 INFO misc - return_pickled_object: figure_basic_image_original_data_12_False.pickle could not be found or force_update is True. Computing the object and pickling it now.
+2022-02-08 20:09:43.931 INFO misc - return_pickled_object: Returning array_basic_images_original_data.pickle from pickled file.	MemTotal: 1202.87109375
+2022-02-08 20:09:43.998 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-02-08 20:09:44.037 INFO misc - return_pickled_object: figure_basic_image_original_data_12_False.pickle being returned now from computation.
+2022-02-08 20:09:46.551 INFO load_slice - tab_1_load_image: Slider changed to value 13
+2022-02-08 20:09:46.552 INFO misc - return_pickled_object: Returning figure_basic_image_warped_data_12_False.pickle from pickled file.	MemTotal: 1202.57421875
+2022-02-08 20:09:53.864 INFO misc - return_pickled_object: Returning slices_3D.pickle from pickled file.	MemTotal: 1202.57421875
+2022-02-08 20:09:58.035 INFO index - render_page_content: Page/lipid-selectionhas been selected	MemTotal: 1202.87109375
+2022-02-08 20:09:58.221 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-02-08 20:10:00.420 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-02-08 20:10:08.246 WARNING lipid_selection - page_2_add_toast_selection: No lipid annotation exist
+2022-02-08 20:10:15.241 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-02-08 20:10:15.431 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-02-08 20:10:24.639 INFO lipid_selection - page_2_add_toast_selection: Changes have been made to the lipid selection or indexation, propagating callback.
+2022-02-08 20:10:24.742 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-02-08 20:10:24.743 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Right before calling the graphing function
+2022-02-08 20:10:24.743 INFO figures - compute_rgb_image_per_lipid_selection: Started RGB image computation for slice 13	MemTotal: 1235.98828125
+2022-02-08 20:10:25.209 INFO figures - compute_rgb_image_per_lipid_selection: array_image acquired for slice 13	MemTotal: 1236.0078125
+2022-02-08 20:10:25.241 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-02-08 20:10:25.247 INFO figures - compute_rgb_image_per_lipid_selection: Started building graph for slice 13	MemTotal: 1236.0078125
+2022-02-08 20:10:25.251 INFO figures - compute_rgb_image_per_lipid_selection: Returning fig for slice 13	MemTotal: 1236.0078125
+2022-02-08 20:10:31.264 WARNING lipid_selection - page_2_add_toast_selection: No lipid annotation exist
+2022-02-08 20:10:35.236 WARNING lipid_selection - page_2_add_toast_selection: No lipid annotation exist
+2022-02-08 20:10:36.151 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-02-08 20:10:36.152 INFO figures - compute_rgb_image_per_lipid_selection: Started RGB image computation for slice 13	MemTotal: 1236.0078125
+2022-02-08 20:10:36.301 INFO figures - compute_rgb_image_per_lipid_selection: array_image acquired for slice 13	MemTotal: 1260.1171875
+2022-02-08 20:10:36.334 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-02-08 20:10:36.340 INFO figures - compute_rgb_image_per_lipid_selection: Started building graph for slice 13	MemTotal: 1260.1171875
+2022-02-08 20:10:36.344 INFO figures - compute_rgb_image_per_lipid_selection: Returning fig for slice 13	MemTotal: 1260.1171875
+2022-02-08 20:10:40.780 INFO index - render_page_content: Page/region-analysishas been selected	MemTotal: 1260.1171875
+2022-02-08 20:10:40.780 INFO misc - return_pickled_object: set_masks_12.pickle could not be found or force_update is True. Computing the object and pickling it now.
+2022-02-08 20:10:40.780 INFO misc - return_pickled_object: dic_masks_and_spectra_12.pickle could not be found or force_update is True. Computing the object and pickling it now.
+2022-02-08 20:10:50.959 INFO index - render_page_content: Page/3D-explorationhas been selected	MemTotal: 1202.88671875
+2022-02-08 20:10:50.960 INFO misc - return_pickled_object: treemaps.pickle could not be found or force_update is True. Computing the object and pickling it now.
+2022-02-08 20:10:50.992 INFO misc - return_pickled_object: treemaps.pickle being returned now from computation.
+2022-02-08 20:10:53.668 INFO index - render_page_content: Page/atlas-explorationhas been selected	MemTotal: 1202.88671875
+2022-02-08 20:10:53.668 INFO misc - return_pickled_object: Returning sunburst.pickle from pickled file.	MemTotal: 1202.88671875
+2022-02-08 20:10:53.683 INFO misc - return_pickled_object: Returning atlas_with_slider_frontal_False.pickle from pickled file.	MemTotal: 1202.88671875
+2022-02-08 20:10:53.700 INFO misc - return_pickled_object: Returning _None.pickle from pickled file.	MemTotal: 1202.88671875
+2022-02-08 20:10:56.251 INFO index - render_page_content: Page/3D-explorationhas been selected	MemTotal: 1185.0390625
+2022-02-08 20:10:56.251 INFO misc - return_pickled_object: treemaps.pickle could not be found or force_update is True. Computing the object and pickling it now.
+2022-02-08 20:10:56.288 INFO misc - return_pickled_object: treemaps.pickle being returned now from computation.
+2022-02-08 20:11:04.635 WARNING threeD_exploration - page_2bis_add_toast_selection: More than one lipid corresponds to the selection
+2022-02-08 20:11:04.646 WARNING threeD_exploration - page_2bis_add_toast_selection: More than one lipid corresponds to the selection
+2022-02-08 20:11:04.661 WARNING threeD_exploration - page_2bis_add_toast_selection: More than one lipid corresponds to the selection
+2022-02-08 20:11:05.763 INFO threeD_exploration - page_2bis_plot_graph_heatmap_mz_selection: For the computation of 3D volume, decrease_resolution_factor is 7
+2022-02-08 20:11:05.768 INFO misc - return_pickled_object: volume_interpolated_3D_CER 2010008_40:1 H_____.pickle could not be found or force_update is True. Computing the object and pickling it now.
+2022-02-08 20:11:05.769 INFO figures - compute_3D_volume_figure: Starting 3D volume computation
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+Exception on /_dash-update-component [POST]
+Traceback (most recent call last):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/dash.py", line 1336, in dispatch
+    response.set_data(func(*args, outputs_list=outputs_list))
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/_callback.py", line 151, in add_context
+    output_value = func(*func_args, **func_kwargs)  # %% callback invoked %%
+  File "/home/colas/lbae/lbae/pages/threeD_exploration.py", line 775, in page_2bis_plot_graph_heatmap_mz_selection
+    decrease_dimensionality_factor=decrease_resolution_factor,
+  File "/home/colas/lbae/lbae/modules/tools/misc.py", line 48, in return_pickled_object
+    object = compute_function(**compute_function_args)
+  File "/home/colas/lbae/lbae/modules/figures.py", line 1379, in compute_3D_volume_figure
+    # Compute an array of boundaries
+TypeError: 'NoneType' object is not iterable
+2022-02-08 20:11:05.782 ERROR app - log_exception: Exception on /_dash-update-component [POST]
+Traceback (most recent call last):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/dash.py", line 1336, in dispatch
+    response.set_data(func(*args, outputs_list=outputs_list))
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/_callback.py", line 151, in add_context
+    output_value = func(*func_args, **func_kwargs)  # %% callback invoked %%
+  File "/home/colas/lbae/lbae/pages/threeD_exploration.py", line 775, in page_2bis_plot_graph_heatmap_mz_selection
+    decrease_dimensionality_factor=decrease_resolution_factor,
+  File "/home/colas/lbae/lbae/modules/tools/misc.py", line 48, in return_pickled_object
+    object = compute_function(**compute_function_args)
+  File "/home/colas/lbae/lbae/modules/figures.py", line 1379, in compute_3D_volume_figure
+    # Compute an array of boundaries
+TypeError: 'NoneType' object is not iterable
+2022-02-08 20:11:07.602 INFO threeD_exploration - page_2bis_plot_graph_heatmap_mz_selection: For the computation of 3D volume, decrease_resolution_factor is 7
+2022-02-08 20:11:07.613 INFO misc - return_pickled_object: volume_interpolated_3D_CER 2010008_40:1 H_____.pickle could not be found or force_update is True. Computing the object and pickling it now.
+2022-02-08 20:11:07.613 INFO figures - compute_3D_volume_figure: Starting 3D volume computation
+Exception on /_dash-update-component [POST]
+Traceback (most recent call last):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/dash.py", line 1336, in dispatch
+    response.set_data(func(*args, outputs_list=outputs_list))
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/_callback.py", line 151, in add_context
+    output_value = func(*func_args, **func_kwargs)  # %% callback invoked %%
+  File "/home/colas/lbae/lbae/pages/threeD_exploration.py", line 775, in page_2bis_plot_graph_heatmap_mz_selection
+    decrease_dimensionality_factor=decrease_resolution_factor,
+  File "/home/colas/lbae/lbae/modules/tools/misc.py", line 48, in return_pickled_object
+    object = compute_function(**compute_function_args)
+  File "/home/colas/lbae/lbae/modules/figures.py", line 1379, in compute_3D_volume_figure
+    # Compute an array of boundaries
+TypeError: 'NoneType' object is not iterable
+2022-02-08 20:11:07.618 ERROR app - log_exception: Exception on /_dash-update-component [POST]
+Traceback (most recent call last):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/dash.py", line 1336, in dispatch
+    response.set_data(func(*args, outputs_list=outputs_list))
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/_callback.py", line 151, in add_context
+    output_value = func(*func_args, **func_kwargs)  # %% callback invoked %%
+  File "/home/colas/lbae/lbae/pages/threeD_exploration.py", line 775, in page_2bis_plot_graph_heatmap_mz_selection
+    decrease_dimensionality_factor=decrease_resolution_factor,
+  File "/home/colas/lbae/lbae/modules/tools/misc.py", line 48, in return_pickled_object
+    object = compute_function(**compute_function_args)
+  File "/home/colas/lbae/lbae/modules/figures.py", line 1379, in compute_3D_volume_figure
+    # Compute an array of boundaries
+TypeError: 'NoneType' object is not iterable
+[2022-02-08 20:11:11 +0100] [74586] [CRITICAL] WORKER TIMEOUT (pid:84273)
+[2022-02-08 20:11:11 +0100] [84273] [INFO] Worker exiting (pid: 84273)
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+No selection could be found for current mask
+No selection could be found for current mask
+No selection could be found for current mask
+[2022-02-08 20:11:12 +0100] [372140] [INFO] Booting worker with pid: 372140
+2022-02-08 20:11:12.597 INFO main - <module>: Starting import chain	MemTotal: 53.87109375
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+2022-02-08 20:11:14.849 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 245.56640625
+2022-02-08 20:11:14.849 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 245.56640625
+2022-02-08 20:11:14.940 INFO atlas - __init__: Initializing Atlas object	MemTotal: 282.5703125
+2022-02-08 20:11:15.354 INFO misc - return_pickled_object: Returning dic_acronym_children_id.pickle from pickled file.	MemTotal: 578.82421875
+2022-02-08 20:11:16.143 INFO misc - return_pickled_object: Returning hierarchy.pickle from pickled file.	MemTotal: 1019.97265625
+2022-02-08 20:11:16.144 INFO misc - return_pickled_object: Returning arrays_projection_corrected_True_True.pickle from pickled file.	MemTotal: 1020.09765625
+2022-02-08 20:11:16.318 INFO misc - return_pickled_object: Returning dic_mask_images.pickle from pickled file.	MemTotal: 1171.0390625
+2022-02-08 20:11:16.322 INFO figures - __init__: Initializing Figures object	MemTotal: 1171.06640625
+2022-02-08 20:11:16.322 INFO misc - return_pickled_object: Returning dic_fig_contours.pickle from pickled file.	MemTotal: 1171.06640625
+2022-02-08 20:11:16.783 INFO app - <module>: Memory use after three main object have been instantiated	MemTotal: 1182.484375
+2022-02-08 20:11:16.807 INFO misc - return_pickled_object: Returning figure_basic_image_warped_data_1_False.pickle from pickled file.	MemTotal: 1183.40625
+2022-02-08 20:11:18.278 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-02-08 20:11:18.384 INFO misc - return_pickled_object: Returning set_masks_0.pickle from pickled file.	MemTotal: 1227.5
+2022-02-08 20:11:18.385 INFO misc - return_pickled_object: Returning figure_basic_image_projection_corrected_0_False_True.pickle from pickled file.	MemTotal: 1227.5
+2022-02-08 20:11:18.398 INFO misc - return_pickled_object: treemaps.pickle could not be found or force_update is True. Computing the object and pickling it now.
+2022-02-08 20:11:18.447 INFO misc - return_pickled_object: treemaps.pickle being returned now from computation.
+2022-02-08 20:11:18.448 INFO misc - return_pickled_object: Returning sunburst.pickle from pickled file.	MemTotal: 1227.66796875
+2022-02-08 20:11:18.463 INFO misc - return_pickled_object: Returning atlas_with_slider_frontal_False.pickle from pickled file.	MemTotal: 1227.8046875
+2022-02-08 20:11:18.483 INFO misc - return_pickled_object: Returning _None.pickle from pickled file.	MemTotal: 1227.8046875
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+Exception on /_dash-update-component [POST]
+Traceback (most recent call last):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/dash.py", line 1297, in dispatch
+    cb = self.callback_map[output]
+KeyError: '..page-4-graph-heatmap-mz-selection.figure...page-4-radioitems-input.value..'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/dash.py", line 1335, in dispatch
+    raise KeyError(msg.format(output)) from missing_callback_function
+KeyError: "Callback function not found for output '..page-4-graph-heatmap-mz-selection.figure...page-4-radioitems-input.value..', perhaps you forgot to prepend the '@'?"
+2022-02-08 20:11:19.983 ERROR app - log_exception: Exception on /_dash-update-component [POST]
+Traceback (most recent call last):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/dash.py", line 1297, in dispatch
+    cb = self.callback_map[output]
+KeyError: '..page-4-graph-heatmap-mz-selection.figure...page-4-radioitems-input.value..'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/dash.py", line 1335, in dispatch
+    raise KeyError(msg.format(output)) from missing_callback_function
+KeyError: "Callback function not found for output '..page-4-graph-heatmap-mz-selection.figure...page-4-radioitems-input.value..', perhaps you forgot to prepend the '@'?"
+Exception on /_dash-update-component [POST]
+Traceback (most recent call last):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/dash.py", line 1297, in dispatch
+    cb = self.callback_map[output]
+KeyError: '..page-4-alert.style...page-4-graph-heatmap-mz-selection.style..'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/dash.py", line 1335, in dispatch
+    raise KeyError(msg.format(output)) from missing_callback_function
+KeyError: "Callback function not found for output '..page-4-alert.style...page-4-graph-heatmap-mz-selection.style..', perhaps you forgot to prepend the '@'?"
+2022-02-08 20:11:20.029 ERROR app - log_exception: Exception on /_dash-update-component [POST]
+Traceback (most recent call last):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/dash.py", line 1297, in dispatch
+    cb = self.callback_map[output]
+KeyError: '..page-4-alert.style...page-4-graph-heatmap-mz-selection.style..'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/dash.py", line 1335, in dispatch
+    raise KeyError(msg.format(output)) from missing_callback_function
+KeyError: "Callback function not found for output '..page-4-alert.style...page-4-graph-heatmap-mz-selection.style..', perhaps you forgot to prepend the '@'?"
+2022-02-08 20:11:22.214 INFO index - render_page_content: Page/region-analysishas been selected	MemTotal: 1227.99609375
+2022-02-08 20:11:22.215 INFO misc - return_pickled_object: set_masks_12.pickle could not be found or force_update is True. Computing the object and pickling it now.
+2022-02-08 20:11:22.215 INFO misc - return_pickled_object: dic_masks_and_spectra_12.pickle could not be found or force_update is True. Computing the object and pickling it now.
+2022-02-08 20:11:30.545 INFO index - render_page_content: Page/load-slicehas been selected	MemTotal: 1186.4921875
+2022-02-08 20:11:30.547 INFO misc - return_pickled_object: Returning figure_basic_image_warped_data_13_False.pickle from pickled file.	MemTotal: 1186.73046875
+2022-02-08 20:11:30.801 INFO load_slice - tab_1_load_image: Slider changed to value 13
+2022-02-08 20:11:33.145 INFO load_slice - tab_1_load_image: Slider changed to value 15
+2022-02-08 20:11:33.145 INFO misc - return_pickled_object: Returning figure_basic_image_warped_data_14_False.pickle from pickled file.	MemTotal: 1186.73046875
+2022-02-08 20:11:34.136 INFO load_slice - tab_1_load_image: Slider changed to value 17
+2022-02-08 20:11:34.136 INFO misc - return_pickled_object: Returning figure_basic_image_warped_data_16_False.pickle from pickled file.	MemTotal: 1186.73046875
+2022-02-08 20:11:35.705 INFO load_slice - tab_1_load_image: Slider changed to value 18
+2022-02-08 20:11:35.706 INFO misc - return_pickled_object: Returning figure_basic_image_warped_data_17_False.pickle from pickled file.	MemTotal: 1186.73046875
+2022-02-08 20:11:36.723 INFO load_slice - tab_1_load_image: Slider changed to value 19
+2022-02-08 20:11:36.723 INFO misc - return_pickled_object: Returning figure_basic_image_warped_data_18_False.pickle from pickled file.	MemTotal: 1186.73046875
+2022-02-08 20:11:37.617 INFO load_slice - tab_1_load_image: Slider changed to value 21
+2022-02-08 20:11:37.617 INFO misc - return_pickled_object: Returning figure_basic_image_warped_data_20_False.pickle from pickled file.	MemTotal: 1186.73046875
+2022-02-08 20:11:38.558 INFO load_slice - tab_1_load_image: Slider changed to value 23
+2022-02-08 20:11:38.558 INFO misc - return_pickled_object: Returning figure_basic_image_warped_data_22_False.pickle from pickled file.	MemTotal: 1186.73046875
+2022-02-08 20:11:39.512 INFO load_slice - tab_1_load_image: Slider changed to value 24
+2022-02-08 20:11:39.513 INFO misc - return_pickled_object: Returning figure_basic_image_warped_data_23_False.pickle from pickled file.	MemTotal: 1186.73046875
+2022-02-08 20:11:47.244 INFO load_slice - tab_1_load_image: Slider changed to value 17
+2022-02-08 20:11:47.244 INFO misc - return_pickled_object: Returning figure_basic_image_warped_data_16_False.pickle from pickled file.	MemTotal: 1186.73046875
+2022-02-08 20:11:48.072 INFO load_slice - tab_1_load_image: Slider changed to value 19
+2022-02-08 20:11:48.072 INFO misc - return_pickled_object: Returning figure_basic_image_warped_data_18_False.pickle from pickled file.	MemTotal: 1186.73046875
+[2022-02-08 20:11:52 +0100] [74586] [CRITICAL] WORKER TIMEOUT (pid:372140)
+[2022-02-08 20:11:52 +0100] [372140] [INFO] Worker exiting (pid: 372140)
+[2022-02-08 20:11:53 +0100] [372242] [INFO] Booting worker with pid: 372242
+2022-02-08 20:11:53.535 INFO main - <module>: Starting import chain	MemTotal: 53.87109375
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+2022-02-08 20:11:55.936 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 245.57421875
+2022-02-08 20:11:55.936 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 245.57421875
+2022-02-08 20:11:56.017 INFO atlas - __init__: Initializing Atlas object	MemTotal: 282.5703125
+2022-02-08 20:11:56.353 INFO misc - return_pickled_object: Returning dic_acronym_children_id.pickle from pickled file.	MemTotal: 578.8203125
+2022-02-08 20:11:57.230 INFO misc - return_pickled_object: Returning hierarchy.pickle from pickled file.	MemTotal: 1019.97265625
+2022-02-08 20:11:57.231 INFO misc - return_pickled_object: Returning arrays_projection_corrected_True_True.pickle from pickled file.	MemTotal: 1020.09375
+2022-02-08 20:11:57.408 INFO misc - return_pickled_object: Returning dic_mask_images.pickle from pickled file.	MemTotal: 1171.03515625
+2022-02-08 20:11:57.412 INFO figures - __init__: Initializing Figures object	MemTotal: 1171.06640625
+2022-02-08 20:11:57.413 INFO misc - return_pickled_object: Returning dic_fig_contours.pickle from pickled file.	MemTotal: 1171.06640625
+2022-02-08 20:11:57.817 INFO app - <module>: Memory use after three main object have been instantiated	MemTotal: 1182.46484375
+2022-02-08 20:11:57.838 INFO misc - return_pickled_object: Returning figure_basic_image_warped_data_1_False.pickle from pickled file.	MemTotal: 1183.40625
+2022-02-08 20:11:59.253 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-02-08 20:11:59.354 INFO misc - return_pickled_object: Returning set_masks_0.pickle from pickled file.	MemTotal: 1227.28125
+2022-02-08 20:11:59.355 INFO misc - return_pickled_object: Returning figure_basic_image_projection_corrected_0_False_True.pickle from pickled file.	MemTotal: 1227.28125
+2022-02-08 20:11:59.367 INFO misc - return_pickled_object: treemaps.pickle could not be found or force_update is True. Computing the object and pickling it now.
+2022-02-08 20:11:59.413 INFO misc - return_pickled_object: treemaps.pickle being returned now from computation.
+2022-02-08 20:11:59.415 INFO misc - return_pickled_object: Returning sunburst.pickle from pickled file.	MemTotal: 1227.46484375
+2022-02-08 20:11:59.429 INFO misc - return_pickled_object: Returning atlas_with_slider_frontal_False.pickle from pickled file.	MemTotal: 1227.46484375
+2022-02-08 20:11:59.448 INFO misc - return_pickled_object: Returning _None.pickle from pickled file.	MemTotal: 1227.46484375
+2022-02-08 20:12:00.125 INFO load_slice - tab_1_load_image: Slider changed to value 19
+2022-02-08 20:12:00.125 INFO misc - return_pickled_object: figure_basic_image_original_data_18_False.pickle could not be found or force_update is True. Computing the object and pickling it now.
+2022-02-08 20:12:00.125 INFO misc - return_pickled_object: Returning array_basic_images_original_data.pickle from pickled file.	MemTotal: 1227.625
+2022-02-08 20:12:00.186 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-02-08 20:12:00.218 INFO misc - return_pickled_object: figure_basic_image_original_data_18_False.pickle being returned now from computation.
+2022-02-08 20:12:03.567 INFO load_slice - tab_1_load_image: Slider changed to value 21
+2022-02-08 20:12:03.568 INFO misc - return_pickled_object: figure_basic_image_original_data_20_False.pickle could not be found or force_update is True. Computing the object and pickling it now.
+2022-02-08 20:12:03.568 INFO misc - return_pickled_object: Returning array_basic_images_original_data.pickle from pickled file.	MemTotal: 1186.73046875
+2022-02-08 20:12:03.626 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-02-08 20:12:03.660 INFO misc - return_pickled_object: figure_basic_image_original_data_20_False.pickle being returned now from computation.
+2022-02-08 20:12:04.543 INFO load_slice - tab_1_load_image: Slider changed to value 23
+2022-02-08 20:12:04.543 INFO misc - return_pickled_object: Returning figure_basic_image_original_data_22_False.pickle from pickled file.	MemTotal: 1203.375
+2022-02-08 20:12:06.213 INFO load_slice - tab_1_load_image: Slider changed to value 1
+2022-02-08 20:12:06.213 INFO misc - return_pickled_object: Returning figure_basic_image_original_data_0_False.pickle from pickled file.	MemTotal: 1203.375
+2022-02-08 20:12:59.048 INFO load_slice - tab_1_load_image: Slider changed to value 2
+2022-02-08 20:12:59.049 INFO misc - return_pickled_object: figure_basic_image_original_data_1_False.pickle could not be found or force_update is True. Computing the object and pickling it now.
+2022-02-08 20:12:59.049 INFO misc - return_pickled_object: Returning array_basic_images_original_data.pickle from pickled file.	MemTotal: 1227.84765625
+2022-02-08 20:12:59.108 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-02-08 20:12:59.140 INFO misc - return_pickled_object: figure_basic_image_original_data_1_False.pickle being returned now from computation.
+2022-02-08 20:13:00.074 INFO load_slice - tab_1_load_image: Slider changed to value 3
+2022-02-08 20:13:00.075 INFO misc - return_pickled_object: Returning figure_basic_image_original_data_2_False.pickle from pickled file.	MemTotal: 1243.87890625
+2022-02-08 20:13:01.138 INFO load_slice - tab_1_load_image: Slider changed to value 5
+2022-02-08 20:13:01.138 INFO misc - return_pickled_object: Returning figure_basic_image_original_data_4_False.pickle from pickled file.	MemTotal: 1243.87890625
+2022-02-08 20:13:02.524 INFO load_slice - tab_1_load_image: Slider changed to value 6
+2022-02-08 20:13:02.524 INFO misc - return_pickled_object: figure_basic_image_original_data_5_False.pickle could not be found or force_update is True. Computing the object and pickling it now.
+2022-02-08 20:13:02.525 INFO misc - return_pickled_object: Returning array_basic_images_original_data.pickle from pickled file.	MemTotal: 1243.87890625
+2022-02-08 20:13:02.574 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-02-08 20:13:02.610 INFO misc - return_pickled_object: figure_basic_image_original_data_5_False.pickle being returned now from computation.
+2022-02-08 20:13:13.701 INFO load_slice - tab_1_load_image: Slider changed to value 7
+2022-02-08 20:13:13.701 INFO misc - return_pickled_object: Returning figure_basic_image_original_data_6_False.pickle from pickled file.	MemTotal: 1243.87890625
+2022-02-08 20:13:14.495 INFO load_slice - tab_1_load_image: Slider changed to value 8
+2022-02-08 20:13:14.496 INFO misc - return_pickled_object: Returning figure_basic_image_original_data_7_False.pickle from pickled file.	MemTotal: 1243.87890625
+2022-02-08 20:13:15.294 INFO load_slice - tab_1_load_image: Slider changed to value 9
+2022-02-08 20:13:15.295 INFO misc - return_pickled_object: Returning figure_basic_image_original_data_8_False.pickle from pickled file.	MemTotal: 1243.87890625
+2022-02-08 20:13:39.469 INFO load_slice - tab_1_load_image: Slider changed to value 10
+2022-02-08 20:13:39.470 INFO misc - return_pickled_object: Returning figure_basic_image_original_data_9_False.pickle from pickled file.	MemTotal: 1203.375
+2022-02-08 20:13:41.499 INFO load_slice - tab_1_load_image: Slider changed to value 11
+2022-02-08 20:13:41.499 INFO misc - return_pickled_object: Returning figure_basic_image_original_data_10_False.pickle from pickled file.	MemTotal: 1203.375
+2022-02-08 20:13:43.557 INFO load_slice - tab_1_load_image: Slider changed to value 12
+2022-02-08 20:13:43.557 INFO misc - return_pickled_object: Returning figure_basic_image_original_data_11_False.pickle from pickled file.	MemTotal: 1203.375
+2022-02-08 20:13:44.895 INFO load_slice - tab_1_load_image: Slider changed to value 11
+2022-02-08 20:13:44.895 INFO misc - return_pickled_object: Returning figure_basic_image_original_data_10_False.pickle from pickled file.	MemTotal: 1203.375
+2022-02-08 20:14:03.265 INFO load_slice - tab_1_load_image: Slider changed to value 12
+2022-02-08 20:14:03.266 INFO misc - return_pickled_object: Returning figure_basic_image_original_data_11_False.pickle from pickled file.	MemTotal: 1243.87890625
+2022-02-08 20:14:04.339 INFO load_slice - tab_1_load_image: Slider changed to value 13
+2022-02-08 20:14:04.339 INFO misc - return_pickled_object: Returning figure_basic_image_original_data_12_False.pickle from pickled file.	MemTotal: 1243.87890625
+2022-02-08 20:14:13.624 INFO load_slice - tab_1_load_image: Slider changed to value 14
+2022-02-08 20:14:13.624 INFO misc - return_pickled_object: figure_basic_image_original_data_13_False.pickle could not be found or force_update is True. Computing the object and pickling it now.
+2022-02-08 20:14:13.624 INFO misc - return_pickled_object: Returning array_basic_images_original_data.pickle from pickled file.	MemTotal: 1243.87890625
+2022-02-08 20:14:13.673 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-02-08 20:14:13.706 INFO misc - return_pickled_object: figure_basic_image_original_data_13_False.pickle being returned now from computation.
+2022-02-08 20:14:15.146 INFO load_slice - tab_1_load_image: Slider changed to value 15
+2022-02-08 20:14:15.147 INFO misc - return_pickled_object: figure_basic_image_original_data_14_False.pickle could not be found or force_update is True. Computing the object and pickling it now.
+2022-02-08 20:14:15.147 INFO misc - return_pickled_object: Returning array_basic_images_original_data.pickle from pickled file.	MemTotal: 1243.87890625
+2022-02-08 20:14:15.195 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-02-08 20:14:15.225 INFO misc - return_pickled_object: figure_basic_image_original_data_14_False.pickle being returned now from computation.
+2022-02-08 20:14:16.258 INFO load_slice - tab_1_load_image: Slider changed to value 16
+2022-02-08 20:14:16.258 INFO misc - return_pickled_object: figure_basic_image_original_data_15_False.pickle could not be found or force_update is True. Computing the object and pickling it now.
+2022-02-08 20:14:16.259 INFO misc - return_pickled_object: Returning array_basic_images_original_data.pickle from pickled file.	MemTotal: 1243.87890625
+2022-02-08 20:14:16.307 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-02-08 20:14:16.337 INFO misc - return_pickled_object: figure_basic_image_original_data_15_False.pickle being returned now from computation.
+2022-02-08 20:14:17.118 INFO load_slice - tab_1_load_image: Slider changed to value 17
+2022-02-08 20:14:17.118 INFO misc - return_pickled_object: figure_basic_image_original_data_16_False.pickle could not be found or force_update is True. Computing the object and pickling it now.
+2022-02-08 20:14:17.118 INFO misc - return_pickled_object: Returning array_basic_images_original_data.pickle from pickled file.	MemTotal: 1243.87890625
+2022-02-08 20:14:17.167 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-02-08 20:14:17.207 INFO misc - return_pickled_object: figure_basic_image_original_data_16_False.pickle being returned now from computation.
+2022-02-08 20:14:18.076 INFO load_slice - tab_1_load_image: Slider changed to value 18
+2022-02-08 20:14:18.077 INFO misc - return_pickled_object: Returning figure_basic_image_original_data_17_False.pickle from pickled file.	MemTotal: 1243.87890625
+2022-02-08 20:14:19.413 INFO load_slice - tab_1_load_image: Slider changed to value 19
+2022-02-08 20:14:19.414 INFO misc - return_pickled_object: Returning figure_basic_image_original_data_18_False.pickle from pickled file.	MemTotal: 1243.87890625
+2022-02-08 20:14:21.662 INFO load_slice - tab_1_load_image: Slider changed to value 18
+2022-02-08 20:14:21.662 INFO misc - return_pickled_object: Returning figure_basic_image_original_data_17_False.pickle from pickled file.	MemTotal: 1243.87890625
+2022-02-08 20:14:23.469 INFO load_slice - tab_1_load_image: Slider changed to value 19
+2022-02-08 20:14:23.469 INFO misc - return_pickled_object: Returning figure_basic_image_original_data_18_False.pickle from pickled file.	MemTotal: 1243.87890625
+2022-02-08 20:14:24.899 INFO load_slice - tab_1_load_image: Slider changed to value 19
+2022-02-08 20:14:24.899 INFO misc - return_pickled_object: Returning figure_basic_image_warped_data_18_False.pickle from pickled file.	MemTotal: 1243.87890625

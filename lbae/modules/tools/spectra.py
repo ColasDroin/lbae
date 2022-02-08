@@ -963,3 +963,31 @@ def compute_avg_intensity_per_lipid(l_intensity_with_lipids, l_idx_labels):
 
     return l_unique_idx_labels, l_avg_intensity
 
+
+# ! Need to write docstring
+# Global function to memoize/compute lipid label indexes
+# Not cached as the caching/retrieving takes as long as the function itself
+# @cache.memoize()
+def global_lipid_index_store(data, slice_index, l_spectra):
+    logging.info("Starting computing ll_idx_labels")
+    ll_idx_labels = []
+    for spectrum in l_spectra:
+
+        if spectrum is not None:
+            # Get the average spectrum and add it to m/z plot
+            grah_scattergl_data = np.array(spectrum, dtype=np.float32)
+
+            # Get df for current slice
+            df_names = data.get_annotations()[data.get_annotations()["slice"] == slice_index]
+
+            # Extract lipid names
+            l_idx_labels = return_index_labels(
+                df_names["min"].to_numpy(), df_names["max"].to_numpy(), grah_scattergl_data[0, :],
+            )
+        else:
+            l_idx_labels = None
+
+        # Save in a list of lists
+        ll_idx_labels.append(l_idx_labels)
+    logging.info("Returning ll_idx_labels")
+    return ll_idx_labels

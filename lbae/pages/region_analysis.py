@@ -27,6 +27,7 @@ from lbae.modules.tools.spectra import (
     return_index_labels,
     add_zeros_to_spectrum,
     compute_avg_intensity_per_lipid,
+    global_lipid_index_store,
 )
 
 HEIGHT_PLOTS = 300
@@ -1188,31 +1189,6 @@ def page_3_record_spectra(
     return []
 
 
-# Global function to memoize/compute lipid label indexes
-# Not cached as the caching/retrieving takes as long as the function itself
-# @cache.memoize()
-def global_lipid_index_store(slice_index, l_spectra):
-    logging.info("Starting computing ll_idx_labels")
-    ll_idx_labels = []
-    for spectrum in l_spectra:
-
-        # Get the average spectrum and add it to m/z plot
-        grah_scattergl_data = np.array(spectrum, dtype=np.float32)
-
-        # Get df for current slice
-        df_names = data.get_annotations()[data.get_annotations()["slice"] == slice_index]
-
-        # Extract lipid names
-        l_idx_labels = return_index_labels(
-            df_names["min"].to_numpy(), df_names["max"].to_numpy(), grah_scattergl_data[0, :],
-        )
-
-        # Save in a list of lists
-        ll_idx_labels.append(l_idx_labels)
-    logging.info("Returning ll_idx_labels")
-    return ll_idx_labels
-
-
 # Function that takes path and plot spectrum
 @app.app.callback(
     Output("page-3-graph-spectrum-per-pixel", "figure"),
@@ -1252,7 +1228,7 @@ def page_3_plot_spectrum(
             l_spectra = global_spectrum_store(
                 slice_index, l_shapes_and_masks, l_mask_name, relayoutData, as_enrichment, log_transform
             )
-            ll_idx_labels = global_lipid_index_store(slice_index, l_spectra)
+            ll_idx_labels = global_lipid_index_store(data, slice_index, l_spectra)
             for idx_spectra, (spectrum, l_idx_labels) in enumerate(zip(l_spectra, ll_idx_labels)):
 
                 # Find color of the current spectrum
@@ -1427,7 +1403,7 @@ def page_3_draw_heatmap_per_lipid_selection(
             l_spectra = global_spectrum_store(
                 slice_index, l_shapes_and_masks, l_mask_name, relayoutData, as_enrichment, log_transform
             )
-            ll_idx_labels = global_lipid_index_store(slice_index, l_spectra)
+            ll_idx_labels = global_lipid_index_store(data, slice_index, l_spectra)
             if len(l_spectra) > 0:
                 if len(ll_idx_labels) != len(l_spectra):
                     print("BUG: the number of received spectra is different from the number of received annotations")
