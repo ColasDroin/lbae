@@ -30,11 +30,12 @@ def return_layout(basic_config, slice_index):
                 # x sets the lateral position, y the vertical one, w is in columns (whose size depends on the dimension), h is in rows (30px)
                 # nb columns go 12->10->6->4->2
                 "lg": [
-                    {"i": "page-4-card-region-selection", "x": 0, "y": 0, "w": 8, "h": 20},
+                    {"i": "page-4-card-region-selection", "x": 0, "y": 0, "w": 8, "h": 15},
                     {"i": "page-4-card-lipid-selection", "x": 8, "y": 0, "w": 4, "h": 11},
-                    {"i": "page-4-card-range-selection", "x": 8, "y": 8, "w": 4, "h": 6},
-                    {"i": "page-4-card-input-selection", "x": 8, "y": 10, "w": 4, "h": 3},
-                    {"i": "page-4-card-main-graph", "x": 0, "y": 20, "w": 12, "h": 32},
+                    {"i": "page-4-card-range-selection", "x": 8, "y": 8, "w": 4, "h": 7},
+                    {"i": "page-4-card-input-selection", "x": 0, "y": 10, "w": 8, "h": 3},
+                    {"i": "page-4-card-main-graph", "x": 0, "y": 20, "w": 6, "h": 16},
+                    {"i": "page-4-card-heatmap", "x": 6, "y": 20, "w": 6, "h": 16},
                 ],
                 "md": [
                     {"i": "page-4-card-region-selection", "x": 0, "y": 0, "w": 7, "h": 14},
@@ -42,6 +43,7 @@ def return_layout(basic_config, slice_index):
                     {"i": "page-4-card-range-selection", "x": 6, "y": 8, "w": 3, "h": 6},
                     {"i": "page-4-card-input-selection", "x": 6, "y": 10, "w": 3, "h": 3},
                     {"i": "page-4-card-main-graph", "x": 0, "y": 14, "w": 10, "h": 14},
+                    {"i": "page-4-card-heatmap", "x": 0, "y": 30, "w": 10, "h": 14},
                 ],
                 "sm": [
                     {"i": "page-4-card-region-selection", "x": 0, "y": 0, "w": 6, "h": 19},
@@ -49,6 +51,7 @@ def return_layout(basic_config, slice_index):
                     {"i": "page-4-card-range-selection", "x": 0, "y": 19 + 7, "w": 6, "h": 5},
                     {"i": "page-4-card-input-selection", "x": 0, "y": 19 + 7 + 5, "w": 6, "h": 3},
                     {"i": "page-4-card-main-graph", "x": 0, "y": 19, "w": 6, "h": 19},
+                    {"i": "page-4-card-heatmap", "x": 0, "y": 30, "w": 6, "h": 19},
                 ],
                 "xs": [
                     {"i": "page-4-card-region-selection", "x": 0, "y": 0, "w": 4, "h": 14},
@@ -56,6 +59,7 @@ def return_layout(basic_config, slice_index):
                     {"i": "page-4-card-range-selection", "x": 0, "y": 14 + 7, "w": 4, "h": 5},
                     {"i": "page-4-card-input-selection", "x": 0, "y": 14 + 7 + 5, "w": 4, "h": 3},
                     {"i": "page-4-card-main-graph", "x": 0, "y": 14, "w": 4, "h": 14},
+                    {"i": "page-4-card-heatmap", "x": 0, "y": 30, "w": 4, "h": 14},
                 ],
                 "xxs": [
                     {"i": "page-4-card-region-selection", "x": 0, "y": 0, "w": 2, "h": 9},
@@ -63,6 +67,7 @@ def return_layout(basic_config, slice_index):
                     {"i": "page-4-card-range-selection", "x": 0, "y": 9 + 7, "w": 2, "h": 5},
                     {"i": "page-4-card-input-selection", "x": 0, "y": 9 + 7 + 5, "w": 2, "h": 3},
                     {"i": "page-4-card-main-graph", "x": 0, "y": 9, "w": 2, "h": 9},
+                    {"i": "page-4-card-heatmap", "x": 0, "y": 18, "w": 2, "h": 9},
                 ],
             },
             children=[
@@ -72,7 +77,7 @@ def return_layout(basic_config, slice_index):
                     children=[
                         dbc.CardHeader(children="Structure selection",),
                         dbc.CardBody(
-                            className="py-0 mb-0 mt-2",
+                            className="py-0 mb-0 mt-0",
                             children=[
                                 dbc.Spinner(
                                     color="dark",
@@ -325,7 +330,7 @@ def return_layout(basic_config, slice_index):
                     children=[
                         dbc.CardHeader("Input selection"),
                         dbc.CardBody(
-                            className="pt-0 mt-3",
+                            className="pt-0 mt-3 d-flex justify-content-center",
                             children=[
                                 dbc.RadioItems(
                                     options=[
@@ -381,7 +386,57 @@ def return_layout(basic_config, slice_index):
                                                     ),
                                                 ),
                                                 dcc.Graph(
-                                                    id="page-4-graph-heatmap-mz-selection",
+                                                    id="page-4-graph-volume",
+                                                    config=basic_config
+                                                    | {
+                                                        "toImageButtonOptions": {
+                                                            "format": "png",
+                                                            "filename": "brain_lipid_selection",
+                                                            "scale": 2,
+                                                        }
+                                                    },
+                                                    style={
+                                                        "width": "100%",
+                                                        "height": "95%",
+                                                        "position": "absolute",
+                                                        "left": "0",
+                                                    },
+                                                ),
+                                            ],
+                                        ),
+                                    ],
+                                ),
+                                html.Div("‎‎‏‏‎ ‎"),  # Empty span to prevent toast from bugging
+                            ],
+                        ),
+                    ],
+                ),
+                dbc.Card(
+                    id="page-4-card-heatmap",
+                    className="no-transition",
+                    style={"width": "100%", "height": "100%"},
+                    children=[
+                        dbc.CardHeader(className="d-flex", children="Lipid expression comparison",),
+                        dbc.CardBody(
+                            className="py-0 mb-0 mt-2",
+                            children=[
+                                dbc.Spinner(
+                                    color="dark",
+                                    show_initially=False,
+                                    children=[
+                                        html.Div(
+                                            className="page-1-fixed-aspect-ratio",
+                                            children=[
+                                                html.Div(
+                                                    id="page-4-alert",
+                                                    className="text-center my-2",
+                                                    children=html.Strong(
+                                                        children="Please select at least one lipid.",
+                                                        style={"color": "#df5034"},
+                                                    ),
+                                                ),
+                                                dcc.Graph(
+                                                    id="page-4-graph-heatmap",
                                                     config=basic_config
                                                     | {
                                                         "toImageButtonOptions": {
@@ -418,7 +473,7 @@ def return_layout(basic_config, slice_index):
 # Function to make visible the alert regarding the plot page 4
 @app.app.callback(
     Output("page-4-alert", "style"),
-    Output("page-4-graph-heatmap-mz-selection", "style"),
+    Output("page-4-graph-volume", "style"),
     Input("page-4-display-button", "n_clicks"),
     # Input("page-4-card-tabs", "active_tab"),
     Input("page-4-radioitems-input", "value"),
@@ -606,9 +661,10 @@ def page_4_add_toast_region_selection(
     return dash.no_update
 
 
-# Function to plot page-4-graph-heatmap-mz-selection when its state get updated
+# Function to plot page-4-graph-volume when its state get updated
 @app.app.callback(
-    Output("page-4-graph-heatmap-mz-selection", "figure"),
+    Output("page-4-graph-volume", "figure"),
+    Output("page-4-graph-heatmap", "figure"),
     Output("page-4-radioitems-input", "value"),
     # Input("page-4-card-tabs", "active_tab"),
     Input("boundaries-high-resolution-mz-plot", "data"),
@@ -701,6 +757,7 @@ def page_2bis_plot_graph_heatmap_mz_selection(
                         set_id_regions=set_id,
                         decrease_dimensionality_factor=decrease_resolution_factor,
                     ),
+                    figures.compute_clustergram_figure(l_selected_regions, percentile=10),
                     3,
                 )
 
@@ -717,6 +774,7 @@ def page_2bis_plot_graph_heatmap_mz_selection(
                         set_id_regions=set_id,
                         decrease_dimensionality_factor=decrease_resolution_factor,
                     ),
+                    figures.compute_clustergram_figure(l_selected_regions, percentile=10),
                     2,
                 )
         return dash.no_update
@@ -796,6 +854,7 @@ def page_2bis_plot_graph_heatmap_mz_selection(
                     set_id_regions=set_id,
                     decrease_dimensionality_factor=decrease_resolution_factor,
                 ),
+                figures.compute_clustergram_figure(l_selected_regions, percentile=10),
                 1,
             )
 

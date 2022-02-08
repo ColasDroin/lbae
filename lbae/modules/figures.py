@@ -9,7 +9,8 @@ from skimage import io
 from scipy.ndimage.interpolation import map_coordinates
 import logging
 from numba import njit
-from matplotlib import cm
+import pandas as pd
+import dash_bio as dashbio
 
 # Homemade functions
 from lbae.modules.tools import spectra
@@ -21,6 +22,8 @@ from lbae.modules.tools.atlas import project_image, slice_to_atlas_transform
 from lbae.modules.tools.misc import logmem
 from lbae.modules.tools.volume import filter_voxels, fill_array_borders, fill_array_interpolation
 from lbae.config import dic_colors, l_colors
+from lbae.pages.region_analysis import global_lipid_index_store
+from lbae.modules.tools.spectra import compute_avg_intensity_per_lipid
 
 ###### DEFINE FIGURES CLASS ######
 class Figures:
@@ -1069,7 +1072,7 @@ class Figures:
     def compute_treemaps_figure(self, maxdepth=7):
         fig = px.treemap(names=self._atlas.l_nodes, parents=self._atlas.l_parents, maxdepth=maxdepth)
         fig.update_layout(
-            uniformtext=dict(minsize=15), margin=dict(t=20, r=0, b=0, l=0),
+            uniformtext=dict(minsize=15), margin=dict(t=3, r=0, b=0, l=0),
         )
         fig.update_traces(root_color="lightgrey")
         return fig
@@ -1562,6 +1565,99 @@ class Figures:
         logging.info("Done computing 3D volume figure")
 
         return fig
+
+    def compute_clustergram_figure(self, l_selected_regions, percentile=10):
+        logging.info("Starting computing clustergram figure")
+        dic_avg_lipids = {}
+        for slice_index in range(self._data.get_slice_number()):
+            dic_masks = return_pickled_object(
+                "atlas/atlas_objects",
+                "dic_masks_and_spectra",
+                force_update=False,
+                compute_function=self._atlas.compute_dic_projected_masks_and_spectra,
+                slice_index=slice_index,
+            )
+            l_spectra = []
+            for region in l_selected_regions:
+                grah_scattergl_data = dic_masks[region][1]
+                l_spectra.append(grah_scattergl_data)
+            ll_idx_labels = global_lipid_index_store(slice_index, l_spectra)
+
+            # Compute average expression for each lipid and each selection
+            set_lipids_idx = set()
+            ll_lipids_idx = []
+            ll_avg_intensity = []
+            n_sel = len(l_spectra)
+            for spectrum, l_idx_labels in zip(l_spectra, ll_idx_labels):
+
+                array_intensity_with_lipids = np.array(spectrum, dtype=np.float32)[1, :]
+                array_idx_labels = np.array(l_idx_labels, dtype=np.int32)
+                l_lipids_idx, l_avg_intensity = compute_avg_intensity_per_lipid(
+                    array_intensity_with_lipids, array_idx_labels
+                )
+                set_lipids_idx.update(l_lipids_idx)
+                ll_lipids_idx.append(l_lipids_idx)
+                ll_avg_intensity.append(l_avg_intensity)
+
+            # dic_avg_lipids = {idx: [0] * n_sel for idx in set_lipids_idx}
+            for i, (l_lipids, l_avg_intensity) in enumerate(zip(ll_lipids_idx, ll_avg_intensity)):
+                for lipid, intensity in zip(l_lipids, l_avg_intensity):
+                    if lipid not in dic_avg_lipids:
+                        dic_avg_lipids[lipid] = []
+                        for j in range(n_sel):
+                            dic_avg_lipids[lipid].append([])
+                    dic_avg_lipids[lipid][i].append(intensity)
+
+        logging.info("Averaging all lipid values across slices")
+        # Average intensity per slice
+        for lipid in dic_avg_lipids:
+            for i in range(n_sel):
+                if len(dic_avg_lipids[lipid][i]) > 0:
+                    dic_avg_lipids[lipid][i] = np.mean(dic_avg_lipids[lipid][i])
+                else:
+                    dic_avg_lipids[lipid][i] = 0
+
+        df_avg_intensity_lipids = pd.DataFrame.from_dict(
+            dic_avg_lipids, orient="index", columns=[l_selected_regions[i] for i in range(n_sel)]
+        )
+
+        # Exclude very lowly expressed lipids
+        df_min_expression = df_avg_intensity_lipids.min(axis=1)
+        df_avg_intensity_lipids = df_avg_intensity_lipids[
+            df_min_expression > df_min_expression.quantile(q=int(percentile) / 100)
+        ]
+
+        if n_sel > 1:
+            df_avg_intensity_lipids = df_avg_intensity_lipids.iloc[(df_avg_intensity_lipids.mean(axis=1)).argsort(), :]
+        else:
+            df_avg_intensity_lipids.sort_values(by=l_selected_regions[0], inplace=True)
+
+        # Replace idx_lipids by actual name
+        df_names = self._data.get_annotations()[self._data.get_annotations()["slice"] == slice_index]
+        df_avg_intensity_lipids.index = df_avg_intensity_lipids.index.map(
+            lambda idx: df_names.iloc[idx]["name"]
+            + "_"
+            + df_names.iloc[idx]["structure"]
+            + "_"
+            + df_names.iloc[idx]["cation"]
+        )
+
+        # Plot
+        fig_heatmap_lipids = dashbio.Clustergram(
+            data=df_avg_intensity_lipids.to_numpy(),
+            column_labels=df_avg_intensity_lipids.index,
+            row_labels=df_avg_intensity_lipids.columns,
+            # color_threshold={
+            #    'row': 250,
+            #    'col': 700
+            # },
+            hidden_labels="row",
+            # height=800,
+            # width=700
+        )
+
+        logging.info("Returning figure")
+        return fig_heatmap_lipids
 
     ###### PICKLING FUNCTIONS ######
     def pickle_all_figure_3D(self, force_update=False):
