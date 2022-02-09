@@ -1071,7 +1071,7 @@ class Figures:
     def compute_treemaps_figure(self, maxdepth=7):
         fig = px.treemap(names=self._atlas.l_nodes, parents=self._atlas.l_parents, maxdepth=maxdepth)
         fig.update_layout(
-            uniformtext=dict(minsize=15), margin=dict(t=3, r=0, b=0, l=0),
+            uniformtext=dict(minsize=15), margin=dict(t=30, r=0, b=10, l=0),
         )
         fig.update_traces(root_color="lightgrey")
         return fig
@@ -1569,7 +1569,7 @@ class Figures:
         logging.info("Starting computing clustergram figure")
         dic_avg_lipids = {}
 
-        for slice_index in range(self._data.get_slice_number()):
+        for slice_index in range(16):  # range(self._data.get_slice_number()):
             dic_masks = return_pickled_object(
                 "atlas/atlas_objects",
                 "dic_masks_and_spectra",
@@ -1644,7 +1644,7 @@ class Figures:
             df_avg_intensity_lipids.sort_values(by=l_selected_regions[0], inplace=True)
 
         # Replace idx_lipids by actual name
-        df_names = self._data.get_annotations()[self._data.get_annotations()["slice"] == slice_index]
+        df_names = self._data.get_annotations()  # [self._data.get_annotations()["slice"] == slice_index]
         df_avg_intensity_lipids.index = df_avg_intensity_lipids.index.map(
             lambda idx: df_names.iloc[idx]["name"]
             + "_"
@@ -1653,25 +1653,23 @@ class Figures:
             + df_names.iloc[idx]["cation"]
         )
 
-        print("1", df_avg_intensity_lipids.to_numpy())
-        print("2", df_avg_intensity_lipids.index)
-        print("3", df_avg_intensity_lipids.columns)
-        # Plot
+        Plot
         fig_heatmap_lipids = dashbio.Clustergram(
             data=df_avg_intensity_lipids.to_numpy(),
-            column_labels=df_avg_intensity_lipids.index,
-            row_labels=df_avg_intensity_lipids.columns,
+            column_labels=df_avg_intensity_lipids.columns.to_list(),
+            row_labels=df_avg_intensity_lipids.index.to_list(),
             # color_threshold={
             #    'row': 250,
             #    'col': 700
             # },
             hidden_labels="row",
-            # height=800,
+            color_map="Viridis",
+            height=700,
             # width=700
         )
 
         logging.info("Returning figure")
-        return fig_heatmap_lipids
+        return fig
 
     ###### PICKLING FUNCTIONS ######
     def pickle_all_figure_3D(self, force_update=False):
