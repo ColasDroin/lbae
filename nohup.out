@@ -3222,3 +3222,622 @@ Bad directive or wrong number of arguments
 2022-02-08 20:14:23.469 INFO misc - return_pickled_object: Returning figure_basic_image_original_data_18_False.pickle from pickled file.	MemTotal: 1243.87890625
 2022-02-08 20:14:24.899 INFO load_slice - tab_1_load_image: Slider changed to value 19
 2022-02-08 20:14:24.899 INFO misc - return_pickled_object: Returning figure_basic_image_warped_data_18_False.pickle from pickled file.	MemTotal: 1243.87890625
+[2022-02-08 21:42:51 +0100] [74586] [INFO] Handling signal: term
+[2022-02-08 21:42:51 +0100] [372242] [INFO] Worker exiting (pid: 372242)
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+[2022-02-08 21:42:51 +0100] [84274] [INFO] Worker exiting (pid: 84274)
+[2022-02-08 21:42:53 +0100] [74586] [INFO] Shutting down: Master
+[2022-02-08 21:43:10 +0100] [385884] [INFO] Starting gunicorn 20.1.0
+[2022-02-08 21:43:10 +0100] [385884] [INFO] Listening at: http://0.0.0.0:8050 (385884)
+[2022-02-08 21:43:10 +0100] [385884] [INFO] Using worker: sync
+[2022-02-08 21:43:10 +0100] [385885] [INFO] Booting worker with pid: 385885
+[2022-02-08 21:43:10 +0100] [385886] [INFO] Booting worker with pid: 385886
+2022-02-08 21:43:10.674 INFO main - <module>: Starting import chain	MemTotal: 53.85546875
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+2022-02-08 21:43:10.686 INFO main - <module>: Starting import chain	MemTotal: 53.85546875
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+2022-02-08 21:43:12.964 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 245.52734375
+2022-02-08 21:43:12.964 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 245.52734375
+2022-02-08 21:43:13.028 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 245.37109375
+2022-02-08 21:43:13.028 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 245.37109375
+2022-02-08 21:43:13.042 INFO atlas - __init__: Initializing Atlas object	MemTotal: 282.58203125
+2022-02-08 21:43:13.103 INFO atlas - __init__: Initializing Atlas object	MemTotal: 282.55078125
+2022-02-08 21:43:13.395 INFO misc - return_pickled_object: Returning dic_acronym_children_id.pickle from pickled file.	MemTotal: 578.84765625
+2022-02-08 21:43:13.457 INFO misc - return_pickled_object: Returning dic_acronym_children_id.pickle from pickled file.	MemTotal: 578.8203125
+2022-02-08 21:43:14.340 INFO misc - return_pickled_object: Returning hierarchy.pickle from pickled file.	MemTotal: 1019.984375
+2022-02-08 21:43:14.340 INFO misc - return_pickled_object: Returning arrays_projection_corrected_True_True.pickle from pickled file.	MemTotal: 1020.10546875
+2022-02-08 21:43:14.477 INFO misc - return_pickled_object: Returning hierarchy.pickle from pickled file.	MemTotal: 1019.953125
+2022-02-08 21:43:14.478 INFO misc - return_pickled_object: Returning arrays_projection_corrected_True_True.pickle from pickled file.	MemTotal: 1020.07421875
+2022-02-08 21:43:14.553 INFO misc - return_pickled_object: Returning dic_mask_images.pickle from pickled file.	MemTotal: 1171.046875
+2022-02-08 21:43:14.557 INFO figures - __init__: Initializing Figures object	MemTotal: 1171.07421875
+2022-02-08 21:43:14.557 INFO misc - return_pickled_object: Returning dic_fig_contours.pickle from pickled file.	MemTotal: 1171.07421875
+2022-02-08 21:43:14.736 INFO misc - return_pickled_object: Returning dic_mask_images.pickle from pickled file.	MemTotal: 1171.015625
+2022-02-08 21:43:14.741 INFO figures - __init__: Initializing Figures object	MemTotal: 1171.0546875
+2022-02-08 21:43:14.741 INFO misc - return_pickled_object: Returning dic_fig_contours.pickle from pickled file.	MemTotal: 1171.09765625
+2022-02-08 21:43:15.008 INFO app - <module>: Memory use after three main object have been instantiated	MemTotal: 1182.5703125
+2022-02-08 21:43:15.032 INFO misc - return_pickled_object: Returning figure_basic_image_warped_data_1_False.pickle from pickled file.	MemTotal: 1183.40234375
+2022-02-08 21:43:15.164 INFO app - <module>: Memory use after three main object have been instantiated	MemTotal: 1182.3125
+2022-02-08 21:43:15.187 INFO misc - return_pickled_object: Returning figure_basic_image_warped_data_1_False.pickle from pickled file.	MemTotal: 1183.36328125
+2022-02-08 21:43:16.633 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-02-08 21:43:16.723 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-02-08 21:43:16.743 INFO misc - return_pickled_object: Returning set_masks_0.pickle from pickled file.	MemTotal: 1227.3203125
+2022-02-08 21:43:16.744 INFO misc - return_pickled_object: Returning figure_basic_image_projection_corrected_0_False_True.pickle from pickled file.	MemTotal: 1227.3203125
+2022-02-08 21:43:16.757 INFO misc - return_pickled_object: treemaps.pickle could not be found or force_update is True. Computing the object and pickling it now.
+2022-02-08 21:43:16.810 INFO misc - return_pickled_object: treemaps.pickle being returned now from computation.
+2022-02-08 21:43:16.812 INFO misc - return_pickled_object: Returning sunburst.pickle from pickled file.	MemTotal: 1227.50390625
+2022-02-08 21:43:16.828 INFO misc - return_pickled_object: Returning atlas_with_slider_frontal_False.pickle from pickled file.	MemTotal: 1227.50390625
+2022-02-08 21:43:16.837 INFO misc - return_pickled_object: Returning set_masks_0.pickle from pickled file.	MemTotal: 1227.1796875
+2022-02-08 21:43:16.838 INFO misc - return_pickled_object: Returning figure_basic_image_projection_corrected_0_False_True.pickle from pickled file.	MemTotal: 1227.1796875
+2022-02-08 21:43:16.848 INFO misc - return_pickled_object: Returning _None.pickle from pickled file.	MemTotal: 1227.50390625
+2022-02-08 21:43:16.852 INFO misc - return_pickled_object: treemaps.pickle could not be found or force_update is True. Computing the object and pickling it now.
+2022-02-08 21:43:16.902 INFO misc - return_pickled_object: treemaps.pickle being returned now from computation.
+2022-02-08 21:43:16.904 INFO misc - return_pickled_object: Returning sunburst.pickle from pickled file.	MemTotal: 1227.36328125
+2022-02-08 21:43:16.920 INFO misc - return_pickled_object: Returning atlas_with_slider_frontal_False.pickle from pickled file.	MemTotal: 1227.36328125
+2022-02-08 21:43:16.945 INFO misc - return_pickled_object: Returning _None.pickle from pickled file.	MemTotal: 1227.36328125
+[2022-02-08 21:43:50 +0100] [385884] [INFO] Handling signal: hup
+[2022-02-08 21:43:50 +0100] [385884] [INFO] Hang up: Master
+[2022-02-08 21:43:50 +0100] [385996] [INFO] Booting worker with pid: 385996
+[2022-02-08 21:43:50 +0100] [385997] [INFO] Booting worker with pid: 385997
+[2022-02-08 21:43:51 +0100] [385884] [WARNING] Worker with pid 385885 was terminated due to signal 1
+[2022-02-08 21:43:51 +0100] [385884] [WARNING] Worker with pid 385886 was terminated due to signal 1
+2022-02-08 21:43:51.120 INFO main - <module>: Starting import chain	MemTotal: 53.88671875
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+2022-02-08 21:43:51.138 INFO main - <module>: Starting import chain	MemTotal: 53.88671875
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+2022-02-08 21:43:53.420 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 245.4375
+2022-02-08 21:43:53.421 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 245.4375
+2022-02-08 21:43:53.439 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 245.5546875
+2022-02-08 21:43:53.440 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 245.5546875
+2022-02-08 21:43:53.524 INFO atlas - __init__: Initializing Atlas object	MemTotal: 282.5703125
+2022-02-08 21:43:53.528 INFO atlas - __init__: Initializing Atlas object	MemTotal: 282.57421875
+2022-02-08 21:43:53.849 INFO misc - return_pickled_object: Returning dic_acronym_children_id.pickle from pickled file.	MemTotal: 578.83203125
+2022-02-08 21:43:53.854 INFO misc - return_pickled_object: Returning dic_acronym_children_id.pickle from pickled file.	MemTotal: 578.83203125
+2022-02-08 21:43:54.640 INFO misc - return_pickled_object: Returning hierarchy.pickle from pickled file.	MemTotal: 1019.96875
+2022-02-08 21:43:54.640 INFO misc - return_pickled_object: Returning arrays_projection_corrected_True_True.pickle from pickled file.	MemTotal: 1019.96875
+2022-02-08 21:43:54.814 INFO misc - return_pickled_object: Returning hierarchy.pickle from pickled file.	MemTotal: 1019.96875
+2022-02-08 21:43:54.815 INFO misc - return_pickled_object: Returning arrays_projection_corrected_True_True.pickle from pickled file.	MemTotal: 1019.96875
+2022-02-08 21:43:54.840 INFO misc - return_pickled_object: Returning dic_mask_images.pickle from pickled file.	MemTotal: 1171.03515625
+2022-02-08 21:43:54.844 INFO figures - __init__: Initializing Figures object	MemTotal: 1171.05859375
+2022-02-08 21:43:54.844 INFO misc - return_pickled_object: Returning dic_fig_contours.pickle from pickled file.	MemTotal: 1171.05859375
+2022-02-08 21:43:55.040 INFO misc - return_pickled_object: Returning dic_mask_images.pickle from pickled file.	MemTotal: 1171.03515625
+2022-02-08 21:43:55.044 INFO figures - __init__: Initializing Figures object	MemTotal: 1171.06640625
+2022-02-08 21:43:55.045 INFO misc - return_pickled_object: Returning dic_fig_contours.pickle from pickled file.	MemTotal: 1171.06640625
+2022-02-08 21:43:55.293 INFO app - <module>: Memory use after three main object have been instantiated	MemTotal: 1182.56640625
+2022-02-08 21:43:55.317 INFO misc - return_pickled_object: Returning figure_basic_image_warped_data_1_False.pickle from pickled file.	MemTotal: 1183.40625
+2022-02-08 21:43:55.491 INFO app - <module>: Memory use after three main object have been instantiated	MemTotal: 1182.51171875
+2022-02-08 21:43:55.515 INFO misc - return_pickled_object: Returning figure_basic_image_warped_data_1_False.pickle from pickled file.	MemTotal: 1183.38671875
+2022-02-08 21:43:56.892 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-02-08 21:43:56.996 INFO misc - return_pickled_object: Returning set_masks_0.pickle from pickled file.	MemTotal: 1227.34375
+2022-02-08 21:43:56.997 INFO misc - return_pickled_object: Returning figure_basic_image_projection_corrected_0_False_True.pickle from pickled file.	MemTotal: 1227.34375
+2022-02-08 21:43:57.010 INFO misc - return_pickled_object: treemaps.pickle could not be found or force_update is True. Computing the object and pickling it now.
+2022-02-08 21:43:57.065 INFO misc - return_pickled_object: treemaps.pickle being returned now from computation.
+2022-02-08 21:43:57.067 INFO misc - return_pickled_object: Returning sunburst.pickle from pickled file.	MemTotal: 1227.52734375
+2022-02-08 21:43:57.090 INFO misc - return_pickled_object: Returning atlas_with_slider_frontal_False.pickle from pickled file.	MemTotal: 1227.52734375
+2022-02-08 21:43:57.113 INFO misc - return_pickled_object: Returning _None.pickle from pickled file.	MemTotal: 1227.52734375
+2022-02-08 21:43:57.149 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-02-08 21:43:57.273 INFO misc - return_pickled_object: Returning set_masks_0.pickle from pickled file.	MemTotal: 1227.33984375
+2022-02-08 21:43:57.274 INFO misc - return_pickled_object: Returning figure_basic_image_projection_corrected_0_False_True.pickle from pickled file.	MemTotal: 1227.33984375
+2022-02-08 21:43:57.288 INFO misc - return_pickled_object: treemaps.pickle could not be found or force_update is True. Computing the object and pickling it now.
+2022-02-08 21:43:57.336 INFO misc - return_pickled_object: treemaps.pickle being returned now from computation.
+2022-02-08 21:43:57.337 INFO misc - return_pickled_object: Returning sunburst.pickle from pickled file.	MemTotal: 1227.5234375
+2022-02-08 21:43:57.351 INFO misc - return_pickled_object: Returning atlas_with_slider_frontal_False.pickle from pickled file.	MemTotal: 1227.5234375
+2022-02-08 21:43:57.370 INFO misc - return_pickled_object: Returning _None.pickle from pickled file.	MemTotal: 1227.67578125
+2022-02-08 21:44:11.939 INFO index - render_page_content: Page/has been selected	MemTotal: 1219.9609375
+2022-02-08 21:44:13.854 INFO index - render_page_content: Page/3D-explorationhas been selected	MemTotal: 1227.734375
+2022-02-08 21:44:13.854 INFO misc - return_pickled_object: treemaps.pickle could not be found or force_update is True. Computing the object and pickling it now.
+2022-02-08 21:44:13.883 INFO misc - return_pickled_object: treemaps.pickle being returned now from computation.
+2022-02-08 21:44:23.219 WARNING threeD_exploration - page_2bis_add_toast_selection: More than one lipid corresponds to the selection
+2022-02-08 21:44:23.229 WARNING threeD_exploration - page_2bis_add_toast_selection: More than one lipid corresponds to the selection
+2022-02-08 21:44:23.243 WARNING threeD_exploration - page_2bis_add_toast_selection: More than one lipid corresponds to the selection
+2022-02-08 21:44:24.849 INFO threeD_exploration - page_2bis_plot_graph_heatmap_mz_selection: For the computation of 3D volume, decrease_resolution_factor is 7
+2022-02-08 21:44:24.856 INFO misc - return_pickled_object: Returning volume_interpolated_3D_CER 2010008_40:1 H___Isocortex__.pickle from pickled file.	MemTotal: 1227.94921875
+2022-02-08 21:44:24.893 INFO figures - compute_clustergram_figure: Starting computing clustergram figure
+2022-02-08 21:44:24.893 INFO misc - return_pickled_object: Returning dic_masks_and_spectra_0.pickle from pickled file.	MemTotal: 1244.49609375
+2022-02-08 21:44:25.176 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-02-08 21:44:25.368 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-02-08 21:44:25.495 INFO misc - return_pickled_object: Returning dic_masks_and_spectra_1.pickle from pickled file.	MemTotal: 1605.74609375
+2022-02-08 21:44:25.957 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-02-08 21:44:25.961 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-02-08 21:44:25.964 INFO misc - return_pickled_object: Returning dic_masks_and_spectra_2.pickle from pickled file.	MemTotal: 2042.984375
+2022-02-08 21:44:26.406 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-02-08 21:44:26.410 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-02-08 21:44:26.413 INFO misc - return_pickled_object: Returning dic_masks_and_spectra_3.pickle from pickled file.	MemTotal: 2268.23046875
+2022-02-08 21:44:26.935 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-02-08 21:44:26.938 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-02-08 21:44:26.941 INFO misc - return_pickled_object: Returning dic_masks_and_spectra_4.pickle from pickled file.	MemTotal: 2543.25390625
+2022-02-08 21:44:27.373 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-02-08 21:44:27.376 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-02-08 21:44:27.379 INFO misc - return_pickled_object: Returning dic_masks_and_spectra_5.pickle from pickled file.	MemTotal: 2650.703125
+2022-02-08 21:44:27.919 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-02-08 21:44:27.923 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-02-08 21:44:27.926 INFO misc - return_pickled_object: Returning dic_masks_and_spectra_6.pickle from pickled file.	MemTotal: 2821.578125
+2022-02-08 21:44:28.561 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-02-08 21:44:28.565 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-02-08 21:44:28.569 INFO misc - return_pickled_object: Returning dic_masks_and_spectra_7.pickle from pickled file.	MemTotal: 3100.15625
+2022-02-08 21:44:29.088 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-02-08 21:44:29.091 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-02-08 21:44:29.095 INFO misc - return_pickled_object: Returning dic_masks_and_spectra_8.pickle from pickled file.	MemTotal: 3198.26171875
+2022-02-08 21:44:29.800 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-02-08 21:44:29.800 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-02-08 21:44:29.801 INFO misc - return_pickled_object: Returning dic_masks_and_spectra_9.pickle from pickled file.	MemTotal: 3473.59765625
+2022-02-08 21:44:30.935 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-02-08 21:44:30.939 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-02-08 21:44:30.942 INFO misc - return_pickled_object: Returning dic_masks_and_spectra_10.pickle from pickled file.	MemTotal: 4155.9453125
+2022-02-08 21:44:32.011 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-02-08 21:44:32.016 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-02-08 21:44:32.020 INFO misc - return_pickled_object: Returning dic_masks_and_spectra_11.pickle from pickled file.	MemTotal: 4687.2734375
+2022-02-08 21:44:32.885 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-02-08 21:44:32.888 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-02-08 21:44:32.892 INFO misc - return_pickled_object: Returning dic_masks_and_spectra_12.pickle from pickled file.	MemTotal: 4038.078125
+2022-02-08 21:44:33.661 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-02-08 21:44:33.665 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-02-08 21:44:33.667 INFO misc - return_pickled_object: Returning dic_masks_and_spectra_13.pickle from pickled file.	MemTotal: 4198.74609375
+2022-02-08 21:44:34.298 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-02-08 21:44:34.301 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-02-08 21:44:34.303 INFO misc - return_pickled_object: Returning dic_masks_and_spectra_14.pickle from pickled file.	MemTotal: 4156.75390625
+2022-02-08 21:44:34.938 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-02-08 21:44:34.941 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-02-08 21:44:34.942 INFO misc - return_pickled_object: dic_masks_and_spectra_15.pickle could not be found or force_update is True. Computing the object and pickling it now.
+[2022-02-08 21:44:55 +0100] [385884] [CRITICAL] WORKER TIMEOUT (pid:385996)
+[2022-02-08 21:44:55 +0100] [385996] [INFO] Worker exiting (pid: 385996)
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+[2022-02-08 21:44:56 +0100] [385884] [WARNING] Worker with pid 385996 was terminated due to signal 9
+[2022-02-08 21:44:56 +0100] [386099] [INFO] Booting worker with pid: 386099
+2022-02-08 21:44:56.516 INFO main - <module>: Starting import chain	MemTotal: 53.88671875
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+2022-02-08 21:44:58.525 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 245.59765625
+2022-02-08 21:44:58.525 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 245.59765625
+2022-02-08 21:44:58.593 INFO atlas - __init__: Initializing Atlas object	MemTotal: 282.57421875
+2022-02-08 21:44:58.916 INFO misc - return_pickled_object: Returning dic_acronym_children_id.pickle from pickled file.	MemTotal: 578.828125
+2022-02-08 21:44:59.935 INFO misc - return_pickled_object: Returning hierarchy.pickle from pickled file.	MemTotal: 1019.9765625
+2022-02-08 21:44:59.936 INFO misc - return_pickled_object: Returning arrays_projection_corrected_True_True.pickle from pickled file.	MemTotal: 1020.1015625
+2022-02-08 21:45:00.111 INFO misc - return_pickled_object: Returning dic_mask_images.pickle from pickled file.	MemTotal: 1171.046875
+2022-02-08 21:45:00.114 INFO figures - __init__: Initializing Figures object	MemTotal: 1171.0625
+2022-02-08 21:45:00.114 INFO misc - return_pickled_object: Returning dic_fig_contours.pickle from pickled file.	MemTotal: 1171.0625
+2022-02-08 21:45:00.525 INFO app - <module>: Memory use after three main object have been instantiated	MemTotal: 1182.578125
+2022-02-08 21:45:00.546 INFO misc - return_pickled_object: Returning figure_basic_image_warped_data_1_False.pickle from pickled file.	MemTotal: 1183.39453125
+2022-02-08 21:45:02.067 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-02-08 21:45:02.172 INFO misc - return_pickled_object: Returning set_masks_0.pickle from pickled file.	MemTotal: 1227.10546875
+2022-02-08 21:45:02.172 INFO misc - return_pickled_object: Returning figure_basic_image_projection_corrected_0_False_True.pickle from pickled file.	MemTotal: 1227.10546875
+2022-02-08 21:45:02.185 INFO misc - return_pickled_object: treemaps.pickle could not be found or force_update is True. Computing the object and pickling it now.
+2022-02-08 21:45:02.233 INFO misc - return_pickled_object: treemaps.pickle being returned now from computation.
+2022-02-08 21:45:02.235 INFO misc - return_pickled_object: Returning sunburst.pickle from pickled file.	MemTotal: 1227.2890625
+2022-02-08 21:45:02.249 INFO misc - return_pickled_object: Returning atlas_with_slider_frontal_False.pickle from pickled file.	MemTotal: 1227.2890625
+2022-02-08 21:45:02.267 INFO misc - return_pickled_object: Returning _None.pickle from pickled file.	MemTotal: 1227.2890625
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments
+
+*** FATAL CONFIG FILE ERROR (Redis 6.2.6) ***
+Reading the configuration file, at line 993
+>>> 'allkeys-lru'
+Bad directive or wrong number of arguments

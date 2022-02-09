@@ -43,6 +43,7 @@ if __name__ == "__main__":
 # TODO make a careful memory analysis to free more memory
 # TODO incoporate new brain slices
 # TODO adress all # ! and # ? comments in the code
+# TODO move layouts to other files
 # TODO when everything is stable, create a function that delete all pickle files and repickle everything automatically
 # TODO update notebooks with up-to-date classes
 # TODO do quality control, especially when several users are on the app in parallel
