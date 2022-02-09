@@ -168,7 +168,7 @@ class Figures:
             fig = return_pickled_object(
                 "figures/load_page",
                 "figure_basic_image",
-                force_update=True,
+                force_update=False,
                 compute_function=self.compute_figure_basic_image,
                 type_figure=None,
                 index_image=slice_index,
@@ -1068,7 +1068,7 @@ class Figures:
         fig.update_layout(margin=dict(t=0, r=0, b=0, l=0),)
         return fig
 
-    def compute_treemaps_figure(self, maxdepth=7):
+    def compute_treemaps_figure(self, maxdepth=5):
         fig = px.treemap(names=self._atlas.l_nodes, parents=self._atlas.l_parents, maxdepth=maxdepth)
         fig.update_layout(
             uniformtext=dict(minsize=15), margin=dict(t=30, r=0, b=10, l=0),
@@ -1569,7 +1569,7 @@ class Figures:
         logging.info("Starting computing clustergram figure")
         dic_avg_lipids = {}
 
-        for slice_index in range(16):  # range(self._data.get_slice_number()):
+        for slice_index in range(self._data.get_slice_number()):
             dic_masks = return_pickled_object(
                 "atlas/atlas_objects",
                 "dic_masks_and_spectra",
@@ -1653,7 +1653,7 @@ class Figures:
             + df_names.iloc[idx]["cation"]
         )
 
-        Plot
+        # Plot
         fig_heatmap_lipids = dashbio.Clustergram(
             data=df_avg_intensity_lipids.to_numpy(),
             column_labels=df_avg_intensity_lipids.columns.to_list(),
@@ -1662,14 +1662,14 @@ class Figures:
             #    'row': 250,
             #    'col': 700
             # },
-            hidden_labels="row",
+            hidden_labels="row" if len(df_avg_intensity_lipids.index.to_list()) > 100 else None,
             color_map="Viridis",
-            height=700,
-            # width=700
+            height=1000,
+            width=1000,
         )
 
         logging.info("Returning figure")
-        return fig
+        return fig_heatmap_lipids
 
     ###### PICKLING FUNCTIONS ######
     def pickle_all_figure_3D(self, force_update=False):

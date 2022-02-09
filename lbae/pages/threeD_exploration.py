@@ -101,7 +101,7 @@ def return_layout(basic_config, slice_index):
                                                     figure=return_pickled_object(
                                                         "figures/atlas_page/3D",
                                                         "treemaps",
-                                                        force_update=True,
+                                                        force_update=False,
                                                         compute_function=figures.compute_treemaps_figure,
                                                     ),
                                                 ),
@@ -167,7 +167,7 @@ def return_layout(basic_config, slice_index):
                                                 dbc.Button(
                                                     children="Compare lipid expression",
                                                     id="page-4-compare-structure-button",
-                                                    className="mt-5 pt-5",
+                                                    className="d-none",
                                                     color="primary",
                                                     disabled=True,
                                                     style={"margin": "auto"},
@@ -409,7 +409,7 @@ def return_layout(basic_config, slice_index):
                                                             },
                                                             style={
                                                                 "width": "100%",
-                                                                "height": "95%",
+                                                                "height": "100%",
                                                                 "position": "absolute",
                                                                 "left": "0",
                                                             },
@@ -445,15 +445,8 @@ def return_layout(basic_config, slice_index):
                                             children=[
                                                 html.Div(
                                                     # className="page-1-fixed-aspect-ratio",
+                                                    className="d-flex justify-content-center",
                                                     children=[
-                                                        html.Div(
-                                                            id="page-4-alert",
-                                                            className="text-center my-2",
-                                                            children=html.Strong(
-                                                                children="Please select at least one lipid.",
-                                                                style={"color": "#df5034"},
-                                                            ),
-                                                        ),
                                                         dcc.Graph(
                                                             id="page-4-graph-heatmap",
                                                             config=basic_config
@@ -465,12 +458,12 @@ def return_layout(basic_config, slice_index):
                                                                 }
                                                             },
                                                             # style={
-                                                            #    "width": "100%",
-                                                            #    "height": "95%",
+                                                            # "width": "100%",
+                                                            # "height": "100%",
+                                                            # "margin": "auto",
                                                             #    "position": "absolute",
                                                             #    "left": "0",
                                                             # },
-                                                            className="h-100",
                                                         ),
                                                     ],
                                                 ),
@@ -564,11 +557,13 @@ def page_4_click(clickData, region_1_id, region_2_id, region_3_id):
 # Function to update label of the add structure button
 @app.app.callback(
     Output("page-4-compare-structure-button", "disabled"),
+    Output("page-4-compare-structure-button", "className"),
     Input("page-4-selected-region-1", "data"),
     Input("page-4-selected-region-2", "data"),
     Input("page-4-selected-region-3", "data"),
 )
-def page_4_click(clickData, region_1_id, region_2_id, region_3_id):
+def page_4_click(region_1_id, region_2_id, region_3_id):
+
     # Find out which input triggered the function
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
 
@@ -578,9 +573,9 @@ def page_4_click(clickData, region_1_id, region_2_id, region_3_id):
         or (region_1_id != "" and region_3_id != "")
         or (region_2_id != "" and region_3_id != "")
     ):
-        return False
+        return False, "mt-5"
 
-    return True
+    return True, "d-none"
 
 
 # Function to add region choice to selection
@@ -927,7 +922,7 @@ def page_2bis_plot_graph_heatmap_mz_selection(
 
     # case a mz value and a manual range have been inputed
     if id_input == "page-4-compare-structure-button":
-        figures.compute_clustergram_figure(l_selected_regions, percentile=10),
+        return figures.compute_clustergram_figure(l_selected_regions, percentile=10)
     return dash.no_update
 
 
