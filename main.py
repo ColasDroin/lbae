@@ -21,7 +21,7 @@ numba_logger = logging.getLogger("numba")
 numba_logger.setLevel(logging.WARNING)
 
 # Launch Redis server
-os.system("nohup ../redis/redis-6.2.6/src/redis-server ../redis/redis-6.2.6/src/redis.conf &")
+#os.system("nohup ../redis/redis-6.2.6/src/redis-server ../redis/redis-6.2.6/src/redis.conf &")
 
 # Import the app and define server for gunicorn
 logging.info("Starting import chain" + logmem())
@@ -32,13 +32,13 @@ server = index.app.server
 # Run the app locally
 if __name__ == "__main__":
     logging.info("Starting app" + logmem())
-    try:
-        index.run()
-    except:
-        # Shut reddis server
-        os.system("../redis/redis-6.2.6/src/redis-cli shutdown")
+    #try:
+    index.run()
+    #except:
+    #    # Shut reddis server
+    #    os.system("../redis/redis-6.2.6/src/redis-cli shutdown")
 
-# TODO Fix the bug with the region analysis part. Get rid of reddis?
+# TODO Fix the bug with the region analysis part. Get rid of redis?
 # TODO Make lipid expression comparison between 3D structure
 # TODO make a careful memory analysis to free more memory
 # TODO incoporate new brain slices

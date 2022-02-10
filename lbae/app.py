@@ -74,14 +74,12 @@ app = dash.Dash(
 
 CACHE_CONFIG = {
     # We use 'FileSystemCache' as we want to keep the application very lightweight in term of RAM memory
-    # "CACHE_TYPE": "FileSystemCache",
-    # "CACHE_DIR": "lbae/data/temp/cache-directory",
-    "CACHE_TYPE": "redis",
-    "CACHE_REDIS_URL": os.environ.get("REDIS_URL", "redis://localhost:6379"),
-    # "CACHE_THRESHOLD": 200,
+    "CACHE_TYPE": "FileSystemCache",
+    "CACHE_DIR": "lbae/data/temp/cache-directory",
+    # "CACHE_TYPE": "redis",
+    # "CACHE_REDIS_URL": os.environ.get("REDIS_URL", "redis://localhost:6379"),
+    "CACHE_THRESHOLD": 200,
 }
 cache = Cache()
 cache.init_app(app.server, config=CACHE_CONFIG)
 
-# Redis object for get and set
-r = redis.Redis()

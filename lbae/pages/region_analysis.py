@@ -16,7 +16,7 @@ from numba import njit
 
 # Homemade modules
 from lbae import app
-from lbae.app import figures, data, atlas, cache, r
+from lbae.app import figures, data, atlas, cache
 from lbae import config
 from lbae.modules.tools.misc import return_pickled_object, convert_image_to_base64
 from lbae.modules.tools.spectra import (
