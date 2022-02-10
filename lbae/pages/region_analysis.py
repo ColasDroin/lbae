@@ -16,7 +16,7 @@ from numba import njit
 
 # Homemade modules
 from lbae import app
-from lbae.app import figures, data, atlas, cache
+from lbae.app import figures, data, atlas, cache_flask
 from lbae import config
 from lbae.modules.tools.misc import return_pickled_object, convert_image_to_base64
 from lbae.modules.tools.spectra import (
@@ -1013,7 +1013,7 @@ def page_3_display_alert(clicked_compute, clicked_reset, relayoutData, mask):
 
 
 # Global function to memoize/compute spectrum
-@cache.memoize()
+@cache_flask.memoize()
 def global_spectrum_store(slice_index, l_shapes_and_masks, l_mask_name, relayoutData, as_enrichment, log_transform):
     l_spectra = []
     idx_mask = -1
