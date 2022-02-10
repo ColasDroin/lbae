@@ -69,7 +69,7 @@ def return_layout(basic_config, slice_index):
                                 "Display 3D slice distribution",
                                 id="page-1-modal-button",
                                 n_clicks=0,
-                                className="ml-5",
+                                class_name="ml-5",
                             ),
                         ],
                     ),

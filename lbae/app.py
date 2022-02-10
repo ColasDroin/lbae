@@ -83,5 +83,5 @@ CACHE_CONFIG = {
     "CACHE_THRESHOLD": 200,
 }
 cache_flask = Cache()
-cache_flask.init_app(app.server)  # , config=CACHE_CONFIG)
+cache_flask.init_app(app.server, config=CACHE_CONFIG)
 

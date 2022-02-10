@@ -21,7 +21,7 @@ from lbae.modules.tools.misc import (
 from lbae.modules.tools.atlas import project_image, slice_to_atlas_transform
 from lbae.modules.tools.misc import logmem
 from lbae.modules.tools.volume import filter_voxels, fill_array_borders, fill_array_interpolation
-from lbae.config import dic_colors, l_colors
+from lbae.config import dic_colors, l_colors, l_colors_progress
 from lbae.modules.tools.spectra import compute_avg_intensity_per_lipid, global_lipid_index_store
 
 ###### DEFINE FIGURES CLASS ######
@@ -1565,11 +1565,25 @@ class Figures:
 
         return fig
 
-    def compute_clustergram_figure(self, l_selected_regions, percentile=10):
+    def compute_clustergram_figure(self, l_selected_regions, percentile=10, set_progress=None):
         logging.info("Starting computing clustergram figure")
         dic_avg_lipids = {}
 
+        # define progression circle
+        # if set_progress is not None:
+        #     sections = [
+        #         {
+        #             "value": int(round(i / self._data.get_slice_number() * 100)),
+        #             "color": l_colors_progress[i % len(l_colors_progress)],
+        #         }
+        #         for i in range(self._data.get_slice_number() + 2)
+        #     ]
+        #     set_progress(sections[:1])
+
         for slice_index in range(self._data.get_slice_number()):
+            if set_progress is not None:
+                set_progress((int(slice_index / 32 * 100), "Loading slice n°" + str(slice_index + 1)))
+
             dic_masks = return_pickled_object(
                 "atlas/atlas_objects",
                 "dic_masks_and_spectra",
@@ -1619,6 +1633,8 @@ class Figures:
                                 dic_avg_lipids[lipid].append([])
                         dic_avg_lipids[lipid][i].append(intensity)
 
+            # set_progress(sections[:slice_index+2])
+
         logging.info("Averaging all lipid values across slices")
         # Average intensity per slice
         for lipid in dic_avg_lipids:
@@ -1667,7 +1683,8 @@ class Figures:
             height=1000,
             width=1000,
         )
-
+        # set_progress(sections)
+        set_progress((100, "Returning figure"))
         logging.info("Returning figure")
         return fig_heatmap_lipids
 

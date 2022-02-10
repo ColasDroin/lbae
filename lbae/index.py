@@ -97,7 +97,7 @@ def return_main_content():
                                                     for i in range(1, data.get_slice_number() + 1, 2)
                                                 ],
                                                 style={"width": "60vw"},
-                                                className="pb-3",
+                                                class_name="pb-3",
                                                 value=1,
                                             ),
                                         ],
@@ -242,7 +242,7 @@ def drawer(n_clicks):
     return True
 
 
-@app.callback(Output("main-slider-center", "className"), Input("url", "pathname"), prevent_initial_call=False)
+@app.callback(Output("main-slider-center", "class_name"), Input("url", "pathname"), prevent_initial_call=False)
 def hide_slider(pathname):
     l_path_with_slider = ["/load-slice", "/lipid-selection", "/region-analysis"]
     # Set the content according to the current pathname
@@ -254,5 +254,5 @@ def hide_slider(pathname):
 
 
 def run():
-    app.run_server(port=8071, debug=False)
+    app.run_server(port=8072, debug=True)
 

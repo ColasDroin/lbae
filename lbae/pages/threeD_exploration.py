@@ -8,6 +8,7 @@ import dash_draggable
 from dash.dependencies import Input, Output, State
 import numpy as np
 import dash
+import dash_mantine_components as dmc
 
 # Data module
 from lbae.app import figures, atlas
@@ -169,7 +170,7 @@ def return_layout(basic_config, slice_index):
                                                     id="page-4-compare-structure-button",
                                                     className="d-none",
                                                     color="primary",
-                                                    disabled=True,
+                                                    disabled=False,
                                                     style={"margin": "auto"},
                                                     # block=True,
                                                 ),
@@ -434,41 +435,50 @@ def return_layout(basic_config, slice_index):
                             children=[
                                 dbc.ModalHeader(dbc.ModalTitle("Lipid expression comparison")),
                                 dbc.ModalBody(
+                                    className="d-flex justify-content-center",
                                     children=[
                                         # dbc.CardHeader(className="d-flex", children="Lipid expression comparison",),
                                         # dbc.CardBody(
                                         #    className="py-0 mb-0 mt-2",
                                         #    children=[
-                                        dbc.Spinner(
-                                            color="dark",
-                                            show_initially=False,
+                                        # dmc.RingProgress(
+                                        #     id="page-4-progress-bar-structure",
+                                        #     size=200,
+                                        #     thickness=12,
+                                        #     label="Loading data...",
+                                        #     sections=[{"value": 0, "color": "red"},],
+                                        # ),
+                                        dbc.Progress(id="page-4-progress-bar-structure", style={"width ": "100%"}),
+                                        # dbc.Spinner(
+                                        #     color="dark",
+                                        #     show_initially=False,
+                                        #     children=[
+                                        html.Div(
+                                            # className="page-1-fixed-aspect-ratio",
+                                            className="d-flex justify-content-center",
                                             children=[
-                                                html.Div(
-                                                    # className="page-1-fixed-aspect-ratio",
-                                                    className="d-flex justify-content-center",
-                                                    children=[
-                                                        dcc.Graph(
-                                                            id="page-4-graph-heatmap",
-                                                            config=basic_config
-                                                            | {
-                                                                "toImageButtonOptions": {
-                                                                    "format": "png",
-                                                                    "filename": "brain_lipid_selection",
-                                                                    "scale": 2,
-                                                                }
-                                                            },
-                                                            # style={
-                                                            # "width": "100%",
-                                                            # "height": "100%",
-                                                            # "margin": "auto",
-                                                            #    "position": "absolute",
-                                                            #    "left": "0",
-                                                            # },
-                                                        ),
-                                                    ],
+                                                dcc.Graph(
+                                                    id="page-4-graph-heatmap",
+                                                    config=basic_config
+                                                    | {
+                                                        "toImageButtonOptions": {
+                                                            "format": "png",
+                                                            "filename": "brain_lipid_selection",
+                                                            "scale": 2,
+                                                        }
+                                                    },
+                                                    # style={
+                                                    # "width": "100%",
+                                                    # "height": "100%",
+                                                    # "margin": "auto",
+                                                    #    "position": "absolute",
+                                                    #    "left": "0",
+                                                    # },
                                                 ),
                                             ],
                                         ),
+                                        #     ],
+                                        # ),
                                         html.Div("‎‎‏‏‎ ‎"),  # Empty span to prevent toast from bugging
                                     ],
                                 ),
@@ -556,7 +566,7 @@ def page_4_click(clickData, region_1_id, region_2_id, region_3_id):
 
 # Function to update label of the add structure button
 @app.app.callback(
-    Output("page-4-compare-structure-button", "disabled"),
+    # Output("page-4-compare-structure-button", "disabled"),
     Output("page-4-compare-structure-button", "className"),
     Input("page-4-selected-region-1", "data"),
     Input("page-4-selected-region-2", "data"),
@@ -573,9 +583,11 @@ def page_4_click(region_1_id, region_2_id, region_3_id):
         or (region_1_id != "" and region_3_id != "")
         or (region_2_id != "" and region_3_id != "")
     ):
-        return False, "mt-5"
+        # return False, "mt-5"
+        return "mt-5"
 
-    return True, "d-none"
+    # return True, "d-none"
+    return "d-none"
 
 
 # Function to add region choice to selection
@@ -904,17 +916,28 @@ def page_2bis_plot_graph_heatmap_mz_selection(
 
 
 # Function to plot page-4-graph-heatmap
-@app.app.callback(
-    Output("page-4-graph-heatmap", "figure"),
-    Input("page-4-compare-structure-button", "n_clicks"),
-    State("page-4-last-selected-regions", "data"),
-    State("page-4-selected-region-1", "data"),
-    State("page-4-selected-region-2", "data"),
-    State("page-4-selected-region-3", "data"),
+@app.app.long_callback(
+    output=Output("page-4-graph-heatmap", "figure"),
+    inputs=[
+        Input("page-4-compare-structure-button", "n_clicks"),
+        State("page-4-last-selected-regions", "data"),
+        State("page-4-selected-region-1", "data"),
+        State("page-4-selected-region-2", "data"),
+        State("page-4-selected-region-3", "data"),
+    ],
+    running=[
+        (Output("page-4-compare-structure-button", "disabled"), True, False),
+        (Output("page-4-progress-bar-structure", "className"), "", "d-none",),
+    ],
+    progress=[Output("page-4-progress-bar-structure", "value"), Output("page-4-progress-bar-structure", "label")],
+    prevent_initial_call=True,
 )
-def page_2bis_plot_graph_heatmap_mz_selection(
-    n_clicks_button_display, l_selected_regions, name_region_1, name_region_2, name_region_3,
+def page_4_plot_graph_heatmap_mz_selection(
+    set_progress, n_clicks_button_display, l_selected_regions, name_region_1, name_region_2, name_region_3,
 ):
+
+    # sections = [{"value": 10, "color": "red"}]
+    set_progress((0, "Inspecting dataset..."))
 
     # Find out which input triggered the function
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
@@ -922,7 +945,7 @@ def page_2bis_plot_graph_heatmap_mz_selection(
 
     # case a mz value and a manual range have been inputed
     if id_input == "page-4-compare-structure-button":
-        return figures.compute_clustergram_figure(l_selected_regions, percentile=10)
+        return figures.compute_clustergram_figure(l_selected_regions, percentile=10, set_progress=set_progress)
     return dash.no_update
 
 
