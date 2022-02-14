@@ -1565,88 +1565,81 @@ class Figures:
 
         return fig
 
-    def compute_clustergram_figure(self, l_selected_regions, percentile=90, set_progress=None):
+    def compute_clustergram_figure(self, set_progress, cache_flask, l_selected_regions, percentile=90):
         logging.info("Starting computing clustergram figure")
-        dic_avg_lipids = {}
 
-        # define progression circle
-        # if set_progress is not None:
-        #     sections = [
-        #         {
-        #             "value": int(round(i / self._data.get_slice_number() * 100)),
-        #             "color": l_colors_progress[i % len(l_colors_progress)],
-        #         }
-        #         for i in range(self._data.get_slice_number() + 2)
-        #     ]
-        #     set_progress(sections[:1])
-
-        for slice_index in range(self._data.get_slice_number()):
-            if set_progress is not None:
+        # Memoize result as it's called everytime a filtering is done
+        @cache_flask.memoize()
+        def return_df_avg_lipids(l_selected_regions):
+            dic_avg_lipids = {}
+            for slice_index in range(self._data.get_slice_number()):
                 set_progress((int(slice_index / 32 * 100), "Loading slice n°" + str(slice_index + 1)))
 
-            dic_masks = return_pickled_object(
-                "atlas/atlas_objects",
-                "dic_masks_and_spectra",
-                force_update=False,
-                compute_function=self._atlas.compute_dic_projected_masks_and_spectra,
-                slice_index=slice_index,
+                dic_masks = return_pickled_object(
+                    "atlas/atlas_objects",
+                    "dic_masks_and_spectra",
+                    force_update=False,
+                    compute_function=self._atlas.compute_dic_projected_masks_and_spectra,
+                    slice_index=slice_index,
+                )
+                l_spectra = []
+
+                for region in l_selected_regions:
+                    long_region = self._atlas.dic_id_name[region]
+                    if long_region in dic_masks:
+                        grah_scattergl_data = dic_masks[long_region][1]
+                        l_spectra.append(grah_scattergl_data)
+                    else:
+                        l_spectra.append(None)
+                ll_idx_labels = global_lipid_index_store(self._data, slice_index, l_spectra)
+
+                # Compute average expression for each lipid and each selection
+                set_lipids_idx = set()
+                ll_lipids_idx = []
+                ll_avg_intensity = []
+                n_sel = len(l_spectra)
+                for spectrum, l_idx_labels in zip(l_spectra, ll_idx_labels):
+
+                    if spectrum is not None:
+                        array_intensity_with_lipids = np.array(spectrum, dtype=np.float32)[1, :]
+                        array_idx_labels = np.array(l_idx_labels, dtype=np.int32)
+                        l_lipids_idx, l_avg_intensity = compute_avg_intensity_per_lipid(
+                            array_intensity_with_lipids, array_idx_labels
+                        )
+                        set_lipids_idx.update(l_lipids_idx)
+                    else:
+                        l_lipids_idx = None
+                        l_avg_intensity = None
+
+                    ll_lipids_idx.append(l_lipids_idx)
+                    ll_avg_intensity.append(l_avg_intensity)
+
+                # dic_avg_lipids = {idx: [0] * n_sel for idx in set_lipids_idx}
+                for i, (l_lipids, l_avg_intensity) in enumerate(zip(ll_lipids_idx, ll_avg_intensity)):
+                    if l_lipids is not None:
+                        for lipid, intensity in zip(l_lipids, l_avg_intensity):
+                            if lipid not in dic_avg_lipids:
+                                dic_avg_lipids[lipid] = []
+                                for j in range(n_sel):
+                                    dic_avg_lipids[lipid].append([])
+                            dic_avg_lipids[lipid][i].append(intensity)
+
+            logging.info("Averaging all lipid values across slices")
+            # Average intensity per slice
+            for lipid in dic_avg_lipids:
+                for i in range(n_sel):
+                    if len(dic_avg_lipids[lipid][i]) > 0:
+                        dic_avg_lipids[lipid][i] = np.mean(dic_avg_lipids[lipid][i])
+                    else:
+                        dic_avg_lipids[lipid][i] = 0
+
+            df_avg_intensity_lipids = pd.DataFrame.from_dict(
+                dic_avg_lipids, orient="index", columns=[l_selected_regions[i] for i in range(n_sel)]
             )
-            l_spectra = []
+            return df_avg_intensity_lipids
 
-            for region in l_selected_regions:
-                long_region = self._atlas.dic_id_name[region]
-                if long_region in dic_masks:
-                    grah_scattergl_data = dic_masks[long_region][1]
-                    l_spectra.append(grah_scattergl_data)
-                else:
-                    l_spectra.append(None)
-            ll_idx_labels = global_lipid_index_store(self._data, slice_index, l_spectra)
-
-            # Compute average expression for each lipid and each selection
-            set_lipids_idx = set()
-            ll_lipids_idx = []
-            ll_avg_intensity = []
-            n_sel = len(l_spectra)
-            for spectrum, l_idx_labels in zip(l_spectra, ll_idx_labels):
-
-                if spectrum is not None:
-                    array_intensity_with_lipids = np.array(spectrum, dtype=np.float32)[1, :]
-                    array_idx_labels = np.array(l_idx_labels, dtype=np.int32)
-                    l_lipids_idx, l_avg_intensity = compute_avg_intensity_per_lipid(
-                        array_intensity_with_lipids, array_idx_labels
-                    )
-                    set_lipids_idx.update(l_lipids_idx)
-                else:
-                    l_lipids_idx = None
-                    l_avg_intensity = None
-
-                ll_lipids_idx.append(l_lipids_idx)
-                ll_avg_intensity.append(l_avg_intensity)
-
-            # dic_avg_lipids = {idx: [0] * n_sel for idx in set_lipids_idx}
-            for i, (l_lipids, l_avg_intensity) in enumerate(zip(ll_lipids_idx, ll_avg_intensity)):
-                if l_lipids is not None:
-                    for lipid, intensity in zip(l_lipids, l_avg_intensity):
-                        if lipid not in dic_avg_lipids:
-                            dic_avg_lipids[lipid] = []
-                            for j in range(n_sel):
-                                dic_avg_lipids[lipid].append([])
-                        dic_avg_lipids[lipid][i].append(intensity)
-
-            # set_progress(sections[:slice_index+2])
-
-        logging.info("Averaging all lipid values across slices")
-        # Average intensity per slice
-        for lipid in dic_avg_lipids:
-            for i in range(n_sel):
-                if len(dic_avg_lipids[lipid][i]) > 0:
-                    dic_avg_lipids[lipid][i] = np.mean(dic_avg_lipids[lipid][i])
-                else:
-                    dic_avg_lipids[lipid][i] = 0
-
-        df_avg_intensity_lipids = pd.DataFrame.from_dict(
-            dic_avg_lipids, orient="index", columns=[l_selected_regions[i] for i in range(n_sel)]
-        )
+        df_avg_intensity_lipids = return_df_avg_lipids(l_selected_regions)
+        set_progress((90, "Loading data"))
 
         # Exclude very lowly expressed lipids
         df_min_expression = df_avg_intensity_lipids.min(axis=1)
@@ -1654,7 +1647,7 @@ class Figures:
             df_min_expression > df_min_expression.quantile(q=int(percentile) / 100)
         ]
 
-        if n_sel > 1:
+        if len(l_selected_regions) > 1:
             df_avg_intensity_lipids = df_avg_intensity_lipids.iloc[(df_avg_intensity_lipids.mean(axis=1)).argsort(), :]
         else:
             df_avg_intensity_lipids.sort_values(by=l_selected_regions[0], inplace=True)

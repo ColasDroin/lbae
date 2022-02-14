@@ -11,7 +11,7 @@ import dash
 import dash_mantine_components as dmc
 
 # Data module
-from lbae.app import figures, atlas
+from lbae.app import figures, atlas, cache_flask
 from lbae import app
 from lbae.modules.tools.misc import return_pickled_object
 
@@ -449,6 +449,19 @@ def return_layout(basic_config, slice_index):
                                         #     sections=[{"value": 0, "color": "red"},],
                                         # ),
                                         dbc.Progress(id="page-4-progress-bar-structure", style={"width ": "100%"}),
+                                        dcc.Slider(
+                                            id="page-4-slider-percentile",
+                                            min=0,
+                                            max=99,
+                                            value=80,
+                                            marks={
+                                                0: {"label": "No filtering"},
+                                                25: {"label": "25%"},
+                                                50: {"label": "50%"},
+                                                75: {"label": "75%"},
+                                                99: {"label": "99%", "style": {"color": "#f50"}},
+                                            },
+                                        ),
                                         # dbc.Spinner(
                                         #     color="dark",
                                         #     show_initially=False,
@@ -920,6 +933,7 @@ def page_2bis_plot_graph_heatmap_mz_selection(
     output=Output("page-4-graph-heatmap", "figure"),
     inputs=[
         Input("page-4-compare-structure-button", "n_clicks"),
+        Input("page-4-slider-percentile", "value"),
         State("page-4-last-selected-regions", "data"),
         State("page-4-selected-region-1", "data"),
         State("page-4-selected-region-2", "data"),
@@ -929,13 +943,14 @@ def page_2bis_plot_graph_heatmap_mz_selection(
         (Output("page-4-compare-structure-button", "disabled"), True, False),
         (Output("page-4-progress-bar-structure", "className"), "", "d-none",),
         (Output("page-4-graph-heatmap", "className"), "d-none", ""),
+        (Output("page-4-slider-percentile", "className"), "d-none", ""),
     ],
     progress=[Output("page-4-progress-bar-structure", "value"), Output("page-4-progress-bar-structure", "label")],
     prevent_initial_call=True,
-    cache_args_to_skip=[0, 1, 2],
+    cache_args_to_ignore=[0, 2],
 )
 def page_4_plot_graph_heatmap_mz_selection(
-    set_progress, n_clicks_button_display, l_selected_regions, name_region_1, name_region_2, name_region_3,
+    set_progress, n_clicks_button_display, percentile, l_selected_regions, name_region_1, name_region_2, name_region_3,
 ):
 
     # sections = [{"value": 10, "color": "red"}]
@@ -946,8 +961,11 @@ def page_4_plot_graph_heatmap_mz_selection(
     value_input = dash.callback_context.triggered[0]["prop_id"].split(".")[1]
 
     # case structures have been selected
-    if id_input == "page-4-compare-structure-button":
-        return figures.compute_clustergram_figure(l_selected_regions, percentile=90, set_progress=set_progress)
+    if id_input == "page-4-compare-structure-button" or id_input == "page-4-slider-percentile":
+        if len(l_selected_regions) > 1:
+            return figures.compute_clustergram_figure(set_progress, cache_flask,
+                l_selected_regions, percentile=percentile
+            )
     return dash.no_update
 
 
