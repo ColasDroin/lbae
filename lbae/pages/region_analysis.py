@@ -1,11 +1,9 @@
 ###### IMPORT MODULES ######
 
 # Official modules
-from click.decorators import pass_context
 import dash_bootstrap_components as dbc
 from dash import dcc, html
-
-from dash.dependencies import Input, Output, State, ALL
+from dash.dependencies import Input, Output, State
 import dash
 import plotly.graph_objects as go
 import numpy as np
@@ -24,7 +22,6 @@ from lbae.modules.tools.spectra import (
     compute_spectrum_per_row_selection,
     convert_array_to_fine_grained,
     strip_zeros,
-    return_index_labels,
     add_zeros_to_spectrum,
     compute_avg_intensity_per_lipid,
     global_lipid_index_store,

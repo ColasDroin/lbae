@@ -81,7 +81,7 @@ def return_layout(basic_config, slice_index):
                     children=[
                         dbc.CardHeader(children="Structure selection",),
                         dbc.CardBody(
-                            className="py-0 mb-0 mt-0",
+                            className="d-flex flex-column pt-1 h-100",
                             children=[
                                 dbc.Spinner(
                                     color="dark",
@@ -124,10 +124,11 @@ def return_layout(basic_config, slice_index):
                                     ],
                                 ),
                                 html.Div(
-                                    className="d-flex flex-row",
+                                    className="d-flex flex-row justify-content-center align-items-center flex-grow-1",
                                     children=[
                                         html.Div(
-                                            style={"width": "49%",},
+                                            style={"width": "70%", "min-height": "0"},
+                                            # className="d-flex align-self-stretch",
                                             children=[
                                                 # Wrap toasts in div to prevent their expansion
                                                 dbc.Toast(
@@ -163,7 +164,7 @@ def return_layout(basic_config, slice_index):
                                             ],
                                         ),
                                         html.Div(
-                                            style={"width": "49%",},
+                                            style={"width": "20%",},
                                             children=[
                                                 dbc.Button(
                                                     children="Compare lipid expression",
@@ -779,8 +780,6 @@ def page_2bis_plot_graph_heatmap_mz_selection(
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
     value_input = dash.callback_context.triggered[0]["prop_id"].split(".")[1]
 
-    print(id_input, value_input)
-
     # Compute set of ids for the volume plot if it is going to be plotted
     if (
         id_input == "page-4-button-range"
@@ -963,8 +962,8 @@ def page_4_plot_graph_heatmap_mz_selection(
     # case structures have been selected
     if id_input == "page-4-compare-structure-button" or id_input == "page-4-slider-percentile":
         if len(l_selected_regions) > 1:
-            return figures.compute_clustergram_figure(set_progress, cache_flask,
-                l_selected_regions, percentile=percentile
+            return figures.compute_clustergram_figure(
+                set_progress, cache_flask, l_selected_regions, percentile=percentile
             )
     return dash.no_update
 

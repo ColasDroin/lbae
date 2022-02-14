@@ -1,6 +1,5 @@
 # Preliminary imports
 import logging
-import os
 from lbae.modules.tools.misc import logmem
 
 # Define logging options for print and debug
@@ -48,6 +47,7 @@ if __name__ == "__main__":
 # TODO correct the name of the files to download
 # TODO write missing docstrings
 # TODO write documentation
+# Make a tour with dash_tour_component?
 # TODO Redesign repo according to : https://dev.to/codemouse92/dead-simple-python-project-structure-and-imports-38c6
 # TODO make a docker container for the very final version of the app
 
