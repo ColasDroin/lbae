@@ -254,5 +254,5 @@ def hide_slider(pathname):
 
 
 def run():
-    app.run_server(port=8072, debug=True)
+    app.run_server(port=8073, debug=True)
 

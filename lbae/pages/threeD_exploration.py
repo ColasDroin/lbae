@@ -435,7 +435,7 @@ def return_layout(basic_config, slice_index):
                             children=[
                                 dbc.ModalHeader(dbc.ModalTitle("Lipid expression comparison")),
                                 dbc.ModalBody(
-                                    className="d-flex justify-content-center",
+                                    className="d-flex justify-content-center flex-column",
                                     children=[
                                         # dbc.CardHeader(className="d-flex", children="Lipid expression comparison",),
                                         # dbc.CardBody(
@@ -928,6 +928,7 @@ def page_2bis_plot_graph_heatmap_mz_selection(
     running=[
         (Output("page-4-compare-structure-button", "disabled"), True, False),
         (Output("page-4-progress-bar-structure", "className"), "", "d-none",),
+        (Output("page-4-graph-heatmap", "className"), "d-none", ""),
     ],
     progress=[Output("page-4-progress-bar-structure", "value"), Output("page-4-progress-bar-structure", "label")],
     prevent_initial_call=True,
@@ -943,7 +944,7 @@ def page_4_plot_graph_heatmap_mz_selection(
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
     value_input = dash.callback_context.triggered[0]["prop_id"].split(".")[1]
 
-    # case a mz value and a manual range have been inputed
+    # case structures have been selected
     if id_input == "page-4-compare-structure-button":
         return figures.compute_clustergram_figure(l_selected_regions, percentile=10, set_progress=set_progress)
     return dash.no_update
