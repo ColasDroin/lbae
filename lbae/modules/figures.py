@@ -1565,7 +1565,7 @@ class Figures:
 
         return fig
 
-    def compute_clustergram_figure(self, l_selected_regions, percentile=10, set_progress=None):
+    def compute_clustergram_figure(self, l_selected_regions, percentile=90, set_progress=None):
         logging.info("Starting computing clustergram figure")
         dic_avg_lipids = {}
 

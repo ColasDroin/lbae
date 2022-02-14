@@ -932,6 +932,7 @@ def page_2bis_plot_graph_heatmap_mz_selection(
     ],
     progress=[Output("page-4-progress-bar-structure", "value"), Output("page-4-progress-bar-structure", "label")],
     prevent_initial_call=True,
+    cache_args_to_skip=[0, 1, 2],
 )
 def page_4_plot_graph_heatmap_mz_selection(
     set_progress, n_clicks_button_display, l_selected_regions, name_region_1, name_region_2, name_region_3,
@@ -946,7 +947,7 @@ def page_4_plot_graph_heatmap_mz_selection(
 
     # case structures have been selected
     if id_input == "page-4-compare-structure-button":
-        return figures.compute_clustergram_figure(l_selected_regions, percentile=10, set_progress=set_progress)
+        return figures.compute_clustergram_figure(l_selected_regions, percentile=90, set_progress=set_progress)
     return dash.no_update
 
 
