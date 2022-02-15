@@ -170,13 +170,7 @@ def return_layout(basic_config, slice_index=1):
                                         id="page-3-dropdown-brain-regions",
                                         options=[
                                             {"label": node, "value": node}
-                                            for node in return_pickled_object(
-                                                "atlas/atlas_objects",
-                                                "set_masks",
-                                                force_update=False,
-                                                compute_function=atlas.compute_set_projected_masks,
-                                                slice_index=slice_index - 1,
-                                            )
+                                            for node in atlas.dic_existing_masks[slice_index - 1]
                                         ],
                                         placeholder="Click on brain regions above.",
                                         multi=True,
@@ -733,17 +727,20 @@ def page_3_plot_heatmap(
         if l_mask_name is not None:
 
             if len(l_mask_name) > 0:
-                dic_masks = return_pickled_object(
-                    "atlas/atlas_objects",
-                    "dic_masks_and_spectra",
-                    force_update=False,
-                    compute_function=atlas.compute_dic_projected_masks_and_spectra,
-                    slice_index=slice_index - 1,
-                )
+                # dic_masks = return_pickled_object(
+                #     "atlas/atlas_objects",
+                #     "dic_masks_and_spectra",
+                #     force_update=False,
+                #     compute_function=atlas.compute_dic_projected_masks_and_spectra,
+                #     slice_index=slice_index - 1,
+                # )
 
                 for idx_mask, mask_name in enumerate(l_mask_name):
-                    if mask_name in dic_masks:
-                        projected_mask = dic_masks[mask_name][0]
+                    id_name = atlas.dic_name_acronym[mask_name]
+                    if id_name in atlas.dic_existing_masks:
+                        projected_mask = atlas.get_projected_mask_and_spectrum(slice_index, mask_name)[
+                            0
+                        ]  # dic_masks[mask_name][0]
                     else:
                         logging.warning("The mask " + str(mask_name) + " couldn't be found")
 
@@ -823,16 +820,7 @@ def page_3_plot_heatmap(
 def page_3_update_dropdown_option(slice_index):
 
     if slice_index is not None:
-        return [
-            {"label": node, "value": node}
-            for node in return_pickled_object(
-                "atlas/atlas_objects",
-                "set_masks",
-                force_update=False,
-                compute_function=atlas.compute_set_projected_masks,
-                slice_index=slice_index - 1,
-            )
-        ]
+        return [{"label": node, "value": node} for node in atlas.dic_existing_masks[slice_index - 1]]
     else:
         return dash.no_update
 
@@ -1020,20 +1008,14 @@ def global_spectrum_store(slice_index, l_shapes_and_masks, l_mask_name, relayout
         # Compute average spectrum from mask
         if shape[0] == "mask":
             idx_mask += 1
-            try:
-                mask_name = l_mask_name[idx_mask]
-                dic_masks = return_pickled_object(
-                    "atlas/atlas_objects",
-                    "dic_masks_and_spectra",
-                    force_update=False,
-                    compute_function=atlas.compute_dic_projected_masks_and_spectra,
-                    slice_index=slice_index - 1,
-                )
-                if mask_name in dic_masks:
-                    grah_scattergl_data = dic_masks[mask_name][1]
-            except:
+            mask_name = l_mask_name[idx_mask]
+            id_name = atlas.dic_name_acronym[mask_name]
+            if id_name in atlas.dic_existing_masks:
+                grah_scattergl_data = atlas.get_projected_mask_and_spectrum(slice_index, mask_name)[1]
+            else:
                 logging.warning("Bug, the selected mask does't exist")
                 return dash.no_update
+
         elif shape[0] == "shape":
             idx_path += 1
 

@@ -21,7 +21,7 @@ layout = html.Div(
                     active="exact",
                     className="d-flex justify-content-center align-items-center",
                     children=[
-                        html.H2(className="icon-brain m-auto"),
+                        html.I(className="icon-brain fs-2 m-auto"),
                         # html.H5(children="Lipid Brain Explorer", className="ml-3 mb-2"),
                     ],
                 ),
@@ -39,7 +39,8 @@ layout = html.Div(
                     id="sidebar-page-1",
                     href="/load-slice",
                     active="exact",
-                    children=[html.I(className="icon-upload pl-1")],  # html.Span("Load slice")],
+                    children=[html.I(className="icon-upload fs-4")],  # html.Span("Load slice")],
+                    className="mt-3 mb-2",
                 ),
                 dbc.Tooltip(
                     # container="content",
@@ -52,7 +53,8 @@ layout = html.Div(
                     id="sidebar-page-2",
                     href="/lipid-selection",
                     active="exact",
-                    children=[html.I(className="icon-lipid pl-1")],  # html.Span("Per-lipid analysis"),],
+                    children=[html.I(className="icon-lipid fs-4")],  # html.Span("Per-lipid analysis"),],
+                    className="my-4",
                 ),
                 dbc.Tooltip(
                     children="Analyse spectrum and brain composition by custom lipid selection",
@@ -64,7 +66,8 @@ layout = html.Div(
                     id="sidebar-page-3",
                     href="/region-analysis",
                     active="exact",
-                    children=[html.I(className="icon-chart-bar pl-1")],  # html.Span("Per-region analysis"),],
+                    children=[html.I(className="icon-chart-bar fs-4")],  # html.Span("Per-region analysis"),],
+                    className="my-4",
                 ),
                 dbc.Tooltip(
                     children="Analyse lipid composition by brain region", target="sidebar-page-3", placement="right"
@@ -75,17 +78,18 @@ layout = html.Div(
                     href="/3D-exploration",
                     active="exact",
                     # disabled=True,
-                    children=[html.I(className="icon-3d pl-1")],  # html.Span("3D exploration"),],
+                    children=[html.I(className="icon-3d fs-4")],  # html.Span("3D exploration"),],
+                    className="my-4",
                 ),
                 dbc.Tooltip(children="Analyse brain data in 3D", target="sidebar-page-4", placement="right"),
-                # Link to page 5
-                dbc.NavLink(
-                    id="sidebar-page-5",
-                    href="/atlas-exploration",
-                    active="exact",
-                    children=[html.I(className="icon-library pl-1")],
-                ),
-                dbc.Tooltip(children="Explore Allen brain atlas data", target="sidebar-page-5", placement="right",),
+                # # Link to page 5
+                # dbc.NavLink(
+                #     id="sidebar-page-5",
+                #     href="/atlas-exploration",
+                #     active="exact",
+                #     children=[html.I(className="icon-library pl-1")],
+                # ),
+                # dbc.Tooltip(children="Explore Allen brain atlas data", target="sidebar-page-5", placement="right",),
                 # Copyright
                 html.H4(id="sidebar-copyright", className="sidebar-copyright icon-cc ml-1 mb-3 fs-1"),
                 dbc.Tooltip(children="Copyright EPFL 2022", target="sidebar-copyright", placement="right"),

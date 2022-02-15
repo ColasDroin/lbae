@@ -65,7 +65,7 @@ class Atlas:
         self.labels = Labels(self.bg_atlas, force_init=True)
         self._simplified_labels_int = None
 
-        # Compute a dictionnary that associates to each structure (acronym) the set of ids (int) of all os its children
+        # Compute a dictionnary that associates to each structure (acronym) the set of ids (int) of all of its children
         self.dic_acronym_children_id = return_pickled_object(
             "atlas/atlas_objects",
             "dic_acronym_children_id",
@@ -82,7 +82,7 @@ class Atlas:
         self.image_shape = list(self.array_coordinates_warped_data.shape[1:-1])
 
         # Record dict that associate brain region (complete string) to specific id (short label), along with graph of structures
-        self.l_nodes, self.l_parents, self.dic_name_id, self.dic_id_name = return_pickled_object(
+        self.l_nodes, self.l_parents, self.dic_name_acronym, self.dic_acronym_name = return_pickled_object(
             "atlas/atlas_objects", "hierarchy", force_update=False, compute_function=self.compute_hierarchy_list
         )
 
@@ -96,14 +96,13 @@ class Atlas:
             atlas_correction=True,
         )[1]
 
-        # Dic of mask images (must be ultra fast)
-        # * warning, very long to compute
-        self.dic_mask_images = return_pickled_object(
-            "atlas/atlas_objects",
-            "dic_mask_images",
-            force_update=False,
-            compute_function=self.compute_dic_mask_images,
-        )
+        # Dictionnary of existing masks per slice, which associates slice index (key) to a set of masks acronyms
+        try:
+            with open("lbae/data/atlas/atlas_objects/dic_existing_masks" + ".pickle", "rb") as file:
+                self.dic_existing_masks = pickle.load(file)
+        except:
+            logging.info("The dictionnary of available mask per slice has not been computed yet, doing it now.")
+            self.save_all_projected_masks_and_spectra()
 
     # Load arrays of images using atlas projection
     @property
@@ -185,8 +184,8 @@ class Atlas:
         # Create a list of parents for all ancestors
         l_nodes = []
         l_parents = []
-        dic_name_id = {}
-        dic_id_name = {}
+        dic_name_acronym = {}
+        dic_acronym_name = {}
         idx = 0
         for x, v in self.bg_atlas.structures.items():
             if len(self.bg_atlas.get_structure_ancestors(v["acronym"])) > 0:
@@ -198,10 +197,10 @@ class Atlas:
 
             l_nodes.append(current_name)
             l_parents.append(ancestor_name)
-            dic_name_id[current_name] = v["acronym"]
-            dic_id_name[v["acronym"]] = current_name
+            dic_name_acronym[current_name] = v["acronym"]
+            dic_acronym_name[v["acronym"]] = current_name
 
-        return l_nodes, l_parents, dic_name_id, dic_id_name
+        return l_nodes, l_parents, dic_name_acronym, dic_acronym_name
 
     def compute_array_projection(self, nearest_neighbour_correction=False, atlas_correction=False):
 
@@ -348,7 +347,7 @@ class Atlas:
                     (self.array_coordinates_warped_data[slice_index, :, :] * 1000 / self.resolution).round(0),
                     dtype=np.int16,
                 )
-            stack_mask = self.get_atlas_mask(self.dic_name_id[mask_name])
+            stack_mask = self.get_atlas_mask(self.dic_name_acronym[mask_name])
             projected_mask = project_atlas_mask(stack_mask, slice_coor_rescaled, self.bg_atlas.reference.shape)
 
         # get the list of rows containing the pixels to average
@@ -372,90 +371,74 @@ class Atlas:
             )
         return grah_scattergl_data
 
-    def compute_dic_mask_images(self):
-        dic = {}
+    def save_all_projected_masks_and_spectra(self):
+
+        # Define a dictionnary that contains all the masks that exist for every slice
+        dic_existing_masks = {}
+
         for slice_index in range(self.data.get_slice_number()):
-            dic[slice_index] = {}
+            logging.info("Starting slice " + str(slice_index))
             slice_coor_rescaled = np.asarray(
                 (self.array_coordinates_warped_data[slice_index, :, :] * 1000 / self.resolution).round(0),
                 dtype=np.int16,
             )
 
+            dic_existing_masks[slice_index] = set([])
+
+            if slice_index > 3:
+                continue
+
             # Get hierarchical tree of brain structures -
-            for mask_name, id_mask in self.dic_name_id.items():
+            for mask_name, id_mask in self.dic_name_acronym.items():
                 # get the array corresponding to the projected mask
                 stack_mask = self.get_atlas_mask(id_mask)
                 projected_mask = project_atlas_mask(stack_mask, slice_coor_rescaled, self.bg_atlas.reference.shape)
                 if np.sum(projected_mask) == 0:
+                    logging.info("The structure " + mask_name + " is not present in slice " + str(slice_index))
                     continue
+                else:
+                    dic_existing_masks[slice_index].add(id_mask)
 
-                # compute orange image
-                normalized_projected_mask = projected_mask / np.max(projected_mask)
-                # clean mask
-                normalized_projected_mask[:, :10] = 0
-                normalized_projected_mask[:, -10:] = 0
-                normalized_projected_mask[:10, :] = 0
-                normalized_projected_mask[-10:, :] = 0
+                # Compute average spectrum in the mask
+                grah_scattergl_data = self.compute_spectrum_data(slice_index, projected_mask)
 
-                color_rgb = [255, 140, 0, 200]
-                l_images = [normalized_projected_mask * color for c, color in zip(["r", "g", "b", "a"], color_rgb)]
-                # Reoder axis to match plotly go.image requirements
-                array_image = np.moveaxis(np.array(l_images, dtype=np.uint8), 0, 2)
-                # convert to string using binary format to get lightweight result
-                base64_string = convert_image_to_base64(
-                    array_image, optimize=True, type="RGBA", binary=True, decrease_resolution_factor=8
-                )  # , format="gif")
-                im = go.Image(visible=True, source=base64_string, hoverinfo="none")
-                dic[slice_index][mask_name] = im
-            break
+                # Dump the mask and data with pickle
+                with open(
+                    "lbae/data/atlas/atlas_objects/mask_and_spectrum_"
+                    + str(slice_index)
+                    + "_"
+                    + str(id_mask).replace("/", "")
+                    + ".pickle",
+                    "wb",
+                ) as file:
+                    pickle.dump((projected_mask, grah_scattergl_data), file)
 
-        return dic
+        # Dump the dictionnary of existing masks with pickle
+        with open("lbae/data/atlas/atlas_objects/dic_existing_masks" + ".pickle", "wb") as file:
+            pickle.dump(dic_existing_masks, file)
 
-    # ! caution as this function is not explicitely precomputed for every slice anywere
-    def compute_dic_projected_masks_and_spectra(self, slice_index):
+        logging.info("Projected masks and spectra have all been computed.")
 
-        dic = {}
-        slice_coor_rescaled = np.asarray(
-            (self.array_coordinates_warped_data[slice_index, :, :] * 1000 / self.resolution).round(0), dtype=np.int16,
+    def get_projected_mask_and_spectrum(self, slice_index, mask_name):
+        id_mask = self.dic_name_acronym[mask_name]
+        path = (
+            "lbae/data/atlas/atlas_objects/mask_and_spectrum_"
+            + str(slice_index)
+            + str(id_mask).replace("/", "")
+            + ".pickle"
         )
+        logging.info("Loading " + mask_name + " for slice " + str(slice_index) + "from pickle file.")
+        try:
+            with open(path, "rb") as file:
+                return pickle.load(file)
+        except:
+            logging.warning(
+                "The mask and spectrum data could not be found for "
+                + mask_name
+                + " for slice "
+                + str(slice_index)
+                + ". Make sure the files have been precomputed and that you checked the mask"
+                + " was present in self.dic_existing_masks"
+            )
+            return None
 
-        # Get hierarchical tree of brain structures -
-        for mask_name, id_mask in self.dic_name_id.items():
-            # get the array corresponding to the projected mask
-            stack_mask = self.get_atlas_mask(id_mask)
-            projected_mask = project_atlas_mask(stack_mask, slice_coor_rescaled, self.bg_atlas.reference.shape)
-            if np.sum(projected_mask) == 0:
-                logging.info("The structure " + mask_name + " is not present in slice " + str(slice_index))
-                continue
-
-            # compute spectrum
-            grah_scattergl_data = self.compute_spectrum_data(slice_index, projected_mask)
-
-            dic[mask_name] = (projected_mask, grah_scattergl_data)
-        return dic
-
-    # ! caution as this function is not explicitely precomputed for every slice anywere
-    def compute_set_projected_masks(self, slice_index):
-        dic_masks = return_pickled_object(
-            "atlas/atlas_objects",
-            "dic_masks_and_spectra",
-            force_update=False,
-            compute_function=self.compute_dic_projected_masks_and_spectra,
-            slice_index=slice_index,
-        )
-        return set(dic_masks.keys())
-
-    """
-    def pickle_all_3D_figures(self, force_recompute=False):
-        path = "data/pickled_data/atlas_3D_data/"
-        existing_figures = set([x.split("_")[-1].split(".pickle")[0].replace("-", "/") for x in os.listdir(path)])
-        for v in self.bg_atlas.structures.values():
-            acronym = v["acronym"]
-            if (acronym in existing_figures and force_recompute) or (acronym not in existing_figures):
-                try:
-                    self.return_3D_figure(structure=acronym, from_pickle=True, default_force_pickle=True)
-                except:
-                    print("Structure " + acronym + " could not be computed")
-            else:
-                print(acronym + " has already been computed before. Skipping it.")
-    """

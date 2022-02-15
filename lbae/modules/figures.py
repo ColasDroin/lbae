@@ -1567,25 +1567,30 @@ class Figures:
         def return_df_avg_lipids(l_selected_regions):
             dic_avg_lipids = {}
             for slice_index in range(self._data.get_slice_number()):
-                set_progress((int(slice_index / 32 * 100), "Loading slice n°" + str(slice_index + 1)))
-
-                dic_masks = return_pickled_object(
-                    "atlas/atlas_objects",
-                    "dic_masks_and_spectra",
-                    force_update=False,
-                    compute_function=self._atlas.compute_dic_projected_masks_and_spectra,
-                    slice_index=slice_index,
+                set_progress(
+                    (int(slice_index / self._data.get_slice_number() * 100), "Loading slice n°" + str(slice_index + 1))
                 )
-                l_spectra = []
 
+                # logging.info("Loading dictionnary " + str(slice_index))
+                # dic_masks = return_pickled_object(
+                #     "atlas/atlas_objects",
+                #     "dic_masks_and_spectra",
+                #     force_update=False,
+                #     compute_function=self._atlas.compute_dic_projected_masks_and_spectra,
+                #     slice_index=slice_index,
+                # )
+                # logging.info("Dictionnary loaded for slice " + str(slice_index))
+
+                l_spectra = []
                 for region in l_selected_regions:
-                    long_region = self._atlas.dic_id_name[region]
-                    if long_region in dic_masks:
-                        grah_scattergl_data = dic_masks[long_region][1]
+                    long_region = self._atlas.dic_acronym_name[region]
+                    if region in self._atlas.dic_existing_masks[slice_index]:
+                        grah_scattergl_data = self._atlas.get_projected_mask_and_spectrum(slice_index, long_region)[1]
                         l_spectra.append(grah_scattergl_data)
                     else:
                         l_spectra.append(None)
                 ll_idx_labels = global_lipid_index_store(self._data, slice_index, l_spectra)
+                logging.info("Computing dictionnary for averaging slice " + str(slice_index))
 
                 # Compute average expression for each lipid and each selection
                 set_lipids_idx = set()
@@ -1633,6 +1638,7 @@ class Figures:
             return df_avg_intensity_lipids
 
         df_avg_intensity_lipids = return_df_avg_lipids(l_selected_regions)
+        logging.info("Averaging done for all slices")
         set_progress((90, "Loading data"))
 
         # Exclude very lowly expressed lipids
@@ -1645,6 +1651,7 @@ class Figures:
             df_avg_intensity_lipids = df_avg_intensity_lipids.iloc[(df_avg_intensity_lipids.mean(axis=1)).argsort(), :]
         else:
             df_avg_intensity_lipids.sort_values(by=l_selected_regions[0], inplace=True)
+        logging.info("Lowly expressed lipids excluded")
 
         # Replace idx_lipids by actual name
         df_names = self._data.get_annotations()  # [self._data.get_annotations()["slice"] == slice_index]
@@ -1655,7 +1662,8 @@ class Figures:
             + "_"
             + df_names.iloc[idx]["cation"]
         )
-
+        logging.info("Lipid indexes replaced by names")
+        logging.info("Preparing plot")
         # Plot
         fig_heatmap_lipids = dashbio.Clustergram(
             data=df_avg_intensity_lipids.to_numpy(),
