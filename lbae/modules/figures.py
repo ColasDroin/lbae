@@ -672,7 +672,7 @@ class Figures:
         )
         return fig
 
-    def compute_figure_slices_3D(self, reduce_resolution_factor=7):
+    def compute_figure_slices_3D(self, reduce_resolution_factor=20):
 
         # get transform parameters (a,u,v) for each slice
         l_transform_parameters = return_pickled_object(
@@ -726,7 +726,7 @@ class Figures:
             {
                 "pad": {"b": 5, "t": 10},
                 "len": 0.9,
-                "x": 0.1,
+                "x": 0.05,
                 "y": 0,
                 "steps": [
                     {"args": [[f.name], frame_args(0)], "label": str(k), "method": "animate",}
@@ -747,21 +747,21 @@ class Figures:
                 # zaxis_autorange="reversed",
                 # aspectmode = "data",
                 yaxis=dict(
-                    range=[0.05 / 7 * reduce_resolution_factor, 0.33 / 7 * reduce_resolution_factor],
+                    range=[0.0, 0.35],
                     autorange=False,
                     backgroundcolor="rgba(0,0,0,0)",
                     color="grey",
                     gridcolor="grey",
                 ),
                 zaxis=dict(
-                    range=[0.2 / 7 * reduce_resolution_factor, -0.02 / 7 * reduce_resolution_factor],
+                    range=[0.2, -0.02],
                     autorange=False,
                     backgroundcolor="rgba(0,0,0,0)",
                     color="grey",
                     gridcolor="grey",
                 ),
                 xaxis=dict(
-                    range=[0.0 / 7 * reduce_resolution_factor, 0.28 / 7 * reduce_resolution_factor],
+                    range=[0.0, 0.35],
                     autorange=False,
                     backgroundcolor="rgba(0,0,0,0)",
                     color="grey",
@@ -769,20 +769,14 @@ class Figures:
                 ),
             ),
             margin=dict(t=5, r=0, b=0, l=0),
-            # updatemenus=[
-            #     {
-            #         "buttons": [
-            #             {"args": [None, frame_args(50)], "label": "&#9654;", "method": "animate",},  # play symbol
-            #             {"args": [[None], frame_args(0)], "label": "&#9724;", "method": "animate",},  # pause symbol
-            #         ],
-            #         "direction": "left",
-            #         "pad": {"r": 10, "t": 70},
-            #         "type": "buttons",
-            #         "x": 0.1,
-            #         "y": 0,
-            #     }
-            # ],
             sliders=sliders,
+        )
+
+        # No display of tick labels as they're wrong anyway
+        fig.update_layout(
+            scene=dict(
+                xaxis=dict(showticklabels=False), yaxis=dict(showticklabels=False), zaxis=dict(showticklabels=False),
+            )
         )
 
         return fig

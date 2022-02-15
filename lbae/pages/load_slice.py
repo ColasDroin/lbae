@@ -307,7 +307,9 @@ def toggle_modal(n1, is_open):
 
 # Function to plot page-4-graph-heatmap-mz-selection when its state get updated
 @app.app.callback(
-    Output("page-1-graph-modal", "figure"), Input("page-1-modal-button", "n_clicks"),
+    output=Output("page-1-graph-modal", "figure"),
+    inputs=Input("page-1-modal-button", "n_clicks"),
+    prevent_initial_call=True,
 )
 def page_1_plot_graph_modal(n1):
     if n1:
