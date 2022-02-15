@@ -60,7 +60,7 @@ server = flask.Flask(__name__)
 
 # For long callback support
 launch_uid = uuid4()
-cache_long_callback = diskcache.Cache("lbae/data/temp/cache-directory")
+cache_long_callback = diskcache.Cache("lbae/data/temp/")
 long_callback_manager = DiskcacheLongCallbackManager(cache_long_callback, cache_by=[lambda: launch_uid], expire=500,)
 
 # Instantiate app
@@ -77,7 +77,7 @@ app = dash.Dash(
 CACHE_CONFIG = {
     # We use 'FileSystemCache' as we want to keep the application very lightweight in term of RAM memory
     "CACHE_TYPE": "FileSystemCache",
-    "CACHE_DIR": "lbae/data/temp/cache-directory",
+    "CACHE_DIR": "lbae/data/temp/",
     # "CACHE_TYPE": "redis",
     # "CACHE_REDIS_URL": os.environ.get("REDIS_URL", "redis://localhost:6379"),
     "CACHE_THRESHOLD": 200,

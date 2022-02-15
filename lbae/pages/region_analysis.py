@@ -169,7 +169,10 @@ def return_layout(basic_config, slice_index=1):
                                     children=dcc.Dropdown(
                                         id="page-3-dropdown-brain-regions",
                                         options=[
-                                            {"label": node, "value": node}
+                                            {
+                                                "label": atlas.dic_acronym_name[node],
+                                                "value": atlas.dic_acronym_name[node],
+                                            }
                                             for node in atlas.dic_existing_masks[slice_index - 1]
                                         ],
                                         placeholder="Click on brain regions above.",
@@ -737,10 +740,8 @@ def page_3_plot_heatmap(
 
                 for idx_mask, mask_name in enumerate(l_mask_name):
                     id_name = atlas.dic_name_acronym[mask_name]
-                    if id_name in atlas.dic_existing_masks:
-                        projected_mask = atlas.get_projected_mask_and_spectrum(slice_index, mask_name)[
-                            0
-                        ]  # dic_masks[mask_name][0]
+                    if id_name in atlas.dic_existing_masks[slice_index - 1]:
+                        projected_mask = atlas.get_projected_mask_and_spectrum(slice_index - 1, mask_name)[0]
                     else:
                         logging.warning("The mask " + str(mask_name) + " couldn't be found")
 
@@ -820,7 +821,10 @@ def page_3_plot_heatmap(
 def page_3_update_dropdown_option(slice_index):
 
     if slice_index is not None:
-        return [{"label": node, "value": node} for node in atlas.dic_existing_masks[slice_index - 1]]
+        return [
+            {"label": atlas.dic_acronym_name[node], "value": atlas.dic_acronym_name[node]}
+            for node in atlas.dic_existing_masks[slice_index - 1]
+        ]
     else:
         return dash.no_update
 
@@ -1010,8 +1014,8 @@ def global_spectrum_store(slice_index, l_shapes_and_masks, l_mask_name, relayout
             idx_mask += 1
             mask_name = l_mask_name[idx_mask]
             id_name = atlas.dic_name_acronym[mask_name]
-            if id_name in atlas.dic_existing_masks:
-                grah_scattergl_data = atlas.get_projected_mask_and_spectrum(slice_index, mask_name)[1]
+            if id_name in atlas.dic_existing_masks[slice_index - 1]:
+                grah_scattergl_data = atlas.get_projected_mask_and_spectrum(slice_index - 1, mask_name)[1]
             else:
                 logging.warning("Bug, the selected mask does't exist")
                 return dash.no_update

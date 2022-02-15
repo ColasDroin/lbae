@@ -294,7 +294,7 @@ def page_4_click(clickData):
     if clickData is not None:
         if "points" in clickData:
             label = clickData["points"][0]["label"]
-            acronym = atlas.dic_name_id[label]
+            acronym = atlas.dic_name_acronym[label]
             print("New 3d figure loading: ", label, acronym)
             fig = return_pickled_object(
                 "figures/atlas_page/3D",

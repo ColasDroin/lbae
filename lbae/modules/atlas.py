@@ -418,16 +418,18 @@ class Atlas:
             pickle.dump(dic_existing_masks, file)
 
         logging.info("Projected masks and spectra have all been computed.")
+        self.dic_existing_masks = dic_existing_masks
 
     def get_projected_mask_and_spectrum(self, slice_index, mask_name):
         id_mask = self.dic_name_acronym[mask_name]
         path = (
             "lbae/data/atlas/atlas_objects/mask_and_spectrum_"
             + str(slice_index)
+            + "_"
             + str(id_mask).replace("/", "")
             + ".pickle"
         )
-        logging.info("Loading " + mask_name + " for slice " + str(slice_index) + "from pickle file.")
+        logging.info("Loading " + mask_name + " for slice " + str(slice_index) + " from pickle file.")
         try:
             with open(path, "rb") as file:
                 return pickle.load(file)

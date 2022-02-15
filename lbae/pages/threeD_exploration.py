@@ -563,7 +563,7 @@ def page_4_click(clickData, region_1_id, region_2_id, region_3_id):
         if clickData is not None:
             if "points" in clickData:
                 label = clickData["points"][0]["label"]
-                # acronym = atlas.dic_name_id[label]
+                # acronym = atlas.dic_name_acronym[label]
                 # print("New 3d figure loading: ", label, acronym)
                 return "Add " + label + " to selection", False
         return "Please choose a structure above", True
@@ -689,7 +689,7 @@ def page_4_add_toast_region_selection(
     elif id_input == "page-4-add-structure-button":
         if label_region != "Please choose a structure above":
             region = label_region.split("Add ")[1].split(" to selection")[0]
-            region_id = atlas.dic_name_id[region]
+            region_id = atlas.dic_name_acronym[region]
             if region_id not in l_selected_regions:
                 l_selected_regions.append(region_id)
 
@@ -872,25 +872,6 @@ def page_2bis_plot_graph_heatmap_mz_selection(
                 )
             ]
 
-            # if active_tab == "page-4-tab-3":
-            #     # ! There seems to be a bug where the figure is computed twice (the callback is repeated) but can't figure out why...
-            #     # ! On hold for now as, most likely this figure won't be kept in the app
-            #     return (
-            #         return_pickled_object(
-            #             "figures/3D_page",
-            #             "scatter_3D_" + name_lipid_1 + "_" + name_lipid_2 + "_" + name_lipid_3,
-            #             force_update=False,
-            #             compute_function=figures.compute_figure_bubbles_3D,
-            #             ignore_arguments_naming=True,
-            #             ll_t_bounds=lll_lipid_bounds,
-            #             normalize_independently=True,
-            #             name_lipid_1=name_lipid_1,
-            #             name_lipid_2=name_lipid_2,
-            #             name_lipid_3=name_lipid_3,
-            #         ),
-            #         1,
-            #     )
-
             return (
                 return_pickled_object(
                     "figures/3D_page",
@@ -921,7 +902,6 @@ def page_2bis_plot_graph_heatmap_mz_selection(
 
         else:
             # probably the page has just been loaded, so do nothing
-            # return app.slice_store.getSlice(slice_index).return_heatmap(binary_string=False)
             return dash.no_update
 
     return dash.no_update
