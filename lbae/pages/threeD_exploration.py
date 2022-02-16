@@ -1,6 +1,6 @@
 ###### IMPORT MODULES ######
 
-# Official modules
+# Standard modules
 import dash_bootstrap_components as dbc
 from dash import dcc, html
 import logging

@@ -1,6 +1,6 @@
 ###### IMPORT MODULES ######
 
-# Official modules
+# Standard modules
 import dash_bootstrap_components as dbc
 from dash import dcc, html
 from dash.dependencies import Input, Output, State
@@ -10,7 +10,7 @@ import dash_draggable
 import logging
 import dash_mantine_components as dmc
 
-# Homemade modules
+# LBAE modules
 import app
 from app import figures, data
 from modules.tools.misc import return_pickled_object

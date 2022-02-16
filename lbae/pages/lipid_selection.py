@@ -1,6 +1,6 @@
 ###### IMPORT MODULES ######
 
-# Official modules
+# Standard modules
 import dash_bootstrap_components as dbc
 from dash import dcc, html
 import logging
@@ -12,7 +12,7 @@ import dash_draggable
 import numpy as np
 import dash_mantine_components as dmc
 
-# Homemade modules
+# LBAE modules
 from app import figures, data
 import app
 

@@ -1,6 +1,6 @@
 ###### IMPORT MODULES ######
 
-# Official modules
+# Standard modules
 import dash_bootstrap_components as dbc
 from dash import dcc, html
 from dash.dependencies import Input, Output, State
@@ -12,7 +12,7 @@ import logging
 import dash_draggable
 from numba import njit
 
-# Homemade modules
+# LBAE modules
 import app
 from app import figures, data, atlas, cache_flask
 import config

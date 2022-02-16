@@ -1,6 +1,6 @@
 ###### IMPORT MODULES ######
 
-# Standard imports
+# Standard modules
 import numpy as np
 from numba import njit
 import logging
@@ -125,23 +125,42 @@ def fill_array_interpolation(array_annotation, array_slices, divider_radius=5):
         for y in range(0, array_annotation.shape[1]):
             for z in range(0, array_annotation.shape[2]):
                 # If we are in a unfilled region of the brain or just inside the brain
-                if (np.abs(array_slices[x, y, z] - (-0.01)) < 10 ** -4) or array_slices[x, y, z] >= 0:
+                if (np.abs(array_slices[x, y, z] - (-0.01)) < 10 ** -4) or array_slices[
+                    x, y, z
+                ] >= 0:
                     # Check all datapoints in the same structure, and do a distance-weighted average
                     value_voxel = 0
                     sum_weights = 0
                     size_radius = int(array_annotation.shape[0] / divider_radius)
-                    for xt in range(max(0, x - size_radius), min(array_annotation.shape[0], x + size_radius + 1)):
-                        for yt in range(max(0, y - size_radius), min(array_annotation.shape[1], y + size_radius + 1)):
+                    for xt in range(
+                        max(0, x - size_radius), min(array_annotation.shape[0], x + size_radius + 1)
+                    ):
+                        for yt in range(
+                            max(0, y - size_radius),
+                            min(array_annotation.shape[1], y + size_radius + 1),
+                        ):
                             for zt in range(
-                                max(0, z - size_radius), min(array_annotation.shape[2], z + size_radius + 1)
+                                max(0, z - size_radius),
+                                min(array_annotation.shape[2], z + size_radius + 1),
                             ):
                                 # If we are inside of the shere of radius size_radius
-                                if np.sqrt((x - xt) ** 2 + (y - yt) ** 2 + (z - zt) ** 2) <= size_radius:
+                                if (
+                                    np.sqrt((x - xt) ** 2 + (y - yt) ** 2 + (z - zt) ** 2)
+                                    <= size_radius
+                                ):
                                     # The voxel has data
                                     if array_slices[xt, yt, zt] >= 0:
                                         # The structure is identical
-                                        if np.abs(array_annotation[x, y, z] - array_annotation[xt, yt, zt]) < 10 ** -4:
-                                            d = np.sqrt((x - xt) ** 2 + (y - yt) ** 2 + (z - zt) ** 2)
+                                        if (
+                                            np.abs(
+                                                array_annotation[x, y, z]
+                                                - array_annotation[xt, yt, zt]
+                                            )
+                                            < 10 ** -4
+                                        ):
+                                            d = np.sqrt(
+                                                (x - xt) ** 2 + (y - yt) ** 2 + (z - zt) ** 2
+                                            )
                                             value_voxel += np.exp(-d) * array_slices[xt, yt, zt]
                                             sum_weights += np.exp(-d)
                     if sum_weights == 0:

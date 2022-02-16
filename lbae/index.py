@@ -1,15 +1,25 @@
-###### IMPORT MODULES ######
+# Copyright (c) 2022, Colas Droin. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
 
-# Official modules
+""" This module is where the app layout is created: the main container, the sidebar and the 
+different pages. All the dcc.store, used to store client data across pages, are created here. It is 
+also here that the URL routing is done.
+"""
+# ! Update this description if I move from URL-based to tab-based app
+
+# ==================================================================================================
+# --- Imports
+# ==================================================================================================
+
+# Standard modules
 import dash_bootstrap_components as dbc
 from dash import dcc, html
 from dash.dependencies import Input, Output, State
 import uuid
-import dash_loading_spinners as dls
 import logging
 import dash_mantine_components as dmc
 
-# Homemade modules
+# LBAE modules
 from app import app, data
 from pages import (
     sidebar,
@@ -23,16 +33,22 @@ from pages import (
 from config import basic_config
 from modules.tools.misc import logmem
 
-###### DEFINE APP LAYOUT ######
+# ==================================================================================================
+# --- App layout
+# ==================================================================================================
 
 
-# Responsive layout
 def return_main_content():
+    """This function compute the elements of the app that are shared across pages, including all the 
+    dcc.store.
 
-    # list of empty lipid indexes for the dropdown of page 2bis
+    Returns:
+        html.Div: A div containing the corresponding elements.
+    """
+    # List of empty lipid indexes for the dropdown of page 4
     empty_lipid_list = [-1 for i in range(data.get_slice_number())]
 
-    # Record session id in case sessions need to be individualized (i.e. we handle better global variables)
+    # Record session id in case sessions need to be individualized
     session_id = str(uuid.uuid4())
 
     # Define static content
@@ -47,12 +63,12 @@ def return_main_content():
             # Record the state of the range sliders for low and high resolution spectra in page 2
             dcc.Store(id="boundaries-low-resolution-mz-plot"),
             dcc.Store(id="boundaries-high-resolution-mz-plot"),
-            # Record the lipids selected in page 2 (made with a dropdown for now)
+            # Record the lipids selected in page 2
             dcc.Store(id="page-2-selected-lipid-1", data=-1),
             dcc.Store(id="page-2-selected-lipid-2", data=-1),
             dcc.Store(id="page-2-selected-lipid-3", data=-1),
             dcc.Store(id="page-2-last-selected-lipids", data=[]),
-            # Record the lipids selected in page 2bis
+            # Record the lipids selected in page 4
             dcc.Store(id="page-4-selected-lipid-1", data=empty_lipid_list),
             dcc.Store(id="page-4-selected-lipid-2", data=empty_lipid_list),
             dcc.Store(id="page-4-selected-lipid-3", data=empty_lipid_list),
@@ -126,7 +142,7 @@ def return_main_content():
                     ),
                     # Space to ensure the slider for sections doesn't hide anything
                     dmc.Space(h=70),
-                    # Documentation
+                    # Documentation in a lateral drawer
                     dmc.Drawer(
                         id="drawer",
                         padding="md",
@@ -137,35 +153,39 @@ def return_main_content():
                             dmc.Accordion(
                                 children=[
                                     dmc.AccordionItem(
-                                        children="""On any graph (heatmap or m/z plot), you can draw a square with your mouse to zoom in, 
-        and double click to reset zoom level.""",
+                                        children="""On any graph (heatmap or m/z plot), you can 
+                                            draw a square with your mouse to zoom in, and double 
+                                            click to reset zoom level.""",
                                         label="Zoom",
                                     ),
                                     dmc.AccordionItem(
-                                        children="""You can interact more with the figures (zoom, pan, reset axes, download) 
-        using the modebard above them.""",
+                                        children="""You can interact more with the figures (zoom, 
+                                            pan, reset axes, download) using the modebard above 
+                                            them.""",
                                         label="Modebar",
                                     ),
                                     dmc.AccordionItem(
-                                        children="""Most of the items in the app are embedded with advice.
-            Just position your mouse over an item to get a tip on how to use it.""",
+                                        children="""Most of the items in the app are embedded with 
+                                        advice. Just position your mouse over an item to get a tip 
+                                        on how to use it.""",
                                         label="Tooltips",
                                     ),
                                 ],
                                 iconPosition="right",
                                 multiple=True,
                                 id="acc",
-                                # state={"1": True},
                             ),
                         ],
                     ),
-                    dls.Tunnel(
+                    # Spinner when switching pages
+                    dbc.Spinner(
                         id="main-spinner",
+                        color="dark",
                         children=html.Div(id="empty-content"),
                         fullscreen=True,
                         fullscreen_style={"margin-left": "6rem", "padding-right": "7rem",},
-                        debounce=200,
-                        width=100,
+                        spinner_style={"width": "6rem", "height": "6rem"},
+                        delay_hide=100,
                     ),
                 ],
             ),
@@ -174,22 +194,35 @@ def return_main_content():
     return main_content
 
 
-def return_validation_layout(main_content):
+def return_validation_layout(main_content, initial_slice=1):
+    """This function compute the layout of the app, including the main container, the sidebar and 
+    the different pages.
+
+    Args:
+        main_content (html.Div): A div containing the elements of the app that are shared across 
+            pages.
+        initial_slice (int): Index of the slice to be displayed at launch.
+
+    Returns:
+        html.Div: A div containing the layout of the app.
+    """
     return html.Div(
         [
             main_content,
             home.layout,
-            # Layout is computed assuming slice 1 is selected
-            load_slice.return_layout(basic_config, 1),
-            lipid_selection.return_layout(basic_config, 1),
-            region_analysis.return_layout(basic_config, 1),
-            threeD_exploration.return_layout(basic_config, 1),
-            atlas_exploration.return_layout(basic_config, 1),
+            load_slice.return_layout(basic_config, initial_slice),
+            lipid_selection.return_layout(basic_config, initial_slice),
+            region_analysis.return_layout(basic_config, initial_slice),
+            threeD_exploration.return_layout(basic_config, initial_slice),
+            atlas_exploration.return_layout(basic_config, initial_slice),
         ]
     )
 
 
-###### APP CALLBACK FOR URL ######
+# ==================================================================================================
+# --- App callbacks
+# ==================================================================================================
+# ! Write docstring of callbacks when things are stabler
 
 
 @app.callback(

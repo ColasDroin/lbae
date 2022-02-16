@@ -1,6 +1,6 @@
 ###### IMPORT MODULES ######
 
-# Standard imports
+# Standard modules
 import numpy as np
 
 # ! Investigate the usefulness of both these classes
@@ -28,7 +28,11 @@ class Labels:
         # an array slice have been provided
         else:
             return np.reshape(
-                [self.bg_atlas.structures[i]["name"] if i != 0 else "undefined" for i in x.flatten()], x.shape
+                [
+                    self.bg_atlas.structures[i]["name"] if i != 0 else "undefined"
+                    for i in x.flatten()
+                ],
+                x.shape,
             )
 
 
@@ -39,7 +43,9 @@ class LabelContours:
 
     def __init__(self, bg_atlas):
         self.bg_atlas = bg_atlas
-        self.unique_id = {ni: indi for indi, ni in enumerate(set(self.bg_atlas.annotation.flatten()))}
+        self.unique_id = {
+            ni: indi for indi, ni in enumerate(set(self.bg_atlas.annotation.flatten()))
+        }
 
     def __getitem__(self, key):
         x = self.bg_atlas.annotation[key]
