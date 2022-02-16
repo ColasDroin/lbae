@@ -8,7 +8,6 @@ import uuid
 import dash_loading_spinners as dls
 import logging
 import dash_mantine_components as dmc
-from flask import request
 
 # Homemade modules
 from lbae.app import app, data
@@ -94,7 +93,9 @@ def return_main_content():
                                                 max=data.get_slice_number(),
                                                 marks=[
                                                     {"value": i, "label": str(i)}
-                                                    for i in range(1, data.get_slice_number() + 1, 2)
+                                                    for i in range(
+                                                        1, data.get_slice_number() + 1, 2
+                                                    )
                                                 ],
                                                 style={"width": "60vw"},
                                                 class_name="pb-3",
@@ -173,24 +174,19 @@ def return_main_content():
     return main_content
 
 
-main_content = return_main_content()
-
-# Initialize app with main content
-app.layout = main_content
-
-# Give complete layout for callback validation
-app.validation_layout = html.Div(
-    [
-        main_content,
-        home.layout,
-        # Layout is computed assuming slice 1 is selected
-        load_slice.return_layout(basic_config, 1),
-        lipid_selection.return_layout(basic_config, 1),
-        region_analysis.return_layout(basic_config, 1),
-        threeD_exploration.return_layout(basic_config, 1),
-        atlas_exploration.return_layout(basic_config, 1),
-    ]
-)
+def return_validation_layout(main_content):
+    return html.Div(
+        [
+            main_content,
+            home.layout,
+            # Layout is computed assuming slice 1 is selected
+            load_slice.return_layout(basic_config, 1),
+            lipid_selection.return_layout(basic_config, 1),
+            region_analysis.return_layout(basic_config, 1),
+            threeD_exploration.return_layout(basic_config, 1),
+            atlas_exploration.return_layout(basic_config, 1),
+        ]
+    )
 
 
 ###### APP CALLBACK FOR URL ######
@@ -237,12 +233,16 @@ def render_page_content(pathname, slice_index):
     return page, ""
 
 
-@app.callback(Output("drawer", "opened"), Input("button-doc", "n_clicks"), prevent_initial_call=True)
+@app.callback(
+    Output("drawer", "opened"), Input("button-doc", "n_clicks"), prevent_initial_call=True
+)
 def drawer(n_clicks):
     return True
 
 
-@app.callback(Output("main-slider-center", "class_name"), Input("url", "pathname"), prevent_initial_call=False)
+@app.callback(
+    Output("main-slider-center", "class_name"), Input("url", "pathname"), prevent_initial_call=False
+)
 def hide_slider(pathname):
     l_path_with_slider = ["/load-slice", "/lipid-selection", "/region-analysis"]
     # Set the content according to the current pathname
@@ -251,8 +251,3 @@ def hide_slider(pathname):
 
     else:
         return "d-none"
-
-
-def run():
-    app.run_server(port=8073, debug=False)
-
