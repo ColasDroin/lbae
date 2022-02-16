@@ -3,7 +3,7 @@
 import dash_bootstrap_components as dbc
 from dash.dependencies import Input, Output, State
 from dash import dcc, html
-from lbae import app
+import app
 
 ###### DEFFINE PAGE LAYOUT ######
 
@@ -21,7 +21,10 @@ layout = html.Div(
                             children=[
                                 dbc.CardBody(
                                     children=[
-                                        html.H1("Welcome to the Lipid Brain Atlas Explorer", className="card-title"),
+                                        html.H1(
+                                            "Welcome to the Lipid Brain Atlas Explorer",
+                                            className="card-title",
+                                        ),
                                         html.H1(
                                             className="icon-brain display-1 d-flex justify-content-center my-5 rainbow_text_animated",
                                             style={"font-size": "12rem"},

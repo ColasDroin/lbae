@@ -63,7 +63,7 @@ def return_pickled_object(
         The result of compute_function. Type may vary depending on compute_function.
     """
     # Create folder containing the object if it doesn't already exist
-    path_folder = "lbae/data/" + data_folder + "/"
+    path_folder = "data/" + data_folder + "/"
     os.makedirs(path_folder, exist_ok=True)
 
     # Complete filename with function arguments
@@ -222,13 +222,13 @@ def delete_all_files_in_folder(input_folder):
 
 
 # ! To update when code is more stable
-def delete_all_pickle_files(path_data_folder="lbae/data/"):
+def delete_all_pickle_files(path_data_folder="data/"):
     """This function deletes all the files saved as part of the app normal functioning, to allow for
     a clean reset. Note that it actually deletes more than just pickle files.
 
     Args:
         path_data_folder (str, optional): Path of the data folder, in which temporary files will be 
-        cleaned. Defaults to "lbae/data/".
+        cleaned. Defaults to "data/".
     """
     # Delete all pickled atlas files
     path_atlas_object = "atlas/atlas_objects/"

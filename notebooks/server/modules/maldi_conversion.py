@@ -7,8 +7,8 @@ import os
 import pandas as pd
 
 # Homemade packages
-from lbae.modules.tools.mspec import SmzMLobj
-from lbae.modules.tools.spectra import reduce_resolution_sorted_array_spectra
+from modules.tools.mspec import SmzMLobj
+from modules.tools.spectra import reduce_resolution_sorted_array_spectra
 
 ###### DEFINE UTILITY FUNCTIONS ######
 def load_file(path, resolution=1e-5):
@@ -193,7 +193,10 @@ def filter_peaks(array_spectra, array_peaks, verbose=False):
 
     # Check that the pixel recorded are identical to the expected number of pixels recorded
     if verbose:
-        print("Difference between number of recorded pixels", np.sum(np.array(l_n_pix) - array_peaks[:, 2]))
+        print(
+            "Difference between number of recorded pixels",
+            np.sum(np.array(l_n_pix) - array_peaks[:, 2]),
+        )
         print(np.array(l_n_pix)[-10:])
         print(array_peaks[-10:, 2])
 
@@ -340,13 +343,17 @@ def process_raw_data(
 
     # Process more high-resolution data
     print("Double sorting high-res array")
-    array_high_res = array_high_res[np.lexsort((array_high_res[:, 1], array_high_res[:, 0]), axis=0)]
+    array_high_res = array_high_res[
+        np.lexsort((array_high_res[:, 1], array_high_res[:, 0]), axis=0)
+    ]
 
     # Get arrays spectra and corresponding array_pixel_index tables for the high resolution
     print("Getting corresponding spectra arrays")
     array_pixel_high_res = array_high_res[:, 0].T.astype(np.int32)
     array_spectra_high_res = array_high_res[:, 1:].T.astype(np.float32)
-    array_pixel_indexes_high_res = return_array_pixel_indexes(array_pixel_high_res, image_shape[0] * image_shape[1])
+    array_pixel_indexes_high_res = return_array_pixel_indexes(
+        array_pixel_high_res, image_shape[0] * image_shape[1]
+    )
 
     # Save all array as a npz file as a temporary backup
     if save:

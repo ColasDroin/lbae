@@ -19,16 +19,16 @@ import io
 from imageio import imread
 
 # Homemade functions
-from lbae.modules.tools.atlas import (
+from modules.tools.atlas import (
     project_atlas_mask,
     get_array_rows_from_atlas_mask,
     fill_array_projection,
     solve_plane_equation,
 )
-from lbae.modules.tools.spectra import compute_spectrum_per_row_selection
-from lbae.modules.atlas_labels import Labels, LabelContours
-from lbae.modules.tools.misc import return_pickled_object, convert_image_to_base64
-from lbae.modules.tools.misc import logmem
+from modules.tools.spectra import compute_spectrum_per_row_selection
+from modules.atlas_labels import Labels, LabelContours
+from modules.tools.misc import return_pickled_object, convert_image_to_base64
+from modules.tools.misc import logmem
 
 #! Overall, see if I can memmap all the objects in this class
 
@@ -49,10 +49,12 @@ class Atlas:
         self.data = maldi_data
 
         # Load or download the atlas if it's the first time
-        brainglobe_dir = "lbae/data/atlas/brain_globe/"
+        brainglobe_dir = "data/atlas/brain_globe/"
         os.makedirs(brainglobe_dir, exist_ok=True)
         self.bg_atlas = BrainGlobeAtlas(
-            "allen_mouse_" + str(resolution) + "um", brainglobe_dir=brainglobe_dir, check_latest=False
+            "allen_mouse_" + str(resolution) + "um",
+            brainglobe_dir=brainglobe_dir,
+            check_latest=False,
         )
 
         # When computing an array of figures with a slider to explore the atlas, subsample in the longitudinal
@@ -75,15 +77,23 @@ class Atlas:
 
         # Load array of coordinates for warped data (can't be pickled as used with hovering)
         self.array_coordinates_warped_data = np.array(
-            skimage.io.imread("lbae/data/tiff_files/coordinates_warped_data.tif"), dtype=np.float32
+            skimage.io.imread("data/tiff_files/coordinates_warped_data.tif"), dtype=np.float32
         )
 
         # Record shape of the warped data
         self.image_shape = list(self.array_coordinates_warped_data.shape[1:-1])
 
         # Record dict that associate brain region (complete string) to specific id (short label), along with graph of structures
-        self.l_nodes, self.l_parents, self.dic_name_acronym, self.dic_acronym_name = return_pickled_object(
-            "atlas/atlas_objects", "hierarchy", force_update=False, compute_function=self.compute_hierarchy_list
+        (
+            self.l_nodes,
+            self.l_parents,
+            self.dic_name_acronym,
+            self.dic_acronym_name,
+        ) = return_pickled_object(
+            "atlas/atlas_objects",
+            "hierarchy",
+            force_update=False,
+            compute_function=self.compute_hierarchy_list,
         )
 
         # Array_projection_corrected is used a lot
@@ -98,10 +108,12 @@ class Atlas:
 
         # Dictionnary of existing masks per slice, which associates slice index (key) to a set of masks acronyms
         try:
-            with open("lbae/data/atlas/atlas_objects/dic_existing_masks" + ".pickle", "rb") as file:
+            with open("data/atlas/atlas_objects/dic_existing_masks" + ".pickle", "rb") as file:
                 self.dic_existing_masks = pickle.load(file)
         except:
-            logging.info("The dictionnary of available mask per slice has not been computed yet, doing it now.")
+            logging.info(
+                "The dictionnary of available mask per slice has not been computed yet, doing it now."
+            )
             self.save_all_projected_masks_and_spectra()
 
     # Load arrays of images using atlas projection
@@ -176,7 +188,9 @@ class Atlas:
         dic_acronym_children_id = {}
         for id in set(self.bg_atlas.annotation.flatten()):
             if id != 0:
-                dic_acronym_children_id = fill_dic_acronym_children_id(dic_acronym_children_id, [id])
+                dic_acronym_children_id = fill_dic_acronym_children_id(
+                    dic_acronym_children_id, [id]
+                )
         return dic_acronym_children_id
 
     def compute_hierarchy_list(self):
@@ -224,13 +238,27 @@ class Atlas:
             a, u, v = l_transform_parameters[i]
 
             # load corresponding slice and coor
-            path = "lbae/data/tiff_files/coordinates_original_data/"
-            filename = path + [x for x in os.listdir(path) if str(i + 1) == x.split("slice_")[1].split(".tiff")[0]][0]
+            path = "data/tiff_files/coordinates_original_data/"
+            filename = (
+                path
+                + [
+                    x
+                    for x in os.listdir(path)
+                    if str(i + 1) == x.split("slice_")[1].split(".tiff")[0]
+                ][0]
+            )
             original_coor = np.array(skimage.io.imread(filename), dtype=np.float32)
             l_original_coor.append(original_coor)
 
-            path = "lbae/data/tiff_files/original_data/"
-            filename = path + [x for x in os.listdir(path) if str(i + 1) == x.split("slice_")[1].split(".tiff")[0]][0]
+            path = "data/tiff_files/original_data/"
+            filename = (
+                path
+                + [
+                    x
+                    for x in os.listdir(path)
+                    if str(i + 1) == x.split("slice_")[1].split(".tiff")[0]
+                ][0]
+            )
             original_slice = np.array(skimage.io.imread(filename), dtype=np.int16)
 
             # map back the pixel from the atlas coordinates
@@ -256,7 +284,9 @@ class Atlas:
     def compute_projection_parameters(self):
         l_transform_parameters = []
         for slice_index in range(self.array_coordinates_warped_data.shape[0]):
-            a_atlas, u_atlas, v_atlas = solve_plane_equation(slice_index, self.array_coordinates_warped_data)
+            a_atlas, u_atlas, v_atlas = solve_plane_equation(
+                slice_index, self.array_coordinates_warped_data
+            )
             l_transform_parameters.append((a_atlas, u_atlas, v_atlas))
         return l_transform_parameters
 
@@ -305,7 +335,9 @@ class Atlas:
             array_images.shape, self.simplified_labels_int[0, 0, 0], dtype=np.int32
         )
 
-        array_coor_rescaled = ((self.array_coordinates_warped_data * 1000 / self.resolution).round(0)).astype(np.int16)
+        array_coor_rescaled = (
+            (self.array_coordinates_warped_data * 1000 / self.resolution).round(0)
+        ).astype(np.int16)
         for x in range(array_images.shape[0]):
             for y in range(array_images.shape[1]):
                 for z in range(array_images.shape[2]):
@@ -315,7 +347,9 @@ class Atlas:
                         and array_coor_rescaled[x, y, z][1] < self.bg_atlas.reference.shape[1]
                         and array_coor_rescaled[x, y, z][2] < self.bg_atlas.reference.shape[2]
                     ):
-                        array_images[x, y, z] = self.bg_atlas.reference[tuple(array_coor_rescaled[x, y, z])]
+                        array_images[x, y, z] = self.bg_atlas.reference[
+                            tuple(array_coor_rescaled[x, y, z])
+                        ]
                         array_projected_simplified_id[x, y, z] = self.simplified_labels_int[
                             tuple(array_coor_rescaled[x, y, z])
                         ]
@@ -337,24 +371,34 @@ class Atlas:
 
         return mask_stack
 
-    def compute_spectrum_data(self, slice_index, projected_mask=None, mask_name=None, slice_coor_rescaled=None):
+    def compute_spectrum_data(
+        self, slice_index, projected_mask=None, mask_name=None, slice_coor_rescaled=None
+    ):
         if projected_mask is None and mask_name is None:
             print("Either a mask or a mask name must be provided")
             return None
         elif mask_name is not None:
             if slice_coor_rescaled is None:
                 slice_coor_rescaled = np.asarray(
-                    (self.array_coordinates_warped_data[slice_index, :, :] * 1000 / self.resolution).round(0),
+                    (
+                        self.array_coordinates_warped_data[slice_index, :, :]
+                        * 1000
+                        / self.resolution
+                    ).round(0),
                     dtype=np.int16,
                 )
             stack_mask = self.get_atlas_mask(self.dic_name_acronym[mask_name])
-            projected_mask = project_atlas_mask(stack_mask, slice_coor_rescaled, self.bg_atlas.reference.shape)
+            projected_mask = project_atlas_mask(
+                stack_mask, slice_coor_rescaled, self.bg_atlas.reference.shape
+            )
 
         # get the list of rows containing the pixels to average
         original_shape = self.data.get_image_shape(slice_index + 1)
         mask_remapped = np.zeros(original_shape, dtype=np.uint8)
         list_index_bound_rows, list_index_bound_column_per_row = get_array_rows_from_atlas_mask(
-            projected_mask, mask_remapped, self.array_projection_correspondence_corrected[slice_index],
+            projected_mask,
+            mask_remapped,
+            self.array_projection_correspondence_corrected[slice_index],
         )
         if np.sum(list_index_bound_rows) == 0:
             print("No selection could be found for current mask")
@@ -379,7 +423,9 @@ class Atlas:
         for slice_index in range(self.data.get_slice_number()):
             logging.info("Starting slice " + str(slice_index))
             slice_coor_rescaled = np.asarray(
-                (self.array_coordinates_warped_data[slice_index, :, :] * 1000 / self.resolution).round(0),
+                (
+                    self.array_coordinates_warped_data[slice_index, :, :] * 1000 / self.resolution
+                ).round(0),
                 dtype=np.int16,
             )
 
@@ -389,9 +435,16 @@ class Atlas:
             for mask_name, id_mask in self.dic_name_acronym.items():
                 # get the array corresponding to the projected mask
                 stack_mask = self.get_atlas_mask(id_mask)
-                projected_mask = project_atlas_mask(stack_mask, slice_coor_rescaled, self.bg_atlas.reference.shape)
+                projected_mask = project_atlas_mask(
+                    stack_mask, slice_coor_rescaled, self.bg_atlas.reference.shape
+                )
                 if np.sum(projected_mask) == 0:
-                    logging.info("The structure " + mask_name + " is not present in slice " + str(slice_index))
+                    logging.info(
+                        "The structure "
+                        + mask_name
+                        + " is not present in slice "
+                        + str(slice_index)
+                    )
                     continue
                 else:
                     dic_existing_masks[slice_index].add(id_mask)
@@ -401,7 +454,7 @@ class Atlas:
 
                 # Dump the mask and data with pickle
                 with open(
-                    "lbae/data/atlas/atlas_objects/mask_and_spectrum_"
+                    "data/atlas/atlas_objects/mask_and_spectrum_"
                     + str(slice_index)
                     + "_"
                     + str(id_mask).replace("/", "")
@@ -411,7 +464,7 @@ class Atlas:
                     pickle.dump((projected_mask, grah_scattergl_data), file)
 
         # Dump the dictionnary of existing masks with pickle
-        with open("lbae/data/atlas/atlas_objects/dic_existing_masks" + ".pickle", "wb") as file:
+        with open("data/atlas/atlas_objects/dic_existing_masks" + ".pickle", "wb") as file:
             pickle.dump(dic_existing_masks, file)
 
         logging.info("Projected masks and spectra have all been computed.")
@@ -420,13 +473,15 @@ class Atlas:
     def get_projected_mask_and_spectrum(self, slice_index, mask_name):
         id_mask = self.dic_name_acronym[mask_name]
         path = (
-            "lbae/data/atlas/atlas_objects/mask_and_spectrum_"
+            "data/atlas/atlas_objects/mask_and_spectrum_"
             + str(slice_index)
             + "_"
             + str(id_mask).replace("/", "")
             + ".pickle"
         )
-        logging.info("Loading " + mask_name + " for slice " + str(slice_index) + " from pickle file.")
+        logging.info(
+            "Loading " + mask_name + " for slice " + str(slice_index) + " from pickle file."
+        )
         try:
             with open(path, "rb") as file:
                 return pickle.load(file)

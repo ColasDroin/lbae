@@ -5,11 +5,13 @@ import numpy as np
 from numba import njit
 
 # Homemade package
-from lbae.modules.tools.spectra import convert_spectrum_idx_to_coor, add_zeros_to_spectrum
+from modules.tools.spectra import convert_spectrum_idx_to_coor, add_zeros_to_spectrum
 
 ###### DEFINE UTILITY FUNCTIONS ######
 @njit
-def build_index_lookup_table(array_spectra, array_pixel_indexes, divider_lookup, size_spectrum=2000):
+def build_index_lookup_table(
+    array_spectra, array_pixel_indexes, divider_lookup, size_spectrum=2000
+):
     """This function builds a lookup table to map mz values to indexes in array_spectra. In practice, for each pixel,
     the lookup table gives the first index of mz such that mz>=lookup*divider_lookup. If no such mz exists, the lookup 
     table gives last possible mz index (i.e. biggest possible mz for the current pixel, but under the lookup). If 
@@ -30,7 +32,9 @@ def build_index_lookup_table(array_spectra, array_pixel_indexes, divider_lookup,
             array_spectra for each pixel.
     """
     # Define the empty array for the lookup table
-    lookup_table = np.zeros((size_spectrum // divider_lookup, array_pixel_indexes.shape[0]), dtype=np.int32)
+    lookup_table = np.zeros(
+        (size_spectrum // divider_lookup, array_pixel_indexes.shape[0]), dtype=np.int32
+    )
     lookup_table[0, :] = array_pixel_indexes[:, 0]
 
     # Loop over pixel indexes
@@ -89,7 +93,9 @@ def build_cumulated_image_lookup_table(
             the cumulated spectrum until the corresponding m/z value for each pixel.
     """
     # Define the empty array for the lookup table
-    image_lookup_table = np.zeros((size_spectrum // divider_lookup, img_shape[0], img_shape[1]), dtype=np.float32)
+    image_lookup_table = np.zeros(
+        (size_spectrum // divider_lookup, img_shape[0], img_shape[1]), dtype=np.float32
+    )
     image_lookup_table[0, :] = np.zeros((img_shape[0], img_shape[1]), dtype=np.float32)
     for idx_pix in range(array_pixel_indexes.shape[0]):
         j = array_pixel_indexes[idx_pix, 0]
@@ -278,7 +284,8 @@ def process_lookup_tables(
         array_spectra_high_res, array_pixel_indexes_high_res, divider_lookup
     )
     print(
-        "Size (in mb) of lookup_table_spectra_high_res: ", round(lookup_table_spectra_high_res.nbytes / 1024 / 1024, 2)
+        "Size (in mb) of lookup_table_spectra_high_res: ",
+        round(lookup_table_spectra_high_res.nbytes / 1024 / 1024, 2),
     )
     print("Shape of lookup_table_spectra_high_res: ", lookup_table_spectra_high_res.shape)
 
@@ -290,7 +297,10 @@ def process_lookup_tables(
         "Size (in mb) of cumulated_image_lookup_table_high_res: ",
         round(cumulated_image_lookup_table_high_res.nbytes / 1024 / 1024, 2),
     )
-    print("Shape of cumulated_image_lookup_table_high_res: ", cumulated_image_lookup_table_high_res.shape)
+    print(
+        "Shape of cumulated_image_lookup_table_high_res: ",
+        cumulated_image_lookup_table_high_res.shape,
+    )
 
     # Extend averaged arrays with zeros for nicer display
     array_averaged_mz_intensity_low_res, _ = add_zeros_to_spectrum(
@@ -308,7 +318,10 @@ def process_lookup_tables(
         "Size (in mb) of lookup_table_averaged_spectrum_high_res: ",
         round(lookup_table_averaged_spectrum_high_res.nbytes / 1024 / 1024, 2),
     )
-    print("Shape of lookup_table_averaged_spectrum_high_res: ", lookup_table_averaged_spectrum_high_res.shape)
+    print(
+        "Shape of lookup_table_averaged_spectrum_high_res: ",
+        lookup_table_averaged_spectrum_high_res.shape,
+    )
 
     if save:
         # Save as npz file

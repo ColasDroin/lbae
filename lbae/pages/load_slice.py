@@ -11,9 +11,9 @@ import logging
 import dash_mantine_components as dmc
 
 # Homemade modules
-from lbae import app
-from lbae.app import figures, data
-from lbae.modules.tools.misc import return_pickled_object
+import app
+from app import figures, data
+from modules.tools.misc import return_pickled_object
 
 ###### DEFFINE PAGE LAYOUT ######
 # ! It seems that some things (useless?) are loaded at startup and take time
@@ -284,7 +284,9 @@ def page_1_hover(hoverData, slice_index):
             y = hoverData["points"][0]["y"]
 
             slice_coor_rescaled = np.asarray(
-                (app.atlas.array_coordinates_warped_data[x, y, z] * 1000 / app.atlas.resolution).round(0),
+                (
+                    app.atlas.array_coordinates_warped_data[x, y, z] * 1000 / app.atlas.resolution
+                ).round(0),
                 dtype=np.int16,
             )
             try:
@@ -297,7 +299,9 @@ def page_1_hover(hoverData, slice_index):
 
 
 @app.app.callback(
-    Output("page-1-modal", "is_open"), Input("page-1-modal-button", "n_clicks"), State("page-1-modal", "is_open"),
+    Output("page-1-modal", "is_open"),
+    Input("page-1-modal-button", "n_clicks"),
+    State("page-1-modal", "is_open"),
 )
 def toggle_modal(n1, is_open):
     if n1:
@@ -314,7 +318,10 @@ def toggle_modal(n1, is_open):
 def page_1_plot_graph_modal(n1):
     if n1:
         return return_pickled_object(
-            "figures/3D_page", "slices_3D", force_update=False, compute_function=figures.compute_figure_slices_3D
+            "figures/3D_page",
+            "slices_3D",
+            force_update=False,
+            compute_function=figures.compute_figure_slices_3D,
         )
     return dash.no_update
 

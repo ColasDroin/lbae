@@ -4,7 +4,7 @@
 import pickle
 import numpy as np
 import pandas as pd
-from lbae.modules.tools.misc import logmem
+from modules.tools.misc import logmem
 import logging
 
 ###### DEFINE MaldiData CLASS ######
@@ -69,7 +69,7 @@ class MaldiData:
 
     __slots__ = ["_dic_lightweight", "_dic_memmap", "_n_slices", "_df_annotations", "_path_data"]
 
-    def __init__(self, path_data="lbae/data/whole_dataset/", path_annotations="lbae/data/annotations/"):
+    def __init__(self, path_data="data/whole_dataset/", path_annotations="data/annotations/"):
 
         logging.info("Initializing MaldiData object" + logmem())
 

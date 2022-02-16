@@ -13,16 +13,16 @@ import pandas as pd
 import dash_bio as dashbio
 
 # Homemade functions
-from lbae.modules.tools import spectra
-from lbae.modules.tools.misc import (
+from modules.tools import spectra
+from modules.tools.misc import (
     return_pickled_object,
     convert_image_to_base64,
 )
-from lbae.modules.tools.atlas import project_image, slice_to_atlas_transform
-from lbae.modules.tools.misc import logmem
-from lbae.modules.tools.volume import filter_voxels, fill_array_borders, fill_array_interpolation
-from lbae.config import dic_colors, l_colors, l_colors_progress
-from lbae.modules.tools.spectra import compute_avg_intensity_per_lipid, global_lipid_index_store
+from modules.tools.atlas import project_image, slice_to_atlas_transform
+from modules.tools.misc import logmem
+from modules.tools.volume import filter_voxels, fill_array_borders, fill_array_interpolation
+from config import dic_colors, l_colors, l_colors_progress
+from modules.tools.spectra import compute_avg_intensity_per_lipid, global_lipid_index_store
 
 ###### DEFINE FIGURES CLASS ######
 class Figures:
@@ -47,7 +47,7 @@ class Figures:
     def compute_padded_original_images(self):
 
         # Compute number of slices from the original acquisition are present in the folder
-        path = "lbae/data/tiff_files/original_data/"
+        path = "data/tiff_files/original_data/"
         n_slices = len([x for x in os.listdir(path) if "slice_" in x])
         if n_slices != self._data.get_slice_number():
             logging.warning(
@@ -135,7 +135,11 @@ class Figures:
                 go.Image(
                     visible=True,
                     source=convert_image_to_base64(
-                        array_image_atlas, optimize=True, binary=True, type="RGBA", decrease_resolution_factor=8
+                        array_image_atlas,
+                        optimize=True,
+                        binary=True,
+                        type="RGBA",
+                        decrease_resolution_factor=8,
                     ),
                     hoverinfo="none",
                 )
@@ -155,7 +159,9 @@ class Figures:
         if draw:
             fig.update_layout(
                 dragmode="drawclosedpath",
-                newshape=dict(fillcolor=l_colors[0], opacity=0.7, line=dict(color="white", width=1)),
+                newshape=dict(
+                    fillcolor=l_colors[0], opacity=0.7, line=dict(color="white", width=1)
+                ),
                 autosize=True,
             )
 
@@ -183,7 +189,7 @@ class Figures:
         if type_figure == "original_data":
             array_images = self.compute_padded_original_images()
         elif type_figure == "warped_data":
-            array_images = np.array(io.imread("lbae/data/tiff_files/warped_data.tif"))
+            array_images = np.array(io.imread("data/tiff_files/warped_data.tif"))
         elif type_figure == "projection_corrected":
             array_images = self._atlas.array_projection_corrected
         elif type_figure == "atlas":
@@ -197,7 +203,9 @@ class Figures:
         return array_images
 
     # ? Drop this function as well? But this one works and may be kept in the future
-    def compute_figure_basic_images_with_slider(self, type_figure="warped_data", plot_atlas_contours=False):
+    def compute_figure_basic_images_with_slider(
+        self, type_figure="warped_data", plot_atlas_contours=False
+    ):
         # Get array of images
         array_images = return_pickled_object(
             "figures/load_page",
@@ -290,7 +298,8 @@ class Figures:
                 "x": 0.1,
                 "y": 0,
                 "steps": [
-                    {"args": [[f.name], frame_args(0)], "label": f.name, "method": "animate",} for f in fig.frames
+                    {"args": [[f.name], frame_args(0)], "label": f.name, "method": "animate",}
+                    for f in fig.frames
                 ],
             }
         ]
@@ -301,7 +310,14 @@ class Figures:
     ###### FUNCTIONS FOR FIGURE IN LIPID_SELECTION PAGE ######
 
     def compute_image_per_lipid(
-        self, slice_index, lb_mz, hb_mz, RGB_format=True, normalize=True, log=False, projected_image=True
+        self,
+        slice_index,
+        lb_mz,
+        hb_mz,
+        RGB_format=True,
+        normalize=True,
+        log=False,
+        projected_image=True,
     ):
         # Get image from raw mass spec data
         image = spectra.compute_image_using_index_and_image_lookup(
@@ -334,7 +350,9 @@ class Figures:
 
         # project image into cleaned and higher resolution version
         if projected_image:
-            image = project_image(slice_index, image, self._atlas.array_projection_correspondence_corrected)
+            image = project_image(
+                slice_index, image, self._atlas.array_projection_correspondence_corrected
+            )
         return image
 
     # ! Check in the end if this function is redundant with return_heatmap_per_lipid_selection
@@ -350,7 +368,9 @@ class Figures:
         heatmap=False,
     ):
         if binary_string:
-            logging.info("binary_string is set to True, therefore the plot will be made as a heatmap")
+            logging.info(
+                "binary_string is set to True, therefore the plot will be made as a heatmap"
+            )
             heatmap = True
 
         # Upper bound lower than the lowest m/z value and higher that the highest m/z value
@@ -370,7 +390,9 @@ class Figures:
         # Build graph from image
         # ! Do I want to keep the heatmap option? I think not as it's slower
         if heatmap:
-            fig = px.imshow(image, binary_string=binary_string, color_continuous_scale="deep_r")  # , aspect = 'auto')
+            fig = px.imshow(
+                image, binary_string=binary_string, color_continuous_scale="deep_r"
+            )  # , aspect = 'auto')
             if plot_contours:
                 logging.warning("Contour plot is not compatible with heatmap plot for now.")
                 # Compute it anyway but won't work
@@ -393,7 +415,9 @@ class Figures:
         # Improve graph layout
         fig.update_layout(
             margin=dict(t=0, r=0, b=0, l=0),
-            newshape=dict(fillcolor=dic_colors["blue"], opacity=0.7, line=dict(color="white", width=1)),
+            newshape=dict(
+                fillcolor=dic_colors["blue"], opacity=0.7, line=dict(color="white", width=1)
+            ),
             # Do not specify height for now as plotly is buggued and resets it to 450px if switching tabs
             # height=500,
         )
@@ -468,7 +492,11 @@ class Figures:
         # Build a list of empty images and add selected lipids for each channel
         l_images = []
         for l_boundaries in ll_t_bounds:
-            image = np.zeros(self._atlas.image_shape if projected_image else self._data.get_image_shape(slice_index))
+            image = np.zeros(
+                self._atlas.image_shape
+                if projected_image
+                else self._data.get_image_shape(slice_index)
+            )
             if l_boundaries is not None:
                 for boundaries in l_boundaries:
                     if boundaries is not None:
@@ -587,7 +615,9 @@ class Figures:
                     )
         return fig
 
-    def compute_spectrum_high_res(self, slice_index, lb=None, hb=None, annotations=None, force_xlim=False, plot=True):
+    def compute_spectrum_high_res(
+        self, slice_index, lb=None, hb=None, annotations=None, force_xlim=False, plot=True
+    ):
 
         # Define default values for graph (empty)
         if lb is None and hb is None:
@@ -636,7 +666,9 @@ class Figures:
             for color, x in zip(["red", "green", "blue"], annotations):
                 if x is not None:
                     if x[0] >= lb and x[-1] <= hb:
-                        fig.add_vrect(x0=x[0], x1=x[1], line_width=0, fillcolor=dic_colors[color], opacity=0.4)
+                        fig.add_vrect(
+                            x0=x[0], x1=x[1], line_width=0, fillcolor=dic_colors[color], opacity=0.4
+                        )
 
         # In case we don't want to zoom in too much on the selected lipid
         if force_xlim:
@@ -689,7 +721,11 @@ class Figures:
         d2 = self._atlas.array_coordinates_warped_data.shape[2]
         for original_length, new_length in zip(
             self._atlas.array_projection_corrected.shape,
-            (n_slices, int(round(d1 / reduce_resolution_factor)), int(round(d2 / reduce_resolution_factor))),
+            (
+                n_slices,
+                int(round(d1 / reduce_resolution_factor)),
+                int(round(d2 / reduce_resolution_factor)),
+            ),
         ):
             new_dims.append(np.linspace(0, original_length - 1, new_length))
 
@@ -699,20 +735,29 @@ class Figures:
         fig = go.Figure(
             frames=[
                 go.Frame(
-                    data=self.get_surface(i, l_transform_parameters, array_projection_small, reduce_resolution_factor),
+                    data=self.get_surface(
+                        i, l_transform_parameters, array_projection_small, reduce_resolution_factor
+                    ),
                     name=str(i + 1),
                 )
                 if i != 12 and i != 8
                 else go.Frame(
                     data=self.get_surface(
-                        i - 1, l_transform_parameters, array_projection_small, reduce_resolution_factor
+                        i - 1,
+                        l_transform_parameters,
+                        array_projection_small,
+                        reduce_resolution_factor,
                     ),
                     name=str(i + 1),
                 )
                 for i in range(0, self._data.get_slice_number(), 1)
             ]
         )
-        fig.add_trace(self.get_surface(0, l_transform_parameters, array_projection_small, reduce_resolution_factor))
+        fig.add_trace(
+            self.get_surface(
+                0, l_transform_parameters, array_projection_small, reduce_resolution_factor
+            )
+        )
 
         def frame_args(duration):
             return {
@@ -775,14 +820,18 @@ class Figures:
         # No display of tick labels as they're wrong anyway
         fig.update_layout(
             scene=dict(
-                xaxis=dict(showticklabels=False), yaxis=dict(showticklabels=False), zaxis=dict(showticklabels=False),
+                xaxis=dict(showticklabels=False),
+                yaxis=dict(showticklabels=False),
+                zaxis=dict(showticklabels=False),
             )
         )
 
         return fig
 
     # ! I can probably numbaize that
-    def get_surface(self, slice_index, l_transform_parameters, array_projection, reduce_resolution_factor):
+    def get_surface(
+        self, slice_index, l_transform_parameters, array_projection, reduce_resolution_factor
+    ):
 
         a, u, v = l_transform_parameters[slice_index]
 
@@ -891,7 +940,14 @@ class Figures:
 
         # Improve graph layout
         fig.update_layout(
-            title={"text": "", "y": 0.97, "x": 0.5, "xanchor": "center", "yanchor": "top", "font": dict(size=14,),},
+            title={
+                "text": "",
+                "y": 0.97,
+                "x": 0.5,
+                "xanchor": "center",
+                "yanchor": "top",
+                "font": dict(size=14,),
+            },
             margin=dict(t=5, r=0, b=0, l=0),
             # updatemenus=[
             #    {
@@ -1058,12 +1114,16 @@ class Figures:
         return fig
 
     def compute_sunburst_figure(self, maxdepth=3):
-        fig = px.sunburst(names=self._atlas.l_nodes, parents=self._atlas.l_parents, maxdepth=maxdepth)
+        fig = px.sunburst(
+            names=self._atlas.l_nodes, parents=self._atlas.l_parents, maxdepth=maxdepth
+        )
         fig.update_layout(margin=dict(t=0, r=0, b=0, l=0),)
         return fig
 
     def compute_treemaps_figure(self, maxdepth=5):
-        fig = px.treemap(names=self._atlas.l_nodes, parents=self._atlas.l_parents, maxdepth=maxdepth)
+        fig = px.treemap(
+            names=self._atlas.l_nodes, parents=self._atlas.l_parents, maxdepth=maxdepth
+        )
         fig.update_layout(
             uniformtext=dict(minsize=15), margin=dict(t=30, r=0, b=10, l=0),
         )
@@ -1094,7 +1154,9 @@ class Figures:
         # Create figure
         fig = go.Figure()
 
-        subsampling = list(range(0, self._atlas.bg_atlas.reference.shape[idx_view], self._atlas.subsampling_block))
+        subsampling = list(
+            range(0, self._atlas.bg_atlas.reference.shape[idx_view], self._atlas.subsampling_block)
+        )
         # Add traces, one for each slider step
         for step in subsampling:
             if view == "frontal":
@@ -1214,7 +1276,10 @@ class Figures:
     def compute_3D_figure(self, structure=None):
 
         root_lines = return_pickled_object(
-            "figures/atlas_page/3D", "root", force_update=False, compute_function=self.compute_root_data
+            "figures/atlas_page/3D",
+            "root",
+            force_update=False,
+            compute_function=self.compute_root_data,
         )
 
         layout = go.Layout(
@@ -1293,17 +1358,25 @@ class Figures:
 
         # Subsample array of annotation the same way array_atlas was subsampled
         array_annotation_root = array_annotation_root[
-            ::decrease_dimensionality_factor, ::decrease_dimensionality_factor, ::decrease_dimensionality_factor
+            ::decrease_dimensionality_factor,
+            ::decrease_dimensionality_factor,
+            ::decrease_dimensionality_factor,
         ]
 
         # Bug correction for the last slice
         array_annotation_root = np.concatenate(
-            (array_annotation_root, np.zeros((1, array_annotation_root.shape[1], array_annotation_root.shape[2])))
+            (
+                array_annotation_root,
+                np.zeros((1, array_annotation_root.shape[1], array_annotation_root.shape[2])),
+            )
         )
 
         # Get the volume array
         array_atlas_borders_root = fill_array_borders(
-            array_annotation_root, differentiate_borders=False, color_near_borders=False, keep_structure_id=None
+            array_annotation_root,
+            differentiate_borders=False,
+            color_near_borders=False,
+            keep_structure_id=None,
         )
 
         # Compute the 3D grid
@@ -1360,7 +1433,9 @@ class Figures:
         # Get subsampled array of annotations
         array_annotation = np.array(
             self._atlas.bg_atlas.annotation[
-                ::decrease_dimensionality_factor, ::decrease_dimensionality_factor, ::decrease_dimensionality_factor
+                ::decrease_dimensionality_factor,
+                ::decrease_dimensionality_factor,
+                ::decrease_dimensionality_factor,
             ],
             dtype=np.int32,
         )
@@ -1398,7 +1473,9 @@ class Figures:
         array_z_scaled = array_z * 1000000 / self._atlas.resolution / decrease_dimensionality_factor
 
         @njit
-        def fill_array_slices(array_x_scaled, array_y_scaled, array_z_scaled, array_c, array_slices, array_for_avg):
+        def fill_array_slices(
+            array_x_scaled, array_y_scaled, array_z_scaled, array_c, array_slices, array_for_avg
+        ):
             for x, y, z, c in zip(array_x_scaled, array_y_scaled, array_z_scaled, array_c):
                 x_scaled = int(round(y))
                 y_scaled = int(round(z))
@@ -1417,7 +1494,12 @@ class Figures:
             return array_slices
 
         array_slices = fill_array_slices(
-            array_x_scaled, array_y_scaled, array_z_scaled, np.array(array_c), array_slices, array_for_avg
+            array_x_scaled,
+            array_y_scaled,
+            array_z_scaled,
+            np.array(array_c),
+            array_slices,
+            array_for_avg,
         )
         logging.info("Filled basic structure array with array of expression")
 
@@ -1509,7 +1591,9 @@ class Figures:
             if x_min is None:
                 print("Bug, no voxel value has been assigned")
             else:
-                array_annotation = array_annotation[x_min : x_max + 1, y_min : y_max + 1, z_min : z_max + 1]
+                array_annotation = array_annotation[
+                    x_min : x_max + 1, y_min : y_max + 1, z_min : z_max + 1
+                ]
                 array_slices = array_slices[x_min : x_max + 1, y_min : y_max + 1, z_min : z_max + 1]
                 X = X[x_min : x_max + 1, y_min : y_max + 1, z_min : z_max + 1]
                 Y = Y[x_min : x_max + 1, y_min : y_max + 1, z_min : z_max + 1]
@@ -1517,11 +1601,16 @@ class Figures:
 
             logging.info("Cropped the figure to only keep areas in which lipids are expressed")
         # Compute an array containing the lipid expression interpolated for every voxel
-        array_interpolated = fill_array_interpolation(array_annotation, array_slices, divider_radius=4)
+        array_interpolated = fill_array_interpolation(
+            array_annotation, array_slices, divider_radius=4
+        )
 
         # Get root figure
         root_data = return_pickled_object(
-            "figures/3D_page", "volume_root", force_update=False, compute_function=self.compute_3D_root_volume,
+            "figures/3D_page",
+            "volume_root",
+            force_update=False,
+            compute_function=self.compute_3D_root_volume,
         )
 
         logging.info("Building final figure")
@@ -1536,7 +1625,12 @@ class Figures:
                     isomin=0.01,
                     isomax=1.5,
                     # opacity=0.5,  # max opacity
-                    opacityscale=[[-0.11, 0.00], [0.01, 0.0], [0.5, 0.05], [2.5, 0.7]],  # "uniform",
+                    opacityscale=[
+                        [-0.11, 0.00],
+                        [0.01, 0.0],
+                        [0.5, 0.05],
+                        [2.5, 0.7],
+                    ],  # "uniform",
                     surface_count=10,
                     colorscale="viridis_r",  # "RdBu_r",
                     flatshading=True,
@@ -1559,7 +1653,9 @@ class Figures:
 
         return fig
 
-    def compute_clustergram_figure(self, set_progress, cache_flask, l_selected_regions, percentile=90):
+    def compute_clustergram_figure(
+        self, set_progress, cache_flask, l_selected_regions, percentile=90
+    ):
         logging.info("Starting computing clustergram figure")
 
         # Memoize result as it's called everytime a filtering is done
@@ -1581,7 +1677,9 @@ class Figures:
                 for region in l_selected_regions:
                     long_region = self._atlas.dic_acronym_name[region]
                     if region in self._atlas.dic_existing_masks[slice_index]:
-                        grah_scattergl_data = self._atlas.get_projected_mask_and_spectrum(slice_index, long_region)[1]
+                        grah_scattergl_data = self._atlas.get_projected_mask_and_spectrum(
+                            slice_index, long_region
+                        )[1]
                         l_spectra.append(grah_scattergl_data)
                     else:
                         l_spectra.append(None)
@@ -1610,7 +1708,9 @@ class Figures:
                     ll_avg_intensity.append(l_avg_intensity)
 
                 # dic_avg_lipids = {idx: [0] * n_sel for idx in set_lipids_idx}
-                for i, (l_lipids, l_avg_intensity) in enumerate(zip(ll_lipids_idx, ll_avg_intensity)):
+                for i, (l_lipids, l_avg_intensity) in enumerate(
+                    zip(ll_lipids_idx, ll_avg_intensity)
+                ):
                     if l_lipids is not None:
                         for lipid, intensity in zip(l_lipids, l_avg_intensity):
                             if lipid not in dic_avg_lipids:
@@ -1629,7 +1729,9 @@ class Figures:
                         dic_avg_lipids[lipid][i] = 0
 
             df_avg_intensity_lipids = pd.DataFrame.from_dict(
-                dic_avg_lipids, orient="index", columns=[l_selected_regions[i] for i in range(n_sel)]
+                dic_avg_lipids,
+                orient="index",
+                columns=[l_selected_regions[i] for i in range(n_sel)],
             )
             return df_avg_intensity_lipids
 
@@ -1644,13 +1746,17 @@ class Figures:
         ]
 
         if len(l_selected_regions) > 1:
-            df_avg_intensity_lipids = df_avg_intensity_lipids.iloc[(df_avg_intensity_lipids.mean(axis=1)).argsort(), :]
+            df_avg_intensity_lipids = df_avg_intensity_lipids.iloc[
+                (df_avg_intensity_lipids.mean(axis=1)).argsort(), :
+            ]
         else:
             df_avg_intensity_lipids.sort_values(by=l_selected_regions[0], inplace=True)
         logging.info("Lowly expressed lipids excluded")
 
         # Replace idx_lipids by actual name
-        df_names = self._data.get_annotations()  # [self._data.get_annotations()["slice"] == slice_index]
+        df_names = (
+            self._data.get_annotations()
+        )  # [self._data.get_annotations()["slice"] == slice_index]
         df_avg_intensity_lipids.index = df_avg_intensity_lipids.index.map(
             lambda idx: df_names.iloc[idx]["name"]
             + "_"
@@ -1684,7 +1790,9 @@ class Figures:
 
         # simulate a click on all lipid names
         for name in sorted(self._data.get_annotations().name.unique()):
-            structures = self._data.get_annotations()[self._data.get_annotations()["name"] == name].structure.unique()
+            structures = self._data.get_annotations()[
+                self._data.get_annotations()["name"] == name
+            ].structure.unique()
             for structure in sorted(structures):
                 cations = self._data.get_annotations()[
                     (self._data.get_annotations()["name"] == name)
@@ -1758,7 +1866,12 @@ class Figures:
 
                         return_pickled_object(
                             "figures/3D_page",
-                            "volume_interpolated_3D_" + name_lipid_1 + "_" + name_lipid_2 + "_" + name_lipid_3,
+                            "volume_interpolated_3D_"
+                            + name_lipid_1
+                            + "_"
+                            + name_lipid_2
+                            + "_"
+                            + name_lipid_3,
                             force_update=force_update,
                             compute_function=self.compute_3D_volume_figure,
                             ignore_arguments_naming=True,

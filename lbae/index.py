@@ -10,8 +10,8 @@ import logging
 import dash_mantine_components as dmc
 
 # Homemade modules
-from lbae.app import app, data
-from lbae.pages import (
+from app import app, data
+from pages import (
     sidebar,
     home,
     load_slice,
@@ -20,8 +20,8 @@ from lbae.pages import (
     region_analysis,
     threeD_exploration,
 )
-from lbae.config import basic_config
-from lbae.modules.tools.misc import logmem
+from config import basic_config
+from modules.tools.misc import logmem
 
 ###### DEFINE APP LAYOUT ######
 

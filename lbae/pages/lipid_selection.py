@@ -13,8 +13,8 @@ import numpy as np
 import dash_mantine_components as dmc
 
 # Homemade modules
-from lbae.app import figures, data
-from lbae import app
+from app import figures, data
+import app
 
 HEIGHT_PLOTS = 280
 N_LINES = int(np.ceil(HEIGHT_PLOTS / 30))
@@ -66,7 +66,13 @@ def return_layout(basic_config, slice_index):
                     {"i": "page-2-card-lipid-selection", "x": 0, "y": 19, "w": 6, "h": 11},
                     {"i": "page-2-card-range-selection", "x": 0, "y": 10, "w": 6, "h": 5},
                     {"i": "page-2-card-low-res", "x": 0, "y": 19 + 7 + 5, "w": 6, "h": N_LINES},
-                    {"i": "page-2-card-high-res", "x": 0, "y": 19 + 7 + 5 + N_LINES, "w": 6, "h": N_LINES},
+                    {
+                        "i": "page-2-card-high-res",
+                        "x": 0,
+                        "y": 19 + 7 + 5 + N_LINES,
+                        "w": 6,
+                        "h": N_LINES,
+                    },
                 ],
                 "xs": [
                     {"i": "page-2-card-heatmap", "x": 0, "y": 0, "w": 4, "h": 14},
@@ -74,7 +80,13 @@ def return_layout(basic_config, slice_index):
                     {"i": "page-2-card-lipid-selection", "x": 0, "y": 0, "w": 4, "h": 11},
                     {"i": "page-2-card-range-selection", "x": 0, "y": 4, "w": 4, "h": 5},
                     {"i": "page-2-card-low-res", "x": 0, "y": 14 + 7 + 5, "w": 4, "h": N_LINES},
-                    {"i": "page-2-card-high-res", "x": 0, "y": 14 + 7 + 5 + N_LINES, "w": 4, "h": N_LINES},
+                    {
+                        "i": "page-2-card-high-res",
+                        "x": 0,
+                        "y": 14 + 7 + 5 + N_LINES,
+                        "w": 4,
+                        "h": N_LINES,
+                    },
                 ],
                 "xxs": [
                     {"i": "page-2-card-heatmap", "x": 0, "y": 0, "w": 2, "h": 9},
@@ -82,7 +94,13 @@ def return_layout(basic_config, slice_index):
                     {"i": "page-2-card-lipid-selection", "x": 0, "y": 0, "w": 2, "h": 10},
                     {"i": "page-2-card-range-selection", "x": 0, "y": 4, "w": 2, "h": 5},
                     {"i": "page-2-card-low-res", "x": 0, "y": 9 + 7 + 5, "w": 2, "h": N_LINES},
-                    {"i": "page-2-card-high-res", "x": 0, "y": 9 + 7 + 5 + N_LINES, "w": 2, "h": N_LINES},
+                    {
+                        "i": "page-2-card-high-res",
+                        "x": 0,
+                        "y": 9 + 7 + 5 + N_LINES,
+                        "w": 2,
+                        "h": N_LINES,
+                    },
                 ],
             },
             children=[
@@ -144,7 +162,12 @@ def return_layout(basic_config, slice_index):
                     ],
                 ),
                 dbc.Card(
-                    style={"maxWidth": "100%", "margin": "0 auto", "width": "100%", "height": "100%"},
+                    style={
+                        "maxWidth": "100%",
+                        "margin": "0 auto",
+                        "width": "100%",
+                        "height": "100%",
+                    },
                     # className="mt-4",
                     id="page-2-card-low-res",
                     children=[
@@ -162,8 +185,13 @@ def return_layout(basic_config, slice_index):
                                                     children=[
                                                         dcc.Graph(
                                                             id="page-2-graph-low-resolution-spectrum",
-                                                            figure=figures.compute_spectrum_low_res(slice_index),
-                                                            style={"height": HEIGHT_PLOTS, "width": "100%"},
+                                                            figure=figures.compute_spectrum_low_res(
+                                                                slice_index
+                                                            ),
+                                                            style={
+                                                                "height": HEIGHT_PLOTS,
+                                                                "width": "100%",
+                                                            },
                                                             responsive=True,
                                                             config=basic_config
                                                             | {
@@ -185,7 +213,12 @@ def return_layout(basic_config, slice_index):
                     ],
                 ),
                 dbc.Card(
-                    style={"maxWidth": "100%", "margin": "0 auto", "width": "100%", "height": "100%"},
+                    style={
+                        "maxWidth": "100%",
+                        "margin": "0 auto",
+                        "width": "100%",
+                        "height": "100%",
+                    },
                     id="page-2-card-lipid-selection",
                     children=[
                         dbc.CardHeader(children="Lipid selection"),
@@ -201,7 +234,11 @@ def return_layout(basic_config, slice_index):
                                 html.Div(
                                     id="tab-2-div-dropdown-lipid-names",
                                     children=[
-                                        dcc.Dropdown(id="tab-2-dropdown-lipid-names", options=[], multi=False,),
+                                        dcc.Dropdown(
+                                            id="tab-2-dropdown-lipid-names",
+                                            options=[],
+                                            multi=False,
+                                        ),
                                     ],
                                 ),
                                 dbc.Tooltip(
@@ -323,7 +360,12 @@ def return_layout(basic_config, slice_index):
                     ],
                 ),
                 dbc.Card(
-                    style={"maxWidth": "100%", "margin": "0 auto", "width": "100%", "height": "100%"},
+                    style={
+                        "maxWidth": "100%",
+                        "margin": "0 auto",
+                        "width": "100%",
+                        "height": "100%",
+                    },
                     id="page-2-card-range-selection",
                     # className="mt-4",
                     children=[
@@ -344,13 +386,22 @@ def return_layout(basic_config, slice_index):
                                 dbc.InputGroup(
                                     [
                                         dbc.Input(
-                                            id="page-2-lower-bound", placeholder="Lower bound (m/z value)", value=600
+                                            id="page-2-lower-bound",
+                                            placeholder="Lower bound (m/z value)",
+                                            value=600,
                                         ),
                                         dbc.Input(
-                                            id="page-2-upper-bound", placeholder="Upper bound (m/z value)", value=605
+                                            id="page-2-upper-bound",
+                                            placeholder="Upper bound (m/z value)",
+                                            value=605,
                                         ),
                                         # dbc.InputGroupAddon(
-                                        dbc.Button("Display", id="page-2-button-bounds", n_clicks=0, color="primary",),
+                                        dbc.Button(
+                                            "Display",
+                                            id="page-2-button-bounds",
+                                            n_clicks=0,
+                                            color="primary",
+                                        ),
                                         #    addon_type="prepend",
                                         # ),
                                     ],
@@ -371,7 +422,12 @@ def return_layout(basic_config, slice_index):
                                         dbc.Input(id="page-2-mz-value", placeholder="m/z value"),
                                         dbc.Input(id="page-2-mz-range", placeholder="Range"),
                                         # dbc.InputGroupAddon(
-                                        dbc.Button("Display", id="page-2-button-range", n_clicks=0, color="primary",),
+                                        dbc.Button(
+                                            "Display",
+                                            id="page-2-button-range",
+                                            n_clicks=0,
+                                            color="primary",
+                                        ),
                                         #    addon_type="prepend",
                                         # ),
                                     ],
@@ -382,7 +438,12 @@ def return_layout(basic_config, slice_index):
                     ],
                 ),
                 dbc.Card(
-                    style={"maxWidth": "100%", "margin": "0 auto", "width": "100%", "height": "100%"},
+                    style={
+                        "maxWidth": "100%",
+                        "margin": "0 auto",
+                        "width": "100%",
+                        "height": "100%",
+                    },
                     # className="mt-4",
                     id="page-2-card-high-res",
                     children=[
@@ -494,7 +555,9 @@ def page_2_plot_graph_heatmap_mz_selection(
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
 
     # case a mz value and a manual range have been inputed
-    if id_input == "page-2-button-range" or (id_input == "main-slider" and graph_input == "m/z range"):
+    if id_input == "page-2-button-range" or (
+        id_input == "main-slider" and graph_input == "m/z range"
+    ):
         if mz is not None and mz_range is not None:
             mz = float(mz)
             mz_range = float(mz_range)
@@ -510,11 +573,16 @@ def page_2_plot_graph_heatmap_mz_selection(
         return dash.no_update
 
     # case a two mz bounds values have been inputed
-    elif id_input == "page-2-button-bounds" or (id_input == "main-slider" and graph_input == "m/z boundaries"):
+    elif id_input == "page-2-button-bounds" or (
+        id_input == "main-slider" and graph_input == "m/z boundaries"
+    ):
         if lb is not None and hb is not None:
             lb, hb = float(lb), float(hb)
             if lb > 400 and hb < 1200 and hb - lb > 0 and hb - lb < 10:
-                return figures.compute_heatmap_per_mz(slice_index, lb, hb, binary_string=False), "m/z boundaries"
+                return (
+                    figures.compute_heatmap_per_mz(slice_index, lb, hb, binary_string=False),
+                    "m/z boundaries",
+                )
 
         return dash.no_update
 
@@ -534,7 +602,12 @@ def page_2_plot_graph_heatmap_mz_selection(
 
             # Build the list of mz boundaries for each peak
             ll_lipid_bounds = [
-                [(float(data.get_annotations().iloc[index]["min"]), float(data.get_annotations().iloc[index]["max"]))]
+                [
+                    (
+                        float(data.get_annotations().iloc[index]["min"]),
+                        float(data.get_annotations().iloc[index]["max"]),
+                    )
+                ]
                 if index != -1
                 else None
                 for index in [lipid_1_index, lipid_2_index, lipid_3_index]
@@ -542,7 +615,10 @@ def page_2_plot_graph_heatmap_mz_selection(
 
             # Check that annotations do not intercept with each other
             l_lipid_bounds_clean = [
-                x for l_lipid_bounds in ll_lipid_bounds if l_lipid_bounds is not None for x in l_lipid_bounds
+                x
+                for l_lipid_bounds in ll_lipid_bounds
+                if l_lipid_bounds is not None
+                for x in l_lipid_bounds
             ]
 
             if len(l_lipid_bounds_clean) >= 2:
@@ -584,7 +660,9 @@ def page_2_plot_graph_heatmap_mz_selection(
         if bound_high_res is not None:
             bound_high_res = json.loads(bound_high_res)
             return (
-                figures.compute_heatmap_per_mz(slice_index, bound_high_res[0], bound_high_res[1], binary_string=False),
+                figures.compute_heatmap_per_mz(
+                    slice_index, bound_high_res[0], bound_high_res[1], binary_string=False
+                ),
                 "Selection from high-res m/z graph",
             )
 
@@ -667,7 +745,10 @@ def tab_2_plot_graph_low_res_spectrum(
 
             # build the list of mz boundaries for each peak
             l_lipid_bounds = [
-                (float(data.get_annotations().iloc[index]["min"]), float(data.get_annotations().iloc[index]["max"]))
+                (
+                    float(data.get_annotations().iloc[index]["min"]),
+                    float(data.get_annotations().iloc[index]["max"]),
+                )
                 if index != -1
                 else None
                 for index in [lipid_1_index, lipid_2_index, lipid_3_index]
@@ -679,14 +760,18 @@ def tab_2_plot_graph_low_res_spectrum(
             return dash.no_update
             # return figures.compute_spectrum_low_res(slice_index,)
 
-    elif id_input == "page-2-button-range" or (id_input == "main-slider" and graph_input == "m/z range"):
+    elif id_input == "page-2-button-range" or (
+        id_input == "main-slider" and graph_input == "m/z range"
+    ):
         mz = float(mz)
         mz_range = float(mz_range)
         if mz > 400 and mz < 1200 and mz_range < 10:
             l_lipid_bounds = [(mz - mz_range / 2, mz + mz_range / 2), None, None]
             return figures.compute_spectrum_low_res(slice_index, l_lipid_bounds)
 
-    elif id_input == "page-2-button-bounds" or (id_input == "main-slider" and graph_input == "m/z boundaries"):
+    elif id_input == "page-2-button-bounds" or (
+        id_input == "main-slider" and graph_input == "m/z boundaries"
+    ):
         lb, hb = float(lb), float(hb)
         if lb > 400 and hb < 1200 and hb - lb > 0 and hb - lb < 10:
             l_lipid_bounds = [(lb, hb), None, None]
@@ -785,7 +870,10 @@ def page_2_plot_graph_high_res_spectrum(
             # Build the list of mz boundaries for each peak
             l_indexes = [lipid_1_index, lipid_2_index, lipid_3_index]
             l_lipid_bounds = [
-                (float(data.get_annotations().iloc[index]["min"]), float(data.get_annotations().iloc[index]["max"]))
+                (
+                    float(data.get_annotations().iloc[index]["min"]),
+                    float(data.get_annotations().iloc[index]["max"]),
+                )
                 if index != -1
                 else None
                 for index in l_indexes
@@ -804,7 +892,9 @@ def page_2_plot_graph_high_res_spectrum(
                 force_xlim=True,
             )
 
-    elif id_input == "page-2-button-range" or (id_input == "main-slider" and graph_input == "m/z range"):
+    elif id_input == "page-2-button-range" or (
+        id_input == "main-slider" and graph_input == "m/z range"
+    ):
         mz = float(mz)
         mz_range = float(mz_range)
         if mz > 400 and mz < 1200 and mz_range < 10:
@@ -817,12 +907,17 @@ def page_2_plot_graph_high_res_spectrum(
                 force_xlim=True,
             )
 
-    elif id_input == "page-2-button-bounds" or (id_input == "main-slider" and graph_input == "m/z boundaries"):
+    elif id_input == "page-2-button-bounds" or (
+        id_input == "main-slider" and graph_input == "m/z boundaries"
+    ):
         lb, hb = float(lb), float(hb)
         if lb > 400 and hb < 1200 and hb - lb > 0 and hb - lb < 10:
             # l_lipid_bounds = [(lb, hb), None, None]
             return figures.compute_spectrum_high_res(
-                slice_index, lb - 10 ** -2, hb + 10 ** -2, force_xlim=True,  # annotations=l_lipid_bounds,
+                slice_index,
+                lb - 10 ** -2,
+                hb + 10 ** -2,
+                force_xlim=True,  # annotations=l_lipid_bounds,
             )
 
     # If the figure is created at app launch or after load button is cliked, or with an empty lipid selection,
@@ -836,7 +931,9 @@ def page_2_plot_graph_high_res_spectrum(
 
         # Case the zoom is high enough
         if bound_high_res[1] - bound_high_res[0] <= 3:
-            return figures.compute_spectrum_high_res(slice_index, bound_high_res[0], bound_high_res[1])
+            return figures.compute_spectrum_high_res(
+                slice_index, bound_high_res[0], bound_high_res[1]
+            )
         # Otherwise just return default (empty) graph
         else:
             return dash.no_update
@@ -894,7 +991,9 @@ def page_2_store_boundaries_mz_from_graph_high_res_spectrum(relayoutData, bound_
     State("tab-2-dropdown-lipid-structures", "options"),
     State("tab-2-dropdown-lipid-cations", "options"),
 )
-def tab_2_handle_dropdowns(slice_index, name, structure, options_names, options_structures, options_cations):
+def tab_2_handle_dropdowns(
+    slice_index, name, structure, options_names, options_structures, options_cations
+):
 
     # Find out which input triggered the function
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
@@ -910,15 +1009,22 @@ def tab_2_handle_dropdowns(slice_index, name, structure, options_names, options_
             #         data.get_annotations()[data.get_annotations()["slice"] == slice_index].name.unique()
             #     )
             # ]
-            options_names = [{"label": name, "value": name} for name in sorted(data.get_annotations().name.unique())]
+            options_names = [
+                {"label": name, "value": name}
+                for name in sorted(data.get_annotations().name.unique())
+            ]
             return options_names, [], []  # , None, None, None
 
         elif name is not None:
             if id_input == "tab-2-dropdown-lipid-names":
                 structures = data.get_annotations()[
-                    (data.get_annotations()["name"] == name)  # & (data.get_annotations()["slice"] == slice_index)
+                    (
+                        data.get_annotations()["name"] == name
+                    )  # & (data.get_annotations()["slice"] == slice_index)
                 ].structure.unique()
-                options_structures = [{"label": structure, "value": structure} for structure in sorted(structures)]
+                options_structures = [
+                    {"label": structure, "value": structure} for structure in sorted(structures)
+                ]
                 return options_names, options_structures, []  # , name, None, None
 
             elif structure is not None:
@@ -928,8 +1034,14 @@ def tab_2_handle_dropdowns(slice_index, name, structure, options_names, options_
                         & (data.get_annotations()["structure"] == structure)
                         # & (data.get_annotations()["slice"] == slice_index)
                     ].cation.unique()
-                    options_cations = [{"label": cation, "value": cation} for cation in sorted(cations)]
-                    return options_names, options_structures, options_cations  # , name, structure, None
+                    options_cations = [
+                        {"label": cation, "value": cation} for cation in sorted(cations)
+                    ]
+                    return (
+                        options_names,
+                        options_structures,
+                        options_cations,
+                    )  # , name, structure, None
 
     return dash.no_update
 
@@ -1020,7 +1132,9 @@ def page_2_add_toast_selection(
         )
 
     # Otherwise, update selection or add lipid
-    elif (id_input == "tab-2-dropdown-lipid-cations" and cation is not None) or id_input == "main-slider":
+    elif (
+        id_input == "tab-2-dropdown-lipid-cations" and cation is not None
+    ) or id_input == "main-slider":
 
         if id_input == "main-slider":
 
@@ -1042,7 +1156,9 @@ def page_2_add_toast_selection(
                     )
                     l_lipid_loc = [
                         l_lipid_loc_temp[i]
-                        for i, x in enumerate(data.get_annotations().iloc[l_lipid_loc_temp]["slice"] == slice_index)
+                        for i, x in enumerate(
+                            data.get_annotations().iloc[l_lipid_loc_temp]["slice"] == slice_index
+                        )
                         if x
                     ]
 
@@ -1137,7 +1253,9 @@ def page_2_add_toast_selection(
                 change_made = True
 
             if change_made:
-                logging.info("Changes have been made to the lipid selection or indexation, propagating callback.")
+                logging.info(
+                    "Changes have been made to the lipid selection or indexation, propagating callback."
+                )
                 return (
                     header_1,
                     header_2,
@@ -1160,7 +1278,8 @@ def page_2_add_toast_selection(
 
 # Function to make visible the high-res m/z plot in tab 2
 @app.app.callback(
-    Output("page-2-graph-high-resolution-spectrum", "style"), Input("page-2-graph-high-resolution-spectrum", "figure")
+    Output("page-2-graph-high-resolution-spectrum", "style"),
+    Input("page-2-graph-high-resolution-spectrum", "figure"),
 )
 def tab_2_display_high_res_mz_plot(figure):
     if figure is not None:
@@ -1193,7 +1312,9 @@ def tab_2_display_alert(figure):
 )
 def tab_2_download(n_clicks, lipid_1_index, lipid_2_index, lipid_3_index, slice_index):
 
-    l_lipids_indexes = [x for x in [lipid_1_index, lipid_2_index, lipid_3_index] if x is not None and x != -1]
+    l_lipids_indexes = [
+        x for x in [lipid_1_index, lipid_2_index, lipid_3_index] if x is not None and x != -1
+    ]
     # If lipids has been selected from the dropdown, filter them in the df and download them
     if len(l_lipids_indexes) > 0:
 
@@ -1234,7 +1355,9 @@ def tab_2_download(n_clicks, lipid_1_index, lipid_2_index, lipid_3_index, slice_
     Input("page-2-selected-lipid-3", "data"),
 )
 def tab_2_active_download(lipid_1_index, lipid_2_index, lipid_3_index):
-    l_lipids_indexes = [x for x in [lipid_1_index, lipid_2_index, lipid_3_index] if x is not None and x != -1]
+    l_lipids_indexes = [
+        x for x in [lipid_1_index, lipid_2_index, lipid_3_index] if x is not None and x != -1
+    ]
     # If lipids has been selected from the dropdown, activate button
     if len(l_lipids_indexes) > 0:
         return False, False, False
@@ -1262,7 +1385,9 @@ def tab_2_disable_dropdowns(lipid_1_index, lipid_2_index, lipid_3_index):
 
 
 @app.app.callback(
-    Output("page-2-button-range", "disabled"), Input("page-2-mz-value", "value"), Input("page-2-mz-range", "value"),
+    Output("page-2-button-range", "disabled"),
+    Input("page-2-mz-value", "value"),
+    Input("page-2-mz-range", "value"),
 )
 def tab_2_button_range(mz, mz_range):
     if mz is not None and mz_range is not None:

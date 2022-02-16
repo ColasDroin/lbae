@@ -11,9 +11,9 @@ import dash
 import dash_mantine_components as dmc
 
 # Data module
-from lbae.app import figures, atlas, cache_flask
-from lbae import app
-from lbae.modules.tools.misc import return_pickled_object
+from app import figures, atlas, cache_flask
+import app
+from modules.tools.misc import return_pickled_object
 
 ###### DEFFINE PAGE LAYOUT ######
 
@@ -185,7 +185,12 @@ def return_layout(basic_config, slice_index):
                     ],
                 ),
                 dbc.Card(
-                    style={"maxWidth": "100%", "margin": "0 auto", "width": "100%", "height": "100%"},
+                    style={
+                        "maxWidth": "100%",
+                        "margin": "0 auto",
+                        "width": "100%",
+                        "height": "100%",
+                    },
                     id="page-4-card-lipid-selection",
                     children=[
                         dbc.CardHeader(children="Lipid selection"),
@@ -201,7 +206,11 @@ def return_layout(basic_config, slice_index):
                                 html.Div(
                                     id="page-4-div-dropdown-lipid-names",
                                     children=[
-                                        dcc.Dropdown(id="page-4-dropdown-lipid-names", options=[], multi=False,),
+                                        dcc.Dropdown(
+                                            id="page-4-dropdown-lipid-names",
+                                            options=[],
+                                            multi=False,
+                                        ),
                                     ],
                                 ),
                                 dbc.Tooltip(
@@ -287,7 +296,12 @@ def return_layout(basic_config, slice_index):
                     ],
                 ),
                 dbc.Card(
-                    style={"maxWidth": "100%", "margin": "0 auto", "width": "100%", "height": "100%"},
+                    style={
+                        "maxWidth": "100%",
+                        "margin": "0 auto",
+                        "width": "100%",
+                        "height": "100%",
+                    },
                     # className="mt-4",
                     id="page-4-card-range-selection",
                     children=[
@@ -307,8 +321,14 @@ def return_layout(basic_config, slice_index):
                                 ),
                                 dbc.InputGroup(
                                     [
-                                        dbc.Input(id="page-4-lower-bound", placeholder="Lower bound (m/z value)",),
-                                        dbc.Input(id="page-4-upper-bound", placeholder="Upper bound (m/z value)",),
+                                        dbc.Input(
+                                            id="page-4-lower-bound",
+                                            placeholder="Lower bound (m/z value)",
+                                        ),
+                                        dbc.Input(
+                                            id="page-4-upper-bound",
+                                            placeholder="Upper bound (m/z value)",
+                                        ),
                                         # dbc.InputGroupAddon(
                                         # dbc.Button("Display", id="page-4-button-bounds", n_clicks=0, color="primary",),
                                         #    addon_type="prepend",
@@ -344,7 +364,12 @@ def return_layout(basic_config, slice_index):
                     ],
                 ),
                 dbc.Card(
-                    style={"maxWidth": "100%", "margin": "0 auto", "width": "100%", "height": "100%"},
+                    style={
+                        "maxWidth": "100%",
+                        "margin": "0 auto",
+                        "width": "100%",
+                        "height": "100%",
+                    },
                     id="page-4-card-input-selection",
                     children=[
                         dbc.CardHeader("Input selection"),
@@ -381,7 +406,9 @@ def return_layout(basic_config, slice_index):
                             is_open=False,
                             size="xl",
                             children=[
-                                dbc.ModalHeader(dbc.ModalTitle("Lipid selection interpolated in 3D")),
+                                dbc.ModalHeader(
+                                    dbc.ModalTitle("Lipid selection interpolated in 3D")
+                                ),
                                 dbc.ModalBody(
                                     children=[
                                         dbc.Spinner(
@@ -420,7 +447,9 @@ def return_layout(basic_config, slice_index):
                                                 ),
                                             ],
                                         ),
-                                        html.Div("‎‎‏‏‎ ‎"),  # Empty span to prevent toast from bugging
+                                        html.Div(
+                                            "‎‎‏‏‎ ‎"
+                                        ),  # Empty span to prevent toast from bugging
                                     ],
                                 ),
                             ],
@@ -449,7 +478,10 @@ def return_layout(basic_config, slice_index):
                                         #     label="Loading data...",
                                         #     sections=[{"value": 0, "color": "red"},],
                                         # ),
-                                        dbc.Progress(id="page-4-progress-bar-structure", style={"width ": "100%"}),
+                                        dbc.Progress(
+                                            id="page-4-progress-bar-structure",
+                                            style={"width ": "100%"},
+                                        ),
                                         dcc.Slider(
                                             id="page-4-slider-percentile",
                                             min=0,
@@ -493,7 +525,9 @@ def return_layout(basic_config, slice_index):
                                         ),
                                         #     ],
                                         # ),
-                                        html.Div("‎‎‏‏‎ ‎"),  # Empty span to prevent toast from bugging
+                                        html.Div(
+                                            "‎‎‏‏‎ ‎"
+                                        ),  # Empty span to prevent toast from bugging
                                     ],
                                 ),
                             ],
@@ -807,17 +841,21 @@ def page_2bis_plot_graph_heatmap_mz_selection(
             set_id = None
             decrease_resolution_factor = 7
         logging.info(
-            "For the computation of 3D volume, decrease_resolution_factor is " + str(decrease_resolution_factor)
+            "For the computation of 3D volume, decrease_resolution_factor is "
+            + str(decrease_resolution_factor)
         )
     # case a mz value and a manual range have been inputed
-    if id_input == "page-4-button-range" or (id_input == "page-4-radioitems-input" and value_input == 3):
+    if id_input == "page-4-button-range" or (
+        id_input == "page-4-radioitems-input" and value_input == 3
+    ):
         if mz is not None and mz_range is not None:
             mz = float(mz)
             mz_range = float(mz_range)
             if mz > 400 and mz < 1200 and mz_range < 10:
                 return (
                     figures.compute_3D_volume_figure(
-                        [[[(mz - mz_range / 2, mz + mz_range / 2)], None, None]] * app.data.get_slice_number(),
+                        [[[(mz - mz_range / 2, mz + mz_range / 2)], None, None]]
+                        * app.data.get_slice_number(),
                         set_id_regions=set_id,
                         decrease_dimensionality_factor=decrease_resolution_factor,
                     ),
@@ -827,7 +865,9 @@ def page_2bis_plot_graph_heatmap_mz_selection(
         return dash.no_update
 
     # case a two mz bounds values have been inputed
-    elif id_input == "page-4-button-bounds" or (id_input == "page-4-radioitems-input" and value_input == 2):
+    elif id_input == "page-4-button-bounds" or (
+        id_input == "page-4-radioitems-input" and value_input == 2
+    ):
         if lb is not None and hb is not None:
             lb, hb = float(lb), float(hb)
             if lb > 400 and hb < 1200 and hb - lb > 0 and hb - lb < 10:
@@ -924,12 +964,21 @@ def page_2bis_plot_graph_heatmap_mz_selection(
         (Output("page-4-graph-heatmap", "className"), "d-none", ""),
         (Output("page-4-slider-percentile", "className"), "d-none", ""),
     ],
-    progress=[Output("page-4-progress-bar-structure", "value"), Output("page-4-progress-bar-structure", "label")],
+    progress=[
+        Output("page-4-progress-bar-structure", "value"),
+        Output("page-4-progress-bar-structure", "label"),
+    ],
     prevent_initial_call=True,
     cache_args_to_ignore=[0, 2],
 )
 def page_4_plot_graph_heatmap_mz_selection(
-    set_progress, n_clicks_button_display, percentile, l_selected_regions, name_region_1, name_region_2, name_region_3,
+    set_progress,
+    n_clicks_button_display,
+    percentile,
+    l_selected_regions,
+    name_region_1,
+    name_region_2,
+    name_region_3,
 ):
 
     # sections = [{"value": 10, "color": "red"}]
@@ -971,13 +1020,20 @@ def page_2bis_handle_dropdowns(name, structure, options_names, options_structure
     # when second one is set, the last one option is computed
 
     if len(id_input) == 0 or id_input == "dcc-store-slice-index":
-        options_names = [{"label": name, "value": name} for name in sorted(app.data.get_annotations().name.unique())]
+        options_names = [
+            {"label": name, "value": name}
+            for name in sorted(app.data.get_annotations().name.unique())
+        ]
         return options_names, [], [], None, None, None
 
     elif name is not None:
         if id_input == "page-4-dropdown-lipid-names":
-            structures = app.data.get_annotations()[app.data.get_annotations()["name"] == name].structure.unique()
-            options_structures = [{"label": structure, "value": structure} for structure in sorted(structures)]
+            structures = app.data.get_annotations()[
+                app.data.get_annotations()["name"] == name
+            ].structure.unique()
+            options_structures = [
+                {"label": structure, "value": structure} for structure in sorted(structures)
+            ]
             return options_names, options_structures, [], name, None, None
 
         elif structure is not None:
@@ -1043,7 +1099,18 @@ def page_2bis_add_toast_selection(
     # everytime the page is loaded, and prevent using dcc-store-slice-index as an input
     # if page-4-dropdown-lipid-cations is called while there's no lipid name defined, it means the page just got loaded
     if len(id_input) == 0 or (id_input == "page-4-dropdown-lipid-cations" and name is None):
-        return "", "", "", empty_lipid_list, empty_lipid_list, empty_lipid_list, False, False, False, []
+        return (
+            "",
+            "",
+            "",
+            empty_lipid_list,
+            empty_lipid_list,
+            empty_lipid_list,
+            False,
+            False,
+            False,
+            [],
+        )
 
     # If a lipid has been deleted from a toast
     if value_input == "is_open":
@@ -1174,7 +1241,10 @@ def page_4_disable_dropdowns(l_lipid_1_index, l_lipid_2_index, l_lipid_3_index):
 )
 def tab_2_active_display(l_lipid_1_index, l_lipid_2_index, l_lipid_3_index):
     # If lipids has been selected from the dropdown, activate button
-    if np.sum(l_lipid_1_index + l_lipid_2_index + l_lipid_3_index) > -3 * app.data.get_slice_number():
+    if (
+        np.sum(l_lipid_1_index + l_lipid_2_index + l_lipid_3_index)
+        > -3 * app.data.get_slice_number()
+    ):
         return False
     else:
         return True

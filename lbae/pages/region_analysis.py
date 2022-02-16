@@ -13,11 +13,11 @@ import dash_draggable
 from numba import njit
 
 # Homemade modules
-from lbae import app
-from lbae.app import figures, data, atlas, cache_flask
-from lbae import config
-from lbae.modules.tools.misc import return_pickled_object, convert_image_to_base64
-from lbae.modules.tools.spectra import (
+import app
+from app import figures, data, atlas, cache_flask
+import config
+from modules.tools.misc import return_pickled_object, convert_image_to_base64
+from modules.tools.spectra import (
     sample_rows_from_path,
     compute_spectrum_per_row_selection,
     convert_array_to_fine_grained,
@@ -54,28 +54,82 @@ def return_layout(basic_config, slice_index=1):
                     {"i": "page-3-card-main-graph", "x": 0, "y": 0, "w": 9, "h": 20},
                     {"i": "page-3-card-mask-selection", "x": 9, "y": 0, "w": 3, "h": 20},
                     {"i": "page-3-card-spectrum", "x": 0, "y": 15, "w": 9, "h": N_LINES},
-                    {"i": "page-3-card-dropdowns", "x": 9, "y": 15, "w": 3, "h": int(N_LINES) / 2 + 2},
-                    {"i": "page-3-card-filtering", "x": 9, "y": 16, "w": 3, "h": N_LINES - int(N_LINES) / 2 - 2},
+                    {
+                        "i": "page-3-card-dropdowns",
+                        "x": 9,
+                        "y": 15,
+                        "w": 3,
+                        "h": int(N_LINES) / 2 + 2,
+                    },
+                    {
+                        "i": "page-3-card-filtering",
+                        "x": 9,
+                        "y": 16,
+                        "w": 3,
+                        "h": N_LINES - int(N_LINES) / 2 - 2,
+                    },
                     {"i": "page-3-card-heatmap", "x": 0, "y": 17, "w": 6, "h": 2 * N_LINES - 2},
-                    {"i": "page-3-card-graph-lipid-comparison", "x": 6, "y": 17, "w": 6, "h": 2 * N_LINES - 2},
+                    {
+                        "i": "page-3-card-graph-lipid-comparison",
+                        "x": 6,
+                        "y": 17,
+                        "w": 6,
+                        "h": 2 * N_LINES - 2,
+                    },
                 ],
                 "lg": [
                     {"i": "page-3-card-main-graph", "x": 0, "y": 0, "w": 9, "h": 16},
                     {"i": "page-3-card-mask-selection", "x": 9, "y": 0, "w": 3, "h": 16},
                     {"i": "page-3-card-spectrum", "x": 0, "y": 15, "w": 9, "h": N_LINES},
-                    {"i": "page-3-card-dropdowns", "x": 9, "y": 15, "w": 3, "h": int(N_LINES) / 2 + 2},
-                    {"i": "page-3-card-filtering", "x": 9, "y": 16, "w": 3, "h": N_LINES - int(N_LINES) / 2 - 2},
+                    {
+                        "i": "page-3-card-dropdowns",
+                        "x": 9,
+                        "y": 15,
+                        "w": 3,
+                        "h": int(N_LINES) / 2 + 2,
+                    },
+                    {
+                        "i": "page-3-card-filtering",
+                        "x": 9,
+                        "y": 16,
+                        "w": 3,
+                        "h": N_LINES - int(N_LINES) / 2 - 2,
+                    },
                     {"i": "page-3-card-heatmap", "x": 0, "y": 17, "w": 6, "h": 2 * N_LINES - 2},
-                    {"i": "page-3-card-graph-lipid-comparison", "x": 6, "y": 17, "w": 6, "h": 2 * N_LINES - 5},
+                    {
+                        "i": "page-3-card-graph-lipid-comparison",
+                        "x": 6,
+                        "y": 17,
+                        "w": 6,
+                        "h": 2 * N_LINES - 5,
+                    },
                 ],
                 "md": [
                     {"i": "page-3-card-main-graph", "x": 0, "y": 0, "w": 7, "h": 15},
                     {"i": "page-3-card-mask-selection", "x": 9, "y": 0, "w": 3, "h": 15},
                     {"i": "page-3-card-spectrum", "x": 0, "y": 15, "w": 7, "h": N_LINES},
-                    {"i": "page-3-card-dropdowns", "x": 7, "y": 15, "w": 3, "h": int(N_LINES) / 2 + 2},
-                    {"i": "page-3-card-filtering", "x": 7, "y": 16, "w": 3, "h": N_LINES - int(N_LINES) / 2 - 2},
+                    {
+                        "i": "page-3-card-dropdowns",
+                        "x": 7,
+                        "y": 15,
+                        "w": 3,
+                        "h": int(N_LINES) / 2 + 2,
+                    },
+                    {
+                        "i": "page-3-card-filtering",
+                        "x": 7,
+                        "y": 16,
+                        "w": 3,
+                        "h": N_LINES - int(N_LINES) / 2 - 2,
+                    },
                     {"i": "page-3-card-heatmap", "x": 0, "y": 17, "w": 5, "h": 2 * N_LINES - 2},
-                    {"i": "page-3-card-graph-lipid-comparison", "x": 5, "y": 17, "w": 5, "h": 2 * N_LINES - 7},
+                    {
+                        "i": "page-3-card-graph-lipid-comparison",
+                        "x": 5,
+                        "y": 17,
+                        "w": 5,
+                        "h": 2 * N_LINES - 7,
+                    },
                 ],
                 "sm": [
                     {"i": "page-3-card-main-graph", "x": 0, "y": 0, "w": 6, "h": 15},
@@ -83,7 +137,13 @@ def return_layout(basic_config, slice_index=1):
                     {"i": "page-3-card-spectrum", "x": 0, "y": 12, "w": 6, "h": N_LINES},
                     {"i": "page-3-card-dropdowns", "x": 0, "y": 19, "w": 6, "h": 7},
                     {"i": "page-3-card-filtering", "x": 0, "y": 19 + 7, "w": 6, "h": 4},
-                    {"i": "page-3-card-heatmap", "x": 0, "y": 19 + 7 + 5, "w": 6, "h": 2 * N_LINES - 2},
+                    {
+                        "i": "page-3-card-heatmap",
+                        "x": 0,
+                        "y": 19 + 7 + 5,
+                        "w": 6,
+                        "h": 2 * N_LINES - 2,
+                    },
                     {
                         "i": "page-3-card-graph-lipid-comparison",
                         "x": 0,
@@ -98,7 +158,13 @@ def return_layout(basic_config, slice_index=1):
                     {"i": "page-3-card-spectrum", "x": 0, "y": 10, "w": 4, "h": N_LINES},
                     {"i": "page-3-card-dropdowns", "x": 0, "y": 15, "w": 4, "h": 7},
                     {"i": "page-3-card-filtering", "x": 0, "y": 14 + 7, "w": 4, "h": 4},
-                    {"i": "page-3-card-heatmap", "x": 0, "y": 14 + 7 + 5, "w": 4, "h": 2 * N_LINES - 2},
+                    {
+                        "i": "page-3-card-heatmap",
+                        "x": 0,
+                        "y": 14 + 7 + 5,
+                        "w": 4,
+                        "h": 2 * N_LINES - 2,
+                    },
                     {
                         "i": "page-3-card-graph-lipid-comparison",
                         "x": 0,
@@ -113,7 +179,13 @@ def return_layout(basic_config, slice_index=1):
                     {"i": "page-3-card-spectrum", "x": 0, "y": 4, "w": 2, "h": N_LINES},
                     {"i": "page-3-card-dropdowns", "x": 0, "y": 9, "w": 2, "h": 7},
                     {"i": "page-3-card-filtering", "x": 0, "y": 9 + 7, "w": 2, "h": 4},
-                    {"i": "page-3-card-heatmap", "x": 0, "y": 9 + 7 + 5, "w": 2, "h": 2 * N_LINES - 2},
+                    {
+                        "i": "page-3-card-heatmap",
+                        "x": 0,
+                        "y": 9 + 7 + 5,
+                        "w": 2,
+                        "h": 2 * N_LINES - 2,
+                    },
                     {
                         "i": "page-3-card-graph-lipid-comparison",
                         "x": 0,
@@ -129,7 +201,8 @@ def return_layout(basic_config, slice_index=1):
                     style={"margin": "0 auto", "width": "100%", "height": "100%"},
                     children=[
                         dbc.CardHeader(
-                            className="d-flex justify-content-between", children=[html.Div("Brain region selection"),],
+                            className="d-flex justify-content-between",
+                            children=[html.Div("Brain region selection"),],
                         ),
                         dbc.CardBody(
                             className="loading-wrapper",
@@ -211,7 +284,11 @@ def return_layout(basic_config, slice_index=1):
                                 html.Div(
                                     className="d-grid gap-2 col-10 mx-auto mt-2",
                                     children=[
-                                        dbc.Button(children="Reset", id="page-3-reset-button", color="primary",)
+                                        dbc.Button(
+                                            children="Reset",
+                                            id="page-3-reset-button",
+                                            color="primary",
+                                        )
                                     ],
                                 ),
                                 html.Div(
@@ -238,7 +315,11 @@ def return_layout(basic_config, slice_index=1):
                                         dbc.Spinner(
                                             color="dark",
                                             children=[
-                                                html.Div(id="page-3-empty-div-load", className="p-5", children=[])
+                                                html.Div(
+                                                    id="page-3-empty-div-load",
+                                                    className="p-5",
+                                                    children=[],
+                                                )
                                             ],
                                         )
                                     ]
@@ -254,7 +335,10 @@ def return_layout(basic_config, slice_index=1):
                         dbc.CardHeader(
                             className="d-flex justify-content-between",
                             children=[
-                                html.Div(id="page-3-toast-graph-heatmap-mz-selection", children="Brain slice n°"),
+                                html.Div(
+                                    id="page-3-toast-graph-heatmap-mz-selection",
+                                    children="Brain slice n°",
+                                ),
                             ],
                         ),
                         dbc.CardBody(
@@ -304,7 +388,12 @@ def return_layout(basic_config, slice_index=1):
                 ),
                 dbc.Card(
                     id="page-3-card-spectrum",
-                    style={"maxWidth": "100%", "margin": "0 auto", "width": "100%", "height": "100%"},
+                    style={
+                        "maxWidth": "100%",
+                        "margin": "0 auto",
+                        "width": "100%",
+                        "height": "100%",
+                    },
                     children=[
                         dbc.CardHeader("High-resolution spectrum for current selection"),
                         dbc.CardBody(
@@ -342,7 +431,8 @@ def return_layout(basic_config, slice_index=1):
                                                 html.Div(id="page-3-graph-spectrum-per-pixel-wait"),
                                                 dcc.Graph(
                                                     id="page-3-graph-spectrum-per-pixel",
-                                                    style={"height": HEIGHT_PLOTS} | {"display": "none"},
+                                                    style={"height": HEIGHT_PLOTS}
+                                                    | {"display": "none"},
                                                     config=basic_config
                                                     | {
                                                         "toImageButtonOptions": {
@@ -362,7 +452,12 @@ def return_layout(basic_config, slice_index=1):
                 ),
                 dbc.Card(
                     id="page-3-card-dropdowns",
-                    style={"maxWidth": "100%", "margin": "0 auto", "width": "100%", "height": "100%"},
+                    style={
+                        "maxWidth": "100%",
+                        "margin": "0 auto",
+                        "width": "100%",
+                        "height": "100%",
+                    },
                     # className="mt-4",
                     children=[
                         dbc.CardHeader("Lipid comparison"),
@@ -389,15 +484,24 @@ def return_layout(basic_config, slice_index=1):
                                             # className="loading-wrapper",
                                             children=[
                                                 dcc.Dropdown(
-                                                    id="page-3-dropdown-red", options=[], value=[], multi=True,
+                                                    id="page-3-dropdown-red",
+                                                    options=[],
+                                                    value=[],
+                                                    multi=True,
                                                 ),
                                                 # html.Hr(className="my-2"),
                                                 dcc.Dropdown(
-                                                    id="page-3-dropdown-green", options=[], value=[], multi=True,
+                                                    id="page-3-dropdown-green",
+                                                    options=[],
+                                                    value=[],
+                                                    multi=True,
                                                 ),
                                                 # html.Hr(className="my-2"),
                                                 dcc.Dropdown(
-                                                    id="page-3-dropdown-blue", options=[], value=[], multi=True,
+                                                    id="page-3-dropdown-blue",
+                                                    options=[],
+                                                    value=[],
+                                                    multi=True,
                                                 ),
                                                 html.Hr(className="my-2"),
                                                 html.P(
@@ -421,7 +525,12 @@ def return_layout(basic_config, slice_index=1):
                 ),
                 dbc.Card(
                     id="page-3-card-filtering",
-                    style={"maxWidth": "100%", "margin": "0 auto", "width": "100%", "height": "100%"},
+                    style={
+                        "maxWidth": "100%",
+                        "margin": "0 auto",
+                        "width": "100%",
+                        "height": "100%",
+                    },
                     # className="mt-1",
                     children=[
                         dbc.CardHeader("Lipid filtering per percentile"),
@@ -449,7 +558,12 @@ def return_layout(basic_config, slice_index=1):
                 ),
                 dbc.Card(
                     id="page-3-card-heatmap",
-                    style={"maxWidth": "100%", "margin": "0 auto", "width": "100%", "height": "100%"},
+                    style={
+                        "maxWidth": "100%",
+                        "margin": "0 auto",
+                        "width": "100%",
+                        "height": "100%",
+                    },
                     children=[
                         dbc.CardHeader("Average lipid expression per selection"),
                         dbc.CardBody(
@@ -472,7 +586,8 @@ def return_layout(basic_config, slice_index=1):
                                                 dcc.Graph(
                                                     id="page-3-graph-heatmap-per-lipid",
                                                     className="mb-1",
-                                                    style={"height": 2 * HEIGHT_PLOTS} | {"display": "none"},
+                                                    style={"height": 2 * HEIGHT_PLOTS}
+                                                    | {"display": "none"},
                                                     config=basic_config
                                                     | {
                                                         "toImageButtonOptions": {
@@ -497,7 +612,10 @@ def return_layout(basic_config, slice_index=1):
                                                         # ),
                                                         dbc.Checklist(
                                                             options=[
-                                                                {"label": "Sort by relative std", "value": True,}
+                                                                {
+                                                                    "label": "Sort by relative std",
+                                                                    "value": True,
+                                                                }
                                                             ],
                                                             id="page-3-sort-by-diff-switch",
                                                             switch=True,
@@ -516,7 +634,12 @@ def return_layout(basic_config, slice_index=1):
                 ),
                 dbc.Card(
                     id="page-3-card-graph-lipid-comparison",
-                    style={"maxWidth": "100%", "margin": "0 auto", "width": "100%", "height": "100%"},
+                    style={
+                        "maxWidth": "100%",
+                        "margin": "0 auto",
+                        "width": "100%",
+                        "height": "100%",
+                    },
                     children=[
                         dbc.CardHeader(
                             className="d-flex justify-content-between",
@@ -616,7 +739,8 @@ def page_3_hover(hoverData, slice_index):
             y = hoverData["points"][0]["y"]
 
             slice_coor_rescaled = np.asarray(
-                (atlas.array_coordinates_warped_data[x, y, z] * 1000 / atlas.resolution).round(0), dtype=np.int16,
+                (atlas.array_coordinates_warped_data[x, y, z] * 1000 / atlas.resolution).round(0),
+                dtype=np.int16,
             )
             try:
                 label = atlas.labels[tuple(slice_coor_rescaled)]
@@ -655,7 +779,14 @@ def tab_3_reset_layout(cliked_reset, url):
     prevent_inital_call=True,
 )
 def page_3_plot_heatmap(
-    relayoutData, slice_index, cliked_reset, l_mask_name, url, l_color_mask, reset, l_shapes_and_masks,
+    relayoutData,
+    slice_index,
+    cliked_reset,
+    l_mask_name,
+    url,
+    l_color_mask,
+    reset,
+    l_shapes_and_masks,
 ):
 
     # Find out which input triggered the function
@@ -663,11 +794,18 @@ def page_3_plot_heatmap(
     value_input = dash.callback_context.triggered[0]["prop_id"].split(".")[1]
 
     if value_input != "hoverData":
-        print(id_input, value_input, slice_index, cliked_reset, l_mask_name, url, l_color_mask, reset)
+        print(
+            id_input, value_input, slice_index, cliked_reset, l_mask_name, url, l_color_mask, reset
+        )
 
     # If a new slice is loaded or the page just got loaded
     # do nothing because of automatic relayout of the heatmap which is automatically triggered when the page is loaded
-    if id_input == "main-slider" or len(id_input) == 0 or id_input == "page-3-reset-button" or id_input == "url":
+    if (
+        id_input == "main-slider"
+        or len(id_input) == 0
+        or id_input == "page-3-reset-button"
+        or id_input == "url"
+    ):
         fig = return_pickled_object(
             "figures/load_page",
             "figure_basic_image",
@@ -680,7 +818,9 @@ def page_3_plot_heatmap(
         )
         fig.update_layout(
             dragmode="drawclosedpath",
-            newshape=dict(fillcolor=config.l_colors[0], opacity=0.7, line=dict(color="white", width=1)),
+            newshape=dict(
+                fillcolor=config.l_colors[0], opacity=0.7, line=dict(color="white", width=1)
+            ),
             autosize=True,
         )
         return fig, [], True, []
@@ -708,7 +848,9 @@ def page_3_plot_heatmap(
 
         fig.update_layout(
             dragmode="drawclosedpath",
-            newshape=dict(fillcolor=config.l_colors[0], opacity=0.7, line=dict(color="white", width=1)),
+            newshape=dict(
+                fillcolor=config.l_colors[0], opacity=0.7, line=dict(color="white", width=1)
+            ),
             autosize=True,
         )
         return fig, [], True, []
@@ -741,7 +883,9 @@ def page_3_plot_heatmap(
                 for idx_mask, mask_name in enumerate(l_mask_name):
                     id_name = atlas.dic_name_acronym[mask_name]
                     if id_name in atlas.dic_existing_masks[slice_index - 1]:
-                        projected_mask = atlas.get_projected_mask_and_spectrum(slice_index - 1, mask_name)[0]
+                        projected_mask = atlas.get_projected_mask_and_spectrum(
+                            slice_index - 1, mask_name
+                        )[0]
                     else:
                         logging.warning("The mask " + str(mask_name) + " couldn't be found")
 
@@ -758,12 +902,17 @@ def page_3_plot_heatmap(
                         color_rgb = [int(color[i : i + 2], 16) for i in (0, 2, 4)] + [200]
                         l_color_mask.append(color_rgb)
 
-                    l_images = [normalized_projected_mask * color for c, color in zip(["r", "g", "b", "a"], color_rgb)]
+                    l_images = [
+                        normalized_projected_mask * color
+                        for c, color in zip(["r", "g", "b", "a"], color_rgb)
+                    ]
                     # Reoder axis to match plotly go.image requirements
                     array_image = np.moveaxis(np.array(l_images, dtype=np.uint8), 0, 2)
 
                     # convert image to string to save space (new image as each mask must have a different color)
-                    base64_string = convert_image_to_base64(array_image, optimize=True, format="gif", type="RGBA")
+                    base64_string = convert_image_to_base64(
+                        array_image, optimize=True, format="gif", type="RGBA"
+                    )
                     fig.add_trace(go.Image(visible=True, source=base64_string, hoverinfo="skip"))
                     fig.update_layout(dragmode="drawclosedpath",)
 
@@ -780,7 +929,9 @@ def page_3_plot_heatmap(
                             # if color_idx is not None:
                             #    col_next = config.l_colors[(color_idx + 1) % 4]
                             # else:
-                            col_next = config.l_colors[(len(relayoutData["shapes"]) + len(l_color_mask)) % 4]
+                            col_next = config.l_colors[
+                                (len(relayoutData["shapes"]) + len(l_color_mask)) % 4
+                            ]
 
                             # compute color and save in l_shapes_and_masks
                             if id_input == "page-3-graph-heatmap-per-sel":
@@ -789,7 +940,12 @@ def page_3_plot_heatmap(
                                     if "shapes" in relayoutData:
                                         color_idx_for_registration += len(relayoutData["shapes"])
                                 l_shapes_and_masks.append(
-                                    ["shape", None, relayoutData["shapes"][-1], color_idx_for_registration - 1]
+                                    [
+                                        "shape",
+                                        None,
+                                        relayoutData["shapes"][-1],
+                                        color_idx_for_registration - 1,
+                                    ]
                                 )
 
         if color_idx is not None and col_next is None:
@@ -917,14 +1073,24 @@ def tab_3_display_high_res_mz_plot(clicked_reset, clicked_compute, mask, relayou
         if mask is not None:
             if mask != []:
                 logging.info("One or several masks have been selected, displaying graphs")
-                return {"height": HEIGHT_PLOTS}, {"display": "none"}, {"height": 2 * HEIGHT_PLOTS}, {}
+                return (
+                    {"height": HEIGHT_PLOTS},
+                    {"display": "none"},
+                    {"height": 2 * HEIGHT_PLOTS},
+                    {},
+                )
 
         if relayoutData is not None:
             if "shapes" in relayoutData:
                 if len(relayoutData["shapes"]) > 0:
                     if len(relayoutData["shapes"]) <= 4:
                         logging.info("One or several shapes have been selected, displaying graphs")
-                        return {"height": HEIGHT_PLOTS}, {"display": "none"}, {"height": 2 * HEIGHT_PLOTS}, {}
+                        return (
+                            {"height": HEIGHT_PLOTS},
+                            {"display": "none"},
+                            {"height": 2 * HEIGHT_PLOTS},
+                            {},
+                        )
                     else:
                         return {"display": "none"}, {}, {"display": "none"}, {"display": "none"}
 
@@ -992,18 +1158,30 @@ def page_3_display_alert(clicked_compute, clicked_reset, relayoutData, mask):
     elif id_input == "page-3-button-compute-spectra":
         if mask is not None:
             if mask != []:
-                return {"display": "none"}, {"display": "none"}, {"display": "none"}, {"display": "none"}
+                return (
+                    {"display": "none"},
+                    {"display": "none"},
+                    {"display": "none"},
+                    {"display": "none"},
+                )
 
         if relayoutData is not None:
             if "shapes" in relayoutData:
                 if len(relayoutData["shapes"]) > 0:
-                    return {"display": "none"}, {"display": "none"}, {"display": "none"}, {"display": "none"}
+                    return (
+                        {"display": "none"},
+                        {"display": "none"},
+                        {"display": "none"},
+                        {"display": "none"},
+                    )
     return dash.no_update
 
 
 # Global function to memoize/compute spectrum
 @cache_flask.memoize()
-def global_spectrum_store(slice_index, l_shapes_and_masks, l_mask_name, relayoutData, as_enrichment, log_transform):
+def global_spectrum_store(
+    slice_index, l_shapes_and_masks, l_mask_name, relayoutData, as_enrichment, log_transform
+):
     l_spectra = []
     idx_mask = -1
     idx_path = -1
@@ -1020,7 +1198,9 @@ def global_spectrum_store(slice_index, l_shapes_and_masks, l_mask_name, relayout
             mask_name = l_mask_name[idx_mask]
             id_name = atlas.dic_name_acronym[mask_name]
             if id_name in atlas.dic_existing_masks[slice_index - 1]:
-                grah_scattergl_data = atlas.get_projected_mask_and_spectrum(slice_index - 1, mask_name)[1]
+                grah_scattergl_data = atlas.get_projected_mask_and_spectrum(
+                    slice_index - 1, mask_name
+                )[1]
             else:
                 logging.warning("Bug, the selected mask does't exist")
                 return dash.no_update
@@ -1040,9 +1220,15 @@ def global_spectrum_store(slice_index, l_shapes_and_masks, l_mask_name, relayout
                     path = [
                         (
                             int(
-                                atlas.array_projection_correspondence_corrected[slice_index - 1, y, x, 0]
+                                atlas.array_projection_correspondence_corrected[
+                                    slice_index - 1, y, x, 0
+                                ]
                             ),  # must explicitely cast to int for serialization as numpy int are not accepted
-                            int(atlas.array_projection_correspondence_corrected[slice_index - 1, y, x, 1]),
+                            int(
+                                atlas.array_projection_correspondence_corrected[
+                                    slice_index - 1, y, x, 1
+                                ]
+                            ),
                         )
                         for x, y in zip(path[:-1:2], path[1::2])
                     ]
@@ -1085,13 +1271,15 @@ def global_spectrum_store(slice_index, l_shapes_and_masks, l_mask_name, relayout
                 grah_scattergl_data[1, :] /= np.sum(grah_scattergl_data[1, :])
 
                 # then convert to uncompressed version
-                grah_scattergl_data = convert_array_to_fine_grained(grah_scattergl_data, 10 ** -3, lb=350, hb=1250)
+                grah_scattergl_data = convert_array_to_fine_grained(
+                    grah_scattergl_data, 10 ** -3, lb=350, hb=1250
+                )
 
                 # then normalize to the sum of all pixels
                 grah_scattergl_data[1, :] /= (
-                    convert_array_to_fine_grained(data.get_array_spectra(slice_index - 1), 10 ** -3, lb=350, hb=1250,)[
-                        1, :
-                    ]
+                    convert_array_to_fine_grained(
+                        data.get_array_spectra(slice_index - 1), 10 ** -3, lb=350, hb=1250,
+                    )[1, :]
                     + 1
                 )
 
@@ -1190,7 +1378,14 @@ def page_3_record_spectra(
     prevent_intial_call=True,
 )
 def page_3_plot_spectrum(
-    cliked_reset, l_spectra, slice_index, l_mask_name, l_shapes_and_masks, as_enrichment, log_transform, relayoutData,
+    cliked_reset,
+    l_spectra,
+    slice_index,
+    l_mask_name,
+    l_shapes_and_masks,
+    as_enrichment,
+    log_transform,
+    relayoutData,
 ):
 
     # Find out which input triggered the function
@@ -1211,7 +1406,12 @@ def page_3_plot_spectrum(
             logging.info("Starting spectra plotting now")
             fig_mz = go.Figure()
             l_spectra = global_spectrum_store(
-                slice_index, l_shapes_and_masks, l_mask_name, relayoutData, as_enrichment, log_transform
+                slice_index,
+                l_shapes_and_masks,
+                l_mask_name,
+                relayoutData,
+                as_enrichment,
+                log_transform,
             )
             ll_idx_labels = global_lipid_index_store(data, slice_index, l_spectra)
             for idx_spectra, (spectrum, l_idx_labels) in enumerate(zip(l_spectra, ll_idx_labels)):
@@ -1236,7 +1436,10 @@ def page_3_plot_spectrum(
                 l_idx_unkept = return_idx_inf(l_idx_labels)
 
                 # Pad annotated trace with zeros
-                (grah_scattergl_data_padded_annotated, array_index_padding,) = add_zeros_to_spectrum(
+                (
+                    grah_scattergl_data_padded_annotated,
+                    array_index_padding,
+                ) = add_zeros_to_spectrum(
                     grah_scattergl_data[:, l_idx_kept], pad_individual_peaks=True, padding=10 ** -4,
                 )
                 l_mz_with_lipids = grah_scattergl_data_padded_annotated[0, :]
@@ -1259,7 +1462,9 @@ def page_3_plot_spectrum(
 
                 # Rebuild lipid name from structure, cation, etc.
                 l_labels_all_lipids = data.compute_l_labels()
-                l_labels = [l_labels_all_lipids[idx] if idx != -1 else "" for idx in l_idx_labels_kept]
+                l_labels = [
+                    l_labels_all_lipids[idx] if idx != -1 else "" for idx in l_idx_labels_kept
+                ]
 
                 # Add annotated trace to plot
                 fig_mz.add_trace(
@@ -1278,7 +1483,9 @@ def page_3_plot_spectrum(
 
                 # Pad not annotated traces peaks with zeros
                 grah_scattergl_data_padded, array_index_padding = add_zeros_to_spectrum(
-                    grah_scattergl_data[:, l_idx_unkept], pad_individual_peaks=True, padding=10 ** -4,
+                    grah_scattergl_data[:, l_idx_unkept],
+                    pad_individual_peaks=True,
+                    padding=10 ** -4,
                 )
                 l_mz_without_lipids = grah_scattergl_data_padded[0, :]
                 l_intensity_without_lipids = grah_scattergl_data_padded[1, :]
@@ -1386,12 +1593,19 @@ def page_3_draw_heatmap_per_lipid_selection(
         if l_spectra == "ok":  # and ll_idx_labels == "ok":
             # get the actual values for l_spectra and ll_idx_labels and not just the dummy fillings
             l_spectra = global_spectrum_store(
-                slice_index, l_shapes_and_masks, l_mask_name, relayoutData, as_enrichment, log_transform
+                slice_index,
+                l_shapes_and_masks,
+                l_mask_name,
+                relayoutData,
+                as_enrichment,
+                log_transform,
             )
             ll_idx_labels = global_lipid_index_store(data, slice_index, l_spectra)
             if len(l_spectra) > 0:
                 if len(ll_idx_labels) != len(l_spectra):
-                    print("BUG: the number of received spectra is different from the number of received annotations")
+                    print(
+                        "BUG: the number of received spectra is different from the number of received annotations"
+                    )
                     return dash.no_update
 
                 # Compute average expression for each lipid and each selection
@@ -1411,7 +1625,9 @@ def page_3_draw_heatmap_per_lipid_selection(
                     ll_avg_intensity.append(l_avg_intensity)
 
                 dic_avg_lipids = {idx: [0] * n_sel for idx in set_lipids_idx}
-                for i, (l_lipids, l_avg_intensity) in enumerate(zip(ll_lipids_idx, ll_avg_intensity)):
+                for i, (l_lipids, l_avg_intensity) in enumerate(
+                    zip(ll_lipids_idx, ll_avg_intensity)
+                ):
                     for lipid, intensity in zip(l_lipids, l_avg_intensity):
                         dic_avg_lipids[lipid][i] = intensity
 
@@ -1435,7 +1651,11 @@ def page_3_draw_heatmap_per_lipid_selection(
                 # Sort by relative std
                 if sort_switch and n_sel > 1:
                     df_avg_intensity_lipids = df_avg_intensity_lipids.iloc[
-                        (df_avg_intensity_lipids.std(axis=1) / df_avg_intensity_lipids.mean(axis=1)).argsort(), :
+                        (
+                            df_avg_intensity_lipids.std(axis=1)
+                            / df_avg_intensity_lipids.mean(axis=1)
+                        ).argsort(),
+                        :,
                     ]
                 else:
                     # df_avg_intensity_lipids.sort_index(ascending=False, inplace=True)
@@ -1496,14 +1716,20 @@ def tab_3_download(n_clicks, fig_mz):
                 xlsx_writer = pd.ExcelWriter(bytes_io, engine="xlsxwriter")
                 for i, data in enumerate(fig_mz.data):
                     if i % 2 == 0:
-                        df = pd.DataFrame.from_dict({"m/z": data["x"], "Intensity": data["y"], "Lipid": data["text"],})
+                        df = pd.DataFrame.from_dict(
+                            {"m/z": data["x"], "Intensity": data["y"], "Lipid": data["text"],}
+                        )
                         df.to_excel(
-                            xlsx_writer, index=False, sheet_name="Annotated spectrum sel " + str(i // 2 + 1),
+                            xlsx_writer,
+                            index=False,
+                            sheet_name="Annotated spectrum sel " + str(i // 2 + 1),
                         )
                     else:
                         df = pd.DataFrame.from_dict({"m/z": data["x"], "Intensity": data["y"]})
                         df.to_excel(
-                            xlsx_writer, index=False, sheet_name="Remaining spectrum sel " + str(i // 2 + 1),
+                            xlsx_writer,
+                            index=False,
+                            sheet_name="Remaining spectrum sel " + str(i // 2 + 1),
                         )
                 xlsx_writer.save()
 
@@ -1514,7 +1740,8 @@ def tab_3_download(n_clicks, fig_mz):
 
 # Function that deactivate the download button if not region drawn
 @app.app.callback(
-    Output("tab-3-download-data-button", "disabled"), Input("page-3-graph-spectrum-per-pixel", "figure"),
+    Output("tab-3-download-data-button", "disabled"),
+    Input("page-3-graph-spectrum-per-pixel", "figure"),
 )
 def page_3_reset_download(fig_mz):
     if fig_mz is not None:
@@ -1567,7 +1794,9 @@ def page_3_fill_dropdown_options(l_idx_lipids, cliked_reset, slice_index, n_clic
                     + df_names.iloc[idx]["cation"]
                     for idx in l_idx_lipids
                 ]
-                options = [{"label": name, "value": idx} for name, idx in zip(l_names, l_idx_lipids)]
+                options = [
+                    {"label": name, "value": idx} for name, idx in zip(l_names, l_idx_lipids)
+                ]
 
                 # dropdown is displayed in reversed order
                 options.reverse()
@@ -1679,7 +1908,9 @@ def draw_modal_graph(
         # Build the list of mz boundaries for each peak
         l_lipid_bounds = [
             [
-                (float(df_names.iloc[index]["min"]), float(df_names.iloc[index]["max"]),) if index != -1 else None
+                (float(df_names.iloc[index]["min"]), float(df_names.iloc[index]["max"]),)
+                if index != -1
+                else None
                 for index in l_lipids
             ]
             for l_lipids in [l_red_lipids, l_green_lipids, l_blue_lipids]
@@ -1694,7 +1925,9 @@ def draw_modal_graph(
                 for shape in l_shapes_and_masks:
                     if shape[0] == "mask":
                         base64_string = shape[2]
-                        fig.add_trace(go.Image(visible=True, source=base64_string, hoverinfo="skip"))
+                        fig.add_trace(
+                            go.Image(visible=True, source=base64_string, hoverinfo="skip")
+                        )
                     elif shape[0] == "shape":
                         draw = shape[2]
                         l_draw.append(draw)

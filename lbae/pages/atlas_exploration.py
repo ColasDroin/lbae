@@ -8,9 +8,9 @@ import dash
 import dash_draggable
 
 # App module
-from lbae import app
-from lbae.app import figures, atlas
-from lbae.modules.tools.misc import return_pickled_object
+import app
+from app import figures, atlas
+from modules.tools.misc import return_pickled_object
 
 ###### DEFFINE PAGE LAYOUT ######
 
@@ -63,7 +63,12 @@ def return_layout(basic_config, slice_index):
             children=[
                 dbc.Card(
                     id="page-5-card-hierarchy",
-                    style={"maxWidth": "100%", "margin": "0 auto", "width": "100%", "height": "100%"},
+                    style={
+                        "maxWidth": "100%",
+                        "margin": "0 auto",
+                        "width": "100%",
+                        "height": "100%",
+                    },
                     children=[
                         dbc.CardHeader(children="Atlas hierarchy"),
                         dbc.CardBody(
@@ -109,7 +114,12 @@ def return_layout(basic_config, slice_index):
                 ),
                 dbc.Card(
                     id="page-5-card-atlas-sections",
-                    style={"maxWidth": "100%", "margin": "0 auto", "width": "100%", "height": "100%"},
+                    style={
+                        "maxWidth": "100%",
+                        "margin": "0 auto",
+                        "width": "100%",
+                        "height": "100%",
+                    },
                     # className="mt-2",
                     children=[
                         dbc.CardHeader(
@@ -179,7 +189,12 @@ def return_layout(basic_config, slice_index):
                 ),
                 dbc.Card(
                     id="page-5-card-atlas-3D",
-                    style={"maxWidth": "100%", "margin": "0 auto", "width": "100%", "height": "100%"},
+                    style={
+                        "maxWidth": "100%",
+                        "margin": "0 auto",
+                        "width": "100%",
+                        "height": "100%",
+                    },
                     children=[
                         dbc.CardHeader(children="3D brain representation"),
                         dbc.CardBody(
