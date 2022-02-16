@@ -1,7 +1,7 @@
-# -*- coding: utf-8 -*-
-
 # Copyright (c) 2022, Colas Droin. All rights reserved.
 # Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+
+""" This file contains various functions used many times in different parts of the app."""
 
 # ==================================================================================================
 # --- Imports
@@ -23,7 +23,6 @@ import psutil
 # ==================================================================================================
 
 
-# for dosctring: this function has been benchmarked and takes about 0.5ms to run
 def logmem():
     """This function returns a string representing the current amount of memory used by the program.
     It is almost instantaneous as it takes about 0.5ms to run.
@@ -63,7 +62,6 @@ def return_pickled_object(
     Returns:
         The result of compute_function. Type may vary depending on compute_function.
     """
-
     # Create folder containing the object if it doesn't already exist
     path_folder = "lbae/data/" + data_folder + "/"
     os.makedirs(path_folder, exist_ok=True)
@@ -82,7 +80,8 @@ def return_pickled_object(
     else:
         logging.info(
             file_name
-            + " could not be found or force_update is True. Computing the object and pickling it now."
+            + " could not be found or force_update is True. "
+            + "Computing the object and pickling it now."
         )
 
         # Execute compute_function
@@ -134,7 +133,6 @@ def convert_image_to_base64(
     Returns:
         str: The base 64 image encoded in a string.
     """
-
     # Convert 1D array into a PIL image
     if type is None:
         # Map image to a colormap and convert to uint8
@@ -170,7 +168,6 @@ def convert_image_to_base64(
 
         if format == "webp":
             logging.info("Webp mode selected, binary or paletted modes are not supported")
-            # Optimize the quality as the figure will be pickled, so this line of code won't run live
             pil_img.save(
                 stream, format=format, optimize=optimize, quality=quality, method=6, lossless=False
             )
@@ -203,18 +200,19 @@ def convert_image_to_base64(
             + base64.b64encode(stream.getvalue()).decode("utf-8")
         )
 
-    # Commented code for e.g. conversion with jpeg
-    # with BytesIO() as stream:
-    #    pil_img.save(stream, format="jpeg", optimize=optimize, quality=40)
-    #    base64_string = "data:image/jpeg;base64," + base64.b64encode(stream.getvalue()).decode("utf-8")
-
     return base64_string
 
 
 def delete_all_files_in_folder(input_folder):
+    """This function deletes all files and folder preset in the diretory input_folder
+
+    Args:
+        input_folder (str): Path of the input folder to clean.
+    """
     for filename in os.listdir(input_folder):
         file_path = os.path.join(input_folder, filename)
         try:
+            # Delete wether directory or file
             if os.path.isfile(file_path) or os.path.islink(file_path):
                 os.unlink(file_path)
             elif os.path.isdir(file_path):
@@ -225,7 +223,13 @@ def delete_all_files_in_folder(input_folder):
 
 # ! To update when code is more stable
 def delete_all_pickle_files(path_data_folder="lbae/data/"):
+    """This function deletes all the files saved as part of the app normal functioning, to allow for
+    a clean reset. Note that it actually deletes more than just pickle files.
 
+    Args:
+        path_data_folder (str, optional): Path of the data folder, in which temporary files will be 
+        cleaned. Defaults to "lbae/data/".
+    """
     # Delete all pickled atlas files
     path_atlas_object = "atlas/atlas_objects/"
     delete_all_files_in_folder(path_data_folder + path_atlas_object)

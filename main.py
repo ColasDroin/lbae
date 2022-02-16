@@ -1,7 +1,14 @@
-# -*- coding: utf-8 -*-
-
 # Copyright (c) 2022, Colas Droin. All rights reserved.
 # Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+
+""" This script is used to run the app, setup logging settings, and start redis if needed. 
+To run the app with gunicorn, use the following command in the (base) lbae folder: 
+gunicorn main:server -b:8050 --workers=2
+
+To kill gunicorn from a linux server (if it doesn't want to die, and respawn automatically), use the
+following command: 
+pkill -P1 gunicorn
+"""
 
 # ==================================================================================================
 # --- Imports
@@ -36,21 +43,31 @@ numba_logger.setLevel(logging.WARNING)
 # --- App and server initialization
 # ==================================================================================================
 
+logging.info("Starting import chain" + logmem())
+from lbae.app import app
+from lbae.index import return_main_content, return_validation_layout
+
 use_redis = False
 if use_redis:
     os.system("nohup ../redis/redis-6.2.6/src/redis-server ../redis/redis-6.2.6/src/redis.conf &")
 
-# Import the app and define server for gunicorn
-logging.info("Starting import chain" + logmem())
-from lbae import index
+# Define app layout
+main_content = return_main_content()
 
-server = index.app.server
+# Initialize app with main content
+app.layout = main_content
+
+# Give complete layout for callback validation
+app.validation_layout = return_validation_layout(main_content)
+
+# Server definition for gunicorn
+server = app.server
 
 # Run the app locally
 if __name__ == "__main__":
     logging.info("Starting app" + logmem())
     try:
-        index.run()
+        app.run_server(port=8073, debug=False)
     except:
         if use_redis:
             # Shut reddis server
@@ -78,11 +95,4 @@ if __name__ == "__main__":
 # ? make layout perfect for every screen size. Maybe automate the process for a given figure shape?
 # ? have the documentation always open on the right on very big screens to fill empty space
 
-
-# To run the app from the server, use the following command in the base lbae folder:
-# gunicorn main:server -b:8050 --workers=2
-# To kill gunicorn if it doesn't want to die
-# pkill -P1 gunicorn
-
 # http://cajal.epfl.ch:8050/
-
