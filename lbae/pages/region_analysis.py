@@ -662,8 +662,8 @@ def page_3_plot_heatmap(
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
     value_input = dash.callback_context.triggered[0]["prop_id"].split(".")[1]
 
-    # if value_input != "hoverData":
-    #    print(id_input, value_input, slice_index, cliked_reset, l_mask_name, url, l_color_mask, reset)
+    if value_input != "hoverData":
+        print(id_input, value_input, slice_index, cliked_reset, l_mask_name, url, l_color_mask, reset)
 
     # If a new slice is loaded or the page just got loaded
     # do nothing because of automatic relayout of the heatmap which is automatically triggered when the page is loaded
@@ -694,7 +694,7 @@ def page_3_plot_heatmap(
         id_input == "page-3-dropdown-brain-regions "
         and relayoutData is None
         and cliked_reset is None
-        and l_mask_name is None
+        and (l_mask_name is None or len(l_mask_name) == 0)
     ):
         fig = return_pickled_object(
             "figures/load_page",
@@ -726,7 +726,7 @@ def page_3_plot_heatmap(
         )
         color_idx = None
         col_next = None
-
+        # l_shapes_and_masks = []
         if l_mask_name is not None:
 
             if len(l_mask_name) > 0:
@@ -1007,6 +1007,11 @@ def global_spectrum_store(slice_index, l_shapes_and_masks, l_mask_name, relayout
     l_spectra = []
     idx_mask = -1
     idx_path = -1
+
+    logging.info("Computing spectra now")
+    print("ICI1", l_shapes_and_masks)
+    print("ICI2", l_mask_name)
+
     for shape in l_shapes_and_masks:
         grah_scattergl_data = None
         # Compute average spectrum from mask
@@ -1151,9 +1156,6 @@ def page_3_record_spectra(
 
     elif id_input == "page-3-button-compute-spectra":
         logging.info("Starting to compute spectrum")
-
-        # Set progress bar to 0 in redis db
-        # r.set(session_id + "page-3-progress", 10)
 
         l_spectra = global_spectrum_store(
             slice_index, l_shapes_and_masks, l_mask_name, relayoutData, as_enrichment, log_transform

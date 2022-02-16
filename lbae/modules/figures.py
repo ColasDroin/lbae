@@ -1567,19 +1567,15 @@ class Figures:
         def return_df_avg_lipids(l_selected_regions):
             dic_avg_lipids = {}
             for slice_index in range(self._data.get_slice_number()):
-                set_progress(
-                    (int(slice_index / self._data.get_slice_number() * 100), "Loading slice n°" + str(slice_index + 1))
-                )
 
-                # logging.info("Loading dictionnary " + str(slice_index))
-                # dic_masks = return_pickled_object(
-                #     "atlas/atlas_objects",
-                #     "dic_masks_and_spectra",
-                #     force_update=False,
-                #     compute_function=self._atlas.compute_dic_projected_masks_and_spectra,
-                #     slice_index=slice_index,
-                # )
-                # logging.info("Dictionnary loaded for slice " + str(slice_index))
+                # Display progress every 10 slices
+                if slice_index % 10 == 0:
+                    set_progress(
+                        (
+                            int(slice_index / self._data.get_slice_number() * 100),
+                            "Loading slice n°" + str(slice_index + 1),
+                        )
+                    )
 
                 l_spectra = []
                 for region in l_selected_regions:

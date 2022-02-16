@@ -385,9 +385,6 @@ class Atlas:
 
             dic_existing_masks[slice_index] = set([])
 
-            if slice_index > 3:
-                continue
-
             # Get hierarchical tree of brain structures -
             for mask_name, id_mask in self.dic_name_acronym.items():
                 # get the array corresponding to the projected mask

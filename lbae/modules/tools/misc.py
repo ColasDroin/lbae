@@ -1,6 +1,12 @@
-###### IMPORT MODULES ######
+# -*- coding: utf-8 -*-
 
-# Standard import
+# Copyright (c) 2022, Colas Droin. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+
+# ==================================================================================================
+# --- Imports
+# ==================================================================================================
+
 import logging
 import pickle
 import os
@@ -12,18 +18,51 @@ from PIL import Image
 import shutil
 import psutil
 
-###### DEFINE MISC FUNCTIONS ######
+# ==================================================================================================
+# --- Functions
+# ==================================================================================================
+
 
 # for dosctring: this function has been benchmarked and takes about 0.5ms to run
 def logmem():
+    """This function returns a string representing the current amount of memory used by the program.
+    It is almost instantaneous as it takes about 0.5ms to run.
+
+    Returns:
+        str: Amount of memory used by the program.
+    """
     memory = psutil.Process(os.getpid()).memory_info().rss / (1024 * 1024)
     memory_string = "MemTotal: " + str(memory)
     return "\t" + memory_string
 
 
 def return_pickled_object(
-    data_folder, file_name, force_update, compute_function, ignore_arguments_naming=False, **compute_function_args
+    data_folder,
+    file_name,
+    force_update,
+    compute_function,
+    ignore_arguments_naming=False,
+    **compute_function_args
 ):
+    """This function checks if the result of the method or function compute_function has not been
+    computed and saved already. If yes, it returns this result from the corresponding pickle file.
+    Else, it executes compute_function, saves the result in a pickle file, and returns the result.
+
+    Args:
+        data_folder (str): The path of the folder in which the result of compute_function must be 
+            saved.
+        file_name (str): The name of the pickle file to save/load. Arguments will potentially be 
+            contatenated to file_name depending on the value of ignore_arguments_naming.
+        force_update (bool): If True, compute_function will be re-executed and saved despite the 
+            file result already existing.
+        compute_function (func): The function/method whose result must be loaded/saved.
+        ignore_arguments_naming (bool, optional): If True, the arguments of compute_function won't
+            be added to the filename of the result file. Defaults to False.
+        **compute_function_args: Arguments of compute_function.
+
+    Returns:
+        The result of compute_function. Type may vary depending on compute_function.
+    """
 
     # Create folder containing the object if it doesn't already exist
     path_folder = "lbae/data/" + data_folder + "/"
@@ -42,11 +81,14 @@ def return_pickled_object(
             return pickle.load(file)
     else:
         logging.info(
-            file_name + " could not be found or force_update is True. Computing the object and pickling it now."
+            file_name
+            + " could not be found or force_update is True. Computing the object and pickling it now."
         )
 
+        # Execute compute_function
         object = compute_function(**compute_function_args)
 
+        # Save the result in a pickle file
         with open(path_folder + file_name, "wb") as file:
             pickle.dump(object, file)
         logging.info(file_name + " being returned now from computation.")
@@ -64,6 +106,34 @@ def convert_image_to_base64(
     decrease_resolution_factor=1,
     binary=False,
 ):
+    """This functions allows for the conversion of a numpy array into a bytestring image using PIL. 
+    All images are paletted so save space.
+
+    Args:
+        image_array (np.ndarray): The array containing the image. May be 1D of 3D or 4D. The type 
+            argument must match with the dimensionality.
+        optimize (bool, optional): If True, PIL will try to optimize the image size, at the expense 
+            of a longer computation time. This is not available with all image formats (check PIL 
+            documentation). Defaults to True.
+        quality (int, optional): Image quality, from 0 to 100, used by PIL for compression. Defaults 
+            to 85.
+        colormap (cm colormap, optional): The colormap used to map 1D uint8 image to colors. 
+            Defaults to cm.viridis.
+        type (str, optional): The type of the image. If image_array is in 3D, type must be RGB. If 
+            4D, type must be RGBA. Defaults to None.
+        format (str, optional): The output format for the bytestring image. Defaults to "png". 
+            "webp", "gif", "jpeg" also available.
+        overlay (np.ndarray, optional): Another image array to overlay with image_array. Defaults to 
+            None.
+        decrease_resolution_factor (int, optional): Used to divide the resolution of the initial 
+            array, to output a smaller image. Defaults to 1.
+        binary (bool, optional): Used to convert the output image to binary format ("LA", in PIL), 
+            to save a lot of space for greyscales images. 
+            Defaults to False.
+
+    Returns:
+        str: The base 64 image encoded in a string.
+    """
 
     # Convert 1D array into a PIL image
     if type is None:
@@ -87,42 +157,54 @@ def convert_image_to_base64(
     # If we want to decrease resolution to save space
     if decrease_resolution_factor > 1:
         x, y = pil_img.size
-        x2, y2 = int(round(x / decrease_resolution_factor)), int(round(y / decrease_resolution_factor))
+        x2, y2 = (
+            int(round(x / decrease_resolution_factor)),
+            int(round(y / decrease_resolution_factor)),
+        )
         pil_img = pil_img.resize((x2, y2), Image.ANTIALIAS)
 
     # Convert to base64
     base64_string = None
     with BytesIO() as stream:
+        # Handle image format
+
         if format == "webp":
             logging.info("Webp mode selected, binary or paletted modes are not supported")
             # Optimize the quality as the figure will be pickled, so this line of code won't run live
-            pil_img.save(stream, format=format, optimize=optimize, quality=quality, method=6, lossless=False)
+            pil_img.save(
+                stream, format=format, optimize=optimize, quality=quality, method=6, lossless=False
+            )
+
         elif format == "gif":
             # Convert to paletted image to save space
             pil_img = pil_img.convert("P")
-            # Optimize the quality as the figure will be pickled, so this line of code won't run live
             logging.info("gif mode selected, quality argument is not supported")
             pil_img.save(stream, format=format, optimize=optimize, transparency=255)
+
         elif format == "jpeg":
             # Convert to paletted image to save space
             pil_img = pil_img.convert("P")
-            # Optimize the quality as the figure will be pickled, so this line of code won't run live
             pil_img.save(stream, format=format, optimize=optimize, quality=quality)
+
         else:
-            # ? Caution, palette-based may not work or cause bug
             # Convert to paletted image to save space
             if binary:
                 pil_img = pil_img.convert("LA")
             else:
                 pil_img = pil_img.convert("P")
-            # Optimize the quality as the figure will be pickled, so this line of code won't run live
             logging.info("png mode selected, quality argument is not supported")
             pil_img.save(stream, format=format, optimize=optimize)
-        base64_string = "data:image/" + format + ";base64," + base64.b64encode(stream.getvalue()).decode("utf-8")
+
+        # Encode final image
+        base64_string = (
+            "data:image/"
+            + format
+            + ";base64,"
+            + base64.b64encode(stream.getvalue()).decode("utf-8")
+        )
 
     # Commented code for e.g. conversion with jpeg
     # with BytesIO() as stream:
-    #    # Optimize the quality as the figure will be pickled, so this line of code won't run live
     #    pil_img.save(stream, format="jpeg", optimize=optimize, quality=40)
     #    base64_string = "data:image/jpeg;base64," + base64.b64encode(stream.getvalue()).decode("utf-8")
 

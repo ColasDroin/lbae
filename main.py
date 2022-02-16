@@ -1,6 +1,19 @@
-# Preliminary imports
+# -*- coding: utf-8 -*-
+
+# Copyright (c) 2022, Colas Droin. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+
+# ==================================================================================================
+# --- Imports
+# ==================================================================================================
+
 import logging
-from lbae.modules.tools.misc import logmem
+import os
+from lbae.modules.tools.misc import logmem  # To track memory usage
+
+# ==================================================================================================
+# --- Logging settings
+# ==================================================================================================
 
 # Define logging options for print and debug
 logging.basicConfig(
@@ -19,8 +32,13 @@ numexpr_logger.setLevel(logging.WARNING)
 numba_logger = logging.getLogger("numba")
 numba_logger.setLevel(logging.WARNING)
 
-# Launch Redis server
-# os.system("nohup ../redis/redis-6.2.6/src/redis-server ../redis/redis-6.2.6/src/redis.conf &")
+# ==================================================================================================
+# --- App and server initialization
+# ==================================================================================================
+
+use_redis = False
+if use_redis:
+    os.system("nohup ../redis/redis-6.2.6/src/redis-server ../redis/redis-6.2.6/src/redis.conf &")
 
 # Import the app and define server for gunicorn
 logging.info("Starting import chain" + logmem())
@@ -31,15 +49,20 @@ server = index.app.server
 # Run the app locally
 if __name__ == "__main__":
     logging.info("Starting app" + logmem())
-    # try:
-    index.run()
-    # except:
-    #    # Shut reddis server
-    #    os.system("../redis/redis-6.2.6/src/redis-cli shutdown")
+    try:
+        index.run()
+    except:
+        if use_redis:
+            # Shut reddis server
+            os.system("../redis/redis-6.2.6/src/redis-cli shutdown")
+        else:
+            pass
+
 
 # TODO make a careful memory analysis to free more memory
 # TODO incoporate new brain slices
 # TODO adress all # ! and # ? comments in the code
+# TODO make the app with tabs instead of pages to accelerate it?
 # TODO move layouts to other files
 # TODO when everything is stable, create a function that delete all pickle files and repickle everything automatically
 # TODO update notebooks with up-to-date classes
@@ -52,7 +75,6 @@ if __name__ == "__main__":
 # TODO make a docker container for the very final version of the app
 
 # ? implement the app as a multipage app when the feature is available on Dash
-# ? Implement a "fast mode" with lower resolution images and spectra to have a faster app (for slow connections)
 # ? make layout perfect for every screen size. Maybe automate the process for a given figure shape?
 # ? have the documentation always open on the right on very big screens to fill empty space
 

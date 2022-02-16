@@ -3,8 +3,6 @@
 # Standard imports
 import numpy as np
 from numba import njit
-import tables
-import warnings
 import logging
 
 # Homemade packages
@@ -67,14 +65,20 @@ def compute_normalized_spectra(array_spectra, array_pixel_indexes):
 
     # Loop over the spectrum of each pixel
     for idx_pix in range(array_pixel_indexes.shape[0]):
-        logging.info("_compute_normalized_spectra:" + str(idx_pix / array_pixel_indexes.shape[0] * 100) + " done")
+        logging.info(
+            "_compute_normalized_spectra:"
+            + str(idx_pix / array_pixel_indexes.shape[0] * 100)
+            + " done"
+        )
 
         # If pixel contains no peak, skip it
         if array_pixel_indexes[idx_pix, 0] == -1:
             continue
 
         # Get the spectrum of current pixel
-        spectrum = array_spectra[:, array_pixel_indexes[idx_pix, 0] : array_pixel_indexes[idx_pix, 1] + 1]
+        spectrum = array_spectra[
+            :, array_pixel_indexes[idx_pix, 0] : array_pixel_indexes[idx_pix, 1] + 1
+        ]
 
         # Out of safety, normalize the spectrum of current pixel with respect to its own sum
         # Might be useless since array_spectra is normally already normalized by pixel
@@ -90,14 +94,20 @@ def compute_normalized_spectra(array_spectra, array_pixel_indexes):
         spectrum = strip_zeros(spectrum)
 
         # Store back the spectrum
-        if spectrum.shape[1] == array_pixel_indexes[idx_pix, 1] + 1 - array_pixel_indexes[idx_pix, 0]:
+        if (
+            spectrum.shape[1]
+            == array_pixel_indexes[idx_pix, 1] + 1 - array_pixel_indexes[idx_pix, 0]
+        ):
             array_spectra_normalized[
                 :, array_pixel_indexes[idx_pix, 0] : array_pixel_indexes[idx_pix, 1] + 1
             ] = spectrum
         else:
             # Store shorter-sized spectrum in array_spectra_normalized, rest will be zeros
             array_spectra_normalized[
-                :, array_pixel_indexes[idx_pix, 0] : array_pixel_indexes[idx_pix, 0] + len(spectrum) + 1
+                :,
+                array_pixel_indexes[idx_pix, 0] : array_pixel_indexes[idx_pix, 0]
+                + len(spectrum)
+                + 1,
             ]
 
     return array_spectra_normalized
@@ -111,7 +121,7 @@ def convert_array_to_fine_grained(array, resolution, lb=350, hb=1250):
 
     Args:
         array (np.ndarray or pytables.array): An array of shape (2,n) containing spectrum data (m/z and intensity).
-        resolution (float): The resolution used for finer-graining.
+            resolution (float): The resolution used for finer-graining.
         lb (int, optional): Lower bound for the fine-grained array. Defaults to 350.
         hb (int, optional): Higher bound for the fine-grained array. Defaults to 1250.
 
@@ -152,7 +162,13 @@ def strip_zeros(array):
 ###### FUNCTIONS TO COMPUTE IMAGE FROM LIPID SELECTION ######
 @njit
 def compute_image_using_index_lookup(
-    low_bound, high_bound, array_spectra, array_pixel_indexes, img_shape, lookup_table_spectra, divider_lookup,
+    low_bound,
+    high_bound,
+    array_spectra,
+    array_pixel_indexes,
+    img_shape,
+    lookup_table_spectra,
+    divider_lookup,
 ):
     """For each pixel, this function extracts from array_spectra the intensity of a given m/z selection (normally 
     corresponding to a lipid annotation) defined by a lower and a higher bound. For faster computation, it uses 
@@ -192,13 +208,24 @@ def compute_image_using_index_lookup(
         higher_bound = lookup_table_spectra[int(np.ceil(high_bound / divider_lookup))][idx_pix]
         array_to_sum = array_spectra[:, lower_bound : higher_bound + 1]
         # Sum the m/z values over the requested range
-        image = _fill_image(image, idx_pix, img_shape, array_to_sum, lower_bound, higher_bound, low_bound, high_bound)
+        image = _fill_image(
+            image,
+            idx_pix,
+            img_shape,
+            array_to_sum,
+            lower_bound,
+            higher_bound,
+            low_bound,
+            high_bound,
+        )
 
     return image
 
 
 @njit
-def _fill_image(image, idx_pix, img_shape, array_to_sum, lower_bound, higher_bound, low_bound, high_bound):
+def _fill_image(
+    image, idx_pix, img_shape, array_to_sum, lower_bound, higher_bound, low_bound, high_bound
+):
     """ This internal function is used to fill the image provided as an argument with the intensities corresponding to
     the selection between low and high bounds."""
     # While i is in the interval of the current lipid annotation, delimited by low and high bounds, fill image with
@@ -261,7 +288,13 @@ def compute_image_using_index_and_image_lookup(
     # Image lookup table is not worth it for small differences between the bounds
     if (high_bound - low_bound) < 5:
         return compute_image_using_index_lookup(
-            low_bound, high_bound, array_spectra, array_pixel_indexes, img_shape, lookup_table_spectra, divider_lookup,
+            low_bound,
+            high_bound,
+            array_spectra,
+            array_pixel_indexes,
+            img_shape,
+            lookup_table_spectra,
+            divider_lookup,
         )
 
     else:
@@ -294,7 +327,8 @@ def _compute_image_using_index_and_image_lookup_partial(
     """
     # Get a first approximate of the requested lipid image
     image = (
-        lookup_table_image[int(high_bound / divider_lookup)] - lookup_table_image[int(low_bound / divider_lookup)]
+        lookup_table_image[int(high_bound / divider_lookup)]
+        - lookup_table_image[int(low_bound / divider_lookup)]
     )  # Normalization should be useless here as the spectrum is already normalized
 
     # Look for true lower/higher bound between the lower/higher looked up image and the next one
@@ -302,7 +336,10 @@ def _compute_image_using_index_and_image_lookup_partial(
     array_idx_low_bound_sup_pix = lookup_table_spectra[int(np.ceil(low_bound / divider_lookup))]
     array_idx_high_bound_inf_pix = lookup_table_spectra[int(high_bound / divider_lookup)]
     array_idx_high_bound_sup_pix = lookup_table_spectra[int(np.ceil(high_bound / divider_lookup))]
-    for idx_pix, (idx_low_bound_inf, idx_low_bound_sup, idx_high_bound_inf, idx_high_bound_sup) in enumerate(
+    for (
+        idx_pix,
+        (idx_low_bound_inf, idx_low_bound_sup, idx_high_bound_inf, idx_high_bound_sup),
+    ) in enumerate(
         zip(
             array_idx_low_bound_inf_pix,
             array_idx_low_bound_sup_pix,
@@ -321,14 +358,30 @@ def _compute_image_using_index_and_image_lookup_partial(
 
         # Correct the image coming from lookup
         image = _correct_image(
-            image, idx_pix, img_shape, array_to_sum_lb, array_to_sum_hb, low_bound, high_bound, divider_lookup
+            image,
+            idx_pix,
+            img_shape,
+            array_to_sum_lb,
+            array_to_sum_hb,
+            low_bound,
+            high_bound,
+            divider_lookup,
         )
 
     return image
 
 
 @njit
-def _correct_image(image, idx_pix, img_shape, array_to_sum_lb, array_to_sum_hb, low_bound, high_bound, divider_lookup):
+def _correct_image(
+    image,
+    idx_pix,
+    img_shape,
+    array_to_sum_lb,
+    array_to_sum_hb,
+    low_bound,
+    high_bound,
+    divider_lookup,
+):
     """ This internal function is used to correct the intensities in the image provided as an argument, by adding 
     (removing) the intensities that should (not) have been in the selection between low and high bounds."""
     # First correct for the m/z values that have been summed in the image and shouldn't have
@@ -493,15 +546,23 @@ def compute_index_boundaries(low_bound, high_bound, array_spectra_avg, lookup_ta
             array_spectra_avg.
     """
     # Extract the arrays provided by the lookup table as first guess for the low and high bounds
-    array_to_sum_lb = array_spectra_avg[0, lookup_table[int(low_bound)] : lookup_table[int(np.ceil(low_bound))] + 1]
-    array_to_sum_hb = array_spectra_avg[0, lookup_table[int(high_bound)] : lookup_table[int(np.ceil(high_bound))] + 1]
+    array_to_sum_lb = array_spectra_avg[
+        0, lookup_table[int(low_bound)] : lookup_table[int(np.ceil(low_bound))] + 1
+    ]
+    array_to_sum_hb = array_spectra_avg[
+        0, lookup_table[int(high_bound)] : lookup_table[int(np.ceil(high_bound))] + 1
+    ]
 
     # Correct the lookup indices with these arrays
-    return _loop_compute_index_boundaries(array_to_sum_lb, array_to_sum_hb, low_bound, high_bound, lookup_table)
+    return _loop_compute_index_boundaries(
+        array_to_sum_lb, array_to_sum_hb, low_bound, high_bound, lookup_table
+    )
 
 
 @njit
-def _loop_compute_index_boundaries(array_to_sum_lb, array_to_sum_hb, low_bound, high_bound, lookup_table):
+def _loop_compute_index_boundaries(
+    array_to_sum_lb, array_to_sum_hb, low_bound, high_bound, lookup_table
+):
     """This internal function is wrapped by compute_index_boundaries(). Please consult the corresponding documentation.
     """
     # Define intial guess for the low and high bounds indices
@@ -564,7 +625,9 @@ def add_zeros_to_spectrum(array_spectra, pad_individual_peaks=True, padding=10 *
 
     """
     # For speed, allocate array of maximum size
-    new_array_spectra = np.zeros((array_spectra.shape[0], array_spectra.shape[1] * 3), dtype=np.float32)
+    new_array_spectra = np.zeros(
+        (array_spectra.shape[0], array_spectra.shape[1] * 3), dtype=np.float32
+    )
     array_index_padding = np.zeros((array_spectra.shape[1]), dtype=np.int32)
 
     # Either pad each peak individually
@@ -711,23 +774,31 @@ def compute_spectrum_per_row_selection(
     # Fill array line by line
     for i, x in enumerate(range(list_index_bound_rows[0], list_index_bound_rows[1] + 1)):
         for idx_1, idx_2 in zip(ll_idx[i][0:-1:2], ll_idx[i][1::2]):
-            array_spectra_selection[:, pad : pad + idx_2 + 1 - idx_1] = array_spectra[:, idx_1 : idx_2 + 1]
+            array_spectra_selection[:, pad : pad + idx_2 + 1 - idx_1] = array_spectra[
+                :, idx_1 : idx_2 + 1
+            ]
             pad += idx_2 + 1 - idx_1
 
     # Sort array
     array_spectra_selection = array_spectra_selection[:, array_spectra_selection[0].argsort()]
 
     # Sum the arrays (similar m/z values are added)
-    array_spectra_selection = reduce_resolution_sorted_array_spectra(array_spectra_selection, resolution=10 ** -4)
+    array_spectra_selection = reduce_resolution_sorted_array_spectra(
+        array_spectra_selection, resolution=10 ** -4
+    )
 
     # Pad with zeros if asked
     if zeros_extend:
-        array_spectra_selection, array_index_padding = add_zeros_to_spectrum(array_spectra_selection)
+        array_spectra_selection, array_index_padding = add_zeros_to_spectrum(
+            array_spectra_selection
+        )
     return array_spectra_selection
 
 
 @njit
-def get_list_row_indexes(list_index_bound_rows, list_index_bound_column_per_row, array_pixel_indexes, image_shape):
+def get_list_row_indexes(
+    list_index_bound_rows, list_index_bound_column_per_row, array_pixel_indexes, image_shape
+):
     """This function turns a selection of rows (bounds in list_index_bound_rows) and corresponding columns (bounds in 
     list_index_bound_column_per_row) into an optimized list of pixel indices in array_spectra. It takes advantage of the 
     fact that pixels that are neighbours in a given rows also have contiguous spectra in array_spectra, allowing for 
@@ -756,13 +827,20 @@ def get_list_row_indexes(list_index_bound_rows, list_index_bound_column_per_row,
         l_idx = []
         for j in range(0, len(list_index_bound_column_per_row[i]), 2):
             # Check if we're not just looping over zero padding
-            if list_index_bound_column_per_row[i][j] == 0 and list_index_bound_column_per_row[i][j + 1] == 0:
+            if (
+                list_index_bound_column_per_row[i][j] == 0
+                and list_index_bound_column_per_row[i][j + 1] == 0
+            ):
                 continue
 
             # Get the outer indexes of the (concatenated) spectra of the current row belonging to the selection
-            idx_pix_1 = convert_coor_to_spectrum_idx((x, list_index_bound_column_per_row[i][j]), image_shape)
+            idx_pix_1 = convert_coor_to_spectrum_idx(
+                (x, list_index_bound_column_per_row[i][j]), image_shape
+            )
             idx_1 = array_pixel_indexes[idx_pix_1, 0]
-            idx_pix_2 = convert_coor_to_spectrum_idx((x, list_index_bound_column_per_row[i][j + 1]), image_shape)
+            idx_pix_2 = convert_coor_to_spectrum_idx(
+                (x, list_index_bound_column_per_row[i][j + 1]), image_shape
+            )
             idx_2 = array_pixel_indexes[idx_pix_2, 1]
 
             # Case we started or finished with empty pixel
@@ -867,16 +945,21 @@ def sample_rows_from_path(path):
                 len(list_index_bound_column_per_row[x - x_min]) % 2 == 1
                 and len(list_index_bound_column_per_row[x - x_min]) != 1
             ):
-                list_index_bound_column_per_row[x - x_min] = list_index_bound_column_per_row[x - x_min][:-1]
+                list_index_bound_column_per_row[x - x_min] = list_index_bound_column_per_row[
+                    x - x_min
+                ][:-1]
             else:
                 list_index_bound_column_per_row[x - x_min] = np.append(
-                    list_index_bound_column_per_row[x - x_min], list_index_bound_column_per_row[x - x_min][0]
+                    list_index_bound_column_per_row[x - x_min],
+                    list_index_bound_column_per_row[x - x_min][0],
                 )
         list_index_bound_column_per_row[x - x_min].sort()  # Inplace sort to spare memory
 
     # Convert list of np.array to np array padded with zeros (for numba compatibility)
     max_len = max([len(i) for i in list_index_bound_column_per_row])
-    array_index_bound_column_per_row = np.zeros((len(list_index_bound_column_per_row), max_len), dtype=np.int32)
+    array_index_bound_column_per_row = np.zeros(
+        (len(list_index_bound_column_per_row), max_len), dtype=np.int32
+    )
     for i, arr in enumerate(list_index_bound_column_per_row):
         array_index_bound_column_per_row[i, : len(arr)] = arr
 
