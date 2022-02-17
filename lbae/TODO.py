@@ -1,5 +1,6 @@
 #
 # TODO make a careful memory analysis to free more memory
+# TODO replace all "tabs" by "pages"
 # TODO incoporate new brain slices
 # TODO adress all # ! and # ? comments in the code
 # TODO make the app with tabs instead of pages to accelerate it?

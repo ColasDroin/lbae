@@ -15,6 +15,7 @@ import dash_mantine_components as dmc
 # LBAE modules
 from app import figures, data
 import app
+from modules.tools.misc import return_pickled_object
 
 HEIGHT_PLOTS = 280
 N_LINES = int(np.ceil(HEIGHT_PLOTS / 30))
@@ -144,14 +145,221 @@ def return_layout(basic_config, slice_index):
                                                         slice_index, 600, 605, binary_string=False
                                                     ),
                                                 ),
-                                                dmc.Badge(
-                                                    id="page-2-badge-input",
-                                                    children="Current input: " + "m/z boundaries",
-                                                    color="teal",
-                                                    variant="outline",
+                                                dmc.Group(
+                                                    spacing="xs",
+                                                    align="flex-end",
+                                                    style={"left": "1%", "top": "1em",},
                                                     class_name="position-absolute",
-                                                    style={"right": "5%", "top": "2em"},
+                                                    children=[
+                                                        dmc.Group(
+                                                            direction="column",
+                                                            spacing=0,
+                                                            children=[
+                                                                html.Div(
+                                                                    children=" Lipid selection",
+                                                                    className="fs-5 text-light",
+                                                                ),
+                                                                dmc.MultiSelect(
+                                                                    id="page-2-dropdown-lipids",
+                                                                    data=return_pickled_object(
+                                                                        "annotations/",
+                                                                        "lipid_options",
+                                                                        force_update=False,
+                                                                        compute_function=return_lipid_options,
+                                                                    ),
+                                                                    searchable=True,
+                                                                    nothingFound="No lipid found",
+                                                                    radius="md",
+                                                                    size="xs",
+                                                                    # variant="filled",
+                                                                    placeholder="Choose up to 3 lipids",
+                                                                    clearable=False,
+                                                                    maxSelectedValues=3,
+                                                                    transitionDuration=150,
+                                                                    transition="pop-top-left",
+                                                                    transitionTimingFunction="ease",
+                                                                    style={"width": "20em",},
+                                                                ),
+                                                            ],
+                                                        ),
+                                                        dmc.Button(
+                                                            children="Display as RGB",
+                                                            id="tab-2-rgb-button",
+                                                            variant="filled",
+                                                            color="gray",
+                                                            radius="md",
+                                                            size="xs",
+                                                            disabled=True,
+                                                            compact=False,
+                                                            loading=False,
+                                                        ),
+                                                        dmc.Button(
+                                                            children="Display as colormap",
+                                                            id="tab-2-colormap-button",
+                                                            variant="filled",
+                                                            color="gray",
+                                                            radius="md",
+                                                            size="xs",
+                                                            disabled=True,
+                                                            compact=False,
+                                                            loading=False,
+                                                        ),
+                                                    ],
                                                 ),
+                                                html.Div(
+                                                    id="page-2-badge-input",
+                                                    children=" Current input: " + "m/z boundaries",
+                                                    className="fs-5 text-light position-absolute",
+                                                    style={"right": "1%", "top": "1em"},
+                                                ),
+                                                dmc.Badge(
+                                                    id="page-2-badge-lipid-1",
+                                                    children="name-lipid-1",
+                                                    color="red",
+                                                    variant="filled",
+                                                    class_name="d-none",
+                                                    style={"right": "1%", "top": "4em"},
+                                                ),
+                                                dmc.Badge(
+                                                    id="page-2-badge-lipid-2",
+                                                    children="name-lipid-2",
+                                                    color="teal",
+                                                    variant="filled",
+                                                    class_name="d-none",
+                                                    style={"right": "1%", "top": "6em"},
+                                                ),
+                                                dmc.Badge(
+                                                    id="page-2-badge-lipid-3",
+                                                    children="name-lipid-3",
+                                                    color="blue",
+                                                    variant="filled",
+                                                    class_name="d-none",
+                                                    style={"right": "1%", "top": "8em"},
+                                                ),
+                                                dmc.Group(
+                                                    spacing="xs",
+                                                    align="flex-end",
+                                                    children=[
+                                                        dmc.Group(
+                                                            # position="center",
+                                                            direction="column",
+                                                            spacing=0,
+                                                            children=[
+                                                                html.Div(
+                                                                    children=" Lower bound (m/z)",
+                                                                    className="fs-5 text-light",
+                                                                ),
+                                                                dmc.NumberInput(
+                                                                    id="page-2-lower-bound",
+                                                                    min=380,
+                                                                    max=1220,
+                                                                    precision=3,
+                                                                    radius="md",
+                                                                    size="xs",
+                                                                    value=600,
+                                                                    # variant="filled",
+                                                                    hideControls=True,
+                                                                    # label="Lower bound (m/z)",
+                                                                ),
+                                                            ],
+                                                        ),
+                                                        dmc.Group(
+                                                            # position="center",
+                                                            direction="column",
+                                                            spacing=0,
+                                                            children=[
+                                                                html.Div(
+                                                                    children=" Upper bound (m/z)",
+                                                                    className="fs-5 text-light",
+                                                                ),
+                                                                dmc.NumberInput(
+                                                                    id="page-2-upper-bound",
+                                                                    min=380,
+                                                                    max=1220,
+                                                                    precision=3,
+                                                                    radius="md",
+                                                                    size="xs",
+                                                                    value=602,
+                                                                    # variant="filled",
+                                                                    hideControls=True,
+                                                                    # label="Upper bound (m/z)",
+                                                                ),
+                                                            ],
+                                                        ),
+                                                        dmc.Button(
+                                                            children="Display as colormap",
+                                                            id="page-2-button-bounds",
+                                                            variant="filled",
+                                                            color="gray",
+                                                            radius="md",
+                                                            size="xs",
+                                                            compact=False,
+                                                            loading=False,
+                                                        ),
+                                                    ],
+                                                    style={
+                                                        "width": "35em",
+                                                        "left": "1%",
+                                                        "bottom": "1em",
+                                                    },
+                                                    class_name="position-absolute",
+                                                ),
+                                                dmc.Button(
+                                                    children="Download data",
+                                                    id="tab-2-download-data-button",
+                                                    variant="filled",
+                                                    disabled=True,
+                                                    color="gray",
+                                                    radius="md",
+                                                    size="xs",
+                                                    compact=False,
+                                                    loading=False,
+                                                    style={
+                                                        # "width": "35em",
+                                                        "right": "1%",
+                                                        "bottom": "1em",
+                                                    },
+                                                    class_name="position-absolute mb-1",
+                                                ),
+                                                dcc.Download(id="tab-2-download-data"),
+                                                # html.Small(
+                                                #     id="page-2-text-bounds",
+                                                #     children="Or enter the lower and upper bounds of your m/z range selection.",
+                                                #     className="position-absolute",
+                                                #     style={
+                                                #         "width": "35em",
+                                                #         "left": "1%",
+                                                #         "bottom": "3.5em",
+                                                #         "color": "white",
+                                                #     },
+                                                # ),
+                                                # dbc.InputGroup(
+                                                #     [
+                                                #         dbc.Input(
+                                                #             id="page-2-lower-bound",
+                                                #             placeholder="Lower bound (m/z value)",
+                                                #             value=600,
+                                                #         ),
+                                                #         dbc.Input(
+                                                #             id="page-2-upper-bound",
+                                                #             placeholder="Upper bound (m/z value)",
+                                                #             value=605,
+                                                #         ),
+                                                #         dbc.Button(
+                                                #             "Display",
+                                                #             id="page-2-button-bounds",
+                                                #             n_clicks=0,
+                                                #             color="primary",
+                                                #         ),
+                                                #     ],
+                                                #     size="sm",
+                                                #     style={
+                                                #         "width": "35em",
+                                                #         "left": "1%",
+                                                #         "bottom": "1em",
+                                                #     },
+                                                #     class_name="position-absolute",
+                                                # ),
                                             ],
                                         ),
                                     ],
@@ -225,90 +433,90 @@ def return_layout(basic_config, slice_index):
                         dbc.CardBody(
                             className="pt-1",
                             children=[
-                                dbc.Tooltip(
-                                    children="Please select the lipids of your choice (3 max):",
-                                    target="page-2-card-lipid-selection",
-                                    placement="left",
-                                ),
-                                # Dropdown must be wrapped in div, otherwise lazy loading creates bug with tooltips
-                                html.Div(
-                                    id="tab-2-div-dropdown-lipid-names",
-                                    children=[
-                                        dcc.Dropdown(
-                                            id="tab-2-dropdown-lipid-names",
-                                            options=[],
-                                            multi=False,
-                                        ),
-                                    ],
-                                ),
-                                dbc.Tooltip(
-                                    children="Choose the category of your lipid",
-                                    target="tab-2-div-dropdown-lipid-names",
-                                    placement="left",
-                                ),
-                                html.Div(
-                                    id="tab-2-div-dropdown-lipid-structures",
-                                    children=[
-                                        dcc.Dropdown(
-                                            id="tab-2-dropdown-lipid-structures",
-                                            options=[],
-                                            multi=False,
-                                            className="mt-2",
-                                        ),
-                                    ],
-                                ),
-                                dbc.Tooltip(
-                                    children="After choosing the lipid category, choose the structure of your lipid",
-                                    target="tab-2-div-dropdown-lipid-structures",
-                                    placement="left",
-                                ),
-                                html.Div(
-                                    id="tab-2-div-dropdown-lipid-cations",
-                                    children=[
-                                        dcc.Dropdown(
-                                            id="tab-2-dropdown-lipid-cations",
-                                            options=[],
-                                            multi=False,
-                                            className="mt-2",
-                                        ),
-                                    ],
-                                ),
-                                dbc.Tooltip(
-                                    children="After choosing the lipid structure, choose the cation binded to your lipid",
-                                    target="tab-2-div-dropdown-lipid-cations",
-                                    placement="left",
-                                ),
-                                # Wrap toasts in div to prevent their expansion
-                                dbc.Toast(
-                                    id="page-2-toast-lipid-1",
-                                    header="name-lipid-1",
-                                    icon="danger",
-                                    dismissable=True,
-                                    is_open=False,
-                                    bodyClassName="p-0",
-                                    className="mt-3",
-                                    style={"margin": "auto"},
-                                ),
-                                dbc.Toast(
-                                    id="page-2-toast-lipid-2",
-                                    header="name-lipid-2",
-                                    icon="success",
-                                    dismissable=True,
-                                    is_open=False,
-                                    bodyClassName="p-0",
-                                    className="mt-1",
-                                    style={"margin": "auto"},
-                                ),
-                                dbc.Toast(
-                                    id="page-2-toast-lipid-3",
-                                    header="name-lipid-3",
-                                    icon="primary",
-                                    dismissable=True,
-                                    is_open=False,
-                                    bodyClassName="p-0",
-                                    className="mt-1",
-                                    style={"margin": "auto"},
-                                ),
+                                # dbc.Tooltip(
+                                #     children="Please select the lipids of your choice (3 max):",
+                                #     target="page-2-card-lipid-selection",
+                                #     placement="left",
+                                # ),
+                                # # Dropdown must be wrapped in div, otherwise lazy loading creates bug with tooltips
+                                # html.Div(
+                                #     id="page-2-div-dropdown-lipid-names",
+                                #     children=[
+                                #         dcc.Dropdown(
+                                #             id="page-2-dropdown-lipid-names",
+                                #             options=[],
+                                #             multi=False,
+                                #         ),
+                                #     ],
+                                # ),
+                                # dbc.Tooltip(
+                                #     children="Choose the category of your lipid",
+                                #     target="page-2-div-dropdown-lipid-names",
+                                #     placement="left",
+                                # ),
+                                # html.Div(
+                                #     id="page-2-div-dropdown-lipid-structures",
+                                #     children=[
+                                #         dcc.Dropdown(
+                                #             id="page-2-dropdown-lipid-structures",
+                                #             options=[],
+                                #             multi=False,
+                                #             className="mt-2",
+                                #         ),
+                                #     ],
+                                # ),
+                                # dbc.Tooltip(
+                                #     children="After choosing the lipid category, choose the structure of your lipid",
+                                #     target="page-2-div-dropdown-lipid-structures",
+                                #     placement="left",
+                                # ),
+                                # html.Div(
+                                #     id="page-2-div-dropdown-lipid-cations",
+                                #     children=[
+                                #         dcc.Dropdown(
+                                #             id="page-2-dropdown-lipid-cations",
+                                #             options=[],
+                                #             multi=False,
+                                #             className="mt-2",
+                                #         ),
+                                #     ],
+                                # ),
+                                # dbc.Tooltip(
+                                #     children="After choosing the lipid structure, choose the cation binded to your lipid",
+                                #     target="page-2-div-dropdown-lipid-cations",
+                                #     placement="left",
+                                # ),
+                                # # Wrap toasts in div to prevent their expansion
+                                # dbc.Toast(
+                                #     id="page-2-toast-lipid-1",
+                                #     header="name-lipid-1",
+                                #     icon="danger",
+                                #     dismissable=True,
+                                #     is_open=False,
+                                #     bodyClassName="p-0",
+                                #     className="mt-3",
+                                #     style={"margin": "auto"},
+                                # ),
+                                # dbc.Toast(
+                                #     id="page-2-toast-lipid-2",
+                                #     header="name-lipid-2",
+                                #     icon="success",
+                                #     dismissable=True,
+                                #     is_open=False,
+                                #     bodyClassName="p-0",
+                                #     className="mt-1",
+                                #     style={"margin": "auto"},
+                                # ),
+                                # dbc.Toast(
+                                #     id="page-2-toast-lipid-3",
+                                #     header="name-lipid-3",
+                                #     icon="primary",
+                                #     dismissable=True,
+                                #     is_open=False,
+                                #     bodyClassName="p-0",
+                                #     className="mt-1",
+                                #     style={"margin": "auto"},
+                                # ),
                                 # dbc.Alert(
                                 #    id="page-2-warning-lipids-number",
                                 #    children=html.P(
@@ -325,36 +533,6 @@ def return_layout(basic_config, slice_index):
                                 #    style={"border-radius": "10px"},
                                 #    color="warning",
                                 # ),
-                                dbc.ButtonGroup(
-                                    className="d-flex justify-content-center mt-2",
-                                    children=[
-                                        dbc.Button(
-                                            children="Display as RGB",
-                                            id="tab-2-rgb-button",
-                                            className="mt-1",
-                                            color="primary",
-                                            disabled=True,
-                                            # block=True,
-                                        ),
-                                        dbc.Button(
-                                            children="Display as colormap",
-                                            id="tab-2-colormap-button",
-                                            className="mt-1",
-                                            color="primary",
-                                            disabled=True,
-                                            # block=True,
-                                        ),
-                                        dbc.Button(
-                                            children="Download data",
-                                            id="tab-2-download-data-button",
-                                            className="mt-1",
-                                            color="primary",
-                                            disabled=True,
-                                            # block=True,
-                                        ),
-                                    ],
-                                ),
-                                dcc.Download(id="tab-2-download-data"),
                             ],
                         ),
                     ],
@@ -383,30 +561,30 @@ def return_layout(basic_config, slice_index):
                                     target="page-2-text-bounds",
                                     placement="left",
                                 ),
-                                dbc.InputGroup(
-                                    [
-                                        dbc.Input(
-                                            id="page-2-lower-bound",
-                                            placeholder="Lower bound (m/z value)",
-                                            value=600,
-                                        ),
-                                        dbc.Input(
-                                            id="page-2-upper-bound",
-                                            placeholder="Upper bound (m/z value)",
-                                            value=605,
-                                        ),
-                                        # dbc.InputGroupAddon(
-                                        dbc.Button(
-                                            "Display",
-                                            id="page-2-button-bounds",
-                                            n_clicks=0,
-                                            color="primary",
-                                        ),
-                                        #    addon_type="prepend",
-                                        # ),
-                                    ],
-                                    size="sm",
-                                ),
+                                # dbc.InputGroup(
+                                #     [
+                                #         dbc.Input(
+                                #             id="page-2-lower-bound",
+                                #             placeholder="Lower bound (m/z value)",
+                                #             value=600,
+                                #         ),
+                                #         dbc.Input(
+                                #             id="page-2-upper-bound",
+                                #             placeholder="Upper bound (m/z value)",
+                                #             value=605,
+                                #         ),
+                                #         # dbc.InputGroupAddon(
+                                #         dbc.Button(
+                                #             "Display",
+                                #             id="page-2-button-bounds",
+                                #             n_clicks=0,
+                                #             color="primary",
+                                #         ),
+                                #         #    addon_type="prepend",
+                                #         # ),
+                                #     ],
+                                #     size="sm",
+                                # ),
                                 html.Small(
                                     children="Or choose a m/z value with a given range.",
                                     className="text-center",
@@ -556,7 +734,7 @@ def page_2_plot_graph_heatmap_mz_selection(
 
     # case a mz value and a manual range have been inputed
     if id_input == "page-2-button-range" or (
-        id_input == "main-slider" and graph_input == "m/z range"
+        id_input == "main-slider" and graph_input == "Current input: " + "m/z range"
     ):
         if mz is not None and mz_range is not None:
             mz = float(mz)
@@ -567,21 +745,21 @@ def page_2_plot_graph_heatmap_mz_selection(
                     figures.compute_heatmap_per_mz(
                         slice_index, mz - mz_range / 2, mz + mz_range / 2, binary_string=False
                     ),
-                    "m/z range",
+                    "Current input: " + "m/z range",
                 )
 
         return dash.no_update
 
     # case a two mz bounds values have been inputed
     elif id_input == "page-2-button-bounds" or (
-        id_input == "main-slider" and graph_input == "m/z boundaries"
+        id_input == "main-slider" and graph_input == "Current input: " + "m/z boundaries"
     ):
         if lb is not None and hb is not None:
             lb, hb = float(lb), float(hb)
             if lb > 400 and hb < 1200 and hb - lb > 0 and hb - lb < 10:
                 return (
                     figures.compute_heatmap_per_mz(slice_index, lb, hb, binary_string=False),
-                    "m/z boundaries",
+                    "Current input: " + "m/z boundaries",
                 )
 
         return dash.no_update
@@ -595,7 +773,10 @@ def page_2_plot_graph_heatmap_mz_selection(
         or id_input == "tab-2-colormap-button"
         or (
             id_input == "main-slider"
-            and (graph_input == "Lipid selection colormap" or graph_input == "Lipid selection RGB")
+            and (
+                graph_input == "Current input: " + "Lipid selection colormap"
+                or graph_input == "Current input: " + "Lipid selection RGB"
+            )
         )
     ):
         if lipid_1_index >= 0 or lipid_2_index >= 0 or lipid_3_index >= 0:
@@ -628,24 +809,26 @@ def page_2_plot_graph_heatmap_mz_selection(
                         logging.warning("Some pixel annotations intercept each other")
 
             if id_input == "tab-2-colormap-button" or (
-                id_input == "main-slider" and graph_input == "Lipid selection colormap"
+                id_input == "main-slider"
+                and graph_input == "Current input: " + "Lipid selection colormap"
             ):
                 return (
                     figures.compute_heatmap_per_lipid_selection(slice_index, ll_lipid_bounds),
-                    "Lipid selection colormap",
+                    "Current input: " + "Lipid selection colormap",
                 )
             elif id_input == "tab-2-rgb-button" or (
-                id_input == "main-slider" and graph_input == "Lipid selection RGB"
+                id_input == "main-slider"
+                and graph_input == "Current input: " + "Lipid selection RGB"
             ):
                 return (
                     figures.compute_rgb_image_per_lipid_selection(slice_index, ll_lipid_bounds),
-                    "Lipid selection RGB",
+                    "Current input: " + "Lipid selection RGB",
                 )
             else:
                 logging.info("Right before calling the graphing function")
                 return (
                     figures.compute_rgb_image_per_lipid_selection(slice_index, ll_lipid_bounds),
-                    "Lipid selection RGB",
+                    "Current input: " + "Lipid selection RGB",
                 )
 
         else:
@@ -655,7 +838,8 @@ def page_2_plot_graph_heatmap_mz_selection(
 
     # Case trigger is range slider from high resolution spectrum
     if id_input == "boundaries-high-resolution-mz-plot" or (
-        id_input == "main-slider" and graph_input == "Selection from high-res m/z graph"
+        id_input == "main-slider"
+        and graph_input == "Current input: " + "Selection from high-res m/z graph"
     ):
         if bound_high_res is not None:
             bound_high_res = json.loads(bound_high_res)
@@ -663,12 +847,13 @@ def page_2_plot_graph_heatmap_mz_selection(
                 figures.compute_heatmap_per_mz(
                     slice_index, bound_high_res[0], bound_high_res[1], binary_string=False
                 ),
-                "Selection from high-res m/z graph",
+                "Current input: " + "Selection from high-res m/z graph",
             )
 
     # Case trigger is range slider from low resolution spectrum
     if id_input == "boundaries-low-resolution-mz-plot" or (
-        id_input == "main-slider" and graph_input == "Selection from low-res m/z graph"
+        id_input == "main-slider"
+        and graph_input == "Current input: " + "Selection from low-res m/z graph"
     ):
         if bound_low_res is not None:
             bound_low_res = json.loads(bound_low_res)
@@ -681,7 +866,7 @@ def page_2_plot_graph_heatmap_mz_selection(
                     heatmap=False,
                     plot_contours=False,
                 ),
-                "Selection from low-res m/z graph",
+                "Current input: " + "Selection from low-res m/z graph",
             )
 
     # If no trigger, it means the page has just been loaded, so load new figure with default parameters
@@ -737,7 +922,10 @@ def tab_2_plot_graph_low_res_spectrum(
         or id_input == "tab-2-colormap-button"
         or (
             id_input == "main-slider"
-            and (graph_input == "Lipid selection colormap" or graph_input == "Lipid selection RGB")
+            and (
+                graph_input == "Current input: " + "Lipid selection colormap"
+                or graph_input == "Current input: " + "Lipid selection RGB"
+            )
         )
     ):
 
@@ -761,7 +949,7 @@ def tab_2_plot_graph_low_res_spectrum(
             # return figures.compute_spectrum_low_res(slice_index,)
 
     elif id_input == "page-2-button-range" or (
-        id_input == "main-slider" and graph_input == "m/z range"
+        id_input == "main-slider" and graph_input == "Current input: " + "m/z range"
     ):
         mz = float(mz)
         mz_range = float(mz_range)
@@ -770,14 +958,17 @@ def tab_2_plot_graph_low_res_spectrum(
             return figures.compute_spectrum_low_res(slice_index, l_lipid_bounds)
 
     elif id_input == "page-2-button-bounds" or (
-        id_input == "main-slider" and graph_input == "m/z boundaries"
+        id_input == "main-slider" and graph_input == "Current input: " + "m/z boundaries"
     ):
         lb, hb = float(lb), float(hb)
         if lb > 400 and hb < 1200 and hb - lb > 0 and hb - lb < 10:
             l_lipid_bounds = [(lb, hb), None, None]
             return figures.compute_spectrum_low_res(slice_index, l_lipid_bounds)
 
-    elif id_input == "main-slider" and graph_input == "Selection from low-res m/z graph":
+    elif (
+        id_input == "main-slider"
+        and graph_input == "Current input: " + "Selection from low-res m/z graph"
+    ):
         # TODO : find a way to set relayoutdata properly
         pass
 
@@ -862,7 +1053,10 @@ def page_2_plot_graph_high_res_spectrum(
         or id_input == "page-2-last-selected-lipids"
         or (
             id_input == "main-slider"
-            and (graph_input == "Lipid selection colormap" or graph_input == "Lipid selection RGB")
+            and (
+                graph_input == "Current input: " + "Lipid selection colormap"
+                or graph_input == "Current input: " + "Lipid selection RGB"
+            )
         )
     ):
         if lipid_1_index >= 0 or lipid_2_index >= 0 or lipid_3_index >= 0:
@@ -893,7 +1087,7 @@ def page_2_plot_graph_high_res_spectrum(
             )
 
     elif id_input == "page-2-button-range" or (
-        id_input == "main-slider" and graph_input == "m/z range"
+        id_input == "main-slider" and graph_input == "Current input: " + "m/z range"
     ):
         mz = float(mz)
         mz_range = float(mz_range)
@@ -908,7 +1102,7 @@ def page_2_plot_graph_high_res_spectrum(
             )
 
     elif id_input == "page-2-button-bounds" or (
-        id_input == "main-slider" and graph_input == "m/z boundaries"
+        id_input == "main-slider" and graph_input == "Current input: " + "m/z boundaries"
     ):
         lb, hb = float(lb), float(hb)
         if lb > 400 and hb < 1200 and hb - lb > 0 and hb - lb < 10:
@@ -976,20 +1170,21 @@ def page_2_store_boundaries_mz_from_graph_high_res_spectrum(relayoutData, bound_
         return dash.no_update
 
 
+"""
 # Function to refine dropdown names choices
 @app.app.callback(
-    Output("tab-2-dropdown-lipid-names", "options"),
-    Output("tab-2-dropdown-lipid-structures", "options"),
-    Output("tab-2-dropdown-lipid-cations", "options"),
-    # Output("tab-2-dropdown-lipid-names", "value"),
-    # Output("tab-2-dropdown-lipid-structures", "value"),
-    # Output("tab-2-dropdown-lipid-cations", "value"),
+    Output("page-2-dropdown-lipid-names", "options"),
+    Output("page-2-dropdown-lipid-structures", "options"),
+    Output("page-2-dropdown-lipid-cations", "options"),
+    # Output("page-2-dropdown-lipid-names", "value"),
+    # Output("page-2-dropdown-lipid-structures", "value"),
+    # Output("page-2-dropdown-lipid-cations", "value"),
     Input("main-slider", "value"),
-    Input("tab-2-dropdown-lipid-names", "value"),
-    Input("tab-2-dropdown-lipid-structures", "value"),
-    State("tab-2-dropdown-lipid-names", "options"),
-    State("tab-2-dropdown-lipid-structures", "options"),
-    State("tab-2-dropdown-lipid-cations", "options"),
+    Input("page-2-dropdown-lipid-names", "value"),
+    Input("page-2-dropdown-lipid-structures", "value"),
+    State("page-2-dropdown-lipid-names", "options"),
+    State("page-2-dropdown-lipid-structures", "options"),
+    State("page-2-dropdown-lipid-cations", "options"),
 )
 def tab_2_handle_dropdowns(
     slice_index, name, structure, options_names, options_structures, options_cations
@@ -1016,7 +1211,7 @@ def tab_2_handle_dropdowns(
             return options_names, [], []  # , None, None, None
 
         elif name is not None:
-            if id_input == "tab-2-dropdown-lipid-names":
+            if id_input == "page-2-dropdown-lipid-names":
                 structures = data.get_annotations()[
                     (
                         data.get_annotations()["name"] == name
@@ -1028,7 +1223,7 @@ def tab_2_handle_dropdowns(
                 return options_names, options_structures, []  # , name, None, None
 
             elif structure is not None:
-                if id_input == "tab-2-dropdown-lipid-structures":
+                if id_input == "page-2-dropdown-lipid-structures":
                     cations = data.get_annotations()[
                         (data.get_annotations()["name"] == name)
                         & (data.get_annotations()["structure"] == structure)
@@ -1044,44 +1239,38 @@ def tab_2_handle_dropdowns(
                     )  # , name, structure, None
 
     return dash.no_update
-
+"""
 
 # Function to add dropdown choice to selection
 @app.app.callback(
-    Output("page-2-toast-lipid-1", "header"),
-    Output("page-2-toast-lipid-2", "header"),
-    Output("page-2-toast-lipid-3", "header"),
+    Output("page-2-badge-lipid-1", "children"),
+    Output("page-2-badge-lipid-2", "children"),
+    Output("page-2-badge-lipid-3", "children"),
     Output("page-2-selected-lipid-1", "data"),
     Output("page-2-selected-lipid-2", "data"),
     Output("page-2-selected-lipid-3", "data"),
-    Output("page-2-toast-lipid-1", "is_open"),
-    Output("page-2-toast-lipid-2", "is_open"),
-    Output("page-2-toast-lipid-3", "is_open"),
-    Output("tab-2-dropdown-lipid-cations", "value"),
-    Output("tab-2-dropdown-lipid-names", "value"),
-    Output("tab-2-dropdown-lipid-structures", "value"),
-    Input("tab-2-dropdown-lipid-cations", "value"),
-    Input("page-2-toast-lipid-1", "is_open"),
-    Input("page-2-toast-lipid-2", "is_open"),
-    Input("page-2-toast-lipid-3", "is_open"),
+    Output("page-2-badge-lipid-1", "class_name"),
+    Output("page-2-badge-lipid-2", "class_name"),
+    Output("page-2-badge-lipid-3", "class_name"),
+    # Output("page-2-dropdown-lipids", "value"),
+    Input("page-2-dropdown-lipids", "value"),
+    Input("page-2-badge-lipid-1", "class_name"),
+    Input("page-2-badge-lipid-2", "class_name"),
+    Input("page-2-badge-lipid-3", "class_name"),
     Input("main-slider", "value"),
-    State("tab-2-dropdown-lipid-names", "value"),
-    State("tab-2-dropdown-lipid-structures", "value"),
     State("page-2-selected-lipid-1", "data"),
     State("page-2-selected-lipid-2", "data"),
     State("page-2-selected-lipid-3", "data"),
-    State("page-2-toast-lipid-1", "header"),
-    State("page-2-toast-lipid-2", "header"),
-    State("page-2-toast-lipid-3", "header"),
+    State("page-2-badge-lipid-1", "children"),
+    State("page-2-badge-lipid-2", "children"),
+    State("page-2-badge-lipid-3", "children"),
 )
 def page_2_add_toast_selection(
-    cation,
-    bool_toast_1,
-    bool_toast_2,
-    bool_toast_3,
+    l_lipid_names,
+    class_name_badge_1,
+    class_name_badge_2,
+    class_name_badge_3,
     slice_index,
-    name,
-    structure,
     lipid_1_index,
     lipid_2_index,
     lipid_3_index,
@@ -1094,46 +1283,52 @@ def page_2_add_toast_selection(
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
     value_input = dash.callback_context.triggered[0]["prop_id"].split(".")[1]
 
-    # if tab-2-dropdown-lipid-cations is called while there's no lipid name defined, it means the page just got loaded
-    if len(id_input) == 0 or (id_input == "tab-2-dropdown-lipid-cations" and name is None):
-        return "", "", "", -1, -1, -1, False, False, False, None, None, None
+    # print(id_input, value_input, l_lipid_names)
 
-    # If a lipid has been deleted from a toast
-    if value_input == "is_open":
+    # if page-2-dropdown-lipids is called while there's no lipid name defined, it means the page just got loaded
+    if len(id_input) == 0 or (id_input == "page-2-dropdown-lipids" and l_lipid_names is None):
+        return "", "", "", -1, -1, -1, "d-none", "d-none", "d-none"  # , None
 
-        # Delete corressponding header and index
-        if id_input == "page-2-toast-lipid-1":
-            header_1 = ""
-            lipid_1_index = -1
+    # If one or several lipids have been deleted
+    if l_lipid_names is not None:
+        if len(l_lipid_names) < len(
+            [x for x in [lipid_1_index, lipid_2_index, lipid_3_index] if x != -1]
+        ):
+            logging.info("One or several lipids have been deleter. Cleaning lipid badges now.")
+            for idx_header, header in enumerate([header_1, header_2, header_3]):
+                found = False
+                for lipid_name in l_lipid_names:
+                    if lipid_name == header:
+                        found = True
+                if not found:
+                    if idx_header == 0:
+                        header_1 = ""
+                        lipid_1_index = -1
+                        class_name_badge_1 = "d-none"
+                    if idx_header == 1:
+                        header_2 = ""
+                        lipid_2_index = -1
+                        class_name_badge_2 = "d-none"
+                    if idx_header == 2:
+                        header_3 = ""
+                        lipid_3_index = -1
+                        class_name_badge_3 = "d-none"
 
-        elif id_input == "page-2-toast-lipid-2":
-            header_2 = ""
-            lipid_2_index = -1
-
-        elif id_input == "page-2-toast-lipid-3":
-            header_3 = ""
-            lipid_3_index = -1
-        else:
-            logging.warning("Problem in page_2_add_toast_selection")
-
-        return (
-            header_1,
-            header_2,
-            header_3,
-            lipid_1_index,
-            lipid_2_index,
-            lipid_3_index,
-            bool_toast_1,
-            bool_toast_2,
-            bool_toast_3,
-            None,
-            None,
-            None,
-        )
+            return (
+                header_1,
+                header_2,
+                header_3,
+                lipid_1_index,
+                lipid_2_index,
+                lipid_3_index,
+                class_name_badge_1,
+                class_name_badge_2,
+                class_name_badge_3,
+            )
 
     # Otherwise, update selection or add lipid
-    elif (
-        id_input == "tab-2-dropdown-lipid-cations" and cation is not None
+    if (
+        id_input == "page-2-dropdown-lipids" and l_lipid_names is not None
     ) or id_input == "main-slider":
 
         if id_input == "main-slider":
@@ -1184,15 +1379,16 @@ def page_2_add_toast_selection(
                 lipid_1_index,
                 lipid_2_index,
                 lipid_3_index,
-                bool_toast_1,
-                bool_toast_2,
-                bool_toast_3,
-                None,
-                None,
-                None,
+                class_name_badge_1,
+                class_name_badge_2,
+                class_name_badge_3,
+                # None,
             )
 
-        elif id_input == "tab-2-dropdown-lipid-cations":
+        elif id_input == "page-2-dropdown-lipids":
+            # Get the lipid name and structure
+            name, structure, cation = l_lipid_names[-1].split(" ")
+
             # Find lipid location
             l_lipid_loc = (
                 data.get_annotations()
@@ -1211,8 +1407,17 @@ def page_2_add_toast_selection(
                 l_lipid_loc = [l_lipid_loc[-1]]
 
             if len(l_lipid_loc) < 1:
-                logging.warning("No lipid annotation exist")
-                return dash.no_update
+                logging.warning("No lipid annotation exist. Taking another slice annotation")
+                l_lipid_loc = (
+                    data.get_annotations()
+                    .index[
+                        (data.get_annotations()["name"] == name)
+                        & (data.get_annotations()["structure"] == structure)
+                        & (data.get_annotations()["cation"] == cation)
+                    ]
+                    .tolist()
+                )[:1]
+                # return dash.no_update
 
             # Record location and lipid name
             lipid_index = l_lipid_loc[0]
@@ -1235,18 +1440,18 @@ def page_2_add_toast_selection(
             if lipid_string not in [header_1, header_2, header_2]:
 
                 # Check first slot available
-                if not bool_toast_1:
+                if class_name_badge_1 == "d-none":
                     header_1 = lipid_string
                     lipid_1_index = lipid_index
-                    bool_toast_1 = True
-                elif not bool_toast_2:
+                    class_name_badge_1 = "position-absolute"
+                elif class_name_badge_2 == "d-none":
                     header_2 = lipid_string
                     lipid_2_index = lipid_index
-                    bool_toast_2 = True
-                elif not bool_toast_3:
+                    class_name_badge_2 = "position-absolute"
+                elif class_name_badge_3 == "d-none":
                     header_3 = lipid_string
                     lipid_3_index = lipid_index
-                    bool_toast_3 = True
+                    class_name_badge_3 = "position-absolute"
                 else:
                     logging.warning("More than 3 lipids have been selected")
                     return dash.no_update
@@ -1263,12 +1468,10 @@ def page_2_add_toast_selection(
                     lipid_1_index,
                     lipid_2_index,
                     lipid_3_index,
-                    bool_toast_1,
-                    bool_toast_2,
-                    bool_toast_3,
-                    None,
-                    None,
-                    None,
+                    class_name_badge_1,
+                    class_name_badge_2,
+                    class_name_badge_3,
+                    # None,
                 )
             else:
                 return dash.no_update
@@ -1365,11 +1568,12 @@ def tab_2_active_download(lipid_1_index, lipid_2_index, lipid_3_index):
         return True, True, True
 
 
+"""
 # Function to disable/enable dropdowns depending on the number of lipids selected
 @app.app.callback(
-    Output("tab-2-dropdown-lipid-names", "disabled"),
-    Output("tab-2-dropdown-lipid-structures", "disabled"),
-    Output("tab-2-dropdown-lipid-cations", "disabled"),
+    Output("page-2-dropdown-lipid-names", "disabled"),
+    Output("page-2-dropdown-lipid-structures", "disabled"),
+    Output("page-2-dropdown-lipid-cations", "disabled"),
     Output("page-2-warning-lipids-number", "className"),
     Input("page-2-selected-lipid-1", "data"),
     Input("page-2-selected-lipid-2", "data"),
@@ -1382,6 +1586,7 @@ def tab_2_disable_dropdowns(lipid_1_index, lipid_2_index, lipid_3_index):
         return True, True, True, "mt-1 text-center"
     else:
         return False, False, False, "mt-1 text-center d-none"
+"""
 
 
 @app.app.callback(
@@ -1409,4 +1614,25 @@ def tab_2_button_window(lb, hb):
         if lb > 400 and hb < 1200 and hb - lb > 0 and hb - lb < 10:
             return False
     return True
+
+
+### Not a callback but still needed
+def return_lipid_options():
+    return [
+        {
+            "label": name + " " + structure + " " + cation,
+            "value": name + " " + structure + " " + cation,
+            "group": name,
+        }
+        for name in sorted(data.get_annotations().name.unique())
+        for structure in sorted(
+            data.get_annotations()[(data.get_annotations()["name"] == name)].structure.unique()
+        )
+        for cation in sorted(
+            data.get_annotations()[
+                (data.get_annotations()["name"] == name)
+                & (data.get_annotations()["structure"] == structure)
+            ].cation.unique()
+        )
+    ]
 
