@@ -430,6 +430,10 @@ class Figures:
         if draw:
             fig.update_layout(dragmode="drawclosedpath")
 
+        # Set background color to zero
+        fig.layout.plot_bgcolor = "rgba(0,0,0,0)"
+        fig.layout.paper_bgcolor = "rgba(0,0,0,0)"
+
         return fig
 
     def compute_heatmap_per_lipid_selection(
@@ -477,6 +481,10 @@ class Figures:
         fig.update_xaxes(showticklabels=False)
         fig.update_yaxes(showticklabels=False)
         fig.update(layout_coloraxis_showscale=False)
+
+        # Set background color to zero
+        fig.layout.plot_bgcolor = "rgba(0,0,0,0)"
+        fig.layout.paper_bgcolor = "rgba(0,0,0,0)"
 
         return fig
 
@@ -578,6 +586,11 @@ class Figures:
             )
             fig.update_xaxes(showticklabels=False)
             fig.update_yaxes(showticklabels=False)
+
+            # Set background color to zero
+            fig.layout.plot_bgcolor = "rgba(0,0,0,0)"
+            fig.layout.paper_bgcolor = "rgba(0,0,0,0)"
+
             logging.info("Returning fig for slice " + str(slice_index) + logmem())
             return fig
 

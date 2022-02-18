@@ -18,6 +18,7 @@ from io import BytesIO
 from PIL import Image
 import shutil
 import psutil
+from numba import njit
 
 # LBAE modules
 from config import black_viridis
@@ -98,6 +99,15 @@ def return_pickled_object(
         return object
 
 
+@njit
+def replace_value_in_RGB_array(array):
+    for i in range(array.shape[0]):
+        for j in range(array.shape[1]):
+            if np.sum(array[i, j]) < 3:
+                array[i, j] = [29, 29, 31]
+    return array
+
+
 def convert_image_to_base64(
     image_array,
     optimize=True,
@@ -147,6 +157,11 @@ def convert_image_to_base64(
 
     # Convert 3D or 4D array into a PIL image
     elif type == "RGB" or type == "RGBA":
+
+        # substitute zero value with background value
+        image_array = replace_value_in_RGB_array(
+            image_array
+        )  # ! This needs to be improved, way too slow
         pil_img = Image.fromarray(image_array, type)
 
     # Overlay is transparent, therefore initial image must be converted to RGBA

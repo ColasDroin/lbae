@@ -99,7 +99,7 @@ def return_main_content():
                     dmc.Center(
                         id="main-slider-center",
                         children=dmc.Group(
-                            [
+                            children=[
                                 dmc.Paper(
                                     dmc.Group(
                                         [
@@ -142,7 +142,7 @@ def return_main_content():
                         },
                     ),
                     # Space to ensure the slider for sections doesn't hide anything
-                    dmc.Space(h=70),
+                    # dmc.Space(h=70),
                     # Documentation in a lateral drawer
                     dmc.Drawer(
                         id="drawer",
