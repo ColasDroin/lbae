@@ -7,6 +7,7 @@
 # --- Imports
 # ==================================================================================================
 
+# Standard modules
 import logging
 import pickle
 import os
@@ -17,6 +18,9 @@ from io import BytesIO
 from PIL import Image
 import shutil
 import psutil
+
+# LBAE modules
+from config import black_viridis
 
 # ==================================================================================================
 # --- Functions
@@ -98,7 +102,7 @@ def convert_image_to_base64(
     image_array,
     optimize=True,
     quality=85,
-    colormap=cm.viridis,
+    colormap=black_viridis,
     type=None,
     format="png",
     overlay=None,

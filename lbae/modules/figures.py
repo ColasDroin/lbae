@@ -390,16 +390,17 @@ class Figures:
         # Build graph from image
         # ! Do I want to keep the heatmap option? I think not as it's slower
         if heatmap:
-            fig = px.imshow(
-                image, binary_string=binary_string, color_continuous_scale="deep_r"
-            )  # , aspect = 'auto')
-            if plot_contours:
-                logging.warning("Contour plot is not compatible with heatmap plot for now.")
-                # Compute it anyway but won't work
-                b64_string = convert_image_to_base64(
-                    self._atlas.list_projected_atlas_borders_arrays[slice_index - 1], type="RGBA"
-                )
-                fig.add_trace(go.Image(visible=True, source=b64_string))
+            # fig = px.imshow(
+            #     image, binary_string=binary_string, color_continuous_scale="deep_r"
+            # )  # , aspect = 'auto')
+            # if plot_contours:
+            #     logging.warning("Contour plot is not compatible with heatmap plot for now.")
+            #     # Compute it anyway but won't work
+            #     b64_string = convert_image_to_base64(
+            #         self._atlas.list_projected_atlas_borders_arrays[slice_index - 1], type="RGBA"
+            #     )
+            #     fig.add_trace(go.Image(visible=True, source=b64_string))
+            logging.warning("Heatmap plot has been deactivated for optimization reasons")
 
         else:
             fig = go.Figure()

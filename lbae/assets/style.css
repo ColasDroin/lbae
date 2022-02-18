@@ -10,7 +10,7 @@ html {
   left: 0;
   bottom: 0;
   width: 6rem;
-  padding: 2rem 1rem 2rem 1rem;
+  padding: 2rem 1rem 1rem 1rem;
   background-color: #f8f9fa;
   /*z-index: 1050;*/
   /*transition: width 0.2s ease-in-out;*/
@@ -123,8 +123,11 @@ html {
   margin-top: auto;
   /*padding: 1rem 1rem;*/
   padding-left: 5.5rem;
-  white-space: normal;
-  max-width: 1800px;
+  /* white-space: normal;*/
+  height: 100%;
+  overflow: hidden;
+  /* min-height: 100vh; */
+  /*max-width: 1800px;*/
   /*white-space: normal;*/
   /*transition: margin-left 0.2s ease-in-out;*/
 }
@@ -137,7 +140,7 @@ html {
 /*max-width: 90vw;*/
 /*}*/
 .dash-graph {
-  max-height: 85vh;
+  max-height: 80vh;
 }
 
 /* rounded corner for images (doesn't work)
@@ -299,9 +302,13 @@ html {
 .page-1-fixed-aspect-ratio {
   position: relative;
   width: 100%;
-  padding-bottom: 72%;
+  padding-bottom: min(
+    72%,
+    79vh
+  ); /* when max-height = 80vh is reached, need to block stretching*/
   float: left;
   height: 0;
+  max-width: 111vh; /* 80/72=11*/
 }
 
 .page-4-fixed-aspect-ratio {

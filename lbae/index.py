@@ -90,8 +90,9 @@ def return_main_content():
             # Record the lipids expressed in the region in page 3
             dcc.Store(id="page-3-dcc-store-lipids-region", data=[]),
             # Actual app layout
-            dbc.Container(
-                fluid=True,
+            # dbc.Container(
+            #    fluid=True,
+            html.Div(
                 children=[
                     sidebar.layout,
                     html.Div(id="content"),

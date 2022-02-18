@@ -26,333 +26,332 @@ N_LINES = int(np.ceil(HEIGHT_PLOTS / 30))
 def return_layout(basic_config, slice_index):
 
     page = (
-        dash_draggable.ResponsiveGridLayout(
-            id="draggable",
-            clearSavedLayout=True,
-            isDraggable=False,
-            isResizable=False,
-            containerPadding=[2, 2],
-            breakpoints={"xxl": 1600, "lg": 1200, "md": 996, "sm": 768, "xs": 480, "xxs": 0},
-            gridCols={"xxl": 12, "lg": 12, "md": 10, "sm": 6, "xs": 4, "xxs": 2},
-            layouts={
-                # x sets the lateral position, y the vertical one, w is in columns (whose size depends on the dimension), h is in rows (30px)
-                # nb columns go 12->10->6->4->2
-                "xxl": [
-                    {"i": "page-2-card-heatmap", "x": 0, "y": 0, "w": 12, "h": 30},
-                    {"i": "page-2-card-low-res", "x": 7, "y": 0, "w": 5, "h": N_LINES},
-                    {"i": "page-2-card-high-res", "x": 7, "y": 20, "w": 5, "h": N_LINES},
-                ],
-                "lg": [
-                    {"i": "page-2-card-heatmap", "x": 0, "y": 0, "w": 7, "h": 16},
-                    {"i": "page-2-card-low-res", "x": 7, "y": 16, "w": 5, "h": N_LINES},
-                    {"i": "page-2-card-high-res", "x": 7, "y": 16, "w": 5, "h": N_LINES},
-                ],
-                "md": [
-                    {"i": "page-2-card-heatmap", "x": 0, "y": 0, "w": 6, "h": 14},
-                    {"i": "page-2-card-low-res", "x": 0, "y": 14, "w": 5, "h": N_LINES},
-                    {"i": "page-2-card-high-res", "x": 5, "y": 14, "w": 5, "h": N_LINES},
-                ],
-                "sm": [
-                    {"i": "page-2-card-heatmap", "x": 0, "y": 0, "w": 6, "h": 19},
-                    {"i": "page-2-card-low-res", "x": 0, "y": 19 + 7 + 5, "w": 6, "h": N_LINES},
-                    {
-                        "i": "page-2-card-high-res",
-                        "x": 0,
-                        "y": 19 + 7 + 5 + N_LINES,
-                        "w": 6,
-                        "h": N_LINES,
-                    },
-                ],
-                "xs": [
-                    {"i": "page-2-card-heatmap", "x": 0, "y": 0, "w": 4, "h": 14},
-                    {"i": "page-2-card-low-res", "x": 0, "y": 14 + 7 + 5, "w": 4, "h": N_LINES},
-                    {
-                        "i": "page-2-card-high-res",
-                        "x": 0,
-                        "y": 14 + 7 + 5 + N_LINES,
-                        "w": 4,
-                        "h": N_LINES,
-                    },
-                ],
-                "xxs": [
-                    {"i": "page-2-card-heatmap", "x": 0, "y": 0, "w": 2, "h": 9},
-                    {"i": "page-2-card-low-res", "x": 0, "y": 9 + 7 + 5, "w": 2, "h": N_LINES},
-                    {
-                        "i": "page-2-card-high-res",
-                        "x": 0,
-                        "y": 9 + 7 + 5 + N_LINES,
-                        "w": 2,
-                        "h": N_LINES,
-                    },
-                ],
-            },
+        # dash_draggable.ResponsiveGridLayout(
+        #     id="draggable",
+        #     clearSavedLayout=True,
+        #     isDraggable=False,
+        #     isResizable=False,
+        #     containerPadding=[2, 2],
+        #     breakpoints={"xxl": 1600, "lg": 1200, "md": 996, "sm": 768, "xs": 480, "xxs": 0},
+        #     gridCols={"xxl": 12, "lg": 12, "md": 10, "sm": 6, "xs": 4, "xxs": 2},
+        #     layouts={
+        #         # x sets the lateral position, y the vertical one, w is in columns (whose size depends on the dimension), h is in rows (30px)
+        #         # nb columns go 12->10->6->4->2
+        #         "xxl": [
+        #             {"i": "page-2-card-heatmap", "x": 0, "y": 0, "w": 12, "h": 29},
+        #             {"i": "page-2-card-low-res", "x": 7, "y": 0, "w": 5, "h": N_LINES},
+        #             {"i": "page-2-card-high-res", "x": 7, "y": 20, "w": 5, "h": N_LINES},
+        #         ],
+        #         "lg": [
+        #             {"i": "page-2-card-heatmap", "x": 0, "y": 0, "w": 7, "h": 16},
+        #             {"i": "page-2-card-low-res", "x": 7, "y": 16, "w": 5, "h": N_LINES},
+        #             {"i": "page-2-card-high-res", "x": 7, "y": 16, "w": 5, "h": N_LINES},
+        #         ],
+        #         "md": [
+        #             {"i": "page-2-card-heatmap", "x": 0, "y": 0, "w": 6, "h": 14},
+        #             {"i": "page-2-card-low-res", "x": 0, "y": 14, "w": 5, "h": N_LINES},
+        #             {"i": "page-2-card-high-res", "x": 5, "y": 14, "w": 5, "h": N_LINES},
+        #         ],
+        #         "sm": [
+        #             {"i": "page-2-card-heatmap", "x": 0, "y": 0, "w": 6, "h": 19},
+        #             {"i": "page-2-card-low-res", "x": 0, "y": 19 + 7 + 5, "w": 6, "h": N_LINES},
+        #             {
+        #                 "i": "page-2-card-high-res",
+        #                 "x": 0,
+        #                 "y": 19 + 7 + 5 + N_LINES,
+        #                 "w": 6,
+        #                 "h": N_LINES,
+        #             },
+        #         ],
+        #         "xs": [
+        #             {"i": "page-2-card-heatmap", "x": 0, "y": 0, "w": 4, "h": 14},
+        #             {"i": "page-2-card-low-res", "x": 0, "y": 14 + 7 + 5, "w": 4, "h": N_LINES},
+        #             {
+        #                 "i": "page-2-card-high-res",
+        #                 "x": 0,
+        #                 "y": 14 + 7 + 5 + N_LINES,
+        #                 "w": 4,
+        #                 "h": N_LINES,
+        #             },
+        #         ],
+        #         "xxs": [
+        #             {"i": "page-2-card-heatmap", "x": 0, "y": 0, "w": 2, "h": 9},
+        #             {"i": "page-2-card-low-res", "x": 0, "y": 9 + 7 + 5, "w": 2, "h": N_LINES},
+        #             {
+        #                 "i": "page-2-card-high-res",
+        #                 "x": 0,
+        #                 "y": 9 + 7 + 5 + N_LINES,
+        #                 "w": 2,
+        #                 "h": N_LINES,
+        #             },
+        #         ],
+        #     },
+        html.Div(
+            className="bg-dark",
+            style={"height": "100vh"},
             children=[
-                dbc.Card(
-                    id="page-2-card-heatmap",
-                    className="no-transition",
-                    style={"width": "100%", "height": "100%"},
+                # dbc.Card(
+                #     id="page-2-card-heatmap",
+                #     className="no-transition",
+                #     style={"width": "100%", "height": "100%"},
+                #     children=[
+                #         dbc.CardHeader(
+                #             id="page-2-toast-graph-heatmap-mz-selection",
+                #             className="d-flex",
+                #             children=[html.Div("Brain slice n°"),],
+                #         ),
+                #         dbc.CardBody(
+                #             className="py-0 mb-0 mt-2",
+                #             children=[
+                #                 dbc.Spinner(
+                #                     color="dark",
+                #                     show_initially=False,
+                #                     children=[
+                # dmc.Paper(
+                #     id="page-2-card-heatmap",
+                #     children=[
+                html.Div(
+                    className="page-1-fixed-aspect-ratio",
                     children=[
-                        dbc.CardHeader(
-                            id="page-2-toast-graph-heatmap-mz-selection",
-                            className="d-flex",
-                            children=[html.Div("Brain slice n°"),],
+                        dcc.Graph(
+                            id="page-2-graph-heatmap-mz-selection",
+                            config=basic_config
+                            | {
+                                "toImageButtonOptions": {
+                                    "format": "png",
+                                    "filename": "brain_lipid_selection",
+                                    "scale": 2,
+                                }
+                            },
+                            style={
+                                "width": "100%",
+                                "height": "100%",
+                                "position": "absolute",
+                                "left": "0",
+                            },
+                            figure=figures.compute_heatmap_per_mz(
+                                slice_index, 600, 605, binary_string=False
+                            ),
                         ),
-                        dbc.CardBody(
-                            className="py-0 mb-0 mt-2",
+                        # dmc.Group(
+                        #     spacing="xs",
+                        #     align="flex-end",
+                        #     children=[
+                        dmc.Group(
+                            direction="column",
+                            spacing=0,
+                            style={"left": "1%", "top": "1em",},
+                            class_name="position-absolute",
                             children=[
-                                dbc.Spinner(
-                                    color="dark",
-                                    show_initially=False,
+                                html.Div(children=" Lipid selection", className="fs-5 text-light",),
+                                dmc.Group(
+                                    spacing="xs",
+                                    align="flex-start",
                                     children=[
-                                        html.Div(
-                                            className="page-1-fixed-aspect-ratio",
-                                            children=[
-                                                dcc.Graph(
-                                                    id="page-2-graph-heatmap-mz-selection",
-                                                    config=basic_config
-                                                    | {
-                                                        "toImageButtonOptions": {
-                                                            "format": "png",
-                                                            "filename": "brain_lipid_selection",
-                                                            "scale": 2,
-                                                        }
-                                                    },
-                                                    style={
-                                                        "width": "100%",
-                                                        "height": "100%",
-                                                        "position": "absolute",
-                                                        "left": "0",
-                                                    },
-                                                    figure=figures.compute_heatmap_per_mz(
-                                                        slice_index, 600, 605, binary_string=False
-                                                    ),
-                                                ),
-                                                # dmc.Group(
-                                                #     spacing="xs",
-                                                #     align="flex-end",
-                                                #     children=[
-                                                dmc.Group(
-                                                    direction="column",
-                                                    spacing=0,
-                                                    style={"left": "1%", "top": "1em",},
-                                                    class_name="position-absolute",
-                                                    children=[
-                                                        html.Div(
-                                                            children=" Lipid selection",
-                                                            className="fs-5 text-light",
-                                                        ),
-                                                        dmc.Group(
-                                                            spacing="xs",
-                                                            align="flex-start",
-                                                            children=[
-                                                                dmc.MultiSelect(
-                                                                    id="page-2-dropdown-lipids",
-                                                                    data=return_pickled_object(
-                                                                        "annotations/",
-                                                                        "lipid_options",
-                                                                        force_update=False,
-                                                                        compute_function=return_lipid_options,
-                                                                    ),
-                                                                    searchable=True,
-                                                                    nothingFound="No lipid found",
-                                                                    radius="md",
-                                                                    size="xs",
-                                                                    # variant="filled",
-                                                                    placeholder="Choose up to 3 lipids",
-                                                                    clearable=False,
-                                                                    maxSelectedValues=3,
-                                                                    transitionDuration=150,
-                                                                    transition="pop-top-left",
-                                                                    transitionTimingFunction="ease",
-                                                                    style={"width": "20em",},
-                                                                ),
-                                                                dmc.Button(
-                                                                    children="Display as RGB",
-                                                                    id="tab-2-rgb-button",
-                                                                    variant="filled",
-                                                                    color="gray",
-                                                                    radius="md",
-                                                                    size="xs",
-                                                                    disabled=True,
-                                                                    compact=False,
-                                                                    loading=False,
-                                                                ),
-                                                                dmc.Button(
-                                                                    children="Display as colormap",
-                                                                    id="tab-2-colormap-button",
-                                                                    variant="filled",
-                                                                    color="gray",
-                                                                    radius="md",
-                                                                    size="xs",
-                                                                    disabled=True,
-                                                                    compact=False,
-                                                                    loading=False,
-                                                                ),
-                                                            ],
-                                                        ),
-                                                    ],
-                                                ),
-                                                #     ],
-                                                # ),
-                                                html.Div(
-                                                    id="page-2-badge-input",
-                                                    children=" Current input: " + "m/z boundaries",
-                                                    className="fs-5 text-light position-absolute",
-                                                    style={"right": "1%", "top": "1em"},
-                                                ),
-                                                dmc.Badge(
-                                                    id="page-2-badge-lipid-1",
-                                                    children="name-lipid-1",
-                                                    color="red",
-                                                    variant="filled",
-                                                    class_name="d-none",
-                                                    style={"right": "1%", "top": "4em"},
-                                                ),
-                                                dmc.Badge(
-                                                    id="page-2-badge-lipid-2",
-                                                    children="name-lipid-2",
-                                                    color="teal",
-                                                    variant="filled",
-                                                    class_name="d-none",
-                                                    style={"right": "1%", "top": "6em"},
-                                                ),
-                                                dmc.Badge(
-                                                    id="page-2-badge-lipid-3",
-                                                    children="name-lipid-3",
-                                                    color="blue",
-                                                    variant="filled",
-                                                    class_name="d-none",
-                                                    style={"right": "1%", "top": "8em"},
-                                                ),
-                                                dmc.Group(
-                                                    spacing="xs",
-                                                    align="flex-end",
-                                                    children=[
-                                                        dmc.Group(
-                                                            # position="center",
-                                                            direction="column",
-                                                            spacing=0,
-                                                            children=[
-                                                                html.Div(
-                                                                    children=" Lower bound (m/z)",
-                                                                    className="fs-5 text-light",
-                                                                ),
-                                                                dmc.Tooltip(
-                                                                    wrapLines=True,
-                                                                    width=220,
-                                                                    withArrow=True,
-                                                                    transition="fade",
-                                                                    transitionDuration=200,
-                                                                    label="Your selection can't exceed a range of 10m/z, and must be comprised in-between 400 and 1200.",
-                                                                    children=[
-                                                                        dmc.NumberInput(
-                                                                            id="page-2-lower-bound",
-                                                                            min=380,
-                                                                            max=1220,
-                                                                            precision=3,
-                                                                            radius="md",
-                                                                            size="xs",
-                                                                            value=600,
-                                                                            # variant="filled",
-                                                                            hideControls=True,
-                                                                            # label="Lower bound (m/z)",
-                                                                        ),
-                                                                    ],
-                                                                ),
-                                                            ],
-                                                        ),
-                                                        dmc.Group(
-                                                            # position="center",
-                                                            direction="column",
-                                                            spacing=0,
-                                                            children=[
-                                                                html.Div(
-                                                                    children=" Upper bound (m/z)",
-                                                                    className="fs-5 text-light",
-                                                                ),
-                                                                dmc.Tooltip(
-                                                                    wrapLines=True,
-                                                                    width=220,
-                                                                    withArrow=True,
-                                                                    transition="fade",
-                                                                    transitionDuration=200,
-                                                                    label="Your selection can't exceed a range of 10m/z, and must be comprised in-between 400 and 1200.",
-                                                                    children=[
-                                                                        dmc.NumberInput(
-                                                                            id="page-2-upper-bound",
-                                                                            min=380,
-                                                                            max=1220,
-                                                                            precision=3,
-                                                                            radius="md",
-                                                                            size="xs",
-                                                                            value=602,
-                                                                            # variant="filled",
-                                                                            hideControls=True,
-                                                                            # label="Upper bound (m/z)",
-                                                                        ),
-                                                                    ],
-                                                                ),
-                                                            ],
-                                                        ),
-                                                        dmc.Button(
-                                                            children="Display as colormap",
-                                                            id="page-2-button-bounds",
-                                                            variant="filled",
-                                                            color="gray",
-                                                            radius="md",
-                                                            size="xs",
-                                                            compact=False,
-                                                            loading=False,
-                                                        ),
-                                                    ],
-                                                    style={
-                                                        "width": "35em",
-                                                        "left": "1%",
-                                                        "bottom": "1em",
-                                                    },
-                                                    class_name="position-absolute",
-                                                ),
-                                                dmc.Group(
-                                                    position="right",
-                                                    direction="column",
-                                                    style={"right": "1%", "bottom": "1em",},
-                                                    class_name="position-absolute",
-                                                    spacing=0,
-                                                    children=[
-                                                        dmc.Button(
-                                                            children="Download data",
-                                                            id="tab-2-download-data-button",
-                                                            variant="filled",
-                                                            disabled=True,
-                                                            color="gray",
-                                                            radius="md",
-                                                            size="xs",
-                                                            compact=False,
-                                                            loading=False,
-                                                        ),
-                                                        dmc.Button(
-                                                            children="Download image",
-                                                            id="tab-2-download-image-button",
-                                                            variant="filled",
-                                                            disabled=True,
-                                                            color="gray",
-                                                            radius="md",
-                                                            size="xs",
-                                                            compact=False,
-                                                            loading=False,
-                                                            class_name="mt-1",
-                                                        ),
-                                                    ],
-                                                ),
-                                                dcc.Download(id="tab-2-download-data"),
-                                            ],
+                                        dmc.MultiSelect(
+                                            id="page-2-dropdown-lipids",
+                                            data=return_pickled_object(
+                                                "annotations/",
+                                                "lipid_options",
+                                                force_update=False,
+                                                compute_function=return_lipid_options,
+                                            ),
+                                            searchable=True,
+                                            nothingFound="No lipid found",
+                                            radius="md",
+                                            size="xs",
+                                            # variant="filled",
+                                            placeholder="Choose up to 3 lipids",
+                                            clearable=False,
+                                            maxSelectedValues=3,
+                                            transitionDuration=150,
+                                            transition="pop-top-left",
+                                            transitionTimingFunction="ease",
+                                            style={"width": "20em",},
+                                        ),
+                                        dmc.Button(
+                                            children="Display as RGB",
+                                            id="tab-2-rgb-button",
+                                            variant="filled",
+                                            color="gray",
+                                            radius="md",
+                                            size="xs",
+                                            disabled=True,
+                                            compact=False,
+                                            loading=False,
+                                        ),
+                                        dmc.Button(
+                                            children="Display as colormap",
+                                            id="tab-2-colormap-button",
+                                            variant="filled",
+                                            color="gray",
+                                            radius="md",
+                                            size="xs",
+                                            disabled=True,
+                                            compact=False,
+                                            loading=False,
                                         ),
                                     ],
                                 ),
                             ],
                         ),
+                        #     ],
+                        # ),
+                        html.Div(
+                            id="page-2-badge-input",
+                            children=" Current input: " + "m/z boundaries",
+                            className="fs-5 text-light position-absolute",
+                            style={"right": "1%", "top": "1em"},
+                        ),
+                        dmc.Badge(
+                            id="page-2-badge-lipid-1",
+                            children="name-lipid-1",
+                            color="red",
+                            variant="filled",
+                            class_name="d-none",
+                            style={"right": "1%", "top": "4em"},
+                        ),
+                        dmc.Badge(
+                            id="page-2-badge-lipid-2",
+                            children="name-lipid-2",
+                            color="teal",
+                            variant="filled",
+                            class_name="d-none",
+                            style={"right": "1%", "top": "6em"},
+                        ),
+                        dmc.Badge(
+                            id="page-2-badge-lipid-3",
+                            children="name-lipid-3",
+                            color="blue",
+                            variant="filled",
+                            class_name="d-none",
+                            style={"right": "1%", "top": "8em"},
+                        ),
+                        dmc.Group(
+                            spacing="xs",
+                            align="flex-end",
+                            children=[
+                                dmc.Group(
+                                    # position="center",
+                                    direction="column",
+                                    spacing=0,
+                                    children=[
+                                        html.Div(
+                                            children=" Lower bound (m/z)",
+                                            className="fs-5 text-light",
+                                        ),
+                                        dmc.Tooltip(
+                                            wrapLines=True,
+                                            width=220,
+                                            withArrow=True,
+                                            transition="fade",
+                                            transitionDuration=200,
+                                            label="Your selection can't exceed a range of 10m/z, and must be comprised in-between 400 and 1200.",
+                                            children=[
+                                                dmc.NumberInput(
+                                                    id="page-2-lower-bound",
+                                                    min=380,
+                                                    max=1220,
+                                                    precision=3,
+                                                    radius="md",
+                                                    size="xs",
+                                                    value=600,
+                                                    # variant="filled",
+                                                    hideControls=True,
+                                                    # label="Lower bound (m/z)",
+                                                ),
+                                            ],
+                                        ),
+                                    ],
+                                ),
+                                dmc.Group(
+                                    # position="center",
+                                    direction="column",
+                                    spacing=0,
+                                    children=[
+                                        html.Div(
+                                            children=" Upper bound (m/z)",
+                                            className="fs-5 text-light",
+                                        ),
+                                        dmc.Tooltip(
+                                            wrapLines=True,
+                                            width=220,
+                                            withArrow=True,
+                                            transition="fade",
+                                            transitionDuration=200,
+                                            label="Your selection can't exceed a range of 10m/z, and must be comprised in-between 400 and 1200.",
+                                            children=[
+                                                dmc.NumberInput(
+                                                    id="page-2-upper-bound",
+                                                    min=380,
+                                                    max=1220,
+                                                    precision=3,
+                                                    radius="md",
+                                                    size="xs",
+                                                    value=602,
+                                                    # variant="filled",
+                                                    hideControls=True,
+                                                    # label="Upper bound (m/z)",
+                                                ),
+                                            ],
+                                        ),
+                                    ],
+                                ),
+                                dmc.Button(
+                                    children="Display as colormap",
+                                    id="page-2-button-bounds",
+                                    variant="filled",
+                                    color="gray",
+                                    radius="md",
+                                    size="xs",
+                                    compact=False,
+                                    loading=False,
+                                ),
+                            ],
+                            style={"width": "35em", "left": "1%", "bottom": "1em",},
+                            class_name="position-absolute",
+                        ),
+                        dmc.Group(
+                            position="right",
+                            direction="column",
+                            style={"right": "1%", "bottom": "1em",},
+                            class_name="position-absolute",
+                            spacing=0,
+                            children=[
+                                dmc.Button(
+                                    children="Download data",
+                                    id="tab-2-download-data-button",
+                                    variant="filled",
+                                    disabled=True,
+                                    color="gray",
+                                    radius="md",
+                                    size="xs",
+                                    compact=False,
+                                    loading=False,
+                                ),
+                                dmc.Button(
+                                    children="Download image",
+                                    id="tab-2-download-image-button",
+                                    variant="filled",
+                                    disabled=True,
+                                    color="gray",
+                                    radius="md",
+                                    size="xs",
+                                    compact=False,
+                                    loading=False,
+                                    class_name="mt-1",
+                                ),
+                            ],
+                        ),
+                        dcc.Download(id="tab-2-download-data"),
                     ],
                 ),
+                #     ],
+                # ),
+                #             ],
+                #         ),
+                #     ],
+                # ),
                 dbc.Card(
                     style={
                         "maxWidth": "100%",
@@ -360,7 +359,7 @@ def return_layout(basic_config, slice_index):
                         "width": "100%",
                         "height": "100%",
                     },
-                    # className="mt-4",
+                    className="d-none",
                     id="page-2-card-low-res",
                     children=[
                         dbc.CardHeader("Low-resolution mass-spectrometry spectrum"),
@@ -411,7 +410,7 @@ def return_layout(basic_config, slice_index):
                         "width": "100%",
                         "height": "100%",
                     },
-                    # className="mt-4",
+                    className="d-none",
                     id="page-2-card-high-res",
                     children=[
                         dbc.CardHeader("High-resolution mass-spectrometry spectrum"),
@@ -465,18 +464,18 @@ def return_layout(basic_config, slice_index):
 
 ###### APP CALLBACKS ######
 
-# Function to update the heatmap toast name
-@app.app.callback(
-    Output("page-2-toast-graph-heatmap-mz-selection", "children"), Input("main-slider", "value"),
-)
-def page_2_update_graph_heatmap_mz_selection(slice_index):
-    if slice_index is not None:
-        return [
-            html.Div("Brain slice n°" + str(slice_index)),
-        ]
+# # Function to update the heatmap toast name
+# @app.app.callback(
+#     Output("page-2-toast-graph-heatmap-mz-selection", "children"), Input("main-slider", "value"),
+# )
+# def page_2_update_graph_heatmap_mz_selection(slice_index):
+#     if slice_index is not None:
+#         return [
+#             html.Div("Brain slice n°" + str(slice_index)),
+#         ]
 
-    else:
-        return dash.no_update
+#     else:
+#         return dash.no_update
 
 
 # Function to plot page-2-graph-heatmap-mz-selection when its state get updated

@@ -1,4 +1,7 @@
-#
+import numpy as np
+from matplotlib import cm
+from matplotlib.colors import ListedColormap
+
 # ! Clean config
 
 # Define app colors (list and dictionnary)
@@ -34,3 +37,11 @@ basic_config = {
     "modeBarButtonsToRemove": [],
     "displaylogo": False,
 }
+
+
+# Colormap with black for 0 values
+viridis = cm.get_cmap("viridis", 256)
+newcolors = viridis(np.linspace(0, 1, 256))
+black = np.array([22 / 256, 23 / 256, 25 / 256, 1])
+newcolors[:1, :] = black
+black_viridis = ListedColormap(newcolors)

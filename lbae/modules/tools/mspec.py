@@ -182,7 +182,9 @@ def search2sorted(a: np.ndarray, v: np.ndarray, return_idx=True) -> np.ndarray:
 
 
 @numba.njit
-def fast_to_dense_fixed_mz_vals(fixed_mz_vals: np.ndarray, mz: np.ndarray, intensities: np.ndarray) -> np.ndarray:
+def fast_to_dense_fixed_mz_vals(
+    fixed_mz_vals: np.ndarray, mz: np.ndarray, intensities: np.ndarray
+) -> np.ndarray:
     """Returns the same results of the code below
     x = np.zeros_like(fixed_mz_vals)
     bool_f = np.in1d(fixed_mz_vals, mz)
@@ -325,7 +327,9 @@ class Spectrum:
     def _to_dense_separated_intervals(self, separated_intervals: np.ndarray) -> np.ndarray:
         return fast_to_dense_separated_intervals(separated_intervals, self.mz, self.i)
 
-    def to_dense(self, *, fixed_mz_vals: np.ndarray = None, separated_intervals: np.ndarray = None) -> np.ndarray:
+    def to_dense(
+        self, *, fixed_mz_vals: np.ndarray = None, separated_intervals: np.ndarray = None
+    ) -> np.ndarray:
         if fixed_mz_vals is not None:
             return self._to_dense_fixed_mz_vals(fixed_mz_vals)
         elif separated_intervals is not None:
@@ -524,7 +528,9 @@ class SmzMLobj:
     def __len__(self) -> int:
         return len(self.spectra)
 
-    def get_mz_vals(self, mz_resolution: float = None, force_recompute: bool = False) -> List[float]:
+    def get_mz_vals(
+        self, mz_resolution: float = None, force_recompute: bool = False
+    ) -> List[float]:
         """Get all the m/z values as the set union of the ones in the spectra
 
         Arguments
@@ -617,7 +623,9 @@ class SmzMLobj:
             self._mz_vals_at_res[self._mz_resolution] = np.array(sorted(mz_vals))
             return self
         else:
-            raise NotImplementedError("A fixed resolution view is not inplemented yet. Use inplace=True")
+            raise NotImplementedError(
+                "A fixed resolution view is not inplemented yet. Use inplace=True"
+            )
 
     def filter_spectra(self, mz_bool_condition: np.ndarray, inplace: bool = True) -> None:
         """The general methods that discards a subset of m/z peaks
@@ -640,7 +648,9 @@ class SmzMLobj:
                 self.spectra[i].filter_mz_inplace(selected_mzs)
             self._mz_vals_at_res[self.mz_resolution] = selected_mzs
         else:
-            raise NotImplementedError("A deep filtered view is not inplemented yet. Use inplace=True")
+            raise NotImplementedError(
+                "A deep filtered view is not inplemented yet. Use inplace=True"
+            )
 
     def filter_lipids(self) -> None:
         lipid_bool_condition = self._lipid_condition(self.mz_vals)
@@ -683,13 +693,17 @@ class SmzMLobj:
         elif sparse.issparse(self._I):
             return self._I
         else:
-            logging.warning("A dense matrix was already computed. Returning a sparsified dense matrix!")
+            logging.warning(
+                "A dense matrix was already computed. Returning a sparsified dense matrix!"
+            )
             return sparse.lil_matrix(self._I)
 
     @property
     def A(self) -> np.ndarray:
         if self._I is None:
-            logging.warning("The dense matrix A has never been computed. Please wait while it's being generated.")
+            logging.warning(
+                "The dense matrix A has never been computed. Please wait while it's being generated."
+            )
             self._densify()
             return self._I
         elif sparse.issparse(self._I):
@@ -722,16 +736,20 @@ class SmzMLobj:
         return self.__len__()
 
     def _load(self, ixs2load: np.ndarray, show_progress: bool = False) -> None:
-        set_ixs2load = set(ixs2load)  # ixs2load should be unique, I just do this for fast lookup later.
+        set_ixs2load = set(
+            ixs2load
+        )  # ixs2load should be unique, I just do this for fast lookup later.
         n_toload = len(set_ixs2load)
         cnt = 0
         if show_progress:
-            with progressbar(total=n_toload, desc=f"Loading Sprectra at resolution {self.mz_resolution}") as pbar:
+            with progressbar(
+                total=n_toload, desc=f"Loading Sprectra at resolution {self.mz_resolution}"
+            ) as pbar:
                 for i, spectrum in enumerate(self.reader):
                     if i in set_ixs2load:
-                        self.spectra[cnt] = Spectrum(spectrum.mz - self.mz_shift[cnt], spectrum.i).resolved(
-                            self.mz_resolution
-                        )
+                        self.spectra[cnt] = Spectrum(
+                            spectrum.mz - self.mz_shift[cnt], spectrum.i
+                        ).resolved(self.mz_resolution)
                         cnt += 1
                         pbar.update(1)
                     if cnt == n_toload:
@@ -739,7 +757,9 @@ class SmzMLobj:
         else:
             for i, spectrum in enumerate(self.reader):
                 if i in set_ixs2load:
-                    self.spectra[i] = Spectrum(spectrum.mz + self.mz_shift[i], spectrum.i).resolved(self.mz_resolution)
+                    self.spectra[i] = Spectrum(spectrum.mz + self.mz_shift[i], spectrum.i).resolved(
+                        self.mz_resolution
+                    )
                     cnt += 1
                 if cnt == n_toload:
                     break
@@ -782,7 +802,9 @@ class SmzMLobj:
             self._load(ixs2load)
         return SmzMLobjView(self.spectra[slice_like], self)
 
-    def _extract(self, sel_spectra: ArrayLike, sel_peaks: np.ndarray, copy: bool = False) -> List[List[np.ndarray]]:
+    def _extract(
+        self, sel_spectra: ArrayLike, sel_peaks: np.ndarray, copy: bool = False
+    ) -> List[List[np.ndarray]]:
         """Internal function to extract a subset of peaks for a set of spectra
         """
         out_list = []
@@ -869,7 +891,13 @@ class SmzMLobj:
             else:
                 fc = cmap
             b = ax.bar(
-                mz_values, intensities, width=self.mz_resolution, fc=fc, alpha=alpha, label=sel_spectra[i], **kwargs,
+                mz_values,
+                intensities,
+                width=self.mz_resolution,
+                fc=fc,
+                alpha=alpha,
+                label=sel_spectra[i],
+                **kwargs,
             )
         ax.set_ylim(0,)
 
@@ -980,7 +1008,9 @@ class SmzMLobj:
         return ax
 
     def peak_windows_trace(
-        self, sel_peaks: Union[ArrayLike, List[ArrayLike], np.ndarray], sel_spectra: ArrayLike = None,
+        self,
+        sel_peaks: Union[ArrayLike, List[ArrayLike], np.ndarray],
+        sel_spectra: ArrayLike = None,
     ) -> ArrayLike:
         """It produces a vector containing, for every spectrum, the center of mass computed of the selected peaks 
         Most often sel_peaks contains a window of sel_peaks
@@ -1191,7 +1221,9 @@ class SmzMLobj:
                     # calculate difference between CoM and 'true' value
                     deviation = CoM  # - true_mz
                     intensity = row[0, non_zero_idx].mean()
-                    ax.scatter(intensity, deviation, color=selected_colors[i], marker="x", alpha=alpha)
+                    ax.scatter(
+                        intensity, deviation, color=selected_colors[i], marker="x", alpha=alpha
+                    )
 
                 elif plot_style == "total":
 
@@ -1200,7 +1232,9 @@ class SmzMLobj:
                         mz = self.mz_vals[INDEX.squeeze()[value]]
                         deviation = mz  # - true_mz
                         intensity = row[0, value]
-                        ax.scatter(intensity, deviation, color=selected_colors[i], marker="x", alpha=alpha)
+                        ax.scatter(
+                            intensity, deviation, color=selected_colors[i], marker="x", alpha=alpha
+                        )
 
                 ax.set_xlabel("Intensity")
                 ax.set_ylabel("Devation from average m/z value")
@@ -1218,7 +1252,9 @@ class SmzMLobj:
             if i == len(percentiles_) - 1:
                 idx_pixel = np.argwhere(IMG_SUM > percentiles_[i]).flatten()
             else:
-                idx_pixel = np.argwhere((IMG_SUM > percentiles_[i]) & (IMG_SUM < percentiles_[i + 1])).flatten()
+                idx_pixel = np.argwhere(
+                    (IMG_SUM > percentiles_[i]) & (IMG_SUM < percentiles_[i + 1])
+                ).flatten()
             S_pixels = self.S[idx_pixel][:, INDEX.squeeze()]
 
             # calculate CoM for each pixel
@@ -1308,7 +1344,12 @@ class SmzMLobj:
         if plot_graph:
             if ax == None:
                 fig, ax = plt.subplots()
-            ax.imshow(IMG_SUM_, cmap="inferno", vmin=np.percentile(IMG_SUM_, vmin), vmax=np.percentile(IMG_SUM_, vmax))
+            ax.imshow(
+                IMG_SUM_,
+                cmap="inferno",
+                vmin=np.percentile(IMG_SUM_, vmin),
+                vmax=np.percentile(IMG_SUM_, vmax),
+            )
             ax.axis("off")
 
             if range_type == "explicit":
