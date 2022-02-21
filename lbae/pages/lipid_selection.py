@@ -133,12 +133,13 @@ def return_layout(basic_config, slice_index):
                                         "scale": 2,
                                     }
                                 }
-                                | {"staticPlot": True},
+                                | {"staticPlot": False},
                                 style={
                                     "width": "100%",
                                     "height": "100%",
                                     "position": "absolute",
                                     "left": "0",
+                                    "top": "0",
                                     "background-color": "#1d1c1f",
                                 },
                                 figure=figures.compute_heatmap_per_mz(

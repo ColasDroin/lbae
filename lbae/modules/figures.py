@@ -410,7 +410,9 @@ class Figures:
             else:
                 array_image_atlas = None
 
-            base64_string = convert_image_to_base64(image, overlay=array_image_atlas)
+            base64_string = convert_image_to_base64(
+                image, overlay=array_image_atlas, transparent_zeros=True
+            )
             fig.add_trace(go.Image(visible=True, source=base64_string))
 
         # Improve graph layout
@@ -419,6 +421,8 @@ class Figures:
             newshape=dict(
                 fillcolor=dic_colors["blue"], opacity=0.7, line=dict(color="white", width=1)
             ),
+            xaxis=dict(showgrid=False, zeroline=False),
+            yaxis=dict(showgrid=False, zeroline=False),
             # Do not specify height for now as plotly is buggued and resets it to 450px if switching tabs
             # height=500,
         )
@@ -463,20 +467,14 @@ class Figures:
 
         # Build figure
         fig = go.Figure()
-        base64_string = convert_image_to_base64(image)
+        base64_string = convert_image_to_base64(image, transparent_zeros=True)
         fig.add_trace(go.Image(visible=True, source=base64_string))
 
         # Improve graph layout
         fig.update_layout(
-            #     title={
-            #         "text": "Mass spectrometry heatmap",
-            #         "y": 0.97,
-            #         "x": 0.5,
-            #         "xanchor": "center",
-            #         "yanchor": "top",
-            #         "font": dict(size=14,),
-            #     },
-            margin=dict(t=10, r=0, b=10, l=0),
+            xaxis=dict(showgrid=False, zeroline=False),
+            yaxis=dict(showgrid=False, zeroline=False),
+            margin=dict(t=0, r=0, b=0, l=0),
         )
         fig.update_xaxes(showticklabels=False)
         fig.update_yaxes(showticklabels=False)
@@ -559,7 +557,9 @@ class Figures:
         logging.info("array_image acquired for slice " + str(slice_index) + logmem())
 
         if use_pil:
-            base64_string_exp = convert_image_to_base64(array_image, type="RGB")
+            base64_string_exp = convert_image_to_base64(
+                array_image, type="RGB", transparent_zeros=True
+            )
             final_image = go.Image(visible=True, source=base64_string_exp,)
         else:
             final_image = go.Image(z=array_image)
@@ -574,15 +574,9 @@ class Figures:
 
             # Improve graph layout
             fig.update_layout(
-                # title={
-                #    "text": "Mass spectrometry heatmap" if title else "",
-                #    "y": 0.97,
-                #    "x": 0.5,
-                #    "xanchor": "center",
-                #    "yanchor": "top",
-                #    "font": dict(size=14,),
-                # },
-                margin=dict(t=10, r=0, b=10, l=0),
+                xaxis=dict(showgrid=False, zeroline=False),
+                yaxis=dict(showgrid=False, zeroline=False),
+                margin=dict(t=0, r=0, b=0, l=0),
             )
             fig.update_xaxes(showticklabels=False)
             fig.update_yaxes(showticklabels=False)

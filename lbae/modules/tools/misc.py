@@ -99,13 +99,12 @@ def return_pickled_object(
         return object
 
 
-@njit
-def replace_value_in_RGB_array(array):
-    for i in range(array.shape[0]):
-        for j in range(array.shape[1]):
-            if np.sum(array[i, j]) < 3:
-                array[i, j] = [29, 29, 31]
-    return array
+# TODO ! Make docstring
+def black_to_transparency(img):
+    # Need to copy as PIL arrays are read-only
+    x = np.asarray(img.convert("RGBA")).copy()
+    x[:, :, 3] = (255 * (x[:, :, :3] != 0).any(axis=2)).astype(np.uint8)
+    return Image.fromarray(x)
 
 
 def convert_image_to_base64(
@@ -118,6 +117,7 @@ def convert_image_to_base64(
     overlay=None,
     decrease_resolution_factor=1,
     binary=False,
+    transparent_zeros=False,
 ):
     """This functions allows for the conversion of a numpy array into a bytestring image using PIL. 
     All images are paletted so save space.
@@ -157,11 +157,6 @@ def convert_image_to_base64(
 
     # Convert 3D or 4D array into a PIL image
     elif type == "RGB" or type == "RGBA":
-
-        # substitute zero value with background value
-        image_array = replace_value_in_RGB_array(
-            image_array
-        )  # ! This needs to be improved, way too slow
         pil_img = Image.fromarray(image_array, type)
 
     # Overlay is transparent, therefore initial image must be converted to RGBA
@@ -179,6 +174,10 @@ def convert_image_to_base64(
             int(round(y / decrease_resolution_factor)),
         )
         pil_img = pil_img.resize((x2, y2), Image.ANTIALIAS)
+
+    if transparent_zeros:
+        # Takes ~5 ms but makes output much nicer
+        pil_img = black_to_transparency(pil_img)
 
     # Convert to base64
     base64_string = None
