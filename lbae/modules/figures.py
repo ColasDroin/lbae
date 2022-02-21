@@ -582,8 +582,8 @@ class Figures:
             fig.update_yaxes(showticklabels=False)
 
             # Set background color to zero
-            fig.layout.plot_bgcolor = "rgba(0,0,0,0)"
-            fig.layout.paper_bgcolor = "rgba(0,0,0,0)"
+            fig.layout.plot_bgcolor = "rgba(0,0,0,0.)"
+            fig.layout.paper_bgcolor = "rgba(0,0,0,0.)"
 
             logging.info("Returning fig for slice " + str(slice_index) + logmem())
             return fig
@@ -604,7 +604,7 @@ class Figures:
             showlegend=False,
             xaxis=dict(rangeslider={"visible": False}, title="m/z"),
             yaxis=dict(fixedrange=False, title="Intensity"),
-            template="plotly_white",
+            template="plotly_dark",
             autosize=True,
             title={
                 "text": "Low resolution spectrum (averaged across pixels)",
@@ -614,6 +614,8 @@ class Figures:
                 "yanchor": "top",
                 "font": dict(size=14,),
             },
+            paper_bgcolor="rgba(0,0,0,0.3)",
+            plot_bgcolor="rgba(0,0,0,0.3)",
         )
 
         # Build figure
@@ -665,7 +667,7 @@ class Figures:
             showlegend=False,
             xaxis=dict(rangeslider={"visible": False}, title="m/z"),
             yaxis=dict(fixedrange=True, title="Intensity"),
-            template="plotly_white",
+            template="plotly_dark",
             title={
                 "text": "High resolution spectrum (averaged across pixels)",
                 "y": 0.92,
@@ -674,6 +676,8 @@ class Figures:
                 "yanchor": "top",
                 "font": dict(size=14,),
             },
+            paper_bgcolor="rgba(0,0,0,0.3)",
+            plot_bgcolor="rgba(0,0,0,0.3)",
         )
         # Build figure layout
         fig = go.Figure(data=data, layout=layout)
@@ -703,7 +707,7 @@ class Figures:
             showlegend=True,
             xaxis=dict(title="m/z"),
             yaxis=dict(title="Intensity"),
-            template="plotly_white",
+            template="plotly_dark",
         )
         # Build figure
         fig = go.Figure(data=data, layout=layout)

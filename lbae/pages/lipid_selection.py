@@ -259,8 +259,8 @@ def return_layout(basic_config, slice_index):
                                 spacing=0,
                                 children=[
                                     dmc.Button(
-                                        children="Show spectrum",
-                                        id="page-2-show-spectrum-button",
+                                        children="Show zoomed-in spectrum",
+                                        id="page-2-show-high-res-spectrum-button",
                                         variant="filled",
                                         disabled=False,
                                         color="gray",
@@ -268,6 +268,18 @@ def return_layout(basic_config, slice_index):
                                         size="xs",
                                         compact=False,
                                         loading=False,
+                                    ),
+                                    dmc.Button(
+                                        children="Show entire spectrum",
+                                        id="page-2-show-low-res-spectrum-button",
+                                        variant="filled",
+                                        disabled=False,
+                                        color="gray",
+                                        radius="md",
+                                        size="xs",
+                                        compact=False,
+                                        loading=False,
+                                        class_name="mt-1",
                                     ),
                                     dmc.Button(
                                         children="Download data",
@@ -309,33 +321,16 @@ def return_layout(basic_config, slice_index):
         ),
         html.Div(
             children=[
-                # dmc.Drawer(
                 dbc.Offcanvas(
                     # title="Spectra for current selection",
-                    id="page-2-drawer-spectra",
-                    # padding="xs",
-                    # size="550px",
-                    # shadow="xs",
-                    # overlayOpacity=0.0,
+                    id="page-2-drawer-low-res-spectra",
                     backdrop=True,
                     placement="end",
-                    style={"width": "70%"},
+                    style={"width": "30%"},
                     children=[
-                        # dbc.Card(
-                        # style={
-                        #     "maxWidth": "100%",
-                        #     "margin": "0 auto",
-                        #     "width": "100%",
-                        #     "height": "100%",
-                        # },
-                        # className="d-none",
-                        # id="page-2-card-low-res",
-                        # children=[
-                        #    dbc.CardHeader("Low-resolution mass-spectrometry spectrum"),
-                        #    dbc.CardBody(
-                        #        children=[
                         html.Div(
                             className="loading-wrapper",
+                            style={"margin-top": "5%"},
                             children=[
                                 dbc.Spinner(
                                     color="dark",
@@ -343,6 +338,17 @@ def return_layout(basic_config, slice_index):
                                         html.Div(
                                             # className="px-3 mt-2",
                                             children=[
+                                                dmc.Button(
+                                                    children="Hide spectrum",
+                                                    id="page-2-close-low-res-spectrum-button",
+                                                    variant="filled",
+                                                    disabled=False,
+                                                    color="orange",
+                                                    radius="md",
+                                                    size="xs",
+                                                    compact=False,
+                                                    loading=False,
+                                                ),
                                                 dcc.Graph(
                                                     id="page-2-graph-low-resolution-spectrum",
                                                     figure=figures.compute_spectrum_low_res(
@@ -368,25 +374,18 @@ def return_layout(basic_config, slice_index):
                                 ),
                             ],
                         ),
-                        #             ],
-                        #         ),
-                        #     ],
-                        # ),
-                        # dbc.Card(
-                        # style={
-                        #     "maxWidth": "100%",
-                        #     "margin": "0 auto",
-                        #     "width": "100%",
-                        #     "height": "100%",
-                        # },
-                        # className="d-none",
-                        # id="page-2-card-high-res",
-                        # children=[
-                        #     dbc.CardHeader("High-resolution mass-spectrometry spectrum"),
-                        #     dbc.CardBody(
-                        #         children=[
+                    ],
+                ),
+                dbc.Offcanvas(
+                    # title="Spectra for current selection",
+                    id="page-2-drawer-high-res-spectra",
+                    backdrop=True,
+                    placement="end",
+                    style={"width": "30%"},
+                    children=[
                         html.Div(
-                            className="loading-wrapper mt-5",
+                            className="loading-wrapper",
+                            style={"margin-top": "5%"},
                             children=[
                                 dbc.Spinner(
                                     color="dark",
@@ -404,6 +403,17 @@ def return_layout(basic_config, slice_index):
                                                 ),
                                             ],
                                         ),
+                                        dmc.Button(
+                                            children="Hide spectrum",
+                                            id="page-2-close-high-res-spectrum-button",
+                                            variant="filled",
+                                            disabled=False,
+                                            color="orange",
+                                            radius="md",
+                                            size="xs",
+                                            compact=False,
+                                            loading=False,
+                                        ),
                                         dcc.Graph(
                                             id="page-2-graph-high-resolution-spectrum",
                                             style={"display": "none"},
@@ -420,10 +430,6 @@ def return_layout(basic_config, slice_index):
                                 ),
                             ],
                         ),
-                        #             ],
-                        #         ),
-                        #     ],
-                        # ),
                     ],
                 ),
             ],
@@ -1398,11 +1404,24 @@ def return_lipid_options():
 
 
 @app.app.callback(
-    Output("page-2-drawer-spectra", "is_open"),
-    Input("page-2-show-spectrum-button", "n_clicks"),
-    [State("page-2-drawer-spectra", "is_open")],
+    Output("page-2-drawer-low-res-spectra", "is_open"),
+    Input("page-2-show-low-res-spectrum-button", "n_clicks"),
+    Input("page-2-close-low-res-spectrum-button", "n_clicks"),
+    [State("page-2-drawer-low-res-spectra", "is_open")],
 )
-def toggle_offcanvas(n1, is_open):
-    if n1:
+def toggle_offcanvas(n1, n2, is_open):
+    if n1 or n2:
+        return not is_open
+    return is_open
+
+
+@app.app.callback(
+    Output("page-2-drawer-high-res-spectra", "is_open"),
+    Input("page-2-show-high-res-spectrum-button", "n_clicks"),
+    Input("page-2-close-high-res-spectrum-button", "n_clicks"),
+    [State("page-2-drawer-high-res-spectra", "is_open")],
+)
+def toggle_offcanvas(n1, n2, is_open):
+    if n1 or n2:
         return not is_open
     return is_open

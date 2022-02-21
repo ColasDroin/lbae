@@ -109,7 +109,7 @@ html {
   margin-bottom: auto;
   margin-top: auto;
   /*padding: 1rem 1rem;*/
-  padding-left: 5.5rem;
+  padding-left: 6rem;
   /* white-space: normal;*/
   height: 100%;
   overflow: hidden;
@@ -300,7 +300,7 @@ body > div.fade.offcanvas-backdrop.show {
   ); /* when max-height = 80vh is reached, need to block stretching*/
   float: left;
   height: 0;
-  max-width: 111vh; /* 80/72=11*/
+  /* max-width: 111vh;*/ /*80/72=11 */
 }
 
 .page-4-fixed-aspect-ratio {
@@ -317,6 +317,26 @@ body > div.fade.offcanvas-backdrop.show {
   padding-bottom: 57.8%;
   float: left;
   height: 0;
+}
+
+/* To remove the header of the drawer */
+#page-2-drawer-high-res-spectra > div.offcanvas-header {
+  display: none;
+}
+
+#page-2-drawer-low-res-spectra > div.offcanvas-header {
+  display: none;
+}
+
+/* Remove drawer background */
+#page-2-drawer-high-res-spectra {
+  background-color: transparent;
+  height: 400px;
+}
+
+#page-2-drawer-low-res-spectra {
+  background-color: transparent;
+  height: 400px;
 }
 
 /* To center main toast header */
