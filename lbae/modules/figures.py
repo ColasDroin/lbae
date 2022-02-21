@@ -600,13 +600,22 @@ class Figures:
         )
         # Define figure layout
         layout = go.Layout(
-            margin=dict(t=0, r=0, b=10, l=0),
+            margin=dict(t=50, r=0, b=10, l=0),
             showlegend=False,
             xaxis=dict(rangeslider={"visible": False}, title="m/z"),
             yaxis=dict(fixedrange=False, title="Intensity"),
             template="plotly_white",
             autosize=True,
+            title={
+                "text": "Low resolution spectrum (averaged across pixels)",
+                "y": 0.92,
+                "x": 0.5,
+                "xanchor": "center",
+                "yanchor": "top",
+                "font": dict(size=14,),
+            },
         )
+
         # Build figure
         fig = go.Figure(data=data, layout=layout)
 

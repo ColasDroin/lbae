@@ -26,66 +26,6 @@ N_LINES = int(np.ceil(HEIGHT_PLOTS / 30))
 def return_layout(basic_config, slice_index):
 
     page = (
-        # dash_draggable.ResponsiveGridLayout(
-        #     id="draggable",
-        #     clearSavedLayout=True,
-        #     isDraggable=False,
-        #     isResizable=False,
-        #     containerPadding=[2, 2],
-        #     breakpoints={"xxl": 1600, "lg": 1200, "md": 996, "sm": 768, "xs": 480, "xxs": 0},
-        #     gridCols={"xxl": 12, "lg": 12, "md": 10, "sm": 6, "xs": 4, "xxs": 2},
-        #     layouts={
-        #         # x sets the lateral position, y the vertical one, w is in columns (whose size depends on the dimension), h is in rows (30px)
-        #         # nb columns go 12->10->6->4->2
-        #         "xxl": [
-        #             {"i": "page-2-card-heatmap", "x": 0, "y": 0, "w": 12, "h": 29},
-        #             {"i": "page-2-card-low-res", "x": 7, "y": 0, "w": 5, "h": N_LINES},
-        #             {"i": "page-2-card-high-res", "x": 7, "y": 20, "w": 5, "h": N_LINES},
-        #         ],
-        #         "lg": [
-        #             {"i": "page-2-card-heatmap", "x": 0, "y": 0, "w": 7, "h": 16},
-        #             {"i": "page-2-card-low-res", "x": 7, "y": 16, "w": 5, "h": N_LINES},
-        #             {"i": "page-2-card-high-res", "x": 7, "y": 16, "w": 5, "h": N_LINES},
-        #         ],
-        #         "md": [
-        #             {"i": "page-2-card-heatmap", "x": 0, "y": 0, "w": 6, "h": 14},
-        #             {"i": "page-2-card-low-res", "x": 0, "y": 14, "w": 5, "h": N_LINES},
-        #             {"i": "page-2-card-high-res", "x": 5, "y": 14, "w": 5, "h": N_LINES},
-        #         ],
-        #         "sm": [
-        #             {"i": "page-2-card-heatmap", "x": 0, "y": 0, "w": 6, "h": 19},
-        #             {"i": "page-2-card-low-res", "x": 0, "y": 19 + 7 + 5, "w": 6, "h": N_LINES},
-        #             {
-        #                 "i": "page-2-card-high-res",
-        #                 "x": 0,
-        #                 "y": 19 + 7 + 5 + N_LINES,
-        #                 "w": 6,
-        #                 "h": N_LINES,
-        #             },
-        #         ],
-        #         "xs": [
-        #             {"i": "page-2-card-heatmap", "x": 0, "y": 0, "w": 4, "h": 14},
-        #             {"i": "page-2-card-low-res", "x": 0, "y": 14 + 7 + 5, "w": 4, "h": N_LINES},
-        #             {
-        #                 "i": "page-2-card-high-res",
-        #                 "x": 0,
-        #                 "y": 14 + 7 + 5 + N_LINES,
-        #                 "w": 4,
-        #                 "h": N_LINES,
-        #             },
-        #         ],
-        #         "xxs": [
-        #             {"i": "page-2-card-heatmap", "x": 0, "y": 0, "w": 2, "h": 9},
-        #             {"i": "page-2-card-low-res", "x": 0, "y": 9 + 7 + 5, "w": 2, "h": N_LINES},
-        #             {
-        #                 "i": "page-2-card-high-res",
-        #                 "x": 0,
-        #                 "y": 9 + 7 + 5 + N_LINES,
-        #                 "w": 2,
-        #                 "h": N_LINES,
-        #             },
-        #         ],
-        #     },
         html.Div(
             style={
                 "position": "absolute",
@@ -96,54 +36,42 @@ def return_layout(basic_config, slice_index):
                 "background-color": "#1d1c1f",
             },
             children=[
-                # dbc.Card(
-                #     id="page-2-card-heatmap",
-                #     className="no-transition",
-                #     style={"width": "100%", "height": "100%"},
-                #     children=[
-                #         dbc.CardHeader(
-                #             id="page-2-toast-graph-heatmap-mz-selection",
-                #             className="d-flex",
-                #             children=[html.Div("Brain slice n°"),],
-                #         ),
-                #         dbc.CardBody(
-                #             className="py-0 mb-0 mt-2",
-                #             children=[
-                #                 dbc.Spinner(
-                #                     color="dark",
-                #                     show_initially=False,
-                #                     children=[
-                # dmc.Paper(
-                #     id="page-2-card-heatmap",
-                #     children=[
                 dmc.Center(
                     class_name="w-100",
-                    style={"height": "90%"},  # Boostrap doesn't support h-90...
+                    style={"height": "100%"},  # Boostrap doesn't support h-90...
                     children=html.Div(
                         className="page-1-fixed-aspect-ratio",
                         style={"background-color": "#1d1c1f"},
                         children=[
-                            dcc.Graph(
-                                id="page-2-graph-heatmap-mz-selection",
-                                config=basic_config
-                                | {
-                                    "toImageButtonOptions": {
-                                        "format": "png",
-                                        "filename": "brain_lipid_selection",
-                                        "scale": 2,
-                                    }
-                                }
-                                | {"staticPlot": False},
-                                style={
-                                    "width": "100%",
-                                    "height": "100%",
-                                    "position": "absolute",
-                                    "left": "0",
-                                    "top": "0",
-                                    "background-color": "#1d1c1f",
+                            dbc.Spinner(
+                                color="info",
+                                spinner_style={
+                                    "margin-top": "40%",
+                                    "width": "3rem",
+                                    "height": "3rem",
                                 },
-                                figure=figures.compute_heatmap_per_mz(
-                                    slice_index, 600, 605, binary_string=False
+                                children=dcc.Graph(
+                                    id="page-2-graph-heatmap-mz-selection",
+                                    config=basic_config
+                                    | {
+                                        "toImageButtonOptions": {
+                                            "format": "png",
+                                            "filename": "brain_lipid_selection",
+                                            "scale": 2,
+                                        }
+                                    }
+                                    | {"staticPlot": False},
+                                    style={
+                                        "width": "100%",
+                                        "height": "100%",
+                                        "position": "absolute",
+                                        "left": "0",
+                                        "top": "0",
+                                        "background-color": "#1d1c1f",
+                                    },
+                                    figure=figures.compute_heatmap_per_mz(
+                                        slice_index, 600, 605, binary_string=False
+                                    ),
                                 ),
                             ),
                             # dmc.Group(
@@ -214,7 +142,7 @@ def return_layout(basic_config, slice_index):
                             # ),
                             html.Div(
                                 id="page-2-badge-input",
-                                children=" Current input: " + "m/z boundaries",
+                                children="Current input: " + "m/z boundaries",
                                 className="fs-5 text-light position-absolute",
                                 style={"right": "1%", "top": "1em"},
                             ),
@@ -280,7 +208,6 @@ def return_layout(basic_config, slice_index):
                                         ],
                                     ),
                                     dmc.Group(
-                                        # position="center",
                                         direction="column",
                                         spacing=0,
                                         children=[
@@ -304,9 +231,7 @@ def return_layout(basic_config, slice_index):
                                                         radius="md",
                                                         size="xs",
                                                         value=602,
-                                                        # variant="filled",
                                                         hideControls=True,
-                                                        # label="Upper bound (m/z)",
                                                     ),
                                                 ],
                                             ),
@@ -334,6 +259,17 @@ def return_layout(basic_config, slice_index):
                                 spacing=0,
                                 children=[
                                     dmc.Button(
+                                        children="Show spectrum",
+                                        id="page-2-show-spectrum-button",
+                                        variant="filled",
+                                        disabled=False,
+                                        color="gray",
+                                        radius="md",
+                                        size="xs",
+                                        compact=False,
+                                        loading=False,
+                                    ),
+                                    dmc.Button(
                                         children="Download data",
                                         id="tab-2-download-data-button",
                                         variant="filled",
@@ -343,6 +279,7 @@ def return_layout(basic_config, slice_index):
                                         size="xs",
                                         compact=False,
                                         loading=False,
+                                        class_name="mt-1",
                                     ),
                                     dmc.Button(
                                         children="Download image",
@@ -368,97 +305,59 @@ def return_layout(basic_config, slice_index):
                 #         ),
                 #     ],
                 # ),
-                dbc.Card(
-                    style={
-                        "maxWidth": "100%",
-                        "margin": "0 auto",
-                        "width": "100%",
-                        "height": "100%",
-                    },
-                    className="d-none",
-                    id="page-2-card-low-res",
+            ],
+        ),
+        html.Div(
+            children=[
+                # dmc.Drawer(
+                dbc.Offcanvas(
+                    # title="Spectra for current selection",
+                    id="page-2-drawer-spectra",
+                    # padding="xs",
+                    # size="550px",
+                    # shadow="xs",
+                    # overlayOpacity=0.0,
+                    backdrop=True,
+                    placement="end",
+                    style={"width": "70%"},
                     children=[
-                        dbc.CardHeader("Low-resolution mass-spectrometry spectrum"),
-                        dbc.CardBody(
+                        # dbc.Card(
+                        # style={
+                        #     "maxWidth": "100%",
+                        #     "margin": "0 auto",
+                        #     "width": "100%",
+                        #     "height": "100%",
+                        # },
+                        # className="d-none",
+                        # id="page-2-card-low-res",
+                        # children=[
+                        #    dbc.CardHeader("Low-resolution mass-spectrometry spectrum"),
+                        #    dbc.CardBody(
+                        #        children=[
+                        html.Div(
+                            className="loading-wrapper",
                             children=[
-                                html.Div(
-                                    className="loading-wrapper",
+                                dbc.Spinner(
+                                    color="dark",
                                     children=[
-                                        dbc.Spinner(
-                                            color="dark",
+                                        html.Div(
+                                            # className="px-3 mt-2",
                                             children=[
-                                                html.Div(
-                                                    # className="px-3 mt-2",
-                                                    children=[
-                                                        dcc.Graph(
-                                                            id="page-2-graph-low-resolution-spectrum",
-                                                            figure=figures.compute_spectrum_low_res(
-                                                                slice_index
-                                                            ),
-                                                            style={
-                                                                "height": HEIGHT_PLOTS,
-                                                                "width": "100%",
-                                                            },
-                                                            responsive=True,
-                                                            config=basic_config
-                                                            | {
-                                                                "toImageButtonOptions": {
-                                                                    "format": "png",
-                                                                    "filename": "full_spectrum_low_res",
-                                                                    "scale": 2,
-                                                                }
-                                                            },
-                                                        ),
-                                                    ],
-                                                ),
-                                            ],
-                                        ),
-                                    ],
-                                ),
-                            ],
-                        ),
-                    ],
-                ),
-                dbc.Card(
-                    style={
-                        "maxWidth": "100%",
-                        "margin": "0 auto",
-                        "width": "100%",
-                        "height": "100%",
-                    },
-                    className="d-none",
-                    id="page-2-card-high-res",
-                    children=[
-                        dbc.CardHeader("High-resolution mass-spectrometry spectrum"),
-                        dbc.CardBody(
-                            children=[
-                                html.Div(
-                                    className="loading-wrapper",
-                                    children=[
-                                        dbc.Spinner(
-                                            color="dark",
-                                            children=[
-                                                html.Div(
-                                                    className="",
-                                                    children=[
-                                                        html.Div(
-                                                            id="page-2-alert",
-                                                            className="text-center mt-2",
-                                                            children=html.Strong(
-                                                                children="Please select a lipid or zoom more on the left graph to display the high-resolution spectrum",
-                                                                style={"color": "#df5034"},
-                                                            ),
-                                                        ),
-                                                    ],
-                                                ),
                                                 dcc.Graph(
-                                                    id="page-2-graph-high-resolution-spectrum",
-                                                    style={"display": "none"},
+                                                    id="page-2-graph-low-resolution-spectrum",
+                                                    figure=figures.compute_spectrum_low_res(
+                                                        slice_index
+                                                    ),
+                                                    style={
+                                                        "height": HEIGHT_PLOTS,
+                                                        "width": "100%",
+                                                    },
+                                                    responsive=True,
                                                     config=basic_config
                                                     | {
                                                         "toImageButtonOptions": {
                                                             "format": "png",
-                                                            "filename": "spectrum_selection_high_res",
+                                                            "filename": "full_spectrum_low_res",
                                                             "scale": 2,
                                                         }
                                                     },
@@ -469,6 +368,62 @@ def return_layout(basic_config, slice_index):
                                 ),
                             ],
                         ),
+                        #             ],
+                        #         ),
+                        #     ],
+                        # ),
+                        # dbc.Card(
+                        # style={
+                        #     "maxWidth": "100%",
+                        #     "margin": "0 auto",
+                        #     "width": "100%",
+                        #     "height": "100%",
+                        # },
+                        # className="d-none",
+                        # id="page-2-card-high-res",
+                        # children=[
+                        #     dbc.CardHeader("High-resolution mass-spectrometry spectrum"),
+                        #     dbc.CardBody(
+                        #         children=[
+                        html.Div(
+                            className="loading-wrapper mt-5",
+                            children=[
+                                dbc.Spinner(
+                                    color="dark",
+                                    children=[
+                                        html.Div(
+                                            className="",
+                                            children=[
+                                                html.Div(
+                                                    id="page-2-alert",
+                                                    className="text-center mt-2",
+                                                    children=html.Strong(
+                                                        children="Please select a lipid or zoom more on the left graph to display the high-resolution spectrum",
+                                                        style={"color": "#df5034"},
+                                                    ),
+                                                ),
+                                            ],
+                                        ),
+                                        dcc.Graph(
+                                            id="page-2-graph-high-resolution-spectrum",
+                                            style={"display": "none"},
+                                            config=basic_config
+                                            | {
+                                                "toImageButtonOptions": {
+                                                    "format": "png",
+                                                    "filename": "spectrum_selection_high_res",
+                                                    "scale": 2,
+                                                }
+                                            },
+                                        ),
+                                    ],
+                                ),
+                            ],
+                        ),
+                        #             ],
+                        #         ),
+                        #     ],
+                        # ),
                     ],
                 ),
             ],
@@ -1441,3 +1396,13 @@ def return_lipid_options():
         )
     ]
 
+
+@app.app.callback(
+    Output("page-2-drawer-spectra", "is_open"),
+    Input("page-2-show-spectrum-button", "n_clicks"),
+    [State("page-2-drawer-spectra", "is_open")],
+)
+def toggle_offcanvas(n1, is_open):
+    if n1:
+        return not is_open
+    return is_open

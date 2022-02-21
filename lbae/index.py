@@ -100,45 +100,52 @@ def return_main_content():
                         id="main-slider-center",
                         children=dmc.Group(
                             children=[
-                                dmc.Paper(
-                                    dmc.Group(
-                                        [
-                                            dmc.Text("Slice: "),
-                                            dmc.Slider(
-                                                id="main-slider",
-                                                min=1,
-                                                max=data.get_slice_number(),
-                                                marks=[
-                                                    {"value": i, "label": str(i)}
-                                                    for i in range(
-                                                        1, data.get_slice_number() + 1, 2
-                                                    )
-                                                ],
-                                                style={"width": "60vw"},
-                                                class_name="pb-3",
-                                                value=1,
-                                            ),
-                                        ],
-                                        direction="row",
-                                    ),
-                                    padding="lg",
-                                    shadow="md",
-                                    radius="xl",
-                                    withBorder=True,
+                                # dmc.Paper(
+                                dmc.Group(
+                                    direction="column",
+                                    spacing=0,  # "xs",
+                                    children=[
+                                        html.Div(children="Slice: ", className="fs-5 text-light",),
+                                        dcc.Slider(
+                                            id="main-slider",
+                                            min=1,
+                                            max=data.get_slice_number(),
+                                            step=1,
+                                            marks=None,
+                                            tooltip={"placement": "right", "always_visible": True,},
+                                            # marks=[
+                                            #     {"value": i, "label": str(i)}
+                                            #     for i in range(
+                                            #         1, data.get_slice_number() + 1, 2
+                                            #     )
+                                            # ],
+                                            # style={"width": "60vw"},
+                                            # class_name="pb-3",
+                                            value=1,
+                                            vertical=True,
+                                            className="ml-1",
+                                        ),
+                                    ],
                                 ),
-                                dmc.Button("Toggle documentation", id="button-doc"),
-                                dmc.Space(w=30),
+                                #     padding="lg",
+                                #     shadow="md",
+                                #     radius="xl",
+                                #     withBorder=True,
+                                # ),
+                                # dmc.Button("Toggle documentation", id="button-doc"),
+                                # dmc.Space(w=30),
                             ],
                         ),
                         style={
-                            "width": "100%",
+                            # "width": "100%",
                             "position": "fixed",
-                            "bottom": 0,
-                            "margin-left": "5%",
-                            "margin-right": "5%",
-                            "margin-bottom": "1%",
-                            "left": "0",
-                            "right": "0",
+                            "left": "10rem",
+                            "top": "20%",
+                            # "margin-left": "5%",
+                            # "margin-right": "5%",
+                            # "margin-bottom": "1%",
+                            # "left": "0",
+                            # "right": "0",
                         },
                     ),
                     # Space to ensure the slider for sections doesn't hide anything

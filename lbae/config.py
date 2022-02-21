@@ -42,6 +42,7 @@ basic_config = {
 # Colormap with black for 0 values
 viridis = cm.get_cmap("viridis", 256)
 newcolors = viridis(np.linspace(0, 1, 256))
-black = np.array([30 / 256, 30 / 256, 32 / 256, 1])
+# black = np.array([30 / 256, 30 / 256, 32 / 256, 1])
+black = np.array([0 / 256, 0 / 256, 0 / 256, 1])
 newcolors[:1, :] = black
 black_viridis = ListedColormap(newcolors)

@@ -102,19 +102,6 @@ html {
   padding-left: 0.2rem;
 }
 
-/* shift the content when the sidebar is hovered 
-.sidebar:hover + #content {
-  margin-left: 18rem;
-}
-*/
-
-/* Show spinner briefly when a link is clicked 
- .nav-link:hover + #main-spinner {
-  margin-left : 7rem;
-  padding-right : 7rem;
-}
-*/
-
 /* default settings for content */
 #content {
   margin-left: auto;
@@ -140,7 +127,12 @@ html {
 /*max-width: 90vw;*/
 /*}*/
 .dash-graph {
-  max-height: 80vh;
+  max-height: 100vh;
+}
+
+/* To have backdrop invisible for drawer */
+body > div.fade.offcanvas-backdrop.show {
+  opacity: 0;
 }
 
 /* rounded corner for images (doesn't work)
@@ -304,7 +296,7 @@ html {
   width: 100%;
   padding-bottom: min(
     72%,
-    79vh
+    100vh
   ); /* when max-height = 80vh is reached, need to block stretching*/
   float: left;
   height: 0;
