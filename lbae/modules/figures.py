@@ -121,14 +121,20 @@ class Figures:
             fig.add_trace(
                 go.Image(
                     visible=True,
-                    source=convert_image_to_base64(array_image, overlay=array_image_atlas),
+                    source=convert_image_to_base64(
+                        array_image, overlay=array_image_atlas, transparent_zeros=True
+                    ),
                     hoverinfo="none",
                 )
             )
 
             # Add the labels only if it's not a simple annotation illustration
-            fig.update_xaxes(title_text=self._atlas.bg_atlas.space.axis_labels[0][1])
-            fig.update_yaxes(title_text=self._atlas.bg_atlas.space.axis_labels[0][0])
+            fig.update_xaxes(
+                title_text=self._atlas.bg_atlas.space.axis_labels[0][1], title_standoff=0
+            )
+            # fig.update_yaxes(
+            #    title_text=self._atlas.bg_atlas.space.axis_labels[0][0], title_standoff=0
+            # )
 
         else:
             fig.add_trace(
@@ -149,9 +155,10 @@ class Figures:
         fig.update_xaxes(showticklabels=False)
         fig.update_yaxes(showticklabels=False)
         fig.update_layout(
-            margin=dict(t=20, r=0, b=10, l=0),
-            xaxis={"showgrid": False},
-            yaxis={"showgrid": False},
+            margin=dict(t=0, r=0, b=0, l=0),
+            xaxis=dict(showgrid=False, zeroline=False),
+            yaxis=dict(showgrid=False, zeroline=False),
+            template="plotly_dark",
             paper_bgcolor="rgba(0,0,0,0)",
             plot_bgcolor="rgba(0,0,0,0)",
         )
@@ -367,6 +374,7 @@ class Figures:
         plot_contours=False,
         heatmap=False,
     ):
+        logging.info("Starting figure computation, from mz boundaries")
         if binary_string:
             logging.info(
                 "binary_string is set to True, therefore the plot will be made as a heatmap"
@@ -379,13 +387,15 @@ class Figures:
         if hb_mz is None:
             hb_mz = 1800
 
-        # Compute image with largest possible bounds
+        logging.info("Getting image array")
+        # Compute image with given bounds
         image = self.compute_image_per_lipid(
             slice_index, lb_mz, hb_mz, RGB_format=True, projected_image=projected_image
         )
-
+        logging.info("Done getting image array. Cleaning memory")
         # Clean memmap memory
         self._data.clean_memory(slice_index=slice_index)
+        logging.info("Memory cleaned")
 
         # Build graph from image
         # ! Do I want to keep the heatmap option? I think not as it's slower
@@ -409,10 +419,12 @@ class Figures:
                 array_image_atlas = self._atlas.list_projected_atlas_borders_arrays[slice_index - 1]
             else:
                 array_image_atlas = None
-
+            logging.info("Converting image to string")
+            # Set optimize to False to gain computation time
             base64_string = convert_image_to_base64(
-                image, overlay=array_image_atlas, transparent_zeros=True
+                image, overlay=array_image_atlas, transparent_zeros=True, optimize=False
             )
+            logging.info("Adding image to figure")
             fig.add_trace(go.Image(visible=True, source=base64_string))
 
         # Improve graph layout
@@ -437,7 +449,7 @@ class Figures:
         # Set background color to zero
         fig.layout.plot_bgcolor = "rgba(0,0,0,0)"
         fig.layout.paper_bgcolor = "rgba(0,0,0,0)"
-
+        logging.info("Returning figure")
         return fig
 
     def compute_heatmap_per_lipid_selection(
@@ -467,7 +479,9 @@ class Figures:
 
         # Build figure
         fig = go.Figure()
-        base64_string = convert_image_to_base64(image, transparent_zeros=True)
+
+        # Set optimize to False to gain computation time
+        base64_string = convert_image_to_base64(image, transparent_zeros=True, optimize=False)
         fig.add_trace(go.Image(visible=True, source=base64_string))
 
         # Improve graph layout
@@ -557,8 +571,9 @@ class Figures:
         logging.info("array_image acquired for slice " + str(slice_index) + logmem())
 
         if use_pil:
+            # Set optimize to False to gain computation time
             base64_string_exp = convert_image_to_base64(
-                array_image, type="RGB", transparent_zeros=True
+                array_image, type="RGB", transparent_zeros=True, optimize=False,
             )
             final_image = go.Image(visible=True, source=base64_string_exp,)
         else:

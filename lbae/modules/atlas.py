@@ -355,6 +355,11 @@ class Atlas:
                         ]
                     else:
                         array_images[x, y, z] = 0
+
+        # Correct for bug on inferior right margin
+        print("ICICICI", array_images)
+        array_images[:, :, :10] = 0
+
         return array_images, array_projected_simplified_id
 
     def get_atlas_mask(self, structure):

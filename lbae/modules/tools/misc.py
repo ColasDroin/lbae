@@ -99,8 +99,16 @@ def return_pickled_object(
         return object
 
 
-# TODO ! Make docstring
 def black_to_transparency(img):
+    """This function takes a PIL image and convert the zero-valued pixels to transparent ones in the
+    most efficient way possible.
+
+    Args:
+        img (PIL.Image): The image for which the pixels must be made transparent.
+
+    Returns:
+        PIL.Image: The image with transparent pixels.
+    """
     # Need to copy as PIL arrays are read-only
     x = np.asarray(img.convert("RGBA")).copy()
     x[:, :, 3] = (255 * (x[:, :, :3] != 0).any(axis=2)).astype(np.uint8)
@@ -147,6 +155,8 @@ def convert_image_to_base64(
     Returns:
         str: The base 64 image encoded in a string.
     """
+    logging.info("Entering string conversion function")
+
     # Convert 1D array into a PIL image
     if type is None:
         # Map image to a colormap and convert to uint8
@@ -159,12 +169,15 @@ def convert_image_to_base64(
     elif type == "RGB" or type == "RGBA":
         pil_img = Image.fromarray(image_array, type)
 
+    logging.info("Image has been converted from array to PIL image")
+
     # Overlay is transparent, therefore initial image must be converted to RGBA
     if overlay is not None:
         if type != "RGBA":
             pil_img = pil_img.convert("RGBA")
         overlay_img = Image.fromarray(overlay, "RGBA")
         pil_img.paste(overlay_img, (0, 0), overlay_img)
+        logging.info("Overlay has been added to the image")
 
     # If we want to decrease resolution to save space
     if decrease_resolution_factor > 1:
@@ -174,10 +187,12 @@ def convert_image_to_base64(
             int(round(y / decrease_resolution_factor)),
         )
         pil_img = pil_img.resize((x2, y2), Image.ANTIALIAS)
+        logging.info("Resolution has been decreased")
 
     if transparent_zeros:
         # Takes ~5 ms but makes output much nicer
         pil_img = black_to_transparency(pil_img)
+        logging.info("Empty pixels are now transparent")
 
     # Convert to base64
     base64_string = None
@@ -217,7 +232,7 @@ def convert_image_to_base64(
             + ";base64,"
             + base64.b64encode(stream.getvalue()).decode("utf-8")
         )
-
+    logging.info("Image has been converted to base64. Returning it now.")
     return base64_string
 
 

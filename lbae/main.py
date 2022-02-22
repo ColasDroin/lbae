@@ -61,7 +61,9 @@ app.validation_layout = return_validation_layout(main_content)
 # Server definition for gunicorn
 server = app.server
 
-# Run the app locally
+# ==================================================================================================
+# --- App execution
+# ==================================================================================================
 if __name__ == "__main__":
     logging.info("Starting app" + logmem())
     try:

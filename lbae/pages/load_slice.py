@@ -20,198 +20,133 @@ from modules.tools.misc import return_pickled_object
 #! Put basic config in config in all page file
 def return_layout(basic_config, slice_index):
 
-    page = dash_draggable.ResponsiveGridLayout(
-        id="draggable",
-        clearSavedLayout=True,
-        isDraggable=False,
-        isResizable=False,
-        containerPadding=[2, 2],
-        breakpoints={"xxl": 1600, "lg": 1200, "md": 996, "sm": 768, "xs": 480, "xxs": 0},
-        gridCols={"xxl": 12, "lg": 12, "md": 10, "sm": 6, "xs": 4, "xxs": 2},
-        layouts={
-            # x sets the lateral position, y the vertical one, w is in columns (whose size depends on the dimension), h is in rows (30px)
-            # nb columns go 12->10->6->4->2
-            "xxl": [{"i": "page-1-main-toast", "x": 2, "y": 0, "w": 8, "h": 22},],
-            "lg": [{"i": "page-1-main-toast", "x": 2, "y": 0, "w": 8, "h": 20},],
-            "md": [{"i": "page-1-main-toast", "x": 1, "y": 0, "w": 8, "h": 18},],
-            "sm": [{"i": "page-1-main-toast", "x": 0, "y": 0, "w": 6, "h": 17},],
-            "xs": [{"i": "page-1-main-toast", "x": 0, "y": 0, "w": 4, "h": 14},],
-            "xxs": [{"i": "page-1-main-toast", "x": 0, "y": 0, "w": 2, "h": 12},],
+    page = html.Div(
+        style={
+            "position": "absolute",
+            "top": "0px",
+            "right": "0px",
+            "bottom": "0px",
+            "left": "5.5rem",
+            "background-color": "#1d1c1f",
         },
         children=[
-            dbc.Card(
-                id="page-1-main-toast",
-                style={"width": "100%", "height": "100%"},
-                className="d-flex align-items-stretch",
-                children=[
-                    dbc.CardHeader(
-                        className="d-flex align-items-stretch",
-                        children=[
-                            dbc.Tabs(
-                                [
-                                    dbc.Tab(label="Original slices", tab_id="page-1-tab-0"),
-                                    dbc.Tab(label="Warped slices", tab_id="page-1-tab-1"),
-                                    dbc.Tab(label="Filtered slices", tab_id="page-1-tab-2"),
-                                    dbc.Tab(label="Atlas slices", tab_id="page-1-tab-3"),
+            dmc.Center(
+                class_name="w-100",
+                style={"height": "100%"},
+                children=html.Div(
+                    className="page-1-fixed-aspect-ratio",
+                    style={"background-color": "#1d1c1f"},
+                    children=[
+                        dcc.Graph(
+                            id="page-1-graph-slice-selection",
+                            responsive=True,
+                            style={
+                                "width": "86%",
+                                "height": "86%",
+                                "position": "absolute",
+                                "left": "7%",
+                                "top": "7%",
+                            },
+                            config=basic_config
+                            | {
+                                "toImageButtonOptions": {
+                                    "format": "png",
+                                    "filename": "brain_slice",
+                                    "scale": 2,
+                                }
+                            },
+                            figure=return_pickled_object(
+                                "figures/load_page",
+                                "figure_basic_image",
+                                force_update=False,
+                                compute_function=figures.compute_figure_basic_image,
+                                type_figure="warped_data",
+                                index_image=slice_index,
+                                plot_atlas_contours=False,
+                            ),
+                        ),
+                        html.P(
+                            "Hovered region: ",
+                            id="page-1-graph-hover-text",
+                            className="text-warning font-weight-bold position-absolute",
+                            style={"right": "15%", "top": "15%"},
+                        ),
+                        dmc.Center(
+                            dmc.Group(
+                                class_name="mt-4",
+                                children=[
+                                    # dbc.Tabs(
+                                    dmc.SegmentedControl(
+                                        data=[
+                                            dict(label="Original slices", value="0"),
+                                            dict(label="Warped slices", value="1"),
+                                            dict(label="Filtered slices", value="2"),
+                                            dict(label="Atlas slices", value="3"),
+                                        ],
+                                        id="page-1-card-tabs",
+                                        # card=True,
+                                        # active_tab="page-1-tab-1",
+                                        # className="mr-5 pr-5",
+                                        value="2",
+                                        radius="lg",
+                                        color="cyan",
+                                    ),
+                                    dbc.Switch(
+                                        id="page-1-toggle-annotations",
+                                        label="Annotations",
+                                        value=False,
+                                        className="ml-5 mt-2",
+                                    ),
+                                    dmc.Button(
+                                        "Display 3D slice distribution",
+                                        id="page-1-modal-button",
+                                        n_clicks=0,
+                                        class_name="ml-5",
+                                    ),
                                 ],
-                                id="page-1-card-tabs",
-                                # card=True,
-                                active_tab="page-1-tab-1",
-                                # className="mr-5 pr-5",
                             ),
-                            dbc.Switch(
-                                id="page-1-toggle-annotations",
-                                label="Annotations",
-                                value=False,
-                                className="ml-5 mt-2",
-                            ),
-                            dmc.Button(
-                                "Display 3D slice distribution",
-                                id="page-1-modal-button",
-                                n_clicks=0,
-                                class_name="ml-5",
-                            ),
-                        ],
-                    ),
-                    dbc.Modal(
-                        [
-                            dbc.ModalHeader(dbc.ModalTitle("3D slice distribution")),
-                            dbc.ModalBody(
-                                dbc.Spinner(
-                                    color="dark",
-                                    show_initially=False,
+                        ),
+                    ],
+                ),
+            ),
+            dbc.Modal(
+                [
+                    dbc.ModalHeader(dbc.ModalTitle("3D slice distribution")),
+                    dbc.ModalBody(
+                        dbc.Spinner(
+                            color="dark",
+                            show_initially=False,
+                            children=[
+                                html.Div(
+                                    className="page-1-fixed-aspect-ratio",
                                     children=[
-                                        html.Div(
-                                            className="page-1-fixed-aspect-ratio",
-                                            children=[
-                                                dcc.Graph(
-                                                    id="page-1-graph-modal",
-                                                    config=basic_config
-                                                    | {
-                                                        "toImageButtonOptions": {
-                                                            "format": "png",
-                                                            "filename": "brain_lipid_selection",
-                                                            "scale": 2,
-                                                        }
-                                                    },
-                                                    style={
-                                                        "width": "100%",
-                                                        "height": "100%",
-                                                        "position": "absolute",
-                                                        "left": "0",
-                                                    },
-                                                ),
-                                            ],
+                                        dcc.Graph(
+                                            id="page-1-graph-modal",
+                                            config=basic_config
+                                            | {
+                                                "toImageButtonOptions": {
+                                                    "format": "png",
+                                                    "filename": "brain_lipid_selection",
+                                                    "scale": 2,
+                                                }
+                                            },
+                                            style={
+                                                "width": "100%",
+                                                "height": "100%",
+                                                "position": "absolute",
+                                                "left": "0",
+                                            },
                                         ),
                                     ],
                                 ),
-                            ),
-                        ],
-                        id="page-1-modal",
-                        size="xl",
-                        is_open=False,
-                    ),
-                    dbc.CardBody(
-                        className="py-0 ",
-                        children=[
-                            ## First column
-                            dbc.Col(
-                                width=12,
-                                children=[
-                                    html.Div(
-                                        className="loading-wrapper page-1-fixed-aspect-ratio",
-                                        children=[
-                                            # dbc.Spinner(
-                                            #    color="dark",
-                                            # spinner_style={"margin": "auto"},
-                                            #    children=[
-                                            dcc.Graph(
-                                                id="page-1-graph-slice-selection",
-                                                responsive=True,
-                                                style={
-                                                    "width": "100%",
-                                                    "height": "100%",
-                                                    "position": "absolute",
-                                                    "left": "0",
-                                                },
-                                                config=basic_config
-                                                | {
-                                                    "toImageButtonOptions": {
-                                                        "format": "png",
-                                                        "filename": "brain_slice",
-                                                        "scale": 2,
-                                                    }
-                                                },
-                                                figure=return_pickled_object(
-                                                    "figures/load_page",
-                                                    "figure_basic_image",
-                                                    force_update=False,
-                                                    compute_function=figures.compute_figure_basic_image,
-                                                    type_figure="warped_data",
-                                                    index_image=slice_index,
-                                                    plot_atlas_contours=False,
-                                                ),
-                                            ),
-                                            html.P(
-                                                "Hovered region: ",
-                                                id="page-1-graph-hover-text",
-                                                className="text-warning font-weight-bold position-absolute",
-                                                style={"left": "10%", "top": "2em"},
-                                            ),
-                                            # ],
-                                            # )
-                                        ],
-                                    ),
-                                    ### Third (nested) row
-                                    dbc.Row(
-                                        justify="center",
-                                        children=[
-                                            # Empty column for centering
-                                            # dbc.Col(width = 1),
-                                            ## First column
-                                            # dbc.Col(
-                                            #     width=1,
-                                            #     className="px-0 mt-4 mr-1 text-right",
-                                            #     children=[html.P("Slice: ")],
-                                            # ),
-                                            # ## Second column
-                                            # dbc.Col(
-                                            #     width=9,
-                                            #     className="mt-3",
-                                            #     children=[
-                                            #         dcc.Slider(
-                                            #             className="px-0 mx-0",
-                                            #             id="page-1-slider-slice-selection",
-                                            #             min=1,
-                                            #             max=data.get_slice_number(),
-                                            #             step=None,
-                                            #             updatemode="drag",
-                                            #             marks={
-                                            #                 x: {
-                                            #                     "label": str(x) if x % 2 == 0 else "",
-                                            #                     "style": {"color": config.dic_colors["dark"]},
-                                            #                 }
-                                            #                 for x in range(1, data.get_slice_number() + 1,)
-                                            #             },
-                                            #             value=initial_slice,
-                                            #         )
-                                            #     ],
-                                            # ),
-                                        ],
-                                    ),
-                                ],
-                            ),
-                            #    ],
-                            # ),
-                            html.Div(""),  # Empty span to prevent toast from bugging
-                        ],
+                            ],
+                        ),
                     ),
                 ],
+                id="page-1-modal",
+                size="xl",
+                is_open=False,
             ),
-            # ],
-            # ),
-            # ],
-            # ),
         ],
     )
     return page
@@ -222,7 +157,7 @@ def return_layout(basic_config, slice_index):
 @app.app.callback(
     Output("page-1-graph-slice-selection", "figure"),
     Input("main-slider", "value"),
-    Input("page-1-card-tabs", "active_tab"),
+    Input("page-1-card-tabs", "value"),
     Input("page-1-toggle-annotations", "value"),
 )
 def tab_1_load_image(value_slider, active_tab, display_annotations):
@@ -244,18 +179,18 @@ def tab_1_load_image(value_slider, active_tab, display_annotations):
         return return_pickled_object(
             "figures/load_page",
             "figure_basic_image",
-            force_update=False,
+            force_update=True,
             compute_function=figures.compute_figure_basic_image,
-            type_figure=dic_mapping_tab_indices[active_tab[-1]],
+            type_figure=dic_mapping_tab_indices[active_tab],
             index_image=value_slider - 1,
-            plot_atlas_contours=display_annotations if active_tab[-1] != "0" else False,
+            plot_atlas_contours=display_annotations if active_tab != "0" else False,
         )
 
     return dash.no_update
 
 
 @app.app.callback(
-    Output("page-1-graph-hover-text", "className"), Input("page-1-card-tabs", "active_tab"),
+    Output("page-1-graph-hover-text", "className"), Input("page-1-card-tabs", "value"),
 )
 def page_1_visibilty_hover(active_tab):
 
@@ -263,7 +198,7 @@ def page_1_visibilty_hover(active_tab):
     id_input, value_input = dash.callback_context.triggered[0]["prop_id"].split(".")
 
     if len(id_input) > 0:
-        if active_tab[-1] == "0":
+        if active_tab == "0":
             return "d-none"
         else:
             return "text-warning font-weight-bold position-absolute"
