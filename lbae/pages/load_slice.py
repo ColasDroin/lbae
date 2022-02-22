@@ -46,6 +46,7 @@ def return_layout(basic_config, slice_index):
                                 "position": "absolute",
                                 "left": "7%",
                                 "top": "7%",
+                                "background-color": "#1d1c1f",
                             },
                             config=basic_config
                             | {
@@ -55,6 +56,7 @@ def return_layout(basic_config, slice_index):
                                     "scale": 2,
                                 }
                             },
+                            # | {"staticPlot": True},
                             figure=return_pickled_object(
                                 "figures/load_page",
                                 "figure_basic_image",
@@ -70,6 +72,15 @@ def return_layout(basic_config, slice_index):
                             id="page-1-graph-hover-text",
                             className="text-warning font-weight-bold position-absolute",
                             style={"right": "15%", "top": "15%"},
+                        ),
+                        dmc.Switch(
+                            id="page-1-toggle-annotations",
+                            label="Annotations",
+                            checked=False,
+                            color="cyan",
+                            radius="xl",
+                            size="sm",
+                            style={"position": "absolute", "bottom": "10%", "right": "15%"},
                         ),
                         dmc.Center(
                             dmc.Group(
@@ -88,20 +99,21 @@ def return_layout(basic_config, slice_index):
                                         # active_tab="page-1-tab-1",
                                         # className="mr-5 pr-5",
                                         value="2",
-                                        radius="lg",
+                                        radius="sm",
                                         color="cyan",
                                     ),
-                                    dbc.Switch(
-                                        id="page-1-toggle-annotations",
-                                        label="Annotations",
-                                        value=False,
-                                        className="ml-5 mt-2",
-                                    ),
+                                    # dbc.Switch(
+                                    #     id="page-1-toggle-annotations",
+                                    #     label="Annotations",
+                                    #     value=False,
+                                    #     className="ml-5 mt-2",
+                                    # ),
                                     dmc.Button(
                                         "Display 3D slice distribution",
                                         id="page-1-modal-button",
                                         n_clicks=0,
                                         class_name="ml-5",
+                                        color="cyan",
                                     ),
                                 ],
                             ),
@@ -158,7 +170,7 @@ def return_layout(basic_config, slice_index):
     Output("page-1-graph-slice-selection", "figure"),
     Input("main-slider", "value"),
     Input("page-1-card-tabs", "value"),
-    Input("page-1-toggle-annotations", "value"),
+    Input("page-1-toggle-annotations", "checked"),
 )
 def tab_1_load_image(value_slider, active_tab, display_annotations):
     logging.info("Slider changed to value " + str(value_slider))
@@ -179,7 +191,7 @@ def tab_1_load_image(value_slider, active_tab, display_annotations):
         return return_pickled_object(
             "figures/load_page",
             "figure_basic_image",
-            force_update=True,
+            force_update=False,
             compute_function=figures.compute_figure_basic_image,
             type_figure=dic_mapping_tab_indices[active_tab],
             index_image=value_slider - 1,

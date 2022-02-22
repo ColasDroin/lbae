@@ -329,7 +329,8 @@ class Atlas:
 
         return l_array_images
 
-    def compute_array_images_atlas(self):
+    # * This is quite long to execute (~10mn)
+    def compute_array_images_atlas(self, zero_out_of_annotation=False):
         array_images = np.empty(self.array_coordinates_warped_data.shape[:-1], dtype=np.uint8)
         array_projected_simplified_id = np.full(
             array_images.shape, self.simplified_labels_int[0, 0, 0], dtype=np.int32
@@ -347,17 +348,19 @@ class Atlas:
                         and array_coor_rescaled[x, y, z][1] < self.bg_atlas.reference.shape[1]
                         and array_coor_rescaled[x, y, z][2] < self.bg_atlas.reference.shape[2]
                     ):
-                        array_images[x, y, z] = self.bg_atlas.reference[
-                            tuple(array_coor_rescaled[x, y, z])
-                        ]
                         array_projected_simplified_id[x, y, z] = self.simplified_labels_int[
                             tuple(array_coor_rescaled[x, y, z])
                         ]
+                        if array_projected_simplified_id[x, y, z] == 0 and zero_out_of_annotation:
+                            continue
+                        else:
+                            array_images[x, y, z] = self.bg_atlas.reference[
+                                tuple(array_coor_rescaled[x, y, z])
+                            ]
                     else:
                         array_images[x, y, z] = 0
 
         # Correct for bug on inferior right margin
-        print("ICICICI", array_images)
         array_images[:, :, :10] = 0
 
         return array_images, array_projected_simplified_id

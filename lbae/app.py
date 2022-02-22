@@ -56,7 +56,7 @@ long_callback_manager = DiskcacheLongCallbackManager(
 # Instantiate app
 app = dash.Dash(
     title="Lipids Brain Atlas Explorer",
-    external_stylesheets=[dbc.themes.SANDSTONE],
+    external_stylesheets=[dbc.themes.DARKLY],
     meta_tags=[{"name": "viewport", "content": "width=device-width, initial-scale=1"}],
     server=server,
     suppress_callback_exceptions=False,

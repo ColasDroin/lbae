@@ -205,6 +205,7 @@ class Figures:
                 "array_images_atlas",
                 force_update=False,
                 compute_function=self._atlas.compute_array_images_atlas,
+                zero_out_of_annotation=True,
             )
             array_images = array_projected_images_atlas
         return array_images
@@ -850,6 +851,7 @@ class Figures:
                 ),
             ),
             margin=dict(t=5, r=0, b=0, l=0),
+            template="plotly_dark",
             sliders=sliders,
         )
 

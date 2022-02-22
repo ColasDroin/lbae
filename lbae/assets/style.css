@@ -11,7 +11,8 @@ html {
   bottom: 0;
   width: 6rem;
   padding: 2rem 1rem 1rem 1rem;
-  background-color: #f8f9fa;
+  /* background-color: #f8f9fa; */
+  background-color: #1d3d5c;
   /*z-index: 1050;*/
   /*transition: width 0.2s ease-in-out;*/
 }
@@ -33,6 +34,14 @@ html {
 .nav-pills .nav-link.active,
 .nav-pills .show > .nav-link {
   background-color: #50bdda !important ;
+}
+
+.nav-link:hover {
+  color: #50bdda !important ;
+}
+
+.nav-link:focus {
+  color: #dee2e6 !important;
 }
 
 /* fix the width of the icons 
@@ -133,6 +142,15 @@ html {
 /* To have backdrop invisible for drawer */
 body > div.fade.offcanvas-backdrop.show {
   opacity: 0;
+}
+
+#content > div > div > div > div.mantine-Switch-root.mantine-16ttirm > label {
+  color: #e9ecef;
+  margin-top: 0.16rem;
+}
+
+#page-1-toggle-annotations::before {
+  background-color: rgb(65 154 181);
 }
 
 /* rounded corner for images (doesn't work)
@@ -374,6 +392,11 @@ div.toast-header > button > span {
 #page-2-toast-lipid-2 > div.toast-header > button > span,
 #page-2-toast-lipid-3 > div.toast-header > button > span {
   color: #757575;
+}
+
+/* set slider height */
+#main-slider {
+  height: min(50vh, 30vw);
 }
 
 /* customize dropdown 

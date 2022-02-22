@@ -99,48 +99,35 @@ def return_main_content():
                     dmc.Center(
                         id="main-slider-center",
                         children=dmc.Group(
+                            direction="column",
+                            spacing=0,  # "xs",
                             children=[
-                                # dmc.Paper(
-                                dmc.Group(
-                                    direction="column",
-                                    spacing=0,  # "xs",
-                                    children=[
-                                        html.Div(children="Slice: ", className="fs-5 text-light",),
-                                        dcc.Slider(
-                                            id="main-slider",
-                                            min=1,
-                                            max=data.get_slice_number(),
-                                            step=1,
-                                            marks=None,
-                                            tooltip={"placement": "right", "always_visible": True,},
-                                            # marks=[
-                                            #     {"value": i, "label": str(i)}
-                                            #     for i in range(
-                                            #         1, data.get_slice_number() + 1, 2
-                                            #     )
-                                            # ],
-                                            # style={"width": "60vw"},
-                                            # class_name="pb-3",
-                                            value=1,
-                                            vertical=True,
-                                            className="ml-1",
-                                        ),
-                                    ],
+                                html.Div(children="Slice: ", className="fs-5 text-light",),
+                                dcc.Slider(
+                                    id="main-slider",
+                                    min=1,
+                                    max=data.get_slice_number(),
+                                    step=1,
+                                    marks=None,
+                                    tooltip={"placement": "right", "always_visible": True,},
+                                    # marks=[
+                                    #     {"value": i, "label": str(i)}
+                                    #     for i in range(
+                                    #         1, data.get_slice_number() + 1, 2
+                                    #     )
+                                    # ],
+                                    # class_name="pb-3",
+                                    value=1,
+                                    vertical=True,
+                                    className="ml-1",
                                 ),
-                                #     padding="lg",
-                                #     shadow="md",
-                                #     radius="xl",
-                                #     withBorder=True,
-                                # ),
-                                # dmc.Button("Toggle documentation", id="button-doc"),
-                                # dmc.Space(w=30),
                             ],
                         ),
                         style={
                             # "width": "100%",
                             "position": "fixed",
                             "left": "10rem",
-                            "top": "20%",
+                            "top": "30%",
                             # "margin-left": "5%",
                             # "margin-right": "5%",
                             # "margin-bottom": "1%",
@@ -188,10 +175,10 @@ def return_main_content():
                     # Spinner when switching pages
                     dbc.Spinner(
                         id="main-spinner",
-                        color="dark",
+                        color="light",
                         children=html.Div(id="empty-content"),
                         fullscreen=True,
-                        fullscreen_style={"margin-left": "6rem", "padding-right": "7rem",},
+                        fullscreen_style={"left": "6rem", "background-color": "#1d1c1f"},
                         spinner_style={"width": "6rem", "height": "6rem"},
                         delay_hide=100,
                     ),
