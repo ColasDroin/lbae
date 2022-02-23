@@ -5,7 +5,7 @@ import numpy as np
 from numba import njit
 
 # Homemade package
-from lbae.modules.tools.spectra import convert_spectrum_idx_to_coor, add_zeros_to_spectrum
+from modules.tools.spectra import convert_spectrum_idx_to_coor, add_zeros_to_spectrum
 
 ###### DEFINE UTILITY FUNCTIONS ######
 @njit

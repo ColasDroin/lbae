@@ -7,8 +7,8 @@ import os
 import pandas as pd
 
 # Homemade packages
-from lbae.modules.tools.mspec import SmzMLobj
-from lbae.modules.tools.spectra import reduce_resolution_sorted_array_spectra
+from modules.tools.mspec import SmzMLobj
+from modules.tools.spectra import reduce_resolution_sorted_array_spectra
 
 ###### DEFINE UTILITY FUNCTIONS ######
 def load_file(path, resolution=1e-5):
@@ -54,7 +54,6 @@ def load_peak_file(path):
                 "concentration",
                 "median_intensity",
                 "tissue",
-                "mz_estimated",
                 "difference",
                 "matrix",
             ],
@@ -75,7 +74,6 @@ def load_peak_file(path):
                     "concentration",
                     "median_intensity",
                     "tissue",
-                    "mz_estimated",
                     "difference",
                     "matrix",
                 ],
@@ -94,7 +92,6 @@ def load_peak_file(path):
                     "percent_1_hit",
                     "concentration",
                     "median_intensity",
-                    "mz_estimated",
                     "difference",
                 ],
                 axis=1,
@@ -205,6 +202,7 @@ def filter_peaks(array_spectra, array_peaks, verbose=False):
 
 # ! Complete docstring
 def standardize_values(array_high_res, array_peaks):
+    print("SO FAR SO GOOD")
     return array_high_res
 
 
@@ -282,7 +280,7 @@ def process_raw_data(
     standardize_lipid_values=True,
     save=True,
     return_result=False,
-    output_path="notebooks/server/data/temp/",
+    output_path="notebooks/data_processing/data/temp/",
     verbose=False,
 ):
     """This function has been implemented to allow the parallelization of slice processing. It turns the raw MALDI data
