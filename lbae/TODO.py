@@ -5,6 +5,7 @@
 # TODO adress all # ! and # ? comments in the code
 # TODO make the app with tabs instead of pages to accelerate it?
 # TODO move layouts to other files
+# TODO Get rid of the useless init.py
 # TODO understand better the role of __init__.py and potentially delete them
 # TODO when everything is stable, create a function that delete all pickle files and repickle everything automatically
 # TODO update notebooks with up-to-date classes

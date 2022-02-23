@@ -7,8 +7,8 @@ import os
 import pandas as pd
 
 # Homemade packages
-from modules.tools.mspec import SmzMLobj
-from modules.tools.spectra import reduce_resolution_sorted_array_spectra
+from lbae.modules.tools.mspec import SmzMLobj
+from lbae.modules.tools.spectra import reduce_resolution_sorted_array_spectra
 
 ###### DEFINE UTILITY FUNCTIONS ######
 def load_file(path, resolution=1e-5):
@@ -203,6 +203,11 @@ def filter_peaks(array_spectra, array_peaks, verbose=False):
     return l_to_keep
 
 
+# ! Complete docstring
+def standardize_values(array_high_res, array_peaks):
+    return array_high_res
+
+
 @njit
 def return_array_pixel_indexes(array_pixel, total_shape):
     """Returns an array of pixel indexes: for each pixel (corresponding to the index of a given row of 
@@ -273,13 +278,14 @@ def return_averaged_spectra_array(array):
 
 def process_raw_data(
     t_index_path,
-    bool_filter_peaks=True,
+    do_filter_peaks=True,
+    standardize_lipid_values=True,
     save=True,
     return_result=False,
     output_path="notebooks/server/data/temp/",
-    verbose=True,
+    verbose=False,
 ):
-    """This function has been implemented to allow the paralellization of slice processing. It turns the raw MALDI data
+    """This function has been implemented to allow the parallelization of slice processing. It turns the raw MALDI data
     into several numpy arrays and lookup tables:
     - array_pixel_indexes_high_res: of shape (n,2), it maps each pixel to two array_spectra_high_res indices, delimiting
       the corresponding spectrum.
@@ -294,7 +300,9 @@ def process_raw_data(
     Args:
         t_index_path (tuple(int, str)): A tuple containing the index of the slice (starting from 1) and the 
             corresponding path for the raw data.
-        bool_filter_peaks (bool, optional): If True, non-annotated peaks are filtered out. Defaults to True.
+        do_filter_peaks (bool, optional): If True, non-annotated peaks are filtered out. Defaults to True.
+        standardize_lipid_values (bool, optional): If True, the lipid intensities that have been 
+            through the MAIA pipeline will be standardized across slices. Defaults to True.
         save (bool, optional): If True, output arrays are saved in a npz file. Defaults to True.
         return_result (bool, optional): If True, output arrays are returned by the function. Defaults to False.
         output_path (str, optional): Path to save the output npz file. Defaults to "notebooks/server/data/temp/".
@@ -322,15 +330,21 @@ def process_raw_data(
 
     # Filter out the non-requested peaks and convert to array
     appendix = "_unfiltered"
-    if bool_filter_peaks:
+    if do_filter_peaks:
+        print("Filtering out noise and matrix peaks")
         try:
             df_peaks = load_peak_file(name)
             array_peaks = df_peaks.to_numpy()
-            l_to_keep_high_res = filter_peaks(array_high_res, array_peaks)
+            l_to_keep_high_res = filter_peaks(array_high_res, array_peaks, verbose=verbose)
             array_high_res = array_high_res[l_to_keep_high_res]
             appendix = "_filtered"
         except:
             appendix = "_unfiltered"
+
+    if standardize_lipid_values:
+        print("Filtering out noise and matrix peaks")
+
+        array_high_res = standardize_values(array_high_res, array_peaks)
 
     # Average low/high resolution arrays over identical mz across pixels
     print("Getting spectrums array averaged accross pixels")

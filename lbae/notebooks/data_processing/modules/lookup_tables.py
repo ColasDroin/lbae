@@ -5,7 +5,7 @@ import numpy as np
 from numba import njit
 
 # Homemade package
-from modules.tools.spectra import convert_spectrum_idx_to_coor, add_zeros_to_spectrum
+from lbae.modules.tools.spectra import convert_spectrum_idx_to_coor, add_zeros_to_spectrum
 
 ###### DEFINE UTILITY FUNCTIONS ######
 @njit
@@ -273,7 +273,7 @@ def process_lookup_tables(
     array_averaged_mz_intensity_low_res[1, :] /= np.sum(array_averaged_mz_intensity_low_res[1, :])
     array_averaged_mz_intensity_high_res[1, :] /= np.sum(array_averaged_mz_intensity_high_res[1, :])
     for (b1, b2) in array_pixel_indexes_high_res:
-        # ? Instead of processing this way (divide by the entire pixel sum of soectra), maybe divide by the number of non-zero values in the spectrum ?
+        # ? Instead of processing this way (divide by the entire pixel sum of spectra), maybe divide by the number of non-zero values in the spectrum ?
         array_spectra_high_res[1, b1 : b2 + 1] /= np.sum(array_spectra_high_res[1, b1 : b2 + 1])
 
     # Define divider_lookup
