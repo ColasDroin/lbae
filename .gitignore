@@ -1,4 +1,4 @@
 .DS_Store
-notebooks/server/data
 lbae/data
 lbae/notebooks/data_processing/data/images/all_slices.jpg
+**/__pycache__/
