@@ -258,9 +258,9 @@ def filter_peaks(array_spectra, array_peaks, array_mz_lipids):
 
 @njit
 def return_array_pixel_indexes(array_pixel, total_shape):
-    """Returns an array of pixel indexes: for each pixel (corresponding to the index of a given row 
-    of array_pixel_indexes), it returns the 2 boundaries in the corresponding array_spectra (upper 
-    boundarie is included).
+    """This function returns an array of pixel indexes: for each pixel (corresponding to the index 
+    of a given row of array_pixel_indexes), it returns the 2 boundaries in the corresponding 
+    array_spectra (upper boundarie is included).
 
     Args:
         array_pixel (np.ndarray): Array of length n containing the index of each pixel for each m/z 
@@ -351,6 +351,31 @@ def get_standardized_values(
 def compute_standardization(
     array_spectra_pixel, idx_pixel, array_peaks, arrays_before_transfo, arrays_after_transfo
 ):
+    """This function takes the spectrum data of a given pixel, along with the corresponding pixel 
+    index, and transforms the value of the lipids intensities annotated in 'array_peaks' according 
+    to the transformation made in 'arrays_before_transfo' and 'arrays_after_transfo'.
+
+    Args:
+        array_spectra (np.ndarray): A numpy array containing spectrum data (pixel index, m/z and 
+            intensity) of pixel 'idx_pixel', sorted by mz.
+        idx_pixel (int): Index of the current pixel whose spectrum is transformed.
+        array_peaks (np.ndarray): A numpy array containing the peak annotations (min peak, max peak, 
+            number of pixels containing the peak, average value of the peak), filtered for the 
+            lipids who have preliminarily been transformed. Sorted by min_mz.
+        arrays_before_transfo (np.ndarray): A numpy array of shape (n_lipids, image_shape[0], 
+            image_shape[1]) containing the cumulated intensities (summed over all bins) of the 
+            lipids we want to visualize, for each pixel, before these intensities were transformed.
+        arrays_after_transfo (np.ndarray): A numpy array of shape (n_lipids, image_shape[0], 
+            image_shape[1]) containing the cumulated intensities (summed over all bins) of the 
+            lipids we want to visualize, for each pixel, after these intensities were transformed.
+
+    Raises:
+        Exception: _description_
+
+    Returns:
+        np.ndarray: A numpy array containing spectrum data (pixel index, m/z and intensity), of 
+            pixel 'idx_pixel', sorted by mz, with lipids values transformed.
+    """
     # Define initial values
     idx_peak = 0
     idx_mz = 0
@@ -367,34 +392,40 @@ def compute_standardization(
             idx_max_mz = idx_mz - 1
 
             # Compute intensities of the window before and after correction
-            intensity_before = arrays_before_transfo[idx_peak].flatten()[idx_pixel]
-            intensity_after = arrays_after_transfo[idx_peak].flatten()[idx_pixel]
+            if idx_peak < len(arrays_before_transfo):
+                intensity_before = arrays_before_transfo[idx_peak].flatten()[idx_pixel]
+                intensity_after = arrays_after_transfo[idx_peak].flatten()[idx_pixel]
 
-            # Most likely, the annotation doesn't exist, so insert it
-            if idx_max_mz == idx_min_mz or idx_max_mz == idx_min_mz - 1:
-                pass
-                # array_spectra_pixel = np.insert(array_spectra_pixel, idx_min_mz, [idx_pix, mz_estimated, intensity_after], axis = 0)
-            # Else compute a multiplicative factor
+                # Most likely, the annotation doesn't exist, so insert it
+                if idx_max_mz == idx_min_mz or idx_max_mz == idx_min_mz - 1:
+                    pass
+                    # array_spectra_pixel = np.insert(array_spectra_pixel, idx_min_mz,
+                    #   [idx_pix, mz_estimated, intensity_after], axis = 0)
+                # Else compute a multiplicative factor
+                else:
+
+                    # Compute sum of expression between limits
+                    integral = np.sum(array_spectra_pixel[idx_min_mz : idx_max_mz + 1, 2])
+
+                    # Assess that this sum is equal to the one precomputed with MAIA
+                    if np.abs(integral - intensity_before) > 10 ** -4:
+                        print("There seems to be a problem with the computation of the integral")
+                        print(integral, intensity_before)
+                        print(idx_min_mz, idx_max_mz)
+                    # else:
+                    #     print("ok")
+
+                    correction = intensity_after / intensity_before
+
+                    # Multiply all intensities in the window by the corrective coefficient
+                    array_spectra_pixel[idx_min_mz : idx_max_mz + 1, 2] *= correction
+
+                # Move on to the next peak
+                idx_peak += 1
             else:
-
-                # Compute sum of expression between limits
-                integral = np.sum(array_spectra_pixel[idx_min_mz : idx_max_mz + 1, 2])
-
-                # Assess that this sum is equal to the one precomputed with MAIA
-                if np.abs(integral - intensity_before) > 10 ** -4:
-                    print("There seems to be a problem with the computation of the integral")
-                    print(integral, intensity_before)
-                    print(idx_min_mz, idx_max_mz)
-                # else:
-                #     print("ok")
-
-                correction = intensity_after / intensity_before
-
-                # Multiply all intensities in the window by the corrective coefficient
-                array_spectra_pixel[idx_min_mz : idx_max_mz + 1, 2] *= correction
-
-            # Move on to the next peak
-            idx_peak += 1
+                raise Exception(
+                    "There seems to be more peaks than lipids annotated... Exiting function"
+                )
         else:
             idx_mz += 1
 
@@ -409,33 +440,47 @@ def standardize_values(
     arrays_before_transfo,
     arrays_after_transfo,
 ):
-    # TODO finish docstring
     """This function rescale the intensity values of the lipids annotated with a Combat-like method 
     as part of the MAIA pipeline, using pre-computed intensities values.
 
     Args:
-        array_spectra (_type_): _description_
-        array_peaks (_type_): _description_
-        n_pix (int): Total number of pixels in the acquisition.
-        path (str):
-
+        array_spectra (np.ndarray): A numpy array containing spectrum data (pixel index, m/z and 
+            intensity), sorted by pixel index and mz.
+        array_pixel_indexes (np.ndarray): A numpy array of shape (m,2) containing the boundary 
+            indices of each pixel in the original spectra array.
+        array_peaks (np.ndarray): A numpy array containing the peak annotations (min peak, max peak, 
+            number of pixels containing the peak, average value of the peak), sorted by min_mz.
+        l_lipids_float (list): A list containing the estimated m/z values of the lipids we want to 
+            visualize.
+        arrays_before_transfo (np.ndarray): A numpy array of shape (n_lipids, image_shape[0], 
+            image_shape[1]) containing the cumulated intensities (summed over all bins) of the 
+            lipids we want to visualize, for each pixel, before these intensities were transformed.
+        arrays_after_transfo (np.ndarray): A numpy array of shape (n_lipids, image_shape[0], 
+            image_shape[1]) containing the cumulated intensities (summed over all bins) of the 
+            lipids we want to visualize, for each pixel, after these intensities were transformed.
     Returns:
-        _type_: _description_
+        np.ndarray: A numpy array containing spectrum data (pixel index, m/z and intensity), sorted 
+            by pixel index and mz, with lipids values transformed.
     """
 
-    # keep only the peak annotation that correspond to the lipids which have been transformed
-    rows_to_keep = []
-    for idx, [mini, maxi, npix, mz_est] in enumerate(array_peaks):
-        for mz_lipid in l_lipids_float:
-            # Problem with this precision... Which slice has been taken to compute mz_estimated?
-            if np.abs(mz_est - mz_lipid) <= 14 * 10 ** -4:
-                rows_to_keep.append(idx)
-                break
+    def compute_number_peaks_lipid_annotation(array_peaks, l_lipids_float, precision=14 * 10 ** -4):
+        # keep only the peak annotation that correspond to the lipids which have been transformed
+        rows_to_keep = []
+        for idx, [mini, maxi, npix, mz_est] in enumerate(array_peaks):
+            for mz_lipid in l_lipids_float:
+                # Problem with this precision... Which slice must taken to compute mz_estimated?
+                if np.abs(mz_est - mz_lipid) <= precision:
+                    rows_to_keep.append(idx)
+                    break
+        return rows_to_keep
 
+    for factor_precision in range(20):
+        rows_to_keep = compute_number_peaks_lipid_annotation(
+            array_peaks, l_lipids_float, precision=factor_precision * 10 ** -4
+        )
+        if len(rows_to_keep) == len(l_lipids_float):
+            break
     array_peaks_to_correct = array_peaks[rows_to_keep]
-
-    # These two numbers should be identical
-    print(len(rows_to_keep), len(l_lipids_float))
 
     # new_array_spectra = []
     for idx_pixel, [idx_pixel_min, idx_pixel_max] in enumerate(array_pixel_indexes):
@@ -586,7 +631,7 @@ def process_raw_data(
                 array_high_res = array_high_res[
                     np.lexsort((array_high_res[:, 1], array_high_res[:, 0]), axis=0)
                 ]
-                # Get arrays spectra and corresponding array_pixel_index tables for the high resolution
+                # Get arrays spectra and corresponding array_pixel_index tables for the high res
                 array_pixel_high_res = array_high_res[:, 0].T.astype(np.int32)
                 array_pixel_indexes_high_res = return_array_pixel_indexes(
                     array_pixel_high_res, image_shape[0] * image_shape[1]
