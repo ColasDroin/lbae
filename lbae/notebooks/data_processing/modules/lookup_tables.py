@@ -62,7 +62,7 @@ def build_index_lookup_table(
             if j < array_pixel_indexes[idx_pix, 1] + 1:
                 lookup_table[index_lookup + 1, idx_pix] = j
 
-            # If we're not in the requested pixel, this means that the while loop was exited because 
+            # If we're not in the requested pixel, this means that the while loop was exited because
             # the lookup didn't exist, so we fill the rest of the table with biggest possible value
             else:
                 for i in range(index_lookup + 1, size_spectrum // divider_lookup):
@@ -127,7 +127,7 @@ def build_cumulated_image_lookup_table(
             if j < array_pixel_indexes[idx_pix, 1] + 1:
                 image_lookup_table[index_lookup + 1, coor_pix[0], coor_pix[1]] = pix_value
 
-            # If we're not in the requested pixel, this means that the while loop was exited because 
+            # If we're not in the requested pixel, this means that the while loop was exited because
             # the lookup didn't exist, so we fill the rest of the table with biggest possible value
             else:
                 for i in range(index_lookup + 1, size_spectrum // divider_lookup):
@@ -135,6 +135,7 @@ def build_cumulated_image_lookup_table(
                 break
 
     return image_lookup_table
+
 
 @njit
 def build_index_lookup_table_averaged_spectrum(array_mz, size_spectrum=2000):
@@ -169,7 +170,7 @@ def build_index_lookup_table_averaged_spectrum(array_mz, size_spectrum=2000):
         if j < array_mz.shape[0]:
             lookup_table[index_lookup + 1] = j
 
-        # If the lookup doesn't exist, so we fill the rest of the table with biggest possible m/z 
+        # If the lookup doesn't exist, so we fill the rest of the table with biggest possible m/z
         # value
         else:
             for i in range(index_lookup + 1, size_spectrum):
@@ -249,7 +250,7 @@ def process_lookup_tables(
             if len(t_index_path) > 2:
                 path = temp_path + "slice_" + str(slice_index) + "_bis" + appendix + ".npz"
                 npzfile = np.load(path)
-                # Annotate repeated slice by multiplying their index by thousand (easier than 
+                # Annotate repeated slice by multiplying their index by thousand (easier than
                 # replacing slice name with a non-int like bis)
                 path = temp_path + "slice_" + str(slice_index * 1000) + appendix + ".npz"
             else:
@@ -260,7 +261,7 @@ def process_lookup_tables(
             if len(t_index_path) > 2:
                 path = temp_path + "slice_" + str(slice_index) + "_bis" + appendix + ".npz"
                 npzfile = np.load(path)
-                # Annotate repeated slice by multiplying their index by thousand (easier than 
+                # Annotate repeated slice by multiplying their index by thousand (easier than
                 # replacing slice name with a non-int like bis)
                 path = temp_path + "slice_" + str(slice_index * 1000) + appendix + ".npz"
             else:
@@ -284,10 +285,10 @@ def process_lookup_tables(
 
     # No normalization anymore as it's done in 'process_raw_data()'
     # # Normalize spectrum
-    # array_averaged_mz_intensity_low_res[1, :] /= np.sum(array_averaged_mz_intensity_low_res[1, :])
-    # array_averaged_mz_intensity_high_res[1, :] /= np.sum(array_averaged_mz_intensity_high_res[1, :])
+    # array_averaged_mz_intensity_low_res[1, :]/= np.sum(array_averaged_mz_intensity_low_res[1, :])
+    # array_averaged_mz_intensity_high_res[1, :]/=np.sum(array_averaged_mz_intensity_high_res[1, :])
     # for (b1, b2) in array_pixel_indexes_high_res:
-    #     # ? Instead of processing this way (divide by the entire pixel sum of spectra), maybe 
+    #     # ? Instead of processing this way (divide by the entire pixel sum of spectra), maybe
     #     # ? divide by the number of non-zero values in the spectrum ?
     #     array_spectra_high_res[1, b1 : b2 + 1] /= np.sum(array_spectra_high_res[1, b1 : b2 + 1])
 
