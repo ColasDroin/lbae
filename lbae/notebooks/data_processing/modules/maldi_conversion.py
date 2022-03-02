@@ -488,9 +488,9 @@ def standardize_values(
 
         # keep only the peak annotation that correspond to the lipids which have been transformed
         rows_to_keep = []
-        for idx, [mini, maxi, npix, mz_est] in enumerate(array_peaks):
+        for mz_lipid in l_lipids_float_correct:
             found = False
-            for mz_lipid in l_lipids_float_correct:
+            for idx, [mini, maxi, npix, mz_est] in enumerate(array_peaks):
                 if np.abs(mz_est - mz_lipid) <= precision:
                     found = True
                     rows_to_keep.append(idx)
