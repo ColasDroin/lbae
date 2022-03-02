@@ -110,7 +110,7 @@ def normalize_per_TIC_per_pixel(array_spectra, array_TIC):
     return array_spectra
 
 
-def load_peak_file(path):
+def load_peak_file(path, array=True):
     """This function loads the peaks annotations (including matrix peaks) from a csv file located 
     at the provided path. It returns a numpy array sorted by min peak value (m/z) annotation.
 
@@ -140,7 +140,10 @@ def load_peak_file(path):
 
     # Sort by increasing m/z annotation for the peaks
     df = df.sort_values(by="min", axis=0)
-    return df.to_numpy()
+    if array:
+        return df.to_numpy()
+    else:
+        return df
 
 
 def load_lipid_file(section_index, path):
@@ -468,7 +471,7 @@ def standardize_values(
         rows_to_keep = []
         for idx, [mini, maxi, npix, mz_est] in enumerate(array_peaks):
             for mz_lipid in l_lipids_float:
-                # Problem with this precision... Which slice must taken to compute mz_estimated?
+                # Problem with this precision... Which slice must be taken to compute mz_estimated?
                 if np.abs(mz_est - mz_lipid) <= precision:
                     rows_to_keep.append(idx)
                     break
@@ -583,7 +586,7 @@ def process_raw_data(
         return_result (bool, optional): If True, output arrays are returned by the function. 
             Defaults to False.
         output_path (str, optional): Path to save the output npz file. Defaults to 
-            "notebooks/server/data/temp/".
+            "notebooks/data_processing/data/temp/".
 
 
     Returns:
@@ -651,7 +654,8 @@ def process_raw_data(
                     arrays_after_transfo,
                 )
                 appendix = "_filtered"
-        except:
+        except Exception as e:
+            print(e)
             appendix = "_unfiltered"
 
     # Sort according to mz for averaging

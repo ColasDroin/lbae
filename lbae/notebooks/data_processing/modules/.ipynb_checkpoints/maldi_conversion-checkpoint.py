@@ -583,7 +583,7 @@ def process_raw_data(
         return_result (bool, optional): If True, output arrays are returned by the function. 
             Defaults to False.
         output_path (str, optional): Path to save the output npz file. Defaults to 
-            "notebooks/server/data/temp/".
+            "notebooks/data_processing/data/temp/".
 
 
     Returns:

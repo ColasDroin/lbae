@@ -182,7 +182,7 @@ def build_index_lookup_table_averaged_spectrum(array_mz, size_spectrum=2000):
 
 def process_lookup_tables(
     t_index_path,
-    temp_path="notebooks/server/data/temp/",
+    temp_path="notebooks/data_processing/data/temp/",
     l_arrays_raw_data=None,
     load_from_file=True,
     save=True,
@@ -216,7 +216,7 @@ def process_lookup_tables(
         t_index_path (tuple(int, str)): A tuple containing the index of the slice (starting from 1) 
             and the corresponding path for the raw data.
         temp_path (str, optional): Path to load/save the output npz file. Defaults to 
-            "notebooks/server/data/temp/".
+            "notebooks/data_processing/data/temp/".
         l_arrays_raw_data (list, optional): A list of arrays containing the data that is processed 
             in the current function. If None, the same arrays must be loaded from the disk. Defaults 
             to None.
