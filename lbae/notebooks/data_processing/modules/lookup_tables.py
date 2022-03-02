@@ -245,28 +245,8 @@ def process_lookup_tables(
         # Get slice path
         slice_index = t_index_path[0]
         name = t_index_path[1]
-        try:
-            appendix = "_unfiltered"
-            if len(t_index_path) > 2:
-                path = temp_path + "slice_" + str(slice_index) + "_bis" + appendix + ".npz"
-                npzfile = np.load(path)
-                # Annotate repeated slice by multiplying their index by thousand (easier than
-                # replacing slice name with a non-int like bis)
-                path = temp_path + "slice_" + str(slice_index * 1000) + appendix + ".npz"
-            else:
-                path = temp_path + "slice_" + str(slice_index) + appendix + ".npz"
-                npzfile = np.load(path)
-        except:
-            appendix = "_filtered"
-            if len(t_index_path) > 2:
-                path = temp_path + "slice_" + str(slice_index) + "_bis" + appendix + ".npz"
-                npzfile = np.load(path)
-                # Annotate repeated slice by multiplying their index by thousand (easier than
-                # replacing slice name with a non-int like bis)
-                path = temp_path + "slice_" + str(slice_index * 1000) + appendix + ".npz"
-            else:
-                path = temp_path + "slice_" + str(slice_index) + appendix + ".npz"
-                npzfile = np.load(path)
+        path = temp_path + "slice_" + str(slice_index) + ".npz"
+        npzfile = np.load(path)
 
         # Load individual arrays
         array_pixel_indexes_high_res = npzfile["array_pixel_indexes_high_res"]

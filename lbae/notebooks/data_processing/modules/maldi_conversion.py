@@ -470,7 +470,7 @@ def standardize_values(
             by pixel index and mz, with lipids values transformed.
     """
 
-    def gzt_mz_peaks_lipid_annotation(
+    def get_mz_peaks_lipid_annotation(
         array_peaks, l_lipids_float, array_mz_lipids, precision=10 ** -4
     ):
 
@@ -499,15 +499,11 @@ def standardize_values(
                 raise Exception(
                     "Lipid with foldername with mz = "
                     + str(mz_lipid)
-                    + " was in df_match.csv but not in ranges.vsc"
+                    + " was in df_match.csv but not in ranges.csv"
                 )
         return rows_to_keep
 
-    for factor_precision in range(20):
-        rows_to_keep = gzt_mz_peaks_lipid_annotation(array_peaks, l_lipids_float, array_mz_lipids)
-        if len(rows_to_keep) == len(l_lipids_float):
-            break
-
+    rows_to_keep = get_mz_peaks_lipid_annotation(array_peaks, l_lipids_float, array_mz_lipids)
     array_peaks_to_correct = array_peaks[rows_to_keep]
 
     for idx_pixel, [idx_pixel_min, idx_pixel_max] in enumerate(array_pixel_indexes):
@@ -576,6 +572,50 @@ def return_averaged_spectra_array(array):
     return np.array([array_unique_mz, array_unique_intensity], dtype=np.float32)
 
 
+def extract_raw_data(
+    t_index_path, save=True, output_path="notebooks/data_processing/data/temp/",
+):
+    """This function loads the raw maldi data and turns it into a python friendly numpy array, along
+    with a given shape for the acquisition.
+
+    Args:
+        t_index_path (tuple(int, str)): A tuple containing the index of the slice (starting from 1) 
+            and the corresponding path for the raw data.
+        save (bool, optional): If True, arrays for the extracted data are saved in a npz file. 
+            Defaults to True (only option implemented for now for the rest of the pipeline).
+        output_path (str, optional): Path to save the output npz file. Defaults to 
+            "notebooks/data_processing/data/temp/".
+    Returns:
+        np.ndarray, np.ndarray: The first array, of shape (3,n), contains, for the current 
+            acquisition, the mz value (2nd column) and intensity (3rd column) for each pixel (first 
+            column). The second array contains two integers representing the acquisition shape.
+.    """
+    # Get slice path
+    slice_index = t_index_path[0]
+    name = t_index_path[1]
+
+    # Load file in high and low resolution
+    print("Loading files : " + name)
+    smz_high_res = load_file(name, resolution=1e-5)
+    image_shape = smz_high_res.img_shape
+
+    # Load df with different sortings (low_res will be averaged over m/z afterwards)
+    print("Creating and sorting dataframes")
+    df_high_res = process_sparse_matrix(smz_high_res, sort="m/z")
+
+    # Convert df into arrays for easier manipulation with numba
+    array_high_res = df_high_res.to_numpy()
+
+    if save:
+        np.savez(
+            output_path + "slice_" + str(slice_index) + ".npz",
+            array_high_res=array_high_res,
+            image_shape=image_shape,
+        )
+
+    return array_high_res, image_shape
+
+
 def process_raw_data(
     t_index_path,
     do_filter_peaks=True,
@@ -583,9 +623,10 @@ def process_raw_data(
     save=True,
     return_result=False,
     output_path="notebooks/data_processing/data/temp/",
+    load_from_file=True,
 ):
     """This function has been implemented to allow the parallelization of slice processing. It turns 
-    the raw MALDI data into several numpy arrays and lookup tables:
+    the MALDI data into several numpy arrays and lookup tables:
     - array_pixel_indexes_high_res: of shape (n,2), it maps each pixel to two array_spectra_high_res 
         indices, delimiting the corresponding spectrum.
     - array_spectra_high_res: of shape (2,m), it contains the concatenated spectra of each pixel. 
@@ -610,27 +651,26 @@ def process_raw_data(
             Defaults to False.
         output_path (str, optional): Path to save the output npz file. Defaults to 
             "notebooks/data_processing/data/temp/".
+        load_from_file(bool, optional): If True, loads the extracted data from npz file. Only option 
+            implemented for now.
 
 
     Returns:
         Depending on 'return result', returns either nothing, either several np.ndarrays, described 
             above.
     """
-    # Get slice path
-    slice_index = t_index_path[0]
-    name = t_index_path[1]
 
-    # Load file in high and low resolution
-    print("Loading files : " + name)
-    smz_high_res = load_file(name, resolution=1e-5)
-    image_shape = smz_high_res.img_shape
-
-    # Load df with different sortings (low_res will be averaged over m/z afterwards)
-    print("Creating and sorting dataframes")
-    df_high_res = process_sparse_matrix(smz_high_res, sort="m/z")
-
-    # Convert df into arrays for easier manipulation with numba
-    array_high_res = df_high_res.to_numpy()
+    if load_from_file:
+        # Get slice path
+        slice_index = t_index_path[0]
+        name = t_index_path[1]
+        path = output_path + "slice_" + str(slice_index) + ".npz"
+        npzfile = np.load(path)
+        # Load individual arrays
+        array_high_res = npzfile["array_high_res"]
+        image_shape = npzfile["image_shape"]
+    else:
+        raise Exception("Loading from arguments is not implemented yet")
 
     print("Compute and normalize pixels values according to TIC")
     # Get the TIC per pixel for normalization (must be done before filtering out peaks)
@@ -638,7 +678,6 @@ def process_raw_data(
     array_high_res = normalize_per_TIC_per_pixel(array_high_res, array_TIC)
 
     # Filter out the non-requested peaks and convert to array
-    appendix = "_unfiltered"
     if do_filter_peaks:
         print("Filtering out noise and matrix peaks")
         # try:
@@ -678,10 +717,6 @@ def process_raw_data(
                 arrays_before_transfo,
                 arrays_after_transfo,
             )
-            appendix = "_filtered"
-        # except Exception as e:
-        #     print(e)
-        #     appendix = "_unfiltered"
 
     # Sort according to mz for averaging
     print("Sorting by m/z value for averaging")
@@ -713,25 +748,14 @@ def process_raw_data(
     # Save all array as a npz file as a temporary backup
     if save:
         print("Saving : " + name)
-        if len(t_index_path) > 2:
-            np.savez(
-                output_path + "slice_" + str(slice_index) + "_bis" + appendix + ".npz",
-                array_pixel_indexes_high_res=array_pixel_indexes_high_res,
-                array_spectra_high_res=array_spectra_high_res,
-                array_averaged_mz_intensity_low_res=array_averaged_mz_intensity_low_res,
-                array_averaged_mz_intensity_high_res=array_averaged_mz_intensity_high_res,
-                image_shape=image_shape,
-            )
-
-        else:
-            np.savez(
-                output_path + "slice_" + str(slice_index) + appendix + ".npz",
-                array_pixel_indexes_high_res=array_pixel_indexes_high_res,
-                array_spectra_high_res=array_spectra_high_res,
-                array_averaged_mz_intensity_low_res=array_averaged_mz_intensity_low_res,
-                array_averaged_mz_intensity_high_res=array_averaged_mz_intensity_high_res,
-                image_shape=image_shape,
-            )
+        np.savez(
+            output_path + "slice_" + str(slice_index) + ".npz",
+            array_pixel_indexes_high_res=array_pixel_indexes_high_res,
+            array_spectra_high_res=array_spectra_high_res,
+            array_averaged_mz_intensity_low_res=array_averaged_mz_intensity_low_res,
+            array_averaged_mz_intensity_high_res=array_averaged_mz_intensity_high_res,
+            image_shape=image_shape,
+        )
 
     # Returns all array if needed
     if return_result:
