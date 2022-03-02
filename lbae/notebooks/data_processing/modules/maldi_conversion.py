@@ -171,7 +171,7 @@ def load_lipid_file(section_index, path):
     df = df[df["section_ix"] == section_index - 1]
 
     # Return a numpy array of mz values sorted by first column
-    array_mz_lipids = np.array(df["mz_estimated", "mz_estimated_total"], dtype=np.float32)
+    array_mz_lipids = np.array(df[["mz_estimated", "mz_estimated_total"]], dtype=np.float32)
     return array_mz_lipids[np.argsort(array_mz_lipids[:, 0])]
 
 
@@ -645,7 +645,7 @@ def process_raw_data(
         # Get the peak annotation file
         array_peaks = load_peak_file(name)
         # Get the list of m/z values to keep for visualization
-        array_mz_lipids = load_lipid_file(1, path="data/annotations/df_match.csv")
+        array_mz_lipids = load_lipid_file(slice_index, path="data/annotations/df_match.csv")
         # Filter out all the undesired values
         l_to_keep_high_res, l_mz_lipids_kept = filter_peaks(
             array_high_res, array_peaks, array_mz_lipids[:, 0]
