@@ -7,8 +7,9 @@ from numba import njit
 ###### DEFINE UTILITY FUNCTIONS ######
 @njit
 def project_image(slice_index, original_image, array_projection_correspondence):
-    """This function is used to project the original maldi acquisition (low-resolution, possibly tilted, and) into a 
-    warped and higher resolution, indexed with the Allen Mouse Brain Common Coordinate Framework (ccfv3).
+    """This function is used to project the original maldi acquisition (low-resolution, possibly 
+    tilted, and) into a warped and higher resolution, indexed with the Allen Mouse Brain Common 
+    Coordinate Framework (ccfv3).
 
     Args:
         slice_index (int): Index of the slice to project.
@@ -54,7 +55,9 @@ def project_atlas_mask(stack_mask, slice_coordinates_rescaled, shape_atlas):
         np.ndarray: A two-dimensional array representing the projected mask on the requested slice.
     """
     # Define empty array for the projected mask, with the same dimension as the current slice
-    projected_mask = np.full(slice_coordinates_rescaled.shape[:-1], stack_mask[0, 0, 0], dtype=np.int32)
+    projected_mask = np.full(
+        slice_coordinates_rescaled.shape[:-1], stack_mask[0, 0, 0], dtype=np.int32
+    )
     for x in range(slice_coordinates_rescaled.shape[0]):
         for y in range(slice_coordinates_rescaled.shape[1]):
             current_coor_rescaled = slice_coordinates_rescaled[x, y]
@@ -150,7 +153,11 @@ def get_array_rows_from_atlas_mask(mask, mask_remapped, array_projection_corresp
 
 @njit
 def solve_plane_equation(
-    slice_index, array_coordinates_high_res, point_1=(150, 151), point_2=(800, 1200), point_3=(100, 101)
+    slice_index,
+    array_coordinates_high_res,
+    point_1=(150, 151),
+    point_2=(800, 1200),
+    point_3=(100, 101),
 ):
     """This function defines and solves a system of linear equations for three points of the plane (which corresponds to
     a slice in the ccfv3). The vectors returned by the function enable to index the 2D slice in the 3D atlas space 
@@ -292,7 +299,9 @@ def fill_array_projection(
     A = np.empty((2, 2), dtype=np.float64)
     A[0] = [u[1], v[1]]
     A[1] = [u[2], v[2]]
-    A += np.random.normal(0, 0.000000001, (2, 2))  # add small noise to solve singularity issues when inversion
+    A += np.random.normal(
+        0, 0.000000001, (2, 2)
+    )  # add small noise to solve singularity issues when inversion
 
     for i_original_slice in range(original_coor.shape[0]):
         for j_original_slice in range(original_coor.shape[1]):
@@ -309,13 +318,23 @@ def fill_array_projection(
             # If the high-resolution coordinate found be inversion exists, fill array_projection
             if i < array_projection.shape[1] and j < array_projection.shape[2] and i > 0 and j > 0:
                 try:
-                    array_projection[slice_index, i, j] = original_slice[i_original_slice, j_original_slice, 2]
+                    array_projection[slice_index, i, j] = original_slice[
+                        i_original_slice, j_original_slice, 2
+                    ]
                     array_projection_filling[slice_index, i, j] = 1
-                    array_projection_correspondence[slice_index, i, j] = [i_original_slice, j_original_slice]
+                    array_projection_correspondence[slice_index, i, j] = [
+                        i_original_slice,
+                        j_original_slice,
+                    ]
                 except:
                     raise ValueError
                     logging.info(
-                        i, j, array_projection.shape, i_original_slice, j_original_slice, original_slice.shape
+                        i,
+                        j,
+                        array_projection.shape,
+                        i_original_slice,
+                        j_original_slice,
+                        original_slice.shape,
                     )
 
     # Apply potential corrections
@@ -324,7 +343,9 @@ def fill_array_projection(
             for j in range(array_projection.shape[2]):
 
                 # Look for the 3D atlas coordinate of out data
-                x_atlas, y_atlas, z_atlas = array_coordinates_high_res[slice_index, i, j] * 1000 / atlas_resolution
+                x_atlas, y_atlas, z_atlas = (
+                    array_coordinates_high_res[slice_index, i, j] * 1000 / atlas_resolution
+                )
 
                 # Ugly again, but numba doesn't support np.round
                 x_atlas = int(round(x_atlas))
@@ -359,7 +380,9 @@ def fill_array_projection(
                                 ):
                                     # Look for neighbours that are filled in a close window
                                     radius = 3
-                                    array_window = np.empty((2 * radius + 1, 2 * radius + 1), dtype=np.float32)
+                                    array_window = np.empty(
+                                        (2 * radius + 1, 2 * radius + 1), dtype=np.float32
+                                    )
 
                                     # Temporary fill the window not to modify the value as they are browsed and end up
                                     # having an incremental nearest neighbor correction
@@ -371,12 +394,17 @@ def fill_array_projection(
                                                 and j + x > 0
                                                 and j + y < array_projection.shape[2]
                                             ):
-                                                if array_projection_filling[slice_index, i + x, j + y] == 0:
-                                                    array_window[x + radius, y + radius] = np.nan
-                                                else:
-                                                    array_window[x + radius, y + radius] = array_projection[
+                                                if (
+                                                    array_projection_filling[
                                                         slice_index, i + x, j + y
                                                     ]
+                                                    == 0
+                                                ):
+                                                    array_window[x + radius, y + radius] = np.nan
+                                                else:
+                                                    array_window[
+                                                        x + radius, y + radius
+                                                    ] = array_projection[slice_index, i + x, j + y]
                                     avg = np.nanmean(array_window)
                                     if np.isnan(avg):
                                         continue
@@ -399,7 +427,9 @@ def fill_array_projection(
                                     array_projection_correspondence[
                                         slice_index, i, j
                                     ] = array_projection_correspondence[
-                                        slice_index, i + selected_pixel_x - radius, j + selected_pixel_y - radius
+                                        slice_index,
+                                        i + selected_pixel_x - radius,
+                                        j + selected_pixel_y - radius,
                                     ]
                     # Wipe the pixels values that are not annotated in the atlas
                     elif atlas_correction:
