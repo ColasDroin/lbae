@@ -375,6 +375,7 @@ class Figures:
         plot_contours=False,
         heatmap=False,
     ):
+
         logging.info("Starting figure computation, from mz boundaries")
         if binary_string:
             logging.info(
@@ -393,6 +394,7 @@ class Figures:
         image = self.compute_image_per_lipid(
             slice_index, lb_mz, hb_mz, RGB_format=True, projected_image=projected_image
         )
+
         logging.info("Done getting image array. Cleaning memory")
         # Clean memmap memory
         self._data.clean_memory(slice_index=slice_index)
@@ -457,8 +459,11 @@ class Figures:
         self, slice_index, ll_t_bounds, normalize_independently=True, projected_image=True
     ):
 
+        logging.info("Compute heatmap per lipid selection" + str(ll_t_bounds))
+
         # Start from empty image and add selected lipids
-        image = np.zeros(self._atlas.image_shape)
+        # * Caution: array must be int, float gets badly converted afterwards
+        image = np.zeros(self._atlas.image_shape, dtype=np.int32)
         for l_t_bounds in ll_t_bounds:
             if l_t_bounds is not None:
                 for boundaries in l_t_bounds:
@@ -472,7 +477,6 @@ class Figures:
                             normalize=normalize_independently,
                             projected_image=projected_image,
                         )
-
                         image += image_temp
 
         # Clean memmap memory

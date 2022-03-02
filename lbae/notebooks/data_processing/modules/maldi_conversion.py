@@ -157,34 +157,37 @@ def load_lipid_file(section_index, path):
         path (string): The path of the csv file containing the lipids annotations.
 
     Returns:
-        np.ndarray: A unidimensional array of m/z values corrsponding to the lipids that we want to
-            keep for further visualization.
+        np.ndarray: A two-dimensional array of m/z values corrsponding to the lipids that we want to
+            keep for further visualization (first column is per-slice value, second column is 
+            averaged value). Sorted by individual slice value in the end.
     """
     # Load the peaks annotations using the last definition used for the csv file
     df = pd.read_csv(path, sep=",")
 
     # Drop the columns that we won't use afterwards
-    df = df.drop(["molecule_ID", "concentration", "mz_estimated_total",], axis=1,)
+    df = df.drop(["molecule_ID", "concentration",], axis=1,)
 
     # Keep only the current section
     df = df[df["section_ix"] == section_index - 1]
 
-    # Return a numpy array of mz values
-    return np.sort(np.array(df["mz_estimated"], dtype=np.float32))
+    # Return a numpy array of mz values sorted by first column
+    array_mz_lipids = np.array(df["mz_estimated", "mz_estimated_total"], dtype=np.float32)
+    return array_mz_lipids[np.argsort(array_mz_lipids[:, 0])]
 
 
 @njit
-def filter_peaks(array_spectra, array_peaks, array_mz_lipids):
+def filter_peaks(array_spectra, array_peaks, array_mz_lipids_per_slice):
     """This function is used to filter out all the spectrum data in 'array_spectra' that 
-    has not been annotated as peak in 'array_peaks' and that do not belong to 'array_mz_lipids'.
+    has not been annotated as peak in 'array_peaks' and that do not belong to 
+    'array_mz_lipids_per_slice'.
 
     Args:
         array_spectra (np.ndarray): A numpy array containing spectrum data (pixel index, m/z and 
             intensity), sorted by mz (but not necessarily by pixel index).
         array_peaks (np.ndarray): A numpy array containing the peak annotations (min peak, max peak, 
             number of pixels containing the peak, average value of the peak), sorted by min_mz.
-        array_mz_lipids (np.ndarray): A 1-D numpy array containing the mz values of the lipids we 
-            want to visualize.
+            array_mz_lipids_per_slice (np.ndarray): A 1-D numpy array containing the per-slice mz 
+            values of the lipids we want to visualize.
 
     Returns:
         list: m/z values corresponding to peaks that have been annotated and belong to lipids we 
@@ -197,7 +200,7 @@ def filter_peaks(array_spectra, array_peaks, array_mz_lipids):
     idx_curr_mz = 0
     idx_lipid = 0
     l_n_pix = []
-    mz_lipid = array_mz_lipids[idx_lipid]
+    mz_lipid = array_mz_lipids_per_slice[idx_lipid]
     l_mz_lipids_kept = []
     # Need to initialize the set with an int inside and then delete it because numba is retarded
     set_pix = {0}
@@ -214,12 +217,12 @@ def filter_peaks(array_spectra, array_peaks, array_mz_lipids):
         # Either current mz is in the current window
         elif mz >= min_mz and mz <= max_mz:
             # Adapt the index of the current lipid
-            while mz_lipid < min_mz and idx_lipid < array_mz_lipids.shape[0]:
+            while mz_lipid < min_mz and idx_lipid < array_mz_lipids_per_slice.shape[0]:
                 idx_lipid += 1
-                mz_lipid = array_mz_lipids[idx_lipid]
+                mz_lipid = array_mz_lipids_per_slice[idx_lipid]
 
             # If we've explored all lipids already, exit the loop
-            if idx_lipid == array_mz_lipids.shape[0]:
+            if idx_lipid == array_mz_lipids_per_slice.shape[0]:
                 break
 
             # If mz lipid is not in the current peak, move on to the next
@@ -245,8 +248,8 @@ def filter_peaks(array_spectra, array_peaks, array_mz_lipids):
             set_pix.clear()
 
     # * This piece of code is commented because it is not usable as such since the introduction of
-    # * array_mz_lipids as argument in the function, but it should still work if molecules not
-    # * belonging to array_mz_lipids are not excluded
+    # * array_mz_lipids_per_slice as argument in the function, but it should still work if molecules
+    # * not belonging to array_mz_lipids_per_slice are not excluded
     # if verbose:
     #     # Check that the pixel recorded are identical to the expected number of pixels recorded
     #     print(
@@ -439,6 +442,7 @@ def standardize_values(
     array_spectra,
     array_pixel_indexes,
     array_peaks,
+    array_mz_lipids,
     l_lipids_float,
     arrays_before_transfo,
     arrays_after_transfo,
@@ -466,26 +470,46 @@ def standardize_values(
             by pixel index and mz, with lipids values transformed.
     """
 
-    def compute_number_peaks_lipid_annotation(array_peaks, l_lipids_float, precision=14 * 10 ** -4):
+    def gzt_mz_peaks_lipid_annotation(
+        array_peaks, l_lipids_float, array_mz_lipids, precision=10 ** -4
+    ):
+
+        # First get the list of mz of the current slice
+        l_lipids_float_correct = []
+        for mz_lipid in l_lipids_float:
+            found = False
+            for mz_per_slice, mz_avg in array_mz_lipids:
+                if np.abs(mz_avg - mz_lipid) <= precision:
+                    found = True
+                    l_lipids_float_correct.append(mz_per_slice)
+                    break
+            if not found:
+                raise Exception("No lipid could be found for foldername with mz = " + str(mz_lipid))
+
         # keep only the peak annotation that correspond to the lipids which have been transformed
         rows_to_keep = []
         for idx, [mini, maxi, npix, mz_est] in enumerate(array_peaks):
-            for mz_lipid in l_lipids_float:
-                # Problem with this precision... Which slice must be taken to compute mz_estimated?
+            found = False
+            for mz_lipid in l_lipids_float_correct:
                 if np.abs(mz_est - mz_lipid) <= precision:
+                    found = True
                     rows_to_keep.append(idx)
                     break
+            if not found:
+                raise Exception(
+                    "Lipid with foldername with mz = "
+                    + str(mz_lipid)
+                    + " was in df_match.csv but not in ranges.vsc"
+                )
         return rows_to_keep
 
     for factor_precision in range(20):
-        rows_to_keep = compute_number_peaks_lipid_annotation(
-            array_peaks, l_lipids_float, precision=factor_precision * 10 ** -4
-        )
+        rows_to_keep = gzt_mz_peaks_lipid_annotation(array_peaks, l_lipids_float, array_mz_lipids)
         if len(rows_to_keep) == len(l_lipids_float):
             break
+
     array_peaks_to_correct = array_peaks[rows_to_keep]
 
-    # new_array_spectra = []
     for idx_pixel, [idx_pixel_min, idx_pixel_max] in enumerate(array_pixel_indexes):
         array_spectra_pixel = array_spectra[idx_pixel_min : idx_pixel_max + 1]
 
@@ -500,9 +524,8 @@ def standardize_values(
 
             # Reattribute the corrected values to the intial spectrum
             array_spectra[idx_pixel_min : idx_pixel_max + 1] = array_spectra_pixel
-        # new_array_spectra.append(array_spectra_pixel)
 
-    return array_spectra  # np.array(new_array_spectra)
+    return array_spectra
 
 
 @njit
@@ -618,45 +641,47 @@ def process_raw_data(
     appendix = "_unfiltered"
     if do_filter_peaks:
         print("Filtering out noise and matrix peaks")
-        try:
-            # Get the peak annotation file
-            array_peaks = load_peak_file(name)
-            # Get the list of m/z values to keep for visualization
-            array_mz_lipids = load_lipid_file(1, path="data/annotations/df_match.csv")
-            # Filter out all the undesired values
-            l_to_keep_high_res, l_mz_lipids_kept = filter_peaks(
-                array_high_res, array_peaks, array_mz_lipids
+        # try:
+        # Get the peak annotation file
+        array_peaks = load_peak_file(name)
+        # Get the list of m/z values to keep for visualization
+        array_mz_lipids = load_lipid_file(1, path="data/annotations/df_match.csv")
+        # Filter out all the undesired values
+        l_to_keep_high_res, l_mz_lipids_kept = filter_peaks(
+            array_high_res, array_peaks, array_mz_lipids[:, 0]
+        )
+        # Keep only the annotated peaks
+        array_high_res = array_high_res[l_to_keep_high_res]
+        if standardize_lipid_values:
+            # Double sort by pixel and mz
+            array_high_res = array_high_res[
+                np.lexsort((array_high_res[:, 1], array_high_res[:, 0]), axis=0)
+            ]
+            # Get arrays spectra and corresponding array_pixel_index tables for the high res
+            array_pixel_high_res = array_high_res[:, 0].T.astype(np.int32)
+            array_pixel_indexes_high_res = return_array_pixel_indexes(
+                array_pixel_high_res, image_shape[0] * image_shape[1]
             )
-            # Keep only the annotated peaks
-            array_high_res = array_high_res[l_to_keep_high_res]
-            if standardize_lipid_values:
-                # Double sort by pixel and mz
-                array_high_res = array_high_res[
-                    np.lexsort((array_high_res[:, 1], array_high_res[:, 0]), axis=0)
-                ]
-                # Get arrays spectra and corresponding array_pixel_index tables for the high res
-                array_pixel_high_res = array_high_res[:, 0].T.astype(np.int32)
-                array_pixel_indexes_high_res = return_array_pixel_indexes(
-                    array_pixel_high_res, image_shape[0] * image_shape[1]
-                )
-                (
-                    l_lipids_str,
-                    l_lipids_float,
-                    arrays_before_transfo,
-                    arrays_after_transfo,
-                ) = get_standardized_values(slice_index)
-                array_high_res = standardize_values(
-                    array_high_res,
-                    array_pixel_indexes_high_res,
-                    array_peaks,
-                    l_lipids_float,
-                    arrays_before_transfo,
-                    arrays_after_transfo,
-                )
-                appendix = "_filtered"
-        except Exception as e:
-            print(e)
-            appendix = "_unfiltered"
+            (
+                l_lipids_str,
+                l_lipids_float,
+                arrays_before_transfo,
+                arrays_after_transfo,
+            ) = get_standardized_values(slice_index)
+            # Standardize values
+            array_high_res = standardize_values(
+                array_high_res,
+                array_pixel_indexes_high_res,
+                array_peaks,
+                array_mz_lipids,
+                l_lipids_float,
+                arrays_before_transfo,
+                arrays_after_transfo,
+            )
+            appendix = "_filtered"
+        # except Exception as e:
+        #     print(e)
+        #     appendix = "_unfiltered"
 
     # Sort according to mz for averaging
     print("Sorting by m/z value for averaging")

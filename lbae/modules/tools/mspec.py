@@ -1,6 +1,8 @@
 # NB: this notebook has been coded by Gioele La Manno and Halima Schede
 # Contact gioele.lamanno@epfl.ch for further information
 
+""" This file is used to convert raw MALDI data into python-friendly numpy arrays."""
+
 from __future__ import annotations  # postponed evaluation of annotations
 import numpy as np
 from scipy import sparse
@@ -242,7 +244,8 @@ def fast_to_dense_separated_intervals(
     Equivalent, but much more performant, to:
     dense = np.empty(separated_intervals.shape[0], dtype=float)
     for i in range(separated_intervals.shape[0]):
-        dense[i] = np.sum(intensities[(mz >= separated_intervals[i,0]) & (mz < separated_intervals[i,1])])
+        dense[i] = np.sum(intensities[(mz >= separated_intervals[i,0]) 
+            & (mz < separated_intervals[i,1])])
 
     Arguments
     ---------
@@ -507,12 +510,14 @@ class SmzMLobj:
             # print(f'Spectrumcount from reader={self.reader.get_spectrum_count()}')
             if n_extra_spectra > 0:
                 logging.warning(
-                    f"The mzML file containts more than the expected {self.expected_pixels} spectra. "
+                    "The mzML file containts more than the expected"
+                    + f"{self.expected_pixels} spectra. "
                     + f"The tailing {n_extra_spectra} spectra will be ignored."
                 )
         else:
             raise IOError(
-                f"File of type {os.path.splitext(annotation)[-1].lower()} is not supported as annotation file."
+                f"File of type {os.path.splitext(annotation)[-1].lower()} is not supported as"
+                + " annotation file."
             )
         if self.selected_pixels:
             self.expected_pixels = self.selected_pixels[1] - self.selected_pixels[0]
@@ -605,11 +610,13 @@ class SmzMLobj:
         previous_bigger_res = max(list(self._mz_vals_at_res.keys()), default=0)
         if mz_resolution < previous_bigger_res:
             raise ValueError(
-                "You cannot chose a resolution finer than the one previously set. Reload the object to achieve it it."
+                "You cannot chose a resolution finer than the one previously set."
+                + "Reload the object to achieve it it."
             )
         elif mz_resolution < 4 * previous_bigger_res:
             logging.warning(
-                "Careful! This new resolution is not much coarser than the one previously set. Binning might result influenced."
+                "Careful! This new resolution is not much coarser than the one previously set."
+                + "Binning might result influenced."
             )
         else:
             pass
@@ -643,7 +650,8 @@ class SmzMLobj:
             selected_mzs = self._mz_vals_at_res[self.mz_resolution][mz_bool_condition]
             for i in progressbar(
                 range(len(self.spectra)),
-                desc=f"Filtering {mz_bool_condition.sum()} peaks out of {len(self._mz_vals_at_res[self.mz_resolution])}",
+                desc=f"Filtering {mz_bool_condition.sum()} "
+                + f"peaks out of {len(self._mz_vals_at_res[self.mz_resolution])}",
             ):
                 self.spectra[i].filter_mz_inplace(selected_mzs)
             self._mz_vals_at_res[self.mz_resolution] = selected_mzs
@@ -686,7 +694,8 @@ class SmzMLobj:
     def S(self) -> sparse.lil_matrix:
         if self._I is None:
             logging.warning(
-                "The sparsified dense matrix S has never been computed. Please wait while it's being generated."
+                "The sparsified dense matrix S has never been computed. "
+                + "Please wait while it's being generated."
             )
             self._I = self._generate_sparse_intensities()
             return self._I
@@ -702,7 +711,7 @@ class SmzMLobj:
     def A(self) -> np.ndarray:
         if self._I is None:
             logging.warning(
-                "The dense matrix A has never been computed. Please wait while it's being generated."
+                "The dense matrix A was never computed. Please wait while it's being generated."
             )
             self._densify()
             return self._I
@@ -832,19 +841,20 @@ class SmzMLobj:
         Parameters
         ----------
         sel_spectra: ArrayLike
-            Selected spectra. A list or array containing integers indicating the index of the pixels/spectra. e.g. [100, 120, 1002, ...]
+            Selected spectra. A list or array containing integers indicating the index of the 
+            pixels/spectra. e.g. [100, 120, 1002, ...]
             If a list of 2-element-list or 2d array it will interpreted as (row, colums pairs)
 
         sel_peaks: np.ndarray,
             Selected Peaks. 
             
             If an array. It will have to contain the values of the m/z of the peaks to show.
-            It is normally obtained by subsetting `self.mz_vals`, for example it could be the result of something like:
-            smz.mz_vals[(smz.mz_vals > 856) & (smz.mz_vals < 876)]
+            It is normally obtained by subsetting `self.mz_vals`, for example it could be the result 
+            of something like: smz.mz_vals[(smz.mz_vals > 856) & (smz.mz_vals < 876)]
 
             If a string. It can contain a query, using the placeholder name `mz` to specify the m/z
-            The expression should correspond to valid python code. For examples for the examples above it should be:
-            "(mz > 856) & (mz < 876)"
+            The expression should correspond to valid python code. For examples for the examples 
+            above it should be: "(mz > 856) & (mz < 876)"
             WARNING: this is a dangerous hack as it uses `eval`!
 
         cmap: Any = plt.cm.rainbow,
@@ -924,28 +934,31 @@ class SmzMLobj:
         **plotkwargs: Dict[str, Any],
     ) -> None:
         """Plot a set non-interactive spectra showing only some peaks.
-        This is make static visualization or to visualize spectra when one does not care of peaks overlapping.
+        This is make static visualization or to visualize spectra when one does not care of peaks 
+        overlapping.
 
         Parameters
         ----------
         sel_spectra: ArrayLike
-            Selected spectra. A list or array containing integers indicating the index of the pixels/spectra. e.g. [100, 120, 1002, ...]
+            Selected spectra. A list or array containing integers indicating the index of the 
+            pixels/spectra. e.g. [100, 120, 1002, ...]
             If a list of 2-element-list or 2d array it will interpreted as (row, colums pairs)
 
         sel_peaks: np.ndarray,
             Selected Peaks. 
             
             If an array. It will have to contain the values of the m/z of the peaks to show.
-            It is normally obtained by subsetting `self.mz_vals`, for example it could be the result of something like:
-            smz.mz_vals[(smz.mz_vals > 856) & (smz.mz_vals < 876)]
+            It is normally obtained by subsetting `self.mz_vals`, for example it could be the result 
+            of something like: smz.mz_vals[(smz.mz_vals > 856) & (smz.mz_vals < 876)]
 
             If a string. It can contain a query, using the placeholder name `mz` to specify the m/z
-            The expression should correspond to valid python code. For examples for the examples above it should be:
-            "(mz > 856) & (mz < 876)"
+            The expression should correspond to valid python code. For examples for the examples 
+            above it should be: "(mz > 856) & (mz < 876)"
             WARNING: this is a dangerous hack as it uses `eval`!
 
         bar_width_in_scale: bool = True
-            If True the width of the bar will be, otherwise it will be set just to the passed value `lw`
+            If True the width of the bar will be, otherwise it will be set just to the passed 
+            value `lw`
         
         lw: float = 2
             the width of the line
@@ -1012,8 +1025,8 @@ class SmzMLobj:
         sel_peaks: Union[ArrayLike, List[ArrayLike], np.ndarray],
         sel_spectra: ArrayLike = None,
     ) -> ArrayLike:
-        """It produces a vector containing, for every spectrum, the center of mass computed of the selected peaks 
-        Most often sel_peaks contains a window of sel_peaks
+        """It produces a vector containing, for every spectrum, the center of mass computed of the 
+        selected peaks. Most often sel_peaks contains a window of sel_peaks
 
         Arguments
         ---------
@@ -1021,7 +1034,8 @@ class SmzMLobj:
             A set of Selected Peaks or multiple sets Selected Peaks.
             If one ste of Selected Peaks:
                 It contains the values of the m/z of the peaks to consider.
-                It is normally obtained by subsetting `self.mz_vals`, for example it could be the result of something like:
+                It is normally obtained by subsetting `self.mz_vals`, for example it could be the 
+                result of something like:
                 smz.mz_vals[(smz.mz_vals > 856) & (smz.mz_vals < 876)]
             If multiple set of Selected Peaks:
                 A list of lists/arrays (or a 2d array) containing the peaks as explained above
@@ -1072,7 +1086,8 @@ class SmzMLobj:
             A set of Selected Peaks or multiple sets Selected Peaks.
             If one ste of Selected Peaks:
                 It contains the values of the m/z of the peaks to consider.
-                It is normally obtained by subsetting `self.mz_vals`, for example it could be the result of something like:
+                It is normally obtained by subsetting `self.mz_vals`, for example it could be the 
+                result of something like:
                 smz.mz_vals[(smz.mz_vals > 856) & (smz.mz_vals < 876)]
             If multiple set of Selected Peaks:
                 A list of lists/arrays (or a 2d array) containing the peaks as explained above
@@ -1138,7 +1153,11 @@ class SmzMLobj:
         ax=None,
     ):
 
-        """Function takes in a range of mz values as a tuple and outputs a scatter plot with axis deviation from averaged CoM values and intensity per pixel. Returns also indexes for pixels which contain a signal of interest as well as the indexes of the mz bins which satisfy the specified range. The percentiles will return the mean intensity and standard deviation of the signal for each percentile bin.
+        """Function takes in a range of mz values as a tuple and outputs a scatter plot with axis 
+        deviation from averaged CoM values and intensity per pixel. Returns also indexes for pixels 
+        which contain a signal of interest as well as the indexes of the mz bins which satisfy the 
+        specified range. The percentiles will return the mean intensity and standard deviation of 
+        the signal for each percentile bin.
         
         Arguments
         ---------
@@ -1146,7 +1165,8 @@ class SmzMLobj:
             The m/z range that one wants to visualize across pixels  
         
         percentiles: tuple(int)
-            The percentile values according to intensity for which one wants to calculate the average intensity and standard deviation of the CoM per pixel to the averaged CoM
+            The percentile values according to intensity for which one wants to calculate the 
+            average intensity and standard deviation of the CoM per pixel to the averaged CoM
 
         plot_graph: bool
             True if one wants to plot
@@ -1171,7 +1191,8 @@ class SmzMLobj:
             The indexes of the columns of S for mz bins which contain a signal
         
         INDEX_PIXEL: np.ndarray
-            The indexes of the rows of S for which pixels contain at least one signal from the specified bin range
+            The indexes of the rows of S for which pixels contain at least one signal from the 
+            specified bin range
 
         CoM_std: np.ndarray
             The standard deviations of the mz CoM for each specified percentile range
@@ -1298,10 +1319,12 @@ class SmzMLobj:
 
         range_type: str
             'bins' where the input to bin_range is a List[Tuple]
-            'explicit' where the input to bin_range is a List of m/z values one wants to include. If the value does not exist in self.mz_vals then it is ignored
+            'explicit' where the input to bin_range is a List of m/z values one wants to include. 
+            If the value does not exist in self.mz_vals then it is ignored
         
         plot_graph: bool
-            True if one wishes to visualize the image. Otherwise, closes the image immediately so that they can be saved
+            True if one wishes to visualize the image. Otherwise, closes the image immediately so 
+            that they can be saved
 
         vmin: int
             Percentile of the image sum to trim by
@@ -1378,10 +1401,12 @@ class SmzMLobj:
             The closest m/z value for which there was a registered signal
 
         above, idx_above: Tuple[float, int]
-            Tuple for which first value is the closest value above the mz value and the second value is the index of self.mz_vals for which the value occurs
+            Tuple for which first value is the closest value above the mz value and the second value 
+            is the index of self.mz_vals for which the value occurs
         
         below, idx_below: Tuple[float, int]
-            Tuple for which first value is the closest value below the mz value and the second value is the index of self.mz_vals for which the value occurs
+            Tuple for which first value is the closest value below the mz value and the second value 
+            is the index of self.mz_vals for which the value occurs
 
         """
 
