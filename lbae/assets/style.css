@@ -499,6 +499,19 @@ div.toast-header > button > span {
   padding-bottom: 0;
 }
 
+#main-paper-slider {
+  -webkit-transition: opacity 0.1s ease-in-out;
+  -moz-transition: opacity 0.1s ease-in-out;
+  -ms-transition: opacity 0.1s ease-in-out;
+  -o-transition: opacity 0.1s ease-in-out;
+  transition: opacity 0.1s ease-in-out;
+  opacity: 0.25;
+}
+
+#main-paper-slider:hover {
+  opacity: 1;
+}
+
 /* at some point, replace this nasty hack by a dropdown in which you can select 1 value only
 and print the selection next to the dropdown (unerasable, except with reset) 
 div.Select-value > span.Select-value-icon {
