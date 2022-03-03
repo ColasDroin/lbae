@@ -508,6 +508,11 @@ div.toast-header > button > span {
   border-color: rgba(80, 189, 218, 0.5);
 }
 
+/* decrease vertical asymetry tabs  */
+#page-1-card-tabs {
+  padding-bottom: 0;
+}
+
 /* at some point, replace this nasty hack by a dropdown in which you can select 1 value only
 and print the selection next to the dropdown (unerasable, except with reset) 
 div.Select-value > span.Select-value-icon {

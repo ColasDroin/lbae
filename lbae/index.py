@@ -108,18 +108,19 @@ def return_main_content():
                                     min=1,
                                     max=data.get_slice_number(),
                                     step=1,
-                                    marks=None,
-                                    tooltip={"placement": "right", "always_visible": True,},
                                     # marks=[
-                                    #     {"value": i, "label": str(i)}
-                                    #     for i in range(
-                                    #         1, data.get_slice_number() + 1, 2
-                                    #     )
+                                    #     {
+                                    #         "value": slice_index + 1,
+                                    #         "label": str(data.get_slice_number() - slice_index),
+                                    #     }
+                                    #     for slice_index in range(data.get_slice_number())
                                     # ],
+                                    # tooltip={"placement": "right", "always_visible": True,},
                                     # class_name="pb-3",
-                                    value=1,
+                                    value=data.get_slice_number(),
                                     vertical=True,
                                     className="ml-1",
+                                    included=False,
                                 ),
                             ],
                         ),
