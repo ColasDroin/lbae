@@ -108,13 +108,13 @@ def return_main_content():
                                     min=1,
                                     max=data.get_slice_number(),
                                     step=1,
-                                    # marks=[
-                                    #     {
-                                    #         "value": slice_index + 1,
-                                    #         "label": str(data.get_slice_number() - slice_index),
-                                    #     }
-                                    #     for slice_index in range(data.get_slice_number())
-                                    # ],
+                                    marks=[
+                                        {
+                                            "value": slice_index,
+                                            "label": str(data.get_slice_number() - slice_index + 1),
+                                        }
+                                        for slice_index in range(0, data.get_slice_number() + 1)
+                                    ],
                                     # tooltip={"placement": "right", "always_visible": True,},
                                     # class_name="pb-3",
                                     value=data.get_slice_number(),
@@ -122,19 +122,20 @@ def return_main_content():
                                     className="ml-1",
                                     included=False,
                                 ),
+                                # dmc.SegmentedControl(
+                                #     data=[
+                                #         dict(label=str(slice_index), value=slice_index)
+                                #         for slice_index in range(1, data.get_slice_number() + 1)
+                                #     ],
+                                #     id="main-slider",
+                                #     value=2,
+                                #     radius="sm",
+                                #     color="cyan",
+                                #     #orientation="vertical",
+                                # ),
                             ],
                         ),
-                        style={
-                            # "width": "100%",
-                            "position": "fixed",
-                            "left": "10rem",
-                            "top": "30%",
-                            # "margin-left": "5%",
-                            # "margin-right": "5%",
-                            # "margin-bottom": "1%",
-                            # "left": "0",
-                            # "right": "0",
-                        },
+                        style={"position": "fixed", "left": "10rem", "top": "30%",},
                     ),
                     # Space to ensure the slider for sections doesn't hide anything
                     # dmc.Space(h=70),

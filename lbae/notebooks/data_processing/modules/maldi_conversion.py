@@ -403,7 +403,7 @@ def compute_standardization(
                 intensity_after = arrays_after_transfo[idx_peak].flatten()[idx_pixel]
 
                 # Most likely, the annotation doesn't exist, so insert it
-                if idx_max_mz == idx_min_mz or idx_max_mz == idx_min_mz - 1:
+                if np.abs(idx_max_mz - idx_min_mz) <= 1.1:
                     pass
                     # array_spectra_pixel = np.insert(array_spectra_pixel, idx_min_mz,
                     #   [idx_pix, mz_estimated, intensity_after], axis = 0)

@@ -10,18 +10,10 @@ html {
   left: 0;
   bottom: 0;
   width: 6rem;
-  padding: 2rem 1rem 1rem 1rem;
-  /* background-color: #f8f9fa; */
+  padding: 2rem 1.5rem 1rem 1rem;
   background-color: #1d3d5c;
   /*z-index: 1050;*/
-  /*transition: width 0.2s ease-in-out;*/
 }
-
-/* when the user hovers on the sidebar, expand it
-.sidebar:hover {
-  width: 17rem;
-}
- */
 
 /* make sure the contents of the navlink don't wrap when navbar collapses */
 .sidebar .nav-link {
@@ -117,15 +109,9 @@ html {
   margin-right: auto;
   margin-bottom: auto;
   margin-top: auto;
-  /*padding: 1rem 1rem;*/
   padding-left: 6rem;
-  /* white-space: normal;*/
   height: 100%;
   overflow: hidden;
-  /* min-height: 100vh; */
-  /*max-width: 1800px;*/
-  /*white-space: normal;*/
-  /*transition: margin-left 0.2s ease-in-out;*/
 }
 
 /* min/max size for graphs */
@@ -395,9 +381,9 @@ div.toast-header > button > span {
 }
 
 /* set slider height */
-#main-slider {
+/* #main-slider {
   height: min(50vh, 30vw);
-}
+} */
 
 /* customize dropdown 
 
