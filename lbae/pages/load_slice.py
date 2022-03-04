@@ -62,7 +62,7 @@ def return_layout(basic_config, slice_index):
                                 "figure_basic_image",
                                 force_update=False,
                                 compute_function=figures.compute_figure_basic_image,
-                                type_figure="warped_data",
+                                type_figure="projection_corrected",
                                 index_image=slice_index - 1,
                                 plot_atlas_contours=False,
                             ),

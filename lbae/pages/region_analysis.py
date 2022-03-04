@@ -51,29 +51,29 @@ def return_layout(basic_config, slice_index=1):
                 # x sets the lateral position, y the vertical one, w is in columns (whose size depends on the dimension), h is in rows (30px)
                 # nb columns go 12->12->10->6->4->2
                 "xxl": [
-                    {"i": "page-3-card-main-graph", "x": 0, "y": 0, "w": 9, "h": 20},
-                    {"i": "page-3-card-mask-selection", "x": 9, "y": 0, "w": 3, "h": 20},
-                    {"i": "page-3-card-spectrum", "x": 0, "y": 15, "w": 9, "h": N_LINES},
+                    {"i": "page-3-card-main-graph", "x": 2, "y": 0, "w": 6, "h": 20},
+                    {"i": "page-3-card-mask-selection", "x": 8, "y": 0, "w": 3, "h": 20},
+                    {"i": "page-3-card-spectrum", "x": 2, "y": 15, "w": 6, "h": N_LINES},
                     {
                         "i": "page-3-card-dropdowns",
-                        "x": 9,
+                        "x": 8,
                         "y": 15,
                         "w": 3,
                         "h": int(N_LINES) / 2 + 2,
                     },
                     {
                         "i": "page-3-card-filtering",
-                        "x": 9,
+                        "x": 8,
                         "y": 16,
                         "w": 3,
                         "h": N_LINES - int(N_LINES) / 2 - 2,
                     },
-                    {"i": "page-3-card-heatmap", "x": 0, "y": 17, "w": 6, "h": 2 * N_LINES - 2},
+                    {"i": "page-3-card-heatmap", "x": 2, "y": 17, "w": 4, "h": 2 * N_LINES - 2},
                     {
                         "i": "page-3-card-graph-lipid-comparison",
                         "x": 6,
                         "y": 17,
-                        "w": 6,
+                        "w": 5,
                         "h": 2 * N_LINES - 2,
                     },
                 ],
@@ -362,6 +362,7 @@ def return_layout(basic_config, slice_index=1):
                                                 "height": "100%",
                                                 "position": "absolute",
                                                 "left": "0",
+                                                # "max-height": "40vh",
                                             },
                                             figure=return_pickled_object(
                                                 "figures/load_page",
@@ -639,6 +640,7 @@ def return_layout(basic_config, slice_index=1):
                         "margin": "0 auto",
                         "width": "100%",
                         "height": "100%",
+                        "overflow": "hidden",
                     },
                     children=[
                         dbc.CardHeader(

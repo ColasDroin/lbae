@@ -159,7 +159,7 @@ def return_main_content():
                             step=1,
                             marks=[
                                 {"value": slice_index, "label": str(slice_index),}
-                                for slice_index in range(1, data.get_slice_number() + 1, 4)
+                                for slice_index in range(1, data.get_slice_number() + 1, 3)
                             ],
                             # tooltip={"placement": "right", "always_visible": True,},
                             size="xs",
@@ -301,7 +301,7 @@ def drawer(n_clicks):
 
 
 @app.callback(
-    Output("main-slider-center", "class_name"), Input("url", "pathname"), prevent_initial_call=False
+    Output("main-paper-slider", "class_name"), Input("url", "pathname"), prevent_initial_call=False
 )
 def hide_slider(pathname):
     l_path_with_slider = ["/load-slice", "/lipid-selection", "/region-analysis"]

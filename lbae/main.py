@@ -66,12 +66,12 @@ server = app.server
 # ==================================================================================================
 if __name__ == "__main__":
     logging.info("Starting app" + logmem())
-    try:
-        app.run_server(port=8073, debug=False)
-    except:
-        if app.use_redis:
-            # Shut reddis server
-            os.system("../redis/redis-6.2.6/src/redis-cli shutdown")
-        else:
-            pass
+    # try:
+    app.run_server(port=8073, debug=False)
+    # except:
+    #     if app.use_redis:
+    #         # Shut reddis server
+    #         os.system("../redis/redis-6.2.6/src/redis-cli shutdown")
+    #     else:
+    #         pass
 
