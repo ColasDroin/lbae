@@ -373,7 +373,6 @@ class Figures:
         binary_string=False,
         projected_image=True,
         plot_contours=False,
-        heatmap=False,
     ):
 
         logging.info("Starting figure computation, from mz boundaries")
@@ -401,34 +400,19 @@ class Figures:
         logging.info("Memory cleaned")
 
         # Build graph from image
-        # ! Do I want to keep the heatmap option? I think not as it's slower
-        if heatmap:
-            # fig = px.imshow(
-            #     image, binary_string=binary_string, color_continuous_scale="deep_r"
-            # )  # , aspect = 'auto')
-            # if plot_contours:
-            #     logging.warning("Contour plot is not compatible with heatmap plot for now.")
-            #     # Compute it anyway but won't work
-            #     b64_string = convert_image_to_base64(
-            #         self._atlas.list_projected_atlas_borders_arrays[slice_index - 1], type="RGBA"
-            #     )
-            #     fig.add_trace(go.Image(visible=True, source=b64_string))
-            logging.warning("Heatmap plot has been deactivated for optimization reasons")
+        fig = go.Figure()
 
+        if plot_contours:
+            array_image_atlas = self._atlas.list_projected_atlas_borders_arrays[slice_index - 1]
         else:
-            fig = go.Figure()
-
-            if plot_contours:
-                array_image_atlas = self._atlas.list_projected_atlas_borders_arrays[slice_index - 1]
-            else:
-                array_image_atlas = None
-            logging.info("Converting image to string")
-            # Set optimize to False to gain computation time
-            base64_string = convert_image_to_base64(
-                image, overlay=array_image_atlas, transparent_zeros=True, optimize=False
-            )
-            logging.info("Adding image to figure")
-            fig.add_trace(go.Image(visible=True, source=base64_string))
+            array_image_atlas = None
+        logging.info("Converting image to string")
+        # Set optimize to False to gain computation time
+        base64_string = convert_image_to_base64(
+            image, overlay=array_image_atlas, transparent_zeros=True, optimize=False
+        )
+        logging.info("Adding image to figure")
+        fig.add_trace(go.Image(visible=True, source=base64_string))
 
         # Improve graph layout
         fig.update_layout(
@@ -555,7 +539,6 @@ class Figures:
         slice_index,
         ll_t_bounds,
         normalize_independently=True,
-        title=True,
         projected_image=True,
         enrichment=False,
         log=False,
@@ -1176,7 +1159,8 @@ class Figures:
         # Check that the given view exists
         if view not in ("frontal", "horizontal", "sagittal"):
             logging.warning(
-                "The provided view must be of of the following: frontal, horizontal, or sagittal. Back to default, i.e. frontal"
+                "The provided view must be of of the following: frontal, horizontal, or sagittal."
+                + "Back to default, i.e. frontal"
             )
             view = "frontal"
 
@@ -1442,14 +1426,13 @@ class Figures:
 
         # Compute the plot
         brain_root_data = go.Isosurface(
-            x=X_root.flatten(),  # [[1,2,3], [1,2,3], [1,2,3]],
-            y=Y_root.flatten(),  # [[1,2,3], [1,2,3], [1,2,3]],
-            z=Z_root.flatten(),  # [[1,1,1], [2,2,2], [3,3,3]],
+            x=X_root.flatten(),
+            y=Y_root.flatten(),
+            z=Z_root.flatten(),
             value=array_atlas_borders_root.flatten(),
             isomin=-0.21,
             isomax=2.55,
             opacity=0.1,  # max opacity
-            # opacityscale=[[-0.0, 0], [1., 1]],
             # opacityscale = "uniform",
             surface_count=2,
             colorscale="Blues",  # colorscale,
@@ -1892,19 +1875,6 @@ class Figures:
                         name_lipid_1 = lipid_string
                         name_lipid_2 = ""
                         name_lipid_3 = ""
-
-                        # return_pickled_object(
-                        #     "figures/3D_page",
-                        #     "scatter_3D_" + name_lipid_1 + "_" + name_lipid_2 + "_" + name_lipid_3,
-                        #     force_update=force_update,
-                        #     compute_function=self.compute_figure_bubbles_3D,
-                        #     ignore_arguments_naming=True,
-                        #     ll_t_bounds=lll_lipid_bounds,
-                        #     normalize_independently=True,
-                        #     name_lipid_1=name_lipid_1,
-                        #     name_lipid_2=name_lipid_2,
-                        #     name_lipid_3=name_lipid_3,
-                        # )
 
                         return_pickled_object(
                             "figures/3D_page",

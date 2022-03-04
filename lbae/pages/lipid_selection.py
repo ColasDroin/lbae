@@ -74,10 +74,6 @@ def return_layout(basic_config, slice_index):
                                     ),
                                 ),
                             ),
-                            # dmc.Group(
-                            #     spacing="xs",
-                            #     align="flex-end",
-                            #     children=[
                             dmc.Group(
                                 direction="column",
                                 spacing=0,
@@ -441,20 +437,6 @@ def return_layout(basic_config, slice_index):
 
 ###### APP CALLBACKS ######
 
-# # Function to update the heatmap toast name
-# @app.app.callback(
-#     Output("page-2-toast-graph-heatmap-mz-selection", "children"), Input("main-slider", "value"),
-# )
-# def page_2_update_graph_heatmap_mz_selection(slice_index):
-#     if slice_index is not None:
-#         return [
-#             html.Div("Brain slice n°" + str(slice_index)),
-#         ]
-
-#     else:
-#         return dash.no_update
-
-
 # Function to plot page-2-graph-heatmap-mz-selection when its state get updated
 @app.app.callback(
     Output("page-2-graph-heatmap-mz-selection", "figure"),
@@ -496,24 +478,6 @@ def page_2_plot_graph_heatmap_mz_selection(
     logging.info("Entering function to plot heatmap or RGB depending on lipid selection")
     # Find out which input triggered the function
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
-
-    # # case a mz value and a manual range have been inputed
-    # if id_input == "page-2-button-range" or (
-    #     id_input == "main-slider" and graph_input == "Current input: " + "m/z range"
-    # ):
-    #     if mz is not None and mz_range is not None:
-    #         mz = float(mz)
-    #         mz_range = float(mz_range)
-    #         if mz > 400 and mz < 1200 and mz_range < 10:
-    #             # ? Could I not use return_heatmap_per_lipid_selection instead ?
-    #             return (
-    #                 figures.compute_heatmap_per_mz(
-    #                     slice_index, mz - mz_range / 2, mz + mz_range / 2, binary_string=False
-    #                 ),
-    #                 "Current input: " + "m/z range",
-    #             )
-    #
-    #    return dash.no_update
 
     # case a two mz bounds values have been inputed
     if id_input == "page-2-button-bounds" or (
@@ -713,15 +677,6 @@ def tab_2_plot_graph_low_res_spectrum(
             return dash.no_update
             # return figures.compute_spectrum_low_res(slice_index,)
 
-    # elif id_input == "page-2-button-range" or (
-    #     id_input == "main-slider" and graph_input == "Current input: " + "m/z range"
-    # ):
-    #     mz = float(mz)
-    #     mz_range = float(mz_range)
-    #     if mz > 400 and mz < 1200 and mz_range < 10:
-    #         l_lipid_bounds = [(mz - mz_range / 2, mz + mz_range / 2), None, None]
-    #         return figures.compute_spectrum_low_res(slice_index, l_lipid_bounds)
-
     elif id_input == "page-2-button-bounds" or (
         id_input == "main-slider" and graph_input == "Current input: " + "m/z boundaries"
     ):
@@ -851,21 +806,6 @@ def page_2_plot_graph_high_res_spectrum(
                 force_xlim=True,
             )
 
-    # elif id_input == "page-2-button-range" or (
-    #     id_input == "main-slider" and graph_input == "Current input: " + "m/z range"
-    # ):
-    #     mz = float(mz)
-    #     mz_range = float(mz_range)
-    #     if mz > 400 and mz < 1200 and mz_range < 10:
-    #         # l_lipid_bounds = [(mz - mz_range / 2, mz + mz_range / 2), None, None]
-    #         return figures.compute_spectrum_high_res(
-    #             slice_index,
-    #             mz - mz_range / 2 - 10 ** -2,
-    #             mz + mz_range / 2 + 10 ** -2,
-    #             # annotations=l_lipid_bounds,
-    #             force_xlim=True,
-    #         )
-
     elif id_input == "page-2-button-bounds" or (
         id_input == "main-slider" and graph_input == "Current input: " + "m/z boundaries"
     ):
@@ -934,77 +874,6 @@ def page_2_store_boundaries_mz_from_graph_high_res_spectrum(relayoutData, bound_
     else:
         return dash.no_update
 
-
-"""
-# Function to refine dropdown names choices
-@app.app.callback(
-    Output("page-2-dropdown-lipid-names", "options"),
-    Output("page-2-dropdown-lipid-structures", "options"),
-    Output("page-2-dropdown-lipid-cations", "options"),
-    # Output("page-2-dropdown-lipid-names", "value"),
-    # Output("page-2-dropdown-lipid-structures", "value"),
-    # Output("page-2-dropdown-lipid-cations", "value"),
-    Input("main-slider", "value"),
-    Input("page-2-dropdown-lipid-names", "value"),
-    Input("page-2-dropdown-lipid-structures", "value"),
-    State("page-2-dropdown-lipid-names", "options"),
-    State("page-2-dropdown-lipid-structures", "options"),
-    State("page-2-dropdown-lipid-cations", "options"),
-)
-def tab_2_handle_dropdowns(
-    slice_index, name, structure, options_names, options_structures, options_cations
-):
-
-    # Find out which input triggered the function
-    id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
-
-    # Refine dropdown hierarchically: when first one is set, the 2 other options are computed accordingly,
-    # when second one is set, the last one option is computed
-    if slice_index is not None:
-        # if len(id_input) == 0:
-        if name is None and structure is None:
-            # options_names = [
-            #     {"label": name, "value": name}
-            #     for name in sorted(
-            #         data.get_annotations()[data.get_annotations()["slice"] == slice_index].name.unique()
-            #     )
-            # ]
-            options_names = [
-                {"label": name, "value": name}
-                for name in sorted(data.get_annotations().name.unique())
-            ]
-            return options_names, [], []  # , None, None, None
-
-        elif name is not None:
-            if id_input == "page-2-dropdown-lipid-names":
-                structures = data.get_annotations()[
-                    (
-                        data.get_annotations()["name"] == name
-                    )  # & (data.get_annotations()["slice"] == slice_index)
-                ].structure.unique()
-                options_structures = [
-                    {"label": structure, "value": structure} for structure in sorted(structures)
-                ]
-                return options_names, options_structures, []  # , name, None, None
-
-            elif structure is not None:
-                if id_input == "page-2-dropdown-lipid-structures":
-                    cations = data.get_annotations()[
-                        (data.get_annotations()["name"] == name)
-                        & (data.get_annotations()["structure"] == structure)
-                        # & (data.get_annotations()["slice"] == slice_index)
-                    ].cation.unique()
-                    options_cations = [
-                        {"label": cation, "value": cation} for cation in sorted(cations)
-                    ]
-                    return (
-                        options_names,
-                        options_structures,
-                        options_cations,
-                    )  # , name, structure, None
-
-    return dash.no_update
-"""
 
 # Function to add dropdown choice to selection
 @app.app.callback(
@@ -1331,42 +1200,6 @@ def tab_2_active_download(lipid_1_index, lipid_2_index, lipid_3_index):
         return False, False, False
     else:
         return True, True, True
-
-
-"""
-# Function to disable/enable dropdowns depending on the number of lipids selected
-@app.app.callback(
-    Output("page-2-dropdown-lipid-names", "disabled"),
-    Output("page-2-dropdown-lipid-structures", "disabled"),
-    Output("page-2-dropdown-lipid-cations", "disabled"),
-    Output("page-2-warning-lipids-number", "className"),
-    Input("page-2-selected-lipid-1", "data"),
-    Input("page-2-selected-lipid-2", "data"),
-    Input("page-2-selected-lipid-3", "data"),
-)
-def tab_2_disable_dropdowns(lipid_1_index, lipid_2_index, lipid_3_index):
-
-    # If all slots are taken, disable all dropdowns
-    if lipid_1_index != -1 and lipid_2_index != -1 and lipid_3_index != -1:
-        return True, True, True, "mt-1 text-center"
-    else:
-        return False, False, False, "mt-1 text-center d-none"
-"""
-
-"""
-@app.app.callback(
-    Output("page-2-button-range", "disabled"),
-    Input("page-2-mz-value", "value"),
-    Input("page-2-mz-range", "value"),
-)
-def tab_2_button_range(mz, mz_range):
-    if mz is not None and mz_range is not None:
-        mz = float(mz)
-        mz_range = float(mz_range)
-        if mz > 400 and mz < 1200 and mz_range < 10:
-            return False
-    return True
-"""
 
 
 @app.app.callback(
