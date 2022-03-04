@@ -18,7 +18,6 @@ import app
 from modules.tools.misc import return_pickled_object
 
 HEIGHT_PLOTS = 280
-N_LINES = int(np.ceil(HEIGHT_PLOTS / 30))
 
 ###### DEFFINE PAGE LAYOUT ######
 
@@ -185,7 +184,9 @@ def return_layout(basic_config, slice_index):
                                                 withArrow=True,
                                                 transition="fade",
                                                 transitionDuration=200,
-                                                label="Your selection can't exceed a range of 10m/z, and must be comprised in-between 400 and 1200.",
+                                                label="Your selection can't exceed a range of "
+                                                + "10m/z, and must be comprised in-between 400 "
+                                                + "and 1200.",
                                                 children=[
                                                     dmc.NumberInput(
                                                         id="page-2-lower-bound",
@@ -217,7 +218,9 @@ def return_layout(basic_config, slice_index):
                                                 withArrow=True,
                                                 transition="fade",
                                                 transitionDuration=200,
-                                                label="Your selection can't exceed a range of 10m/z, and must be comprised in-between 400 and 1200.",
+                                                label="Your selection can't exceed a range of "
+                                                + "10m/z, and must be comprised in-between"
+                                                + " 400 and 1200.",
                                                 children=[
                                                     dmc.NumberInput(
                                                         id="page-2-upper-bound",
@@ -393,7 +396,9 @@ def return_layout(basic_config, slice_index):
                                                     id="page-2-alert",
                                                     className="text-center mt-2",
                                                     children=html.Strong(
-                                                        children="Please select a lipid or zoom more on the left graph to display the high-resolution spectrum",
+                                                        children="Please select a lipid or zoom "
+                                                        + "more on the left graph to display the "
+                                                        + "high-resolution spectrum",
                                                         style={"color": "#df5034"},
                                                     ),
                                                 ),
@@ -598,13 +603,14 @@ def page_2_plot_graph_heatmap_mz_selection(
                 "Current input: " + "Selection from low-res m/z graph",
             )
 
-    # If no trigger, it means the page has just been loaded, so load new figure with default parameters
+    # If no trigger, the page has just been loaded, so load new figure with default parameters
     else:
         # return app.slice_store.getSlice(slice_index).return_heatmap(binary_string=False)
         return dash.no_update
 
 
-# Function to plot page-2-graph-low-resolution-spectrum when its state get updated, i.e. when load button get clicked
+# Function to plot page-2-graph-low-resolution-spectrum when its state get updated, i.e. when load
+# button get clicked
 @app.app.callback(
     Output("page-2-graph-low-resolution-spectrum", "figure"),
     Input("main-slider", "value"),
@@ -819,8 +825,8 @@ def page_2_plot_graph_high_res_spectrum(
                 force_xlim=True,  # annotations=l_lipid_bounds,
             )
 
-    # If the figure is created at app launch or after load button is cliked, or with an empty lipid selection,
-    # don't plot anything
+    # If the figure is created at app launch or after load button is cliked, or with an empty lipid
+    # selection, don't plot anything
     elif "page-2-selected-lipid" in id_input:
         return dash.no_update
 
@@ -857,7 +863,7 @@ def page_2_store_boundaries_mz_from_graph_high_res_spectrum(relayoutData, bound_
         elif "xaxis.range" in relayoutData:
             return json.dumps(relayoutData["xaxis.range"])
 
-        # If the range is re-initialized, need to explicitely pass the low-res value of the slider to the figure
+        # If the range is re-initialized, need to explicitely pass the low-res value of the slider
         elif "xaxis.autorange" in relayoutData:
             if bound_low_res is not None:
                 bound_low_res = json.loads(bound_low_res)
@@ -919,7 +925,8 @@ def page_2_add_toast_selection(
 
     # print(id_input, value_input, l_lipid_names)
 
-    # if page-2-dropdown-lipids is called while there's no lipid name defined, it means the page just got loaded
+    # if page-2-dropdown-lipids is called while there's no lipid name defined, it means the page
+    # just got loaded
     if len(id_input) == 0 or (id_input == "page-2-dropdown-lipids" and l_lipid_names is None):
         return "", "", "", -1, -1, -1, "d-none", "d-none", "d-none"  # , None
 
@@ -991,7 +998,8 @@ def page_2_add_toast_selection(
                         if x
                     ]
 
-                    # Fill list with first annotation that exists if it can't find one for the current slice
+                    # Fill list with first annotation that exists if it can't find one for the
+                    # current slice
                     if len(l_lipid_loc) == 0:
                         l_lipid_loc = l_lipid_loc_temp[:1]
 
@@ -1093,7 +1101,8 @@ def page_2_add_toast_selection(
 
             if change_made:
                 logging.info(
-                    "Changes have been made to the lipid selection or indexation, propagating callback."
+                    "Changes have been made to the lipid selection or indexation,"
+                    + " propagating callback."
                 )
                 return (
                     header_1,

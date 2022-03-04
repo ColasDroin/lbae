@@ -385,9 +385,9 @@ def compute_standardization(
     # Define initial values
     idx_peak = 0
     idx_mz = 0
-    min_mz, max_mz, n_pix, mz_estimated = array_peaks[idx_peak]
     while idx_mz < array_spectra_pixel.shape[0] and idx_peak < array_peaks.shape[0]:
         idx_pix, mz, intensity = array_spectra_pixel[idx_mz]
+        min_mz, max_mz, n_pix, mz_estimated = array_peaks[idx_peak]
 
         # new window has been discovered
         if mz >= min_mz:
@@ -402,7 +402,7 @@ def compute_standardization(
                 intensity_before = arrays_before_transfo[idx_peak].flatten()[idx_pixel]
                 intensity_after = arrays_after_transfo[idx_peak].flatten()[idx_pixel]
 
-                # Most likely, the annotation doesn't exist, so insert it
+                # Most likely, the annotation doesn't exist, so skip it
                 if np.abs(idx_max_mz - idx_min_mz) <= 1.1:
                     pass
                     # array_spectra_pixel = np.insert(array_spectra_pixel, idx_min_mz,
@@ -468,44 +468,43 @@ def standardize_values(
     Returns:
         np.ndarray: A numpy array containing spectrum data (pixel index, m/z and intensity), sorted 
             by pixel index and mz, with lipids values transformed.
+        np.ndarray: A numpy array similar as 'array_peaks', but containing only the lipids that have 
+            been transformed.
+        np.ndarray: A numpy array equal to the ratio of 'arrays_after_transfo' and 
+            'arrays_before_transfo' containing the corrective factor used for lipid and each pixel.
     """
+    precision = 10 ** -4
 
-    def get_mz_peaks_lipid_annotation(
-        array_peaks, l_lipids_float, array_mz_lipids, precision=10 ** -4
-    ):
+    # First get the list of mz of the current slice
+    l_lipids_float_correct = []
+    for mz_lipid in l_lipids_float:
+        found = False
+        for mz_per_slice, mz_avg in array_mz_lipids:
+            if np.abs(mz_avg - mz_lipid) <= precision:
+                found = True
+                l_lipids_float_correct.append(mz_per_slice)
+                break
+        if not found:
+            raise Exception("No lipid could be found for foldername with mz = " + str(mz_lipid))
 
-        # First get the list of mz of the current slice
-        l_lipids_float_correct = []
-        for mz_lipid in l_lipids_float:
-            found = False
-            for mz_per_slice, mz_avg in array_mz_lipids:
-                if np.abs(mz_avg - mz_lipid) <= precision:
-                    found = True
-                    l_lipids_float_correct.append(mz_per_slice)
-                    break
-            if not found:
-                raise Exception("No lipid could be found for foldername with mz = " + str(mz_lipid))
-
-        # keep only the peak annotation that correspond to the lipids which have been transformed
-        rows_to_keep = []
-        for mz_lipid in l_lipids_float_correct:
-            found = False
-            for idx, [mini, maxi, npix, mz_est] in enumerate(array_peaks):
-                if np.abs(mz_est - mz_lipid) <= precision:
-                    found = True
-                    rows_to_keep.append(idx)
-                    break
-            if not found:
-                raise Exception(
-                    "Lipid with foldername with mz = "
-                    + str(mz_lipid)
-                    + " was in df_match.csv but not in ranges.csv"
-                )
-        return rows_to_keep
-
-    rows_to_keep = get_mz_peaks_lipid_annotation(array_peaks, l_lipids_float, array_mz_lipids)
+    # keep only the peak annotation that correspond to the lipids which have been transformed
+    rows_to_keep = []
+    for mz_lipid in l_lipids_float_correct:
+        found = False
+        for idx, [mini, maxi, npix, mz_est] in enumerate(array_peaks):
+            if np.abs(mz_est - mz_lipid) <= precision:
+                found = True
+                rows_to_keep.append(idx)
+                break
+        if not found:
+            raise Exception(
+                "Lipid with foldername with mz = "
+                + str(mz_lipid)
+                + " was in df_match.csv but not in ranges.csv"
+            )
     array_peaks_to_correct = array_peaks[rows_to_keep]
 
+    # Compute the transformed spectrum for each pixel
     for idx_pixel, [idx_pixel_min, idx_pixel_max] in enumerate(array_pixel_indexes):
         array_spectra_pixel = array_spectra[idx_pixel_min : idx_pixel_max + 1]
 
@@ -521,7 +520,13 @@ def standardize_values(
             # Reattribute the corrected values to the intial spectrum
             array_spectra[idx_pixel_min : idx_pixel_max + 1] = array_spectra_pixel
 
-    return array_spectra
+    # Delete the n_pix column (3rd column) in array_peaks
+    array_peaks_to_correct = np.delete(array_peaks_to_correct, 2, 1)
+
+    # Get the array of corrective factors (per lipid per pixel)
+    array_corrective_factors = arrays_after_transfo / arrays_before_transfo
+
+    return array_spectra, array_peaks_to_correct, array_corrective_factors
 
 
 @njit
@@ -608,7 +613,7 @@ def extract_raw_data(
 
     if save:
         np.savez(
-            output_path + "slice_" + str(slice_index) + ".npz",
+            output_path + "slice_" + str(slice_index) + "raw.npz",
             array_high_res=array_high_res,
             image_shape=image_shape,
         )
@@ -627,17 +632,25 @@ def process_raw_data(
 ):
     """This function has been implemented to allow the parallelization of slice processing. It turns 
     the MALDI data into several numpy arrays and lookup tables:
-    - array_pixel_indexes_high_res: of shape (n,2), it maps each pixel to two array_spectra_high_res 
-        indices, delimiting the corresponding spectrum.
-    - array_spectra_high_res: of shape (2,m), it contains the concatenated spectra of each pixel. 
-        First row contains the m/z values, while second row contains the corresponding intensities.
-    - array_averaged_mz_intensity_low_res: of shape (2, k), it contains the low-resolution spectrum 
-        averaged over all pixels. First row contains the m/z values, while second row contains the 
-        corresponding intensities.
+    - array_pixel_indexes_high_res: A numpy array of shape (n,2), it maps each pixel to two 
+        array_spectra_high_res indices, delimiting the corresponding spectrum.
+    - array_spectra_high_res: A numpy array of shape (2,m), it contains the concatenated spectra of 
+        each pixel. First row contains the m/z values, while second row contains the corresponding 
+        intensities.
+    - array_averaged_mz_intensity_low_res: A numpy array of shape (2, k), it contains the 
+        low-resolution spectrum averaged over all pixels. First row contains the m/z values, while 
+        second row contains the corresponding intensities.
     - array_averaged_mz_intensity_high_res: Same as array_averaged_mz_intensity_low_res, but in 
         higher resolution, with, therefore, a different shape.
     - image_shape: a tuple of integers, indicating the vertical and horizontal sizes of the 
         corresponding slice.
+    - array_peaks_corrected: A numpy array similar as 'array_peaks', that is, a two- dimensional 
+        array containing the peak annotations (min peak, max peak, number of pixels containing the 
+        peak, average value of the peak), sorted by min_mz, but containing only the lipids that have 
+        been transformed.
+    - array_corrective_factors: A three-dimensional numpy array equal to the ratio of 
+        'arrays_after_transfo' and 'arrays_before_transfo' containing the corrective factor used for 
+        lipid (first dimension) and each pixel (second and third dimension).
 
     Args:
         t_index_path (tuple(int, str)): A tuple containing the index of the slice (starting from 1) 
@@ -664,7 +677,7 @@ def process_raw_data(
         # Get slice path
         slice_index = t_index_path[0]
         name = t_index_path[1]
-        path = output_path + "slice_" + str(slice_index) + ".npz"
+        path = output_path + "slice_" + str(slice_index) + "raw.npz"
         npzfile = np.load(path)
         # Load individual arrays
         array_high_res = npzfile["array_high_res"]
@@ -708,7 +721,7 @@ def process_raw_data(
                 arrays_after_transfo,
             ) = get_standardized_values(slice_index)
             # Standardize values
-            array_high_res = standardize_values(
+            array_high_res, array_peaks_corrected, array_corrective_factors = standardize_values(
                 array_high_res,
                 array_pixel_indexes_high_res,
                 array_peaks,
@@ -755,6 +768,8 @@ def process_raw_data(
             array_averaged_mz_intensity_low_res=array_averaged_mz_intensity_low_res,
             array_averaged_mz_intensity_high_res=array_averaged_mz_intensity_high_res,
             image_shape=image_shape,
+            array_peaks_corrected=array_peaks_corrected,
+            array_corrective_factors=array_corrective_factors,
         )
 
     # Returns all array if needed
@@ -765,5 +780,7 @@ def process_raw_data(
             array_averaged_mz_intensity_low_res,
             array_averaged_mz_intensity_high_res,
             image_shape,
+            array_peaks_corrected,
+            array_corrective_factors,
         )
 

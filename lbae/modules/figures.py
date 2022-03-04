@@ -363,7 +363,7 @@ class Figures:
             )
         return image
 
-    # ! Check in the end if this function is redundant with return_heatmap_per_lipid_selection
+    # ! Check in the end if this function is redundant with compute_heatmap_per_lipid_selection
     def compute_heatmap_per_mz(
         self,
         slice_index,

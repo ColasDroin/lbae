@@ -190,26 +190,33 @@ def process_lookup_tables(
 ):
     """This function has been implemented to allow the paralellization of lookup tables processing. 
     It computes and returns/saves the lookup tables for each slice. The output consists of:
-        - array_pixel_indexes_high_res: of shape (n,2), it maps each pixel to two 
-            array_spectra_high_res indices, delimiting the corresponding spectrum.
-        - array_spectra_high_res: of shape (2,m), it contains the concatenated spectra of each 
-            pixel. First row contains the m/z values, while second row contains the corresponding 
-            intensities.
-        - array_averaged_mz_intensity_low_res: of shape (2, k), it contains the low-resolution 
-            spectrum averaged over all pixels. First row contains the m/z values, while second row 
-            contains the corresponding intensities.
-        - array_averaged_mz_intensity_low_res: Same as array_averaged_mz_intensity_low_res, but in 
-            higher resolution, with, therefore, a different shape.
-        - image_shape: a tuple of integers, indicating the vertical and horizontal size of the 
-            corresponding slice.
-        - divider_lookup: integer that sets the resolution of the lookup tables.
-        - lookup_table_spectra_high_res: of shape (size_spectrum// divider_lookup, m), it maps m/z 
-            values to indexes in array_spectra for each pixel.
-        - cumulated_image_lookup_table_high_res: of shape (size_spectrum// divider_lookup, 
-            image height, image_width), it maps m/z values to the cumulated spectrum until the 
-            corresponding m/z value for each pixel.
-        - lookup_table_averaged_spectrum_high_res: of length size_spectrum, it maps m/z values to 
-            indexes in the averaged array_spectra for each pixel.
+    - array_pixel_indexes_high_res: np.nddaray of shape (n,2), it maps each pixel to two 
+        array_spectra_high_res indices, delimiting the corresponding spectrum.
+    - array_spectra_high_res: np.nddaray of shape (2,m), it contains the concatenated spectra of 
+        each pixel. First row contains the m/z values, while second row contains the 
+        corresponding intensities.
+    - array_averaged_mz_intensity_low_res: np.nddaray of shape (2, k), it contains the 
+        low-resolution spectrum averaged over all pixels. First row contains the m/z values, 
+        while second row contains the corresponding intensities.
+    - array_averaged_mz_intensity_low_res: Same as array_averaged_mz_intensity_low_res, but in 
+        higher resolution, with, therefore, a different shape.
+    - image_shape: a tuple of integers, indicating the vertical and horizontal size of the 
+        corresponding slice.
+    - divider_lookup: integer that sets the resolution of the lookup tables.
+    - lookup_table_spectra_high_res: np.nddaray of shape (size_spectrum// divider_lookup, m), it 
+        maps m/z values to indexes in array_spectra for each pixel.
+    - cumulated_image_lookup_table_high_res: np.nddaray of shape 
+        (size_spectrum // divider_lookup, image height, image_width), it maps m/z values to the 
+        cumulated spectrum until the corresponding m/z value for each pixel.
+    - lookup_table_averaged_spectrum_high_res: np.nddaray of length size_spectrum, it maps m/z 
+        values to indexes in the averaged array_spectra for each pixel.
+    - array_peaks_corrected: A numpy array similar as 'array_peaks', that is, a two- dimensional 
+        array containing the peak annotations (min peak, max peak, number of pixels containing the 
+        peak, average value of the peak), sorted by min_mz, but containing only the lipids that have 
+        been transformed.
+    - array_corrective_factors: A three-dimensional numpy array equal to the ratio of 
+        'arrays_after_transfo' and 'arrays_before_transfo' containing the corrective factor used for 
+        lipid (first dimension) and each pixel (second and third dimension).
 
 
     Args:
@@ -238,6 +245,8 @@ def process_lookup_tables(
             array_averaged_mz_intensity_low_res,
             array_averaged_mz_intensity_high_res,
             image_shape,
+            array_peaks_corrected,
+            array_corrective_factors,
         ) = l_arrays_raw_data
 
     elif load_from_file:
@@ -254,6 +263,8 @@ def process_lookup_tables(
         array_averaged_mz_intensity_low_res = npzfile["array_averaged_mz_intensity_low_res"]
         array_averaged_mz_intensity_high_res = npzfile["array_averaged_mz_intensity_high_res"]
         image_shape = npzfile["image_shape"]
+        array_peaks_corrected = npzfile["array_peaks_corrected"]
+        array_corrective_factors = npzfile["array_corrective_factors"]
 
         # Try to see if the array has already been processed before
         if "divider_lookup" in npzfile:
@@ -333,6 +344,8 @@ def process_lookup_tables(
             lookup_table_spectra_high_res=lookup_table_spectra_high_res,
             cumulated_image_lookup_table_high_res=cumulated_image_lookup_table_high_res,
             lookup_table_averaged_spectrum_high_res=lookup_table_averaged_spectrum_high_res,
+            array_peaks_corrected=array_peaks_corrected,
+            array_corrective_factors=array_corrective_factors,
         )
 
     # Returns all array if needed
@@ -347,5 +360,7 @@ def process_lookup_tables(
             lookup_table_spectra_high_res,
             cumulated_image_lookup_table_high_res,
             lookup_table_averaged_spectrum_high_res,
+            array_peaks_corrected,
+            array_corrective_factors,
         )
 
