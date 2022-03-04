@@ -12,45 +12,60 @@ import logging
 
 class MaldiData:
     """
-    A class to access the various arrays in the dataset from two dictionnaries, lightweight (always kept in ram), and 
-    memmap (remains on disk). It uses the special attribute __slots__ for faster access to the attributes.
+    A class to access the various arrays in the dataset from two dictionnaries, lightweight (always 
+    kept in ram), and memmap (remains on disk). It uses the special attribute __slots__ for faster 
+    access to the attributes.
 
     Attributes:
-        _dic_lightweight (dictionnary): a dictionnary containing the following lightweights arrays, 
-            which therefore remain in memory as long as the app is running:
+        _dic_lightweight (dictionnary): a dictionnary containing the following lightweights arrays 
+        (remaining in memory as long as the app is running), as well as the shape of thoses 
+        stored in memory maps:
             - image_shape: a tuple of integers, indicating the vertical and horizontal sizes of the 
                 corresponding slice.
             - divider_lookup: integer that sets the resolution of the lookup tables.
-            - array_avg_spectrum_downsampled: bidimensional, it contains the low-resolution spectrum averaged over all 
-                pixels. First row contains the m/z values, while second row contains the corresponding intensities.
-            - array_lookup_pixels: bidimensional, it maps each pixel to two array_spectra_high_res indices, delimiting
-                the corresponding spectrum.
+            - array_avg_spectrum_downsampled: bidimensional, it contains the low-resolution spectrum 
+                averaged over all pixels. First row contains the m/z values, while second row 
+                contains the corresponding intensities.
+            - array_lookup_pixels: bidimensional, it maps each pixel to two array_spectra_high_res 
+            indices, delimiting the corresponding spectrum.
             - array_lookup_mz_avg: unidimensional, it maps m/z values to indexes in the averaged 
                 array_spectra for each pixel.
+            - array_peaks_transformed_lipids: bidimensional, it contains the peak annotations 
+                (min peak, max peak, average value of the peak), sorted by min_mz, for the lipids 
+                that have been transformed.
+            - array_corrective_factors: Three-dimensional, it contains the MAIA corrective factor 
+                used for lipid (first dimension) and each pixel (second and third dimension).
             In addition, it contains the shape of all the arrays stored in the numpy memory maps.
-        _dic_memmap (dictionnary): a dictionnary containing numpy memory maps allowing to access the heavyweights 
-            arrays of the datasets, without saturating the disk. The arrays in the dictionnary are:
-            - array_spectra: bidimensional, it contains the concatenated spectra of each pixel. First row contains the
-                m/z values, while second row contains the corresponding intensities.
-            - array_avg_spectrum: bidimensional, it contains the high-resolution spectrum averaged over all 
-                pixels. First row contains the m/z values, while second row contains the corresponding intensities.
-            - array_lookup_mz: bidimensional, it maps m/z values to indexes in array_spectra for each pixel.
-            - array_cumulated_lookup_mz_image: bidimensional, it maps m/z values to the cumulated spectrum until the 
-                corresponding m/z value for each pixel.
+        _dic_memmap (dictionnary): a dictionnary containing numpy memory maps allowing to access the 
+            heavyweights arrays of the datasets, without saturating the disk. The arrays in the 
+            dictionnary are:
+            - array_spectra: bidimensional, it contains the concatenated spectra of each pixel. 
+                First row contains the m/z values, while second row contains the corresponding 
+                intensities.
+            - array_avg_spectrum: bidimensional, it contains the high-resolution spectrum averaged 
+                over all pixels. First row contains the m/z values, while second row contains the 
+                corresponding intensities.
+            - array_lookup_mz: bidimensional, it maps m/z values to indexes in array_spectra for 
+                each pixel.
+            - array_cumulated_lookup_mz_image: bidimensional, it maps m/z values to the cumulated 
+                spectrum until the corresponding m/z value for each pixel.
         _n_slices (int): number of slices present in the dataset.
-        _df_annotations (pd.dataframe): a dataframe containing for each slice and each annotated peak the name of 
-            the lipid inbetween the two annotated peak boundaries.
+        _df_annotations (pd.dataframe): a dataframe containing for each slice and each annotated 
+            peak the name of the lipid inbetween the two annotated peak boundaries.
         _path_data (str): path were the data files are stored.
 
     Methods:
-        get_annotations(): getter for the lipid annotation of each slice, contained in a pandas dataframe.
+        get_annotations(): getter for the lipid annotation of each slice, contained in a pandas 
+            dataframe.
         get_slice_number(): getter for the number of slices present in the dataset.
-        get_image_shape(slice_index): getter for image_shape, which indicates the shape of the image corresponding to 
-            the acquisition indexed by slice_index.
-        get_divider_lookup(slice_index): getter for divider_lookup, which sets the resolution of the lookup of the 
-            acquisition indexed by slice_index.
-        get_array_avg_spectrum_downsampled(slice_index): getter for array_avg_spectrum_downsampled, which is a lookup 
-            table for the low-resolution average spectrum of the acquisition indexed by slice_index.
+        get_image_shape(slice_index): getter for image_shape, which indicates the shape of the image 
+            corresponding to the acquisition indexed by slice_index.
+        get_divider_lookup(slice_index): getter for divider_lookup, which sets the resolution of the 
+            lookup of the acquisition indexed by slice_index.
+        get_array_avg_spectrum_downsampled(slice_index): getter for array_avg_spectrum_downsampled, 
+            which is a lookup table for the low-resolution average spectrum of the acquisition 
+            indexed by slice_index.
+        # ! Finish docstring here
         get_array_lookup_pixels(slice_index):
         get_array_lookup_mz_avg(slice_index):
         get_array_spectra(slice_index):

@@ -644,10 +644,9 @@ def process_raw_data(
         higher resolution, with, therefore, a different shape.
     - image_shape: a tuple of integers, indicating the vertical and horizontal sizes of the 
         corresponding slice.
-    - array_peaks_corrected: A numpy array similar as 'array_peaks', that is, a two- dimensional 
-        array containing the peak annotations (min peak, max peak, number of pixels containing the 
-        peak, average value of the peak), sorted by min_mz, but containing only the lipids that have 
-        been transformed.
+    - array_peaks_corrected: A two-dimensional array containing the peak annotations (min peak, 
+        max peak, average value of the peak), sorted by min_mz, but containing only the lipids that 
+        have been transformed.
     - array_corrective_factors: A three-dimensional numpy array equal to the ratio of 
         'arrays_after_transfo' and 'arrays_before_transfo' containing the corrective factor used for 
         lipid (first dimension) and each pixel (second and third dimension).

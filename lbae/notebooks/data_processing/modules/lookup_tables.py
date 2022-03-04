@@ -210,9 +210,8 @@ def process_lookup_tables(
         cumulated spectrum until the corresponding m/z value for each pixel.
     - lookup_table_averaged_spectrum_high_res: np.nddaray of length size_spectrum, it maps m/z 
         values to indexes in the averaged array_spectra for each pixel.
-    - array_peaks_corrected: A numpy array similar as 'array_peaks', that is, a two- dimensional 
-        array containing the peak annotations (min peak, max peak, number of pixels containing the 
-        peak, average value of the peak), sorted by min_mz, but containing only the lipids that have 
+    - array_peaks_corrected: A two-dimensional array containing the peak annotations (min peak, 
+        max peak, average value of the peak), sorted by min_mz, for the lipids that have 
         been transformed.
     - array_corrective_factors: A three-dimensional numpy array equal to the ratio of 
         'arrays_after_transfo' and 'arrays_before_transfo' containing the corrective factor used for 
