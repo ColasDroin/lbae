@@ -626,7 +626,6 @@ def extract_raw_data(
 
 def process_raw_data(
     t_index_path,
-    do_filter_peaks=True,
     standardize_lipid_values=True,
     save=True,
     return_result=False,
@@ -645,6 +644,8 @@ def process_raw_data(
         second row contains the corresponding intensities.
     - array_averaged_mz_intensity_high_res: Same as array_averaged_mz_intensity_low_res, but in 
         higher resolution, with, therefore, a different shape.
+    - array_averaged_mz_intensity_high_res_before_standardization: Same as 
+        array_averaged_mz_intensity_high_res, but before applying MAIA standardization.
     - image_shape: a tuple of integers, indicating the vertical and horizontal sizes of the 
         corresponding slice.
     - array_peaks_corrected: A two-dimensional array containing the peak annotations (min peak, 
@@ -657,8 +658,6 @@ def process_raw_data(
     Args:
         t_index_path (tuple(int, str)): A tuple containing the index of the slice (starting from 1) 
             and the corresponding path for the raw data.
-        do_filter_peaks (bool, optional): If True, non-annotated peaks are filtered out. Defaults to 
-            True.
         standardize_lipid_values (bool, optional): If True, the lipid intensities that have been 
             through the MAIA pipeline will be standardized across slices. Defaults to True.
         save (bool, optional): If True, output arrays are saved in a npz file. Defaults to True.
@@ -693,45 +692,55 @@ def process_raw_data(
     array_high_res = normalize_per_TIC_per_pixel(array_high_res, array_TIC)
 
     # Filter out the non-requested peaks and convert to array
-    if do_filter_peaks:
-        print("Filtering out noise and matrix peaks")
-        # try:
-        # Get the peak annotation file
-        array_peaks = load_peak_file(name)
-        # Get the list of m/z values to keep for visualization
-        array_mz_lipids = load_lipid_file(slice_index, path="data/annotations/df_match.csv")
-        # Filter out all the undesired values
-        l_to_keep_high_res, l_mz_lipids_kept = filter_peaks(
-            array_high_res, array_peaks, array_mz_lipids[:, 0]
+    print("Filtering out noise and matrix peaks")
+
+    # Get the peak annotation file
+    array_peaks = load_peak_file(name)
+    # Get the list of m/z values to keep for visualization
+    array_mz_lipids = load_lipid_file(slice_index, path="data/annotations/df_match.csv")
+    # Filter out all the undesired values
+    l_to_keep_high_res, l_mz_lipids_kept = filter_peaks(
+        array_high_res, array_peaks, array_mz_lipids[:, 0]
+    )
+    # Keep only the annotated peaks
+    array_high_res = array_high_res[l_to_keep_high_res]
+
+    # Compute the averaged spectra array before standardization
+    print("Sorting by m/z value for averaging before standardization")
+    array_high_res = array_high_res[np.lexsort((array_high_res[:, 1],), axis=0)]
+
+    # Average low/high resolution arrays over identical mz across pixels
+    print("Getting spectrums array averaged accross pixels")
+    array_averaged_mz_intensity_high_res_before_standardization = return_averaged_spectra_array(
+        array_high_res
+    )
+
+    if standardize_lipid_values:
+        # Double sort by pixel and mz
+        array_high_res = array_high_res[
+            np.lexsort((array_high_res[:, 1], array_high_res[:, 0]), axis=0)
+        ]
+        # Get arrays spectra and corresponding array_pixel_index tables for the high res
+        array_pixel_high_res = array_high_res[:, 0].T.astype(np.int32)
+        array_pixel_indexes_high_res = return_array_pixel_indexes(
+            array_pixel_high_res, image_shape[0] * image_shape[1]
         )
-        # Keep only the annotated peaks
-        array_high_res = array_high_res[l_to_keep_high_res]
-        if standardize_lipid_values:
-            # Double sort by pixel and mz
-            array_high_res = array_high_res[
-                np.lexsort((array_high_res[:, 1], array_high_res[:, 0]), axis=0)
-            ]
-            # Get arrays spectra and corresponding array_pixel_index tables for the high res
-            array_pixel_high_res = array_high_res[:, 0].T.astype(np.int32)
-            array_pixel_indexes_high_res = return_array_pixel_indexes(
-                array_pixel_high_res, image_shape[0] * image_shape[1]
-            )
-            (
-                l_lipids_str,
-                l_lipids_float,
-                arrays_before_transfo,
-                arrays_after_transfo,
-            ) = get_standardized_values(slice_index)
-            # Standardize values
-            array_high_res, array_peaks_corrected, array_corrective_factors = standardize_values(
-                array_high_res,
-                array_pixel_indexes_high_res,
-                array_peaks,
-                array_mz_lipids,
-                l_lipids_float,
-                arrays_before_transfo,
-                arrays_after_transfo,
-            )
+        (
+            l_lipids_str,
+            l_lipids_float,
+            arrays_before_transfo,
+            arrays_after_transfo,
+        ) = get_standardized_values(slice_index)
+        # Standardize values
+        array_high_res, array_peaks_corrected, array_corrective_factors = standardize_values(
+            array_high_res,
+            array_pixel_indexes_high_res,
+            array_peaks,
+            array_mz_lipids,
+            l_lipids_float,
+            arrays_before_transfo,
+            arrays_after_transfo,
+        )
 
     # Sort according to mz for averaging
     print("Sorting by m/z value for averaging")
@@ -769,6 +778,7 @@ def process_raw_data(
             array_spectra_high_res=array_spectra_high_res,
             array_averaged_mz_intensity_low_res=array_averaged_mz_intensity_low_res,
             array_averaged_mz_intensity_high_res=array_averaged_mz_intensity_high_res,
+            array_averaged_mz_intensity_high_res_before_standardization=array_averaged_mz_intensity_high_res_before_standardization,
             image_shape=image_shape,
             array_peaks_corrected=array_peaks_corrected,
             array_corrective_factors=array_corrective_factors,
@@ -781,6 +791,7 @@ def process_raw_data(
             array_spectra_high_res,
             array_averaged_mz_intensity_low_res,
             array_averaged_mz_intensity_high_res,
+            array_averaged_mz_intensity_high_res_before_standardization,
             image_shape,
             array_peaks_corrected,
             array_corrective_factors,

@@ -33,7 +33,7 @@ class MaldiData:
             - array_peaks_transformed_lipids: bidimensional, it contains the peak annotations 
                 (min peak, max peak, average value of the peak), sorted by min_mz, for the lipids 
                 that have been transformed.
-            - array_corrective_factors: Three-dimensional, it contains the MAIA corrective factor 
+            - array_corrective_factors: three-dimensional, it contains the MAIA corrective factor 
                 used for lipid (first dimension) and each pixel (second and third dimension).
             In addition, it contains the shape of all the arrays stored in the numpy memory maps.
         _dic_memmap (dictionnary): a dictionnary containing numpy memory maps allowing to access the 
@@ -45,6 +45,8 @@ class MaldiData:
             - array_avg_spectrum: bidimensional, it contains the high-resolution spectrum averaged 
                 over all pixels. First row contains the m/z values, while second row contains the 
                 corresponding intensities.
+            - array_avg_spectrum_before_standardization: Same as array_avg_spectrum, but before MAIA
+                standardization.
             - array_lookup_mz: bidimensional, it maps m/z values to indexes in array_spectra for 
                 each pixel.
             - array_cumulated_lookup_mz_image: bidimensional, it maps m/z values to the cumulated 
@@ -71,13 +73,13 @@ class MaldiData:
         get_array_spectra(slice_index):
         get_array_mz(slice_index):
         get_array_intensity(slice_index):
-        get_array_avg_spectrum(slice_index):
+        get_array_avg_spectrum(slice_index, standardization = True):
         get_array_lookup_mz(slice_index):
         get_array_cumulated_lookup_mz_image(slice_index):
         get_partial_array_spectra(slice_index, lb=None, hb=None, index=None):
         get_partial_array_mz(slice_index, lb=None, hb=None, index=None):
         get_partial_array_intensity(slice_index, lb=None, hb=None, index=None):
-        get_partial_array_avg_spectrum(slice_index, lb=None, hb=None):
+        get_partial_array_avg_spectrum(slice_index, lb=None, hb=None, standardization = True):
         get_lookup_mz(slice_index, index):
         get_cumulated_lookup_mz_image(slice_index, index):
     """
@@ -145,6 +147,12 @@ class MaldiData:
         # Previously called lookup_table_averaged_spectrum_high_res
         return self._dic_lightweight[slice_index]["array_lookup_mz_avg"]
 
+    def get_array_peaks_transformed_lipids(self, slice_index):
+        return self._dic_lightweight[slice_index]["array_peaks_transformed_lipids"]
+
+    def get_array_corrective_factors(self, slice_index):
+        return self._dic_lightweight[slice_index]["array_corrective_factors"]
+
     def get_array_spectra(self, slice_index):
         # Previously called array_spectra_high_res.
         return self._dic_memmap[slice_index]["array_spectra"]
@@ -157,9 +165,12 @@ class MaldiData:
         # Previously called array_spectra_high_res
         return self._dic_memmap[slice_index]["array_spectra"][1, :]
 
-    def get_array_avg_spectrum(self, slice_index):
-        # Previously called array_averaged_mz_intensity_high_res
-        return self._dic_memmap[slice_index]["array_avg_spectrum"]
+    def get_array_avg_spectrum(self, slice_index, standardization=True):
+        if standardization:
+            # Previously called array_averaged_mz_intensity_high_res
+            return self._dic_memmap[slice_index]["array_avg_spectrum"]
+        else:
+            return self._dic_memmap[slice_index]["array_avg_spectrum_before_standardization"]
 
     def get_array_lookup_mz(self, slice_index):
         # Previously called lookup_table_spectra_high_res
@@ -255,21 +266,36 @@ class MaldiData:
                 )
             return self._dic_memmap[slice_index]["array_spectra"][1, index]
 
-    def get_partial_array_avg_spectrum(self, slice_index, lb=None, hb=None):
+    def get_partial_array_avg_spectrum(self, slice_index, lb=None, hb=None, standardization=True):
 
         # Start with most likely case
         if hb is not None and lb is not None:
-            return self._dic_memmap[slice_index]["array_avg_spectrum"][:, lb:hb]
+            if standardization:
+                return self._dic_memmap[slice_index]["array_avg_spectrum"][:, lb:hb]
+            else:
+                return self._dic_memmap[slice_index]["array_avg_spectrum_before_standardization"][
+                    :, lb:hb
+                ]
 
         # Second most likely case : full slice
         elif lb is None and hb is None:
-            return self.get_array_avg_spectrum(slice_index)
+            return self.get_array_avg_spectrum(slice_index, standardization)
 
         # Most likely the remaining cases won't be used
         elif lb is None:
-            return self._dic_memmap[slice_index]["array_avg_spectrum"][:, :hb]
+            if standardization:
+                return self._dic_memmap[slice_index]["array_avg_spectrum"][:, :hb]
+            else:
+                return self._dic_memmap[slice_index]["array_avg_spectrum_before_standardization"][
+                    :, :hb
+                ]
         else:
-            return self._dic_memmap[slice_index]["array_avg_spectrum"][:, lb:]
+            if standardization:
+                return self._dic_memmap[slice_index]["array_avg_spectrum"][:, lb:]
+            else:
+                return self._dic_memmap[slice_index]["array_avg_spectrum_before_standardization"][
+                    :, lb:
+                ]
 
     def get_lookup_mz(self, slice_index, index):
         # Just return the (one) required lookup to go faster

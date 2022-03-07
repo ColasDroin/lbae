@@ -243,6 +243,7 @@ def process_lookup_tables(
             array_spectra_high_res,
             array_averaged_mz_intensity_low_res,
             array_averaged_mz_intensity_high_res,
+            array_averaged_mz_intensity_high_res_before_standardization,
             image_shape,
             array_peaks_corrected,
             array_corrective_factors,
@@ -261,6 +262,9 @@ def process_lookup_tables(
         array_spectra_high_res = npzfile["array_spectra_high_res"]
         array_averaged_mz_intensity_low_res = npzfile["array_averaged_mz_intensity_low_res"]
         array_averaged_mz_intensity_high_res = npzfile["array_averaged_mz_intensity_high_res"]
+        array_averaged_mz_intensity_high_res_before_standardization = npzfile[
+            "array_averaged_mz_intensity_high_res_before_standardization"
+        ]
         image_shape = npzfile["image_shape"]
         array_peaks_corrected = npzfile["array_peaks_corrected"]
         array_corrective_factors = npzfile["array_corrective_factors"]
@@ -338,6 +342,7 @@ def process_lookup_tables(
             array_spectra_high_res=array_spectra_high_res,
             array_averaged_mz_intensity_low_res=array_averaged_mz_intensity_low_res,
             array_averaged_mz_intensity_high_res=array_averaged_mz_intensity_high_res,
+            array_averaged_mz_intensity_high_res_before_standardization=array_averaged_mz_intensity_high_res_before_standardization,
             image_shape=image_shape,
             divider_lookup=divider_lookup,
             lookup_table_spectra_high_res=lookup_table_spectra_high_res,
@@ -354,6 +359,7 @@ def process_lookup_tables(
             array_spectra_high_res,
             array_averaged_mz_intensity_low_res,
             array_averaged_mz_intensity_high_res,
+            array_averaged_mz_intensity_high_res_before_standardization,
             image_shape,
             divider_lookup,
             lookup_table_spectra_high_res,

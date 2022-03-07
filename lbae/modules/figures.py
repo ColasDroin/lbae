@@ -326,6 +326,7 @@ class Figures:
         normalize=True,
         log=False,
         projected_image=True,
+        reverse_transform = False,
     ):
         # Get image from raw mass spec data
         image = spectra.compute_image_using_index_and_image_lookup(
@@ -337,6 +338,10 @@ class Figures:
             self._data.get_array_lookup_mz(slice_index),
             self._data.get_array_cumulated_lookup_mz_image(slice_index),
             self._data.get_divider_lookup(slice_index),
+            self._data.get_array_peaks_transformed_lipids(slice_index),
+            self._data.get_array_corrective_factors(slice_index),
+            reverse_transform = reverse_transform,
+
         )
 
         if log:
