@@ -169,6 +169,9 @@ def compute_image_using_index_lookup(
     img_shape,
     lookup_table_spectra,
     divider_lookup,
+    array_peaks_transformed_lipids,
+    array_corrective_factors,
+    revert_transform,
 ):
     """For each pixel, this function extracts from array_spectra the intensity of a given m/z selection (normally 
     corresponding to a lipid annotation) defined by a lower and a higher bound. For faster computation, it uses 
@@ -188,6 +191,12 @@ def compute_image_using_index_lookup(
             the following mapping: lookup_table_spectra[i,j] contains the first m/z index of pixel j such that 
             m/z >= i * divider_lookup.
         divider_lookup (int): Integer used to set the resolution when building the lookup table.
+        array_peaks_transformed_lipids (np.ndarray): A two-dimensional numpy array, which contains the peak annotations 
+                (min peak, max peak, average value of the peak), sorted by min_mz, for the lipids 
+                that have been transformed.
+        array_corrective_factors (np.ndarray): A three-dimensional numpy array, which contains the MAIA corrective factor 
+                used for lipid (first dimension) and each pixel (second and third dimension).
+        reverse_transform (bool): If True, the MAIA correction for pixel intensity is reverted.
 
     Returns:
         np.ndarray: An array of shape img_shape (reprensenting an image) containing the cumulated intensity of the 
@@ -195,6 +204,22 @@ def compute_image_using_index_lookup(
     """
     # Build empty image
     image = np.zeros((img_shape[0], img_shape[1]), dtype=np.float32)
+
+    # Build an array of ones for the correction (i.e. default is no correction)
+    array_corrective_factors_lipid = np.ones((img_shape[0] * img_shape,), np.float32)
+
+    if revert_transform:
+        # Check if the m/z region has been transformed, i.e. low and high bound are inside annotation
+        idx_lipid_right = -1
+        for idx_lipid, (min_mz, max_mz, avg_mz) in enumerate(array_peaks_transformed_lipids):
+            # Take 10**-4 for precision
+            if (low_bound - 10 ** -4) >= min_mz and (high_bound + 10 ** -4) <= max_mz:
+                idx_lipid_right = idx_lipid
+                break
+
+        # If the current region corresponds to a transformed lipid:
+        if idx_lipid_right != -1:
+            array_corrective_factors_lipid[:] = array_corrective_factors[idx_lipid_right].flatten()
 
     # Find lower bound and add from there
     for idx_pix in range(array_pixel_indexes.shape[0]):
@@ -207,6 +232,11 @@ def compute_image_using_index_lookup(
         lower_bound = lookup_table_spectra[int(low_bound / divider_lookup)][idx_pix]
         higher_bound = lookup_table_spectra[int(np.ceil(high_bound / divider_lookup))][idx_pix]
         array_to_sum = array_spectra[:, lower_bound : higher_bound + 1]
+
+        # Apply MAIA correction
+        if array_corrective_factors_lipid[idx_pix] != 0:
+            array_to_sum = array_to_sum / array_corrective_factors_lipid[idx_pix]
+
         # Sum the m/z values over the requested range
         image = _fill_image(
             image,
@@ -224,7 +254,7 @@ def compute_image_using_index_lookup(
 
 @njit
 def _fill_image(
-    image, idx_pix, img_shape, array_to_sum, lower_bound, higher_bound, low_bound, high_bound
+    image, idx_pix, img_shape, array_to_sum, lower_bound, higher_bound, low_bound, high_bound,
 ):
     """ This internal function is used to fill the image provided as an argument with the intensities corresponding to
     the selection between low and high bounds."""
@@ -242,7 +272,6 @@ def _fill_image(
     return image
 
 
-# ! I have to compare the speed and correctedness of the two versions and delete the full is possible
 def compute_image_using_index_and_image_lookup(
     low_bound,
     high_bound,
@@ -252,6 +281,9 @@ def compute_image_using_index_and_image_lookup(
     lookup_table_spectra,
     lookup_table_image,
     divider_lookup,
+    array_peaks_transformed_lipids,
+    array_corrective_factors,
+    revert_transform=False,
 ):
     """This function is very much similar to compute_image_using_index_lookup, except that it uses a different lookup 
     table: lookup_table_image. This lookup table contains the cumulated intensities above the current lookup (instead of
@@ -279,6 +311,12 @@ def compute_image_using_index_and_image_lookup(
             the following mapping: lookup_table_image[i,j] contains, for the pixel of index j, the cumulated intensities 
             from the lowest possible m/z until the first m/z such that m/z >= i * divider_lookup.
         divider_lookup (int): Integer used to set the resolution when building the lookup table.
+        array_peaks_transformed_lipids (np.ndarray): A two-dimensional numpy array, which contains the peak annotations 
+                (min peak, max peak, average value of the peak), sorted by min_mz, for the lipids 
+                that have been transformed.
+        array_corrective_factors (np.ndarray): A three-dimensional numpy array, which contains the MAIA corrective factor 
+                used for lipid (first dimension) and each pixel (second and third dimension).
+        reverse_transform (bool): If True, the MAIA correction for pixel intensity is reverted. Defaults to False.
 
     Returns:
         np.ndarray: An array of shape img_shape (reprensenting an image) containing the cumulated intensity of the 
@@ -286,7 +324,8 @@ def compute_image_using_index_and_image_lookup(
     """
 
     # Image lookup table is not worth it for small differences between the bounds
-    if (high_bound - low_bound) < 5:
+    # And image lookup can't be used if the transformation should not be applied
+    if (high_bound - low_bound) < 5 or revert_transform:
         return compute_image_using_index_lookup(
             low_bound,
             high_bound,
@@ -295,6 +334,9 @@ def compute_image_using_index_and_image_lookup(
             img_shape,
             lookup_table_spectra,
             divider_lookup,
+            array_peaks_transformed_lipids,
+            array_corrective_factors,
+            revert_transform,
         )
 
     else:
@@ -421,10 +463,13 @@ def compute_normalized_image_per_lipid(
     lookup_table_spectra,
     cumulated_image_lookup_table,
     divider_lookup,
+    array_peaks_transformed_lipids,
+    array_corrective_factors,
+    revert_transform=False,
     percentile_normalization=99,
     RGB_channel_format=True,
 ):
-    """This function is mostly a wrapper for compute_image_using_index_and_image_lookup, this is, it computes an image
+    """This function is mostly a wrapper for compute_image_using_index_and_image_lookup, that is, it computes an image
     containing the cumulated intensity of the spectra between low_bound and high_bound, for each pixel. In addition, it
     adds a step of normalization, such that the output is more visually pleasing and comparable across selections. The
     output can also be provided in 8 bits, that is, the format of a single channel in a RGB image.
@@ -445,6 +490,12 @@ def compute_normalized_image_per_lipid(
             the following mapping: lookup_table_image[i,j] contains, for the pixel of index j, the cumulated intensities 
             from the lowest possible m/z until the first m/z such that m/z >= i * divider_lookup.
         divider_lookup (int): Integer used to set the resolution when building the lookup table.
+        array_peaks_transformed_lipids (np.ndarray): A two-dimensional numpy array, which contains the peak annotations 
+                (min peak, max peak, average value of the peak), sorted by min_mz, for the lipids 
+                that have been transformed.
+        array_corrective_factors (np.ndarray): A three-dimensional numpy array, which contains the MAIA corrective factor 
+                used for lipid (first dimension) and each pixel (second and third dimension).
+        reverse_transform (bool): If True, the MAIA correction for pixel intensity is reverted. Defaults to False.
         percentile_normalization (int): Integer used to re-normalize the data, such that the maximum value correspond to
             the given percentile.
         RGB_channel_format (bool): If False, the output image is provided as an array with values between 0 and 1. Else,
@@ -466,6 +517,9 @@ def compute_normalized_image_per_lipid(
         lookup_table_spectra,
         cumulated_image_lookup_table,
         divider_lookup,
+        array_peaks_transformed_lipids,
+        array_corrective_factors,
+        revert_transform,
     )
 
     # Normalize by percentile
