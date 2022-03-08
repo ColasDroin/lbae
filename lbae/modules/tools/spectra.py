@@ -171,7 +171,7 @@ def compute_image_using_index_lookup(
     divider_lookup,
     array_peaks_transformed_lipids,
     array_corrective_factors,
-    revert_transform,
+    reverse_transform,
 ):
     """For each pixel, this function extracts from array_spectra the intensity of a given m/z selection (normally 
     corresponding to a lipid annotation) defined by a lower and a higher bound. For faster computation, it uses 
@@ -206,14 +206,14 @@ def compute_image_using_index_lookup(
     image = np.zeros((img_shape[0], img_shape[1]), dtype=np.float32)
 
     # Build an array of ones for the correction (i.e. default is no correction)
-    array_corrective_factors_lipid = np.ones((img_shape[0] * img_shape,), np.float32)
+    array_corrective_factors_lipid = np.ones((img_shape[0] * img_shape[1],), np.float32)
 
-    if revert_transform:
+    if reverse_transform:
         # Check if the m/z region has been transformed, i.e. low and high bound are inside annotation
         idx_lipid_right = -1
         for idx_lipid, (min_mz, max_mz, avg_mz) in enumerate(array_peaks_transformed_lipids):
             # Take 10**-4 for precision
-            if (low_bound - 10 ** -4) >= min_mz and (high_bound + 10 ** -4) <= max_mz:
+            if (low_bound + 10 ** -4) >= min_mz and (high_bound - 10 ** -4) <= max_mz:
                 idx_lipid_right = idx_lipid
                 break
 
@@ -283,7 +283,7 @@ def compute_image_using_index_and_image_lookup(
     divider_lookup,
     array_peaks_transformed_lipids,
     array_corrective_factors,
-    revert_transform=False,
+    reverse_transform=False,
 ):
     """This function is very much similar to compute_image_using_index_lookup, except that it uses a different lookup 
     table: lookup_table_image. This lookup table contains the cumulated intensities above the current lookup (instead of
@@ -325,7 +325,7 @@ def compute_image_using_index_and_image_lookup(
 
     # Image lookup table is not worth it for small differences between the bounds
     # And image lookup can't be used if the transformation should not be applied
-    if (high_bound - low_bound) < 5 or revert_transform:
+    if (high_bound - low_bound) < 5 or reverse_transform:
         return compute_image_using_index_lookup(
             low_bound,
             high_bound,
@@ -336,7 +336,7 @@ def compute_image_using_index_and_image_lookup(
             divider_lookup,
             array_peaks_transformed_lipids,
             array_corrective_factors,
-            revert_transform,
+            reverse_transform,
         )
 
     else:
@@ -465,7 +465,7 @@ def compute_normalized_image_per_lipid(
     divider_lookup,
     array_peaks_transformed_lipids,
     array_corrective_factors,
-    revert_transform=False,
+    reverse_transform=False,
     percentile_normalization=99,
     RGB_channel_format=True,
 ):
@@ -519,7 +519,7 @@ def compute_normalized_image_per_lipid(
         divider_lookup,
         array_peaks_transformed_lipids,
         array_corrective_factors,
-        revert_transform,
+        reverse_transform,
     )
 
     # Normalize by percentile

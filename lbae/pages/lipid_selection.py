@@ -73,6 +73,15 @@ def return_layout(basic_config, slice_index):
                                     ),
                                 ),
                             ),
+                            dmc.Switch(
+                                id="page-2-toggle-reverse-transform",
+                                label="Reverse MAIA transform",
+                                checked=False,
+                                color="cyan",
+                                radius="xl",
+                                size="sm",
+                                style={"position": "absolute", "bottom": "12%", "right": "15%"},
+                            ),
                             dmc.Group(
                                 direction="column",
                                 spacing=0,
@@ -461,6 +470,7 @@ def return_layout(basic_config, slice_index):
     # State("page-2-mz-value", "value"),
     # State("page-2-mz-range", "value"),
     State("page-2-badge-input", "children"),
+    Input("page-2-toggle-reverse-transform", "checked"),
 )
 def page_2_plot_graph_heatmap_mz_selection(
     slice_index,
@@ -479,6 +489,7 @@ def page_2_plot_graph_heatmap_mz_selection(
     # mz,
     # mz_range,
     graph_input,
+    reverse_transform,
 ):
     logging.info("Entering function to plot heatmap or RGB depending on lipid selection")
     # Find out which input triggered the function
@@ -506,7 +517,7 @@ def page_2_plot_graph_heatmap_mz_selection(
         or id_input == "tab-2-rgb-button"
         or id_input == "tab-2-colormap-button"
         or (
-            id_input == "main-slider"
+            (id_input == "main-slider" or id_input == "page-2-toggle-reverse-transform")
             and (
                 graph_input == "Current input: " + "Lipid selection colormap"
                 or graph_input == "Current input: " + "Lipid selection RGB"
@@ -542,26 +553,46 @@ def page_2_plot_graph_heatmap_mz_selection(
                     if t_bounds_1[1] > t_bounds_2[0]:
                         logging.warning("Some pixel annotations intercept each other")
 
-            if id_input == "tab-2-colormap-button" or (
-                id_input == "main-slider"
-                and graph_input == "Current input: " + "Lipid selection colormap"
+            if (
+                id_input == "tab-2-colormap-button"
+                or (
+                    id_input == "main-slider"
+                    and graph_input == "Current input: " + "Lipid selection colormap"
+                )
+                or (
+                    id_input == "page-2-toggle-reverse-transform"
+                    and graph_input == "Current input: " + "Lipid selection colormap"
+                )
             ):
                 return (
-                    figures.compute_heatmap_per_lipid_selection(slice_index, ll_lipid_bounds),
+                    figures.compute_heatmap_per_lipid_selection(
+                        slice_index, ll_lipid_bounds, reverse_transform=reverse_transform
+                    ),
                     "Current input: " + "Lipid selection colormap",
                 )
-            elif id_input == "tab-2-rgb-button" or (
-                id_input == "main-slider"
-                and graph_input == "Current input: " + "Lipid selection RGB"
+            elif (
+                id_input == "tab-2-rgb-button"
+                or (
+                    id_input == "main-slider"
+                    and graph_input == "Current input: " + "Lipid selection RGB"
+                )
+                or (
+                    id_input == "page-2-toggle-reverse-transform"
+                    and graph_input == "Current input: " + "Lipid selection RGB"
+                )
             ):
                 return (
-                    figures.compute_rgb_image_per_lipid_selection(slice_index, ll_lipid_bounds),
+                    figures.compute_rgb_image_per_lipid_selection(
+                        slice_index, ll_lipid_bounds, reverse_transform=reverse_transform
+                    ),
                     "Current input: " + "Lipid selection RGB",
                 )
             else:
                 logging.info("Right before calling the graphing function")
                 return (
-                    figures.compute_rgb_image_per_lipid_selection(slice_index, ll_lipid_bounds),
+                    figures.compute_rgb_image_per_lipid_selection(
+                        slice_index, ll_lipid_bounds, reverse_transform=reverse_transform
+                    ),
                     "Current input: " + "Lipid selection RGB",
                 )
 
@@ -597,7 +628,6 @@ def page_2_plot_graph_heatmap_mz_selection(
                     bound_low_res[0],
                     bound_low_res[1],
                     binary_string=False,
-                    heatmap=False,
                     plot_contours=False,
                 ),
                 "Current input: " + "Selection from low-res m/z graph",

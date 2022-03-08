@@ -326,8 +326,9 @@ class Figures:
         normalize=True,
         log=False,
         projected_image=True,
-        reverse_transform = False,
+        reverse_transform=False,
     ):
+        logging.info("Entering compute_image_per_lipid")
         # Get image from raw mass spec data
         image = spectra.compute_image_using_index_and_image_lookup(
             lb_mz,
@@ -340,8 +341,7 @@ class Figures:
             self._data.get_divider_lookup(slice_index),
             self._data.get_array_peaks_transformed_lipids(slice_index),
             self._data.get_array_corrective_factors(slice_index),
-            reverse_transform = reverse_transform,
-
+            reverse_transform=reverse_transform,
         )
 
         if log:
@@ -445,7 +445,12 @@ class Figures:
         return fig
 
     def compute_heatmap_per_lipid_selection(
-        self, slice_index, ll_t_bounds, normalize_independently=True, projected_image=True
+        self,
+        slice_index,
+        ll_t_bounds,
+        normalize_independently=True,
+        projected_image=True,
+        reverse_transform=False,
     ):
 
         logging.info("Compute heatmap per lipid selection" + str(ll_t_bounds))
@@ -465,6 +470,7 @@ class Figures:
                             RGB_format=True,
                             normalize=normalize_independently,
                             projected_image=projected_image,
+                            reverse_transform=reverse_transform,
                         )
                         image += image_temp
 
@@ -502,6 +508,7 @@ class Figures:
         projected_image=True,
         log=False,
         enrichment=False,
+        reverse_transform=False,
     ):
 
         # Build a list of empty images and add selected lipids for each channel
@@ -525,6 +532,7 @@ class Figures:
                             normalize=normalize_independently,
                             projected_image=projected_image,
                             log=log,
+                            reverse_transform=reverse_transform,
                         )
 
                         image += image_temp
@@ -549,6 +557,7 @@ class Figures:
         log=False,
         return_image=False,
         use_pil=True,
+        reverse_transform=False,
     ):
         logging.info("Started RGB image computation for slice " + str(slice_index) + logmem())
 

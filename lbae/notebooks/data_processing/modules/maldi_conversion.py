@@ -392,7 +392,7 @@ def compute_standardization(
         # new window has been discovered
         if mz >= min_mz:
             idx_min_mz = idx_mz
-            while mz <= max_mz:
+            while mz <= max_mz and idx_mz < array_spectra_pixel.shape[0]:
                 idx_mz += 1
                 idx_pix, mz, intensity = array_spectra_pixel[idx_mz]
             idx_max_mz = idx_mz - 1
@@ -418,11 +418,13 @@ def compute_standardization(
                         print("There seems to be a problem with the computation of the integral")
                         print(integral, intensity_before)
                         print(idx_min_mz, idx_max_mz)
-                        # To avoid division by 0
-                        if intensity_before == 0:
-                            intensity_before = 1
+
                     # else:
                     #     print("ok")
+
+                    # To avoid division by 0 (altough it shouldn't happen)
+                    if intensity_before == 0:
+                        intensity_before = 1
 
                     correction = intensity_after / intensity_before
 
@@ -528,6 +530,8 @@ def standardize_values(
 
     # Get the array of corrective factors (per lipid per pixel)
     array_corrective_factors = arrays_after_transfo / arrays_before_transfo
+
+    # Correct for zero values
 
     return array_spectra, array_peaks_to_correct, array_corrective_factors
 
@@ -716,6 +720,7 @@ def process_raw_data(
     )
 
     if standardize_lipid_values:
+        print("Prepare data for standardization")
         # Double sort by pixel and mz
         array_high_res = array_high_res[
             np.lexsort((array_high_res[:, 1], array_high_res[:, 0]), axis=0)
@@ -731,6 +736,8 @@ def process_raw_data(
             arrays_before_transfo,
             arrays_after_transfo,
         ) = get_standardized_values(slice_index)
+
+        print("Standardize data")
         # Standardize values
         array_high_res, array_peaks_corrected, array_corrective_factors = standardize_values(
             array_high_res,
