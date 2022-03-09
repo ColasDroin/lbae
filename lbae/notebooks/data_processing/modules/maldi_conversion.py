@@ -391,61 +391,67 @@ def compute_standardization(
         min_mz, max_mz, n_pix, mz_estimated = array_peaks[idx_peak]
 
         # new window has been discovered
-        if mz >= min_mz:
-            print(min_mz, max_mz)
-            print(array_spectra_pixel[idx_mz : idx_mz + 5])
+        if mz >= min_mz and mz <= max_mz:
             idx_min_mz = idx_mz
-            while mz <= max_mz and idx_mz < array_spectra_pixel.shape[0]:
-                idx_mz += 1
+            idx_max_mz = idx_mz
+            for idx_mz in range(idx_min_mz, array_spectra_pixel.shape[0]):
                 idx_pix, mz, intensity = array_spectra_pixel[idx_mz]
-            idx_max_mz = idx_mz - 1
-            # print("new peak window found")
+                if mz > max_mz:
+                    idx_max_mz = idx_mz - 1
+                    break
 
-            # Compute intensities of the window before and after correction
-            if idx_peak < len(arrays_before_transfo):
+            # Most likely, the annotation doesn't exist, so skip it
+            if np.abs(idx_max_mz - idx_min_mz) <= 0.9:
+                # print("window skipped because less than 1 bin")
+                pass
+            # Else compute a multiplicative factor
+            else:
+
+                # print("before", idx_min_mz, "after", idx_mz, "max", idx_max_mz)
+                # print(min_mz, max_mz, array_spectra_pixel[idx_min_mz - 2 : idx_max_mz + 2])
+
+                # Get array of intensity before and after correction for current pixel
                 intensity_before = arrays_before_transfo[idx_peak].flatten()[idx_pixel]
                 intensity_after = arrays_after_transfo[idx_peak].flatten()[idx_pixel]
 
-                # Most likely, the annotation doesn't exist, so skip it
-                if np.abs(idx_max_mz - idx_min_mz) <= 1.1:
-                    # print("window skipped because less than 1 bin")
-                    pass
-                    # array_spectra_pixel = np.insert(array_spectra_pixel, idx_min_mz,
-                    #   [idx_pix, mz_estimated, intensity_after], axis = 0)
-                # Else compute a multiplicative factor
+                # Compute sum of expression between limits
+                integral = np.sum(array_spectra_pixel[idx_min_mz : idx_max_mz + 1, 2])
+
+                # Assess that this sum is equal to the one precomputed with MAIA
+                if np.abs(integral - intensity_before) > 10 ** -4:
+                    print("There seems to be a problem with the computation of the integral")
+                    print(integral, intensity_before)
+                    print(idx_min_mz, idx_max_mz)
+                    # pass
+
                 else:
+                    # print("ok")
+                    # print(integral, intensity_before)
+                    # print(idx_min_mz, idx_max_mz)
+                    pass
 
-                    # Compute sum of expression between limits
-                    integral = np.sum(array_spectra_pixel[idx_min_mz : idx_max_mz + 1, 2])
+                # To avoid division by 0 (altough it shouldn't happen)
+                if intensity_before == 0:
+                    intensity_before = 1
 
-                    # Assess that this sum is equal to the one precomputed with MAIA
-                    if np.abs(integral - intensity_before) > 10 ** -4:
-                        print("There seems to be a problem with the computation of the integral")
-                        print(integral, intensity_before)
-                        print(idx_min_mz, idx_max_mz)
+                correction = intensity_after / intensity_before
 
-                    # else:
-                    #     print("ok")
+                # Correct for negative values for very small corrections
+                if correction < 0:
+                    correction = 0
 
-                    # To avoid division by 0 (altough it shouldn't happen)
-                    if intensity_before == 0:
-                        intensity_before = 1
+                # Multiply all intensities in the window by the corrective coefficient
+                array_spectra_pixel[idx_min_mz : idx_max_mz + 1, 2] *= correction
+                n_peaks_transformed += 1
 
-                    correction = intensity_after / intensity_before
+            # Move on to the next peak
+            idx_peak += 1
 
-                    # Multiply all intensities in the window by the corrective coefficient
-                    array_spectra_pixel[idx_min_mz : idx_max_mz + 1, 2] *= correction
-                    n_peaks_transformed += 1
-                    print(correction)
-
-                # Move on to the next peak
+        else:
+            if mz > max_mz:
                 idx_peak += 1
             else:
-                raise Exception(
-                    "There seems to be more peaks than lipids annotated... Exiting function"
-                )
-        else:
-            idx_mz += 1
+                idx_mz += 1
 
     return array_spectra_pixel, n_peaks_transformed
 
@@ -521,7 +527,6 @@ def standardize_values(
     sum_n_peaks_transformed = 0
     for idx_pixel, [idx_pixel_min, idx_pixel_max] in enumerate(array_pixel_indexes):
         array_spectra_pixel = array_spectra[idx_pixel_min : idx_pixel_max + 1]
-
         if len(array_spectra_pixel) > 1:
             array_spectra_pixel, n_peaks_transformed = compute_standardization(
                 array_spectra_pixel,
