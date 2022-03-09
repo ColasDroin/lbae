@@ -385,17 +385,21 @@ def compute_standardization(
     # Define initial values
     idx_peak = 0
     idx_mz = 0
+    n_peaks_transformed = 0
     while idx_mz < array_spectra_pixel.shape[0] and idx_peak < array_peaks.shape[0]:
         idx_pix, mz, intensity = array_spectra_pixel[idx_mz]
         min_mz, max_mz, n_pix, mz_estimated = array_peaks[idx_peak]
 
         # new window has been discovered
         if mz >= min_mz:
+            print(min_mz, max_mz)
+            print(array_spectra_pixel[idx_mz : idx_mz + 5])
             idx_min_mz = idx_mz
             while mz <= max_mz and idx_mz < array_spectra_pixel.shape[0]:
                 idx_mz += 1
                 idx_pix, mz, intensity = array_spectra_pixel[idx_mz]
             idx_max_mz = idx_mz - 1
+            # print("new peak window found")
 
             # Compute intensities of the window before and after correction
             if idx_peak < len(arrays_before_transfo):
@@ -404,6 +408,7 @@ def compute_standardization(
 
                 # Most likely, the annotation doesn't exist, so skip it
                 if np.abs(idx_max_mz - idx_min_mz) <= 1.1:
+                    # print("window skipped because less than 1 bin")
                     pass
                     # array_spectra_pixel = np.insert(array_spectra_pixel, idx_min_mz,
                     #   [idx_pix, mz_estimated, intensity_after], axis = 0)
@@ -430,6 +435,8 @@ def compute_standardization(
 
                     # Multiply all intensities in the window by the corrective coefficient
                     array_spectra_pixel[idx_min_mz : idx_max_mz + 1, 2] *= correction
+                    n_peaks_transformed += 1
+                    print(correction)
 
                 # Move on to the next peak
                 idx_peak += 1
@@ -440,7 +447,7 @@ def compute_standardization(
         else:
             idx_mz += 1
 
-    return array_spectra_pixel
+    return array_spectra_pixel, n_peaks_transformed
 
 
 def standardize_values(
@@ -510,11 +517,13 @@ def standardize_values(
     array_peaks_to_correct = array_peaks[rows_to_keep]
 
     # Compute the transformed spectrum for each pixel
+    n_pix_transformed = 0
+    sum_n_peaks_transformed = 0
     for idx_pixel, [idx_pixel_min, idx_pixel_max] in enumerate(array_pixel_indexes):
         array_spectra_pixel = array_spectra[idx_pixel_min : idx_pixel_max + 1]
 
         if len(array_spectra_pixel) > 1:
-            array_spectra_pixel = compute_standardization(
+            array_spectra_pixel, n_peaks_transformed = compute_standardization(
                 array_spectra_pixel,
                 idx_pixel,
                 array_peaks_to_correct,
@@ -524,14 +533,23 @@ def standardize_values(
 
             # Reattribute the corrected values to the intial spectrum
             array_spectra[idx_pixel_min : idx_pixel_max + 1] = array_spectra_pixel
+            n_pix_transformed += 1
+            sum_n_peaks_transformed += n_peaks_transformed
 
+    print(
+        n_pix_transformed,
+        "have been transformed, with an average of ",
+        sum_n_peaks_transformed / n_pix_transformed,
+        "peaks transformed",
+    )
     # Delete the n_pix column (3rd column) in array_peaks
     array_peaks_to_correct = np.delete(array_peaks_to_correct, 2, 1)
 
-    # Get the array of corrective factors (per lipid per pixel)
-    array_corrective_factors = arrays_after_transfo / arrays_before_transfo
+    # Get the array of corrective factors (per lipid per pixel), removing zero values
+    array_corrective_factors = np.nan_to_num(arrays_after_transfo / arrays_before_transfo)
 
-    # Correct for zero values
+    # Correct for negative values
+    array_corrective_factors = np.clip(array_corrective_factors, 0, None)
 
     return array_spectra, array_peaks_to_correct, array_corrective_factors
 

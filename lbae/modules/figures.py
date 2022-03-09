@@ -569,6 +569,7 @@ class Figures:
             projected_image=projected_image,
             log=log,
             enrichment=enrichment,
+            reverse_transform=reverse_transform,
         )
         logging.info("array_image acquired for slice " + str(slice_index) + logmem())
 

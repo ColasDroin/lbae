@@ -458,9 +458,9 @@ def return_layout(basic_config, slice_index):
     Input("main-slider", "value"),
     Input("boundaries-high-resolution-mz-plot", "data"),
     Input("boundaries-low-resolution-mz-plot", "data"),
-    State("page-2-selected-lipid-1", "data"),
-    State("page-2-selected-lipid-2", "data"),
-    State("page-2-selected-lipid-3", "data"),
+    Input("page-2-selected-lipid-1", "data"),
+    Input("page-2-selected-lipid-2", "data"),
+    Input("page-2-selected-lipid-3", "data"),
     Input("tab-2-rgb-button", "n_clicks"),
     Input("tab-2-colormap-button", "n_clicks"),
     # Input("page-2-button-range", "n_clicks"),
@@ -949,6 +949,8 @@ def page_2_add_toast_selection(
     header_3,
 ):
 
+    logging.info("Entering function to update lipid data")
+
     # Find out which input triggered the function
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
     value_input = dash.callback_context.triggered[0]["prop_id"].split(".")[1]
@@ -1044,6 +1046,7 @@ def page_2_add_toast_selection(
                     elif header_3 == header:
                         lipid_3_index = lipid_index
 
+            logging.info("Returning updated lipid data")
             return (
                 header_1,
                 header_2,
