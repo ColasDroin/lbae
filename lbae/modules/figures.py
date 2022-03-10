@@ -368,6 +368,22 @@ class Figures:
             )
         return image
 
+    def compute_normalization_factor_across_slices(self):
+        for slice_index in range(self._data.get_slice_number()):
+            image = spectra.compute_image_using_index_and_image_lookup(
+                lb_mz,
+                hb_mz,
+                self._data.get_array_spectra(slice_index),
+                self._data.get_array_lookup_pixels(slice_index),
+                self._data.get_image_shape(slice_index),
+                self._data.get_array_lookup_mz(slice_index),
+                self._data.get_array_cumulated_lookup_mz_image(slice_index),
+                self._data.get_divider_lookup(slice_index),
+                self._data.get_array_peaks_transformed_lipids(slice_index),
+                self._data.get_array_corrective_factors(slice_index),
+                reverse_transform=True,
+            )
+
     # ! Check in the end if this function is redundant with compute_heatmap_per_lipid_selection
     def compute_heatmap_per_mz(
         self,
