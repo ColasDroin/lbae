@@ -234,8 +234,10 @@ def compute_image_using_index_lookup(
         array_to_sum = array_spectra[:, lower_bound : higher_bound + 1]
 
         # Apply MAIA correction
-        if array_corrective_factors_lipid[idx_pix] != 0:
-            array_to_sum = array_to_sum / array_corrective_factors_lipid[idx_pix]
+        if array_corrective_factors_lipid[idx_pix] == 0:
+            correction = 1.0
+        else:
+            correction = array_corrective_factors_lipid[idx_pix]
 
         # Sum the m/z values over the requested range
         image = _fill_image(
@@ -247,6 +249,7 @@ def compute_image_using_index_lookup(
             higher_bound,
             low_bound,
             high_bound,
+            correction,
         )
 
     return image
@@ -254,7 +257,15 @@ def compute_image_using_index_lookup(
 
 @njit
 def _fill_image(
-    image, idx_pix, img_shape, array_to_sum, lower_bound, higher_bound, low_bound, high_bound,
+    image,
+    idx_pix,
+    img_shape,
+    array_to_sum,
+    lower_bound,
+    higher_bound,
+    low_bound,
+    high_bound,
+    correction,
 ):
     """ This internal function is used to fill the image provided as an argument with the intensities corresponding to
     the selection between low and high bounds."""
@@ -268,7 +279,9 @@ def _fill_image(
 
         # If i is in the interval of the lipid annotation, keep filling the image
         if array_to_sum[0, i] >= low_bound:
-            image[convert_spectrum_idx_to_coor(idx_pix, img_shape)] += array_to_sum[1, i]
+            image[convert_spectrum_idx_to_coor(idx_pix, img_shape)] += (
+                array_to_sum[1, i] / correction
+            )
     return image
 
 

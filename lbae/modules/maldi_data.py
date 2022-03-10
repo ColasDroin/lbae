@@ -121,10 +121,19 @@ class MaldiData:
         self._df_annotations = pd.read_csv(path_annotations + "lipid_annotation.csv")
         self._df_annotations["name"] = self._df_annotations["name"].map(lambda x: x.split("_")[1])
 
-        # Build a list of lipid names for faster access and numba manipulation
+        # Load lipid annotations of MAIA-transformed lipids
+        self._df_annotations_MAIA_transformed_lipids = pd.read_csv(
+            path_annotations + "transformed_lipids.csv"
+        )
+        self._df_annotations_MAIA_transformed_lipids["name"] = self._df_annotations["name"].map(
+            lambda x: x.split("_")[1]
+        )
 
     def get_annotations(self):
         return self._df_annotations
+
+    def get_annotations_MAIA_transformed_lipids(self):
+        return self._df_annotations_MAIA_transformed_lipids
 
     def get_slice_number(self):
         return self._n_slices
