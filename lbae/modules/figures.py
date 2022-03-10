@@ -26,7 +26,7 @@ from modules.tools.spectra import compute_avg_intensity_per_lipid, global_lipid_
 
 ###### DEFINE FIGURES CLASS ######
 class Figures:
-    __slots__ = ["_data", "_atlas", "dic_fig_contours"]
+    __slots__ = ["_data", "_atlas", "dic_fig_contours", "dic_normalization_factors"]
 
     def __init__(self, maldi_data, atlas):
         logging.info("Initializing Figures object" + logmem())
@@ -39,6 +39,14 @@ class Figures:
             "dic_fig_contours",
             force_update=False,
             compute_function=self.compute_dic_fig_contours,
+        )
+
+        # Dic of normalization factors across slices for MAIA normalized lipids
+        self.dic_normalization_factors = return_pickled_object(
+            "figures/lipid_selection",
+            "dic_normalization_factors",
+            force_update=False,
+            compute_function=self.compute_normalization_factor_across_slices,
         )
 
     ###### FUNCTIONS FOR FIGURE IN LOAD_SLICE PAGE ######
@@ -327,6 +335,7 @@ class Figures:
         log=False,
         projected_image=True,
         reverse_transform=False,
+        lipid_name="",
     ):
         logging.info("Entering compute_image_per_lipid")
         # Get image from raw mass spec data
@@ -348,8 +357,15 @@ class Figures:
             image = np.log(image + 1)
 
         if normalize:
-            # Normalize by 99 percentile
-            perc = np.percentile(image, 99.0)
+            # Normalize across slice if the lipid has been MAIA transformed
+
+            if lipid_name in self.dic_normalization_factors and not reverse_transform:
+
+                perc = self.dic_normalization_factors[lipid_name]
+                logging.info("Normalization made with to percentile computed across all slices.")
+            else:
+                # Normalize by 99 percentile
+                perc = np.percentile(image, 99.0)
             if perc == 0:
                 perc = np.max(image)
             if perc == 0:
@@ -369,20 +385,66 @@ class Figures:
         return image
 
     def compute_normalization_factor_across_slices(self):
-        for slice_index in range(self._data.get_slice_number()):
-            image = spectra.compute_image_using_index_and_image_lookup(
-                lb_mz,
-                hb_mz,
-                self._data.get_array_spectra(slice_index),
-                self._data.get_array_lookup_pixels(slice_index),
-                self._data.get_image_shape(slice_index),
-                self._data.get_array_lookup_mz(slice_index),
-                self._data.get_array_cumulated_lookup_mz_image(slice_index),
-                self._data.get_divider_lookup(slice_index),
-                self._data.get_array_peaks_transformed_lipids(slice_index),
-                self._data.get_array_corrective_factors(slice_index),
-                reverse_transform=True,
-            )
+        logging.info(
+            "Compute normalization factor across slices for MAIA transformed lipids..."
+            + " It may takes a while"
+        )
+        dic_max_percentile = {}
+        # Simulate a click on all MAIA transformed lipids
+        for (
+            index,
+            (name, structure, cation, mz),
+        ) in self._data.get_annotations_MAIA_transformed_lipids().iterrows():
+            max_perc = 0
+            for slice_index in range(1, self._data.get_slice_number() + 1):
+                # Find lipid location
+                l_lipid_loc = (
+                    self._data.get_annotations()
+                    .index[
+                        (self._data.get_annotations()["name"] == name)
+                        & (self._data.get_annotations()["structure"] == structure)
+                        & (self._data.get_annotations()["slice"] == slice_index)
+                        & (self._data.get_annotations()["cation"] == cation)
+                    ]
+                    .tolist()
+                )
+
+                # If several lipids correspond to the selection, we have a problem...
+                if len(l_lipid_loc) >= 1:
+                    index = l_lipid_loc[-1]
+
+                    # get final lipid name
+                    lipid_string = name + "_" + structure + "_" + cation
+
+                    # get lipid bounds
+                    lb_mz = float(self._data.get_annotations().iloc[index]["min"])
+                    hb_mz = float(self._data.get_annotations().iloc[index]["max"])
+
+                    # Get corresponding image
+                    image = spectra.compute_image_using_index_and_image_lookup(
+                        lb_mz,
+                        hb_mz,
+                        self._data.get_array_spectra(slice_index),
+                        self._data.get_array_lookup_pixels(slice_index),
+                        self._data.get_image_shape(slice_index),
+                        self._data.get_array_lookup_mz(slice_index),
+                        self._data.get_array_cumulated_lookup_mz_image(slice_index),
+                        self._data.get_divider_lookup(slice_index),
+                        self._data.get_array_peaks_transformed_lipids(slice_index),
+                        self._data.get_array_corrective_factors(slice_index),
+                        reverse_transform=False,
+                    )
+
+                    # check 99th percentile for normalization
+                    perc = np.percentile(image, 99.0)
+                    # perc must be quite small in theory... otherwise it's a bug
+                    if perc > max_perc:  # and perc<1:
+                        max_perc = perc
+
+            # Store max percentile across slices
+            dic_max_percentile[lipid_string] = max_perc
+
+        return dic_max_percentile
 
     # ! Check in the end if this function is redundant with compute_heatmap_per_lipid_selection
     def compute_heatmap_per_mz(
@@ -467,6 +529,7 @@ class Figures:
         normalize_independently=True,
         projected_image=True,
         reverse_transform=False,
+        ll_lipid_names=None,
     ):
 
         logging.info("Compute heatmap per lipid selection" + str(ll_t_bounds))
@@ -474,9 +537,11 @@ class Figures:
         # Start from empty image and add selected lipids
         # * Caution: array must be int, float gets badly converted afterwards
         image = np.zeros(self._atlas.image_shape, dtype=np.int32)
-        for l_t_bounds in ll_t_bounds:
+        if ll_lipid_names is None:
+            ll_lipid_names = [["" for y in l_t_bounds] for l_t_bounds in ll_t_bounds]
+        for l_t_bounds, l_lipid_names in zip(ll_t_bounds, ll_lipid_names):
             if l_t_bounds is not None:
-                for boundaries in l_t_bounds:
+                for boundaries, lipid_name in zip(l_t_bounds, l_lipid_names):
                     if boundaries is not None:
                         (lb_mz, hb_mz) = boundaries
                         image_temp = self.compute_image_per_lipid(
@@ -487,6 +552,7 @@ class Figures:
                             normalize=normalize_independently,
                             projected_image=projected_image,
                             reverse_transform=reverse_transform,
+                            lipid_name=lipid_name,
                         )
                         image += image_temp
 
@@ -525,18 +591,23 @@ class Figures:
         log=False,
         enrichment=False,
         reverse_transform=False,
+        ll_lipid_names=None,
     ):
+
+        # Empty lipid names if no names provided
+        if ll_lipid_names is None:
+            ll_lipid_names = [["" for y in l_t_bounds] for l_t_bounds in ll_t_bounds]
 
         # Build a list of empty images and add selected lipids for each channel
         l_images = []
-        for l_boundaries in ll_t_bounds:
+        for l_boundaries, l_names in zip(ll_t_bounds, ll_lipid_names):
             image = np.zeros(
                 self._atlas.image_shape
                 if projected_image
                 else self._data.get_image_shape(slice_index)
             )
             if l_boundaries is not None:
-                for boundaries in l_boundaries:
+                for boundaries, lipid_name in zip(l_boundaries, l_names):
                     if boundaries is not None:
                         (lb_mz, hb_mz) = boundaries
 
@@ -549,6 +620,7 @@ class Figures:
                             projected_image=projected_image,
                             log=log,
                             reverse_transform=reverse_transform,
+                            lipid_name=lipid_name,
                         )
 
                         image += image_temp
@@ -574,8 +646,13 @@ class Figures:
         return_image=False,
         use_pil=True,
         reverse_transform=False,
+        ll_lipid_names=None,
     ):
         logging.info("Started RGB image computation for slice " + str(slice_index) + logmem())
+
+        # Empty lipid names if no names provided
+        if ll_lipid_names is None:
+            ll_lipid_names = [["" for y in l_t_bounds] for l_t_bounds in ll_t_bounds]
 
         # Get RGB array for the current lipid selection
         array_image = self.compute_rgb_array_per_lipid_selection(
@@ -586,6 +663,7 @@ class Figures:
             log=log,
             enrichment=enrichment,
             reverse_transform=reverse_transform,
+            ll_lipid_names=ll_lipid_names,
         )
         logging.info("array_image acquired for slice " + str(slice_index) + logmem())
 

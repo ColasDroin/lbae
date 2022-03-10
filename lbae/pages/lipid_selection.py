@@ -539,6 +539,19 @@ def page_2_plot_graph_heatmap_mz_selection(
                 for index in [lipid_1_index, lipid_2_index, lipid_3_index]
             ]
 
+            ll_lipid_names = [
+                [
+                    data.get_annotations().iloc[index]["name"]
+                    + "_"
+                    + data.get_annotations().iloc[index]["structure"]
+                    + "_"
+                    + data.get_annotations().iloc[index]["cation"]
+                ]
+                if index != -1
+                else None
+                for index in [lipid_1_index, lipid_2_index, lipid_3_index]
+            ]
+
             # Check that annotations do not intercept with each other
             l_lipid_bounds_clean = [
                 x
@@ -566,7 +579,10 @@ def page_2_plot_graph_heatmap_mz_selection(
             ):
                 return (
                     figures.compute_heatmap_per_lipid_selection(
-                        slice_index, ll_lipid_bounds, reverse_transform=reverse_transform
+                        slice_index,
+                        ll_lipid_bounds,
+                        reverse_transform=reverse_transform,
+                        ll_lipid_names=ll_lipid_names,
                     ),
                     "Current input: " + "Lipid selection colormap",
                 )
@@ -583,7 +599,10 @@ def page_2_plot_graph_heatmap_mz_selection(
             ):
                 return (
                     figures.compute_rgb_image_per_lipid_selection(
-                        slice_index, ll_lipid_bounds, reverse_transform=reverse_transform
+                        slice_index,
+                        ll_lipid_bounds,
+                        reverse_transform=reverse_transform,
+                        ll_lipid_names=ll_lipid_names,
                     ),
                     "Current input: " + "Lipid selection RGB",
                 )
@@ -591,7 +610,10 @@ def page_2_plot_graph_heatmap_mz_selection(
                 logging.info("Right before calling the graphing function")
                 return (
                     figures.compute_rgb_image_per_lipid_selection(
-                        slice_index, ll_lipid_bounds, reverse_transform=reverse_transform
+                        slice_index,
+                        ll_lipid_bounds,
+                        reverse_transform=reverse_transform,
+                        ll_lipid_names=ll_lipid_names,
                     ),
                     "Current input: " + "Lipid selection RGB",
                 )

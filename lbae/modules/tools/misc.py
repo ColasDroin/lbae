@@ -223,7 +223,7 @@ def convert_image_to_base64(
             else:
                 pil_img = pil_img.convert("P")
             logging.info("png mode selected, quality argument is not supported")
-            pil_img.save(stream, format=format, optimize=optimize)
+            pil_img.save(stream, format=format, optimize=optimize, bits=9)
 
         # Encode final image
         base64_string = (

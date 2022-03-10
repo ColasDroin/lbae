@@ -53,12 +53,19 @@ class MaldiData:
                 spectrum until the corresponding m/z value for each pixel.
         _n_slices (int): number of slices present in the dataset.
         _df_annotations (pd.dataframe): a dataframe containing for each slice and each annotated 
-            peak the name of the lipid inbetween the two annotated peak boundaries.
+            peak the name of the lipid in between the two annotated peak boundaries. Columns are 
+            'slice', 'name', 'structure', 'cation', 'theoretical m/z', 'min', 'max', 'num_pixels', 
+            and	'mz_estimated'.
+        _df_annotations_MAIA_transformed_lipids (pd.dataframe): a dataframe containing the average 
+            m/z value of each MAIA transformed lipid. Columns are 'name', 'structure', 'cation', 
+            'estimated_mz'.
         _path_data (str): path were the data files are stored.
 
     Methods:
         get_annotations(): getter for the lipid annotation of each slice, contained in a pandas 
             dataframe.
+        get_annotations_MAIA_transformed_lipids(): getter for the MAIA transformed lipid annotation, 
+            contained in a pandas dataframe.
         get_slice_number(): getter for the number of slices present in the dataset.
         get_image_shape(slice_index): getter for image_shape, which indicates the shape of the image 
             corresponding to the acquisition indexed by slice_index.
@@ -84,7 +91,14 @@ class MaldiData:
         get_cumulated_lookup_mz_image(slice_index, index):
     """
 
-    __slots__ = ["_dic_lightweight", "_dic_memmap", "_n_slices", "_df_annotations", "_path_data"]
+    __slots__ = [
+        "_dic_lightweight",
+        "_dic_memmap",
+        "_n_slices",
+        "_df_annotations",
+        "_df_annotations_MAIA_transformed_lipids",
+        "_path_data",
+    ]
 
     def __init__(self, path_data="data/whole_dataset/", path_annotations="data/annotations/"):
 
@@ -125,9 +139,9 @@ class MaldiData:
         self._df_annotations_MAIA_transformed_lipids = pd.read_csv(
             path_annotations + "transformed_lipids.csv"
         )
-        self._df_annotations_MAIA_transformed_lipids["name"] = self._df_annotations["name"].map(
-            lambda x: x.split("_")[1]
-        )
+        self._df_annotations_MAIA_transformed_lipids[
+            "name"
+        ] = self._df_annotations_MAIA_transformed_lipids["name"].map(lambda x: x.split("_")[1])
 
     def get_annotations(self):
         return self._df_annotations
