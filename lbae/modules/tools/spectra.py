@@ -956,19 +956,23 @@ def compute_spectrum_per_row_selection(
             ll_idx[i][0:-1:2], ll_idx[i][1::2], ll_idx_pix[i][0:-1:2], ll_idx_pix[i][1::2]
         ):
             if apply_correction:
-                for idx_pix in range(idx_pix_1, idx_pix_2):
+                for idx_pix in range(idx_pix_1, idx_pix_2 + 1):
                     idx_mz_1, idx_mz_2 = array_pixel_indexes[idx_pix]
-                    array_spectra_pix_to_correct = array_spectra[:, idx_mz_1 : idx_mz_2 + 1].copy()
-                    array_spectra_pix_corrected, n_peaks_transformed = compute_standardization(
-                        array_spectra_pix_to_correct.T,
-                        idx_pix,
-                        array_peaks_transformed_lipids,
-                        array_corrective_factors,
-                    )
-                    array_spectra_selection[
-                        :, pad : pad + idx_mz_2 + 1 - idx_mz_1
-                    ] = array_spectra_pix_corrected.T
-                    pad += idx_mz_2 + 1 - idx_mz_1
+                    # If the pixel is not empty
+                    if idx_mz_2 - idx_mz_1 > 0:
+                        array_spectra_pix_to_correct = array_spectra[
+                            :, idx_mz_1 : idx_mz_2 + 1
+                        ].copy()
+                        array_spectra_pix_corrected, n_peaks_transformed = compute_standardization(
+                            array_spectra_pix_to_correct.T,
+                            idx_pix,
+                            array_peaks_transformed_lipids,
+                            array_corrective_factors,
+                        )
+                        array_spectra_selection[
+                            :, pad : pad + idx_mz_2 + 1 - idx_mz_1
+                        ] = array_spectra_pix_corrected.T
+                        pad += idx_mz_2 + 1 - idx_mz_1
             else:
                 array_spectra_selection[:, pad : pad + idx_2 + 1 - idx_1] = array_spectra[
                     :, idx_1 : idx_2 + 1
