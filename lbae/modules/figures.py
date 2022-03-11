@@ -1812,7 +1812,7 @@ class Figures:
                     long_region = self._atlas.dic_acronym_name[region]
                     if region in self._atlas.dic_existing_masks[slice_index]:
                         grah_scattergl_data = self._atlas.get_projected_mask_and_spectrum(
-                            slice_index, long_region
+                            slice_index, long_region, MAIA_correction=True
                         )[1]
                         l_spectra.append(grah_scattergl_data)
                     else:

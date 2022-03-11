@@ -886,7 +886,7 @@ def page_3_plot_heatmap(
                     id_name = atlas.dic_name_acronym[mask_name]
                     if id_name in atlas.dic_existing_masks[slice_index - 1]:
                         projected_mask = atlas.get_projected_mask_and_spectrum(
-                            slice_index - 1, mask_name
+                            slice_index - 1, mask_name, MAIA_correction=False
                         )[0]
                     else:
                         logging.warning("The mask " + str(mask_name) + " couldn't be found")
@@ -1189,8 +1189,8 @@ def global_spectrum_store(
     idx_path = -1
 
     logging.info("Computing spectra now")
-    print("ICI1", l_shapes_and_masks)
-    print("ICI2", l_mask_name)
+    # print("ICI1", l_shapes_and_masks)
+    # print("ICI2", l_mask_name)
 
     for shape in l_shapes_and_masks:
         grah_scattergl_data = None
@@ -1201,7 +1201,7 @@ def global_spectrum_store(
             id_name = atlas.dic_name_acronym[mask_name]
             if id_name in atlas.dic_existing_masks[slice_index - 1]:
                 grah_scattergl_data = atlas.get_projected_mask_and_spectrum(
-                    slice_index - 1, mask_name
+                    slice_index - 1, mask_name, MAIA_correction=False
                 )[1]
             else:
                 logging.warning("Bug, the selected mask does't exist")
@@ -1257,7 +1257,10 @@ def global_spectrum_store(
                         data.get_array_spectra(slice_index),
                         data.get_array_lookup_pixels(slice_index),
                         data.get_image_shape(slice_index),
+                        data.get_array_peaks_transformed_lipids(slice_index),
+                        data.get_array_corrective_factors(slice_index),
                         zeros_extend=False,
+                        apply_correction=False,
                     )
             except:
                 logging.warning("Bug, the selected path does't exist")
@@ -1919,7 +1922,7 @@ def draw_modal_graph(
         ]
 
         fig = figures.compute_rgb_image_per_lipid_selection(
-            slice_index, l_lipid_bounds, title=False, enrichment=enrichment, log=log
+            slice_index, l_lipid_bounds, enrichment=enrichment, log=log
         )
         if boolean_mask:
             if l_shapes_and_masks is not None:

@@ -351,6 +351,7 @@ def get_standardized_values(
     )
 
 
+# ! Caution, a very similar function is also in spectra.py... How to handle that?
 @njit
 def compute_standardization(
     array_spectra_pixel, idx_pixel, array_peaks, arrays_before_transfo, arrays_after_transfo

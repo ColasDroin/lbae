@@ -11,8 +11,8 @@ from modules.tools.mspec import reduce_resolution_sorted
 ###### FUNCTIONS TO CONVERT PIXEL COORDINATES ######
 @njit
 def convert_spectrum_idx_to_coor(index, shape):
-    """This function takes a pixel index and converts it into a tuple of integers representing the coordinates of the 
-    pixel in the current slice.
+    """This function takes a pixel index and converts it into a tuple of integers representing the 
+    coordinates of the pixel in the current slice.
 
     Args:
         index (int): Pixel index in a flattened version of the slice image.
@@ -26,8 +26,8 @@ def convert_spectrum_idx_to_coor(index, shape):
 
 @njit
 def convert_coor_to_spectrum_idx(coordinate, shape):
-    """This function takes a tuple of integers representing the coordinates of the pixel in the current slice and 
-    converts it into an index in a flattened version of the image.
+    """This function takes a tuple of integers representing the coordinates of the pixel in the 
+    current slice and converts it into an index in a flattened version of the image.
 
     Args:
         coordinate tuple(int): Coordinate in the original image.
@@ -46,18 +46,20 @@ def convert_coor_to_spectrum_idx(coordinate, shape):
 ###### FUNCTIONS TO NORMALIZE SPECTRUM ######
 @njit
 def compute_normalized_spectra(array_spectra, array_pixel_indexes):
-    """This function takes an array of spectra and returns it normalized (per pixel). In pratice, each pixel spectrum is 
-    converted into a uncompressed version, and divided by the sum of all spectra. This might a problematic approach as
-    there seems to be small shifts between spectra across pixels, leading to a noise amplification after normalization.
+    """This function takes an array of spectra and returns it normalized (per pixel). In pratice, 
+    each pixel spectrum is converted into a uncompressed version, and divided by the sum of all 
+    spectra. This might a problematic approach as there seems to be small shifts between spectra 
+    across pixels, leading to a noise amplification after normalization.
 
     Args:
-        array_spectra (np.ndarray or pytables.array): An array of shape (2,n) containing spectrum data (m/z and 
-            intensity) for each pixel.
-        array_pixel_indexes (np.ndarray): An array of shape (m,2) containing the boundary indices of each pixel in 
-            array_spectra. 
+        array_spectra (np.ndarray or pytables.array): An array of shape (2,n) containing spectrum 
+            data (m/z and intensity) for each pixel.
+        array_pixel_indexes (np.ndarray): An array of shape (m,2) containing the boundary indices of 
+            each pixel in array_spectra. 
 
     Returns:
-        (np.ndarray): An array of shape (2,m) containing the normalized spectrum data (m/z and intensity).
+        (np.ndarray): An array of shape (2,m) containing the normalized spectrum data (m/z and 
+            intensity).
     """
     # Start by converting array_spectra into a very fine-grained version
     spectrum_sum = convert_array_to_fine_grained(array_spectra, 10 ** -3, lb=350, hb=1250) + 1
@@ -115,18 +117,21 @@ def compute_normalized_spectra(array_spectra, array_pixel_indexes):
 
 @njit
 def convert_array_to_fine_grained(array, resolution, lb=350, hb=1250):
-    """This function converts an array to a fine-grained version, which is common to all pixels, allowing for easier 
-    computations. If several values of the compressed version map to the same value of the uncompressed one, they are 
-    summed. Therefore, when ran on the spectrum of a whole image, it adds the spectra of all pixels. 
+    """This function converts an array to a fine-grained version, which is common to all pixels, 
+    allowing for easier computations. If several values of the compressed version map to the same 
+    value of the uncompressed one, they are summed. Therefore, when ran on the spectrum of a whole 
+    image, it adds the spectra of all pixels. 
 
     Args:
-        array (np.ndarray or pytables.array): An array of shape (2,n) containing spectrum data (m/z and intensity).
-            resolution (float): The resolution used for finer-graining.
+        array (np.ndarray or pytables.array): An array of shape (2,n) containing spectrum data (m/z 
+            and intensity).
+        resolution (float): The resolution used for finer-graining.
         lb (int, optional): Lower bound for the fine-grained array. Defaults to 350.
         hb (int, optional): Higher bound for the fine-grained array. Defaults to 1250.
 
     Returns:
-        (np.ndarray): A sparse, fine-grained array of shape (2,m) containing spectrum data (m/z and intensity).
+        (np.ndarray): A sparse, fine-grained array of shape (2,m) containing spectrum data (m/z and 
+        intensity).
     """
     # Build an empty (zeroed) array with the requested uncompressed size
     new_array = np.linspace(lb, hb, int(round((hb - lb) * resolution ** -1)))
@@ -145,7 +150,8 @@ def strip_zeros(array):
     convert_array_to_fine_grained) from its columns having intensity zero. 
 
     Args:
-        array (np.ndarray or pytables.array): An array of shape (2,n) containing spectrum data (m/z and intensity).
+        array (np.ndarray or pytables.array): An array of shape (2,n) containing spectrum data (m/z 
+            and intensity).
 
     Returns:
         (np.ndarray): The same array stripped from its zero intensity values. Now of shape (2,m).
@@ -173,34 +179,36 @@ def compute_image_using_index_lookup(
     array_corrective_factors,
     apply_transform,
 ):
-    """For each pixel, this function extracts from array_spectra the intensity of a given m/z selection (normally 
-    corresponding to a lipid annotation) defined by a lower and a higher bound. For faster computation, it uses 
-    lookup_table_spectra to map m/z values to given indices. It then assigns the pixel intensity to an array of shape 
-    img_shape, therefore producing an image representing the requested lipid distribution. 
+    """For each pixel, this function extracts from array_spectra the intensity of a given m/z 
+    selection (normally corresponding to a lipid annotation) defined by a lower and a higher bound. 
+    For faster computation, it uses lookup_table_spectra to map m/z values to given indices. It then 
+    assigns the pixel intensity to an array of shape img_shape, therefore producing an image 
+    representing the requested lipid distribution. 
      
     Args:
         low_bound (float): Lower m/z value for the annotation.
         high_bound (float): Higher m/z value for the annotation.
-        array_spectra (np.ndarray or pytables.array): An array of shape (2,n) containing spectrum data (m/z and 
-            intensity) for each pixel.
-        array_pixel_indexes (np.ndarray): An array of shape (m,2) containing the boundary indices of each pixel in 
-            array_spectra.
-        img_shape (tuple(int)): A tuple with the two integer values corresponding to height and width of the current
-            slice acquisition.
-        lookup_table_spectra (np.ndarray or pytables.array): An array of shape (k,m) representing a lookup table with 
-            the following mapping: lookup_table_spectra[i,j] contains the first m/z index of pixel j such that 
-            m/z >= i * divider_lookup.
+        array_spectra (np.ndarray or pytables.array): An array of shape (2,n) containing spectrum 
+            data (m/z and intensity) for each pixel.
+        array_pixel_indexes (np.ndarray): An array of shape (m,2) containing the boundary indices of 
+            each pixel in array_spectra.
+        img_shape (tuple(int)): A tuple with the two integer values corresponding to height and 
+            width of the current slice acquisition.
+        lookup_table_spectra (np.ndarray or pytables.array): An array of shape (k,m) representing a 
+            lookup table with the following mapping: lookup_table_spectra[i,j] contains the first 
+            m/z index of pixel j such that m/z >= i * divider_lookup.
         divider_lookup (int): Integer used to set the resolution when building the lookup table.
-        array_peaks_transformed_lipids (np.ndarray): A two-dimensional numpy array, which contains the peak annotations 
-                (min peak, max peak, average value of the peak), sorted by min_mz, for the lipids 
-                that have been transformed.
-        array_corrective_factors (np.ndarray): A three-dimensional numpy array, which contains the MAIA corrective factor 
-                used for lipid (first dimension) and each pixel (second and third dimension).
+        array_peaks_transformed_lipids (np.ndarray): A two-dimensional numpy array, which contains 
+            the peak annotations (min peak, max peak, average value of the peak), sorted by min_mz, 
+            for the lipids that have been transformed.
+        array_corrective_factors (np.ndarray): A three-dimensional numpy array, which contains the 
+            MAIA corrective factor used for lipid (first dimension) and each pixel (second and third 
+            dimension).
         apply_transform (bool): If True, the MAIA correction for pixel intensity is reverted.
 
     Returns:
-        np.ndarray: An array of shape img_shape (reprensenting an image) containing the cumulated intensity of the 
-            spectra between low_bound and high_bound, for each pixel.
+        np.ndarray: An array of shape img_shape (reprensenting an image) containing the cumulated 
+            intensity of the spectra between low_bound and high_bound, for each pixel.
     """
     # Build empty image
     image = np.zeros((img_shape[0], img_shape[1]), dtype=np.float32)
@@ -228,7 +236,7 @@ def compute_image_using_index_lookup(
         if array_pixel_indexes[idx_pix, 0] == -1:
             continue
 
-        # Compute the range in which values must be summed and extract corresponding part of the spectrum
+        # Compute range in which values must be summed and extract corresponding part of spectrum
         lower_bound = lookup_table_spectra[int(low_bound / divider_lookup)][idx_pix]
         higher_bound = lookup_table_spectra[int(np.ceil(high_bound / divider_lookup))][idx_pix]
         array_to_sum = array_spectra[:, lower_bound : higher_bound + 1]
@@ -267,10 +275,10 @@ def _fill_image(
     high_bound,
     correction,
 ):
-    """ This internal function is used to fill the image provided as an argument with the intensities corresponding to
-    the selection between low and high bounds."""
-    # While i is in the interval of the current lipid annotation, delimited by low and high bounds, fill image with
-    # intensities
+    """ This internal function is used to fill the image provided as an argument with the 
+    intensities corresponding to the selection between low and high bounds."""
+    # While i is in the interval of the current lipid annotation, delimited by low and high bounds,
+    # fill image with intensities
     for i in range(0, higher_bound + 1 - lower_bound):
 
         # If i corresponds to a m/z value above the high_bound of the lipid annotation, exit loop
@@ -298,42 +306,46 @@ def compute_image_using_index_and_image_lookup(
     array_corrective_factors,
     apply_transform=False,
 ):
-    """This function is very much similar to compute_image_using_index_lookup, except that it uses a different lookup 
-    table: lookup_table_image. This lookup table contains the cumulated intensities above the current lookup (instead of
-    the sheer intensities). Therefore, any image corresponding to the integral of all pixel spectra between two bounds 
-    can be approximated by the difference of the lookups closest to these bounds. The integral can then be corrected a 
-    posteriori to obtain the exact value. If the m/z distance between the two bounds is low, it calls 
-    compute_image_using_index_lookup() as the optimization is not worth it.
-    It wraps the internal functions _compute_image_using_index_and_image_lookup_full() and 
-    _compute_image_using_index_and_image_lookup_partial() to ensure that the proper array type is used with numba 
-    depending if the data is coming from a HDF5 storage or not.
+    """This function is very much similar to compute_image_using_index_lookup, except that it uses a
+    different lookup table: lookup_table_image. This lookup table contains the cumulated intensities
+    above the current lookup (instead of the sheer intensities). Therefore, any image corresponding 
+    to the integral of all pixel spectra between two bounds can be approximated by the difference of 
+    the lookups closest to these bounds. The integral can then be corrected a posteriori to obtain 
+    the exact value. If the m/z distance between the two bounds is low, it calls 
+    compute_image_using_index_lookup() as the optimization is not worth it. It wraps the internal 
+    functions _compute_image_using_index_and_image_lookup_full() and 
+    _compute_image_using_index_and_image_lookup_partial() to ensure that the proper array type is 
+    used with numba depending if the data is coming from a HDF5 storage or not.
 
     Args:
         low_bound (float): Lower m/z value for the annotation.
         high_bound (float): Higher m/z value for the annotation.
-        array_spectra (np.ndarray or pytables.array): An array of shape (2,n) containing spectrum data (m/z and 
-            intensity) for each pixel.
-        array_pixel_indexes (np.ndarray): An array of shape (m,2) containing the boundary indices of each pixel in 
-            array_spectra.
-        img_shape (tuple(int)): A tuple with the two integer values corresponding to height and width of the current
-            slice acquisition.
-        lookup_table_spectra (np.ndarray or pytables.array): An array of shape (k,m) representing a lookup table with 
-            the following mapping: lookup_table_spectra[i,j] contains the first m/z index of pixel j such that 
-            m/z >= i * divider_lookup.
-        lookup_table_image (np.ndarray or pytables.array): An array of shape (k,m) representing a lookup table with 
-            the following mapping: lookup_table_image[i,j] contains, for the pixel of index j, the cumulated intensities 
-            from the lowest possible m/z until the first m/z such that m/z >= i * divider_lookup.
+        array_spectra (np.ndarray or pytables.array): An array of shape (2,n) containing spectrum 
+            data (m/z and intensity) for each pixel.
+        array_pixel_indexes (np.ndarray): An array of shape (m,2) containing the boundary indices of 
+            each pixel in array_spectra.
+        img_shape (tuple(int)): A tuple with the two integer values corresponding to height and 
+        width of the current slice acquisition.
+        lookup_table_spectra (np.ndarray or pytables.array): An array of shape (k,m) representing a 
+            lookup table with the following mapping: lookup_table_spectra[i,j] contains the first 
+            m/z index of pixel j such that m/z >= i * divider_lookup.
+        lookup_table_image (np.ndarray or pytables.array): An array of shape (k,m) representing a 
+            lookup table with the following mapping: lookup_table_image[i,j] contains, for the pixel
+            of index j, the cumulated intensities from the lowest possible m/z until the first m/z 
+            such that m/z >= i * divider_lookup.
         divider_lookup (int): Integer used to set the resolution when building the lookup table.
-        array_peaks_transformed_lipids (np.ndarray): A two-dimensional numpy array, which contains the peak annotations 
-                (min peak, max peak, average value of the peak), sorted by min_mz, for the lipids 
-                that have been transformed.
-        array_corrective_factors (np.ndarray): A three-dimensional numpy array, which contains the MAIA corrective factor 
-                used for lipid (first dimension) and each pixel (second and third dimension).
-        apply_transform (bool): If True, the MAIA correction for pixel intensity is applied. Defaults to False.
+        array_peaks_transformed_lipids (np.ndarray): A two-dimensional numpy array, which contains 
+            the peak annotations (min peak, max peak, average value of the peak), sorted by min_mz, 
+            for the lipids that have been transformed.
+        array_corrective_factors (np.ndarray): A three-dimensional numpy array, which contains the 
+            MAIA corrective factor used for lipid (first dimension) and each pixel (second and third 
+            dimension).
+        apply_transform (bool): If True, the MAIA correction for pixel intensity is applied. 
+            Defaults to False.
 
     Returns:
-        np.ndarray: An array of shape img_shape (reprensenting an image) containing the cumulated intensity of the 
-            spectra between low_bound and high_bound, for each pixel.
+        np.ndarray: An array of shape img_shape (reprensenting an image) containing the cumulated 
+            intensity of the spectra between low_bound and high_bound, for each pixel.
     """
 
     # Image lookup table is not worth it for small differences between the bounds
@@ -376,9 +388,10 @@ def _compute_image_using_index_and_image_lookup_partial(
     lookup_table_image,
     divider_lookup,
 ):
-    """This internal function is wrapped by compute_image_using_index_and_image_lookup(). It is used as a slower, 
-    memory-optimized, option, when the slice data must be manually extracted from a HDF5 (aka pytables.array) dataset. 
-    Please consult the documentation of compute_image_using_index_and_image_lookup() for more information.
+    """This internal function is wrapped by compute_image_using_index_and_image_lookup(). It is used 
+    as a slower, memory-optimized, option, when the slice data must be manually extracted from a 
+    HDF5 (aka pytables.array) dataset. Please consult the documentation of 
+    compute_image_using_index_and_image_lookup() for more information.
     """
     # Get a first approximate of the requested lipid image
     image = (
@@ -437,14 +450,15 @@ def _correct_image(
     high_bound,
     divider_lookup,
 ):
-    """ This internal function is used to correct the intensities in the image provided as an argument, by adding 
-    (removing) the intensities that should (not) have been in the selection between low and high bounds."""
+    """ This internal function is used to correct the intensities in the image provided as an 
+    argument, by adding (removing) the intensities that should (not) have been in the selection 
+    between low and high bounds."""
     # First correct for the m/z values that have been summed in the image and shouldn't have
     i = 0
     while array_to_sum_lb[0, i] < low_bound and i < array_to_sum_lb.shape[1]:
 
-        # If the peak corresponding to highest mz is before the lookup value, just skip it altogether as
-        # no correction is needed (the spectrum is empty between lower bound and low bound)
+        # If the peak corresponding to highest mz is before the lookup value, just skip it
+        # altogether as no correction is needed (empty spectrum between lower and low bound)
         if array_to_sum_lb[0, i] < int(low_bound / divider_lookup) * divider_lookup:
             break
 
@@ -456,8 +470,8 @@ def _correct_image(
     i = 0
     while array_to_sum_hb[0, i] <= high_bound and i <= array_to_sum_hb.shape[1]:
 
-        # If the peak corresponding to the highest mz is before the lookup value, just skip it altogether as
-        # no correction is needed (the spectrum is empty between high bound and higher bound)
+        # If the peak corresponding to the highest mz is before the lookup value, just skip it
+        # altogether as no correction is needed (empty spectrum between high and higher bound)
         if array_to_sum_hb[0, i] < int(high_bound / divider_lookup) * divider_lookup:
             break
 
@@ -482,43 +496,47 @@ def compute_normalized_image_per_lipid(
     percentile_normalization=99,
     RGB_channel_format=True,
 ):
-    """This function is mostly a wrapper for compute_image_using_index_and_image_lookup, that is, it computes an image
-    containing the cumulated intensity of the spectra between low_bound and high_bound, for each pixel. In addition, it
-    adds a step of normalization, such that the output is more visually pleasing and comparable across selections. The
-    output can also be provided in 8 bits, that is, the format of a single channel in a RGB image.
+    """This function is mostly a wrapper for compute_image_using_index_and_image_lookup, that is, it
+    computes an image containing the cumulated intensity of the spectra between low_bound and 
+    high_bound, for each pixel. In addition, it adds a step of normalization, such that the output 
+    is more visually pleasing and comparable across selections. The output can also be provided in 
+    8 bits, that is, the format of a single channel in a RGB image.
     
     Args:
         low_bound (float): Lower m/z value for the annotation.
         high_bound (float): Higher m/z value for the annotation.
-        array_spectra (np.ndarray or pytables.array): An array of shape (2,n) containing spectrum data (m/z and 
-            intensity) for each pixel.
-        array_pixel_indexes (np.ndarray): An array of shape (m,2) containing the boundary indices of each pixel in 
-            array_spectra.
-        img_shape (tuple(int)): A tuple with the two integer values corresponding to height and width of the current
-            slice acquisition.
-        lookup_table_spectra (np.ndarray or pytables.array): An array of shape (k,m) representing a lookup table with 
-            the following mapping: lookup_table_spectra[i,j] contains the first m/z index of pixel j such that 
-            m/z >= i * divider_lookup.
-        lookup_table_image (np.ndarray or pytables.array): An array of shape (k,m) representing a lookup table with 
-            the following mapping: lookup_table_image[i,j] contains, for the pixel of index j, the cumulated intensities 
-            from the lowest possible m/z until the first m/z such that m/z >= i * divider_lookup.
+        array_spectra (np.ndarray or pytables.array): An array of shape (2,n) containing spectrum 
+            data (m/z and intensity) for each pixel.
+        array_pixel_indexes (np.ndarray): An array of shape (m,2) containing the boundary indices of
+            each pixel in array_spectra.
+        img_shape (tuple(int)): A tuple with the two integer values corresponding to height and 
+            width of the current slice acquisition.
+        lookup_table_spectra (np.ndarray or pytables.array): An array of shape (k,m) representing a 
+            lookup table with the following mapping: lookup_table_spectra[i,j] contains the first 
+            m/z index of pixel j such that m/z >= i * divider_lookup.
+        lookup_table_image (np.ndarray or pytables.array): An array of shape (k,m) representing a 
+            lookup table with the following mapping: lookup_table_image[i,j] contains, for the pixel
+            of index j, the cumulated intensities from the lowest possible m/z until the first m/z 
+            such that m/z >= i * divider_lookup.
         divider_lookup (int): Integer used to set the resolution when building the lookup table.
-        array_peaks_transformed_lipids (np.ndarray): A two-dimensional numpy array, which contains the peak annotations 
-                (min peak, max peak, average value of the peak), sorted by min_mz, for the lipids 
-                that have been transformed.
-        array_corrective_factors (np.ndarray): A three-dimensional numpy array, which contains the MAIA corrective factor 
-                used for lipid (first dimension) and each pixel (second and third dimension).
-        apply_transform (bool): If True, the MAIA correction for pixel intensity is applied. Defaults to False.
-        percentile_normalization (int): Integer used to re-normalize the data, such that the maximum value correspond to
-            the given percentile.
-        RGB_channel_format (bool): If False, the output image is provided as an array with values between 0 and 1. Else,
-            the values are between 0 and 255.
+        array_peaks_transformed_lipids (np.ndarray): A two-dimensional numpy array, which contains 
+            the peak annotations (min peak, max peak, average value of the peak), sorted by min_mz, 
+            for the lipids that have been transformed.
+        array_corrective_factors (np.ndarray): A three-dimensional numpy array, which contains the 
+            MAIA corrective factor used for lipid (first dimension) and each pixel (second and third 
+            dimension).
+        apply_transform (bool): If True, the MAIA correction for pixel intensity is applied. 
+            Defaults to False.
+        percentile_normalization (int): Integer used to re-normalize the data, such that the maximum 
+            value correspond to the given percentile.
+        RGB_channel_format (bool): If False, the output image is provided as an array with values 
+            between 0 and 1. Else, the values are between 0 and 255.
 
     Returns:
-        np.ndarray: An array of shape img_shape (reprensenting an image) containing the cumulated intensity of the 
-            spectra between low_bound and high_bound, for each pixel. This image is normalized according to 
-            percentile_normalized. Output values are between 0 and 1 (255) depending if RGB_channel_format is False 
-            (True).
+        np.ndarray: An array of shape img_shape (reprensenting an image) containing the cumulated 
+            intensity of the spectra between low_bound and high_bound, for each pixel. This image is 
+            normalized according to percentile_normalized. Output values are between 0 and 1 (255) 
+            depending if RGB_channel_format is False (True).
     """
     # Get image from raw mass spec data
     image = compute_image_using_index_and_image_lookup(
@@ -548,21 +566,22 @@ def compute_normalized_image_per_lipid(
 ###### FUNCTIONS TO COMPUTE M/Z BOUNDARIES FOR AVERAGED ARRAYS (1-D LOOKUP TABLE) ######
 @njit
 def compute_index_boundaries_nolookup(low_bound, high_bound, array_spectra_avg):
-    """This function computes, from array_spectra_avg, the first existing indices corresponding to m/z values above the 
-    provided lower and higher bounds, without using any lookup. If high_bound and/or low_bound are above the highest 
-    possible value for the required lookup, it returns the index of the highest existing value. Note that 
-    array_spectra_avg normally corresponds to the high-resolution spectrum averaged across all pixels, but in can be 
-    any spectrum so long as it is not subdivided in pixels.
+    """This function computes, from array_spectra_avg, the first existing indices corresponding to 
+    m/z values above the provided lower and higher bounds, without using any lookup. If high_bound 
+    and/or low_bound are above the highest possible value for the required lookup, it returns the 
+    index of the highest existing value. Note that array_spectra_avg normally corresponds to the 
+    high-resolution spectrum averaged across all pixels, but in can be any spectrum so long as it is 
+    not subdivided in pixels.
      
     Args:
         low_bound (float): Lower m/z value for the annotation.
         high_bound (float): Higher m/z value for the annotation.
-        array_spectra_avg (np.ndarray or pytables.array): An array of shape (2,n) containing spectrum data (m/z and 
-            intensity).
+        array_spectra_avg (np.ndarray or pytables.array): An array of shape (2,n) containing 
+            spectrum data (m/z and intensity).
 
     Returns:
-        tuple(int): A tuple of integer representing the best guess for the indices of low_bound and high_bound in 
-            array_spectra_avg.
+        tuple(int): A tuple of integer representing the best guess for the indices of low_bound and 
+            high_bound in array_spectra_avg.
     """
     # Extract the mz values for array_spectra_avg
     array_mz = array_spectra_avg[0, :]
@@ -588,29 +607,32 @@ def compute_index_boundaries_nolookup(low_bound, high_bound, array_spectra_avg):
 
 @njit
 def compute_index_boundaries(low_bound, high_bound, array_spectra_avg, lookup_table):
-    """This function is very much similar to compute_index_boundaries_nolookup(), except that it uses lookup_table to
-    find the low and high bounds indices faster. As in compute_index_boundaries_nolookup(), it computes, from 
-    array_spectra_avg, the first existing indices corresponding to m/z values above the provided lower and higher 
-    bounds. If high_bound and/or low_bound are above the highest possible value for the required lookup, it returns 
-    the index of the highest existing value. Note that array_spectra_avg normally corresponds to the high-resolution 
-    spectrum averaged across all pixels, but in can be any spectrum so long as it is not subdivided in pixels. Also note
-    that there are no partial full versions of this function depending if the dataset is stored in RAM or HDF5, since 
-    the two versions would have been almost identical (there's no loop over pixels, contrarily to e.g. 
-    compute_image_using_index_lookup(), and a view/copy of the partial spectra in the selection is made as a first
-    step, turning any pytables.array in a np.ndarray).  
-    It wraps the internal numba-ized function _compute_index_boundaries_nolookup().
+    """This function is very much similar to compute_index_boundaries_nolookup(), except that it 
+    uses lookup_table to find the low and high bounds indices faster. As in 
+    compute_index_boundaries_nolookup(), it computes, from array_spectra_avg, the first existing 
+    indices corresponding to m/z values above the provided lower and higher bounds. If high_bound 
+    and/or low_bound are above the highest possible value for the required lookup, it returns the 
+    index of the highest existing value. Note that array_spectra_avg normally corresponds to the 
+    high-resolution spectrum averaged across all pixels, but in can be any spectrum so long as it is 
+    not subdivided in pixels. Also note that there are no partial full versions of this function 
+    depending if the dataset is stored in RAM or HDF5, since the two versions would have been almost
+    identical (there's no loop over pixels, contrarily to e.g. compute_image_using_index_lookup(), 
+    and a view/copy of the partial spectra in the selection is made as a first step, turning any 
+    pytables.array in a np.ndarray). It wraps the internal numba-ized function 
+    _compute_index_boundaries_nolookup().
 
     Args:
         low_bound (float): Lower m/z value for the annotation.
         high_bound (float): Higher m/z value for the annotation.
-        array_spectra_avg (np.ndarray or pytables.array): An array of shape (2,n) containing spectrum data (m/z and 
-            intensity).
-        lookup_table (np.ndarray): A 1-dimensional array of length m providing, for each index (i.e. lookup), the index 
-            of the first m/z value in the averaged array_spectra superior or equal to the lookup.
+        array_spectra_avg (np.ndarray or pytables.array): An array of shape (2,n) containing 
+            spectrum data (m/z and intensity).
+        lookup_table (np.ndarray): A 1-dimensional array of length m providing, for each index (i.e. 
+            lookup), the index of the first m/z value in the averaged array_spectra superior or 
+            equal to the lookup.
 
     Returns:
-        tuple(int): A tuple of integer representing the best guess for the indices of low_bound and high_bound in 
-            array_spectra_avg.
+        tuple(int): A tuple of integer representing the best guess for the indices of low_bound and
+        high_bound in array_spectra_avg.
     """
     # Extract the arrays provided by the lookup table as first guess for the low and high bounds
     array_to_sum_lb = array_spectra_avg[
@@ -630,7 +652,8 @@ def compute_index_boundaries(low_bound, high_bound, array_spectra_avg, lookup_ta
 def _loop_compute_index_boundaries(
     array_to_sum_lb, array_to_sum_hb, low_bound, high_bound, lookup_table
 ):
-    """This internal function is wrapped by compute_index_boundaries(). Please consult the corresponding documentation.
+    """This internal function is wrapped by compute_index_boundaries(). Please consult the 
+    corresponding documentation.
     """
     # Define intial guess for the low and high bounds indices
     index_low_bound = 0
@@ -654,18 +677,19 @@ def _loop_compute_index_boundaries(
 ###### FUNCTIONS TO COMPUTE SPECTRA AVERAGED FROM A MANUAL SELECTION OR A MASK SELECTION ######
 @njit
 def return_spectrum_per_pixel(idx_pix, array_spectra, array_pixel_indexes):
-    """This function returns the spectrum of the pixel having index pixel_idx, using the lookup table 
-    array_pixel_indexes.
+    """This function returns the spectrum of the pixel having index pixel_idx, using the lookup 
+    table array_pixel_indexes.
 
     Args:
         idx_pix (int): Index of the pixel to return.
-        array_spectra (np.ndarray or pytables.array): An array of shape (2,n) containing spectrum data (m/z and 
-            intensity) for each pixel.
-        array_pixel_indexes (np.ndarray): An array of shape (m,2) containing the boundary indices of each pixel in 
-            array_spectra.
+        array_spectra (np.ndarray or pytables.array): An array of shape (2,n) containing spectrum 
+            data (m/z and intensity) for each pixel.
+        array_pixel_indexes (np.ndarray): An array of shape (m,2) containing the boundary indices of
+            each pixel in array_spectra.
        
     Returns:
-        np.ndarray: An array of shape (2,m) containing spectrum data (m/z and intensity) for the requested pixel.
+        np.ndarray: An array of shape (2,m) containing spectrum data (m/z and intensity) for the 
+            requested pixel.
     """
     # Get the indices of the spectrum of the requested pixel
     idx_1, idx_2 = array_pixel_indexes[idx_pix]
@@ -676,19 +700,22 @@ def return_spectrum_per_pixel(idx_pix, array_spectra, array_pixel_indexes):
 
 @njit
 def add_zeros_to_spectrum(array_spectra, pad_individual_peaks=True, padding=10 ** -5):
-    """This function adds zeros in-between the peaks of the spectra contained in array_spectra (e.g. to be able to plot 
-    them as scatterplotgl).
+    """This function adds zeros in-between the peaks of the spectra contained in array_spectra (e.g. 
+    to be able to plot them as scatterplotgl).
 
     Args:
-        array_spectra (np.ndarray): An array of shape (2,n) containing spectrum data (m/z and intensity) for each pixel.
-        pad_individual_peaks (bool, optional): If true, pads the peaks individually, with a given threshold distance 
-            between two m/z values to consider them as belonging to the same peak. Else, it pads all single value in the 
-            spectrum with zeros. Defaults to False.
-        padding (float, optional): The m/z distance between a peak value and a zero for the padding. Default to 10**-5.
+        array_spectra (np.ndarray): An array of shape (2,n) containing spectrum data (m/z and 
+            intensity) for each pixel.
+        pad_individual_peaks (bool, optional): If true, pads the peaks individually, with a given 
+            threshold distance between two m/z values to consider them as belonging to the same 
+            peak. Else, it pads all single value in the spectrum with zeros. Defaults to False.
+        padding (float, optional): The m/z distance between a peak value and a zero for the padding.
+            Default to 10**-5.
 
     Returns:
-        (np.ndarray, np.ndarray): An array of shape (2,m) containing the padded spectrum data (m/z and intensity) and an
-            an array of shape (k,) containing the number of zeros added at each index of array_spectra.
+        (np.ndarray, np.ndarray): An array of shape (2,m) containing the padded spectrum data (m/z 
+            and intensity) and an array of shape (k,) containing the number of zeros added at each 
+            index of array_spectra.
 
     """
     # For speed, allocate array of maximum size
@@ -801,6 +828,76 @@ def reduce_resolution_sorted_array_spectra(array_spectra, resolution=10 ** -3):
     return new_array_spectra
 
 
+# ! Very similar function in maldi_data... need to harmonize that
+
+
+@njit
+def compute_standardization(array_spectra_pixel, idx_pixel, array_peaks, array_corrective_factors):
+    """This function takes the spectrum data of a given pixel, along with the corresponding pixel 
+    index, and transforms the value of the lipids intensities annotated in 'array_peaks' according 
+    to the transformation registered in 'array_corrective_factors'.
+
+    Args:
+        array_spectra (np.ndarray): A numpy array containing spectrum data (m/z and intensity) of 
+            pixel 'idx_pixel', sorted by mz.
+        idx_pixel (int): Index of the current pixel whose spectrum is transformed.
+        array_peaks (np.ndarray): A numpy array containing the peak annotations (min peak, max peak, 
+            average value of the peak), filtered for the lipids who have preliminarily been 
+            transformed. Sorted by min_mz.
+        array_corrective_factors (np.ndarray): A numpy array of shape (n_lipids, image_shape[0], 
+            image_shape[1]) containing the corrective factors for the lipids we want to visualize, 
+            for each pixel.
+
+    Returns:
+        np.ndarray: A numpy array containing spectrum data (pixel index, m/z and intensity), of 
+            pixel 'idx_pixel', sorted by mz, with lipids values transformed.
+    """
+    # Define initial values
+    idx_peak = 0
+    idx_mz = 0
+    n_peaks_transformed = 0
+    while idx_mz < array_spectra_pixel.shape[0] and idx_peak < array_peaks.shape[0]:
+        mz, intensity = array_spectra_pixel[idx_mz]
+        min_mz, max_mz, mz_estimated = array_peaks[idx_peak]
+
+        # new window has been discovered
+        if mz >= min_mz and mz <= max_mz:
+            idx_min_mz = idx_mz
+            idx_max_mz = idx_mz
+            for idx_mz in range(idx_min_mz, array_spectra_pixel.shape[0]):
+                mz, intensity = array_spectra_pixel[idx_mz]
+                if mz > max_mz:
+                    idx_max_mz = idx_mz - 1
+                    break
+
+            # Most likely, the annotation doesn't exist, so skip it
+            if np.abs(idx_max_mz - idx_min_mz) <= 0.9:
+                # zero-out value that do not belong to the MAIA-transformed regions
+                array_spectra_pixel[idx_mz, 1] = 0
+            # Else compute a multiplicative factor
+            else:
+
+                # Get array of intensity before and after correction for current pixel
+                correction = array_corrective_factors[idx_peak].flatten()[idx_pixel]
+
+                # Multiply all intensities in the window by the corrective coefficient
+                array_spectra_pixel[idx_min_mz : idx_max_mz + 1, 1] *= correction
+                n_peaks_transformed += 1
+
+            # Move on to the next peak
+            idx_peak += 1
+
+        else:
+            if mz > max_mz:
+                idx_peak += 1
+            else:
+                # zero-out value that do not belong to the MAIA-transformed regions
+                array_spectra_pixel[idx_mz, 1] = 0
+                idx_mz += 1
+
+    return array_spectra_pixel, n_peaks_transformed
+
+
 @njit
 def compute_spectrum_per_row_selection(
     list_index_bound_rows,
@@ -808,31 +905,44 @@ def compute_spectrum_per_row_selection(
     array_spectra,
     array_pixel_indexes,
     image_shape,
+    array_peaks_transformed_lipids,
+    array_corrective_factors,
     zeros_extend=True,
     apply_correction=False,
 ):
-    """This function computes the average spectrum from a manual selection of rows of pixel (each containing a 
-    spectrum). The resulting average array can be zero-padded.
+    """This function computes the average spectrum from a manual selection of rows of pixel (each 
+    containing a spectrum). The resulting average array can be zero-padded.
 
     Args:
-        list_index_bound_rows (list(tuple)): A list of lower and upper indices delimiting the range of rows belonging to
-            the current selection.
-        list_index_bound_column_per_row (list(list)): For each row (outer list), provides the index of the columns 
-            delimiting the current selection (inner list). 
-        array_spectra (np.ndarray or pytables.array): An array of shape (2,n) containing spectrum data (m/z and 
-            intensity) for each pixel.
-        array_pixel_indexes (np.ndarray): An array of shape (m,2) containing the boundary indices of each pixel in 
-            array_spectra.
-        image_shape (int, int): A tuple of integers, indicating the vertical and horizontal sizes of the current slice.
-        zeros_extend (bool, optional): If True, the resulting spectrum will be zero-padded. Defaults to True.
-        apply_correction (bool, optional): If True, MAIA transformation is applied to the lipids belonging to TODO, for each pixel. This option makes the computation very slow, so it shouldn't be selected if the computations must be done on the fly.
+        list_index_bound_rows (list(tuple)): A list of lower and upper indices delimiting the range 
+            of rows belonging to the current selection.
+        list_index_bound_column_per_row (list(list)): For each row (outer list), provides the index 
+            of the columns delimiting the current selection (inner list). 
+        array_spectra (np.ndarray or pytables.array): An array of shape (2,n) containing spectrum 
+            data (m/z and intensity) for each pixel.
+        array_pixel_indexes (np.ndarray): An array of shape (m,2) containing the boundary indices of 
+            each pixel in array_spectra.
+        image_shape (int, int): A tuple of integers, indicating the vertical and horizontal sizes of 
+            the current slice.
+        array_peaks_transformed_lipids (np.ndarray): A numpy array containing the peak annotations 
+            (min peak, max peak, number of pixels containing the peak, average value of the peak), 
+            filtered for the lipids who have preliminarily been transformed. Sorted by min_mz.
+        array_corrective_factors (np.ndarray): A numpy array of shape (n_lipids, image_shape[0], 
+            image_shape[1]) containing the corrective factors for the lipids we want to visualize, 
+            for each pixel.
+        zeros_extend (bool, optional): If True, the resulting spectrum will be zero-padded. Defaults 
+            to True.
+        apply_correction (bool, optional): If True, MAIA transformation is applied to the lipids 
+            belonging to array_peaks_transformed_lipids, for each pixel. This option makes the 
+            computation very slow, so it shouldn't be selected if the computations must be done on 
+            the fly. Defaults to False.
 
     Returns:
-        np.ndarray: Spectrum averaged from a manual selection of rows of pixel, containing m/z values in the first row, 
-            and intensities in the second row.
+        np.ndarray: Spectrum averaged from a manual selection of rows of pixel, containing m/z 
+            values in the first row, and intensities in the second row.
     """
     # Get list of row indexes for the current selection
-    ll_idx, size_array = get_list_row_indexes(
+    ll_idx, size_array, ll_idx_pix = get_list_row_indexes(
         list_index_bound_rows, list_index_bound_column_per_row, array_pixel_indexes, image_shape
     )
 
@@ -842,19 +952,35 @@ def compute_spectrum_per_row_selection(
 
     # Fill array line by line
     for i, x in enumerate(range(list_index_bound_rows[0], list_index_bound_rows[1] + 1)):
-        for idx_1, idx_2 in zip(ll_idx[i][0:-1:2], ll_idx[i][1::2]):
+        for idx_1, idx_2, idx_pix_1, idx_pix_2 in zip(
+            ll_idx[i][0:-1:2], ll_idx[i][1::2], ll_idx_pix[i][0:-1:2], ll_idx_pix[i][1::2]
+        ):
             if apply_correction:
-                array_spectra_to_correct = array_spectra[:, idx_1 : idx_2 + 1].copy()
-                # TODO ! Apply correction
-                array_spectra_selection[:, pad : pad + idx_2 + 1 - idx_1] = array_spectra_to_correct
+                for idx_pix in range(idx_pix_1, idx_pix_2):
+                    idx_mz_1, idx_mz_2 = array_pixel_indexes[idx_pix]
+                    array_spectra_pix_to_correct = array_spectra[:, idx_mz_1 : idx_mz_2 + 1].copy()
+                    array_spectra_pix_corrected, n_peaks_transformed = compute_standardization(
+                        array_spectra_pix_to_correct.T,
+                        idx_pix,
+                        array_peaks_transformed_lipids,
+                        array_corrective_factors,
+                    )
+                    array_spectra_selection[
+                        :, pad : pad + idx_mz_2 + 1 - idx_mz_1
+                    ] = array_spectra_pix_corrected.T
+                    pad += idx_mz_2 + 1 - idx_mz_1
             else:
                 array_spectra_selection[:, pad : pad + idx_2 + 1 - idx_1] = array_spectra[
                     :, idx_1 : idx_2 + 1
                 ]
-            pad += idx_2 + 1 - idx_1
+                pad += idx_2 + 1 - idx_1
 
     # Sort array
     array_spectra_selection = array_spectra_selection[:, array_spectra_selection[0].argsort()]
+
+    # Remove the values that have been zeroed-out
+    if apply_correction:
+        array_spectra_selection = strip_zeros(array_spectra_selection)
 
     # Sum the arrays (similar m/z values are added)
     array_spectra_selection = reduce_resolution_sorted_array_spectra(
@@ -873,32 +999,37 @@ def compute_spectrum_per_row_selection(
 def get_list_row_indexes(
     list_index_bound_rows, list_index_bound_column_per_row, array_pixel_indexes, image_shape
 ):
-    """This function turns a selection of rows (bounds in list_index_bound_rows) and corresponding columns (bounds in 
-    list_index_bound_column_per_row) into an optimized list of pixel indices in array_spectra. It takes advantage of the 
-    fact that pixels that are neighbours in a given rows also have contiguous spectra in array_spectra, allowing for 
-    faster query.
+    """This function turns a selection of rows (bounds in list_index_bound_rows) and corresponding 
+    columns (bounds in list_index_bound_column_per_row) into an optimized list of pixel indices in 
+    array_spectra. It takes advantage of the fact that pixels that are neighbours in a given rows 
+    also have contiguous spectra in array_spectra, allowing for faster query.
 
     Args:
-        list_index_bound_rows (list(tuple)): A list of lower and upper indices delimiting the range of rows belonging to
-            the current selection.
-        list_index_bound_column_per_row (list(list)): For each row (outer list), provides the index of the columns 
-            delimiting the current selection (inner list). 
-        array_pixel_indexes (np.ndarray): An array of shape (m,2) containing the boundary indices of each pixel in 
-            array_spectra.
-        image_shape (int, int): A tuple of integers, indicating the vertical and horizontal sizes of the current slice.
+        list_index_bound_rows (list(tuple)): A list of lower and upper indices delimiting the range 
+            of rows belonging to the current selection.
+        list_index_bound_column_per_row (list(list)): For each row (outer list), provides the index 
+            of the columns delimiting the current selection (inner list). 
+        array_pixel_indexes (np.ndarray): An array of shape (m,2) containing the boundary indices of 
+            each pixel in array_spectra.
+        image_shape (int, int): A tuple of integers, indicating the vertical and horizontal sizes of 
+            the current slice.
 
     Returns:
-        (list(list), int): The list of list contains outer pixel indices (inner list) in array_spectra for each row 
-            (outer list). The integer provides the expected total size of the concatenated spectra indexed. 
+        (list(list): List of 2-elements lists which contains the mz indices (inner list) in 
+            array_spectra of the extrema pixel for each row (outer list).
+        int: Total size of the concatenated spectra indexed
+        list(list)):  List of 2-elements lists which contains pixels indices (inner list) in 
+            array_spectra of the extrema pixel for each row (outer list).
     """
     # Compute size array
     size_array = 0
     ll_idx = []
-
+    ll_idx_pix = []
     # Loop over rows in the selection
     for i, x in enumerate(range(list_index_bound_rows[0], list_index_bound_rows[1] + 1)):
         # Careful: list_index_bound_column_per_row
         l_idx = []
+        l_idx_pix = []
         for j in range(0, len(list_index_bound_column_per_row[i]), 2):
             # Check if we're not just looping over zero padding
             if (
@@ -907,7 +1038,8 @@ def get_list_row_indexes(
             ):
                 continue
 
-            # Get the outer indexes of the (concatenated) spectra of the current row belonging to the selection
+            # Get the outer indexes of the (concatenated) spectra of the current row belonging to
+            # the selection
             idx_pix_1 = convert_coor_to_spectrum_idx(
                 (x, list_index_bound_column_per_row[i][j]), image_shape
             )
@@ -925,12 +1057,14 @@ def get_list_row_indexes(
                 while idx_1 == -1:
                     idx_1 = array_pixel_indexes[idx_pix_1 + j, 0]
                     j += 1
+                idx_pix_1 = idx_pix_1 + j - 1
 
                 # Move backward until a non-empty pixel is found for idx_2
                 j = 1
                 while idx_2 == -1:
                     idx_2 = array_pixel_indexes[idx_pix_2 - j, 1]
                     j += 1
+                idx_pix_2 = idx_pix_2 + j - 1
 
             # Check that we still have idx_2>=idx_1
             if idx_1 > idx_2:
@@ -938,41 +1072,43 @@ def get_list_row_indexes(
             else:
                 size_array += idx_2 + 1 - idx_1
                 l_idx.extend([idx_1, idx_2])
+                l_idx_pix.extend([idx_pix_1, idx_pix_2])
 
         # Add the couple of spectra indexes to the list
         ll_idx.append(l_idx)
-
-    return ll_idx, size_array
+        ll_idx_pix.append(l_idx_pix)
+    return ll_idx, size_array, ll_idx_pix
 
 
 @njit
 def sample_rows_from_path(path):
-    """This function takes a path as input and returns the lower and upper indexes of the rows belonging to the current
-    selection (i.e. indexed in the path), as well as the corresponding column boundaries for each row. Note that, 
-    although counter-intuitive given the kind of regression done in this function, x is the vertical axis (from top to 
-    bottom), and y the horizontal one.
+    """This function takes a path as input and returns the lower and upper indexes of the rows 
+    belonging to the current selection (i.e. indexed in the path), as well as the corresponding 
+    column boundaries for each row. Note that, although counter-intuitive given the kind of 
+    regression done in this function, x is the vertical axis (from top to bottom), and y the 
+    horizontal one.
 
     Args:
-        path (np.ndarray): A two-dimensional array, containing, in each row, the row and column coordinates (x and y) of
-            the current selection.
+        path (np.ndarray): A two-dimensional array, containing, in each row, the row and column 
+        coordinates (x and y) of the current selection.
 
     Returns:
-        (np.ndarray, np.ndarray): The first array contains the lower and upper indexes of the rows belonging to the 
-            current selection. The second array contains, for each row, the corresponding column boundaries (there can 
-            be more than 2 for non-convex shapes).
+        (np.ndarray, np.ndarray): The first array contains the lower and upper indexes of the rows 
+        belonging to the current selection. The second array contains, for each row, the 
+        corresponding column boundaries (there can be more than 2 for non-convex shapes).
     """
     # Find out the lower and upper rows
     x_min = path[:, 0].min()
     x_max = path[:, 0].max()
 
-    # Numba won't accept a list of list, so I have to use a list of np arrays for the column boundaries
+    # Numba won't accept a list of list, so I must use a list of np arrays for the column boundaries
     list_index_bound_column_per_row = [np.arange(0) for x in range(x_min, x_max + 1)]
 
     # Also register the x-axis direction to correct the linear regression accordingly
     dir_prev = None
 
-    # For each couple of points in the path, do a linear regression to find the corresponding y (needed due to non
-    # constant sampling on the y-axis)
+    # For each couple of points in the path, do a linear regression to find the corresponding y
+    # (needed due to non constant sampling on the y-axis)
     for i in range(path.shape[0] - 1):
         x1, y1 = path[i]
         x2, y2 = path[i + 1]
@@ -997,7 +1133,8 @@ def sample_rows_from_path(path):
                     list_index_bound_column_per_row[x - x_min], round(slope * x + intercept)
                 )
 
-    # Min x and max x often cover only zero or one pixel due to the way the sampling is done, we just get rid of them
+    # Min x and max x often cover only zero or one pixel due to the way the sampling is done, we
+    # just get rid of them
     if len(list_index_bound_column_per_row[0]) < 2:
         del list_index_bound_column_per_row[0]
         x_min += 1
@@ -1042,10 +1179,11 @@ def sample_rows_from_path(path):
 
 @njit
 def return_index_labels(l_min, l_max, l_mz, zero_padding_extra=5 * 10 ** -5):
-    """This function returns the corresponding lipid name indices from a list of m/z values. Note that the 
-    zero_padding_extra parameter is needed for both taking into account the zero-padding (this way zeros on the sides of 
-    the peak are also identified as the annotated lipid) but also because the annotation is very stringent in the first 
-    place, and sometimes border of the peaks are missing in the annotation.
+    """This function returns the corresponding lipid name indices from a list of m/z values. Note 
+    that the zero_padding_extra parameter is needed for both taking into account the zero-padding 
+    (this way zeros on the sides of the peak are also identified as the annotated lipid) but also 
+    because the annotation is very stringent in the first place, and sometimes border of the peaks 
+    are missing in the annotation.
 
     Args:
         l_min (list(int)): This list provides the lower peak boundaries of the identified lipids.
@@ -1085,16 +1223,20 @@ def return_index_labels(l_min, l_max, l_mz, zero_padding_extra=5 * 10 ** -5):
 
 @njit
 def compute_avg_intensity_per_lipid(l_intensity_with_lipids, l_idx_labels):
-    """This function computes the average intensity of each annotated lipid (summing over peaks coming from the same 
+    """This function computes the average intensity of each annotated lipid (summing over peaks 
+    coming from the same 
     lipid) from a given spectrum.
 
     Args:
-        l_intensity_with_lipids (list(float)): A list of peak intensities (where one lipid can correspond to several 
+        l_intensity_with_lipids (list(float)): A list of peak intensities (where one lipid can 
+        correspond to several 
             peaks, but one peak always correspond to one lipid). 
-        l_idx_labels (list(int)): A list of lipid annotation, each lipid being annotated with a unique integer.
+        l_idx_labels (list(int)): A list of lipid annotation, each lipid being annotated with a 
+        unique integer.
 
     Returns:
-        list(int), list(float): The first list provides the lipid indices, while the second provide the lipid average 
+        list(int), list(float): The first list provides the lipid indices, while the second provide 
+        the lipid average 
             intensities. Peaks corresponding to identical lipid have been averaged.
     """
     # Define empty lists for the lipid indices and intensities

@@ -114,7 +114,7 @@ class Atlas:
             logging.info(
                 "The dictionnary of available mask per slice has not been computed yet, doing it now."
             )
-            self.save_all_projected_masks_and_spectra()
+        self.save_all_projected_masks_and_spectra()
 
     # Load arrays of images using atlas projection
     @property
@@ -380,7 +380,12 @@ class Atlas:
         return mask_stack
 
     def compute_spectrum_data(
-        self, slice_index, projected_mask=None, mask_name=None, slice_coor_rescaled=None
+        self,
+        slice_index,
+        projected_mask=None,
+        mask_name=None,
+        slice_coor_rescaled=None,
+        MAIA_correction=False,
     ):
         if projected_mask is None and mask_name is None:
             print("Either a mask or a mask name must be provided")
@@ -419,7 +424,10 @@ class Atlas:
                 self.data.get_array_spectra(slice_index + 1),
                 self.data.get_array_lookup_pixels(slice_index + 1),
                 original_shape,
+                self.data.get_array_peaks_transformed_lipids(slice_index + 1),
+                self.data.get_array_corrective_factors(slice_index + 1),
                 zeros_extend=False,
+                apply_correction=MAIA_correction,
             )
         return grah_scattergl_data
 
@@ -457,12 +465,29 @@ class Atlas:
                 else:
                     dic_existing_masks[slice_index].add(id_mask)
 
-                # Compute average spectrum in the mask
-                grah_scattergl_data = self.compute_spectrum_data(slice_index, projected_mask)
+                # ! This must be uncommented when I'm done computing the maia corrected data
+                # # Compute average spectrum in the mask
+                # grah_scattergl_data = self.compute_spectrum_data(
+                #     slice_index, projected_mask, MAIA_correction=False
+                # )
 
-                # Dump the mask and data with pickle
+                # # Dump the mask and data with pickle
+                # with open(
+                #     "data/atlas/atlas_objects/mask_and_spectrum_"
+                #     + str(slice_index)
+                #     + "_"
+                #     + str(id_mask).replace("/", "")
+                #     + ".pickle",
+                #     "wb",
+                # ) as file:
+                #     pickle.dump((projected_mask, grah_scattergl_data), file)
+
+                # Same with MAIA corrected data
+                grah_scattergl_data = self.compute_spectrum_data(
+                    slice_index, projected_mask, MAIA_correction=True
+                )
                 with open(
-                    "data/atlas/atlas_objects/mask_and_spectrum_"
+                    "data/atlas/atlas_objects/mask_and_spectrum_MAIA_corrected_"
                     + str(slice_index)
                     + "_"
                     + str(id_mask).replace("/", "")
@@ -478,15 +503,24 @@ class Atlas:
         logging.info("Projected masks and spectra have all been computed.")
         self.dic_existing_masks = dic_existing_masks
 
-    def get_projected_mask_and_spectrum(self, slice_index, mask_name):
+    def get_projected_mask_and_spectrum(self, slice_index, mask_name, MAIA_correction=False):
         id_mask = self.dic_name_acronym[mask_name]
-        path = (
-            "data/atlas/atlas_objects/mask_and_spectrum_"
-            + str(slice_index)
-            + "_"
-            + str(id_mask).replace("/", "")
-            + ".pickle"
-        )
+        if MAIA_correction:
+            path = (
+                "data/atlas/atlas_objects/mask_and_spectrum_MAIA_corrected_"
+                + str(slice_index)
+                + "_"
+                + str(id_mask).replace("/", "")
+                + ".pickle"
+            )
+        else:
+            path = (
+                "data/atlas/atlas_objects/mask_and_spectrum_"
+                + str(slice_index)
+                + "_"
+                + str(id_mask).replace("/", "")
+                + ".pickle"
+            )
         logging.info(
             "Loading " + mask_name + " for slice " + str(slice_index) + " from pickle file."
         )
