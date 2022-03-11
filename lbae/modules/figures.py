@@ -334,7 +334,7 @@ class Figures:
         normalize=True,
         log=False,
         projected_image=True,
-        reverse_transform=False,
+        apply_transform=False,
         lipid_name="",
     ):
         logging.info("Entering compute_image_per_lipid")
@@ -350,7 +350,7 @@ class Figures:
             self._data.get_divider_lookup(slice_index),
             self._data.get_array_peaks_transformed_lipids(slice_index),
             self._data.get_array_corrective_factors(slice_index),
-            reverse_transform=reverse_transform,
+            apply_transform=apply_transform,
         )
 
         if log:
@@ -359,7 +359,7 @@ class Figures:
         if normalize:
             # Normalize across slice if the lipid has been MAIA transformed
 
-            if lipid_name in self.dic_normalization_factors and not reverse_transform:
+            if lipid_name in self.dic_normalization_factors and apply_transform:
 
                 perc = self.dic_normalization_factors[lipid_name]
                 logging.info("Normalization made with to percentile computed across all slices.")
@@ -432,7 +432,7 @@ class Figures:
                         self._data.get_divider_lookup(slice_index),
                         self._data.get_array_peaks_transformed_lipids(slice_index),
                         self._data.get_array_corrective_factors(slice_index),
-                        reverse_transform=False,
+                        apply_transform=False,
                     )
 
                     # check 99th percentile for normalization
@@ -528,7 +528,7 @@ class Figures:
         ll_t_bounds,
         normalize_independently=True,
         projected_image=True,
-        reverse_transform=False,
+        apply_transform=False,
         ll_lipid_names=None,
     ):
 
@@ -551,7 +551,7 @@ class Figures:
                             RGB_format=True,
                             normalize=normalize_independently,
                             projected_image=projected_image,
-                            reverse_transform=reverse_transform,
+                            apply_transform=apply_transform,
                             lipid_name=lipid_name,
                         )
                         image += image_temp
@@ -590,7 +590,7 @@ class Figures:
         projected_image=True,
         log=False,
         enrichment=False,
-        reverse_transform=False,
+        apply_transform=False,
         ll_lipid_names=None,
     ):
 
@@ -619,7 +619,7 @@ class Figures:
                             normalize=normalize_independently,
                             projected_image=projected_image,
                             log=log,
-                            reverse_transform=reverse_transform,
+                            apply_transform=apply_transform,
                             lipid_name=lipid_name,
                         )
 
@@ -645,7 +645,7 @@ class Figures:
         log=False,
         return_image=False,
         use_pil=True,
-        reverse_transform=False,
+        apply_transform=False,
         ll_lipid_names=None,
     ):
         logging.info("Started RGB image computation for slice " + str(slice_index) + logmem())
@@ -662,7 +662,7 @@ class Figures:
             projected_image=projected_image,
             log=log,
             enrichment=enrichment,
-            reverse_transform=reverse_transform,
+            apply_transform=apply_transform,
             ll_lipid_names=ll_lipid_names,
         )
         logging.info("array_image acquired for slice " + str(slice_index) + logmem())

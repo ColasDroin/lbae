@@ -171,7 +171,7 @@ def compute_image_using_index_lookup(
     divider_lookup,
     array_peaks_transformed_lipids,
     array_corrective_factors,
-    reverse_transform,
+    apply_transform,
 ):
     """For each pixel, this function extracts from array_spectra the intensity of a given m/z selection (normally 
     corresponding to a lipid annotation) defined by a lower and a higher bound. For faster computation, it uses 
@@ -196,7 +196,7 @@ def compute_image_using_index_lookup(
                 that have been transformed.
         array_corrective_factors (np.ndarray): A three-dimensional numpy array, which contains the MAIA corrective factor 
                 used for lipid (first dimension) and each pixel (second and third dimension).
-        reverse_transform (bool): If True, the MAIA correction for pixel intensity is reverted.
+        apply_transform (bool): If True, the MAIA correction for pixel intensity is reverted.
 
     Returns:
         np.ndarray: An array of shape img_shape (reprensenting an image) containing the cumulated intensity of the 
@@ -208,8 +208,8 @@ def compute_image_using_index_lookup(
     # Build an array of ones for the correction (i.e. default is no correction)
     array_corrective_factors_lipid = np.ones((img_shape[0] * img_shape[1],), np.float32)
 
-    if reverse_transform:
-        # Check if the m/z region has been transformed, i.e. low and high bound are inside annotation
+    if apply_transform:
+        # Check if the m/z region must transformed, i.e. low and high bound are inside annotation
         idx_lipid_right = -1
         for idx_lipid, (min_mz, max_mz, avg_mz) in enumerate(array_peaks_transformed_lipids):
             # Take 10**-4 for precision
@@ -280,7 +280,7 @@ def _fill_image(
         # If i is in the interval of the lipid annotation, keep filling the image
         if array_to_sum[0, i] >= low_bound:
             image[convert_spectrum_idx_to_coor(idx_pix, img_shape)] += (
-                array_to_sum[1, i] / correction
+                array_to_sum[1, i] * correction
             )
     return image
 
@@ -296,7 +296,7 @@ def compute_image_using_index_and_image_lookup(
     divider_lookup,
     array_peaks_transformed_lipids,
     array_corrective_factors,
-    reverse_transform=False,
+    apply_transform=False,
 ):
     """This function is very much similar to compute_image_using_index_lookup, except that it uses a different lookup 
     table: lookup_table_image. This lookup table contains the cumulated intensities above the current lookup (instead of
@@ -329,7 +329,7 @@ def compute_image_using_index_and_image_lookup(
                 that have been transformed.
         array_corrective_factors (np.ndarray): A three-dimensional numpy array, which contains the MAIA corrective factor 
                 used for lipid (first dimension) and each pixel (second and third dimension).
-        reverse_transform (bool): If True, the MAIA correction for pixel intensity is reverted. Defaults to False.
+        apply_transform (bool): If True, the MAIA correction for pixel intensity is applied. Defaults to False.
 
     Returns:
         np.ndarray: An array of shape img_shape (reprensenting an image) containing the cumulated intensity of the 
@@ -338,7 +338,7 @@ def compute_image_using_index_and_image_lookup(
 
     # Image lookup table is not worth it for small differences between the bounds
     # And image lookup can't be used if the transformation should not be applied
-    if (high_bound - low_bound) < 5 or reverse_transform:
+    if (high_bound - low_bound) < 5 or apply_transform:
         return compute_image_using_index_lookup(
             low_bound,
             high_bound,
@@ -349,7 +349,7 @@ def compute_image_using_index_and_image_lookup(
             divider_lookup,
             array_peaks_transformed_lipids,
             array_corrective_factors,
-            reverse_transform,
+            apply_transform,
         )
 
     else:
@@ -478,7 +478,7 @@ def compute_normalized_image_per_lipid(
     divider_lookup,
     array_peaks_transformed_lipids,
     array_corrective_factors,
-    reverse_transform=False,
+    apply_transform=False,
     percentile_normalization=99,
     RGB_channel_format=True,
 ):
@@ -508,7 +508,7 @@ def compute_normalized_image_per_lipid(
                 that have been transformed.
         array_corrective_factors (np.ndarray): A three-dimensional numpy array, which contains the MAIA corrective factor 
                 used for lipid (first dimension) and each pixel (second and third dimension).
-        reverse_transform (bool): If True, the MAIA correction for pixel intensity is reverted. Defaults to False.
+        apply_transform (bool): If True, the MAIA correction for pixel intensity is applied. Defaults to False.
         percentile_normalization (int): Integer used to re-normalize the data, such that the maximum value correspond to
             the given percentile.
         RGB_channel_format (bool): If False, the output image is provided as an array with values between 0 and 1. Else,
@@ -532,7 +532,7 @@ def compute_normalized_image_per_lipid(
         divider_lookup,
         array_peaks_transformed_lipids,
         array_corrective_factors,
-        reverse_transform,
+        apply_transform,
     )
 
     # Normalize by percentile
@@ -809,6 +809,7 @@ def compute_spectrum_per_row_selection(
     array_pixel_indexes,
     image_shape,
     zeros_extend=True,
+    apply_correction=False,
 ):
     """This function computes the average spectrum from a manual selection of rows of pixel (each containing a 
     spectrum). The resulting average array can be zero-padded.
@@ -824,6 +825,7 @@ def compute_spectrum_per_row_selection(
             array_spectra.
         image_shape (int, int): A tuple of integers, indicating the vertical and horizontal sizes of the current slice.
         zeros_extend (bool, optional): If True, the resulting spectrum will be zero-padded. Defaults to True.
+        apply_correction (bool, optional): If True, MAIA transformation is applied to the lipids belonging to TODO, for each pixel. This option makes the computation very slow, so it shouldn't be selected if the computations must be done on the fly.
 
     Returns:
         np.ndarray: Spectrum averaged from a manual selection of rows of pixel, containing m/z values in the first row, 
@@ -841,9 +843,14 @@ def compute_spectrum_per_row_selection(
     # Fill array line by line
     for i, x in enumerate(range(list_index_bound_rows[0], list_index_bound_rows[1] + 1)):
         for idx_1, idx_2 in zip(ll_idx[i][0:-1:2], ll_idx[i][1::2]):
-            array_spectra_selection[:, pad : pad + idx_2 + 1 - idx_1] = array_spectra[
-                :, idx_1 : idx_2 + 1
-            ]
+            if apply_correction:
+                array_spectra_to_correct = array_spectra[:, idx_1 : idx_2 + 1].copy()
+                # TODO ! Apply correction
+                array_spectra_selection[:, pad : pad + idx_2 + 1 - idx_1] = array_spectra_to_correct
+            else:
+                array_spectra_selection[:, pad : pad + idx_2 + 1 - idx_1] = array_spectra[
+                    :, idx_1 : idx_2 + 1
+                ]
             pad += idx_2 + 1 - idx_1
 
     # Sort array

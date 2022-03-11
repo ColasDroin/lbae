@@ -289,9 +289,7 @@ def return_array_pixel_indexes(array_pixel, total_shape):
 
 
 def get_standardized_values(
-    slice_index,
-    path_array_data="/data/lipidatlas/data/processed/BRAIN1",
-    path_array_transformed_data="/data/lipidatlas/data/processed/BRAIN1_normalized",
+    slice_index, path_array_data, path_array_transformed_data,
 ):
     """This function loads the values of the intensities of the the lipids whose expression have 
     been previously corrected using MAIA.
@@ -464,6 +462,7 @@ def standardize_values(
     l_lipids_float,
     arrays_before_transfo,
     arrays_after_transfo,
+    ignore_standardization=True,
 ):
     """This function rescale the intensity values of the lipids annotated with a Combat-like method 
     as part of the MAIA pipeline, using pre-computed intensities values.
@@ -483,6 +482,9 @@ def standardize_values(
         arrays_after_transfo (np.ndarray): A numpy array of shape (n_lipids, image_shape[0], 
             image_shape[1]) containing the cumulated intensities (summed over all bins) of the 
             lipids we want to visualize, for each pixel, after these intensities were transformed.
+        ignore_standardization (bool): If True, the standardization step is ignored. The function 
+            is not useless as it still returns 'array_peaks_to_correct' and 
+            'array_corrective_factors'.
     Returns:
         np.ndarray: A numpy array containing spectrum data (pixel index, m/z and intensity), sorted 
             by pixel index and mz, with lipids values transformed.
@@ -522,31 +524,32 @@ def standardize_values(
             )
     array_peaks_to_correct = array_peaks[rows_to_keep]
 
-    # Compute the transformed spectrum for each pixel
-    n_pix_transformed = 0
-    sum_n_peaks_transformed = 0
-    for idx_pixel, [idx_pixel_min, idx_pixel_max] in enumerate(array_pixel_indexes):
-        array_spectra_pixel = array_spectra[idx_pixel_min : idx_pixel_max + 1]
-        if len(array_spectra_pixel) > 1:
-            array_spectra_pixel, n_peaks_transformed = compute_standardization(
-                array_spectra_pixel,
-                idx_pixel,
-                array_peaks_to_correct,
-                arrays_before_transfo,
-                arrays_after_transfo,
-            )
+    if not ignore_standardization:
+        # Compute the transformed spectrum for each pixel
+        n_pix_transformed = 0
+        sum_n_peaks_transformed = 0
+        for idx_pixel, [idx_pixel_min, idx_pixel_max] in enumerate(array_pixel_indexes):
+            array_spectra_pixel = array_spectra[idx_pixel_min : idx_pixel_max + 1]
+            if len(array_spectra_pixel) > 1:
+                array_spectra_pixel, n_peaks_transformed = compute_standardization(
+                    array_spectra_pixel,
+                    idx_pixel,
+                    array_peaks_to_correct,
+                    arrays_before_transfo,
+                    arrays_after_transfo,
+                )
 
-            # Reattribute the corrected values to the intial spectrum
-            array_spectra[idx_pixel_min : idx_pixel_max + 1] = array_spectra_pixel
-            n_pix_transformed += 1
-            sum_n_peaks_transformed += n_peaks_transformed
+                # Reattribute the corrected values to the intial spectrum
+                array_spectra[idx_pixel_min : idx_pixel_max + 1] = array_spectra_pixel
+                n_pix_transformed += 1
+                sum_n_peaks_transformed += n_peaks_transformed
 
-    print(
-        n_pix_transformed,
-        "have been transformed, with an average of ",
-        sum_n_peaks_transformed / n_pix_transformed,
-        "peaks transformed",
-    )
+        print(
+            n_pix_transformed,
+            "have been transformed, with an average of ",
+            sum_n_peaks_transformed / n_pix_transformed,
+            "peaks transformed",
+        )
     # Delete the n_pix column (3rd column) in array_peaks
     array_peaks_to_correct = np.delete(array_peaks_to_correct, 2, 1)
 
@@ -629,6 +632,12 @@ def extract_raw_data(
     slice_index = t_index_path[0]
     name = t_index_path[1]
 
+    # Correct output path
+    if "MouseBrain2" in name:
+        output_path += "brain_2/"
+    else:
+        output_path += "brain_1/"
+
     # Load file in high and low resolution
     print("Loading files : " + name)
     smz_high_res = load_file(name, resolution=1e-5)
@@ -705,6 +714,15 @@ def process_raw_data(
         # Get slice path
         slice_index = t_index_path[0]
         name = t_index_path[1]
+
+        # Correct output path
+        if "MouseBrain2" in name:
+            output_path += "brain_2/"
+            brain_1 = False
+        else:
+            output_path += "brain_1/"
+            brain_1 = True
+
         path = output_path + "slice_" + str(slice_index) + "raw.npz"
         npzfile = np.load(path)
         # Load individual arrays
@@ -724,7 +742,12 @@ def process_raw_data(
     # Get the peak annotation file
     array_peaks = load_peak_file(name)
     # Get the list of m/z values to keep for visualization
-    array_mz_lipids = load_lipid_file(slice_index, path="data/annotations/df_match.csv")
+    array_mz_lipids = load_lipid_file(
+        slice_index,
+        path="data/annotations/df_match_brain_2.csv"
+        if not brain_1
+        else "data/annotations/df_match_brain_1.csv",
+    )
     # Filter out all the undesired values
     l_to_keep_high_res, l_mz_lipids_kept = filter_peaks(
         array_high_res, array_peaks, array_mz_lipids[:, 0]
@@ -758,10 +781,18 @@ def process_raw_data(
             l_lipids_float,
             arrays_before_transfo,
             arrays_after_transfo,
-        ) = get_standardized_values(slice_index)
+        ) = get_standardized_values(
+            slice_index,
+            path_array_data="/data/lipidatlas/data/processed/BRAIN1"
+            if brain_1
+            else "/data/lipidatlas/data/processed/BRAIN2",
+            path_array_transformed_data="/data/lipidatlas/data/processed/BRAIN1_normalized"
+            if brain_1
+            else "/data/lipidatlas/data/processed/BRAIN2_normalized",
+        )
 
         print("Standardize data")
-        # Standardize values
+        # Get arrays for standardizing value but ignore actual standardization
         array_high_res, array_peaks_corrected, array_corrective_factors = standardize_values(
             array_high_res,
             array_pixel_indexes_high_res,
@@ -770,6 +801,7 @@ def process_raw_data(
             l_lipids_float,
             arrays_before_transfo,
             arrays_after_transfo,
+            ignore_standardization=True,
         )
 
     # Sort according to mz for averaging

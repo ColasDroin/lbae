@@ -759,7 +759,8 @@ def page_4_add_toast_region_selection(
 
     return dash.no_update
 
-
+# ! Need to have lipids that have been MAIA transformed only in page-4-toast-lipid-1, page-4-toast-lipid-2 etc
+# ! Maybe remove the possibility to have more than 1 lipid?
 # Function to plot page-4-graph-volume when its state get updated
 @app.app.callback(
     Output("page-4-graph-volume", "figure"),
@@ -786,7 +787,7 @@ def page_4_add_toast_region_selection(
     State("page-4-selected-region-2", "data"),
     State("page-4-selected-region-3", "data"),
 )
-def page_2bis_plot_graph_heatmap_mz_selection(
+def page_4_plot_graph_volume(
     # active_tab,
     bound_high_res,
     bound_low_res,
@@ -844,42 +845,45 @@ def page_2bis_plot_graph_heatmap_mz_selection(
             "For the computation of 3D volume, decrease_resolution_factor is "
             + str(decrease_resolution_factor)
         )
-    # case a mz value and a manual range have been inputed
-    if id_input == "page-4-button-range" or (
-        id_input == "page-4-radioitems-input" and value_input == 3
-    ):
-        if mz is not None and mz_range is not None:
-            mz = float(mz)
-            mz_range = float(mz_range)
-            if mz > 400 and mz < 1200 and mz_range < 10:
-                return (
-                    figures.compute_3D_volume_figure(
-                        [[[(mz - mz_range / 2, mz + mz_range / 2)], None, None]]
-                        * app.data.get_slice_number(),
-                        set_id_regions=set_id,
-                        decrease_dimensionality_factor=decrease_resolution_factor,
-                    ),
-                    3,
-                )
 
-        return dash.no_update
+    # ! Range is not implemented anymore
+    # # case a mz value and a manual range have been inputed
+    # if id_input == "page-4-button-range" or (
+    #     id_input == "page-4-radioitems-input" and value_input == 3
+    # ):
+    #     if mz is not None and mz_range is not None:
+    #         mz = float(mz)
+    #         mz_range = float(mz_range)
+    #         if mz > 400 and mz < 1200 and mz_range < 10:
+    #             return (
+    #                 figures.compute_3D_volume_figure(
+    #                     [[[(mz - mz_range / 2, mz + mz_range / 2)], None, None]]
+    #                     * app.data.get_slice_number(),
+    #                     set_id_regions=set_id,
+    #                     decrease_dimensionality_factor=decrease_resolution_factor,
+    #                 ),
+    #                 3,
+    #             )
 
-    # case a two mz bounds values have been inputed
-    elif id_input == "page-4-button-bounds" or (
-        id_input == "page-4-radioitems-input" and value_input == 2
-    ):
-        if lb is not None and hb is not None:
-            lb, hb = float(lb), float(hb)
-            if lb > 400 and hb < 1200 and hb - lb > 0 and hb - lb < 10:
-                return (
-                    figures.compute_3D_volume_figure(
-                        [[[(lb, hb)], None, None]] * app.data.get_slice_number(),
-                        set_id_regions=set_id,
-                        decrease_dimensionality_factor=decrease_resolution_factor,
-                    ),
-                    2,
-                )
-        return dash.no_update
+    #     return dash.no_update
+
+    # ! Bounds are not implemented anymore
+    # # case a two mz bounds values have been inputed
+    # elif id_input == "page-4-button-bounds" or (
+    #     id_input == "page-4-radioitems-input" and value_input == 2
+    # ):
+    #     if lb is not None and hb is not None:
+    #         lb, hb = float(lb), float(hb)
+    #         if lb > 400 and hb < 1200 and hb - lb > 0 and hb - lb < 10:
+    #             return (
+    #                 figures.compute_3D_volume_figure(
+    #                     [[[(lb, hb)], None, None]] * app.data.get_slice_number(),
+    #                     set_id_regions=set_id,
+    #                     decrease_dimensionality_factor=decrease_resolution_factor,
+    #                 ),
+    #                 2,
+    #             )
+    #     return dash.no_update
 
     # If a lipid selection has been done
     elif (

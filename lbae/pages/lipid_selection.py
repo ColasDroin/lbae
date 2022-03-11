@@ -74,9 +74,9 @@ def return_layout(basic_config, slice_index):
                                 ),
                             ),
                             dmc.Switch(
-                                id="page-2-toggle-reverse-transform",
-                                label="Reverse MAIA transform",
-                                checked=False,
+                                id="page-2-toggle-apply-transform",
+                                label="Apply MAIA transform",
+                                checked=True,
                                 color="cyan",
                                 radius="xl",
                                 size="sm",
@@ -470,7 +470,7 @@ def return_layout(basic_config, slice_index):
     # State("page-2-mz-value", "value"),
     # State("page-2-mz-range", "value"),
     State("page-2-badge-input", "children"),
-    Input("page-2-toggle-reverse-transform", "checked"),
+    Input("page-2-toggle-apply-transform", "checked"),
 )
 def page_2_plot_graph_heatmap_mz_selection(
     slice_index,
@@ -489,7 +489,7 @@ def page_2_plot_graph_heatmap_mz_selection(
     # mz,
     # mz_range,
     graph_input,
-    reverse_transform,
+    apply_transform,
 ):
     logging.info("Entering function to plot heatmap or RGB depending on lipid selection")
     # Find out which input triggered the function
@@ -517,7 +517,7 @@ def page_2_plot_graph_heatmap_mz_selection(
         or id_input == "tab-2-rgb-button"
         or id_input == "tab-2-colormap-button"
         or (
-            (id_input == "main-slider" or id_input == "page-2-toggle-reverse-transform")
+            (id_input == "main-slider" or id_input == "page-2-toggle-apply-transform")
             and (
                 graph_input == "Current input: " + "Lipid selection colormap"
                 or graph_input == "Current input: " + "Lipid selection RGB"
@@ -573,7 +573,7 @@ def page_2_plot_graph_heatmap_mz_selection(
                     and graph_input == "Current input: " + "Lipid selection colormap"
                 )
                 or (
-                    id_input == "page-2-toggle-reverse-transform"
+                    id_input == "page-2-toggle-apply-transform"
                     and graph_input == "Current input: " + "Lipid selection colormap"
                 )
             ):
@@ -581,7 +581,7 @@ def page_2_plot_graph_heatmap_mz_selection(
                     figures.compute_heatmap_per_lipid_selection(
                         slice_index,
                         ll_lipid_bounds,
-                        reverse_transform=reverse_transform,
+                        apply_transform=apply_transform,
                         ll_lipid_names=ll_lipid_names,
                     ),
                     "Current input: " + "Lipid selection colormap",
@@ -593,7 +593,7 @@ def page_2_plot_graph_heatmap_mz_selection(
                     and graph_input == "Current input: " + "Lipid selection RGB"
                 )
                 or (
-                    id_input == "page-2-toggle-reverse-transform"
+                    id_input == "page-2-toggle-apply-transform"
                     and graph_input == "Current input: " + "Lipid selection RGB"
                 )
             ):
@@ -601,7 +601,7 @@ def page_2_plot_graph_heatmap_mz_selection(
                     figures.compute_rgb_image_per_lipid_selection(
                         slice_index,
                         ll_lipid_bounds,
-                        reverse_transform=reverse_transform,
+                        apply_transform=apply_transform,
                         ll_lipid_names=ll_lipid_names,
                     ),
                     "Current input: " + "Lipid selection RGB",
@@ -612,7 +612,7 @@ def page_2_plot_graph_heatmap_mz_selection(
                     figures.compute_rgb_image_per_lipid_selection(
                         slice_index,
                         ll_lipid_bounds,
-                        reverse_transform=reverse_transform,
+                        apply_transform=apply_transform,
                         ll_lipid_names=ll_lipid_names,
                     ),
                     "Current input: " + "Lipid selection RGB",

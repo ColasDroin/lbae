@@ -238,22 +238,30 @@ def process_lookup_tables(
             above.
     """
     if l_arrays_raw_data is not None:
-        (
-            array_pixel_indexes_high_res,
-            array_spectra_high_res,
-            array_averaged_mz_intensity_low_res,
-            array_averaged_mz_intensity_high_res,
-            array_averaged_mz_intensity_high_res_before_standardization,
-            image_shape,
-            array_peaks_corrected,
-            array_corrective_factors,
-        ) = l_arrays_raw_data
+        raise ValueError("Arrays must be loaded from file from now on.")
+        # (
+        #     array_pixel_indexes_high_res,
+        #     array_spectra_high_res,
+        #     array_averaged_mz_intensity_low_res,
+        #     array_averaged_mz_intensity_high_res,
+        #     array_averaged_mz_intensity_high_res_before_standardization,
+        #     image_shape,
+        #     array_peaks_corrected,
+        #     array_corrective_factors,
+        # ) = l_arrays_raw_data
 
     elif load_from_file:
 
         # Get slice path
         slice_index = t_index_path[0]
         name = t_index_path[1]
+
+        # Correct temp path
+        if "MouseBrain2" in name:
+            temp_path += "brain_2/"
+        else:
+            temp_path += "brain_1/"
+
         path = temp_path + "slice_" + str(slice_index) + ".npz"
         npzfile = np.load(path)
 
