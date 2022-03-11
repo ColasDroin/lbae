@@ -114,7 +114,7 @@ class Atlas:
             logging.info(
                 "The dictionnary of available mask per slice has not been computed yet, doing it now."
             )
-        self.save_all_projected_masks_and_spectra()
+            self.save_all_projected_masks_and_spectra()
 
     # Load arrays of images using atlas projection
     @property
@@ -465,22 +465,21 @@ class Atlas:
                 else:
                     dic_existing_masks[slice_index].add(id_mask)
 
-                # ! This must be uncommented when I'm done computing the maia corrected data
-                # # Compute average spectrum in the mask
-                # grah_scattergl_data = self.compute_spectrum_data(
-                #     slice_index, projected_mask, MAIA_correction=False
-                # )
+                # Compute average spectrum in the mask
+                grah_scattergl_data = self.compute_spectrum_data(
+                    slice_index, projected_mask, MAIA_correction=False
+                )
 
-                # # Dump the mask and data with pickle
-                # with open(
-                #     "data/atlas/atlas_objects/mask_and_spectrum_"
-                #     + str(slice_index)
-                #     + "_"
-                #     + str(id_mask).replace("/", "")
-                #     + ".pickle",
-                #     "wb",
-                # ) as file:
-                #     pickle.dump((projected_mask, grah_scattergl_data), file)
+                # Dump the mask and data with pickle
+                with open(
+                    "data/atlas/atlas_objects/mask_and_spectrum_"
+                    + str(slice_index)
+                    + "_"
+                    + str(id_mask).replace("/", "")
+                    + ".pickle",
+                    "wb",
+                ) as file:
+                    pickle.dump((projected_mask, grah_scattergl_data), file)
 
                 # Same with MAIA corrected data
                 grah_scattergl_data = self.compute_spectrum_data(
