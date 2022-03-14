@@ -747,7 +747,14 @@ class Figures:
         return fig
 
     def compute_spectrum_high_res(
-        self, slice_index, lb=None, hb=None, annotations=None, force_xlim=False, plot=True
+        self,
+        slice_index,
+        lb=None,
+        hb=None,
+        annotations=None,
+        force_xlim=False,
+        plot=True,
+        standardization=False,
     ):
 
         # Define default values for graph (empty)
@@ -760,11 +767,17 @@ class Figures:
             index_lb, index_hb = spectra.compute_index_boundaries(
                 lb,
                 hb,
-                array_spectra_avg=self._data.get_array_avg_spectrum(slice_index),
+                array_spectra_avg=self._data.get_array_avg_spectrum(
+                    slice_index, standardization=standardization
+                ),
                 lookup_table=self._data.get_array_lookup_mz_avg(slice_index),
             )
-            x = self._data.get_array_avg_spectrum(slice_index)[0, index_lb:index_hb]
-            y = self._data.get_array_avg_spectrum(slice_index)[1, index_lb:index_hb]
+            x = self._data.get_array_avg_spectrum(slice_index, standardization=standardization)[
+                0, index_lb:index_hb
+            ]
+            y = self._data.get_array_avg_spectrum(slice_index, standardization=standardization)[
+                1, index_lb:index_hb
+            ]
 
         # In case download without plotting
         if not plot:
@@ -1144,6 +1157,7 @@ class Figures:
                     projected_image=high_res,
                     log=False,
                     enrichment=False,
+                    apply_transform=True,
                 )
 
                 # Sum array colors (i.e. lipids)
