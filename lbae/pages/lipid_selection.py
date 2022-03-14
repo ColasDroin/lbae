@@ -1213,7 +1213,7 @@ def tab_2_display_alert(figure):
     State("page-2-selected-lipid-2", "data"),
     State("page-2-selected-lipid-3", "data"),
     State("main-slider", "value"),
-    Input("page-2-toggle-apply-transform", "checked"),
+    State("page-2-toggle-apply-transform", "checked"),
     prevent_initial_call=True,
 )
 def tab_2_download(

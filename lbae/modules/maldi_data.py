@@ -118,6 +118,7 @@ class MaldiData:
             for array_name in [
                 "array_spectra",
                 "array_avg_spectrum",
+                "array_avg_spectrum_after_standardization",
                 "array_lookup_mz",
                 "array_cumulated_lookup_mz_image",
             ]:
