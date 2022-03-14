@@ -198,7 +198,7 @@ def process_lookup_tables(
     - array_averaged_mz_intensity_low_res: np.nddaray of shape (2, k), it contains the 
         low-resolution spectrum averaged over all pixels. First row contains the m/z values, 
         while second row contains the corresponding intensities.
-    - array_averaged_mz_intensity_low_res: Same as array_averaged_mz_intensity_low_res, but in 
+    - array_averaged_mz_intensity_high_res: Same as array_averaged_mz_intensity_low_res, but in 
         higher resolution, with, therefore, a different shape.
     - image_shape: a tuple of integers, indicating the vertical and horizontal size of the 
         corresponding slice.

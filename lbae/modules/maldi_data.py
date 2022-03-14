@@ -45,7 +45,7 @@ class MaldiData:
             - array_avg_spectrum: bidimensional, it contains the high-resolution spectrum averaged 
                 over all pixels. First row contains the m/z values, while second row contains the 
                 corresponding intensities.
-            - array_avg_spectrum_before_standardization: Same as array_avg_spectrum, but before MAIA
+            - array_avg_spectrum_after_standardization: Same as array_avg_spectrum, but after MAIA
                 standardization.
             - array_lookup_mz: bidimensional, it maps m/z values to indexes in array_spectra for 
                 each pixel.
@@ -189,11 +189,11 @@ class MaldiData:
         return self._dic_memmap[slice_index]["array_spectra"][1, :]
 
     def get_array_avg_spectrum(self, slice_index, standardization=True):
-        if standardization:
+        if not standardization:
             # Previously called array_averaged_mz_intensity_high_res
             return self._dic_memmap[slice_index]["array_avg_spectrum"]
         else:
-            return self._dic_memmap[slice_index]["array_avg_spectrum_before_standardization"]
+            return self._dic_memmap[slice_index]["array_avg_spectrum_after_standardization"]
 
     def get_array_lookup_mz(self, slice_index):
         # Previously called lookup_table_spectra_high_res

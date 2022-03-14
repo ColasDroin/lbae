@@ -800,6 +800,7 @@ def page_2_store_boundaries_mz_from_graph_low_res_spectrum(relayoutData, slice_i
     # State("page-2-mz-value", "value"),
     # State("page-2-mz-range", "value"),
     State("page-2-badge-input", "children"),
+    Input("page-2-toggle-apply-transform", "checked"),
 )
 def page_2_plot_graph_high_res_spectrum(
     slice_index,
@@ -816,6 +817,7 @@ def page_2_plot_graph_high_res_spectrum(
     # mz,
     # mz_range,
     graph_input,
+    apply_transform,
 ):
 
     # Find out which input triggered the function
@@ -862,6 +864,7 @@ def page_2_plot_graph_high_res_spectrum(
                 l_lipid_bounds[current_lipid_index][1] + 10 ** -2,
                 annotations=l_lipid_bounds,
                 force_xlim=True,
+                standardization=apply_transform,
             )
 
     elif id_input == "page-2-button-bounds" or (
@@ -875,6 +878,7 @@ def page_2_plot_graph_high_res_spectrum(
                 lb - 10 ** -2,
                 hb + 10 ** -2,
                 force_xlim=True,  # annotations=l_lipid_bounds,
+                standardization=apply_transform,
             )
 
     # If the figure is created at app launch or after load button is cliked, or with an empty lipid
@@ -889,7 +893,7 @@ def page_2_plot_graph_high_res_spectrum(
         # Case the zoom is high enough
         if bound_high_res[1] - bound_high_res[0] <= 3:
             return figures.compute_spectrum_high_res(
-                slice_index, bound_high_res[0], bound_high_res[1]
+                slice_index, bound_high_res[0], bound_high_res[1], standardization=apply_transform,
             )
         # Otherwise just return default (empty) graph
         else:
@@ -1209,9 +1213,12 @@ def tab_2_display_alert(figure):
     State("page-2-selected-lipid-2", "data"),
     State("page-2-selected-lipid-3", "data"),
     State("main-slider", "value"),
+    Input("page-2-toggle-apply-transform", "checked"),
     prevent_initial_call=True,
 )
-def tab_2_download(n_clicks, lipid_1_index, lipid_2_index, lipid_3_index, slice_index):
+def tab_2_download(
+    n_clicks, lipid_1_index, lipid_2_index, lipid_3_index, slice_index, apply_transform
+):
 
     l_lipids_indexes = [
         x for x in [lipid_1_index, lipid_2_index, lipid_3_index] if x is not None and x != -1
@@ -1237,7 +1244,9 @@ def tab_2_download(n_clicks, lipid_1_index, lipid_2_index, lipid_3_index, slice_
                 name = name.replace(":", "").replace("/", "")
                 lb = float(data.get_annotations().iloc[index]["min"]) - 10 ** -2
                 hb = float(data.get_annotations().iloc[index]["max"]) + 10 ** -2
-                x, y = figures.compute_spectrum_high_res(slice_index, lb, hb, plot=False)
+                x, y = figures.compute_spectrum_high_res(
+                    slice_index, lb, hb, plot=False, standardization=apply_transform
+                )
                 df = pd.DataFrame.from_dict({"m/z": x, "Intensity": y})
                 df.to_excel(xlsx_writer, index=False, sheet_name=name[:31])
             xlsx_writer.save()

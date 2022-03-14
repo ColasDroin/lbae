@@ -681,7 +681,7 @@ def process_raw_data(
         second row contains the corresponding intensities.
     - array_averaged_mz_intensity_high_res: Same as array_averaged_mz_intensity_low_res, but in 
         higher resolution, with, therefore, a different shape.
-    - array_averaged_mz_intensity_high_res_before_standardization: Same as 
+    - array_averaged_mz_intensity_high_res_after_standardization: Same as 
         array_averaged_mz_intensity_high_res, but before applying MAIA standardization.
     - image_shape: a tuple of integers, indicating the vertical and horizontal sizes of the 
         corresponding slice.
@@ -756,16 +756,6 @@ def process_raw_data(
     # Keep only the annotated peaks
     array_high_res = array_high_res[l_to_keep_high_res]
 
-    # Compute the averaged spectra array before standardization
-    print("Sorting by m/z value for averaging before standardization")
-    array_high_res = array_high_res[np.lexsort((array_high_res[:, 1],), axis=0)]
-
-    # Average low/high resolution arrays over identical mz across pixels
-    print("Getting spectrums array averaged accross pixels")
-    array_averaged_mz_intensity_high_res_before_standardization = return_averaged_spectra_array(
-        array_high_res
-    )
-
     if standardize_lipid_values:
         print("Prepare data for standardization")
         # Double sort by pixel and mz
@@ -793,16 +783,20 @@ def process_raw_data(
         )
 
         print("Standardize data")
-        # Get arrays for standardizing value but ignore actual standardization
-        array_high_res, array_peaks_corrected, array_corrective_factors = standardize_values(
-            array_high_res,
+        # Standardize a copy of a the data
+        (
+            array_high_res_standardized,
+            array_peaks_corrected,
+            array_corrective_factors,
+        ) = standardize_values(
+            array_high_res.copy(),
             array_pixel_indexes_high_res,
             array_peaks,
             array_mz_lipids,
             l_lipids_float,
             arrays_before_transfo,
             arrays_after_transfo,
-            ignore_standardization=True,
+            ignore_standardization=False,
         )
 
     # Sort according to mz for averaging
@@ -816,6 +810,18 @@ def process_raw_data(
     print("Build the low-resolution averaged array from the high resolution averaged array")
     array_averaged_mz_intensity_low_res = reduce_resolution_sorted_array_spectra(
         array_averaged_mz_intensity_high_res, resolution=10 ** -2
+    )
+
+    # Same with the standardized data
+    print("Sorting by m/z value for averaging after standardization")
+    array_high_res_standardized = array_high_res_standardized[
+        np.lexsort((array_high_res_standardized[:, 1],), axis=0)
+    ]
+
+    # Average low/high resolution arrays over identical mz across pixels
+    print("Getting spectrums array averaged accross pixels")
+    array_averaged_mz_intensity_high_res_after_standardization = return_averaged_spectra_array(
+        array_high_res_standardized
     )
 
     # Process more high-resolution data
@@ -841,7 +847,7 @@ def process_raw_data(
             array_spectra_high_res=array_spectra_high_res,
             array_averaged_mz_intensity_low_res=array_averaged_mz_intensity_low_res,
             array_averaged_mz_intensity_high_res=array_averaged_mz_intensity_high_res,
-            array_averaged_mz_intensity_high_res_before_standardization=array_averaged_mz_intensity_high_res_before_standardization,
+            array_averaged_mz_intensity_high_res_after_standardization=array_averaged_mz_intensity_high_res_after_standardization,
             image_shape=image_shape,
             array_peaks_corrected=array_peaks_corrected,
             array_corrective_factors=array_corrective_factors,
@@ -854,7 +860,7 @@ def process_raw_data(
             array_spectra_high_res,
             array_averaged_mz_intensity_low_res,
             array_averaged_mz_intensity_high_res,
-            array_averaged_mz_intensity_high_res_before_standardization,
+            array_averaged_mz_intensity_high_res_after_standardization,
             image_shape,
             array_peaks_corrected,
             array_corrective_factors,
