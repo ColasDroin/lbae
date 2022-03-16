@@ -612,7 +612,7 @@ def return_averaged_spectra_array(array):
 
 
 def extract_raw_data(
-    t_index_path, save=True, output_path="notebooks/data_processing/data/temp/",
+    t_index_path, save=True, output_path="/data/lipidatlas/data/app/data/temp/",
 ):
     """This function loads the raw maldi data and turns it into a python friendly numpy array, along
     with a given shape for the acquisition.
@@ -623,42 +623,45 @@ def extract_raw_data(
         save (bool, optional): If True, arrays for the extracted data are saved in a npz file. 
             Defaults to True (only option implemented for now for the rest of the pipeline).
         output_path (str, optional): Path to save the output npz file. Defaults to 
-            "notebooks/data_processing/data/temp/".
+            "/data/lipidatlas/data/app/data/temp/".
     Returns:
         np.ndarray, np.ndarray: The first array, of shape (3,n), contains, for the current 
             acquisition, the mz value (2nd column) and intensity (3rd column) for each pixel (first 
             column). The second array contains two integers representing the acquisition shape.
 .    """
-    # Get slice path
-    slice_index = t_index_path[0]
-    name = t_index_path[1]
+    try:
+        # Get slice path
+        slice_index = t_index_path[0]
+        name = t_index_path[1]
 
-    # Correct output path
-    if "MouseBrain2" in name:
-        output_path += "brain_2/"
-    else:
-        output_path += "brain_1/"
+        # Correct output path
+        if "MouseBrain2" in name:
+            output_path += "brain_2/"
+        else:
+            output_path += "brain_1/"
 
-    # Load file in high and low resolution
-    print("Loading files : " + name)
-    smz_high_res = load_file(name, resolution=1e-5)
-    image_shape = smz_high_res.img_shape
+        # Load file in high and low resolution
+        print("Loading files : " + name)
+        smz_high_res = load_file(name, resolution=1e-5)
+        image_shape = smz_high_res.img_shape
 
-    # Load df with different sortings (low_res will be averaged over m/z afterwards)
-    print("Creating and sorting dataframes")
-    df_high_res = process_sparse_matrix(smz_high_res, sort="m/z")
+        # Load df with different sortings (low_res will be averaged over m/z afterwards)
+        print("Creating and sorting dataframes")
+        df_high_res = process_sparse_matrix(smz_high_res, sort="m/z")
 
-    # Convert df into arrays for easier manipulation with numba
-    array_high_res = df_high_res.to_numpy()
+        # Convert df into arrays for easier manipulation with numba
+        array_high_res = df_high_res.to_numpy()
 
-    if save:
-        np.savez(
-            output_path + "slice_" + str(slice_index) + "raw.npz",
-            array_high_res=array_high_res,
-            image_shape=image_shape,
-        )
+        if save:
+            np.savez(
+                output_path + "slice_" + str(slice_index) + "raw.npz",
+                array_high_res=array_high_res,
+                image_shape=image_shape,
+            )
 
-    return array_high_res, image_shape
+        return array_high_res, image_shape
+    except:
+        return None
 
 
 def process_raw_data(
@@ -666,7 +669,7 @@ def process_raw_data(
     standardize_lipid_values=True,
     save=True,
     return_result=False,
-    output_path="notebooks/data_processing/data/temp/",
+    output_path="/data/lipidatlas/data/app/data/temp/",
     load_from_file=True,
 ):
     """This function has been implemented to allow the parallelization of slice processing. It turns 
@@ -701,7 +704,7 @@ def process_raw_data(
         return_result (bool, optional): If True, output arrays are returned by the function. 
             Defaults to False.
         output_path (str, optional): Path to save the output npz file. Defaults to 
-            "notebooks/data_processing/data/temp/".
+            "/data/lipidatlas/data/app/data/temp/".
         load_from_file(bool, optional): If True, loads the extracted data from npz file. Only option 
             implemented for now.
 
