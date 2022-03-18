@@ -6,7 +6,7 @@ from numba import njit
 import logging
 
 # Homemade packages
-from modules.tools.mspec import reduce_resolution_sorted
+from modules.tools.external_lib.mspec import reduce_resolution_sorted
 
 ###### FUNCTIONS TO CONVERT PIXEL COORDINATES ######
 @njit

@@ -7,7 +7,7 @@ import os
 import pandas as pd
 
 # Homemade packages
-from modules.tools.mspec import SmzMLobj
+from modules.tools.external_lib.mspec import SmzMLobj
 from modules.tools.spectra import reduce_resolution_sorted_array_spectra
 
 ###### DEFINE UTILITY FUNCTIONS ######
@@ -22,9 +22,14 @@ def load_file(path, resolution=1e-5):
     Returns:
         scipy.sparse: A sparse matrix containing the intensity for each m/z value.
     """
-    # Load object from SmzMLobj
-    smz = SmzMLobj(path + ".mzML", path + ".UDP", mz_resolution=resolution)
-    smz.load(load_unique_mz=True)
+    # Check if imzML exists and load if possible
+    if os.path.exists(path + ".imzML"):
+        smz = SmzMLobj(path + ".ibd", path + ".imzML", mz_resolution=resolution)
+        smz.load(load_unique_mz=True)
+    else:
+        # Load object from SmzMLobj
+        smz = SmzMLobj(path + ".mzML", path + ".UDP", mz_resolution=resolution)
+        smz.load(load_unique_mz=True)
 
     # Compute shape of the spectra matrix to preload matrix
     smz.S.shape
@@ -186,7 +191,7 @@ def filter_peaks(array_spectra, array_peaks, array_mz_lipids_per_slice):
             intensity), sorted by mz (but not necessarily by pixel index).
         array_peaks (np.ndarray): A numpy array containing the peak annotations (min peak, max peak, 
             number of pixels containing the peak, average value of the peak), sorted by min_mz.
-            array_mz_lipids_per_slice (np.ndarray): A 1-D numpy array containing the per-slice mz 
+        array_mz_lipids_per_slice (np.ndarray): A 1-D numpy array containing the per-slice mz 
             values of the lipids we want to visualize.
 
     Returns:
@@ -745,6 +750,7 @@ def process_raw_data(
 
     # Get the peak annotation file
     array_peaks = load_peak_file(name)
+
     # Get the list of m/z values to keep for visualization
     array_mz_lipids = load_lipid_file(
         slice_index,

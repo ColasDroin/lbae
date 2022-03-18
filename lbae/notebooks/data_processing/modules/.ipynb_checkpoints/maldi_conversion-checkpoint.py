@@ -7,7 +7,7 @@ import os
 import pandas as pd
 
 # Homemade packages
-from modules.tools.mspec import SmzMLobj
+from modules.tools.external_lib.mspec import SmzMLobj
 from modules.tools.spectra import reduce_resolution_sorted_array_spectra
 
 ###### DEFINE UTILITY FUNCTIONS ######
@@ -22,9 +22,14 @@ def load_file(path, resolution=1e-5):
     Returns:
         scipy.sparse: A sparse matrix containing the intensity for each m/z value.
     """
-    # Load object from SmzMLobj
-    smz = SmzMLobj(path + ".mzML", path + ".UDP", mz_resolution=resolution)
-    smz.load(load_unique_mz=True)
+    # Check if imzML exists and load if possible
+    if os.path.exists(path + ".imzML"):
+        smz = SmzMLobj(path + ".ibd", path + ".imzML", mz_resolution=resolution)
+        smz.load(load_unique_mz=True)
+    else:
+        # Load object from SmzMLobj
+        smz = SmzMLobj(path + ".mzML", path + ".UDP", mz_resolution=resolution)
+        smz.load(load_unique_mz=True)
 
     # Compute shape of the spectra matrix to preload matrix
     smz.S.shape
@@ -612,7 +617,7 @@ def return_averaged_spectra_array(array):
 
 
 def extract_raw_data(
-    t_index_path, save=True, output_path="notebooks/data_processing/data/temp/",
+    t_index_path, save=True, output_path="/data/lipidatlas/data/app/data/temp/",
 ):
     """This function loads the raw maldi data and turns it into a python friendly numpy array, along
     with a given shape for the acquisition.
@@ -623,7 +628,7 @@ def extract_raw_data(
         save (bool, optional): If True, arrays for the extracted data are saved in a npz file. 
             Defaults to True (only option implemented for now for the rest of the pipeline).
         output_path (str, optional): Path to save the output npz file. Defaults to 
-            "notebooks/data_processing/data/temp/".
+            "/data/lipidatlas/data/app/data/temp/".
     Returns:
         np.ndarray, np.ndarray: The first array, of shape (3,n), contains, for the current 
             acquisition, the mz value (2nd column) and intensity (3rd column) for each pixel (first 
@@ -669,7 +674,7 @@ def process_raw_data(
     standardize_lipid_values=True,
     save=True,
     return_result=False,
-    output_path="notebooks/data_processing/data/temp/",
+    output_path="/data/lipidatlas/data/app/data/temp/",
     load_from_file=True,
 ):
     """This function has been implemented to allow the parallelization of slice processing. It turns 
@@ -704,7 +709,7 @@ def process_raw_data(
         return_result (bool, optional): If True, output arrays are returned by the function. 
             Defaults to False.
         output_path (str, optional): Path to save the output npz file. Defaults to 
-            "notebooks/data_processing/data/temp/".
+            "/data/lipidatlas/data/app/data/temp/".
         load_from_file(bool, optional): If True, loads the extracted data from npz file. Only option 
             implemented for now.
 
