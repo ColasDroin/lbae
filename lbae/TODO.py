@@ -1,5 +1,6 @@
 #
 # TODO Finish redesign
+# TODO Incorporate brain 2
 # TODO Do a round of debug
 # TODO Make a careful memory analysis to free more memory
 # TODO Replace all "tabs" by "pages"

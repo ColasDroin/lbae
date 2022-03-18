@@ -1,0 +1,538 @@
+usage: gunicorn [OPTIONS] [APP_MODULE]
+gunicorn: error: unrecognized arguments: @
+[2022-03-18 14:42:06 +0100] [16622] [INFO] Starting gunicorn 20.1.0
+[2022-03-18 14:42:06 +0100] [16622] [INFO] Listening at: http://0.0.0.0:8050 (16622)
+[2022-03-18 14:42:06 +0100] [16622] [INFO] Using worker: sync
+[2022-03-18 14:42:06 +0100] [16623] [INFO] Booting worker with pid: 16623
+[2022-03-18 14:42:06 +0100] [16624] [INFO] Booting worker with pid: 16624
+2022-03-18 14:42:07.164 INFO main - <module>: Starting import chain	MemTotal: 82.8203125
+2022-03-18 14:42:07.201 INFO main - <module>: Starting import chain	MemTotal: 82.8203125
+2022-03-18 14:42:09.056 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 243.2265625
+2022-03-18 14:42:09.057 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 243.2265625
+2022-03-18 14:42:09.115 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 243.2265625
+2022-03-18 14:42:09.115 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 243.2265625
+2022-03-18 14:42:09.766 INFO atlas - __init__: Initializing Atlas object	MemTotal: 1052.6953125
+2022-03-18 14:42:09.794 INFO atlas - __init__: Initializing Atlas object	MemTotal: 1052.6953125
+2022-03-18 14:42:10.333 INFO misc - return_pickled_object: Returning dic_acronym_children_id.pickle from pickled file.	MemTotal: 1349.30078125
+2022-03-18 14:42:10.372 INFO misc - return_pickled_object: Returning dic_acronym_children_id.pickle from pickled file.	MemTotal: 1349.3046875
+2022-03-18 14:42:11.101 INFO misc - return_pickled_object: Returning hierarchy.pickle from pickled file.	MemTotal: 1790.19921875
+2022-03-18 14:42:11.106 INFO misc - return_pickled_object: Returning arrays_projection_corrected_True_True.pickle from pickled file.	MemTotal: 1790.32421875
+2022-03-18 14:42:11.144 INFO misc - return_pickled_object: Returning hierarchy.pickle from pickled file.	MemTotal: 1790.20703125
+2022-03-18 14:42:11.149 INFO misc - return_pickled_object: Returning arrays_projection_corrected_True_True.pickle from pickled file.	MemTotal: 1790.33203125
+2022-03-18 14:42:11.322 INFO figures - __init__: Initializing Figures object	MemTotal: 1941.82421875
+2022-03-18 14:42:11.322 INFO misc - return_pickled_object: Returning dic_fig_contours.pickle from pickled file.	MemTotal: 1941.82421875
+2022-03-18 14:42:11.362 INFO figures - __init__: Initializing Figures object	MemTotal: 1941.83203125
+2022-03-18 14:42:11.362 INFO misc - return_pickled_object: Returning dic_fig_contours.pickle from pickled file.	MemTotal: 1941.83203125
+2022-03-18 14:42:11.731 INFO misc - return_pickled_object: Returning dic_normalization_factors.pickle from pickled file.	MemTotal: 1953.69921875
+2022-03-18 14:42:11.731 INFO app - <module>: Memory use after three main object have been instantiated	MemTotal: 1953.69921875
+2022-03-18 14:42:11.751 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-03-18 14:42:11.776 INFO misc - return_pickled_object: Returning figure_basic_image_projection_corrected_0_False.pickle from pickled file.	MemTotal: 1956.4140625
+2022-03-18 14:42:11.781 INFO misc - return_pickled_object: Returning dic_normalization_factors.pickle from pickled file.	MemTotal: 1953.765625
+2022-03-18 14:42:11.781 INFO app - <module>: Memory use after three main object have been instantiated	MemTotal: 1953.765625
+2022-03-18 14:42:11.788 INFO figures - compute_heatmap_per_mz: Starting figure computation, from mz boundaries
+2022-03-18 14:42:11.788 INFO figures - compute_heatmap_per_mz: Getting image array
+2022-03-18 14:42:11.788 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-03-18 14:42:11.800 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-03-18 14:42:11.824 INFO misc - return_pickled_object: Returning figure_basic_image_projection_corrected_0_False.pickle from pickled file.	MemTotal: 1956.18359375
+2022-03-18 14:42:11.836 INFO figures - compute_heatmap_per_mz: Starting figure computation, from mz boundaries
+2022-03-18 14:42:11.836 INFO figures - compute_heatmap_per_mz: Getting image array
+2022-03-18 14:42:11.836 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-03-18 14:42:13.188 INFO figures - compute_heatmap_per_mz: Done getting image array. Cleaning memory
+2022-03-18 14:42:13.190 INFO figures - compute_heatmap_per_mz: Memory cleaned
+2022-03-18 14:42:13.191 INFO figures - compute_heatmap_per_mz: Converting image to string
+2022-03-18 14:42:13.192 INFO misc - convert_image_to_base64: Entering string conversion function
+2022-03-18 14:42:13.194 INFO figures - compute_heatmap_per_mz: Done getting image array. Cleaning memory
+2022-03-18 14:42:13.200 INFO figures - compute_heatmap_per_mz: Memory cleaned
+2022-03-18 14:42:13.201 INFO figures - compute_heatmap_per_mz: Converting image to string
+2022-03-18 14:42:13.201 INFO misc - convert_image_to_base64: Entering string conversion function
+2022-03-18 14:42:13.233 INFO misc - convert_image_to_base64: Image has been converted from array to PIL image
+2022-03-18 14:42:13.245 INFO misc - convert_image_to_base64: Image has been converted from array to PIL image
+2022-03-18 14:42:13.272 INFO misc - convert_image_to_base64: Empty pixels are now transparent
+2022-03-18 14:42:13.283 INFO misc - convert_image_to_base64: Empty pixels are now transparent
+2022-03-18 14:42:13.287 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-03-18 14:42:13.299 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-03-18 14:42:13.309 INFO misc - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-03-18 14:42:13.312 INFO figures - compute_heatmap_per_mz: Adding image to figure
+2022-03-18 14:42:13.321 INFO misc - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-03-18 14:42:13.321 INFO figures - compute_heatmap_per_mz: Returning figure
+2022-03-18 14:42:13.321 INFO misc - return_pickled_object: Returning lipid_options.pickle from pickled file.	MemTotal: 1987.01171875
+2022-03-18 14:42:13.324 INFO figures - compute_heatmap_per_mz: Adding image to figure
+2022-03-18 14:42:13.333 INFO figures - compute_heatmap_per_mz: Returning figure
+2022-03-18 14:42:13.333 INFO misc - return_pickled_object: Returning lipid_options.pickle from pickled file.	MemTotal: 1987.1171875
+2022-03-18 14:42:13.350 INFO misc - return_pickled_object: Returning figure_basic_image_projection_corrected_0_False_True.pickle from pickled file.	MemTotal: 1987.01171875
+2022-03-18 14:42:13.362 INFO misc - return_pickled_object: Returning figure_basic_image_projection_corrected_0_False_True.pickle from pickled file.	MemTotal: 1987.1171875
+2022-03-18 14:42:13.362 INFO misc - return_pickled_object: Returning treemaps.pickle from pickled file.	MemTotal: 1987.01171875
+2022-03-18 14:42:13.373 INFO misc - return_pickled_object: Returning treemaps.pickle from pickled file.	MemTotal: 1987.1171875
+2022-03-18 14:42:13.382 INFO misc - return_pickled_object: Returning sunburst.pickle from pickled file.	MemTotal: 1987.01171875
+2022-03-18 14:42:13.392 INFO misc - return_pickled_object: Returning sunburst.pickle from pickled file.	MemTotal: 1987.1171875
+2022-03-18 14:42:13.396 INFO misc - return_pickled_object: Returning atlas_with_slider_frontal_False.pickle from pickled file.	MemTotal: 1987.01171875
+2022-03-18 14:42:13.405 INFO misc - return_pickled_object: Returning atlas_with_slider_frontal_False.pickle from pickled file.	MemTotal: 1987.1171875
+2022-03-18 14:42:13.416 INFO misc - return_pickled_object: Returning _None.pickle from pickled file.	MemTotal: 1987.01171875
+2022-03-18 14:42:13.423 INFO misc - return_pickled_object: Returning _None.pickle from pickled file.	MemTotal: 1987.1171875
+2022-03-18 14:42:17.323 INFO index - render_page_content: Page/has been selected	MemTotal: 1993.36328125
+2022-03-18 14:42:18.175 INFO index - render_page_content: Page/load-slicehas been selected	MemTotal: 1996.6953125
+2022-03-18 14:42:18.176 INFO misc - return_pickled_object: Returning figure_basic_image_projection_corrected_0_False.pickle from pickled file.	MemTotal: 1996.6953125
+2022-03-18 14:42:18.341 INFO load_slice - tab_1_load_image: Slider changed to value 1
+2022-03-18 14:42:19.445 INFO load_slice - tab_1_load_image: Slider changed to value 1
+2022-03-18 14:42:19.445 INFO misc - return_pickled_object: Returning figure_basic_image_warped_data_0_False.pickle from pickled file.	MemTotal: 1996.6953125
+2022-03-18 14:42:19.983 INFO load_slice - tab_1_load_image: Slider changed to value 1
+2022-03-18 14:42:19.983 INFO misc - return_pickled_object: Returning figure_basic_image_original_data_0_False.pickle from pickled file.	MemTotal: 1996.6953125
+2022-03-18 14:42:20.427 INFO load_slice - tab_1_load_image: Slider changed to value 1
+2022-03-18 14:42:20.427 INFO misc - return_pickled_object: Returning figure_basic_image_projection_corrected_0_False.pickle from pickled file.	MemTotal: 1996.62109375
+2022-03-18 14:42:20.675 INFO load_slice - tab_1_load_image: Slider changed to value 1
+2022-03-18 14:42:20.675 INFO misc - return_pickled_object: Returning figure_basic_image_atlas_0_False.pickle from pickled file.	MemTotal: 1996.62109375
+2022-03-18 14:42:22.199 INFO load_slice - tab_1_load_image: Slider changed to value 11
+2022-03-18 14:42:22.199 INFO misc - return_pickled_object: figure_basic_image_atlas_10_False.pickle could not be found or force_update is True. Computing the object and pickling it now.
+2022-03-18 14:42:22.199 INFO misc - return_pickled_object: Returning array_basic_images_atlas.pickle from pickled file.	MemTotal: 1996.62109375
+2022-03-18 14:42:22.262 INFO misc - convert_image_to_base64: Entering string conversion function
+2022-03-18 14:42:22.302 INFO misc - convert_image_to_base64: Image has been converted from array to PIL image
+2022-03-18 14:42:22.341 INFO misc - convert_image_to_base64: Empty pixels are now transparent
+2022-03-18 14:42:22.358 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-03-18 14:42:22.443 INFO misc - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-03-18 14:42:22.468 INFO misc - return_pickled_object: figure_basic_image_atlas_10_False.pickle being returned now from computation.
+2022-03-18 14:42:22.875 INFO load_slice - tab_1_load_image: Slider changed to value 14
+2022-03-18 14:42:22.875 INFO misc - return_pickled_object: figure_basic_image_atlas_13_False.pickle could not be found or force_update is True. Computing the object and pickling it now.
+2022-03-18 14:42:22.876 INFO misc - return_pickled_object: Returning array_basic_images_atlas.pickle from pickled file.	MemTotal: 2016.84375
+2022-03-18 14:42:22.903 INFO misc - convert_image_to_base64: Entering string conversion function
+2022-03-18 14:42:22.939 INFO misc - convert_image_to_base64: Image has been converted from array to PIL image
+2022-03-18 14:42:22.973 INFO misc - convert_image_to_base64: Empty pixels are now transparent
+2022-03-18 14:42:22.989 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-03-18 14:42:23.052 INFO misc - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-03-18 14:42:23.079 INFO misc - return_pickled_object: figure_basic_image_atlas_13_False.pickle being returned now from computation.
+2022-03-18 14:42:23.507 INFO load_slice - tab_1_load_image: Slider changed to value 17
+2022-03-18 14:42:23.507 INFO misc - return_pickled_object: figure_basic_image_atlas_16_False.pickle could not be found or force_update is True. Computing the object and pickling it now.
+2022-03-18 14:42:23.507 INFO misc - return_pickled_object: Returning array_basic_images_atlas.pickle from pickled file.	MemTotal: 2016.90625
+2022-03-18 14:42:23.534 INFO misc - convert_image_to_base64: Entering string conversion function
+2022-03-18 14:42:23.571 INFO misc - convert_image_to_base64: Image has been converted from array to PIL image
+2022-03-18 14:42:23.605 INFO misc - convert_image_to_base64: Empty pixels are now transparent
+2022-03-18 14:42:23.621 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-03-18 14:42:23.682 INFO misc - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-03-18 14:42:23.707 INFO misc - return_pickled_object: figure_basic_image_atlas_16_False.pickle being returned now from computation.
+2022-03-18 14:42:25.489 INFO misc - return_pickled_object: Returning slices_3D.pickle from pickled file.	MemTotal: 2016.96875
+2022-03-18 14:42:30.604 INFO index - render_page_content: Page/lipid-selectionhas been selected	MemTotal: 1996.6953125
+2022-03-18 14:42:30.604 INFO figures - compute_heatmap_per_mz: Starting figure computation, from mz boundaries
+2022-03-18 14:42:30.604 INFO figures - compute_heatmap_per_mz: Getting image array
+2022-03-18 14:42:30.604 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-03-18 14:42:30.730 INFO figures - compute_heatmap_per_mz: Done getting image array. Cleaning memory
+2022-03-18 14:42:30.734 INFO figures - compute_heatmap_per_mz: Memory cleaned
+2022-03-18 14:42:30.735 INFO figures - compute_heatmap_per_mz: Converting image to string
+2022-03-18 14:42:30.735 INFO misc - convert_image_to_base64: Entering string conversion function
+2022-03-18 14:42:30.773 INFO misc - convert_image_to_base64: Image has been converted from array to PIL image
+2022-03-18 14:42:30.810 INFO misc - convert_image_to_base64: Empty pixels are now transparent
+2022-03-18 14:42:30.826 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-03-18 14:42:30.861 INFO misc - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-03-18 14:42:30.861 INFO figures - compute_heatmap_per_mz: Adding image to figure
+2022-03-18 14:42:30.868 INFO figures - compute_heatmap_per_mz: Returning figure
+2022-03-18 14:42:30.869 INFO misc - return_pickled_object: Returning lipid_options.pickle from pickled file.	MemTotal: 2018.15625
+2022-03-18 14:42:31.167 INFO lipid_selection - page_2_add_toast_selection: Entering function to update lipid data
+2022-03-18 14:42:31.271 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-03-18 14:42:32.694 INFO lipid_selection - page_2_add_toast_selection: Entering function to update lipid data
+2022-03-18 14:42:32.696 INFO lipid_selection - page_2_add_toast_selection: Changes have been made to the lipid selection or indexation, propagating callback.
+2022-03-18 14:42:32.763 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-03-18 14:42:32.764 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Right before calling the graphing function
+2022-03-18 14:42:32.764 INFO figures - compute_rgb_image_per_lipid_selection: Started RGB image computation for slice 17	MemTotal: 2017.0703125
+2022-03-18 14:42:32.765 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-03-18 14:42:33.743 INFO figures - compute_rgb_image_per_lipid_selection: array_image acquired for slice 17	MemTotal: 2026.26953125
+2022-03-18 14:42:33.743 INFO misc - convert_image_to_base64: Entering string conversion function
+2022-03-18 14:42:33.760 INFO misc - convert_image_to_base64: Image has been converted from array to PIL image
+2022-03-18 14:42:33.796 INFO misc - convert_image_to_base64: Empty pixels are now transparent
+2022-03-18 14:42:33.812 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-03-18 14:42:33.835 INFO misc - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-03-18 14:42:33.836 INFO figures - compute_rgb_image_per_lipid_selection: Started building graph for slice 17	MemTotal: 2034.71875
+2022-03-18 14:42:33.843 INFO figures - compute_rgb_image_per_lipid_selection: Returning fig for slice 17	MemTotal: 2034.71875
+2022-03-18 14:42:34.539 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-03-18 14:42:34.540 INFO figures - compute_heatmap_per_lipid_selection: Compute heatmap per lipid selection[[(646.6112, 646.6151)], None, None]
+2022-03-18 14:42:34.540 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-03-18 14:42:34.608 INFO misc - convert_image_to_base64: Entering string conversion function
+2022-03-18 14:42:34.645 INFO misc - convert_image_to_base64: Image has been converted from array to PIL image
+2022-03-18 14:42:34.678 INFO misc - convert_image_to_base64: Empty pixels are now transparent
+2022-03-18 14:42:34.695 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-03-18 14:42:34.716 INFO misc - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-03-18 14:42:36.472 INFO lipid_selection - page_2_add_toast_selection: Entering function to update lipid data
+2022-03-18 14:42:36.475 INFO lipid_selection - page_2_add_toast_selection: Returning updated lipid data
+2022-03-18 14:42:36.533 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-03-18 14:42:36.534 INFO figures - compute_heatmap_per_lipid_selection: Compute heatmap per lipid selection[[(646.6113, 646.6146)], None, None]
+2022-03-18 14:42:36.534 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-03-18 14:42:37.626 INFO misc - convert_image_to_base64: Entering string conversion function
+2022-03-18 14:42:37.666 INFO misc - convert_image_to_base64: Image has been converted from array to PIL image
+2022-03-18 14:42:37.714 INFO misc - convert_image_to_base64: Empty pixels are now transparent
+2022-03-18 14:42:37.733 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-03-18 14:42:37.752 INFO misc - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-03-18 14:42:38.338 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-03-18 14:42:38.339 INFO figures - compute_heatmap_per_lipid_selection: Compute heatmap per lipid selection[[(646.6113, 646.6146)], None, None]
+2022-03-18 14:42:38.340 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-03-18 14:42:38.408 INFO misc - convert_image_to_base64: Entering string conversion function
+2022-03-18 14:42:38.446 INFO misc - convert_image_to_base64: Image has been converted from array to PIL image
+2022-03-18 14:42:38.480 INFO misc - convert_image_to_base64: Empty pixels are now transparent
+2022-03-18 14:42:38.497 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-03-18 14:42:38.515 INFO misc - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-03-18 14:42:39.132 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-03-18 14:42:39.134 INFO figures - compute_heatmap_per_lipid_selection: Compute heatmap per lipid selection[[(646.6113, 646.6146)], None, None]
+2022-03-18 14:42:39.134 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-03-18 14:42:39.202 INFO misc - convert_image_to_base64: Entering string conversion function
+2022-03-18 14:42:39.240 INFO misc - convert_image_to_base64: Image has been converted from array to PIL image
+2022-03-18 14:42:39.274 INFO misc - convert_image_to_base64: Empty pixels are now transparent
+2022-03-18 14:42:39.290 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-03-18 14:42:39.307 INFO misc - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-03-18 14:42:39.888 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-03-18 14:42:39.889 INFO figures - compute_heatmap_per_lipid_selection: Compute heatmap per lipid selection[[(646.6113, 646.6146)], None, None]
+2022-03-18 14:42:39.890 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-03-18 14:42:39.956 INFO misc - convert_image_to_base64: Entering string conversion function
+2022-03-18 14:42:40.000 INFO misc - convert_image_to_base64: Image has been converted from array to PIL image
+2022-03-18 14:42:40.039 INFO misc - convert_image_to_base64: Empty pixels are now transparent
+2022-03-18 14:42:40.056 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-03-18 14:42:40.073 INFO misc - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-03-18 14:42:40.926 INFO lipid_selection - page_2_add_toast_selection: Entering function to update lipid data
+2022-03-18 14:42:40.928 INFO lipid_selection - page_2_add_toast_selection: Returning updated lipid data
+2022-03-18 14:42:40.981 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-03-18 14:42:40.982 INFO figures - compute_heatmap_per_lipid_selection: Compute heatmap per lipid selection[[(646.611, 646.6152000000001)], None, None]
+2022-03-18 14:42:40.982 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-03-18 14:42:41.320 INFO misc - convert_image_to_base64: Entering string conversion function
+2022-03-18 14:42:41.361 INFO misc - convert_image_to_base64: Image has been converted from array to PIL image
+2022-03-18 14:42:41.398 INFO misc - convert_image_to_base64: Empty pixels are now transparent
+2022-03-18 14:42:41.414 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-03-18 14:42:41.435 INFO misc - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-03-18 14:42:41.962 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-03-18 14:42:41.963 INFO figures - compute_heatmap_per_lipid_selection: Compute heatmap per lipid selection[[(646.611, 646.6152000000001)], None, None]
+2022-03-18 14:42:41.964 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-03-18 14:42:42.050 INFO misc - convert_image_to_base64: Entering string conversion function
+2022-03-18 14:42:42.092 INFO misc - convert_image_to_base64: Image has been converted from array to PIL image
+2022-03-18 14:42:42.129 INFO misc - convert_image_to_base64: Empty pixels are now transparent
+2022-03-18 14:42:42.146 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-03-18 14:42:42.167 INFO misc - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-03-18 14:42:42.891 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-03-18 14:42:42.892 INFO figures - compute_heatmap_per_lipid_selection: Compute heatmap per lipid selection[[(646.611, 646.6152000000001)], None, None]
+2022-03-18 14:42:42.893 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-03-18 14:42:42.988 INFO misc - convert_image_to_base64: Entering string conversion function
+2022-03-18 14:42:43.026 INFO misc - convert_image_to_base64: Image has been converted from array to PIL image
+2022-03-18 14:42:43.064 INFO misc - convert_image_to_base64: Empty pixels are now transparent
+2022-03-18 14:42:43.082 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-03-18 14:42:43.105 INFO misc - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-03-18 14:42:45.006 INFO lipid_selection - page_2_add_toast_selection: Entering function to update lipid data
+2022-03-18 14:42:45.006 INFO lipid_selection - page_2_add_toast_selection: One or several lipids have been deleter. Cleaning lipid badges now.
+2022-03-18 14:42:45.069 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-03-18 14:42:47.756 INFO lipid_selection - page_2_add_toast_selection: Entering function to update lipid data
+2022-03-18 14:42:47.758 INFO lipid_selection - page_2_add_toast_selection: Changes have been made to the lipid selection or indexation, propagating callback.
+2022-03-18 14:42:47.816 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-03-18 14:42:47.817 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Right before calling the graphing function
+2022-03-18 14:42:47.818 INFO figures - compute_rgb_image_per_lipid_selection: Started RGB image computation for slice 27	MemTotal: 2035.86328125
+2022-03-18 14:42:47.819 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-03-18 14:42:47.941 INFO figures - compute_rgb_image_per_lipid_selection: array_image acquired for slice 27	MemTotal: 2062.609375
+2022-03-18 14:42:47.941 INFO misc - convert_image_to_base64: Entering string conversion function
+2022-03-18 14:42:47.958 INFO misc - convert_image_to_base64: Image has been converted from array to PIL image
+2022-03-18 14:42:47.989 INFO misc - convert_image_to_base64: Empty pixels are now transparent
+2022-03-18 14:42:48.005 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-03-18 14:42:48.037 INFO misc - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-03-18 14:42:48.038 INFO figures - compute_rgb_image_per_lipid_selection: Started building graph for slice 27	MemTotal: 2062.609375
+2022-03-18 14:42:48.043 INFO figures - compute_rgb_image_per_lipid_selection: Returning fig for slice 27	MemTotal: 2062.609375
+2022-03-18 14:42:49.405 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-03-18 14:42:49.406 INFO figures - compute_rgb_image_per_lipid_selection: Started RGB image computation for slice 27	MemTotal: 2062.609375
+2022-03-18 14:42:49.407 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-03-18 14:42:49.488 INFO figures - compute_image_per_lipid: Normalization made with to percentile computed across all slices.
+2022-03-18 14:42:49.510 INFO figures - compute_rgb_image_per_lipid_selection: array_image acquired for slice 27	MemTotal: 2062.70703125
+2022-03-18 14:42:49.510 INFO misc - convert_image_to_base64: Entering string conversion function
+2022-03-18 14:42:49.527 INFO misc - convert_image_to_base64: Image has been converted from array to PIL image
+2022-03-18 14:42:49.558 INFO misc - convert_image_to_base64: Empty pixels are now transparent
+2022-03-18 14:42:49.574 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-03-18 14:42:49.603 INFO misc - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-03-18 14:42:49.604 INFO figures - compute_rgb_image_per_lipid_selection: Started building graph for slice 27	MemTotal: 2062.70703125
+2022-03-18 14:42:49.609 INFO figures - compute_rgb_image_per_lipid_selection: Returning fig for slice 27	MemTotal: 2062.70703125
+2022-03-18 14:42:50.252 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-03-18 14:42:50.253 INFO figures - compute_rgb_image_per_lipid_selection: Started RGB image computation for slice 27	MemTotal: 2011.7421875
+2022-03-18 14:42:50.254 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-03-18 14:42:50.394 INFO figures - compute_rgb_image_per_lipid_selection: array_image acquired for slice 27	MemTotal: 2011.7578125
+2022-03-18 14:42:50.394 INFO misc - convert_image_to_base64: Entering string conversion function
+2022-03-18 14:42:50.415 INFO misc - convert_image_to_base64: Image has been converted from array to PIL image
+2022-03-18 14:42:50.456 INFO misc - convert_image_to_base64: Empty pixels are now transparent
+2022-03-18 14:42:50.473 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-03-18 14:42:50.508 INFO misc - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-03-18 14:42:50.508 INFO figures - compute_rgb_image_per_lipid_selection: Started building graph for slice 27	MemTotal: 2037.79296875
+2022-03-18 14:42:50.514 INFO figures - compute_rgb_image_per_lipid_selection: Returning fig for slice 27	MemTotal: 2037.79296875
+2022-03-18 14:42:52.045 INFO index - render_page_content: Page/region-analysishas been selected	MemTotal: 2062.70703125
+2022-03-18 14:42:52.046 INFO misc - return_pickled_object: Returning figure_basic_image_projection_corrected_26_False_True.pickle from pickled file.	MemTotal: 2062.70703125
+2022-03-18 14:42:52.295 INFO misc - return_pickled_object: Returning figure_basic_image_projection_corrected_26_False.pickle from pickled file.	MemTotal: 2062.70703125
+2022-03-18 14:42:52.296 INFO region_analysis - page_3_record_spectra: Starting to compute spectrum
+2022-03-18 14:42:52.296 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-03-18 14:42:52.296 DEBUG filesystemcache - get: get key 'JCtoTI/7oRxyZBOEtGmnQ9' -> miss 
+2022-03-18 14:42:52.296 INFO region_analysis - global_spectrum_store: Computing spectra now
+2022-03-18 14:42:52.296 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-03-18 14:42:52.297 DEBUG filesystemcache - set: set key 'JCtoTI/7oRxyZBOEtGmnQ9'
+2022-03-18 14:42:52.297 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-03-18 14:42:52.297 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-03-18 14:42:52.297 WARNING region_analysis - page_3_record_spectra: A bug appeared during spectrum computation
+2022-03-18 14:42:52.362 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Starting computing heatmap now
+2022-03-18 14:42:53.681 INFO misc - return_pickled_object: Returning figure_basic_image_projection_corrected_26_False.pickle from pickled file.	MemTotal: 2038.22265625
+2022-03-18 14:42:54.463 INFO region_analysis - tab_3_display_high_res_mz_plot: Compute spectra button has been clicked
+2022-03-18 14:42:54.463 INFO region_analysis - tab_3_display_high_res_mz_plot: One or several shapes have been selected, displaying graphs
+2022-03-18 14:42:54.464 INFO region_analysis - page_3_record_spectra: Starting to compute spectrum
+2022-03-18 14:42:54.464 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-03-18 14:42:54.464 DEBUG filesystemcache - get: get key 'guEo+Jse4+Br6YcAtGmnQ9' -> miss 
+2022-03-18 14:42:54.464 INFO region_analysis - global_spectrum_store: Computing spectra now
+2022-03-18 14:42:54.465 INFO region_analysis - global_spectrum_store: Start computing path
+2022-03-18 14:42:54.465 INFO region_analysis - global_spectrum_store: Computing path finished
+2022-03-18 14:43:01.628 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-03-18 14:43:01.628 DEBUG filesystemcache - set: set key 'guEo+Jse4+Br6YcAtGmnQ9'
+2022-03-18 14:43:01.629 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-03-18 14:43:01.629 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-03-18 14:43:01.629 INFO region_analysis - page_3_record_spectra: Spectra computed, returning it now
+2022-03-18 14:43:01.678 INFO region_analysis - page_3_plot_spectrum: Starting spectra plotting now
+2022-03-18 14:43:01.679 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-03-18 14:43:01.680 DEBUG filesystemcache - get: get key 'guEo+Jse4+Br6YcAtGmnQ9' -> hit 
+2022-03-18 14:43:01.680 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-03-18 14:43:01.681 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Starting computing heatmap now
+2022-03-18 14:43:01.682 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-03-18 14:43:01.682 DEBUG filesystemcache - get: get key 'guEo+Jse4+Br6YcAtGmnQ9' -> hit 
+2022-03-18 14:43:01.682 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-03-18 14:43:01.880 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-03-18 14:43:02.162 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-03-18 14:43:02.411 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Heatmap computed. Returning it now
+2022-03-18 14:43:02.574 INFO region_analysis - page_3_fill_dropdown_options: Starting computing lipid dropdown now.
+2022-03-18 14:43:02.630 INFO region_analysis - page_3_fill_dropdown_options: Dropdown values computed. Updating it with new lipids now.
+2022-03-18 14:43:02.743 INFO region_analysis - draw_modal_graph: Modal graph function triggered with input page-3-open-modal
+2022-03-18 14:43:02.743 INFO region_analysis - draw_modal_graph: At least one lipid has been selected, starting computing modal graph now.
+2022-03-18 14:43:02.745 INFO figures - compute_rgb_image_per_lipid_selection: Started RGB image computation for slice 27	MemTotal: 2089.44140625
+2022-03-18 14:43:02.746 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-03-18 14:43:02.788 INFO region_analysis - page_3_plot_spectrum: Spectra plotted. Returning it now
+2022-03-18 14:43:02.834 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-03-18 14:43:02.858 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-03-18 14:43:02.906 INFO figures - compute_rgb_image_per_lipid_selection: array_image acquired for slice 27	MemTotal: 2092.55078125
+2022-03-18 14:43:02.906 INFO misc - convert_image_to_base64: Entering string conversion function
+2022-03-18 14:43:02.922 INFO misc - convert_image_to_base64: Image has been converted from array to PIL image
+2022-03-18 14:43:02.953 INFO misc - convert_image_to_base64: Empty pixels are now transparent
+2022-03-18 14:43:02.969 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-03-18 14:43:02.993 INFO misc - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-03-18 14:43:02.994 INFO figures - compute_rgb_image_per_lipid_selection: Started building graph for slice 27	MemTotal: 2092.55078125
+2022-03-18 14:43:03.000 INFO figures - compute_rgb_image_per_lipid_selection: Returning fig for slice 27	MemTotal: 2092.55078125
+2022-03-18 14:43:03.005 INFO region_analysis - draw_modal_graph: Modal graph computed. Returning it now
+2022-03-18 14:43:06.859 INFO index - render_page_content: Page/region-analysishas been selected	MemTotal: 2061.4140625
+2022-03-18 14:43:06.860 INFO misc - return_pickled_object: Returning figure_basic_image_projection_corrected_0_False_True.pickle from pickled file.	MemTotal: 2061.4140625
+2022-03-18 14:43:07.670 INFO misc - return_pickled_object: Returning figure_basic_image_projection_corrected_0_False.pickle from pickled file.	MemTotal: 2037.35546875
+2022-03-18 14:43:07.676 INFO region_analysis - page_3_record_spectra: Starting to compute spectrum
+2022-03-18 14:43:07.677 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-03-18 14:43:07.677 DEBUG filesystemcache - get: get key 'qcrHrJ51w4U4ztl9tGmnQ9' -> hit 
+2022-03-18 14:43:07.677 WARNING region_analysis - page_3_record_spectra: A bug appeared during spectrum computation
+2022-03-18 14:43:07.760 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Starting computing heatmap now
+2022-03-18 14:43:08.661 INFO misc - return_pickled_object: Returning figure_basic_image_projection_corrected_0_False.pickle from pickled file.	MemTotal: 2061.38671875
+2022-03-18 14:43:09.349 INFO region_analysis - tab_3_display_high_res_mz_plot: Compute spectra button has been clicked
+2022-03-18 14:43:09.349 INFO region_analysis - tab_3_display_high_res_mz_plot: One or several shapes have been selected, displaying graphs
+2022-03-18 14:43:09.352 INFO region_analysis - page_3_record_spectra: Starting to compute spectrum
+2022-03-18 14:43:09.353 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-03-18 14:43:09.353 DEBUG filesystemcache - get: get key 'GFu07GabHflZyQAbtGmnQ9' -> miss 
+2022-03-18 14:43:09.353 INFO region_analysis - global_spectrum_store: Computing spectra now
+2022-03-18 14:43:09.353 INFO region_analysis - global_spectrum_store: Start computing path
+2022-03-18 14:43:09.353 INFO region_analysis - global_spectrum_store: Computing path finished
+2022-03-18 14:43:16.249 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-03-18 14:43:16.250 DEBUG filesystemcache - set: set key 'GFu07GabHflZyQAbtGmnQ9'
+2022-03-18 14:43:16.250 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-03-18 14:43:16.250 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-03-18 14:43:16.250 INFO region_analysis - page_3_record_spectra: Spectra computed, returning it now
+2022-03-18 14:43:16.306 INFO region_analysis - page_3_plot_spectrum: Starting spectra plotting now
+2022-03-18 14:43:16.308 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Starting computing heatmap now
+2022-03-18 14:43:16.308 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-03-18 14:43:16.309 DEBUG filesystemcache - get: get key 'GFu07GabHflZyQAbtGmnQ9' -> hit 
+2022-03-18 14:43:16.309 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-03-18 14:43:16.309 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-03-18 14:43:16.309 DEBUG filesystemcache - get: get key 'GFu07GabHflZyQAbtGmnQ9' -> hit 
+2022-03-18 14:43:16.309 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-03-18 14:43:16.310 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-03-18 14:43:16.317 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-03-18 14:43:16.371 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Heatmap computed. Returning it now
+2022-03-18 14:43:16.535 INFO region_analysis - page_3_fill_dropdown_options: Starting computing lipid dropdown now.
+2022-03-18 14:43:16.541 INFO region_analysis - page_3_plot_spectrum: Spectra plotted. Returning it now
+2022-03-18 14:43:16.564 INFO region_analysis - page_3_fill_dropdown_options: Dropdown values computed. Updating it with new lipids now.
+2022-03-18 14:43:16.676 INFO region_analysis - draw_modal_graph: Modal graph function triggered with input page-3-open-modal
+2022-03-18 14:43:16.676 INFO region_analysis - draw_modal_graph: At least one lipid has been selected, starting computing modal graph now.
+2022-03-18 14:43:16.677 INFO figures - compute_rgb_image_per_lipid_selection: Started RGB image computation for slice 1	MemTotal: 2037.35546875
+2022-03-18 14:43:16.680 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-03-18 14:43:16.776 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-03-18 14:43:16.802 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-03-18 14:43:16.867 INFO figures - compute_rgb_image_per_lipid_selection: array_image acquired for slice 1	MemTotal: 2092.55078125
+2022-03-18 14:43:16.868 INFO misc - convert_image_to_base64: Entering string conversion function
+2022-03-18 14:43:16.884 INFO misc - convert_image_to_base64: Image has been converted from array to PIL image
+2022-03-18 14:43:16.916 INFO misc - convert_image_to_base64: Empty pixels are now transparent
+2022-03-18 14:43:16.932 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-03-18 14:43:16.946 INFO misc - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-03-18 14:43:16.947 INFO figures - compute_rgb_image_per_lipid_selection: Started building graph for slice 1	MemTotal: 2092.6484375
+2022-03-18 14:43:16.953 INFO figures - compute_rgb_image_per_lipid_selection: Returning fig for slice 1	MemTotal: 2092.6484375
+2022-03-18 14:43:16.958 INFO region_analysis - draw_modal_graph: Modal graph computed. Returning it now
+2022-03-18 14:43:19.315 INFO index - render_page_content: Page/3D-explorationhas been selected	MemTotal: 2031.95703125
+2022-03-18 14:43:19.315 INFO misc - return_pickled_object: Returning treemaps.pickle from pickled file.	MemTotal: 2031.95703125
+2022-03-18 14:43:19.368 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Starting computing heatmap now
+2022-03-18 14:43:19.372 INFO misc - return_pickled_object: Returning figure_basic_image_projection_corrected_0_False_True.pickle from pickled file.	MemTotal: 2031.95703125
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+page-3-dropdown-brain-regions value 27 None None /region-analysis [] False
+page-3-graph-heatmap-per-sel relayoutData 27 None None /region-analysis [] False
+page-3-dropdown-brain-regions value 1 None None /region-analysis [] False
+url pathname 1 None None /3D-exploration [] False
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+page-3-graph-heatmap-per-sel relayoutData 27 None None /region-analysis [] False
+page-3-graph-heatmap-per-sel relayoutData 1 None None /region-analysis [] False
+page-3-graph-heatmap-per-sel relayoutData 1 None None /region-analysis [] False
+2022-03-18 14:43:26.963 INFO figures - compute_clustergram_figure: Starting computing clustergram figure
+2022-03-18 14:43:26.965 DEBUG filesystemcache - delete: deleted key 'modules.figures.Figures.compute_clustergram_figure.<locals>.return_df_avg_lipids_memver'
+2022-03-18 14:43:26.965 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-03-18 14:43:26.966 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-03-18 14:43:26.966 DEBUG filesystemcache - get: get key 'modules.figures.Figures.compute_clustergram_figure.<locals>.return_df_avg_lipids_memver' -> miss (expired)
+2022-03-18 14:43:26.966 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-03-18 14:43:26.966 DEBUG filesystemcache - set: set key 'modules.figures.Figures.compute_clustergram_figure.<locals>.return_df_avg_lipids_memver'
+2022-03-18 14:43:26.966 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-03-18 14:43:26.967 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-03-18 14:43:26.967 DEBUG filesystemcache - get: get key '5o8EAldBneaAxAiO4pujsn' -> miss 
+2022-03-18 14:43:26.967 INFO atlas - get_projected_mask_and_spectrum: Loading Basic cell groups and regions for slice 0 from pickle file.
+2022-03-18 14:43:26.976 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-03-18 14:43:26.981 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-03-18 14:43:26.981 INFO figures - return_df_avg_lipids: Computing dictionnary for averaging slice 0
+2022-03-18 14:43:27.141 INFO atlas - get_projected_mask_and_spectrum: Loading Basic cell groups and regions for slice 1 from pickle file.
+2022-03-18 14:43:27.149 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-03-18 14:43:27.150 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-03-18 14:43:27.151 INFO figures - return_df_avg_lipids: Computing dictionnary for averaging slice 1
+2022-03-18 14:43:27.151 INFO atlas - get_projected_mask_and_spectrum: Loading Basic cell groups and regions for slice 2 from pickle file.
+2022-03-18 14:43:27.157 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-03-18 14:43:27.158 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-03-18 14:43:27.158 INFO figures - return_df_avg_lipids: Computing dictionnary for averaging slice 2
+2022-03-18 14:43:27.158 INFO atlas - get_projected_mask_and_spectrum: Loading Basic cell groups and regions for slice 3 from pickle file.
+2022-03-18 14:43:27.165 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-03-18 14:43:27.165 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-03-18 14:43:27.166 INFO figures - return_df_avg_lipids: Computing dictionnary for averaging slice 3
+2022-03-18 14:43:27.166 INFO atlas - get_projected_mask_and_spectrum: Loading Basic cell groups and regions for slice 4 from pickle file.
+2022-03-18 14:43:27.172 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-03-18 14:43:27.173 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-03-18 14:43:27.173 INFO figures - return_df_avg_lipids: Computing dictionnary for averaging slice 4
+2022-03-18 14:43:27.173 INFO atlas - get_projected_mask_and_spectrum: Loading Basic cell groups and regions for slice 5 from pickle file.
+2022-03-18 14:43:27.179 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-03-18 14:43:27.180 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-03-18 14:43:27.180 INFO figures - return_df_avg_lipids: Computing dictionnary for averaging slice 5
+2022-03-18 14:43:27.180 INFO atlas - get_projected_mask_and_spectrum: Loading Basic cell groups and regions for slice 6 from pickle file.
+2022-03-18 14:43:27.186 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-03-18 14:43:27.187 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-03-18 14:43:27.187 INFO figures - return_df_avg_lipids: Computing dictionnary for averaging slice 6
+2022-03-18 14:43:27.187 INFO atlas - get_projected_mask_and_spectrum: Loading Basic cell groups and regions for slice 7 from pickle file.
+2022-03-18 14:43:27.193 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-03-18 14:43:27.194 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-03-18 14:43:27.194 INFO figures - return_df_avg_lipids: Computing dictionnary for averaging slice 7
+2022-03-18 14:43:27.194 INFO atlas - get_projected_mask_and_spectrum: Loading Basic cell groups and regions for slice 8 from pickle file.
+2022-03-18 14:43:27.201 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-03-18 14:43:27.201 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-03-18 14:43:27.201 INFO figures - return_df_avg_lipids: Computing dictionnary for averaging slice 8
+2022-03-18 14:43:27.201 INFO atlas - get_projected_mask_and_spectrum: Loading Basic cell groups and regions for slice 9 from pickle file.
+2022-03-18 14:43:27.208 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-03-18 14:43:27.208 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-03-18 14:43:27.208 INFO figures - return_df_avg_lipids: Computing dictionnary for averaging slice 9
+2022-03-18 14:43:27.208 INFO atlas - get_projected_mask_and_spectrum: Loading Basic cell groups and regions for slice 10 from pickle file.
+2022-03-18 14:43:27.215 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-03-18 14:43:27.216 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-03-18 14:43:27.216 INFO figures - return_df_avg_lipids: Computing dictionnary for averaging slice 10
+2022-03-18 14:43:27.216 INFO atlas - get_projected_mask_and_spectrum: Loading Basic cell groups and regions for slice 11 from pickle file.
+2022-03-18 14:43:27.222 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-03-18 14:43:27.223 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-03-18 14:43:27.223 INFO figures - return_df_avg_lipids: Computing dictionnary for averaging slice 11
+2022-03-18 14:43:27.223 INFO atlas - get_projected_mask_and_spectrum: Loading Basic cell groups and regions for slice 12 from pickle file.
+2022-03-18 14:43:27.230 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-03-18 14:43:27.230 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-03-18 14:43:27.230 INFO figures - return_df_avg_lipids: Computing dictionnary for averaging slice 12
+2022-03-18 14:43:27.230 INFO atlas - get_projected_mask_and_spectrum: Loading Basic cell groups and regions for slice 13 from pickle file.
+2022-03-18 14:43:27.237 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-03-18 14:43:27.237 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-03-18 14:43:27.238 INFO figures - return_df_avg_lipids: Computing dictionnary for averaging slice 13
+2022-03-18 14:43:27.238 INFO atlas - get_projected_mask_and_spectrum: Loading Basic cell groups and regions for slice 14 from pickle file.
+2022-03-18 14:43:27.244 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-03-18 14:43:27.245 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-03-18 14:43:27.245 INFO figures - return_df_avg_lipids: Computing dictionnary for averaging slice 14
+2022-03-18 14:43:27.245 INFO atlas - get_projected_mask_and_spectrum: Loading Basic cell groups and regions for slice 15 from pickle file.
+2022-03-18 14:43:27.252 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-03-18 14:43:27.252 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-03-18 14:43:27.252 INFO figures - return_df_avg_lipids: Computing dictionnary for averaging slice 15
+2022-03-18 14:43:27.252 INFO atlas - get_projected_mask_and_spectrum: Loading Basic cell groups and regions for slice 16 from pickle file.
+2022-03-18 14:43:27.259 INFO atlas - get_projected_mask_and_spectrum: Loading Hindbrain for slice 16 from pickle file.
+2022-03-18 14:43:27.266 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-03-18 14:43:27.267 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-03-18 14:43:27.267 INFO figures - return_df_avg_lipids: Computing dictionnary for averaging slice 16
+2022-03-18 14:43:27.267 INFO atlas - get_projected_mask_and_spectrum: Loading Basic cell groups and regions for slice 17 from pickle file.
+2022-03-18 14:43:27.274 INFO atlas - get_projected_mask_and_spectrum: Loading Hindbrain for slice 17 from pickle file.
+2022-03-18 14:43:27.281 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-03-18 14:43:27.282 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-03-18 14:43:27.282 INFO figures - return_df_avg_lipids: Computing dictionnary for averaging slice 17
+2022-03-18 14:43:27.282 INFO atlas - get_projected_mask_and_spectrum: Loading Basic cell groups and regions for slice 18 from pickle file.
+2022-03-18 14:43:27.288 INFO atlas - get_projected_mask_and_spectrum: Loading Hindbrain for slice 18 from pickle file.
+2022-03-18 14:43:27.295 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-03-18 14:43:27.296 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-03-18 14:43:27.296 INFO figures - return_df_avg_lipids: Computing dictionnary for averaging slice 18
+2022-03-18 14:43:27.296 INFO atlas - get_projected_mask_and_spectrum: Loading Basic cell groups and regions for slice 19 from pickle file.
+2022-03-18 14:43:27.303 INFO atlas - get_projected_mask_and_spectrum: Loading Hindbrain for slice 19 from pickle file.
+2022-03-18 14:43:27.310 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-03-18 14:43:27.311 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-03-18 14:43:27.311 INFO figures - return_df_avg_lipids: Computing dictionnary for averaging slice 19
+2022-03-18 14:43:27.311 INFO atlas - get_projected_mask_and_spectrum: Loading Basic cell groups and regions for slice 20 from pickle file.
+2022-03-18 14:43:27.318 INFO atlas - get_projected_mask_and_spectrum: Loading Hindbrain for slice 20 from pickle file.
+2022-03-18 14:43:27.325 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-03-18 14:43:27.326 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-03-18 14:43:27.326 INFO figures - return_df_avg_lipids: Computing dictionnary for averaging slice 20
+2022-03-18 14:43:27.326 INFO atlas - get_projected_mask_and_spectrum: Loading Basic cell groups and regions for slice 21 from pickle file.
+2022-03-18 14:43:27.333 INFO atlas - get_projected_mask_and_spectrum: Loading Hindbrain for slice 21 from pickle file.
+2022-03-18 14:43:27.340 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-03-18 14:43:27.341 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-03-18 14:43:27.341 INFO figures - return_df_avg_lipids: Computing dictionnary for averaging slice 21
+2022-03-18 14:43:27.341 INFO atlas - get_projected_mask_and_spectrum: Loading Basic cell groups and regions for slice 22 from pickle file.
+2022-03-18 14:43:27.348 INFO atlas - get_projected_mask_and_spectrum: Loading Hindbrain for slice 22 from pickle file.
+2022-03-18 14:43:27.355 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-03-18 14:43:27.357 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-03-18 14:43:27.357 INFO figures - return_df_avg_lipids: Computing dictionnary for averaging slice 22
+2022-03-18 14:43:27.357 INFO atlas - get_projected_mask_and_spectrum: Loading Basic cell groups and regions for slice 23 from pickle file.
+2022-03-18 14:43:27.364 INFO atlas - get_projected_mask_and_spectrum: Loading Hindbrain for slice 23 from pickle file.
+2022-03-18 14:43:27.371 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-03-18 14:43:27.372 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-03-18 14:43:27.372 INFO figures - return_df_avg_lipids: Computing dictionnary for averaging slice 23
+2022-03-18 14:43:27.372 INFO atlas - get_projected_mask_and_spectrum: Loading Basic cell groups and regions for slice 24 from pickle file.
+2022-03-18 14:43:27.380 INFO atlas - get_projected_mask_and_spectrum: Loading Hindbrain for slice 24 from pickle file.
+2022-03-18 14:43:27.387 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-03-18 14:43:27.388 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-03-18 14:43:27.388 INFO figures - return_df_avg_lipids: Computing dictionnary for averaging slice 24
+2022-03-18 14:43:27.388 INFO atlas - get_projected_mask_and_spectrum: Loading Basic cell groups and regions for slice 25 from pickle file.
+2022-03-18 14:43:27.394 INFO atlas - get_projected_mask_and_spectrum: Loading Hindbrain for slice 25 from pickle file.
+2022-03-18 14:43:27.401 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-03-18 14:43:27.401 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-03-18 14:43:27.402 INFO figures - return_df_avg_lipids: Computing dictionnary for averaging slice 25
+2022-03-18 14:43:27.402 INFO atlas - get_projected_mask_and_spectrum: Loading Basic cell groups and regions for slice 26 from pickle file.
+2022-03-18 14:43:27.408 INFO atlas - get_projected_mask_and_spectrum: Loading Hindbrain for slice 26 from pickle file.
+2022-03-18 14:43:27.415 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-03-18 14:43:27.416 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-03-18 14:43:27.416 INFO figures - return_df_avg_lipids: Computing dictionnary for averaging slice 26
+2022-03-18 14:43:27.417 INFO atlas - get_projected_mask_and_spectrum: Loading Basic cell groups and regions for slice 27 from pickle file.
+2022-03-18 14:43:27.423 INFO atlas - get_projected_mask_and_spectrum: Loading Hindbrain for slice 27 from pickle file.
+2022-03-18 14:43:27.429 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-03-18 14:43:27.430 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-03-18 14:43:27.430 INFO figures - return_df_avg_lipids: Computing dictionnary for averaging slice 27
+2022-03-18 14:43:27.431 INFO atlas - get_projected_mask_and_spectrum: Loading Basic cell groups and regions for slice 28 from pickle file.
+2022-03-18 14:43:27.437 INFO atlas - get_projected_mask_and_spectrum: Loading Hindbrain for slice 28 from pickle file.
+2022-03-18 14:43:27.444 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-03-18 14:43:27.445 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-03-18 14:43:27.445 INFO figures - return_df_avg_lipids: Computing dictionnary for averaging slice 28
+2022-03-18 14:43:27.445 INFO atlas - get_projected_mask_and_spectrum: Loading Basic cell groups and regions for slice 29 from pickle file.
+2022-03-18 14:43:27.452 INFO atlas - get_projected_mask_and_spectrum: Loading Hindbrain for slice 29 from pickle file.
+2022-03-18 14:43:27.459 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-03-18 14:43:27.460 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-03-18 14:43:27.460 INFO figures - return_df_avg_lipids: Computing dictionnary for averaging slice 29
+2022-03-18 14:43:27.460 INFO atlas - get_projected_mask_and_spectrum: Loading Basic cell groups and regions for slice 30 from pickle file.
+2022-03-18 14:43:27.466 INFO atlas - get_projected_mask_and_spectrum: Loading Hindbrain for slice 30 from pickle file.
+2022-03-18 14:43:27.474 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-03-18 14:43:27.475 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-03-18 14:43:27.475 INFO figures - return_df_avg_lipids: Computing dictionnary for averaging slice 30
+2022-03-18 14:43:27.475 INFO atlas - get_projected_mask_and_spectrum: Loading Basic cell groups and regions for slice 31 from pickle file.
+2022-03-18 14:43:27.482 INFO atlas - get_projected_mask_and_spectrum: Loading Hindbrain for slice 31 from pickle file.
+2022-03-18 14:43:27.488 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-03-18 14:43:27.489 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-03-18 14:43:27.489 INFO figures - return_df_avg_lipids: Computing dictionnary for averaging slice 31
+2022-03-18 14:43:27.489 INFO figures - return_df_avg_lipids: Averaging all lipid values across slices
+2022-03-18 14:43:27.493 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-03-18 14:43:27.494 DEBUG filesystemcache - set: set key '5o8EAldBneaAxAiO4pujsn'
+2022-03-18 14:43:27.494 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-03-18 14:43:27.494 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-03-18 14:43:27.494 INFO figures - compute_clustergram_figure: Averaging done for all slices
+2022-03-18 14:43:27.497 INFO figures - compute_clustergram_figure: Lowly expressed lipids excluded
+2022-03-18 14:43:27.504 INFO figures - compute_clustergram_figure: Lipid indexes replaced by names
+2022-03-18 14:43:27.504 INFO figures - compute_clustergram_figure: Preparing plot
+2022-03-18 14:43:27.735 INFO figures - compute_clustergram_figure: Returning figure
+2022-03-18 14:43:32.986 INFO threeD_exploration - page_4_plot_graph_volume: For the computation of 3D volume, decrease_resolution_factor is 7
+2022-03-18 14:43:41.486 INFO index - render_page_content: Page/has been selected	MemTotal: 2031.97265625
