@@ -764,20 +764,17 @@ class Figures:
 
         # If boundaries are provided, get their index
         else:
+            array_spectra_avg = self._data.get_array_avg_spectrum(
+                slice_index, standardization=standardization
+            )
             index_lb, index_hb = spectra.compute_index_boundaries(
                 lb,
                 hb,
-                array_spectra_avg=self._data.get_array_avg_spectrum(
-                    slice_index, standardization=standardization
-                ),
+                array_spectra_avg=array_spectra_avg,
                 lookup_table=self._data.get_array_lookup_mz_avg(slice_index),
             )
-            x = self._data.get_array_avg_spectrum(slice_index, standardization=standardization)[
-                0, index_lb:index_hb
-            ]
-            y = self._data.get_array_avg_spectrum(slice_index, standardization=standardization)[
-                1, index_lb:index_hb
-            ]
+            x = array_spectra_avg[0, index_lb:index_hb]
+            y = array_spectra_avg[1, index_lb:index_hb]
 
         # In case download without plotting
         if not plot:

@@ -536,3 +536,73 @@ page-3-graph-heatmap-per-sel relayoutData 1 None None /region-analysis [] False
 2022-03-18 14:43:27.735 INFO figures - compute_clustergram_figure: Returning figure
 2022-03-18 14:43:32.986 INFO threeD_exploration - page_4_plot_graph_volume: For the computation of 3D volume, decrease_resolution_factor is 7
 2022-03-18 14:43:41.486 INFO index - render_page_content: Page/has been selected	MemTotal: 2031.97265625
+[2022-03-18 15:08:03 +0100] [16622] [INFO] Handling signal: hup
+[2022-03-18 15:08:03 +0100] [16622] [INFO] Hang up: Master
+[2022-03-18 15:08:03 +0100] [20013] [INFO] Booting worker with pid: 20013
+[2022-03-18 15:08:03 +0100] [20014] [INFO] Booting worker with pid: 20014
+[2022-03-18 15:08:03 +0100] [16622] [WARNING] Worker with pid 16624 was terminated due to signal 1
+[2022-03-18 15:08:03 +0100] [16622] [WARNING] Worker with pid 16623 was terminated due to signal 1
+2022-03-18 15:08:03.842 INFO main - <module>: Starting import chain	MemTotal: 82.8515625
+2022-03-18 15:08:03.862 INFO main - <module>: Starting import chain	MemTotal: 82.85546875
+2022-03-18 15:08:06.076 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 243.16796875
+2022-03-18 15:08:06.076 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 243.16796875
+2022-03-18 15:08:06.118 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 243.15234375
+2022-03-18 15:08:06.118 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 243.15234375
+2022-03-18 15:08:06.735 INFO atlas - __init__: Initializing Atlas object	MemTotal: 1052.53515625
+2022-03-18 15:08:06.735 INFO atlas - __init__: Initializing Atlas object	MemTotal: 1052.55859375
+2022-03-18 15:08:07.272 INFO misc - return_pickled_object: Returning dic_acronym_children_id.pickle from pickled file.	MemTotal: 1349.0859375
+2022-03-18 15:08:07.272 INFO misc - return_pickled_object: Returning dic_acronym_children_id.pickle from pickled file.	MemTotal: 1349.109375
+2022-03-18 15:08:08.048 INFO misc - return_pickled_object: Returning hierarchy.pickle from pickled file.	MemTotal: 1790.23046875
+2022-03-18 15:08:08.052 INFO misc - return_pickled_object: Returning arrays_projection_corrected_True_True.pickle from pickled file.	MemTotal: 1790.35546875
+2022-03-18 15:08:08.099 INFO misc - return_pickled_object: Returning hierarchy.pickle from pickled file.	MemTotal: 1790.25390625
+2022-03-18 15:08:08.103 INFO misc - return_pickled_object: Returning arrays_projection_corrected_True_True.pickle from pickled file.	MemTotal: 1790.37890625
+2022-03-18 15:08:08.256 INFO figures - __init__: Initializing Figures object	MemTotal: 1941.88671875
+2022-03-18 15:08:08.257 INFO misc - return_pickled_object: Returning dic_fig_contours.pickle from pickled file.	MemTotal: 1941.88671875
+2022-03-18 15:08:08.317 INFO figures - __init__: Initializing Figures object	MemTotal: 1941.8984375
+2022-03-18 15:08:08.317 INFO misc - return_pickled_object: Returning dic_fig_contours.pickle from pickled file.	MemTotal: 1941.8984375
+2022-03-18 15:08:08.681 INFO misc - return_pickled_object: Returning dic_normalization_factors.pickle from pickled file.	MemTotal: 1953.69140625
+2022-03-18 15:08:08.682 INFO app - <module>: Memory use after three main object have been instantiated	MemTotal: 1953.69140625
+2022-03-18 15:08:08.703 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-03-18 15:08:08.729 INFO misc - return_pickled_object: Returning figure_basic_image_projection_corrected_0_False.pickle from pickled file.	MemTotal: 1956.40234375
+2022-03-18 15:08:08.739 INFO misc - return_pickled_object: Returning dic_normalization_factors.pickle from pickled file.	MemTotal: 1953.7421875
+2022-03-18 15:08:08.739 INFO app - <module>: Memory use after three main object have been instantiated	MemTotal: 1953.7421875
+2022-03-18 15:08:08.742 INFO figures - compute_heatmap_per_mz: Starting figure computation, from mz boundaries
+2022-03-18 15:08:08.742 INFO figures - compute_heatmap_per_mz: Getting image array
+2022-03-18 15:08:08.742 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-03-18 15:08:08.757 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-03-18 15:08:08.784 INFO misc - return_pickled_object: Returning figure_basic_image_projection_corrected_0_False.pickle from pickled file.	MemTotal: 1956.44921875
+2022-03-18 15:08:08.800 INFO figures - compute_heatmap_per_mz: Starting figure computation, from mz boundaries
+2022-03-18 15:08:08.800 INFO figures - compute_heatmap_per_mz: Getting image array
+2022-03-18 15:08:08.800 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-03-18 15:08:10.206 INFO figures - compute_heatmap_per_mz: Done getting image array. Cleaning memory
+2022-03-18 15:08:10.209 INFO figures - compute_heatmap_per_mz: Memory cleaned
+2022-03-18 15:08:10.211 INFO figures - compute_heatmap_per_mz: Converting image to string
+2022-03-18 15:08:10.211 INFO misc - convert_image_to_base64: Entering string conversion function
+2022-03-18 15:08:10.253 INFO misc - convert_image_to_base64: Image has been converted from array to PIL image
+2022-03-18 15:08:10.295 INFO misc - convert_image_to_base64: Empty pixels are now transparent
+2022-03-18 15:08:10.313 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-03-18 15:08:10.336 INFO misc - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-03-18 15:08:10.339 INFO figures - compute_heatmap_per_mz: Adding image to figure
+2022-03-18 15:08:10.349 INFO figures - compute_heatmap_per_mz: Returning figure
+2022-03-18 15:08:10.349 INFO misc - return_pickled_object: Returning lipid_options.pickle from pickled file.	MemTotal: 1987.05859375
+2022-03-18 15:08:10.381 INFO misc - return_pickled_object: Returning figure_basic_image_projection_corrected_0_False_True.pickle from pickled file.	MemTotal: 1987.05859375
+2022-03-18 15:08:10.393 INFO misc - return_pickled_object: Returning treemaps.pickle from pickled file.	MemTotal: 1987.05859375
+2022-03-18 15:08:10.413 INFO misc - return_pickled_object: Returning sunburst.pickle from pickled file.	MemTotal: 1987.05859375
+2022-03-18 15:08:10.427 INFO misc - return_pickled_object: Returning atlas_with_slider_frontal_False.pickle from pickled file.	MemTotal: 1987.05859375
+2022-03-18 15:08:10.446 INFO misc - return_pickled_object: Returning _None.pickle from pickled file.	MemTotal: 1987.05859375
+2022-03-18 15:08:10.485 INFO figures - compute_heatmap_per_mz: Done getting image array. Cleaning memory
+2022-03-18 15:08:10.489 INFO figures - compute_heatmap_per_mz: Memory cleaned
+2022-03-18 15:08:10.491 INFO figures - compute_heatmap_per_mz: Converting image to string
+2022-03-18 15:08:10.491 INFO misc - convert_image_to_base64: Entering string conversion function
+2022-03-18 15:08:10.537 INFO misc - convert_image_to_base64: Image has been converted from array to PIL image
+2022-03-18 15:08:10.582 INFO misc - convert_image_to_base64: Empty pixels are now transparent
+2022-03-18 15:08:10.600 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-03-18 15:08:10.624 INFO misc - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-03-18 15:08:10.627 INFO figures - compute_heatmap_per_mz: Adding image to figure
+2022-03-18 15:08:10.638 INFO figures - compute_heatmap_per_mz: Returning figure
+2022-03-18 15:08:10.638 INFO misc - return_pickled_object: Returning lipid_options.pickle from pickled file.	MemTotal: 1987.1953125
+2022-03-18 15:08:10.671 INFO misc - return_pickled_object: Returning figure_basic_image_projection_corrected_0_False_True.pickle from pickled file.	MemTotal: 1987.1953125
+2022-03-18 15:08:10.685 INFO misc - return_pickled_object: Returning treemaps.pickle from pickled file.	MemTotal: 1987.1953125
+2022-03-18 15:08:10.709 INFO misc - return_pickled_object: Returning sunburst.pickle from pickled file.	MemTotal: 1987.1953125
+2022-03-18 15:08:10.726 INFO misc - return_pickled_object: Returning atlas_with_slider_frontal_False.pickle from pickled file.	MemTotal: 1987.1953125
+2022-03-18 15:08:10.749 INFO misc - return_pickled_object: Returning _None.pickle from pickled file.	MemTotal: 1987.1953125

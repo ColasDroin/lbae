@@ -327,6 +327,9 @@ def process_lookup_tables(
     array_averaged_mz_intensity_high_res, _ = add_zeros_to_spectrum(
         array_averaged_mz_intensity_high_res, pad_individual_peaks=True
     )
+    array_averaged_mz_intensity_high_res_after_standardization, _ = add_zeros_to_spectrum(
+        array_averaged_mz_intensity_high_res_after_standardization, pad_individual_peaks=True
+    )
 
     # Build lookup table to compute fast the indexes corresponding to the boundaries selected in app
     lookup_table_averaged_spectrum_high_res = build_index_lookup_table_averaged_spectrum(
