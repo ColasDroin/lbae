@@ -138,20 +138,23 @@ def return_main_content():
                     #     style={"position": "fixed", "left": "10rem", "top": "30%",},
                     # ),
                     # Space to ensure the slider for sections doesn't hide anything
-                    dmc.Paper(
+                    # dmc.Paper(
+                    html.Div(
                         id="main-paper-slider",
                         style={
                             "position": "fixed",
-                            "bottom": "7%",
-                            "left": "25%",
-                            "right": "20%",
+                            "bottom": "0",
+                            "height": "3rem",
+                            "left": "6rem",  # "25%",
+                            "right": 0,  # "20%",
+                            "background-color": "white",
                             # "margin": "auto",
                             # "width": "50vw",
                         },
-                        radius="lg",
-                        padding="lg",
-                        shadow="xs",
-                        withBorder=False,
+                        # radius="lg",
+                        # padding="lg",
+                        # shadow="xs",
+                        # withBorder=False,
                         children=dmc.Slider(
                             id="main-slider",
                             min=1,
@@ -165,7 +168,7 @@ def return_main_content():
                             size="xs",
                             value=1,
                             color="cyan",
-                            class_name="mb-2",
+                            class_name="mt-2 mx-5",
                         ),
                     ),
                     # dmc.Space(h=70),

@@ -21,104 +21,100 @@ from modules.tools.misc import return_pickled_object
 def return_layout(basic_config, slice_index):
 
     page = html.Div(
+        # This style is needed for keeping background color when reducing image size
         style={
             "position": "absolute",
             "top": "0px",
             "right": "0px",
             "bottom": "0px",
-            "left": "5.5rem",
+            "left": "6rem",
             "background-color": "#1d1c1f",
         },
         children=[
-            dmc.Center(
-                class_name="w-100",
-                style={"height": "100%"},
-                children=html.Div(
-                    className="page-1-fixed-aspect-ratio",
-                    style={"background-color": "#1d1c1f"},
-                    children=[
-                        dcc.Graph(
-                            id="page-1-graph-slice-selection",
-                            responsive=True,
-                            style={
-                                "width": "86%",
-                                "height": "86%",
-                                "position": "absolute",
-                                "left": "7%",
-                                "top": "7%",
-                                "background-color": "#1d1c1f",
-                            },
-                            config=basic_config
-                            | {
-                                "toImageButtonOptions": {
-                                    "format": "png",
-                                    "filename": "brain_slice",
-                                    "scale": 2,
-                                }
-                            },
-                            # | {"staticPlot": True},
-                            figure=return_pickled_object(
-                                "figures/load_page",
-                                "figure_basic_image",
-                                force_update=False,
-                                compute_function=figures.compute_figure_basic_image,
-                                type_figure="projection_corrected",
-                                index_image=slice_index - 1,
-                                plot_atlas_contours=False,
-                            ),
+            # dmc.Center(
+            #    class_name="w-100",
+            #    style={"height": "100%"},
+            #    children=
+            html.Div(
+                className="page-1-fixed-aspect-ratio",
+                style={"background-color": "#1d1c1f"},
+                children=[
+                    dmc.Center(
+                        style={"background-color": "white"},
+                        children=dmc.Group(
+                            class_name="mt-1",
+                            children=[
+                                # dbc.Tabs(
+                                dmc.SegmentedControl(
+                                    data=[
+                                        dict(label="Original slices", value="0"),
+                                        dict(label="Warped slices", value="1"),
+                                        dict(label="Filtered slices", value="2"),
+                                        dict(label="Atlas slices", value="3"),
+                                    ],
+                                    id="page-1-card-tabs",
+                                    # card=True,
+                                    # active_tab="page-1-tab-1",
+                                    value="2",
+                                    radius="sm",
+                                    color="cyan",
+                                ),
+                                dmc.Button(
+                                    "Display 3D slice distribution",
+                                    id="page-1-modal-button",
+                                    n_clicks=0,
+                                    class_name="ml-5",
+                                    color="cyan",
+                                ),
+                                dmc.Switch(
+                                    id="page-1-toggle-annotations",
+                                    label="Annotations",
+                                    checked=False,
+                                    color="cyan",
+                                    radius="xl",
+                                    size="sm",
+                                ),
+                            ],
                         ),
-                        html.P(
-                            "Hovered region: ",
-                            id="page-1-graph-hover-text",
-                            className="text-warning font-weight-bold position-absolute",
-                            style={"right": "15%", "top": "15%"},
+                    ),
+                    dcc.Graph(
+                        id="page-1-graph-slice-selection",
+                        responsive=True,
+                        style={
+                            "width": "86%",
+                            "height": "86%",
+                            "position": "absolute",
+                            "left": "7%",
+                            "top": "7%",
+                            "background-color": "#1d1c1f",
+                        },
+                        config=basic_config
+                        | {
+                            "toImageButtonOptions": {
+                                "format": "png",
+                                "filename": "brain_slice",
+                                "scale": 2,
+                            }
+                        },
+                        # | {"staticPlot": True},
+                        figure=return_pickled_object(
+                            "figures/load_page",
+                            "figure_basic_image",
+                            force_update=False,
+                            compute_function=figures.compute_figure_basic_image,
+                            type_figure="projection_corrected",
+                            index_image=slice_index - 1,
+                            plot_atlas_contours=False,
                         ),
-                        dmc.Switch(
-                            id="page-1-toggle-annotations",
-                            label="Annotations",
-                            checked=False,
-                            color="cyan",
-                            radius="xl",
-                            size="sm",
-                            style={"position": "absolute", "bottom": "10%", "right": "15%"},
-                        ),
-                        dmc.Center(
-                            dmc.Group(
-                                class_name="mt-4",
-                                children=[
-                                    # dbc.Tabs(
-                                    dmc.SegmentedControl(
-                                        data=[
-                                            dict(label="Original slices", value="0"),
-                                            dict(label="Warped slices", value="1"),
-                                            dict(label="Filtered slices", value="2"),
-                                            dict(label="Atlas slices", value="3"),
-                                        ],
-                                        id="page-1-card-tabs",
-                                        # card=True,
-                                        # active_tab="page-1-tab-1",
-                                        value="2",
-                                        radius="sm",
-                                        color="cyan",
-                                    ),
-                                    # dbc.Switch(
-                                    #     id="page-1-toggle-annotations",
-                                    #     label="Annotations",
-                                    #     value=False,
-                                    #     className="ml-5 mt-2",
-                                    # ),
-                                    dmc.Button(
-                                        "Display 3D slice distribution",
-                                        id="page-1-modal-button",
-                                        n_clicks=0,
-                                        class_name="ml-5",
-                                        color="cyan",
-                                    ),
-                                ],
-                            ),
-                        ),
-                    ],
-                ),
+                    ),
+                    html.P(
+                        "Hovered region: ",
+                        id="page-1-graph-hover-text",
+                        className="text-warning font-weight-bold position-absolute",
+                        style={"right": "15%", "top": "15%"},
+                    ),
+                ],
+                # ),
             ),
             dbc.Modal(
                 [

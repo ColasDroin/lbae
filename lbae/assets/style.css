@@ -499,7 +499,7 @@ div.toast-header > button > span {
   padding-bottom: 0;
 }
 
-#main-paper-slider {
+/* #main-paper-slider {
   -webkit-transition: opacity 0.1s ease-in-out;
   -moz-transition: opacity 0.1s ease-in-out;
   -ms-transition: opacity 0.1s ease-in-out;
@@ -510,8 +510,15 @@ div.toast-header > button > span {
 
 #main-paper-slider:hover {
   opacity: 1;
-}
+} */
 
+#content
+  > div:nth-child(1)
+  > div
+  > div.mantine-Switch-root.mantine-16ttirm
+  > label {
+  color: white;
+}
 /* at some point, replace this nasty hack by a dropdown in which you can select 1 value only
 and print the selection next to the dropdown (unerasable, except with reset) 
 div.Select-value > span.Select-value-icon {
