@@ -191,7 +191,7 @@ def filter_peaks(array_spectra, array_peaks, array_mz_lipids_per_slice):
             intensity), sorted by mz (but not necessarily by pixel index).
         array_peaks (np.ndarray): A numpy array containing the peak annotations (min peak, max peak, 
             number of pixels containing the peak, average value of the peak), sorted by min_mz.
-            array_mz_lipids_per_slice (np.ndarray): A 1-D numpy array containing the per-slice mz 
+        array_mz_lipids_per_slice (np.ndarray): A 1-D numpy array containing the per-slice mz 
             values of the lipids we want to visualize.
 
     Returns:
@@ -324,6 +324,10 @@ def get_standardized_values(
     l_lipids_str = os.listdir(path_array_data)
     l_lipids_str_transformed = os.listdir(path_array_transformed_data)
 
+    # Return empty lists if no MALDI files exist yet
+    if len(l_lipids_str)==0 and len(l_lipids_str_transformed)==0:
+        return [],[],np.array([], dtype=np.float32), np.array([], dtype=np.float32)
+    
     # Keep only lipid that have been transformed
     l_lipids_str = [x for x in l_lipids_str if x in l_lipids_str_transformed]
 
@@ -750,6 +754,7 @@ def process_raw_data(
 
     # Get the peak annotation file
     array_peaks = load_peak_file(name)
+
     # Get the list of m/z values to keep for visualization
     array_mz_lipids = load_lipid_file(
         slice_index,
@@ -804,7 +809,7 @@ def process_raw_data(
             l_lipids_float,
             arrays_before_transfo,
             arrays_after_transfo,
-            ignore_standardization=False,
+            ignore_standardization=False if len(l_lipids_str)>0 else True,
         )
 
     # Sort according to mz for averaging

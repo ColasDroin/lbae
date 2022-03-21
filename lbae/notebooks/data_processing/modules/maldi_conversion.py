@@ -324,6 +324,10 @@ def get_standardized_values(
     l_lipids_str = os.listdir(path_array_data)
     l_lipids_str_transformed = os.listdir(path_array_transformed_data)
 
+    # Return empty lists if no MALDI files exist yet
+    if len(l_lipids_str)==0 and len(l_lipids_str_transformed)==0:
+        return [],[],np.array([], dtype=np.float32), np.array([], dtype=np.float32)
+    
     # Keep only lipid that have been transformed
     l_lipids_str = [x for x in l_lipids_str if x in l_lipids_str_transformed]
 
@@ -805,7 +809,7 @@ def process_raw_data(
             l_lipids_float,
             arrays_before_transfo,
             arrays_after_transfo,
-            ignore_standardization=False,
+            ignore_standardization=False if len(l_lipids_str)>0 else True,
         )
 
     # Sort according to mz for averaging
