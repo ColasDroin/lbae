@@ -2,7 +2,7 @@
 
 # Standard modules
 import numpy as np
-from numba import njit
+from numba import njit, jit
 import logging
 
 # Homemade packages
@@ -166,7 +166,7 @@ def strip_zeros(array):
 
 
 ###### FUNCTIONS TO COMPUTE IMAGE FROM LIPID SELECTION ######
-@njit
+@jit
 def compute_image_using_index_lookup(
     low_bound,
     high_bound,

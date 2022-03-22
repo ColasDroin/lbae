@@ -68,7 +68,8 @@ class MaldiData:
             dataframe.
         get_annotations_MAIA_transformed_lipids(): getter for the MAIA transformed lipid annotation, 
             contained in a pandas dataframe.
-        get_slice_number(): getter for the number of slices present in the dataset.
+        get_slice_number(): getter for the number of slice present in the dataset.
+        get_slice_list(): getter for the list of slice indexes in the dataset.
         get_image_shape(slice_index): getter for image_shape, which indicates the shape of the image 
             corresponding to the acquisition indexed by slice_index.
         get_divider_lookup(slice_index): getter for divider_lookup, which sets the resolution of the 
@@ -96,6 +97,7 @@ class MaldiData:
     __slots__ = [
         "_dic_lightweight",
         "_dic_memmap",
+        "_l_slices",
         "_n_slices",
         "_df_annotations",
         "_df_annotations_MAIA_transformed_lipids_brain_1",
@@ -113,10 +115,11 @@ class MaldiData:
 
         # Simple variable to get the number of slices
         self._n_slices = len(self._dic_lightweight)
+        self._l_slices = sorted(list(self._dic_lightweight.keys()))
 
         # Set the accesser to the mmap files
         self._dic_memmap = {}
-        for slice_index in range(1, self._n_slices + 1):
+        for slice_index in self._l_slices:
             self._dic_memmap[slice_index] = {}
             for array_name in [
                 "array_spectra",
@@ -145,24 +148,37 @@ class MaldiData:
         )
         self._df_annotations_MAIA_transformed_lipids_brain_1[
             "name"
-        ] = self._df_annotations_MAIA_transformed_lipids_brain_1["name"].map(lambda x: x.split("_")[1])
+        ] = self._df_annotations_MAIA_transformed_lipids_brain_1["name"].map(
+            lambda x: x.split("_")[1]
+        )
 
         self._df_annotations_MAIA_transformed_lipids_brain_2 = pd.read_csv(
             path_annotations + "transformed_lipids_brain_2.csv"
         )
         self._df_annotations_MAIA_transformed_lipids_brain_2[
             "name"
-        ] = self._df_annotations_MAIA_transformed_lipids_brain_2["name"].map(lambda x: x.split("_")[1])
-
+        ] = self._df_annotations_MAIA_transformed_lipids_brain_2["name"].map(
+            lambda x: x.split("_")[1]
+        )
 
     def get_annotations(self):
         return self._df_annotations
 
-    def get_annotations_MAIA_transformed_lipids(self, brain_1 = True):
+    def get_annotations_MAIA_transformed_lipids(self, brain_1=True):
         if brain_1:
             return self._df_annotations_MAIA_transformed_lipids_brain_1
         else:
             return self._df_annotations_MAIA_transformed_lipids_brain_2
+
+    def get_slice_list(self, indices="all"):
+        if indices == "all":
+            return self._l_slices
+        elif indices == "brain_1":
+            return self._l_slices[:32]
+        elif indices == "brain_2":
+            return self._l_slices[32:]
+        else:
+            raise ValueError("Invalid string for indices")
 
     def get_slice_number(self):
         return self._n_slices
@@ -358,7 +374,7 @@ class MaldiData:
 
             # Clean all memmaps if no slice index have been given
             if slice_index is None:
-                for index in range(1, self._n_slices + 1):
+                for index in self._l_slices:
                     for array_name in l_array_names:
                         self._dic_memmap[index][array_name] = np.memmap(
                             self._path_data + array_name + "_" + str(index) + ".mmap",
@@ -380,7 +396,7 @@ class MaldiData:
         else:
             # Clean all memmaps corresponding to the current array if no slice_index have been given
             if slice_index is None:
-                for index in range(1, self._n_slices + 1):
+                for index in self._l_slices:
                     self._dic_memmap[index][array] = np.memmap(
                         self._path_data + array + "_" + str(index) + ".mmap",
                         dtype="float32" if array != "array_lookup_mz" else "int32",
