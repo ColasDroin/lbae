@@ -56,9 +56,11 @@ class MaldiData:
             peak the name of the lipid in between the two annotated peak boundaries. Columns are 
             'slice', 'name', 'structure', 'cation', 'theoretical m/z', 'min', 'max', 'num_pixels', 
             and	'mz_estimated'.
-        _df_annotations_MAIA_transformed_lipids (pd.dataframe): a dataframe containing the average 
-            m/z value of each MAIA transformed lipid. Columns are 'name', 'structure', 'cation', 
-            'estimated_mz'.
+        _df_annotations_MAIA_transformed_lipids_brain_1 (pd.dataframe): a dataframe containing the 
+            average m/z value of each MAIA transformed lipid. Columns are 'name', 'structure', 
+            'cation', 'estimated_mz', for brain 1.
+        _df_annotations_MAIA_transformed_lipids_brain_2 (pd.dataframe): Same as 
+            _df_annotations_MAIA_transformed_lipids_brain_1 for brain 2.
         _path_data (str): path were the data files are stored.
 
     Methods:
@@ -96,7 +98,8 @@ class MaldiData:
         "_dic_memmap",
         "_n_slices",
         "_df_annotations",
-        "_df_annotations_MAIA_transformed_lipids",
+        "_df_annotations_MAIA_transformed_lipids_brain_1",
+        "_df_annotations_MAIA_transformed_lipids_brain_2",
         "_path_data",
     ]
 
@@ -136,19 +139,30 @@ class MaldiData:
         self._df_annotations = pd.read_csv(path_annotations + "lipid_annotation.csv")
         self._df_annotations["name"] = self._df_annotations["name"].map(lambda x: x.split("_")[1])
 
-        # Load lipid annotations of MAIA-transformed lipids
-        self._df_annotations_MAIA_transformed_lipids = pd.read_csv(
-            path_annotations + "transformed_lipids.csv"
+        # Load lipid annotations of MAIA-transformed lipids for brain 1 and 2
+        self._df_annotations_MAIA_transformed_lipids_brain_1 = pd.read_csv(
+            path_annotations + "transformed_lipids_brain_1.csv"
         )
-        self._df_annotations_MAIA_transformed_lipids[
+        self._df_annotations_MAIA_transformed_lipids_brain_1[
             "name"
-        ] = self._df_annotations_MAIA_transformed_lipids["name"].map(lambda x: x.split("_")[1])
+        ] = self._df_annotations_MAIA_transformed_lipids_brain_1["name"].map(lambda x: x.split("_")[1])
+
+        self._df_annotations_MAIA_transformed_lipids_brain_2 = pd.read_csv(
+            path_annotations + "transformed_lipids_brain_2.csv"
+        )
+        self._df_annotations_MAIA_transformed_lipids_brain_2[
+            "name"
+        ] = self._df_annotations_MAIA_transformed_lipids_brain_2["name"].map(lambda x: x.split("_")[1])
+
 
     def get_annotations(self):
         return self._df_annotations
 
-    def get_annotations_MAIA_transformed_lipids(self):
-        return self._df_annotations_MAIA_transformed_lipids
+    def get_annotations_MAIA_transformed_lipids(self, brain_1 = True):
+        if brain_1:
+            return self._df_annotations_MAIA_transformed_lipids_brain_1
+        else:
+            return self._df_annotations_MAIA_transformed_lipids_brain_2
 
     def get_slice_number(self):
         return self._n_slices

@@ -325,9 +325,9 @@ def get_standardized_values(
     l_lipids_str_transformed = os.listdir(path_array_transformed_data)
 
     # Return empty lists if no MALDI files exist yet
-    if len(l_lipids_str)==0 and len(l_lipids_str_transformed)==0:
-        return [],[],np.array([], dtype=np.float32), np.array([], dtype=np.float32)
-    
+    if len(l_lipids_str) == 0 and len(l_lipids_str_transformed) == 0:
+        return [], [], np.array([], dtype=np.float32), np.array([], dtype=np.float32)
+
     # Keep only lipid that have been transformed
     l_lipids_str = [x for x in l_lipids_str if x in l_lipids_str_transformed]
 
@@ -757,7 +757,7 @@ def process_raw_data(
 
     # Get the list of m/z values to keep for visualization
     array_mz_lipids = load_lipid_file(
-        slice_index,
+        slice_index - 10 if not brain_1 else slice_index,
         path="data/annotations/df_match_brain_2.csv"
         if not brain_1
         else "data/annotations/df_match_brain_1.csv",
@@ -786,7 +786,7 @@ def process_raw_data(
             arrays_before_transfo,
             arrays_after_transfo,
         ) = get_standardized_values(
-            slice_index,
+            slice_index - 10 if not brain_1 else slice_index,
             path_array_data="/data/lipidatlas/data/processed/BRAIN1"
             if brain_1
             else "/data/lipidatlas/data/processed/BRAIN2",
@@ -809,7 +809,7 @@ def process_raw_data(
             l_lipids_float,
             arrays_before_transfo,
             arrays_after_transfo,
-            ignore_standardization=False if len(l_lipids_str)>0 else True,
+            ignore_standardization=False if len(l_lipids_str) > 0 else True,
         )
 
     # Sort according to mz for averaging
