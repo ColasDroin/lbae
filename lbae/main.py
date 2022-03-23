@@ -67,7 +67,7 @@ server = app.server
 if __name__ == "__main__":
     logging.info("Starting app" + logmem())
     # try:
-    app.run_server(port=8073, debug=False)
+    app.run_server(port=8073, debug=True)
     # except:
     #     if app.use_redis:
     #         # Shut reddis server

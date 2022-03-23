@@ -117,10 +117,17 @@ def return_layout(basic_config, slice_index):
                 # ),
             ),
             dbc.Modal(
-                [
-                    dbc.ModalHeader(dbc.ModalTitle("3D slice distribution")),
+                # style={"background-color": "#1d1c1f",},
+                children=[
+                    dbc.ModalHeader(
+                        style={"background-color": "#1d1c1f",},
+                        children=dbc.ModalTitle(
+                            children="3D slice distribution", style={"color": "white"},
+                        ),
+                    ),
                     dbc.ModalBody(
-                        dbc.Spinner(
+                        style={"background-color": "#1d1c1f",},
+                        children=dbc.Spinner(
                             color="dark",
                             show_initially=False,
                             children=[
@@ -262,7 +269,7 @@ def page_1_plot_graph_modal(n1):
         return return_pickled_object(
             "figures/3D_page",
             "slices_3D",
-            force_update=False,
+            force_update=True,
             compute_function=figures.compute_figure_slices_3D,
         )
     return dash.no_update

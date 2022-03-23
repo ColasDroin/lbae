@@ -181,6 +181,8 @@ class MaldiData:
             raise ValueError("Invalid string for indices")
 
     def get_slice_number(self):
+        # ! CHANGE THAT
+        return 32
         return self._n_slices
 
     def get_image_shape(self, slice_index):

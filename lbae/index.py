@@ -296,15 +296,15 @@ def render_page_content(pathname, slice_index):
     return page, ""
 
 
-@app.callback(
-    Output("drawer", "opened"), Input("button-doc", "n_clicks"), prevent_initial_call=True
-)
-def drawer(n_clicks):
-    return True
+# @app.callback(
+#     Output("drawer", "opened"), Input("button-doc", "n_clicks"), prevent_initial_call=True
+# )
+# def drawer(n_clicks):
+#     return True
 
 
 @app.callback(
-    Output("main-paper-slider", "class_name"), Input("url", "pathname"), prevent_initial_call=False
+    Output("main-paper-slider", "className"), Input("url", "pathname"), prevent_initial_call=False
 )
 def hide_slider(pathname):
     l_path_with_slider = ["/load-slice", "/lipid-selection", "/region-analysis"]

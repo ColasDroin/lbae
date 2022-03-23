@@ -57,6 +57,9 @@ long_callback_manager = DiskcacheLongCallbackManager(
 app = dash.Dash(
     title="Lipids Brain Atlas Explorer",
     external_stylesheets=[dbc.themes.DARKLY],
+    external_scripts=[
+        {"src": "https://cdn.jsdelivr.net/npm/dom-to-image@2.6.0/dist/dom-to-image.min.js"}
+    ],
     meta_tags=[{"name": "viewport", "content": "width=device-width, initial-scale=1"}],
     server=server,
     suppress_callback_exceptions=False,

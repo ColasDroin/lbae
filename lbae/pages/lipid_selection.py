@@ -2,7 +2,7 @@
 
 # Standard modules
 import dash_bootstrap_components as dbc
-from dash import dcc, html
+from dash import dcc, html, clientside_callback
 import logging
 import dash
 import json
@@ -1256,7 +1256,25 @@ def tab_2_download(
         return dash.no_update
 
 
+clientside_callback(
+    """
+    function(n_clicks){
+        if(n_clicks > 0){
+            domtoimage.toBlob(document.getElementById('page-2-graph-heatmap-mz-selection'))
+                .then(function (blob) {
+                    window.saveAs(blob, 'lipid_selection.png');
+                }
+            );
+        }
+    }
+    """,
+    Output("tab-2-download-image-button", "n_clicks"),
+    Input("tab-2-download-image-button", "n_clicks"),
+)
+
+
 @app.app.callback(
+    Output("tab-2-download-image-button", "disabled"),
     Output("tab-2-download-data-button", "disabled"),
     Output("tab-2-rgb-button", "disabled"),
     Output("tab-2-colormap-button", "disabled"),
@@ -1270,9 +1288,9 @@ def tab_2_active_download(lipid_1_index, lipid_2_index, lipid_3_index):
     ]
     # If lipids has been selected from the dropdown, activate button
     if len(l_lipids_indexes) > 0:
-        return False, False, False
+        return False, False, False, False
     else:
-        return True, True, True
+        return True, True, True, True
 
 
 @app.app.callback(

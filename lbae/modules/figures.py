@@ -456,6 +456,7 @@ class Figures:
         binary_string=False,
         projected_image=True,
         plot_contours=False,
+        return_base64_string=False,
     ):
 
         logging.info("Starting figure computation, from mz boundaries")
@@ -482,9 +483,7 @@ class Figures:
         self._data.clean_memory(slice_index=slice_index)
         logging.info("Memory cleaned")
 
-        # Build graph from image
-        fig = go.Figure()
-
+        # Get image
         if plot_contours:
             array_image_atlas = self._atlas.list_projected_atlas_borders_arrays[slice_index - 1]
         else:
@@ -494,6 +493,14 @@ class Figures:
         base64_string = convert_image_to_base64(
             image, overlay=array_image_atlas, transparent_zeros=True, optimize=False
         )
+
+        # Either return image directly
+        if return_base64_string:
+            return base64_string
+
+        # Or build graph
+        fig = go.Figure()
+
         logging.info("Adding image to figure")
         fig.add_trace(go.Image(visible=True, source=base64_string))
 
@@ -530,6 +537,7 @@ class Figures:
         projected_image=True,
         apply_transform=False,
         ll_lipid_names=None,
+        return_base64_string=False,
     ):
 
         logging.info("Compute heatmap per lipid selection" + str(ll_t_bounds))
@@ -559,11 +567,15 @@ class Figures:
         # Clean memmap memory
         self._data.clean_memory(slice_index=slice_index)
 
-        # Build figure
-        fig = go.Figure()
-
         # Set optimize to False to gain computation time
         base64_string = convert_image_to_base64(image, transparent_zeros=True, optimize=False)
+
+        # Either return image directly
+        if return_base64_string:
+            return base64_string
+
+        # Or build graph
+        fig = go.Figure()
         fig.add_trace(go.Image(visible=True, source=base64_string))
 
         # Improve graph layout
@@ -647,6 +659,7 @@ class Figures:
         use_pil=True,
         apply_transform=False,
         ll_lipid_names=None,
+        return_base64_string=False,
     ):
         logging.info("Started RGB image computation for slice " + str(slice_index) + logmem())
 
@@ -672,6 +685,10 @@ class Figures:
             base64_string_exp = convert_image_to_base64(
                 array_image, type="RGB", transparent_zeros=True, optimize=False,
             )
+            # Return image directly if needed
+            if return_base64_string:
+                return base64_string_exp
+
             final_image = go.Image(visible=True, source=base64_string_exp,)
         else:
             final_image = go.Image(z=array_image)
@@ -967,9 +984,10 @@ class Figures:
                 xaxis=dict(showticklabels=False),
                 yaxis=dict(showticklabels=False),
                 zaxis=dict(showticklabels=False),
-            )
+            ),
+            paper_bgcolor="rgba(0,0,0,0.)",
+            plot_bgcolor="rgba(0,0,0,0.)",
         )
-
         return fig
 
     # ! I can probably numbaize that
