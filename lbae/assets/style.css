@@ -135,6 +135,16 @@ body > div.fade.offcanvas-backdrop.show {
   margin-top: 0.16rem;
 }
 
+#page-3-controls > div:nth-child(1) > label {
+  color: #e9ecef;
+  margin-top: 0.16rem;
+}
+
+#page-3-controls > div:nth-child(2) > label {
+  color: #e9ecef;
+  margin-top: 0.16rem;
+}
+
 #page-1-toggle-annotations::before {
   background-color: rgb(65 154 181);
 }
@@ -329,6 +339,10 @@ body > div.fade.offcanvas-backdrop.show {
 }
 
 #page-2-drawer-low-res-spectra > div.offcanvas-header {
+  display: none;
+}
+
+#page-4-drawer-region-selection > div.offcanvas-header {
   display: none;
 }
 
@@ -528,16 +542,15 @@ div.Select-value > span.Select-value-icon {
 */
 
 /* Improve react grid look */
-/* 
-div.item-top{
-  transform: translate(0,10px);
-} */
+div.item-top {
+  transform: translate(0, 10px);
+}
 div.item-top {
   visibility: hidden;
 }
 
 div.item {
-  background: #e9ecef;
+  background: #1d1c1f;
   box-shadow: 0px 10px 6px -1px rgb(30 44 57 / 15%);
 }
 

@@ -524,6 +524,7 @@ class Figures:
             fig.update_layout(dragmode="drawclosedpath")
 
         # Set background color to zero
+        fig.layout.template = "plotly_dark"
         fig.layout.plot_bgcolor = "rgba(0,0,0,0)"
         fig.layout.paper_bgcolor = "rgba(0,0,0,0)"
         logging.info("Returning figure")
@@ -589,6 +590,7 @@ class Figures:
         fig.update(layout_coloraxis_showscale=False)
 
         # Set background color to zero
+        fig.layout.template = "plotly_dark"
         fig.layout.plot_bgcolor = "rgba(0,0,0,0)"
         fig.layout.paper_bgcolor = "rgba(0,0,0,0)"
 
@@ -711,8 +713,9 @@ class Figures:
             fig.update_yaxes(showticklabels=False)
 
             # Set background color to zero
-            fig.layout.plot_bgcolor = "rgba(0,0,0,0.)"
-            fig.layout.paper_bgcolor = "rgba(0,0,0,0.)"
+            fig.layout.template = "plotly_dark"
+            fig.layout.plot_bgcolor = "rgba(0,0,0,0)"
+            fig.layout.paper_bgcolor = "rgba(0,0,0,0)"
 
             logging.info("Returning fig for slice " + str(slice_index) + logmem())
             return fig
@@ -848,8 +851,13 @@ class Figures:
             yaxis=dict(title="Intensity"),
             template="plotly_dark",
         )
+
         # Build figure
         fig = go.Figure(data=data, layout=layout)
+
+        # Transparent background
+        fig.layout.plot_bgcolor = "rgba(0,0,0,0)"
+        fig.layout.paper_bgcolor = "rgba(0,0,0,0)"
         return fig
 
     def return_heatmap_lipid(self, fig=None):
@@ -860,8 +868,13 @@ class Figures:
 
         # Improve figure layout
         fig.update_layout(
-            margin=dict(t=25, r=0, b=10, l=0), template="plotly_white", font_size=8,
+            margin=dict(t=25, r=0, b=10, l=0), template="plotly_dark", font_size=8,
         )
+
+        # Transparent background
+        fig.layout.plot_bgcolor = "rgba(0,0,0,0)"
+        fig.layout.paper_bgcolor = "rgba(0,0,0,0)"
+
         return fig
 
     def compute_figure_slices_3D(self, reduce_resolution_factor=20):

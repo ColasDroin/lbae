@@ -11,7 +11,6 @@ import pandas as pd
 import logging
 import dash_draggable
 from numba import njit
-import dash_mantine_components as dmc
 
 # LBAE modules
 import app
@@ -39,802 +38,694 @@ N_LINES = int(np.ceil(HEIGHT_PLOTS / 30))
 
 def return_layout(basic_config, slice_index=1):
 
-    page = html.Div(
-        style={
-            "position": "absolute",
-            "top": "0px",
-            "right": "0px",
-            "bottom": "0px",
-            "left": "6rem",
-            "background-color": "#1d1c1f",
-        },
-        children=[
-            html.Div(
-                className="page-1-fixed-aspect-ratio",
-                style={"background-color": "#1d1c1f",},
-                children=[
-                    dcc.Graph(
-                        id="page-3-graph-heatmap-per-sel",
-                        config=basic_config
-                        | {
-                            "toImageButtonOptions": {
-                                "format": "png",
-                                "filename": "annotated_brain_slice",
-                                "scale": 2,
-                            }
-                        },
-                        style={
-                            "width": "95%",
-                            "height": "95%",
-                            "position": "absolute",
-                            "left": "0",
-                            # "max-height": "40vh",
-                        },
-                        figure=return_pickled_object(
-                            "figures/load_page",
-                            "figure_basic_image",
-                            force_update=False,
-                            compute_function=figures.compute_figure_basic_image,
-                            type_figure="projection_corrected",
-                            index_image=slice_index - 1,
-                            plot_atlas_contours=False,
-                            draw=True,
+    page = (
+        dash_draggable.ResponsiveGridLayout(
+            id="draggable",
+            clearSavedLayout=True,
+            isDraggable=False,
+            isResizable=False,
+            containerPadding=[2, 2],
+            breakpoints={"xxl": 1600, "lg": 1200, "md": 996, "sm": 768, "xs": 480, "xxs": 0},
+            gridCols={"xxl": 12, "lg": 12, "md": 10, "sm": 6, "xs": 4, "xxs": 2},
+            layouts={
+                # x sets the lateral position, y the vertical one, w is in columns (whose size depends on the dimension), h is in rows (30px)
+                # nb columns go 12->12->10->6->4->2
+                "xxl": [
+                    {"i": "page-3-card-main-graph", "x": 2, "y": 0, "w": 6, "h": 20},
+                    {"i": "page-3-card-mask-selection", "x": 8, "y": 0, "w": 3, "h": 20},
+                    {"i": "page-3-card-spectrum", "x": 2, "y": 15, "w": 6, "h": N_LINES},
+                    {
+                        "i": "page-3-card-dropdowns",
+                        "x": 8,
+                        "y": 15,
+                        "w": 3,
+                        "h": int(N_LINES) / 2 + 2,
+                    },
+                    {
+                        "i": "page-3-card-filtering",
+                        "x": 8,
+                        "y": 16,
+                        "w": 3,
+                        "h": N_LINES - int(N_LINES) / 2 - 2,
+                    },
+                    {"i": "page-3-card-heatmap", "x": 2, "y": 17, "w": 4, "h": 2 * N_LINES - 2},
+                    {
+                        "i": "page-3-card-graph-lipid-comparison",
+                        "x": 6,
+                        "y": 17,
+                        "w": 5,
+                        "h": 2 * N_LINES - 2,
+                    },
+                ],
+                "lg": [
+                    {"i": "page-3-card-main-graph", "x": 0, "y": 0, "w": 9, "h": 16},
+                    {"i": "page-3-card-mask-selection", "x": 9, "y": 0, "w": 3, "h": 16},
+                    {"i": "page-3-card-spectrum", "x": 0, "y": 15, "w": 9, "h": N_LINES},
+                    {
+                        "i": "page-3-card-dropdowns",
+                        "x": 9,
+                        "y": 15,
+                        "w": 3,
+                        "h": int(N_LINES) / 2 + 2,
+                    },
+                    {
+                        "i": "page-3-card-filtering",
+                        "x": 9,
+                        "y": 16,
+                        "w": 3,
+                        "h": N_LINES - int(N_LINES) / 2 - 2,
+                    },
+                    {"i": "page-3-card-heatmap", "x": 0, "y": 17, "w": 6, "h": 2 * N_LINES - 2},
+                    {
+                        "i": "page-3-card-graph-lipid-comparison",
+                        "x": 6,
+                        "y": 17,
+                        "w": 6,
+                        "h": 2 * N_LINES - 5,
+                    },
+                ],
+                "md": [
+                    {"i": "page-3-card-main-graph", "x": 0, "y": 0, "w": 7, "h": 15},
+                    {"i": "page-3-card-mask-selection", "x": 9, "y": 0, "w": 3, "h": 15},
+                    {"i": "page-3-card-spectrum", "x": 0, "y": 15, "w": 7, "h": N_LINES},
+                    {
+                        "i": "page-3-card-dropdowns",
+                        "x": 7,
+                        "y": 15,
+                        "w": 3,
+                        "h": int(N_LINES) / 2 + 2,
+                    },
+                    {
+                        "i": "page-3-card-filtering",
+                        "x": 7,
+                        "y": 16,
+                        "w": 3,
+                        "h": N_LINES - int(N_LINES) / 2 - 2,
+                    },
+                    {"i": "page-3-card-heatmap", "x": 0, "y": 17, "w": 5, "h": 2 * N_LINES - 2},
+                    {
+                        "i": "page-3-card-graph-lipid-comparison",
+                        "x": 5,
+                        "y": 17,
+                        "w": 5,
+                        "h": 2 * N_LINES - 7,
+                    },
+                ],
+                "sm": [
+                    {"i": "page-3-card-main-graph", "x": 0, "y": 0, "w": 6, "h": 15},
+                    {"i": "page-3-card-mask-selection", "x": 0, "y": 0, "w": 6, "h": 11},
+                    {"i": "page-3-card-spectrum", "x": 0, "y": 12, "w": 6, "h": N_LINES},
+                    {"i": "page-3-card-dropdowns", "x": 0, "y": 19, "w": 6, "h": 7},
+                    {"i": "page-3-card-filtering", "x": 0, "y": 19 + 7, "w": 6, "h": 4},
+                    {
+                        "i": "page-3-card-heatmap",
+                        "x": 0,
+                        "y": 19 + 7 + 5,
+                        "w": 6,
+                        "h": 2 * N_LINES - 2,
+                    },
+                    {
+                        "i": "page-3-card-graph-lipid-comparison",
+                        "x": 0,
+                        "y": 19 + 7 + 5 + N_LINES,
+                        "w": 6,
+                        "h": 2 * N_LINES - 2,
+                    },
+                ],
+                "xs": [
+                    {"i": "page-3-card-main-graph", "x": 0, "y": 0, "w": 4, "h": 15},
+                    {"i": "page-3-card-mask-selection", "x": 0, "y": 0, "w": 4, "h": 11},
+                    {"i": "page-3-card-spectrum", "x": 0, "y": 10, "w": 4, "h": N_LINES},
+                    {"i": "page-3-card-dropdowns", "x": 0, "y": 15, "w": 4, "h": 7},
+                    {"i": "page-3-card-filtering", "x": 0, "y": 14 + 7, "w": 4, "h": 4},
+                    {
+                        "i": "page-3-card-heatmap",
+                        "x": 0,
+                        "y": 14 + 7 + 5,
+                        "w": 4,
+                        "h": 2 * N_LINES - 2,
+                    },
+                    {
+                        "i": "page-3-card-graph-lipid-comparison",
+                        "x": 0,
+                        "y": 14 + 7 + 5 + N_LINES,
+                        "w": 4,
+                        "h": 2 * N_LINES - 5,
+                    },
+                ],
+                "xxs": [
+                    {"i": "page-3-card-main-graph", "x": 0, "y": 0, "w": 2, "h": 13},
+                    {"i": "page-3-card-mask-selection", "x": 0, "y": 0, "w": 2, "h": 12},
+                    {"i": "page-3-card-spectrum", "x": 0, "y": 4, "w": 2, "h": N_LINES},
+                    {"i": "page-3-card-dropdowns", "x": 0, "y": 9, "w": 2, "h": 7},
+                    {"i": "page-3-card-filtering", "x": 0, "y": 9 + 7, "w": 2, "h": 4},
+                    {
+                        "i": "page-3-card-heatmap",
+                        "x": 0,
+                        "y": 9 + 7 + 5,
+                        "w": 2,
+                        "h": 2 * N_LINES - 2,
+                    },
+                    {
+                        "i": "page-3-card-graph-lipid-comparison",
+                        "x": 0,
+                        "y": 9 + 7 + 5 + N_LINES,
+                        "w": 2,
+                        "h": 2 * N_LINES - 8,
+                    },
+                ],
+            },
+            children=[
+                dbc.Card(
+                    id="page-3-card-mask-selection",
+                    style={"margin": "0 auto", "width": "100%", "height": "100%"},
+                    children=[
+                        dbc.CardHeader(
+                            className="d-flex justify-content-between",
+                            children=[html.Div("Brain region selection"),],
                         ),
-                    ),
-                    html.P(
-                        "Hovered region: ",
-                        id="page-3-graph-hover-text",
-                        className="text-warning font-weight-bold position-absolute",
-                        style={"right": "15%", "top": "1em"},
-                    ),
-                    dmc.Group(
-                        direction="column",
-                        spacing=0,
-                        style={"left": "1%", "top": "1em",},
-                        class_name="position-absolute",
-                        children=[
-                            html.Div(children=" Structure selection", className="fs-5 text-light",),
-                            dmc.Group(
-                                spacing="xs",
-                                align="flex-start",
-                                children=[
-                                    dmc.MultiSelect(
+                        dbc.CardBody(
+                            className="loading-wrapper",
+                            children=[
+                                # html.Div(
+                                #     className="page-1-fixed-aspect-ratio",
+                                #     children=[
+                                #         dcc.Graph(
+                                #             id="page-3-graph-atlas-per-sel",
+                                #             config=basic_config | {"displayModeBar": False},
+                                #             style={
+                                #                 "width": "100%",
+                                #                 "height": "100%",
+                                #                 "position": "absolute",
+                                #                 "left": "0",
+                                #             },
+                                #             figure=return_pickled_object(
+                                #                 "figures/load_page",
+                                #                 "figure_basic_image",
+                                #                 force_update=False,
+                                #                 compute_function=figures.compute_figure_basic_image,
+                                #                 type_figure=None,
+                                #                 index_image=slice_index - 1,
+                                #                 plot_atlas_contours=True,
+                                #                 only_contours=True,
+                                #             ),
+                                #         ),
+                                #         html.P(
+                                #             "Hovered region: ",
+                                #             id="page-3-graph-atlas-hover-text",
+                                #             className="text-warning font-weight-bold position-absolute",
+                                #             style={"left": "15%", "top": "1em"},
+                                #         ),
+                                #     ],
+                                # ),
+                                html.Div(
+                                    children=dcc.Dropdown(
                                         id="page-3-dropdown-brain-regions",
-                                        data=[
+                                        options=[
                                             {
                                                 "label": atlas.dic_acronym_name[node],
                                                 "value": atlas.dic_acronym_name[node],
                                             }
                                             for node in atlas.dic_existing_masks[slice_index - 1]
                                         ],
-                                        searchable=True,
-                                        nothingFound="No structure found",
-                                        radius="md",
-                                        size="xs",
-                                        # variant="filled",
-                                        placeholder="Choose brain structure",
+                                        placeholder="Click on brain regions above.",
+                                        multi=True,
                                         clearable=False,
-                                        maxSelectedValues=3,
-                                        transitionDuration=150,
-                                        transition="pop-top-left",
-                                        transitionTimingFunction="ease",
-                                        style={"width": "20em",},
-                                    ),
-                                    dmc.Button(
-                                        children="Compute spectra",
-                                        id="page-3-button-compute-spectra",
-                                        variant="filled",
-                                        color="gray",
-                                        radius="md",
-                                        size="xs",
-                                        disabled=True,
-                                        compact=False,
-                                        loading=False,
-                                    ),
-                                    dmc.Button(
-                                        children="Reset",
-                                        id="page-3-reset-button",
-                                        variant="filled",
-                                        color="gray",
-                                        radius="md",
-                                        size="xs",
                                         disabled=False,
-                                        compact=False,
-                                        loading=False,
+                                        className="my-3 mx-auto",
                                     ),
-                                ],
-                            ),
-                        ],
-                    ),
-                ],
-            ),
-            html.Div(
-                children=[
-                    dbc.Offcanvas(
-                        id="page-4-drawer-region-selection",
-                        backdrop=False,
-                        placement="end",
-                        style={
-                            "width": "calc(100% - 6rem)",
-                            "height": "100%",
-                            "background-color": "#1d1c1f",
-                        },
-                        children=[
-                            dash_draggable.ResponsiveGridLayout(
-                                id="draggable",
-                                clearSavedLayout=True,
-                                isDraggable=False,
-                                isResizable=False,
-                                containerPadding=[1, 1],
-                                breakpoints={
-                                    "xxl": 1600,
-                                    "lg": 1200,
-                                    "md": 996,
-                                    "sm": 768,
-                                    "xs": 480,
-                                    "xxs": 0,
-                                },
-                                gridCols={
-                                    "xxl": 12,
-                                    "lg": 12,
-                                    "md": 10,
-                                    "sm": 6,
-                                    "xs": 4,
-                                    "xxs": 2,
-                                },
-                                layouts={
-                                    # x sets the lateral position, y the vertical one, w is in columns (whose size depends on the dimension), h is in rows (30px)
-                                    # nb columns go 12->12->10->6->4->2
-                                    "xxl": [
-                                        {"i": "page-3-controls", "x": 0, "y": 0, "w": 12, "h": 2,},
-                                        {
-                                            "i": "page-3-card-spectrum",
-                                            "x": 2,
-                                            "y": 15,
-                                            "w": 6,
-                                            "h": N_LINES,
-                                        },
-                                        {
-                                            "i": "page-3-card-dropdowns",
-                                            "x": 8,
-                                            "y": 15,
-                                            "w": 3,
-                                            "h": int(N_LINES) / 2 + 2,
-                                        },
-                                        {
-                                            "i": "page-3-card-filtering",
-                                            "x": 8,
-                                            "y": 16,
-                                            "w": 3,
-                                            "h": N_LINES - int(N_LINES) / 2 - 2,
-                                        },
-                                        {
-                                            "i": "page-3-card-heatmap",
-                                            "x": 2,
-                                            "y": 17,
-                                            "w": 4,
-                                            "h": 2 * N_LINES - 2,
-                                        },
-                                        {
-                                            "i": "page-3-card-graph-lipid-comparison",
-                                            "x": 6,
-                                            "y": 17,
-                                            "w": 5,
-                                            "h": 2 * N_LINES - 2,
-                                        },
+                                ),
+                                html.Div(
+                                    className="d-grid gap-2 col-10 mx-auto mt-2",
+                                    children=[
+                                        dbc.Button(
+                                            children="Compute spectra",
+                                            id="page-3-button-compute-spectra",
+                                            disabled=True,
+                                            className="",
+                                            color="primary",
+                                        ),
                                     ],
-                                    "lg": [
-                                        {"i": "page-3-controls", "x": 0, "y": 0, "w": 12, "h": 2,},
-                                        {
-                                            "i": "page-3-card-spectrum",
-                                            "x": 0,
-                                            "y": 15,
-                                            "w": 9,
-                                            "h": N_LINES,
-                                        },
-                                        {
-                                            "i": "page-3-card-dropdowns",
-                                            "x": 9,
-                                            "y": 15,
-                                            "w": 3,
-                                            "h": int(N_LINES) / 2 + 2,
-                                        },
-                                        {
-                                            "i": "page-3-card-filtering",
-                                            "x": 9,
-                                            "y": 16,
-                                            "w": 3,
-                                            "h": N_LINES - int(N_LINES) / 2 - 2,
-                                        },
-                                        {
-                                            "i": "page-3-card-heatmap",
-                                            "x": 0,
-                                            "y": 17,
-                                            "w": 6,
-                                            "h": 2 * N_LINES - 2,
-                                        },
-                                        {
-                                            "i": "page-3-card-graph-lipid-comparison",
-                                            "x": 6,
-                                            "y": 17,
-                                            "w": 6,
-                                            "h": 2 * N_LINES - 5,
-                                        },
+                                ),
+                                html.Div(
+                                    className="d-grid gap-2 col-10 mx-auto mt-2",
+                                    children=[
+                                        dbc.Button(
+                                            children="Download spectrum data",
+                                            id="tab-3-download-data-button",
+                                            disabled=True,
+                                            className="",
+                                            color="primary",
+                                        ),
                                     ],
-                                    "md": [
-                                        {"i": "page-3-controls", "x": 0, "y": 0, "w": 10, "h": 2,},
-                                        {
-                                            "i": "page-3-card-spectrum",
-                                            "x": 0,
-                                            "y": 15,
-                                            "w": 7,
-                                            "h": N_LINES,
-                                        },
-                                        {
-                                            "i": "page-3-card-dropdowns",
-                                            "x": 7,
-                                            "y": 15,
-                                            "w": 3,
-                                            "h": int(N_LINES) / 2 + 2,
-                                        },
-                                        {
-                                            "i": "page-3-card-filtering",
-                                            "x": 7,
-                                            "y": 16,
-                                            "w": 3,
-                                            "h": N_LINES - int(N_LINES) / 2 - 2,
-                                        },
-                                        {
-                                            "i": "page-3-card-heatmap",
-                                            "x": 0,
-                                            "y": 17,
-                                            "w": 5,
-                                            "h": 2 * N_LINES - 2,
-                                        },
-                                        {
-                                            "i": "page-3-card-graph-lipid-comparison",
-                                            "x": 5,
-                                            "y": 17,
-                                            "w": 5,
-                                            "h": 2 * N_LINES - 7,
-                                        },
+                                ),
+                                dcc.Download(id="tab-3-download-data"),
+                                ## Fourth column of nested row
+                                html.Div(
+                                    className="d-grid gap-2 col-10 mx-auto mt-2",
+                                    children=[
+                                        dbc.Button(
+                                            children="Reset",
+                                            id="page-3-reset-button",
+                                            color="primary",
+                                        )
                                     ],
-                                    "sm": [
-                                        {"i": "page-3-controls", "x": 0, "y": 0, "w": 6, "h": 2,},
-                                        {
-                                            "i": "page-3-card-spectrum",
-                                            "x": 0,
-                                            "y": 12,
-                                            "w": 6,
-                                            "h": N_LINES,
-                                        },
-                                        {
-                                            "i": "page-3-card-dropdowns",
-                                            "x": 0,
-                                            "y": 19,
-                                            "w": 6,
-                                            "h": 7,
-                                        },
-                                        {
-                                            "i": "page-3-card-filtering",
-                                            "x": 0,
-                                            "y": 19 + 7,
-                                            "w": 6,
-                                            "h": 4,
-                                        },
-                                        {
-                                            "i": "page-3-card-heatmap",
-                                            "x": 0,
-                                            "y": 19 + 7 + 5,
-                                            "w": 6,
-                                            "h": 2 * N_LINES - 2,
-                                        },
-                                        {
-                                            "i": "page-3-card-graph-lipid-comparison",
-                                            "x": 0,
-                                            "y": 19 + 7 + 5 + N_LINES,
-                                            "w": 6,
-                                            "h": 2 * N_LINES - 2,
-                                        },
+                                ),
+                                html.Div(
+                                    className="d-flex flex-column",
+                                    children=[
+                                        dbc.Switch(
+                                            id="page-3-normalize",
+                                            label="Normalize",
+                                            value=False,
+                                            className="mt-2 mx-auto",
+                                        ),
+                                        dbc.Switch(
+                                            id="page-3-log",
+                                            label="Log-transform",
+                                            value=False,
+                                            className="mt-2 mx-auto",
+                                        ),
                                     ],
-                                    "xs": [
-                                        {"i": "page-3-controls", "x": 0, "y": 0, "w": 4, "h": 2,},
-                                        {
-                                            "i": "page-3-card-spectrum",
-                                            "x": 0,
-                                            "y": 10,
-                                            "w": 4,
-                                            "h": N_LINES,
-                                        },
-                                        {
-                                            "i": "page-3-card-dropdowns",
-                                            "x": 0,
-                                            "y": 15,
-                                            "w": 4,
-                                            "h": 7,
-                                        },
-                                        {
-                                            "i": "page-3-card-filtering",
-                                            "x": 0,
-                                            "y": 14 + 7,
-                                            "w": 4,
-                                            "h": 4,
-                                        },
-                                        {
-                                            "i": "page-3-card-heatmap",
-                                            "x": 0,
-                                            "y": 14 + 7 + 5,
-                                            "w": 4,
-                                            "h": 2 * N_LINES - 2,
-                                        },
-                                        {
-                                            "i": "page-3-card-graph-lipid-comparison",
-                                            "x": 0,
-                                            "y": 14 + 7 + 5 + N_LINES,
-                                            "w": 4,
-                                            "h": 2 * N_LINES - 5,
-                                        },
-                                    ],
-                                    "xxs": [
-                                        {"i": "page-3-controls", "x": 0, "y": 0, "w": 2, "h": 2,},
-                                        {
-                                            "i": "page-3-card-spectrum",
-                                            "x": 0,
-                                            "y": 4,
-                                            "w": 2,
-                                            "h": N_LINES,
-                                        },
-                                        {
-                                            "i": "page-3-card-dropdowns",
-                                            "x": 0,
-                                            "y": 9,
-                                            "w": 2,
-                                            "h": 7,
-                                        },
-                                        {
-                                            "i": "page-3-card-filtering",
-                                            "x": 0,
-                                            "y": 9 + 7,
-                                            "w": 2,
-                                            "h": 4,
-                                        },
-                                        {
-                                            "i": "page-3-card-heatmap",
-                                            "x": 0,
-                                            "y": 9 + 7 + 5,
-                                            "w": 2,
-                                            "h": 2 * N_LINES - 2,
-                                        },
-                                        {
-                                            "i": "page-3-card-graph-lipid-comparison",
-                                            "x": 0,
-                                            "y": 9 + 7 + 5 + N_LINES,
-                                            "w": 2,
-                                            "h": 2 * N_LINES - 8,
-                                        },
-                                    ],
-                                },
-                                children=[
-                                    dmc.Center(
-                                        id="page-3-controls",
-                                        style={"width": "100%", "background-color": "#1d1c1f",},
-                                        children=[
-                                            dmc.Switch(
-                                                id="page-3-normalize",
-                                                label="Normalize",
-                                                checked=False,
-                                                color="cyan",
-                                                radius="xl",
-                                                size="sm",
-                                                class_name="mr-3",
+                                ),
+                                # dbc.Progress(value=0, id="page-3-progress", animated=True, striped=True),
+                                # dcc.Interval(id="page-3-interval-component", interval=100, n_intervals=0),
+                                html.Div(
+                                    children=[
+                                        dbc.Spinner(
+                                            color="dark",
+                                            children=[
+                                                html.Div(
+                                                    id="page-3-empty-div-load",
+                                                    className="p-5",
+                                                    children=[],
+                                                )
+                                            ],
+                                        )
+                                    ]
+                                ),
+                            ],
+                        ),
+                    ],
+                ),
+                dbc.Card(
+                    id="page-3-card-main-graph",
+                    style={"margin": "0 auto", "width": "100%", "height": "100%"},
+                    children=[
+                        dbc.CardHeader(
+                            className="d-flex justify-content-between",
+                            children=[
+                                html.Div(
+                                    id="page-3-toast-graph-heatmap-mz-selection",
+                                    children="Brain slice n°",
+                                ),
+                            ],
+                        ),
+                        dbc.CardBody(
+                            className="loading-wrapper py-0 mb-0 mt-2",
+                            children=[
+                                html.Div(
+                                    className="fixed-aspect-ratio",
+                                    children=[
+                                        dcc.Graph(
+                                            id="page-3-graph-heatmap-per-sel",
+                                            config=basic_config
+                                            | {
+                                                "toImageButtonOptions": {
+                                                    "format": "png",
+                                                    "filename": "annotated_brain_slice",
+                                                    "scale": 2,
+                                                }
+                                            },
+                                            style={
+                                                "width": "100%",
+                                                "height": "100%",
+                                                "position": "absolute",
+                                                "left": "0",
+                                                # "max-height": "40vh",
+                                            },
+                                            figure=return_pickled_object(
+                                                "figures/load_page",
+                                                "figure_basic_image",
+                                                force_update=False,
+                                                compute_function=figures.compute_figure_basic_image,
+                                                type_figure="projection_corrected",
+                                                index_image=slice_index - 1,
+                                                plot_atlas_contours=False,
+                                                draw=True,
                                             ),
-                                            dmc.Switch(
-                                                id="page-3-log",
-                                                label="Log-transform",
-                                                checked=False,
-                                                color="cyan",
-                                                radius="xl",
-                                                size="sm",
-                                                class_name="mr-3",
-                                            ),
-                                            dmc.Button(
-                                                children="Download spectrum data",
-                                                id="tab-3-download-data-button",
-                                                disabled=False,
-                                                variant="filled",
-                                                radius="md",
-                                                size="xs",
-                                                compact=False,
-                                                loading=False,
-                                                class_name="mr-5",
-                                            ),
-                                            dcc.Download(id="tab-3-download-data"),
-                                            dmc.Button(
-                                                children="Close",
-                                                id="page-4-close-drawer-region-selection",
-                                                variant="filled",
-                                                disabled=False,
-                                                color="red",
-                                                radius="md",
-                                                size="xs",
-                                                compact=False,
-                                                loading=False,
-                                            ),
-                                        ],
-                                    ),
-                                    dbc.Card(
-                                        id="page-3-card-spectrum",
-                                        style={
-                                            "maxWidth": "100%",
-                                            "margin": "0 auto",
-                                            "width": "100%",
-                                            "height": "100%",
-                                        },
-                                        children=[
-                                            dbc.CardHeader(
-                                                "High-resolution spectrum for current selection",
-                                                style={
-                                                    "background-color": "#1d1c1f",
-                                                    "color": "white",
-                                                },
-                                            ),
-                                            dbc.CardBody(
-                                                className="loading-wrapper py-0 my-0",
-                                                style={"background-color": "#1d1c1f",},
-                                                children=[
-                                                    html.Div(
-                                                        children=[
-                                                            dbc.Spinner(
-                                                                color="dark",
-                                                                children=[
-                                                                    html.Div(
-                                                                        className="px-5",
-                                                                        children=[
-                                                                            html.Div(
-                                                                                id="page-3-alert",
-                                                                                className="text-center my-5",
-                                                                                children=html.Strong(
-                                                                                    children="Please draw at least one region on the heatmap and clicked on 'compute spectra'.. and clicked on 'compute spectra'.",
-                                                                                    style={
-                                                                                        "color": "#df5034"
-                                                                                    },
-                                                                                ),
-                                                                            ),
-                                                                            html.Div(
-                                                                                id="page-3-alert-2",
-                                                                                className="text-center my-2",
-                                                                                style={
-                                                                                    "display": "none"
-                                                                                },
-                                                                                children=[
-                                                                                    html.Strong(
-                                                                                        children="Too many regions selected, please reset the annotations.",
-                                                                                        style={
-                                                                                            "color": "#df5034"
-                                                                                        },
-                                                                                    ),
-                                                                                ],
-                                                                            ),
-                                                                        ],
-                                                                    ),
-                                                                    html.Div(
-                                                                        id="page-3-graph-spectrum-per-pixel-wait"
-                                                                    ),
-                                                                    dcc.Graph(
-                                                                        id="page-3-graph-spectrum-per-pixel",
-                                                                        style={
-                                                                            "height": HEIGHT_PLOTS
-                                                                        }
-                                                                        | {"display": "none"},
-                                                                        config=basic_config
-                                                                        | {
-                                                                            "toImageButtonOptions": {
-                                                                                "format": "png",
-                                                                                "filename": "spectrum_from_custom_region",
-                                                                                "scale": 2,
-                                                                            }
-                                                                        },
-                                                                    ),
-                                                                ],
+                                        ),
+                                        html.P(
+                                            "Hovered region: ",
+                                            id="page-3-graph-hover-text",
+                                            className="text-warning font-weight-bold position-absolute",
+                                            style={"left": "15%", "top": "1em"},
+                                        ),
+                                    ],
+                                ),
+                            ],
+                        ),
+                    ],
+                ),
+                dbc.Card(
+                    id="page-3-card-spectrum",
+                    style={
+                        "maxWidth": "100%",
+                        "margin": "0 auto",
+                        "width": "100%",
+                        "height": "100%",
+                    },
+                    children=[
+                        dbc.CardHeader("High-resolution spectrum for current selection"),
+                        dbc.CardBody(
+                            className="loading-wrapper py-0 my-0",
+                            children=[
+                                html.Div(
+                                    children=[
+                                        dbc.Spinner(
+                                            color="dark",
+                                            children=[
+                                                html.Div(
+                                                    className="px-5",
+                                                    children=[
+                                                        html.Div(
+                                                            id="page-3-alert",
+                                                            className="text-center my-5",
+                                                            children=html.Strong(
+                                                                children="Please draw at least one region on the heatmap and clicked on 'compute spectra'.. and clicked on 'compute spectra'.",
+                                                                style={"color": "#df5034"},
                                                             ),
-                                                        ],
-                                                    ),
-                                                ],
-                                            ),
-                                        ],
-                                    ),
-                                    dbc.Card(
-                                        id="page-3-card-dropdowns",
-                                        style={
-                                            "maxWidth": "100%",
-                                            "margin": "0 auto",
-                                            "width": "100%",
-                                            "height": "100%",
-                                        },
-                                        # className="mt-4",
-                                        children=[
-                                            dbc.CardHeader(
-                                                "Lipid comparison",
-                                                style={
-                                                    "background-color": "#1d1c1f",
-                                                    "color": "white",
-                                                },
-                                            ),
-                                            dbc.CardBody(
-                                                style={"background-color": "#1d1c1f",},
-                                                className="py-0 mt-2",
-                                                children=[
-                                                    dbc.Spinner(
-                                                        color="sucess",
-                                                        delay_hide=100,
-                                                        children=[
-                                                            html.Div(
-                                                                id="page-3-alert-4",
-                                                                className="text-center my-4",
-                                                                children=html.Strong(
-                                                                    children="Please draw at least one region on the heatmap and clicked on 'compute spectra'..",
+                                                        ),
+                                                        html.Div(
+                                                            id="page-3-alert-2",
+                                                            className="text-center my-2",
+                                                            style={"display": "none"},
+                                                            children=[
+                                                                html.Strong(
+                                                                    children="Too many regions selected, please reset the annotations.",
                                                                     style={"color": "#df5034"},
                                                                 ),
-                                                            ),
-                                                            html.Div(id="page-3-div-dropdown-wait"),
-                                                            html.Div(
-                                                                id="page-3-div-dropdown",
-                                                                style={"display": "none"},
-                                                                # className="loading-wrapper",
-                                                                children=[
-                                                                    dcc.Dropdown(
-                                                                        id="page-3-dropdown-red",
-                                                                        options=[],
-                                                                        value=[],
-                                                                        multi=True,
-                                                                    ),
-                                                                    # html.Hr(className="my-2"),
-                                                                    dcc.Dropdown(
-                                                                        id="page-3-dropdown-green",
-                                                                        options=[],
-                                                                        value=[],
-                                                                        multi=True,
-                                                                    ),
-                                                                    # html.Hr(className="my-2"),
-                                                                    dcc.Dropdown(
-                                                                        id="page-3-dropdown-blue",
-                                                                        options=[],
-                                                                        value=[],
-                                                                        multi=True,
-                                                                    ),
-                                                                    html.Hr(className="my-2"),
-                                                                    html.P(
-                                                                        className="lead d-flex justify-content-center",
-                                                                        children=[
-                                                                            dbc.Button(
-                                                                                id="page-3-open-modal",
-                                                                                children="Visualize and compare",
-                                                                                color="primary",
-                                                                                disabled=True,
-                                                                            ),
-                                                                        ],
-                                                                    ),
-                                                                ],
-                                                            ),
-                                                        ],
-                                                    ),
-                                                ],
-                                            ),
-                                        ],
-                                    ),
-                                    dbc.Card(
-                                        id="page-3-card-filtering",
-                                        style={
-                                            "maxWidth": "100%",
-                                            "margin": "0 auto",
-                                            "width": "100%",
-                                            "height": "100%",
-                                        },
-                                        # className="mt-1",
-                                        children=[
-                                            dbc.CardHeader(
-                                                "Lipid filtering per percentile",
-                                                style={
-                                                    "background-color": "#1d1c1f",
-                                                    "color": "white",
-                                                },
-                                            ),
-                                            dbc.CardBody(
-                                                style={"background-color": "#1d1c1f",},
-                                                className="py-0",
-                                                children=[
-                                                    dcc.Slider(
-                                                        id="page-4-slider",
-                                                        className="mt-2",
-                                                        min=0,
-                                                        max=99,
-                                                        value=10,
-                                                        marks={
-                                                            0: {"label": "No filtering"},
-                                                            25: {"label": "25%"},
-                                                            50: {"label": "50%"},
-                                                            75: {"label": "75%"},
-                                                            99: {
-                                                                "label": "99%",
-                                                                "style": {"color": "#f50"},
-                                                            },
-                                                        },
-                                                    )
-                                                ],
-                                            ),
-                                        ],
-                                    ),
-                                    dbc.Card(
-                                        id="page-3-card-heatmap",
-                                        style={
-                                            "maxWidth": "100%",
-                                            "margin": "0 auto",
-                                            "width": "100%",
-                                            "height": "100%",
-                                        },
-                                        children=[
-                                            dbc.CardHeader(
-                                                "Average lipid expression per selection",
-                                                style={
-                                                    "background-color": "#1d1c1f",
-                                                    "color": "white",
-                                                },
-                                            ),
-                                            dbc.CardBody(
-                                                className="loading-wrapper mb-0 pb-0",
-                                                style={"background-color": "#1d1c1f",},
-                                                children=[
-                                                    html.Div(
-                                                        id="page-3-alert-3",
-                                                        className="text-center my-5",
-                                                        children=html.Strong(
-                                                            children="Please draw at least one region on the heatmap and clicked on 'compute spectra'.",
-                                                            style={"color": "#df5034"},
+                                                            ],
                                                         ),
-                                                    ),
-                                                    html.Div(
-                                                        children=[
-                                                            dbc.Spinner(
-                                                                color="sucess",
-                                                                children=[
-                                                                    html.Div(
-                                                                        id="page-3-graph-heatmap-per-lipid-wait"
-                                                                    ),
-                                                                    dcc.Graph(
-                                                                        id="page-3-graph-heatmap-per-lipid",
-                                                                        className="mb-1",
-                                                                        style={
-                                                                            "height": 2
-                                                                            * HEIGHT_PLOTS,
-                                                                            "background-color": "#1d1c1f",
-                                                                        },
-                                                                        # | {"display": "none"},
-                                                                        config=basic_config
-                                                                        | {
-                                                                            "toImageButtonOptions": {
-                                                                                "format": "png",
-                                                                                "filename": "annotated_brain_slice",
-                                                                                "scale": 2,
-                                                                            }
-                                                                        },
-                                                                    ),
-                                                                    html.Div(
-                                                                        id="page-3-switches",
-                                                                        className="d-none",
-                                                                        children=[
-                                                                            dbc.Checklist(
-                                                                                options=[
-                                                                                    {
-                                                                                        "label": "Sort by relative std",
-                                                                                        "value": True,
-                                                                                    }
-                                                                                ],
-                                                                                id="page-3-sort-by-diff-switch",
-                                                                                switch=True,
-                                                                                value=[True],
-                                                                                className="ml-5",
-                                                                            ),
-                                                                        ],
-                                                                    ),
-                                                                ],
-                                                            ),
-                                                        ],
-                                                    ),
-                                                ],
+                                                    ],
+                                                ),
+                                                html.Div(id="page-3-graph-spectrum-per-pixel-wait"),
+                                                dcc.Graph(
+                                                    id="page-3-graph-spectrum-per-pixel",
+                                                    style={"height": HEIGHT_PLOTS}
+                                                    | {"display": "none"},
+                                                    config=basic_config
+                                                    | {
+                                                        "toImageButtonOptions": {
+                                                            "format": "png",
+                                                            "filename": "spectrum_from_custom_region",
+                                                            "scale": 2,
+                                                        }
+                                                    },
+                                                ),
+                                            ],
+                                        ),
+                                    ],
+                                ),
+                            ],
+                        ),
+                    ],
+                ),
+                dbc.Card(
+                    id="page-3-card-dropdowns",
+                    style={
+                        "maxWidth": "100%",
+                        "margin": "0 auto",
+                        "width": "100%",
+                        "height": "100%",
+                    },
+                    # className="mt-4",
+                    children=[
+                        dbc.CardHeader("Lipid comparison"),
+                        dbc.CardBody(
+                            # className="loading-wrapper  py-0",
+                            className="py-0 mt-2",
+                            children=[
+                                dbc.Spinner(
+                                    color="sucess",
+                                    delay_hide=100,
+                                    children=[
+                                        html.Div(
+                                            id="page-3-alert-4",
+                                            className="text-center my-4",
+                                            children=html.Strong(
+                                                children="Please draw at least one region on the heatmap and clicked on 'compute spectra'..",
+                                                style={"color": "#df5034"},
                                             ),
-                                        ],
-                                    ),
-                                    dbc.Card(
-                                        id="page-3-card-graph-lipid-comparison",
-                                        style={
-                                            "maxWidth": "100%",
-                                            "margin": "0 auto",
-                                            "width": "100%",
-                                            "height": "100%",
-                                            # "overflow": "hidden",
-                                        },
-                                        children=[
-                                            dbc.CardHeader(
-                                                className="d-flex justify-content-between",
-                                                style={
-                                                    "background-color": "#1d1c1f",
-                                                    "color": "white",
-                                                },
-                                                children=[
-                                                    html.Div(
-                                                        "Lipid intensity comparison",
-                                                        className="mr-5",
-                                                    ),
-                                                    dbc.Switch(
-                                                        id="page-3-toggle-mask",
-                                                        label="Toggle masks and shape display",
-                                                        value=False,
-                                                        className="ml-5",
-                                                    ),
-                                                ],
-                                            ),
-                                            dbc.CardBody(
-                                                id="page-3-graph-lipid-comparison",
-                                                style={"background-color": "#1d1c1f",},
-                                                # className="loading-wrapper pt-0 mt-0 pb-0 mb-1 px-0 mx-0",
-                                                children=[
-                                                    html.Div(
-                                                        id="page-3-alert-5",
-                                                        className="text-center my-5",
-                                                        children=html.Strong(
-                                                            children="Please draw at least one region on the heatmap and clicked on 'compute spectra'..",
-                                                            style={"color": "#df5034"},
+                                        ),
+                                        html.Div(id="page-3-div-dropdown-wait"),
+                                        html.Div(
+                                            id="page-3-div-dropdown",
+                                            style={"display": "none"},
+                                            # className="loading-wrapper",
+                                            children=[
+                                                dcc.Dropdown(
+                                                    id="page-3-dropdown-red",
+                                                    options=[],
+                                                    value=[],
+                                                    multi=True,
+                                                ),
+                                                # html.Hr(className="my-2"),
+                                                dcc.Dropdown(
+                                                    id="page-3-dropdown-green",
+                                                    options=[],
+                                                    value=[],
+                                                    multi=True,
+                                                ),
+                                                # html.Hr(className="my-2"),
+                                                dcc.Dropdown(
+                                                    id="page-3-dropdown-blue",
+                                                    options=[],
+                                                    value=[],
+                                                    multi=True,
+                                                ),
+                                                html.Hr(className="my-2"),
+                                                html.P(
+                                                    className="lead d-flex justify-content-center",
+                                                    children=[
+                                                        dbc.Button(
+                                                            id="page-3-open-modal",
+                                                            children="Visualize and compare",
+                                                            color="primary",
+                                                            disabled=True,
                                                         ),
-                                                    ),
-                                                    dbc.Spinner(
-                                                        color="dark",
-                                                        children=[
-                                                            html.Div(
-                                                                id="page-3-graph-lipid--comparison-wait"
-                                                            ),
-                                                            html.Div(
-                                                                className="page-1-fixed-aspect-ratio",
-                                                                id="page-3-div-graph-lipid-comparison",
-                                                                style={"display": "none"},
-                                                                children=[
-                                                                    dcc.Graph(
-                                                                        id="page-3-heatmap-lipid-comparison",
-                                                                        config=basic_config
-                                                                        | {
-                                                                            "toImageButtonOptions": {
-                                                                                "format": "png",
-                                                                                "filename": "brain_lipid_selection",
-                                                                                "scale": 2,
-                                                                            }
-                                                                        },
-                                                                        style={
-                                                                            "width": "100%",
-                                                                            "height": "100%",
-                                                                            "position": "absolute",
-                                                                            "left": "0",
-                                                                        },
-                                                                    ),
-                                                                ],
-                                                            ),
-                                                        ],
-                                                    ),
-                                                ],
-                                            ),
-                                        ],
+                                                    ],
+                                                ),
+                                            ],
+                                        ),
+                                    ],
+                                ),
+                            ],
+                        ),
+                    ],
+                ),
+                dbc.Card(
+                    id="page-3-card-filtering",
+                    style={
+                        "maxWidth": "100%",
+                        "margin": "0 auto",
+                        "width": "100%",
+                        "height": "100%",
+                    },
+                    # className="mt-1",
+                    children=[
+                        dbc.CardHeader("Lipid filtering per percentile"),
+                        dbc.CardBody(
+                            # className="loading-wrapper  py-0",
+                            className="py-0",
+                            children=[
+                                dcc.Slider(
+                                    id="page-4-slider",
+                                    className="mt-2",
+                                    min=0,
+                                    max=99,
+                                    value=10,
+                                    marks={
+                                        0: {"label": "No filtering"},
+                                        25: {"label": "25%"},
+                                        50: {"label": "50%"},
+                                        75: {"label": "75%"},
+                                        99: {"label": "99%", "style": {"color": "#f50"}},
+                                    },
+                                )
+                            ],
+                        ),
+                    ],
+                ),
+                dbc.Card(
+                    id="page-3-card-heatmap",
+                    style={
+                        "maxWidth": "100%",
+                        "margin": "0 auto",
+                        "width": "100%",
+                        "height": "100%",
+                    },
+                    children=[
+                        dbc.CardHeader("Average lipid expression per selection"),
+                        dbc.CardBody(
+                            className="loading-wrapper mb-0 pb-0",
+                            children=[
+                                html.Div(
+                                    id="page-3-alert-3",
+                                    className="text-center my-5",
+                                    children=html.Strong(
+                                        children="Please draw at least one region on the heatmap and clicked on 'compute spectra'.",
+                                        style={"color": "#df5034"},
                                     ),
-                                ],
-                            ),
-                        ],
-                    ),
-                ],
-            ),
-        ],
+                                ),
+                                html.Div(
+                                    children=[
+                                        dbc.Spinner(
+                                            color="sucess",
+                                            children=[
+                                                html.Div(id="page-3-graph-heatmap-per-lipid-wait"),
+                                                dcc.Graph(
+                                                    id="page-3-graph-heatmap-per-lipid",
+                                                    className="mb-1",
+                                                    style={"height": 2 * HEIGHT_PLOTS}
+                                                    | {"display": "none"},
+                                                    config=basic_config
+                                                    | {
+                                                        "toImageButtonOptions": {
+                                                            "format": "png",
+                                                            "filename": "annotated_brain_slice",
+                                                            "scale": 2,
+                                                        }
+                                                    },
+                                                ),
+                                                html.Div(
+                                                    id="page-3-switches",
+                                                    className="d-none",
+                                                    children=[
+                                                        # dbc.Checklist(
+                                                        #    options=[
+                                                        #        {"label": "mean-rescale", "value": True,}
+                                                        #    ],
+                                                        #    id="page-3-scale-by-mean-switch",
+                                                        #    switch=True,
+                                                        #    value=[],
+                                                        #    className="mr-5",
+                                                        # ),
+                                                        dbc.Checklist(
+                                                            options=[
+                                                                {
+                                                                    "label": "Sort by relative std",
+                                                                    "value": True,
+                                                                }
+                                                            ],
+                                                            id="page-3-sort-by-diff-switch",
+                                                            switch=True,
+                                                            value=[True],
+                                                            className="ml-5",
+                                                        ),
+                                                    ],
+                                                ),
+                                            ],
+                                        ),
+                                    ],
+                                ),
+                            ],
+                        ),
+                    ],
+                ),
+                dbc.Card(
+                    id="page-3-card-graph-lipid-comparison",
+                    style={
+                        "maxWidth": "100%",
+                        "margin": "0 auto",
+                        "width": "100%",
+                        "height": "100%",
+                        "overflow": "hidden",
+                    },
+                    children=[
+                        dbc.CardHeader(
+                            className="d-flex justify-content-between",
+                            children=[
+                                html.Div("Lipid intensity comparison", className="mr-5"),
+                                dbc.Switch(
+                                    id="page-3-toggle-mask",
+                                    label="Toggle masks and shape display",
+                                    value=False,
+                                    className="ml-5",
+                                ),
+                            ],
+                        ),
+                        dbc.CardBody(
+                            id="page-3-graph-lipid-comparison",
+                            className="loading-wrapper pt-0 mt-0 pb-0 mb-1 px-0 mx-0",
+                            children=[
+                                html.Div(
+                                    id="page-3-alert-5",
+                                    className="text-center my-5",
+                                    children=html.Strong(
+                                        children="Please draw at least one region on the heatmap and clicked on 'compute spectra'..",
+                                        style={"color": "#df5034"},
+                                    ),
+                                ),
+                                dbc.Spinner(
+                                    color="dark",
+                                    children=[
+                                        html.Div(id="page-3-graph-lipid--comparison-wait"),
+                                        html.Div(
+                                            className="page-1-fixed-aspect-ratio",
+                                            id="page-3-div-graph-lipid-comparison",
+                                            style={"display": "none"},
+                                            children=[
+                                                dcc.Graph(
+                                                    id="page-3-heatmap-lipid-comparison",
+                                                    config=basic_config
+                                                    | {
+                                                        "toImageButtonOptions": {
+                                                            "format": "png",
+                                                            "filename": "brain_lipid_selection",
+                                                            "scale": 2,
+                                                        }
+                                                    },
+                                                    style={
+                                                        "width": "100%",
+                                                        "height": "100%",
+                                                        "position": "absolute",
+                                                        "left": "0",
+                                                    },
+                                                ),
+                                            ],
+                                        ),
+                                    ],
+                                ),
+                            ],
+                        ),
+                    ],
+                ),
+            ],
+        ),
     )
 
     return page
 
 
 ###### APP CALLBACKS ######
+
+# Function to update the heatmap toast name
+@app.app.callback(
+    Output("page-3-toast-graph-heatmap-mz-selection", "children"),
+    Input("main-slider", "value"),
+    State("session-id", "data"),
+)
+def page_3_plot_graph_heatmap_mz_selection(slice_index, session_id):
+    # Set progress bar to 0 in redis db (in this function since it's the first being called)
+    # r.set(session_id + "page-3-progress", 0)
+
+    # Return proper slice index
+    if slice_index is not None:
+        return "Brain slice n°" + str(slice_index)
+    else:
+        return dash.no_update
+
 
 # Function to display the hovered region
 @app.app.callback(
@@ -1083,7 +974,7 @@ def page_3_plot_heatmap(
 
 # Function that update dropdown options
 @app.app.callback(
-    Output("page-3-dropdown-brain-regions", "data"), Input("main-slider", "value"),
+    Output("page-3-dropdown-brain-regions", "options"), Input("main-slider", "value"),
 )
 def page_3_update_dropdown_option(slice_index):
 
@@ -1187,7 +1078,7 @@ def tab_3_display_high_res_mz_plot(clicked_reset, clicked_compute, mask, relayou
                 return (
                     {"height": HEIGHT_PLOTS},
                     {"display": "none"},
-                    {"height": 2 * HEIGHT_PLOTS, "background-color": "#1d1c1f",},
+                    {"height": 2 * HEIGHT_PLOTS},
                     {},
                 )
 
@@ -1199,7 +1090,7 @@ def tab_3_display_high_res_mz_plot(clicked_reset, clicked_compute, mask, relayou
                         return (
                             {"height": HEIGHT_PLOTS},
                             {"display": "none"},
-                            {"height": 2 * HEIGHT_PLOTS, "background-color": "#1d1c1f",},
+                            {"height": 2 * HEIGHT_PLOTS},
                             {},
                         )
                     else:
@@ -1423,8 +1314,8 @@ def global_spectrum_store(
     Input("main-slider", "value"),
     State("page-3-dropdown-brain-regions", "value"),
     State("dcc-store-shapes-and-masks", "data"),
-    Input("page-3-normalize", "checked"),
-    Input("page-3-log", "checked"),
+    State("page-3-normalize", "value"),
+    State("page-3-log", "value"),
     State("page-3-graph-heatmap-per-sel", "relayoutData"),
     State("session-id", "data"),
     prevent_intial_call=True,
@@ -1480,14 +1371,14 @@ def page_3_record_spectra(
 @app.app.callback(
     Output("page-3-graph-spectrum-per-pixel", "figure"),
     # Output("dcc-store-list-idx-lipids", "data"),
-    # Output("page-3-empty-div-load", "children"),  # empty div to trigger spinner
+    Output("page-3-empty-div-load", "children"),  # empty div to trigger spinner
     Input("page-3-reset-button", "n_clicks"),
     Input("dcc-store-list-mz-spectra", "data"),
     Input("main-slider", "value"),
     State("page-3-dropdown-brain-regions", "value"),
     State("dcc-store-shapes-and-masks", "data"),
-    Input("page-3-normalize", "checked"),
-    Input("page-3-log", "checked"),
+    State("page-3-normalize", "value"),
+    State("page-3-log", "value"),
     State("page-3-graph-heatmap-per-sel", "relayoutData"),
     prevent_intial_call=True,
 )
@@ -1512,7 +1403,7 @@ def page_3_plot_spectrum(
 
     # Delete everything when clicking reset
     elif id_input == "page-3-reset-button" or l_spectra is None or l_spectra == []:
-        return figures.return_empty_spectrum()
+        return figures.return_empty_spectrum(), ""
 
     # do nothing if l_spectra is None or []
     elif id_input == "dcc-store-list-mz-spectra":
@@ -1626,15 +1517,13 @@ def page_3_plot_spectrum(
                 showlegend=True,
                 xaxis=dict(title="m/z"),
                 yaxis=dict(title="Intensity"),
-                template="plotly_dark",
+                template="plotly_white",
                 legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1.1),
             )
-            fig_mz.layout.plot_bgcolor = "rgba(0,0,0,0)"
-            fig_mz.layout.paper_bgcolor = "rgba(0,0,0,0)"
 
             logging.info("Spectra plotted. Returning it now")
             # Return dummy variable for ll_idx_labels to confirm that it has been computed
-            return fig_mz
+            return fig_mz, ""
 
     return dash.no_update
 
@@ -1651,8 +1540,8 @@ def page_3_plot_spectrum(
     Input("dcc-store-list-mz-spectra", "data"),
     State("page-3-dropdown-brain-regions", "value"),
     State("dcc-store-shapes-and-masks", "data"),
-    Input("page-3-normalize", "checked"),
-    Input("page-3-log", "checked"),
+    State("page-3-normalize", "value"),
+    State("page-3-log", "value"),
     State("page-3-graph-heatmap-per-sel", "relayoutData"),
     State("session-id", "data"),
     prevent_intial_call=True,
@@ -1805,11 +1694,11 @@ def page_3_draw_heatmap_per_lipid_selection(
                     )
                 )
                 fig_heatmap_lipids = figures.return_heatmap_lipid(fig_heatmap_lipids)
-                fig_heatmap_lipids.layout.template = "plotly_dark"
-                fig_heatmap_lipids.layout.plot_bgcolor = "rgba(0,0,0,0)"
-                fig_heatmap_lipids.layout.paper_bgcolor = "rgba(0,0,0,0)"
+
                 logging.info("Heatmap computed. Returning it now")
 
+                # Set progress bar to 70 in redis db
+                # r.set(session_id + "page-3-progress", 70)
                 return fig_heatmap_lipids, l_idx_lipids
 
     return dash.no_update
@@ -1987,8 +1876,8 @@ def toggle_visibility_graph(n1, cliked_reset, l_red_lipids, l_green_lipids, l_bl
     State("dcc-store-shapes-and-masks", "data"),
     State("page-3-dropdown-brain-regions", "value"),
     State("dcc-store-color-mask", "data"),
-    Input("page-3-log", "checked"),
-    Input("page-3-normalize", "checked"),
+    State("page-3-log", "value"),
+    State("page-3-normalize", "value"),
     State("session-id", "data"),
     prevent_initial_call=True,
 )
@@ -2060,18 +1949,6 @@ def draw_modal_graph(
 
     logging.info("No lipid were selected, ignoring update.")
     return dash.no_update
-
-
-@app.app.callback(
-    Output("page-4-drawer-region-selection", "is_open"),
-    Input("page-3-button-compute-spectra", "n_clicks"),
-    Input("page-4-close-drawer-region-selection", "n_clicks"),
-    [State("page-4-drawer-region-selection", "is_open")],
-)
-def toggle_offcanvas(n1, n2, is_open):
-    if n1 or n2:
-        return not is_open
-    return is_open
 
 
 """
