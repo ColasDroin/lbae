@@ -40,7 +40,7 @@ def return_layout(basic_config, slice_index):
                 style={"background-color": "#1d1c1f"},
                 children=[
                     dmc.Center(
-                        style={"background-color": "white"},
+                        style={"background-color": "#1d1c1f"},
                         children=dmc.Group(
                             class_name="mt-1",
                             children=[

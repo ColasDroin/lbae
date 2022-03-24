@@ -1303,7 +1303,13 @@ class Figures:
         fig.update_layout(
             uniformtext=dict(minsize=15), margin=dict(t=30, r=0, b=10, l=0),
         )
-        fig.update_traces(root_color="lightgrey")
+        fig.update_traces(root_color="darkslateblue")
+
+        # Set background color to zero
+        fig.layout.template = "plotly_dark"
+        fig.layout.plot_bgcolor = "rgba(0,0,0,0)"
+        fig.layout.paper_bgcolor = "rgba(0,0,0,0)"
+
         return fig
 
     def compute_atlas_with_slider(self, view="frontal", contour=False):

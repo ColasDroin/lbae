@@ -67,6 +67,7 @@ app = dash.Dash(
     compress=True,
 )
 
+
 # Add a class attribute to specify if redis is being used
 app.use_redis = False
 

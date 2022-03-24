@@ -17,6 +17,7 @@ pkill -P1 gunicorn
 import logging
 import os
 from modules.tools.misc import logmem  # To track memory usage
+import dash_mantine_components as dmc
 
 # ==================================================================================================
 # --- Logging settings
@@ -52,8 +53,11 @@ if app.use_redis:
 # Define app layout
 main_content = return_main_content()
 
-# Initialize app with main content
-app.layout = main_content
+# Initialize app with main content and dark theme
+app.layout = dmc.MantineProvider(
+    theme={"colorScheme": "dark", "colors": {"deep-blue": ["#1d3d5c"] * 10},},
+    children=[main_content],
+)
 
 # Give complete layout for callback validation
 app.validation_layout = return_validation_layout(main_content)
@@ -67,7 +71,7 @@ server = app.server
 if __name__ == "__main__":
     logging.info("Starting app" + logmem())
     # try:
-    app.run_server(port=8073, debug=True)
+    app.run_server(port=8073, debug=False)
     # except:
     #     if app.use_redis:
     #         # Shut reddis server
