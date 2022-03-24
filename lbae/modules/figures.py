@@ -1603,7 +1603,7 @@ class Figures:
         set_id_regions=None,
         decrease_dimensionality_factor=7,
     ):
-
+        print("El conio de tu madre 2")
         logging.info("Starting 3D volume computation")
 
         # Get subsampled array of annotations

@@ -190,37 +190,23 @@ def return_layout(basic_config, slice_index=1):
                                         {
                                             "i": "page-3-card-spectrum",
                                             "x": 2,
-                                            "y": 15,
-                                            "w": 6,
+                                            "y": 2,
+                                            "w": 8,
                                             "h": N_LINES,
-                                        },
-                                        {
-                                            "i": "page-3-card-dropdowns",
-                                            "x": 8,
-                                            "y": 15,
-                                            "w": 3,
-                                            "h": int(N_LINES) / 2 + 2,
-                                        },
-                                        {
-                                            "i": "page-3-card-filtering",
-                                            "x": 8,
-                                            "y": 16,
-                                            "w": 3,
-                                            "h": N_LINES - int(N_LINES) / 2 - 2,
                                         },
                                         {
                                             "i": "page-3-card-heatmap",
                                             "x": 2,
                                             "y": 17,
                                             "w": 4,
-                                            "h": 2 * N_LINES - 2,
+                                            "h": 2 * N_LINES,
                                         },
                                         {
                                             "i": "page-3-card-graph-lipid-comparison",
                                             "x": 6,
                                             "y": 17,
-                                            "w": 5,
-                                            "h": 2 * N_LINES - 2,
+                                            "w": 4,
+                                            "h": 2 * N_LINES,
                                         },
                                     ],
                                     "lg": [
@@ -228,23 +214,9 @@ def return_layout(basic_config, slice_index=1):
                                         {
                                             "i": "page-3-card-spectrum",
                                             "x": 0,
-                                            "y": 15,
-                                            "w": 9,
+                                            "y": 2,
+                                            "w": 12,
                                             "h": N_LINES,
-                                        },
-                                        {
-                                            "i": "page-3-card-dropdowns",
-                                            "x": 9,
-                                            "y": 15,
-                                            "w": 3,
-                                            "h": int(N_LINES) / 2 + 2,
-                                        },
-                                        {
-                                            "i": "page-3-card-filtering",
-                                            "x": 9,
-                                            "y": 16,
-                                            "w": 3,
-                                            "h": N_LINES - int(N_LINES) / 2 - 2,
                                         },
                                         {
                                             "i": "page-3-card-heatmap",
@@ -258,7 +230,7 @@ def return_layout(basic_config, slice_index=1):
                                             "x": 6,
                                             "y": 17,
                                             "w": 6,
-                                            "h": 2 * N_LINES - 5,
+                                            "h": 2 * N_LINES - 4,
                                         },
                                     ],
                                     "md": [
@@ -266,23 +238,9 @@ def return_layout(basic_config, slice_index=1):
                                         {
                                             "i": "page-3-card-spectrum",
                                             "x": 0,
-                                            "y": 15,
-                                            "w": 7,
+                                            "y": 2,
+                                            "w": 10,
                                             "h": N_LINES,
-                                        },
-                                        {
-                                            "i": "page-3-card-dropdowns",
-                                            "x": 7,
-                                            "y": 15,
-                                            "w": 3,
-                                            "h": int(N_LINES) / 2 + 2,
-                                        },
-                                        {
-                                            "i": "page-3-card-filtering",
-                                            "x": 7,
-                                            "y": 16,
-                                            "w": 3,
-                                            "h": N_LINES - int(N_LINES) / 2 - 2,
                                         },
                                         {
                                             "i": "page-3-card-heatmap",
@@ -296,7 +254,7 @@ def return_layout(basic_config, slice_index=1):
                                             "x": 5,
                                             "y": 17,
                                             "w": 5,
-                                            "h": 2 * N_LINES - 7,
+                                            "h": 2 * N_LINES - 5,
                                         },
                                     ],
                                     "sm": [
@@ -304,23 +262,9 @@ def return_layout(basic_config, slice_index=1):
                                         {
                                             "i": "page-3-card-spectrum",
                                             "x": 0,
-                                            "y": 12,
+                                            "y": 2,
                                             "w": 6,
                                             "h": N_LINES,
-                                        },
-                                        {
-                                            "i": "page-3-card-dropdowns",
-                                            "x": 0,
-                                            "y": 19,
-                                            "w": 6,
-                                            "h": 7,
-                                        },
-                                        {
-                                            "i": "page-3-card-filtering",
-                                            "x": 0,
-                                            "y": 19 + 7,
-                                            "w": 6,
-                                            "h": 4,
                                         },
                                         {
                                             "i": "page-3-card-heatmap",
@@ -342,23 +286,9 @@ def return_layout(basic_config, slice_index=1):
                                         {
                                             "i": "page-3-card-spectrum",
                                             "x": 0,
-                                            "y": 10,
+                                            "y": 2,
                                             "w": 4,
                                             "h": N_LINES,
-                                        },
-                                        {
-                                            "i": "page-3-card-dropdowns",
-                                            "x": 0,
-                                            "y": 15,
-                                            "w": 4,
-                                            "h": 7,
-                                        },
-                                        {
-                                            "i": "page-3-card-filtering",
-                                            "x": 0,
-                                            "y": 14 + 7,
-                                            "w": 4,
-                                            "h": 4,
                                         },
                                         {
                                             "i": "page-3-card-heatmap",
@@ -372,7 +302,7 @@ def return_layout(basic_config, slice_index=1):
                                             "x": 0,
                                             "y": 14 + 7 + 5 + N_LINES,
                                             "w": 4,
-                                            "h": 2 * N_LINES - 5,
+                                            "h": 2 * N_LINES - 3,
                                         },
                                     ],
                                     "xxs": [
@@ -380,23 +310,9 @@ def return_layout(basic_config, slice_index=1):
                                         {
                                             "i": "page-3-card-spectrum",
                                             "x": 0,
-                                            "y": 4,
+                                            "y": 2,
                                             "w": 2,
                                             "h": N_LINES,
-                                        },
-                                        {
-                                            "i": "page-3-card-dropdowns",
-                                            "x": 0,
-                                            "y": 9,
-                                            "w": 2,
-                                            "h": 7,
-                                        },
-                                        {
-                                            "i": "page-3-card-filtering",
-                                            "x": 0,
-                                            "y": 9 + 7,
-                                            "w": 2,
-                                            "h": 4,
                                         },
                                         {
                                             "i": "page-3-card-heatmap",
@@ -410,7 +326,7 @@ def return_layout(basic_config, slice_index=1):
                                             "x": 0,
                                             "y": 9 + 7 + 5 + N_LINES,
                                             "w": 2,
-                                            "h": 2 * N_LINES - 8,
+                                            "h": 2 * N_LINES - 5,
                                         },
                                     ],
                                 },
@@ -544,127 +460,6 @@ def return_layout(basic_config, slice_index=1):
                                         ],
                                     ),
                                     dbc.Card(
-                                        id="page-3-card-dropdowns",
-                                        style={
-                                            "maxWidth": "100%",
-                                            "margin": "0 auto",
-                                            "width": "100%",
-                                            "height": "100%",
-                                        },
-                                        # className="mt-4",
-                                        children=[
-                                            dbc.CardHeader(
-                                                "Lipid comparison",
-                                                style={
-                                                    "background-color": "#1d1c1f",
-                                                    "color": "white",
-                                                },
-                                            ),
-                                            dbc.CardBody(
-                                                style={"background-color": "#1d1c1f",},
-                                                className="py-0 mt-2",
-                                                children=[
-                                                    dbc.Spinner(
-                                                        color="sucess",
-                                                        delay_hide=100,
-                                                        children=[
-                                                            html.Div(
-                                                                id="page-3-alert-4",
-                                                                className="text-center my-4",
-                                                                children=html.Strong(
-                                                                    children="Please draw at least one region on the heatmap and clicked on 'compute spectra'..",
-                                                                    style={"color": "#df5034"},
-                                                                ),
-                                                            ),
-                                                            html.Div(id="page-3-div-dropdown-wait"),
-                                                            html.Div(
-                                                                id="page-3-div-dropdown",
-                                                                style={"display": "none"},
-                                                                # className="loading-wrapper",
-                                                                children=[
-                                                                    dcc.Dropdown(
-                                                                        id="page-3-dropdown-red",
-                                                                        options=[],
-                                                                        value=[],
-                                                                        multi=True,
-                                                                    ),
-                                                                    # html.Hr(className="my-2"),
-                                                                    dcc.Dropdown(
-                                                                        id="page-3-dropdown-green",
-                                                                        options=[],
-                                                                        value=[],
-                                                                        multi=True,
-                                                                    ),
-                                                                    # html.Hr(className="my-2"),
-                                                                    dcc.Dropdown(
-                                                                        id="page-3-dropdown-blue",
-                                                                        options=[],
-                                                                        value=[],
-                                                                        multi=True,
-                                                                    ),
-                                                                    html.Hr(className="my-2"),
-                                                                    html.P(
-                                                                        className="lead d-flex justify-content-center",
-                                                                        children=[
-                                                                            dbc.Button(
-                                                                                id="page-3-open-modal",
-                                                                                children="Visualize and compare",
-                                                                                color="primary",
-                                                                                disabled=True,
-                                                                            ),
-                                                                        ],
-                                                                    ),
-                                                                ],
-                                                            ),
-                                                        ],
-                                                    ),
-                                                ],
-                                            ),
-                                        ],
-                                    ),
-                                    dbc.Card(
-                                        id="page-3-card-filtering",
-                                        style={
-                                            "maxWidth": "100%",
-                                            "margin": "0 auto",
-                                            "width": "100%",
-                                            "height": "100%",
-                                        },
-                                        # className="mt-1",
-                                        children=[
-                                            dbc.CardHeader(
-                                                "Lipid filtering per percentile",
-                                                style={
-                                                    "background-color": "#1d1c1f",
-                                                    "color": "white",
-                                                },
-                                            ),
-                                            dbc.CardBody(
-                                                style={"background-color": "#1d1c1f",},
-                                                className="py-0",
-                                                children=[
-                                                    dcc.Slider(
-                                                        id="page-4-slider",
-                                                        className="mt-2",
-                                                        min=0,
-                                                        max=99,
-                                                        value=10,
-                                                        marks={
-                                                            0: {"label": "No filtering"},
-                                                            25: {"label": "25%"},
-                                                            50: {"label": "50%"},
-                                                            75: {"label": "75%"},
-                                                            99: {
-                                                                "label": "99%",
-                                                                "style": {"color": "#f50"},
-                                                            },
-                                                        },
-                                                    )
-                                                ],
-                                            ),
-                                        ],
-                                    ),
-                                    dbc.Card(
                                         id="page-3-card-heatmap",
                                         style={
                                             "maxWidth": "100%",
@@ -694,6 +489,23 @@ def return_layout(basic_config, slice_index=1):
                                                     ),
                                                     html.Div(
                                                         children=[
+                                                            dcc.Slider(
+                                                                id="page-4-slider",
+                                                                className="mt-2",
+                                                                min=0,
+                                                                max=99,
+                                                                value=10,
+                                                                marks={
+                                                                    0: {"label": "No filtering"},
+                                                                    25: {"label": "25%"},
+                                                                    50: {"label": "50%"},
+                                                                    75: {"label": "75%"},
+                                                                    99: {
+                                                                        "label": "99%",
+                                                                        "style": {"color": "#f50"},
+                                                                    },
+                                                                },
+                                                            ),
                                                             dbc.Spinner(
                                                                 color="sucess",
                                                                 children=[
@@ -751,7 +563,7 @@ def return_layout(basic_config, slice_index=1):
                                             "margin": "0 auto",
                                             "width": "100%",
                                             "height": "100%",
-                                            # "overflow": "hidden",
+                                            "overflow": "hidden",
                                         },
                                         children=[
                                             dbc.CardHeader(
@@ -812,7 +624,79 @@ def return_layout(basic_config, slice_index=1):
                                                                             "height": "100%",
                                                                             "position": "absolute",
                                                                             "left": "0",
+                                                                            "top": "4rem",
                                                                         },
+                                                                    ),
+                                                                    dmc.Group(
+                                                                        spacing="xs",
+                                                                        align="flex-start",
+                                                                        children=[
+                                                                            dmc.MultiSelect(
+                                                                                id="page-3-dropdown-red",
+                                                                                data=[],
+                                                                                value=[],
+                                                                                searchable=True,
+                                                                                nothingFound="No lipid found",
+                                                                                radius="md",
+                                                                                size="xs",
+                                                                                placeholder="Choose up to 3 lipids",
+                                                                                clearable=False,
+                                                                                maxSelectedValues=3,
+                                                                                transitionDuration=150,
+                                                                                transition="pop-top-left",
+                                                                                transitionTimingFunction="ease",
+                                                                                style={
+                                                                                    "width": "20em",
+                                                                                },
+                                                                            ),
+                                                                            dmc.MultiSelect(
+                                                                                id="page-3-dropdown-green",
+                                                                                data=[],
+                                                                                value=[],
+                                                                                searchable=True,
+                                                                                nothingFound="No lipid found",
+                                                                                radius="md",
+                                                                                size="xs",
+                                                                                placeholder="Choose up to 3 lipids",
+                                                                                clearable=False,
+                                                                                maxSelectedValues=3,
+                                                                                transitionDuration=150,
+                                                                                transition="pop-top-left",
+                                                                                transitionTimingFunction="ease",
+                                                                                style={
+                                                                                    "width": "20em",
+                                                                                },
+                                                                            ),
+                                                                            dmc.MultiSelect(
+                                                                                id="page-3-dropdown-blue",
+                                                                                data=[],
+                                                                                value=[],
+                                                                                searchable=True,
+                                                                                nothingFound="No lipid found",
+                                                                                radius="md",
+                                                                                size="xs",
+                                                                                placeholder="Choose up to 3 lipids",
+                                                                                clearable=False,
+                                                                                maxSelectedValues=3,
+                                                                                transitionDuration=150,
+                                                                                transition="pop-top-left",
+                                                                                transitionTimingFunction="ease",
+                                                                                style={
+                                                                                    "width": "20em",
+                                                                                },
+                                                                            ),
+                                                                            dmc.Button(
+                                                                                children="Visualize and compare",
+                                                                                id="page-3-open-modal",
+                                                                                variant="filled",
+                                                                                color="gray",
+                                                                                radius="md",
+                                                                                size="xs",
+                                                                                disabled=True,
+                                                                                compact=False,
+                                                                                loading=False,
+                                                                            ),
+                                                                        ],
                                                                     ),
                                                                 ],
                                                             ),
@@ -1163,7 +1047,6 @@ def page_3_button_compute_spectra(relayoutData, clicked_reset, mask):
     Output("page-3-graph-spectrum-per-pixel", "style"),
     Output("page-3-alert-2", "style"),
     Output("page-3-graph-heatmap-per-lipid", "style"),
-    Output("page-3-div-dropdown", "style"),
     Input("page-3-reset-button", "n_clicks"),
     Input("page-3-button-compute-spectra", "n_clicks"),
     State("page-3-dropdown-brain-regions", "value"),
@@ -1176,7 +1059,7 @@ def tab_3_display_high_res_mz_plot(clicked_reset, clicked_compute, mask, relayou
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
 
     if id_input == "page-3-reset-button":
-        return {"display": "none"}, {"display": "none"}, {"display": "none"}, {"display": "none"}
+        return {"display": "none"}, {"display": "none"}, {"display": "none"}
 
     elif id_input == "page-3-button-compute-spectra":
         logging.info("Compute spectra button has been clicked")
@@ -1188,7 +1071,6 @@ def tab_3_display_high_res_mz_plot(clicked_reset, clicked_compute, mask, relayou
                     {"height": HEIGHT_PLOTS},
                     {"display": "none"},
                     {"height": 2 * HEIGHT_PLOTS, "background-color": "#1d1c1f",},
-                    {},
                 )
 
         if relayoutData is not None:
@@ -1200,10 +1082,9 @@ def tab_3_display_high_res_mz_plot(clicked_reset, clicked_compute, mask, relayou
                             {"height": HEIGHT_PLOTS},
                             {"display": "none"},
                             {"height": 2 * HEIGHT_PLOTS, "background-color": "#1d1c1f",},
-                            {},
                         )
                     else:
-                        return {"display": "none"}, {}, {"display": "none"}, {"display": "none"}
+                        return {"display": "none"}, {}, {"display": "none"}
 
     return dash.no_update
 
@@ -1250,7 +1131,6 @@ def page_3_display_switch(clicked_reset, fig_heatmap, relayoutData):
 @app.app.callback(
     Output("page-3-alert", "style"),
     Output("page-3-alert-3", "style"),
-    Output("page-3-alert-4", "style"),
     Output("page-3-alert-5", "style"),
     Input("page-3-button-compute-spectra", "n_clicks"),
     Input("page-3-reset-button", "n_clicks"),
@@ -1264,13 +1144,12 @@ def page_3_display_alert(clicked_compute, clicked_reset, relayoutData, mask):
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
 
     if id_input == "page-3-reset-button":
-        return {}, {}, {}, {}
+        return {}, {}, {}
 
     elif id_input == "page-3-button-compute-spectra":
         if mask is not None:
             if mask != []:
                 return (
-                    {"display": "none"},
                     {"display": "none"},
                     {"display": "none"},
                     {"display": "none"},
@@ -1280,7 +1159,6 @@ def page_3_display_alert(clicked_compute, clicked_reset, relayoutData, mask):
             if "shapes" in relayoutData:
                 if len(relayoutData["shapes"]) > 0:
                     return (
-                        {"display": "none"},
                         {"display": "none"},
                         {"display": "none"},
                         {"display": "none"},
@@ -1869,9 +1747,9 @@ def page_3_reset_download(fig_mz):
 
 # Function that create the dropdown lipids selections
 @app.app.callback(
-    Output("page-3-dropdown-red", "options"),
-    Output("page-3-dropdown-green", "options"),
-    Output("page-3-dropdown-blue", "options"),
+    Output("page-3-dropdown-red", "data"),
+    Output("page-3-dropdown-green", "data"),
+    Output("page-3-dropdown-blue", "data"),
     Output("page-3-dropdown-red", "value"),
     Output("page-3-dropdown-green", "value"),
     Output("page-3-dropdown-blue", "value"),
@@ -1911,7 +1789,7 @@ def page_3_fill_dropdown_options(l_idx_lipids, cliked_reset, slice_index, n_clic
                     for idx in l_idx_lipids
                 ]
                 options = [
-                    {"label": name, "value": idx} for name, idx in zip(l_names, l_idx_lipids)
+                    {"label": name, "value": str(idx)} for name, idx in zip(l_names, l_idx_lipids)
                 ]
 
                 # dropdown is displayed in reversed order
@@ -2024,8 +1902,8 @@ def draw_modal_graph(
         # Build the list of mz boundaries for each peak
         l_lipid_bounds = [
             [
-                (float(df_names.iloc[index]["min"]), float(df_names.iloc[index]["max"]),)
-                if index != -1
+                (float(df_names.iloc[int(index)]["min"]), float(df_names.iloc[int(index)]["max"]),)
+                if int(index) != -1
                 else None
                 for index in l_lipids
             ]
@@ -2073,74 +1951,3 @@ def toggle_offcanvas(n1, n2, is_open):
         return not is_open
     return is_open
 
-
-"""
-# Function to activate the dcc.interval for the progress bar
-@app.app.callback(
-    Output("page-3-interval-component", "disabled"),
-    Input({"type":"page-3-button-compute-spectra", "index":ALL}, "n_clicks"),
-    Input("page-3-progress", "value"),
-)
-def tab_3_activate_interval(n_clicks, progress):
-
-    # Find out which input triggered the function
-    id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
-
-    if n_clicks is not None and progress != 100:
-        if n_clicks > 0:
-            return False
-    else:
-        return True
-
-
-
-# Function that handle loading bar
-@app.app.callback(
-    Output("page-3-progress", "className"),
-    Input("page-3-progress", "value"),
-    Input({"type":"page-3-reset-button", "index":ALL}, "n_clicks"),
-    Input({"type":"page-3-button-compute-spectra", "index":ALL}, "n_clicks"),
-    Input("page-3-interval-component", "disabled"),
-)
-def update_loading_visibility(value, clicked_reset, clicked_compute, disabled_bar):
-
-    # Find out which input triggered the function
-    id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
-
-    # if id_input == "page-3-progress" and value == 100:
-    if disabled_bar:
-        return "d-none"
-    # elif id_input == "page-3-button-compute-spectra":
-    #    return "mt-1"
-    else:
-        return "mt-1"
-
-
-# Function that handles loading bar and row visibility
-@app.app.callback(
-    Output("page-3-progress", "value"), Input("page-3-interval-component", "n_intervals"), State("session-id", "data"),
-)
-def update_loading_bar(n_intervals, session_id):
-    print("TEST TEST")
-    val = r.get(session_id + "page-3-progress")
-    if val is not None:
-        return int(val)
-    else:
-        return 0
-"""
-"""
-# Function that handles cards visibility
-@app.app.callback(
-    Output("page-3-card-spectrum", "className"),
-    Output("page-3-card-dropdowns", "className"),
-    Output("page-3-card-filtering", "className"),
-    Output("page-3-card-heatmap", "className"),
-    Output("page-3-card-graph-lipid-comparison", "className"),
-    Input("page-3-empty-div-load", "children"),
-)
-def update_loading_bar(div):
-    if div == "":
-        return "", "", "", "", ""
-    else:
-        return "d-none", "d-none", "d-none", "d-none", "d-none"
-"""
