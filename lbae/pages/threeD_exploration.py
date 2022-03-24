@@ -759,6 +759,7 @@ def page_4_add_toast_region_selection(
 
     return dash.no_update
 
+
 # ! Need to have lipids that have been MAIA transformed only in page-4-toast-lipid-1, page-4-toast-lipid-2 etc
 # ! Maybe remove the possibility to have more than 1 lipid?
 # Function to plot page-4-graph-volume when its state get updated
@@ -916,6 +917,7 @@ def page_4_plot_graph_volume(
                 )
             ]
 
+            print("El conio de tu madre 1 ")
             return (
                 return_pickled_object(
                     "figures/3D_page",
