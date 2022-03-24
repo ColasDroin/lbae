@@ -36,42 +36,22 @@ def return_layout(basic_config, slice_index):
                 "lg": [
                     {"i": "page-4-card-region-selection", "x": 0, "y": 0, "w": 8, "h": 18},
                     {"i": "page-4-card-lipid-selection", "x": 8, "y": 0, "w": 4, "h": 10},
-                    {"i": "page-4-card-range-selection", "x": 8, "y": 8, "w": 4, "h": 5},
-                    {"i": "page-4-card-input-selection", "x": 8, "y": 17, "w": 4, "h": 3},
-                    # {"i": "page-4-card-main-graph", "x": 0, "y": 18, "w": 8, "h": 21},
-                    # {"i": "page-4-card-heatmap", "x": 8, "y": 18, "w": 4, "h": 21},
                 ],
                 "md": [
                     {"i": "page-4-card-region-selection", "x": 0, "y": 0, "w": 7, "h": 14},
                     {"i": "page-4-card-lipid-selection", "x": 6, "y": 0, "w": 3, "h": 12},
-                    {"i": "page-4-card-range-selection", "x": 6, "y": 8, "w": 3, "h": 6},
-                    {"i": "page-4-card-input-selection", "x": 6, "y": 10, "w": 3, "h": 3},
-                    # {"i": "page-4-card-main-graph", "x": 0, "y": 14, "w": 10, "h": 14},
-                    # {"i": "page-4-card-heatmap", "x": 0, "y": 30, "w": 10, "h": 14},
                 ],
                 "sm": [
                     {"i": "page-4-card-region-selection", "x": 0, "y": 0, "w": 6, "h": 19},
                     {"i": "page-4-card-lipid-selection", "x": 0, "y": 19, "w": 6, "h": 11},
-                    {"i": "page-4-card-range-selection", "x": 0, "y": 19 + 7, "w": 6, "h": 5},
-                    {"i": "page-4-card-input-selection", "x": 0, "y": 19 + 7 + 5, "w": 6, "h": 3},
-                    # {"i": "page-4-card-main-graph", "x": 0, "y": 19, "w": 6, "h": 19},
-                    # {"i": "page-4-card-heatmap", "x": 0, "y": 30, "w": 6, "h": 19},
                 ],
                 "xs": [
                     {"i": "page-4-card-region-selection", "x": 0, "y": 0, "w": 4, "h": 14},
                     {"i": "page-4-card-lipid-selection", "x": 0, "y": 0, "w": 4, "h": 11},
-                    {"i": "page-4-card-range-selection", "x": 0, "y": 14 + 7, "w": 4, "h": 5},
-                    {"i": "page-4-card-input-selection", "x": 0, "y": 14 + 7 + 5, "w": 4, "h": 3},
-                    # {"i": "page-4-card-main-graph", "x": 0, "y": 14, "w": 4, "h": 14},
-                    # {"i": "page-4-card-heatmap", "x": 0, "y": 30, "w": 4, "h": 14},
                 ],
                 "xxs": [
                     {"i": "page-4-card-region-selection", "x": 0, "y": 0, "w": 2, "h": 9},
                     {"i": "page-4-card-lipid-selection", "x": 0, "y": 0, "w": 2, "h": 10},
-                    {"i": "page-4-card-range-selection", "x": 0, "y": 9 + 7, "w": 2, "h": 5},
-                    {"i": "page-4-card-input-selection", "x": 0, "y": 9 + 7 + 5, "w": 2, "h": 3},
-                    # {"i": "page-4-card-main-graph", "x": 0, "y": 9, "w": 2, "h": 9},
-                    # {"i": "page-4-card-heatmap", "x": 0, "y": 18, "w": 2, "h": 9},
                 ],
             },
             children=[
@@ -93,12 +73,12 @@ def return_layout(basic_config, slice_index):
                                                 dcc.Graph(
                                                     id="page-4-graph-region-selection",
                                                     config=basic_config,
-                                                    # style={
-                                                    #    "width": "100%",
-                                                    #    "height": "100%",
-                                                    #    "position": "absolute",
-                                                    #    "left": "0",
-                                                    # },
+                                                    style={
+                                                        "width": "50%",
+                                                        # "height": "100%",
+                                                        # "position": "absolute",
+                                                        # "left": "0",
+                                                    },
                                                     figure=return_pickled_object(
                                                         "figures/atlas_page/3D",
                                                         "treemaps",
@@ -109,6 +89,59 @@ def return_layout(basic_config, slice_index):
                                             ],
                                         ),
                                     ],
+                                ),
+                                dbc.Tooltip(
+                                    children="Please select the lipids of your choice (up to three):",
+                                    target="page-4-card-lipid-selection",
+                                    placement="left",
+                                ),
+                                # Dropdown must be wrapped in div, otherwise lazy loading creates bug with tooltips
+                                html.Div(
+                                    id="page-4-div-dropdown-lipid-names",
+                                    children=[
+                                        dcc.Dropdown(
+                                            id="page-4-dropdown-lipid-names",
+                                            options=[],
+                                            multi=False,
+                                        ),
+                                    ],
+                                ),
+                                dbc.Tooltip(
+                                    children="Choose the category of your lipid",
+                                    target="page-4-div-dropdown-lipid-names",
+                                    placement="left",
+                                ),
+                                html.Div(
+                                    id="page-4-div-dropdown-lipid-structures",
+                                    children=[
+                                        dcc.Dropdown(
+                                            id="page-4-dropdown-lipid-structures",
+                                            options=[],
+                                            multi=False,
+                                            className="mt-2",
+                                        ),
+                                    ],
+                                ),
+                                dbc.Tooltip(
+                                    children="After choosing the lipid category, choose the structure of your lipid",
+                                    target="page-4-div-dropdown-lipid-structures",
+                                    placement="left",
+                                ),
+                                html.Div(
+                                    id="page-4-div-dropdown-lipid-cations",
+                                    children=[
+                                        dcc.Dropdown(
+                                            id="page-4-dropdown-lipid-cations",
+                                            options=[],
+                                            multi=False,
+                                            className="mt-2",
+                                        ),
+                                    ],
+                                ),
+                                dbc.Tooltip(
+                                    children="After choosing the lipid structure, choose the cation binded to your lipid",
+                                    target="page-4-div-dropdown-lipid-cations",
+                                    placement="left",
                                 ),
                                 dbc.ButtonGroup(
                                     className="d-flex justify-content-center",
@@ -179,7 +212,6 @@ def return_layout(basic_config, slice_index):
                                         ),
                                     ],
                                 ),
-                                # html.Div("‎‎‏‏‎ ‎"),  # Empty span to prevent toast from bugging
                             ],
                         ),
                     ],
@@ -197,59 +229,6 @@ def return_layout(basic_config, slice_index):
                         dbc.CardBody(
                             className="pt-1",
                             children=[
-                                dbc.Tooltip(
-                                    children="Please select the lipids of your choice (up to three):",
-                                    target="page-4-card-lipid-selection",
-                                    placement="left",
-                                ),
-                                # Dropdown must be wrapped in div, otherwise lazy loading creates bug with tooltips
-                                html.Div(
-                                    id="page-4-div-dropdown-lipid-names",
-                                    children=[
-                                        dcc.Dropdown(
-                                            id="page-4-dropdown-lipid-names",
-                                            options=[],
-                                            multi=False,
-                                        ),
-                                    ],
-                                ),
-                                dbc.Tooltip(
-                                    children="Choose the category of your lipid",
-                                    target="page-4-div-dropdown-lipid-names",
-                                    placement="left",
-                                ),
-                                html.Div(
-                                    id="page-4-div-dropdown-lipid-structures",
-                                    children=[
-                                        dcc.Dropdown(
-                                            id="page-4-dropdown-lipid-structures",
-                                            options=[],
-                                            multi=False,
-                                            className="mt-2",
-                                        ),
-                                    ],
-                                ),
-                                dbc.Tooltip(
-                                    children="After choosing the lipid category, choose the structure of your lipid",
-                                    target="page-4-div-dropdown-lipid-structures",
-                                    placement="left",
-                                ),
-                                html.Div(
-                                    id="page-4-div-dropdown-lipid-cations",
-                                    children=[
-                                        dcc.Dropdown(
-                                            id="page-4-dropdown-lipid-cations",
-                                            options=[],
-                                            multi=False,
-                                            className="mt-2",
-                                        ),
-                                    ],
-                                ),
-                                dbc.Tooltip(
-                                    children="After choosing the lipid structure, choose the cation binded to your lipid",
-                                    target="page-4-div-dropdown-lipid-cations",
-                                    placement="left",
-                                ),
                                 # Wrap toasts in div to prevent their expansion
                                 dbc.Toast(
                                     id="page-4-toast-lipid-1",
@@ -289,222 +268,35 @@ def return_layout(basic_config, slice_index):
                                         style={"color": "#df5034"},
                                     ),
                                 ),
-                                # dbc.ButtonGroup(className="d-flex justify-content-center", children=[],),
-                                # dcc.Download(id="page-4-download-data"),
                             ],
                         ),
                     ],
                 ),
-                dbc.Card(
-                    style={
-                        "maxWidth": "100%",
-                        "margin": "0 auto",
-                        "width": "100%",
-                        "height": "100%",
-                    },
-                    # className="mt-4",
-                    id="page-4-card-range-selection",
+                dbc.Modal(
+                    id="page-4-modal-volume",
+                    is_open=False,
+                    size="xl",
                     children=[
-                        dbc.CardHeader("Range selection"),
-                        dbc.CardBody(
-                            className="pt-1",
+                        dbc.ModalHeader(dbc.ModalTitle("Lipid selection interpolated in 3D")),
+                        dbc.ModalBody(
                             children=[
-                                html.Small(
-                                    children="Please enter the lower and upper bounds of your m/z range selection.",
-                                    className="text-center",
-                                    id="page-4-text-bounds",
-                                ),
-                                dbc.Tooltip(
-                                    children="Your selection can't exceed a range of 10m/z, and must be comprised in-between 400 and 1200.",
-                                    target="page-4-text-bounds",
-                                    placement="left",
-                                ),
-                                dbc.InputGroup(
-                                    [
-                                        dbc.Input(
-                                            id="page-4-lower-bound",
-                                            placeholder="Lower bound (m/z value)",
-                                        ),
-                                        dbc.Input(
-                                            id="page-4-upper-bound",
-                                            placeholder="Upper bound (m/z value)",
-                                        ),
-                                        # dbc.InputGroupAddon(
-                                        # dbc.Button("Display", id="page-4-button-bounds", n_clicks=0, color="primary",),
-                                        #    addon_type="prepend",
-                                        # ),
-                                    ],
-                                    size="sm",
-                                ),
-                                html.Small(
-                                    children="Or choose a m/z value with a given range.",
-                                    className="text-center",
-                                    id="page-4-text-range",
-                                ),
-                                dbc.Tooltip(
-                                    children="Your selection can't exceed a range of 10m/z, and must be comprised in-between 400 and 1200.",
-                                    target="page-4-text-range",
-                                    placement="left",
-                                ),
-                                dbc.InputGroup(
-                                    [
-                                        dbc.Input(id="page-4-mz-value", placeholder="m/z value"),
-                                        dbc.Input(id="page-4-mz-range", placeholder="Range"),
-                                        # dbc.InputGroupAddon(
-                                        # dbc.Button(
-                                        #    "Display", id="page-4-button-range", n_clicks=0, color="primary", size="sm"
-                                        # ),
-                                        #    addon_type="prepend",
-                                        # ),
-                                    ],
-                                    size="sm",
-                                ),
-                            ],
-                        ),
-                    ],
-                ),
-                dbc.Card(
-                    style={
-                        "maxWidth": "100%",
-                        "margin": "0 auto",
-                        "width": "100%",
-                        "height": "100%",
-                    },
-                    id="page-4-card-input-selection",
-                    children=[
-                        dbc.CardHeader("Input selection"),
-                        dbc.CardBody(
-                            className="mt-2 pt-0",  # pt-1 d-flex justify-content-center",
-                            children=[
-                                dbc.InputGroup(
+                                dbc.Spinner(
+                                    color="dark",
+                                    show_initially=False,
                                     children=[
-                                        dbc.RadioItems(
-                                            options=[
-                                                {"label": "Lipid selection", "value": 1},
-                                                {"label": "m/z boundaries", "value": 2},
-                                                {"label": "m/z range", "value": 3},
-                                            ],
-                                            value=1,
-                                            id="page-4-radioitems-input",
-                                            inline=True,
-                                            className="mt-1",
-                                        ),
-                                        dbc.Button(
-                                            children="Display",
-                                            id="page-4-display-button",
-                                            # className="py-3 mt-0",
-                                            color="primary",
-                                            disabled=True,
-                                            size="sm",
-                                        ),
-                                    ],
-                                ),
-                            ],
-                        ),
-                        dbc.Modal(
-                            id="page-4-modal-volume",
-                            is_open=False,
-                            size="xl",
-                            children=[
-                                dbc.ModalHeader(
-                                    dbc.ModalTitle("Lipid selection interpolated in 3D")
-                                ),
-                                dbc.ModalBody(
-                                    children=[
-                                        dbc.Spinner(
-                                            color="dark",
-                                            show_initially=False,
+                                        html.Div(
+                                            className="page-1-fixed-aspect-ratio",
                                             children=[
                                                 html.Div(
-                                                    className="page-1-fixed-aspect-ratio",
-                                                    children=[
-                                                        html.Div(
-                                                            id="page-4-alert",
-                                                            className="text-center my-2",
-                                                            children=html.Strong(
-                                                                children="Please select at least one lipid.",
-                                                                style={"color": "#df5034"},
-                                                            ),
-                                                        ),
-                                                        dcc.Graph(
-                                                            id="page-4-graph-volume",
-                                                            config=basic_config
-                                                            | {
-                                                                "toImageButtonOptions": {
-                                                                    "format": "png",
-                                                                    "filename": "brain_lipid_selection",
-                                                                    "scale": 2,
-                                                                }
-                                                            },
-                                                            style={
-                                                                "width": "100%",
-                                                                "height": "100%",
-                                                                "position": "absolute",
-                                                                "left": "0",
-                                                            },
-                                                        ),
-                                                    ],
+                                                    id="page-4-alert",
+                                                    className="text-center my-2",
+                                                    children=html.Strong(
+                                                        children="Please select at least one lipid.",
+                                                        style={"color": "#df5034"},
+                                                    ),
                                                 ),
-                                            ],
-                                        ),
-                                        html.Div(
-                                            "‎‎‏‏‎ ‎"
-                                        ),  # Empty span to prevent toast from bugging
-                                    ],
-                                ),
-                            ],
-                        ),
-                        # dbc.Card(
-                        #    id="page-4-card-heatmap",
-                        #    className="no-transition",
-                        #    style={"width": "100%", "height": "100%"},
-                        dbc.Modal(
-                            id="page-4-modal-heatmap",
-                            is_open=False,
-                            size="xl",
-                            children=[
-                                dbc.ModalHeader(dbc.ModalTitle("Lipid expression comparison")),
-                                dbc.ModalBody(
-                                    className="d-flex justify-content-center flex-column",
-                                    children=[
-                                        # dbc.CardHeader(className="d-flex", children="Lipid expression comparison",),
-                                        # dbc.CardBody(
-                                        #    className="py-0 mb-0 mt-2",
-                                        #    children=[
-                                        # dmc.RingProgress(
-                                        #     id="page-4-progress-bar-structure",
-                                        #     size=200,
-                                        #     thickness=12,
-                                        #     label="Loading data...",
-                                        #     sections=[{"value": 0, "color": "red"},],
-                                        # ),
-                                        dbc.Progress(
-                                            id="page-4-progress-bar-structure",
-                                            style={"width ": "100%"},
-                                        ),
-                                        dcc.Slider(
-                                            id="page-4-slider-percentile",
-                                            min=0,
-                                            max=99,
-                                            value=80,
-                                            marks={
-                                                0: {"label": "No filtering"},
-                                                25: {"label": "25%"},
-                                                50: {"label": "50%"},
-                                                75: {"label": "75%"},
-                                                99: {"label": "99%", "style": {"color": "#f50"}},
-                                            },
-                                        ),
-                                        # dbc.Spinner(
-                                        #     color="dark",
-                                        #     show_initially=False,
-                                        #     children=[
-                                        html.Div(
-                                            # className="page-1-fixed-aspect-ratio",
-                                            className="d-flex justify-content-center",
-                                            children=[
                                                 dcc.Graph(
-                                                    id="page-4-graph-heatmap",
+                                                    id="page-4-graph-volume",
                                                     config=basic_config
                                                     | {
                                                         "toImageButtonOptions": {
@@ -513,23 +305,89 @@ def return_layout(basic_config, slice_index):
                                                             "scale": 2,
                                                         }
                                                     },
-                                                    # style={
-                                                    # "width": "100%",
-                                                    # "height": "100%",
-                                                    # "margin": "auto",
-                                                    #    "position": "absolute",
-                                                    #    "left": "0",
-                                                    # },
+                                                    style={
+                                                        "width": "100%",
+                                                        "height": "100%",
+                                                        "position": "absolute",
+                                                        "left": "0",
+                                                    },
                                                 ),
                                             ],
                                         ),
-                                        #     ],
-                                        # ),
-                                        html.Div(
-                                            "‎‎‏‏‎ ‎"
-                                        ),  # Empty span to prevent toast from bugging
                                     ],
                                 ),
+                                html.Div("‎‎‏‏‎ ‎"),  # Empty span to prevent toast from bugging
+                            ],
+                        ),
+                    ],
+                ),
+                dbc.Modal(
+                    id="page-4-modal-heatmap",
+                    is_open=False,
+                    size="xl",
+                    children=[
+                        dbc.ModalHeader(dbc.ModalTitle("Lipid expression comparison")),
+                        dbc.ModalBody(
+                            className="d-flex justify-content-center flex-column",
+                            children=[
+                                # dbc.CardHeader(className="d-flex", children="Lipid expression comparison",),
+                                # dbc.CardBody(
+                                #    className="py-0 mb-0 mt-2",
+                                #    children=[
+                                # dmc.RingProgress(
+                                #     id="page-4-progress-bar-structure",
+                                #     size=200,
+                                #     thickness=12,
+                                #     label="Loading data...",
+                                #     sections=[{"value": 0, "color": "red"},],
+                                # ),
+                                dbc.Progress(
+                                    id="page-4-progress-bar-structure", style={"width ": "100%"},
+                                ),
+                                dcc.Slider(
+                                    id="page-4-slider-percentile",
+                                    min=0,
+                                    max=99,
+                                    value=80,
+                                    marks={
+                                        0: {"label": "No filtering"},
+                                        25: {"label": "25%"},
+                                        50: {"label": "50%"},
+                                        75: {"label": "75%"},
+                                        99: {"label": "99%", "style": {"color": "#f50"}},
+                                    },
+                                ),
+                                # dbc.Spinner(
+                                #     color="dark",
+                                #     show_initially=False,
+                                #     children=[
+                                html.Div(
+                                    # className="page-1-fixed-aspect-ratio",
+                                    className="d-flex justify-content-center",
+                                    children=[
+                                        dcc.Graph(
+                                            id="page-4-graph-heatmap",
+                                            config=basic_config
+                                            | {
+                                                "toImageButtonOptions": {
+                                                    "format": "png",
+                                                    "filename": "brain_lipid_selection",
+                                                    "scale": 2,
+                                                }
+                                            },
+                                            # style={
+                                            # "width": "100%",
+                                            # "height": "100%",
+                                            # "margin": "auto",
+                                            #    "position": "absolute",
+                                            #    "left": "0",
+                                            # },
+                                        ),
+                                    ],
+                                ),
+                                #     ],
+                                # ),
+                                html.Div("‎‎‏‏‎ ‎"),  # Empty span to prevent toast from bugging
                             ],
                         ),
                     ],
@@ -557,19 +415,6 @@ def page_4_display_alert(clicked_compute, input, l_lipids):
     # Find out which input triggered the function
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
 
-    # if id_input is None:
-    #    return {}, {"display": "none"}
-
-    # if active_tab == "page-4-tab-1":
-    #     return (
-    #         {"display": "none"},
-    #         {"width": "100%", "height": "100%", "position": "absolute", "left": "0",},
-    #     )
-
-    # TODO : add the need to have the text field of the input range filled
-    # elif (active_tab == "page-4-tab-3" or active_tab == "page-4-tab-4") and (
-    #     (input == 1 and len(l_lipids) > 0) or input == 2 or input == 3
-    # ):
     if (input == 1 and len(l_lipids) > 0) or input == 2 or input == 3:
         return (
             {"display": "none"},
@@ -766,20 +611,11 @@ def page_4_add_toast_region_selection(
 @app.app.callback(
     Output("page-4-graph-volume", "figure"),
     Output("page-4-radioitems-input", "value"),
-    # Input("page-4-card-tabs", "active_tab"),
-    Input("boundaries-high-resolution-mz-plot", "data"),
-    Input("boundaries-low-resolution-mz-plot", "data"),
     Input("page-4-selected-lipid-1", "data"),
     Input("page-4-selected-lipid-2", "data"),
     Input("page-4-selected-lipid-3", "data"),
-    # Input("page-4-button-range", "n_clicks"),
-    # Input("page-4-button-bounds", "n_clicks"),
     Input("page-4-display-button", "n_clicks"),
     Input("page-4-radioitems-input", "value"),
-    State("page-4-lower-bound", "value"),
-    State("page-4-upper-bound", "value"),
-    State("page-4-mz-value", "value"),
-    State("page-4-mz-range", "value"),
     State("page-4-toast-lipid-1", "header"),
     State("page-4-toast-lipid-2", "header"),
     State("page-4-toast-lipid-3", "header"),
@@ -789,20 +625,11 @@ def page_4_add_toast_region_selection(
     State("page-4-selected-region-3", "data"),
 )
 def page_4_plot_graph_volume(
-    # active_tab,
-    bound_high_res,
-    bound_low_res,
     l_lipid_1_index,
     l_lipid_2_index,
     l_lipid_3_index,
-    # n_clicks_button_range,
-    # n_clicks_button_bounds,
     n_clicks_button_display,
     input,
-    lb,
-    hb,
-    mz,
-    mz_range,
     name_lipid_1,
     name_lipid_2,
     name_lipid_3,
@@ -848,10 +675,8 @@ def page_4_plot_graph_volume(
         )
 
     # If a lipid selection has been done
-    elif (
-        id_input == "page-4-display-button"
-        # or (id_input == "page-4-card-tabs" and (active_tab == "page-4-tab-3" or active_tab == "page-4-tab-4"))
-        or (id_input == "page-4-radioitems-input" and value_input == 1)
+    if id_input == "page-4-display-button" or (
+        id_input == "page-4-radioitems-input" and value_input == 1
     ):
 
         if (
@@ -878,7 +703,6 @@ def page_4_plot_graph_volume(
                 )
             ]
 
-            print("El conio de tu madre 1 ")
             return (
                 return_pickled_object(
                     "figures/3D_page",
@@ -1215,33 +1039,6 @@ def tab_2_active_display(l_lipid_1_index, l_lipid_2_index, l_lipid_3_index):
         return False
     else:
         return True
-
-
-"""
-@app.app.callback(
-    Output("page-4-button-range", "disabled"), Input("page-4-mz-value", "value"), Input("page-4-mz-range", "value"),
-)
-def page_2bis_button_range(mz, mz_range):
-    if mz is not None and mz_range is not None:
-        mz = float(mz)
-        mz_range = float(mz_range)
-        if mz > 400 and mz < 1200 and mz_range < 10:
-            return False
-    return True
-
-
-@app.app.callback(
-    Output("page-4-button-bounds", "disabled"),
-    Input("page-4-lower-bound", "value"),
-    Input("page-4-upper-bound", "value"),
-)
-def page_2bis_button_window(lb, hb):
-    if lb is not None and hb is not None:
-        lb, hb = float(lb), float(hb)
-        if lb > 400 and hb < 1200 and hb - lb > 0 and hb - lb < 10:
-            return False
-    return True
-"""
 
 
 @app.app.callback(
