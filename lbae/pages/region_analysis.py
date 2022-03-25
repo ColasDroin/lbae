@@ -67,7 +67,7 @@ def return_layout(basic_config, slice_index=1):
                             "width": "95%",
                             "height": "95%",
                             "position": "absolute",
-                            "left": "0",
+                            "left": "2.5%",
                             # "max-height": "40vh",
                         },
                         figure=return_pickled_object(
@@ -81,11 +81,21 @@ def return_layout(basic_config, slice_index=1):
                             draw=True,
                         ),
                     ),
-                    html.P(
+                    dmc.Text(
                         "Hovered region: ",
                         id="page-3-graph-hover-text",
-                        className="text-warning font-weight-bold position-absolute",
-                        style={"right": "15%", "top": "1em"},
+                        size="lg",
+                        align="center",
+                        color="cyan",
+                        class_name="mt-5",
+                        weight=500,
+                        # className="text-warning font-weight-bold position-absolute",
+                        style={
+                            "width": "100%",
+                            # "height": "86%",
+                            "position": "absolute",
+                            "top": "7%",
+                        },
                     ),
                     dmc.Group(
                         direction="column",
@@ -165,7 +175,7 @@ def return_layout(basic_config, slice_index=1):
                                 clearSavedLayout=True,
                                 isDraggable=False,
                                 isResizable=False,
-                                containerPadding=[1, 1],
+                                containerPadding=[2, 2],
                                 breakpoints={
                                     "xxl": 1600,
                                     "lg": 1200,
@@ -186,7 +196,6 @@ def return_layout(basic_config, slice_index=1):
                                     # x sets the lateral position, y the vertical one, w is in columns (whose size depends on the dimension), h is in rows (30px)
                                     # nb columns go 12->12->10->6->4->2
                                     "xxl": [
-                                        {"i": "page-3-controls", "x": 0, "y": 0, "w": 12, "h": 2,},
                                         {
                                             "i": "page-3-card-spectrum",
                                             "x": 2,
@@ -206,11 +215,10 @@ def return_layout(basic_config, slice_index=1):
                                             "x": 6,
                                             "y": 17,
                                             "w": 4,
-                                            "h": 2 * N_LINES,
+                                            "h": 2 * N_LINES + 3,
                                         },
                                     ],
                                     "lg": [
-                                        {"i": "page-3-controls", "x": 0, "y": 0, "w": 12, "h": 2,},
                                         {
                                             "i": "page-3-card-spectrum",
                                             "x": 0,
@@ -230,11 +238,10 @@ def return_layout(basic_config, slice_index=1):
                                             "x": 6,
                                             "y": 17,
                                             "w": 6,
-                                            "h": 2 * N_LINES - 4,
+                                            "h": 2 * N_LINES,
                                         },
                                     ],
                                     "md": [
-                                        {"i": "page-3-controls", "x": 0, "y": 0, "w": 10, "h": 2,},
                                         {
                                             "i": "page-3-card-spectrum",
                                             "x": 0,
@@ -254,11 +261,10 @@ def return_layout(basic_config, slice_index=1):
                                             "x": 5,
                                             "y": 17,
                                             "w": 5,
-                                            "h": 2 * N_LINES - 5,
+                                            "h": 2 * N_LINES - 2,
                                         },
                                     ],
                                     "sm": [
-                                        {"i": "page-3-controls", "x": 0, "y": 0, "w": 6, "h": 2,},
                                         {
                                             "i": "page-3-card-spectrum",
                                             "x": 0,
@@ -282,7 +288,6 @@ def return_layout(basic_config, slice_index=1):
                                         },
                                     ],
                                     "xs": [
-                                        {"i": "page-3-controls", "x": 0, "y": 0, "w": 4, "h": 2,},
                                         {
                                             "i": "page-3-card-spectrum",
                                             "x": 0,
@@ -306,7 +311,6 @@ def return_layout(basic_config, slice_index=1):
                                         },
                                     ],
                                     "xxs": [
-                                        {"i": "page-3-controls", "x": 0, "y": 0, "w": 2, "h": 2,},
                                         {
                                             "i": "page-3-card-spectrum",
                                             "x": 0,
@@ -331,53 +335,6 @@ def return_layout(basic_config, slice_index=1):
                                     ],
                                 },
                                 children=[
-                                    dmc.Center(
-                                        id="page-3-controls",
-                                        style={"width": "100%", "background-color": "#1d1c1f",},
-                                        children=[
-                                            dmc.Switch(
-                                                id="page-3-normalize",
-                                                label="Normalize",
-                                                checked=False,
-                                                color="cyan",
-                                                radius="xl",
-                                                size="sm",
-                                                class_name="mr-3",
-                                            ),
-                                            dmc.Switch(
-                                                id="page-3-log",
-                                                label="Log-transform",
-                                                checked=False,
-                                                color="cyan",
-                                                radius="xl",
-                                                size="sm",
-                                                class_name="mr-3",
-                                            ),
-                                            dmc.Button(
-                                                children="Download spectrum data",
-                                                id="tab-3-download-data-button",
-                                                disabled=False,
-                                                variant="filled",
-                                                radius="md",
-                                                size="xs",
-                                                compact=False,
-                                                loading=False,
-                                                class_name="mr-5",
-                                            ),
-                                            dcc.Download(id="tab-3-download-data"),
-                                            dmc.Button(
-                                                children="Close",
-                                                id="page-4-close-drawer-region-selection",
-                                                variant="filled",
-                                                disabled=False,
-                                                color="red",
-                                                radius="md",
-                                                size="xs",
-                                                compact=False,
-                                                loading=False,
-                                            ),
-                                        ],
-                                    ),
                                     dbc.Card(
                                         id="page-3-card-spectrum",
                                         style={
@@ -451,6 +408,22 @@ def return_layout(basic_config, slice_index=1):
                                                                             }
                                                                         },
                                                                     ),
+                                                                    dmc.Button(
+                                                                        children="Download spectrum data",
+                                                                        id="tab-3-download-data-button",
+                                                                        disabled=False,
+                                                                        variant="filled",
+                                                                        radius="md",
+                                                                        size="xs",
+                                                                        color="cyan",
+                                                                        compact=False,
+                                                                        loading=False,
+                                                                        # lass_name="mr-5",
+                                                                        style={
+                                                                            "position": "absolute",
+                                                                            "top": "3rem",
+                                                                        },
+                                                                    ),
                                                                 ],
                                                             ),
                                                         ],
@@ -491,7 +464,7 @@ def return_layout(basic_config, slice_index=1):
                                                         children=[
                                                             dcc.Slider(
                                                                 id="page-4-slider",
-                                                                className="mt-2",
+                                                                className="my-2",
                                                                 min=0,
                                                                 max=99,
                                                                 value=10,
@@ -506,6 +479,17 @@ def return_layout(basic_config, slice_index=1):
                                                                     },
                                                                 },
                                                             ),
+                                                            # dmc.Slider(
+                                                            #     id="page-4-slider",
+                                                            #     class_name="mt-2",
+                                                            #     color="cyan",
+                                                            #     min=0,
+                                                            #     max=99,
+                                                            #     step=3,
+                                                            #     value=10,
+                                                            #     size="xs",
+                                                            #     # label="Filter lipid by percentile",
+                                                            # ),
                                                             dbc.Spinner(
                                                                 color="sucess",
                                                                 children=[
@@ -577,11 +561,14 @@ def return_layout(basic_config, slice_index=1):
                                                         "Lipid intensity comparison",
                                                         className="mr-5",
                                                     ),
-                                                    dbc.Switch(
+                                                    dmc.Switch(
                                                         id="page-3-toggle-mask",
                                                         label="Toggle masks and shape display",
-                                                        value=False,
-                                                        className="ml-5",
+                                                        checked=False,
+                                                        color="cyan",
+                                                        radius="xl",
+                                                        size="sm",
+                                                        class_name="ml-5",
                                                     ),
                                                 ],
                                             ),
@@ -631,70 +618,72 @@ def return_layout(basic_config, slice_index=1):
                                                                         spacing="xs",
                                                                         align="flex-start",
                                                                         children=[
-                                                                            dmc.MultiSelect(
+                                                                            dcc.Dropdown(
                                                                                 id="page-3-dropdown-red",
-                                                                                data=[],
+                                                                                options=[],
                                                                                 value=[],
                                                                                 searchable=True,
-                                                                                nothingFound="No lipid found",
-                                                                                radius="md",
-                                                                                size="xs",
+                                                                                multi=True,
                                                                                 placeholder="Choose up to 3 lipids",
                                                                                 clearable=False,
-                                                                                maxSelectedValues=3,
-                                                                                transitionDuration=150,
-                                                                                transition="pop-top-left",
-                                                                                transitionTimingFunction="ease",
                                                                                 style={
-                                                                                    "width": "20em",
+                                                                                    "width": "15em",
                                                                                 },
                                                                             ),
-                                                                            dmc.MultiSelect(
+                                                                            dcc.Dropdown(
                                                                                 id="page-3-dropdown-green",
-                                                                                data=[],
+                                                                                options=[],
                                                                                 value=[],
                                                                                 searchable=True,
-                                                                                nothingFound="No lipid found",
-                                                                                radius="md",
-                                                                                size="xs",
+                                                                                multi=True,
                                                                                 placeholder="Choose up to 3 lipids",
                                                                                 clearable=False,
-                                                                                maxSelectedValues=3,
-                                                                                transitionDuration=150,
-                                                                                transition="pop-top-left",
-                                                                                transitionTimingFunction="ease",
                                                                                 style={
-                                                                                    "width": "20em",
+                                                                                    "width": "15em",
                                                                                 },
                                                                             ),
-                                                                            dmc.MultiSelect(
+                                                                            dcc.Dropdown(
                                                                                 id="page-3-dropdown-blue",
-                                                                                data=[],
+                                                                                options=[],
                                                                                 value=[],
                                                                                 searchable=True,
-                                                                                nothingFound="No lipid found",
-                                                                                radius="md",
-                                                                                size="xs",
+                                                                                multi=True,
                                                                                 placeholder="Choose up to 3 lipids",
                                                                                 clearable=False,
-                                                                                maxSelectedValues=3,
-                                                                                transitionDuration=150,
-                                                                                transition="pop-top-left",
-                                                                                transitionTimingFunction="ease",
                                                                                 style={
-                                                                                    "width": "20em",
+                                                                                    "width": "15em",
                                                                                 },
                                                                             ),
-                                                                            dmc.Button(
-                                                                                children="Visualize and compare",
-                                                                                id="page-3-open-modal",
-                                                                                variant="filled",
-                                                                                color="gray",
-                                                                                radius="md",
-                                                                                size="xs",
-                                                                                disabled=True,
-                                                                                compact=False,
-                                                                                loading=False,
+                                                                            # dmc.MultiSelect(
+                                                                            #     id="page-3-dropdown-blue",
+                                                                            #     data=[],
+                                                                            #     value=[],
+                                                                            #     searchable=True,
+                                                                            #     nothingFound="No lipid found",
+                                                                            #     radius="md",
+                                                                            #     size="xs",
+                                                                            #     placeholder="Choose up to 3 lipids",
+                                                                            #     clearable=False,
+                                                                            #     maxSelectedValues=3,
+                                                                            #     transitionDuration=150,
+                                                                            #     transition="pop-top-left",
+                                                                            #     transitionTimingFunction="ease",
+                                                                            #     style={
+                                                                            #         "width": "20em",
+                                                                            #     },
+                                                                            # ),
+                                                                            dmc.Center(
+                                                                                dmc.Button(
+                                                                                    children="Visualize and compare",
+                                                                                    id="page-3-open-modal",
+                                                                                    variant="filled",
+                                                                                    color="gray",
+                                                                                    radius="md",
+                                                                                    size="xs",
+                                                                                    disabled=True,
+                                                                                    compact=False,
+                                                                                    loading=False,
+                                                                                ),
                                                                             ),
                                                                         ],
                                                                     ),
@@ -705,6 +694,25 @@ def return_layout(basic_config, slice_index=1):
                                                 ],
                                             ),
                                         ],
+                                    ),
+                                ],
+                            ),
+                            dmc.Center(
+                                class_name="w-100",
+                                children=[
+                                    dcc.Download(id="tab-3-download-data"),
+                                    dmc.Button(
+                                        children="Close panel",
+                                        id="page-4-close-drawer-region-selection",
+                                        variant="filled",
+                                        disabled=False,
+                                        color="red",
+                                        radius="md",
+                                        size="xs",
+                                        compact=False,
+                                        loading=False,
+                                        style={"position": "fixed", "top": "0.5rem"},
+                                        class_name="w-50",
                                     ),
                                 ],
                             ),
@@ -1301,8 +1309,8 @@ def global_spectrum_store(
     Input("main-slider", "value"),
     State("page-3-dropdown-brain-regions", "value"),
     State("dcc-store-shapes-and-masks", "data"),
-    Input("page-3-normalize", "checked"),
-    Input("page-3-log", "checked"),
+    # Input("page-3-normalize", "checked"),
+    # Input("page-3-log", "checked"),
     State("page-3-graph-heatmap-per-sel", "relayoutData"),
     State("session-id", "data"),
     prevent_intial_call=True,
@@ -1315,11 +1323,15 @@ def page_3_record_spectra(
     slice_index,
     l_mask_name,
     l_shapes_and_masks,
-    as_enrichment,
-    log_transform,
+    # as_enrichment,
+    # log_transform,
     relayoutData,
     session_id,
 ):
+
+    # Deactivated switches
+    as_enrichment = False
+    log_transform = False
 
     # Find out which input triggered the function
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
@@ -1364,8 +1376,8 @@ def page_3_record_spectra(
     Input("main-slider", "value"),
     State("page-3-dropdown-brain-regions", "value"),
     State("dcc-store-shapes-and-masks", "data"),
-    Input("page-3-normalize", "checked"),
-    Input("page-3-log", "checked"),
+    # Input("page-3-normalize", "checked"),
+    # Input("page-3-log", "checked"),
     State("page-3-graph-heatmap-per-sel", "relayoutData"),
     prevent_intial_call=True,
 )
@@ -1375,10 +1387,14 @@ def page_3_plot_spectrum(
     slice_index,
     l_mask_name,
     l_shapes_and_masks,
-    as_enrichment,
-    log_transform,
+    # as_enrichment,
+    # log_transform,
     relayoutData,
 ):
+
+    # Deactivated switches
+    as_enrichment = False
+    log_transform = False
 
     # Find out which input triggered the function
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
@@ -1529,8 +1545,8 @@ def page_3_plot_spectrum(
     Input("dcc-store-list-mz-spectra", "data"),
     State("page-3-dropdown-brain-regions", "value"),
     State("dcc-store-shapes-and-masks", "data"),
-    Input("page-3-normalize", "checked"),
-    Input("page-3-log", "checked"),
+    # Input("page-3-normalize", "checked"),
+    # Input("page-3-log", "checked"),
     State("page-3-graph-heatmap-per-sel", "relayoutData"),
     State("session-id", "data"),
     prevent_intial_call=True,
@@ -1544,11 +1560,16 @@ def page_3_draw_heatmap_per_lipid_selection(
     l_spectra,
     l_mask_name,
     l_shapes_and_masks,
-    as_enrichment,
-    log_transform,
+    # as_enrichment,
+    # log_transform,
     relayoutData,
     session_id,
 ):
+
+    # Deactivated switches
+    as_enrichment = False
+    log_transform = False
+
     # Find out which input triggered the function
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
     value_input = dash.callback_context.triggered[0]["prop_id"].split(".")[1]
@@ -1747,9 +1768,9 @@ def page_3_reset_download(fig_mz):
 
 # Function that create the dropdown lipids selections
 @app.app.callback(
-    Output("page-3-dropdown-red", "data"),
-    Output("page-3-dropdown-green", "data"),
-    Output("page-3-dropdown-blue", "data"),
+    Output("page-3-dropdown-red", "options"),
+    Output("page-3-dropdown-green", "options"),
+    Output("page-3-dropdown-blue", "options"),
     Output("page-3-dropdown-red", "value"),
     Output("page-3-dropdown-green", "value"),
     Output("page-3-dropdown-blue", "value"),
@@ -1857,7 +1878,7 @@ def toggle_visibility_graph(n1, cliked_reset, l_red_lipids, l_green_lipids, l_bl
     Output("page-3-heatmap-lipid-comparison", "figure"),
     Input("page-3-open-modal", "n_clicks"),
     Input("page-3-reset-button", "n_clicks"),
-    Input("page-3-toggle-mask", "value"),
+    Input("page-3-toggle-mask", "checked"),
     Input("main-slider", "value"),
     State("page-3-dropdown-red", "value"),
     State("page-3-dropdown-green", "value"),
@@ -1865,8 +1886,8 @@ def toggle_visibility_graph(n1, cliked_reset, l_red_lipids, l_green_lipids, l_bl
     State("dcc-store-shapes-and-masks", "data"),
     State("page-3-dropdown-brain-regions", "value"),
     State("dcc-store-color-mask", "data"),
-    Input("page-3-log", "checked"),
-    Input("page-3-normalize", "checked"),
+    # Input("page-3-log", "checked"),
+    # Input("page-3-normalize", "checked"),
     State("session-id", "data"),
     prevent_initial_call=True,
 )
@@ -1881,10 +1902,15 @@ def draw_modal_graph(
     l_shapes_and_masks,
     l_mask_name,
     l_color_mask,
-    log,
-    enrichment,
+    # log_transform,
+    # as_enrichment,
     session_id,
 ):
+
+    # Deactivated switches
+    as_enrichment = False
+    log_transform = False
+
     # Find out which input triggered the function
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
 
@@ -1911,7 +1937,7 @@ def draw_modal_graph(
         ]
 
         fig = figures.compute_rgb_image_per_lipid_selection(
-            slice_index, l_lipid_bounds, enrichment=enrichment, log=log
+            slice_index, l_lipid_bounds, enrichment=as_enrichment, log=log_transform
         )
         if boolean_mask:
             if l_shapes_and_masks is not None:

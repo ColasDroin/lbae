@@ -864,7 +864,7 @@ class Figures:
 
         # Build empty figure if not provided
         if fig is None:
-            fig = go.Figure(data=go.Heatmap(z=[[]], x=[], y=[], visible=True))
+            fig = go.Figure(data=go.Heatmap(z=[[]], x=[], y=[], visible=False))
 
         # Improve figure layout
         fig.update_layout(
@@ -1303,7 +1303,7 @@ class Figures:
         fig.update_layout(
             uniformtext=dict(minsize=15), margin=dict(t=30, r=0, b=10, l=0),
         )
-        fig.update_traces(root_color="darkslateblue")
+        fig.update_traces(root_color="#1d3d5c")
 
         # Set background color to zero
         fig.layout.template = "plotly_dark"

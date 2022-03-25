@@ -40,8 +40,8 @@ def return_layout(basic_config, slice_index):
                 # x sets the lateral position, y the vertical one, w is in columns (whose size depends on the dimension), h is in rows (30px)
                 # nb columns go 12->10->6->4->2
                 "lg": [
-                    {"i": "page-4-card-region-selection", "x": 0, "y": 0, "w": 8, "h": 18},
-                    {"i": "page-4-card-lipid-selection", "x": 8, "y": 0, "w": 4, "h": 10},
+                    {"i": "page-4-card-region-selection", "x": 3, "y": 0, "w": 6, "h": 16},
+                    {"i": "page-4-card-lipid-selection", "x": 3, "y": 16, "w": 6, "h": 10},
                 ],
                 "md": [
                     {"i": "page-4-card-region-selection", "x": 0, "y": 0, "w": 7, "h": 14},
@@ -63,14 +63,14 @@ def return_layout(basic_config, slice_index):
             children=[
                 dbc.Card(
                     id="page-4-card-region-selection",
-                    style={"width": "100%", "height": "100%"},
+                    style={"width": "100%", "height": "100%", "background-color": "#1d1c1f"},
                     children=[
-                        dbc.CardHeader(
-                            children="",  # "Structure selection",
-                            style={"background-color": "#1d1c1f", "color": "white",},
-                        ),
+                        # dbc.CardHeader(
+                        #     children="",  # "Structure selection",
+                        #     style={"background-color": "#1d1c1f", "color": "white",},
+                        # ),
                         dbc.CardBody(
-                            className="pt-1 h-100",
+                            className="pt-5 mt-5 h-100",
                             style={"background-color": "#1d1c1f"},
                             children=[
                                 html.Div(
@@ -97,7 +97,7 @@ def return_layout(basic_config, slice_index):
                                                     figure=return_pickled_object(
                                                         "figures/atlas_page/3D",
                                                         "treemaps",
-                                                        force_update=False,
+                                                        force_update=True,
                                                         compute_function=figures.compute_treemaps_figure,
                                                     ),
                                                 ),
@@ -149,71 +149,66 @@ def return_layout(basic_config, slice_index):
                                     children=[
                                         html.Div(
                                             style={
-                                                "width": "calc(70% - 1.25rem)",
+                                                "width": "calc(70% - 1.75rem)",
                                                 "display": "inline-block",
                                             },
-                                            children=dmc.Button(
-                                                children="Please choose a structure above",
-                                                id="page-4-add-structure-button",
-                                                disabled=True,
-                                                variant="filled",
-                                                radius="md",
-                                                size="xs",
-                                                compact=False,
-                                                loading=False,
-                                                fullWidth=True,
-                                                class_name="mr-5",
-                                            ),
+                                            children=[
+                                                dmc.Button(
+                                                    children="Please choose a structure above",
+                                                    id="page-4-add-structure-button",
+                                                    disabled=True,
+                                                    variant="filled",
+                                                    radius="md",
+                                                    size="xs",
+                                                    compact=False,
+                                                    loading=False,
+                                                    fullWidth=True,
+                                                    class_name="mr-5",
+                                                ),
+                                                dmc.Button(
+                                                    children="Display lipid expression in the selected structure(s)",
+                                                    id="page-4-display-button",
+                                                    disabled=False,
+                                                    variant="filled",
+                                                    radius="md",
+                                                    size="xs",
+                                                    compact=False,
+                                                    loading=False,
+                                                    fullWidth=True,
+                                                    class_name="mr-5 mt-1",
+                                                ),
+                                            ],
                                         ),
                                         html.Div(
                                             style={
                                                 "width": "calc(30% - 1.25rem)",
                                                 "display": "inline-block",
                                             },
-                                            children=dmc.Button(
-                                                children="Please choose a lipid above",
-                                                id="page-4-add-lipid-button",
-                                                disabled=True,
-                                                variant="filled",
-                                                radius="md",
-                                                size="xs",
-                                                compact=False,
-                                                loading=False,
-                                                fullWidth=True,
-                                                class_name="ml-5",
-                                            ),
-                                        ),
-                                    ],
-                                ),
-                                dmc.Button(
-                                    children="Display lipid expression in the selected structure(s)",
-                                    id="page-4-display-button",
-                                    disabled=False,
-                                    variant="filled",
-                                    radius="md",
-                                    size="xs",
-                                    compact=False,
-                                    loading=False,
-                                ),
-                                html.Div(
-                                    className="d-flex flex-row justify-content-center align-items-center flex-grow-1",
-                                    children=[
-                                        html.Div(
-                                            style={"width": "70%", "min-height": "0"},
-                                            # className="d-flex align-self-stretch",
-                                            children=[],
-                                        ),
-                                        html.Div(
-                                            style={"width": "20%",},
                                             children=[
-                                                dbc.Button(
+                                                dmc.Button(
+                                                    children="Please choose a lipid above",
+                                                    id="page-4-add-lipid-button",
+                                                    disabled=True,
+                                                    variant="filled",
+                                                    radius="md",
+                                                    size="xs",
+                                                    compact=False,
+                                                    loading=False,
+                                                    fullWidth=True,
+                                                    class_name="ml-5",
+                                                    color="cyan",
+                                                ),
+                                                dmc.Button(
                                                     children="Compare lipid expression",
                                                     id="page-4-compare-structure-button",
-                                                    className="d-none",
-                                                    color="primary",
-                                                    disabled=False,
-                                                    style={"margin": "auto"},
-                                                    # block=True,
+                                                    disabled=True,
+                                                    variant="filled",
+                                                    radius="md",
+                                                    size="xs",
+                                                    compact=False,
+                                                    loading=False,
+                                                    fullWidth=True,
+                                                    class_name="ml-5 mt-1",
                                                 ),
                                             ],
                                         ),
@@ -232,10 +227,10 @@ def return_layout(basic_config, slice_index):
                     },
                     id="page-4-card-lipid-selection",
                     children=[
-                        dbc.CardHeader(
-                            children="",  # "Current selection",
-                            style={"background-color": "#1d1c1f", "color": "white",},
-                        ),
+                        # dbc.CardHeader(
+                        #     children="",  # "Current selection",
+                        #     style={"background-color": "#1d1c1f", "color": "white",},
+                        # ),
                         dbc.CardBody(
                             style={"background-color": "#1d1c1f"},
                             className="pt-1",
@@ -250,11 +245,13 @@ def return_layout(basic_config, slice_index):
                                             grow=True,
                                             children=[
                                                 dmc.Center(
-                                                    dmc.Text(
+                                                    class_name="w-100",
+                                                    children=dmc.Text(
                                                         "Brain structure selection",
                                                         size="xl",
                                                         color="white",
-                                                    )
+                                                        class_name="ml-5",
+                                                    ),
                                                 ),
                                                 dbc.Toast(
                                                     id="page-4-toast-region-1",
@@ -295,11 +292,12 @@ def return_layout(basic_config, slice_index):
                                             grow=True,
                                             children=[
                                                 dmc.Center(
-                                                    dmc.Text(
+                                                    class_name="w-100",
+                                                    children=dmc.Text(
                                                         "Lipid selection",
                                                         size="xl",
                                                         color="white",
-                                                        # class_name="w-50",
+                                                        class_name="ml-5",
                                                     ),
                                                 ),
                                                 dbc.Toast(
@@ -529,10 +527,31 @@ def page_4_click(clickData, region_1_id, region_2_id, region_3_id):
     return dash.no_update
 
 
+# Function to update label of the add lipid button
+@app.app.callback(
+    Output("page-4-add-lipid-button", "children"),
+    Output("page-4-add-lipid-button", "disabled"),
+    State("page-4-dropdown-lipid-names", "value"),
+    State("page-4-dropdown-lipid-structures", "value"),
+    Input("page-4-dropdown-lipid-cations", "value"),
+)
+def page_4_click(name, structure, cation):
+    # Find out which input triggered the function
+    id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
+
+    if cation is not None:
+        # Get lipid name
+        lipid_string = name + " " + structure + " " + cation
+
+        return "Add " + lipid_string + " to selection", False
+
+    return dash.no_update
+
+
 # Function to update label of the add structure button
 @app.app.callback(
-    # Output("page-4-compare-structure-button", "disabled"),
-    Output("page-4-compare-structure-button", "className"),
+    Output("page-4-compare-structure-button", "disabled"),
+    # Output("page-4-compare-structure-button", "className"),
     Input("page-4-selected-region-1", "data"),
     Input("page-4-selected-region-2", "data"),
     Input("page-4-selected-region-3", "data"),
@@ -548,11 +567,11 @@ def page_4_click(region_1_id, region_2_id, region_3_id):
         or (region_1_id != "" and region_3_id != "")
         or (region_2_id != "" and region_3_id != "")
     ):
-        # return False, "mt-5"
-        return "mt-5"
+        return False
+        # return "mt-5"
 
-    # return True, "d-none"
-    return "d-none"
+    return True
+    # return "d-none"
 
 
 # Function to add region choice to selection
@@ -807,7 +826,7 @@ def page_4_plot_graph_volume(
         State("page-4-selected-region-3", "data"),
     ],
     running=[
-        (Output("page-4-compare-structure-button", "disabled"), True, False),
+        # (Output("page-4-compare-structure-button", "disabled"), True, False),
         (Output("page-4-progress-bar-structure", "className"), "", "d-none",),
         (Output("page-4-graph-heatmap", "className"), "d-none", ""),
         (Output("page-4-slider-percentile", "className"), "d-none", ""),
@@ -908,7 +927,8 @@ def page_2bis_handle_dropdowns(name, structure, options_names, options_structure
     Output("page-4-toast-lipid-2", "is_open"),
     Output("page-4-toast-lipid-3", "is_open"),
     Output("page-4-last-selected-lipids", "data"),
-    Input("page-4-dropdown-lipid-cations", "value"),
+    State("page-4-dropdown-lipid-cations", "value"),
+    Input("page-4-add-lipid-button", "n_clicks"),
     Input("page-4-toast-lipid-1", "is_open"),
     Input("page-4-toast-lipid-2", "is_open"),
     Input("page-4-toast-lipid-3", "is_open"),
@@ -924,6 +944,7 @@ def page_2bis_handle_dropdowns(name, structure, options_names, options_structure
 )
 def page_2bis_add_toast_selection(
     cation,
+    n_clicks,
     bool_toast_1,
     bool_toast_2,
     bool_toast_3,
@@ -995,7 +1016,7 @@ def page_2bis_add_toast_selection(
         )
 
     # Otherwise, add lipid to selection
-    elif cation is not None and id_input == "page-4-dropdown-lipid-cations":
+    elif cation is not None and id_input == "page-4-add-lipid-button":
 
         for slice_index in range(app.data.get_slice_number()):
 

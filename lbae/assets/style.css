@@ -241,9 +241,14 @@ body > div.fade.offcanvas-backdrop.show {
 } */
 
 /* correct color for dropdowns */
+
 #page-3-dropdown-red .Select-value {
-  background-color: rgba(223, 80, 52, 0.8);
-  color: #222222;
+  background-color: #1a1b1e;
+  color: #ced4da;
+}
+
+#page-3-dropdown-red > div > div {
+  background-color: #2b2e33;
 }
 
 #page-3-dropdown-red .Select-control {
@@ -251,13 +256,17 @@ body > div.fade.offcanvas-backdrop.show {
 }
 
 #page-3-dropdown-red .Select-menu-outer {
-  background-color: rgba(223, 80, 52, 0.8);
-  color: #222222;
+  background-color: #1a1b1e;
+  color: #ced4da;
 }
 
 #page-3-dropdown-green .Select-value {
-  background-color: rgba(95, 169, 112, 0.8);
-  color: #222222;
+  background-color: #1a1b1e;
+  color: #ced4da;
+}
+
+#page-3-dropdown-green > div > div {
+  background-color: #2b2e33;
 }
 
 #page-3-dropdown-green .Select-control {
@@ -265,13 +274,17 @@ body > div.fade.offcanvas-backdrop.show {
 }
 
 #page-3-dropdown-green .Select-menu-outer {
-  background-color: rgba(95, 169, 112, 0.8);
-  color: #222222;
+  background-color: #1a1b1e;
+  color: #ced4da;
 }
 
 #page-3-dropdown-blue .Select-value {
-  background-color: rgba(58, 139, 182, 0.8);
-  color: #222222;
+  background-color: #1a1b1e;
+  color: #ced4da;
+}
+
+#page-3-dropdown-blue > div > div {
+  background-color: #2b2e33;
 }
 
 #page-3-dropdown-blue .Select-control {
@@ -279,8 +292,8 @@ body > div.fade.offcanvas-backdrop.show {
 }
 
 #page-3-dropdown-blue .Select-menu-outer {
-  background-color: rgba(58, 139, 182, 0.8);
-  color: #222222;
+  background-color: #1a1b1e;
+  color: #ced4da;
 }
 
 /* shift modebar on graph */
@@ -573,7 +586,12 @@ div.item-top {
 
 div.item {
   background: #1d1c1f;
-  box-shadow: 0px 10px 6px -1px rgb(30 44 57 / 15%);
+  /* box-shadow: 0px 10px 6px -1px rgb(30 44 57 / 15%); */
+}
+
+/* Button label remain readable even when disabled */
+.mantine-Button-label {
+  color: #ced4da;
 }
 
 div.item:focus,
@@ -582,8 +600,8 @@ div.item.active,
 div.item:focus:active {
   background-image: none;
   outline: none;
-  -webkit-box-shadow: none;
-  box-shadow: 0px 10px 6px -1px rgb(30 44 57 / 15%);
+  /* -webkit-box-shadow: none; */
+  /* box-shadow: 0px 10px 6px -1px rgb(30 44 57 / 15%); */
 }
 
 #page-4-dropdown-lipid-names-label {
