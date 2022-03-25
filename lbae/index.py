@@ -167,7 +167,7 @@ def return_main_content():
                             # tooltip={"placement": "right", "always_visible": True,},
                             size="xs",
                             value=1,
-                            color="deep-blue",
+                            color="cyan",
                             class_name="mt-2 mx-5",
                         ),
                     ),

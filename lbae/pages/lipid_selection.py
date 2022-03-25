@@ -70,27 +70,13 @@ def return_layout(basic_config, slice_index):
                                 ),
                             ),
                         ),
-                        dmc.Switch(
-                            id="page-2-toggle-apply-transform",
-                            label="Apply MAIA transform",
-                            checked=True,
-                            color="cyan",
-                            radius="xl",
-                            size="sm",
-                            style={
-                                "position": "absolute",
-                                "bottom": "6%",
-                                "right": "15%",
-                                "color": "white",
-                            },
-                        ),
                         dmc.Group(
                             direction="column",
                             spacing=0,
                             style={"left": "1%", "top": "1em",},
                             class_name="position-absolute",
                             children=[
-                                html.Div(children=" Lipid selection", className="fs-5 text-light",),
+                                # html.Div(children=" Lipid selection", className="fs-5 text-light",),
                                 dmc.Group(
                                     spacing="xs",
                                     align="flex-start",
@@ -115,6 +101,7 @@ def return_layout(basic_config, slice_index):
                                             transition="pop-top-left",
                                             transitionTimingFunction="ease",
                                             style={"width": "20em",},
+                                            # label="Lipid selection",
                                         ),
                                         dmc.Button(
                                             children="Display as RGB",
@@ -138,16 +125,24 @@ def return_layout(basic_config, slice_index):
                                             compact=False,
                                             loading=False,
                                         ),
+                                        dmc.Switch(
+                                            id="page-2-toggle-apply-transform",
+                                            label="Apply MAIA transform",
+                                            checked=True,
+                                            color="cyan",
+                                            radius="xl",
+                                            size="sm",
+                                        ),
                                     ],
                                 ),
                             ],
                         ),
                         #     ],
                         # ),
-                        html.Div(
+                        dmc.Text(
                             id="page-2-badge-input",
                             children="Current input: " + "m/z boundaries",
-                            className="fs-5 text-light position-absolute",
+                            class_name="position-absolute",
                             style={"right": "1%", "top": "1em"},
                         ),
                         dmc.Badge(
@@ -183,10 +178,6 @@ def return_layout(basic_config, slice_index):
                                     direction="column",
                                     spacing=0,
                                     children=[
-                                        html.Div(
-                                            children=" Lower bound (m/z)",
-                                            className="fs-5 text-light",
-                                        ),
                                         dmc.Tooltip(
                                             wrapLines=True,
                                             width=220,
@@ -207,7 +198,7 @@ def return_layout(basic_config, slice_index):
                                                     value=600,
                                                     # variant="filled",
                                                     hideControls=True,
-                                                    # label="Lower bound (m/z)",
+                                                    label="Lower bound (m/z)",
                                                 ),
                                             ],
                                         ),
@@ -217,10 +208,6 @@ def return_layout(basic_config, slice_index):
                                     direction="column",
                                     spacing=0,
                                     children=[
-                                        html.Div(
-                                            children=" Upper bound (m/z)",
-                                            className="fs-5 text-light",
-                                        ),
                                         dmc.Tooltip(
                                             wrapLines=True,
                                             width=220,
@@ -240,6 +227,7 @@ def return_layout(basic_config, slice_index):
                                                     size="xs",
                                                     value=602,
                                                     hideControls=True,
+                                                    label="Upper bound (m/z)",
                                                 ),
                                             ],
                                         ),

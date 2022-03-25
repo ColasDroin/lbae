@@ -25,11 +25,11 @@ html {
 /* change color of selected pills */
 .nav-pills .nav-link.active,
 .nav-pills .show > .nav-link {
-  background-color: #50bdda !important ;
+  background-color: #0b8599 !important ;
 }
 
 .nav-link:hover {
-  color: #50bdda !important ;
+  color: #0b8599 !important ;
 }
 
 .nav-link:focus {
@@ -82,11 +82,10 @@ html {
   opacity: 1;
 }
 
-/* light blue color for brain 
-.icon-brain {
-  color: #3a8bb6; 
-}
-*/
+/* light blue color for brain  */
+/* .icon-brain {
+  color: #3a8bb6;
+} */
 
 /* container for the sidebar footbar. make sure the contents don't wrap when
  * the sidebar is collapsed. Keep bar at the lowest position.
@@ -131,22 +130,45 @@ body > div.fade.offcanvas-backdrop.show {
 }
 
 #content > div > div > div > div.mantine-Switch-root.mantine-16ttirm > label {
-  color: #e9ecef;
+  /* color: #e9ecef; */
   margin-top: 0.16rem;
 }
 
 #page-3-controls > div:nth-child(1) > label {
-  color: #e9ecef;
+  /* color: #e9ecef; */
   margin-top: 0.16rem;
 }
 
 #page-3-controls > div:nth-child(2) > label {
-  color: #e9ecef;
+  /* color: #e9ecef; */
   margin-top: 0.16rem;
 }
 
-#page-1-toggle-annotations::before {
+/* #page-1-toggle-annotations::before {
   background-color: rgb(65 154 181);
+} */
+
+#content
+  > div
+  > div
+  > div.mantine-8od8ev
+  > div
+  > div:nth-child(3)
+  > div
+  > label {
+  margin-top: 0.25rem;
+}
+
+#content
+  > div:nth-child(1)
+  > div
+  > div.mantine-Switch-root.mantine-16ttirm
+  > label {
+  margin-top: 0.25rem;
+}
+
+.mantine-Text-root {
+  color: #ced4da;
 }
 
 /* rounded corner for images (doesn't work)
@@ -187,18 +209,18 @@ body > div.fade.offcanvas-backdrop.show {
 */
 
 /* nicer slider */
-.rc-slider-track {
-  background-color: #50bdda;
+/* .rc-slider-track {
+  background-color: #0b8599;
 }
 
 .rc-slider-dot-active {
-  border-color: #50bdda;
-  border: solid 2px #50bdda;
+  border-color: #0b8599;
+  border: solid 2px #0b8599;
 }
 
 .rc-slider-handle {
-  background-color: #50bdda;
-  border-color: #50bdda;
+  background-color: #0b8599;
+  border-color: #0b8599;
   border: solid 2px #74bedb;
 }
 
@@ -207,16 +229,16 @@ body > div.fade.offcanvas-backdrop.show {
 }
 
 .rc-slider-handle:hover {
-  border-color: #50bdda;
+  border-color: #0b8599;
 }
 
 .rc-slider-handle-active:active {
-  border-color: #50bdda;
+  border-color: #0b8599;
 }
 
 #page-1-slider-slice-selection {
   white-space: nowrap;
-}
+} */
 
 /* correct color for dropdowns */
 #page-3-dropdown-red .Select-value {

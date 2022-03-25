@@ -107,11 +107,21 @@ def return_layout(basic_config, slice_index):
                             plot_atlas_contours=False,
                         ),
                     ),
-                    html.P(
+                    dmc.Text(
                         "Hovered region: ",
                         id="page-1-graph-hover-text",
-                        className="text-warning font-weight-bold position-absolute",
-                        style={"right": "15%", "top": "15%"},
+                        size="lg",
+                        align="center",
+                        color="cyan",
+                        class_name="mt-5",
+                        weight=500,
+                        # className="text-warning font-weight-bold position-absolute",
+                        style={
+                            "width": "100%",
+                            # "height": "86%",
+                            "position": "absolute",
+                            "top": "7%",
+                        },
                     ),
                 ],
                 # ),
@@ -204,7 +214,7 @@ def tab_1_load_image(value_slider, active_tab, display_annotations):
 
 
 @app.app.callback(
-    Output("page-1-graph-hover-text", "className"), Input("page-1-card-tabs", "value"),
+    Output("page-1-graph-hover-text", "class_name"), Input("page-1-card-tabs", "value"),
 )
 def page_1_visibilty_hover(active_tab):
 
@@ -215,7 +225,7 @@ def page_1_visibilty_hover(active_tab):
         if active_tab == "0":
             return "d-none"
         else:
-            return "text-warning font-weight-bold position-absolute"
+            return "mt-5"
     else:
         return dash.no_update
 
