@@ -117,28 +117,52 @@ def return_layout(basic_config, slice_index):
                                                         color="white",
                                                     )
                                                 ),
-                                                dbc.Tooltip(
-                                                    children="Please select the lipids of your choice (up to three):",
-                                                    target="page-4-card-lipid-selection",
-                                                    placement="left",
-                                                ),
+                                                # dbc.Tooltip(
+                                                #     children="Please select the lipids of your choice (up to three):",
+                                                #     target="page-4-card-lipid-selection",
+                                                #     placement="left",
+                                                # ),
                                                 dmc.Select(
                                                     label="Select lipid category:",
                                                     placeholder="Select lipid cat",
                                                     id="page-4-dropdown-lipid-names",
                                                     data=[],
+                                                    searchable=True,
+                                                    nothingFound="No lipid found",
+                                                    radius="md",
+                                                    clearable=True,
+                                                    size="xs",
+                                                    transitionDuration=150,
+                                                    transition="pop-top-left",
+                                                    transitionTimingFunction="ease",
                                                 ),
                                                 dmc.Select(
                                                     label="Select lipid structure:",
                                                     placeholder="Select lipid struc",
                                                     id="page-4-dropdown-lipid-structures",
                                                     data=[],
+                                                    searchable=True,
+                                                    clearable=True,
+                                                    nothingFound="No lipid found",
+                                                    radius="md",
+                                                    size="xs",
+                                                    transitionDuration=150,
+                                                    transition="pop-top-left",
+                                                    transitionTimingFunction="ease",
                                                 ),
                                                 dmc.Select(
                                                     label="Select lipid cation:",
                                                     placeholder="Select lipid cat",
                                                     id="page-4-dropdown-lipid-cations",
                                                     data=[],
+                                                    clearable=True,
+                                                    searchable=True,
+                                                    nothingFound="No lipid found",
+                                                    radius="md",
+                                                    size="xs",
+                                                    transitionDuration=150,
+                                                    transition="pop-top-left",
+                                                    transitionTimingFunction="ease",
                                                 ),
                                             ],
                                         ),
@@ -160,6 +184,7 @@ def return_layout(basic_config, slice_index):
                                                     variant="filled",
                                                     radius="md",
                                                     size="xs",
+                                                    color="cyan",
                                                     compact=False,
                                                     loading=False,
                                                     fullWidth=True,
@@ -168,10 +193,11 @@ def return_layout(basic_config, slice_index):
                                                 dmc.Button(
                                                     children="Display lipid expression in the selected structure(s)",
                                                     id="page-4-display-button",
-                                                    disabled=False,
+                                                    disabled=True,
                                                     variant="filled",
                                                     radius="md",
                                                     size="xs",
+                                                    color="cyan",
                                                     compact=False,
                                                     loading=False,
                                                     fullWidth=True,
@@ -191,20 +217,21 @@ def return_layout(basic_config, slice_index):
                                                     disabled=True,
                                                     variant="filled",
                                                     radius="md",
+                                                    color="cyan",
                                                     size="xs",
                                                     compact=False,
                                                     loading=False,
                                                     fullWidth=True,
                                                     class_name="ml-5",
-                                                    color="cyan",
                                                 ),
                                                 dmc.Button(
-                                                    children="Compare lipid expression",
+                                                    children="Compare lipid expression in the selected structures",
                                                     id="page-4-compare-structure-button",
                                                     disabled=True,
                                                     variant="filled",
                                                     radius="md",
                                                     size="xs",
+                                                    color="cyan",
                                                     compact=False,
                                                     loading=False,
                                                     fullWidth=True,
@@ -243,6 +270,7 @@ def return_layout(basic_config, slice_index):
                                         dmc.Group(
                                             direction="column",
                                             grow=True,
+                                            class_name="ml-5",
                                             children=[
                                                 dmc.Center(
                                                     class_name="w-100",
@@ -250,35 +278,37 @@ def return_layout(basic_config, slice_index):
                                                         "Brain structure selection",
                                                         size="xl",
                                                         color="white",
-                                                        class_name="ml-5",
                                                     ),
                                                 ),
                                                 dbc.Toast(
                                                     id="page-4-toast-region-1",
                                                     header="name-region-1",
-                                                    icon="primary",
+                                                    # icon="primary",
                                                     dismissable=True,
                                                     is_open=False,
                                                     bodyClassName="p-0",
+                                                    header_class_name="d-flex justify-content-center ml-2",
                                                     className="mt-1",
                                                     style={"margin": "auto"},
                                                 ),
                                                 dbc.Toast(
                                                     id="page-4-toast-region-2",
                                                     header="name-region-2",
-                                                    icon="primary",
+                                                    # icon="primary",
                                                     dismissable=True,
                                                     is_open=False,
                                                     bodyClassName="p-0",
+                                                    header_class_name="d-flex justify-content-center ml-2",
                                                     className="mt-1",
                                                     style={"margin": "auto"},
                                                 ),
                                                 dbc.Toast(
                                                     id="page-4-toast-region-3",
                                                     header="name-region-3",
-                                                    icon="primary",
+                                                    # icon="primary",
                                                     dismissable=True,
                                                     is_open=False,
+                                                    header_class_name="d-flex justify-content-center ml-2",
                                                     bodyClassName="p-0",
                                                     className="mt-1",
                                                     style={"margin": "auto"},
@@ -290,54 +320,55 @@ def return_layout(basic_config, slice_index):
                                             # align="flex-start",
                                             # class_name="w-50",
                                             grow=True,
+                                            class_name="ml-5",
                                             children=[
                                                 dmc.Center(
                                                     class_name="w-100",
                                                     children=dmc.Text(
-                                                        "Lipid selection",
-                                                        size="xl",
-                                                        color="white",
-                                                        class_name="ml-5",
+                                                        "Lipid selection", size="xl", color="white",
                                                     ),
                                                 ),
                                                 dbc.Toast(
                                                     id="page-4-toast-lipid-1",
                                                     header="name-lipid-1",
-                                                    icon="primary",
+                                                    # icon="primary",
                                                     dismissable=True,
                                                     is_open=False,
                                                     bodyClassName="p-0",
+                                                    header_class_name="d-flex justify-content-center ml-2",
                                                     className="mt-1",
                                                     style={"margin": "auto"},
                                                 ),
                                                 dbc.Toast(
                                                     id="page-4-toast-lipid-2",
                                                     header="name-lipid-2",
-                                                    icon="primary",
+                                                    # icon="primary",
                                                     dismissable=True,
                                                     is_open=False,
                                                     bodyClassName="p-0",
+                                                    header_class_name="d-flex justify-content-center ml-2",
                                                     className="mt-1",
                                                     style={"margin": "auto"},
                                                 ),
                                                 dbc.Toast(
                                                     id="page-4-toast-lipid-3",
                                                     header="name-lipid-3",
-                                                    icon="primary",
+                                                    # icon="primary",
                                                     dismissable=True,
+                                                    header_class_name="d-flex justify-content-center ml-2",
                                                     is_open=False,
                                                     bodyClassName="p-0",
                                                     className="mt-1",
-                                                    style={"margin": "auto"},
+                                                    style={"margin": "auto",},
                                                 ),
-                                                html.Div(
-                                                    id="page-4-warning-lipids-number",
-                                                    className="text-center mt-1",
-                                                    children=html.Strong(
-                                                        children="Please delete some lipids to choose new ones.",
-                                                        style={"color": "#df5034"},
-                                                    ),
-                                                ),
+                                                # html.Div(
+                                                #     id="page-4-warning-lipids-number",
+                                                #     className="text-center mt-1",
+                                                #     children=html.Strong(
+                                                #         children="Please delete some lipids to choose new ones.",
+                                                #         style={"color": "#df5034"},
+                                                #     ),
+                                                # ),
                                             ],
                                         ),
                                     ],
@@ -531,47 +562,53 @@ def page_4_click(clickData, region_1_id, region_2_id, region_3_id):
 @app.app.callback(
     Output("page-4-add-lipid-button", "children"),
     Output("page-4-add-lipid-button", "disabled"),
+    Input("page-4-toast-lipid-1", "header"),
+    Input("page-4-toast-lipid-2", "header"),
+    Input("page-4-toast-lipid-3", "header"),
     State("page-4-dropdown-lipid-names", "value"),
     State("page-4-dropdown-lipid-structures", "value"),
     Input("page-4-dropdown-lipid-cations", "value"),
 )
-def page_4_click(name, structure, cation):
+def page_4_click(header_1, header_2, header_3, name, structure, cation):
     # Find out which input triggered the function
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
 
-    if cation is not None:
+    if cation is not None and cation != "":
         # Get lipid name
         lipid_string = name + " " + structure + " " + cation
 
-        return "Add " + lipid_string + " to selection", False
+        # Compare to existing headers
+        if lipid_string not in [header_1, header_2, header_3]:
 
-    return dash.no_update
+            return "Add " + lipid_string + " to selection", False
+
+    return "Please choose a lipid above", True
 
 
-# Function to update label of the add structure button
-@app.app.callback(
-    Output("page-4-compare-structure-button", "disabled"),
-    # Output("page-4-compare-structure-button", "className"),
-    Input("page-4-selected-region-1", "data"),
-    Input("page-4-selected-region-2", "data"),
-    Input("page-4-selected-region-3", "data"),
-)
-def page_4_click(region_1_id, region_2_id, region_3_id):
+# # Function to update label of the add structure button
+# @app.app.callback(
+#     Output("page-4-compare-structure-button", "disabled"),
+#     # Output("page-4-compare-structure-button", "className"),
+#     Input("page-4-selected-region-1", "data"),
+#     Input("page-4-selected-region-2", "data"),
+#     Input("page-4-selected-region-3", "data"),
+# )
+# def page_4_click(region_1_id, region_2_id, region_3_id):
 
-    # Find out which input triggered the function
-    id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
+#     # Find out which input triggered the function
+#     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
 
-    # If lipids has been selected from the dropdown, activate button
-    if (
-        (region_1_id != "" and region_2_id != "")
-        or (region_1_id != "" and region_3_id != "")
-        or (region_2_id != "" and region_3_id != "")
-    ):
-        return False
-        # return "mt-5"
+#     # If lipids has been selected from the dropdown, activate button
+#     if (
+#         (region_1_id != "" and region_2_id != "")
+#         or (region_1_id != "" and region_3_id != "")
+#         or (region_2_id != "" and region_3_id != "")
+#     ):
+#         return False
+#         # return "mt-5"
 
-    return True
-    # return "d-none"
+#     return True
+#     # return "d-none"
 
 
 # Function to add region choice to selection
@@ -763,7 +800,6 @@ def page_4_plot_graph_volume(
             or np.sum(l_lipid_2_index) > -app.data.get_slice_number()
             or np.sum(l_lipid_3_index) > -app.data.get_slice_number()
         ):
-
             # Build the list of mz boundaries for each peak and each index
             lll_lipid_bounds = [
                 [
@@ -1084,7 +1120,7 @@ def page_2bis_add_toast_selection(
     Output("page-4-dropdown-lipid-names", "disabled"),
     Output("page-4-dropdown-lipid-structures", "disabled"),
     Output("page-4-dropdown-lipid-cations", "disabled"),
-    Output("page-4-warning-lipids-number", "className"),
+    # Output("page-4-warning-lipids-number", "className"),
     Input("page-4-selected-lipid-1", "data"),
     Input("page-4-selected-lipid-2", "data"),
     Input("page-4-selected-lipid-3", "data"),
@@ -1097,26 +1133,54 @@ def page_4_disable_dropdowns(l_lipid_1_index, l_lipid_2_index, l_lipid_3_index):
         and np.sum(l_lipid_2_index) > -app.data.get_slice_number()
         and np.sum(l_lipid_3_index) > -app.data.get_slice_number()
     ):
-        return True, True, True, "mt-1 text-center"
+        return True, True, True  # , "mt-1 text-center"
     else:
-        return False, False, False, "mt-1 text-center d-none"
+        return False, False, False  # , "mt-1 text-center d-none"
 
 
 @app.app.callback(
     Output("page-4-display-button", "disabled"),
+    Output("page-4-compare-structure-button", "disabled"),
     Input("page-4-selected-lipid-1", "data"),
     Input("page-4-selected-lipid-2", "data"),
     Input("page-4-selected-lipid-3", "data"),
+    Input("page-4-selected-region-1", "data"),
+    Input("page-4-selected-region-2", "data"),
+    Input("page-4-selected-region-3", "data"),
 )
-def tab_2_active_display(l_lipid_1_index, l_lipid_2_index, l_lipid_3_index):
-    # If lipids has been selected from the dropdown, activate button
+def tab_2_active_display(
+    l_lipid_1_index, l_lipid_2_index, l_lipid_3_index, region_1_id, region_2_id, region_3_id
+):
+
+    # If two structure
     if (
-        np.sum(l_lipid_1_index + l_lipid_2_index + l_lipid_3_index)
-        > -3 * app.data.get_slice_number()
+        (region_1_id != "" and region_2_id != "")
+        or (region_1_id != "" and region_3_id != "")
+        or (region_2_id != "" and region_3_id != "")
     ):
-        return False
-    else:
-        return True
+
+        # If at least one lipid:
+        if (
+            np.sum(l_lipid_1_index + l_lipid_2_index + l_lipid_3_index)
+            > -3 * app.data.get_slice_number()
+        ):
+            return False, False
+        else:
+            return True, False
+
+    # If one structure
+    if region_1_id != "" or region_2_id != "" or region_3_id != "":
+        # If at least one lipid:
+        if (
+            np.sum(l_lipid_1_index + l_lipid_2_index + l_lipid_3_index)
+            > -3 * app.data.get_slice_number()
+        ):
+            return False, False
+
+        else:
+            return True, True
+
+    return True, True
 
 
 @app.app.callback(

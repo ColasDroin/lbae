@@ -610,7 +610,10 @@ class Figures:
 
         # Empty lipid names if no names provided
         if ll_lipid_names is None:
-            ll_lipid_names = [["" for y in l_t_bounds] for l_t_bounds in ll_t_bounds]
+            ll_lipid_names = [
+                ["" for y in l_t_bounds] if l_t_bounds is not None else [""]
+                for l_t_bounds in ll_t_bounds
+            ]
 
         # Build a list of empty images and add selected lipids for each channel
         l_images = []

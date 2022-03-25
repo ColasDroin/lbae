@@ -296,6 +296,25 @@ body > div.fade.offcanvas-backdrop.show {
   color: #ced4da;
 }
 
+/* Style toasts */
+.toast-header {
+  border-bottom: 0px !important;
+  /* padding: 1rem !important; */
+  color: #ced4da !important;
+  background-color: #2b2e33 !important;
+  border-top-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
+  /* margin: 1rem !important; */
+}
+div.toast-header > strong {
+  margin-left: 3rem;
+  margin-right: 3rem;
+}
+
+.btn-close {
+  background: #ced4da;
+}
+
 /* shift modebar on graph */
 #page-1-graph-slice-selection .js-plotly-plot .plotly .modebar {
   left: 68%;
