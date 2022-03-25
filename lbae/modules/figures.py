@@ -1816,8 +1816,8 @@ class Figures:
                         [2.5, 0.7],
                     ],  # "uniform",
                     surface_count=10,
-                    colorscale="viridis_r",  # "RdBu_r",
-                    flatshading=True,
+                    colorscale="viridis",  # "RdBu_r",
+                    # flatshading=True,
                 ),
                 root_data,
             ]
@@ -1827,11 +1827,16 @@ class Figures:
         fig.update_layout(
             margin=dict(t=0, r=0, b=0, l=0),
             scene=dict(
-                xaxis=dict(backgroundcolor="rgba(0,0,0,0)", color="grey", gridcolor="grey"),
-                yaxis=dict(backgroundcolor="rgba(0,0,0,0)", color="grey", gridcolor="grey"),
-                zaxis=dict(backgroundcolor="rgba(0,0,0,0)", color="grey", gridcolor="grey"),
+                xaxis=dict(backgroundcolor="rgba(0,0,0,0)"),  # , color="grey", gridcolor="grey"),
+                yaxis=dict(backgroundcolor="rgba(0,0,0,0)"),  # , color="grey", gridcolor="grey"),
+                zaxis=dict(backgroundcolor="rgba(0,0,0,0)"),  # , color="grey", gridcolor="grey"),
             ),
         )
+
+        # Set background color to zero
+        fig.layout.template = "plotly_dark"
+        fig.layout.plot_bgcolor = "rgba(0,0,0,0)"
+        fig.layout.paper_bgcolor = "rgba(0,0,0,0)"
 
         logging.info("Done computing 3D volume figure")
 
@@ -1964,6 +1969,12 @@ class Figures:
             height=1000,
             width=1000,
         )
+
+        # Set background color to zero
+        fig_heatmap_lipids.layout.template = "plotly_dark"
+        fig_heatmap_lipids.layout.plot_bgcolor = "rgba(0,0,0,0)"
+        fig_heatmap_lipids.layout.paper_bgcolor = "rgba(0,0,0,0)"
+
         # set_progress(sections)
         set_progress((100, "Returning figure"))
         logging.info("Returning figure")

@@ -47,6 +47,7 @@ def return_layout(basic_config, slice_index=1):
             "bottom": "0px",
             "left": "6rem",
             "background-color": "#1d1c1f",
+            "overflow": "hidden",
         },
         children=[
             html.Div(
@@ -231,7 +232,7 @@ def return_layout(basic_config, slice_index=1):
                                             "x": 0,
                                             "y": 17,
                                             "w": 6,
-                                            "h": 2 * N_LINES - 2,
+                                            "h": 2 * N_LINES,
                                         },
                                         {
                                             "i": "page-3-card-graph-lipid-comparison",

@@ -36,12 +36,19 @@ def return_layout(basic_config, slice_index):
             isDraggable=False,
             isResizable=False,
             containerPadding=[2, 2],
+            breakpoints={"xxl": 1600, "lg": 1200, "md": 996, "sm": 768, "xs": 480, "xxs": 0,},
+            gridCols={"xxl": 12, "lg": 12, "md": 10, "sm": 6, "xs": 4, "xxs": 2,},
+            style={"background-color": "#1d1c1f",},
             layouts={
                 # x sets the lateral position, y the vertical one, w is in columns (whose size depends on the dimension), h is in rows (30px)
-                # nb columns go 12->10->6->4->2
-                "lg": [
+                # nb columns go 12->12->10->6->4->2
+                "xxl": [
                     {"i": "page-4-card-region-selection", "x": 3, "y": 0, "w": 6, "h": 16},
                     {"i": "page-4-card-lipid-selection", "x": 3, "y": 16, "w": 6, "h": 10},
+                ],
+                "lg": [
+                    {"i": "page-4-card-region-selection", "x": 0, "y": 0, "w": 8, "h": 16},
+                    {"i": "page-4-card-lipid-selection", "x": 8, "y": 0, "w": 4, "h": 10},
                 ],
                 "md": [
                     {"i": "page-4-card-region-selection", "x": 0, "y": 0, "w": 7, "h": 14},
@@ -381,12 +388,17 @@ def return_layout(basic_config, slice_index):
                             size="xl",
                             children=[
                                 dbc.ModalHeader(
-                                    dbc.ModalTitle("Lipid selection interpolated in 3D")
+                                    style={"background-color": "#1d1c1f",},
+                                    children=dbc.ModalTitle(
+                                        "Lipid selection interpolated in 3D",
+                                        style={"color": "white"},
+                                    ),
                                 ),
                                 dbc.ModalBody(
+                                    style={"background-color": "#1d1c1f",},
                                     children=[
                                         dbc.Spinner(
-                                            color="dark",
+                                            color="light",
                                             show_initially=False,
                                             children=[
                                                 html.Div(
@@ -430,9 +442,15 @@ def return_layout(basic_config, slice_index):
                             is_open=False,
                             size="xl",
                             children=[
-                                dbc.ModalHeader(dbc.ModalTitle("Lipid expression comparison")),
+                                dbc.ModalHeader(
+                                    style={"background-color": "#1d1c1f",},
+                                    children=dbc.ModalTitle(
+                                        "Lipid expression comparison", style={"color": "white"},
+                                    ),
+                                ),
                                 dbc.ModalBody(
                                     className="d-flex justify-content-center flex-column",
+                                    style={"background-color": "#1d1c1f",},
                                     children=[
                                         # dbc.CardHeader(className="d-flex", children="Lipid expression comparison",),
                                         # dbc.CardBody(
@@ -448,6 +466,7 @@ def return_layout(basic_config, slice_index):
                                         dbc.Progress(
                                             id="page-4-progress-bar-structure",
                                             style={"width ": "100%"},
+                                            color="#ced4da",
                                         ),
                                         dcc.Slider(
                                             id="page-4-slider-percentile",
