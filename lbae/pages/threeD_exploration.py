@@ -1210,7 +1210,7 @@ def tab_2_active_display(
             np.sum(l_lipid_1_index + l_lipid_2_index + l_lipid_3_index)
             > -3 * app.data.get_slice_number()
         ):
-            return True, False
+            return False, True
 
         else:
             return True, True

@@ -55,7 +55,7 @@ main_content = return_main_content()
 
 # Initialize app with main content and dark theme
 app.layout = dmc.MantineProvider(
-    # theme={"colorScheme": "dark", "colors": {"deep-blue": ["#1d3d5c"] * 10},},
+    theme={"colorScheme": "dark"},  # , "colors": {"deep-blue": ["#1d3d5c"] * 10},},
     children=[main_content],
 )
 
