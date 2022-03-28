@@ -1966,8 +1966,9 @@ class Figures:
             # },
             hidden_labels="row" if len(df_avg_intensity_lipids.index.to_list()) > 100 else None,
             color_map="Viridis",
-            height=1000,
+            height=800,
             width=1000,
+            display_ratio=[0.2, 0.01],
         )
 
         # Set background color to zero

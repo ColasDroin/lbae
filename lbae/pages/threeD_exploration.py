@@ -30,493 +30,509 @@ def return_layout(basic_config, slice_index):
             "left": "6rem",
             "background-color": "#1d1c1f",
         },
-        children=dash_draggable.ResponsiveGridLayout(
-            id="draggable",
-            clearSavedLayout=True,
-            isDraggable=False,
-            isResizable=False,
-            containerPadding=[2, 2],
-            breakpoints={"xxl": 1600, "lg": 1200, "md": 996, "sm": 768, "xs": 480, "xxs": 0,},
-            gridCols={"xxl": 12, "lg": 12, "md": 10, "sm": 6, "xs": 4, "xxs": 2,},
-            style={"background-color": "#1d1c1f",},
-            layouts={
-                # x sets the lateral position, y the vertical one, w is in columns (whose size depends on the dimension), h is in rows (30px)
-                # nb columns go 12->12->10->6->4->2
-                "xxl": [
-                    {"i": "page-4-card-region-selection", "x": 3, "y": 0, "w": 6, "h": 16},
-                    {"i": "page-4-card-lipid-selection", "x": 3, "y": 16, "w": 6, "h": 10},
-                ],
-                "lg": [
-                    {"i": "page-4-card-region-selection", "x": 0, "y": 0, "w": 8, "h": 16},
-                    {"i": "page-4-card-lipid-selection", "x": 8, "y": 0, "w": 4, "h": 10},
-                ],
-                "md": [
-                    {"i": "page-4-card-region-selection", "x": 0, "y": 0, "w": 7, "h": 14},
-                    {"i": "page-4-card-lipid-selection", "x": 6, "y": 0, "w": 3, "h": 12},
-                ],
-                "sm": [
-                    {"i": "page-4-card-region-selection", "x": 0, "y": 0, "w": 6, "h": 19},
-                    {"i": "page-4-card-lipid-selection", "x": 0, "y": 19, "w": 6, "h": 11},
-                ],
-                "xs": [
-                    {"i": "page-4-card-region-selection", "x": 0, "y": 0, "w": 4, "h": 14},
-                    {"i": "page-4-card-lipid-selection", "x": 0, "y": 0, "w": 4, "h": 11},
-                ],
-                "xxs": [
-                    {"i": "page-4-card-region-selection", "x": 0, "y": 0, "w": 2, "h": 9},
-                    {"i": "page-4-card-lipid-selection", "x": 0, "y": 0, "w": 2, "h": 10},
-                ],
-            },
-            children=[
-                dbc.Card(
-                    id="page-4-card-region-selection",
-                    style={"width": "100%", "height": "100%", "background-color": "#1d1c1f"},
-                    children=[
-                        # dbc.CardHeader(
-                        #     children="",  # "Structure selection",
-                        #     style={"background-color": "#1d1c1f", "color": "white",},
-                        # ),
-                        dbc.CardBody(
-                            className="pt-5 mt-5 h-100",
-                            style={"background-color": "#1d1c1f"},
-                            children=[
-                                html.Div(
-                                    className="d-flex",
-                                    children=[
-                                        html.Div(
-                                            style={"display": "inline-block", "width": "70%"},
-                                            children=[
-                                                dmc.Center(
-                                                    dmc.Text(
-                                                        "Select brain structure(s)",
-                                                        size="xl",
-                                                        color="white",
-                                                    )
-                                                ),
-                                                dcc.Graph(
-                                                    id="page-4-graph-region-selection",
-                                                    config=basic_config,
-                                                    style={
-                                                        # "height": "100%",
-                                                        # "position": "absolute",
-                                                        # "left": "0",
-                                                    },
-                                                    figure=return_pickled_object(
-                                                        "figures/atlas_page/3D",
-                                                        "treemaps",
-                                                        force_update=True,
-                                                        compute_function=figures.compute_treemaps_figure,
-                                                    ),
-                                                ),
-                                            ],
-                                        ),
-                                        dmc.Group(
-                                            direction="column",
-                                            style={"display": "inline-block", "width": "30%"},
-                                            align="center",
-                                            class_name="ml-5",
-                                            children=[
-                                                dmc.Center(
-                                                    dmc.Text(
-                                                        "Select lipid(s)",
-                                                        size="xl",
-                                                        class_name="mb-5 pb-5 ",
-                                                        color="white",
-                                                    )
-                                                ),
-                                                # dbc.Tooltip(
-                                                #     children="Please select the lipids of your choice (up to three):",
-                                                #     target="page-4-card-lipid-selection",
-                                                #     placement="left",
-                                                # ),
-                                                dmc.Select(
-                                                    label="Select lipid category:",
-                                                    placeholder="Select lipid cat",
-                                                    id="page-4-dropdown-lipid-names",
-                                                    data=[],
-                                                    searchable=True,
-                                                    nothingFound="No lipid found",
-                                                    radius="md",
-                                                    clearable=True,
-                                                    size="xs",
-                                                    transitionDuration=150,
-                                                    transition="pop-top-left",
-                                                    transitionTimingFunction="ease",
-                                                ),
-                                                dmc.Select(
-                                                    label="Select lipid structure:",
-                                                    placeholder="Select lipid struc",
-                                                    id="page-4-dropdown-lipid-structures",
-                                                    data=[],
-                                                    searchable=True,
-                                                    clearable=True,
-                                                    nothingFound="No lipid found",
-                                                    radius="md",
-                                                    size="xs",
-                                                    transitionDuration=150,
-                                                    transition="pop-top-left",
-                                                    transitionTimingFunction="ease",
-                                                ),
-                                                dmc.Select(
-                                                    label="Select lipid cation:",
-                                                    placeholder="Select lipid cat",
-                                                    id="page-4-dropdown-lipid-cations",
-                                                    data=[],
-                                                    clearable=True,
-                                                    searchable=True,
-                                                    nothingFound="No lipid found",
-                                                    radius="md",
-                                                    size="xs",
-                                                    transitionDuration=150,
-                                                    transition="pop-top-left",
-                                                    transitionTimingFunction="ease",
-                                                ),
-                                            ],
-                                        ),
-                                    ],
-                                ),
-                                html.Div(
-                                    # className="d-flex justify-content-around",
-                                    children=[
-                                        html.Div(
-                                            style={
-                                                "width": "calc(70% - 1.75rem)",
-                                                "display": "inline-block",
-                                            },
-                                            children=[
-                                                dmc.Button(
-                                                    children="Please choose a structure above",
-                                                    id="page-4-add-structure-button",
-                                                    disabled=True,
-                                                    variant="filled",
-                                                    radius="md",
-                                                    size="xs",
-                                                    color="cyan",
-                                                    compact=False,
-                                                    loading=False,
-                                                    fullWidth=True,
-                                                    class_name="mr-5",
-                                                ),
-                                                dmc.Button(
-                                                    children="Display lipid expression in the selected structure(s)",
-                                                    id="page-4-display-button",
-                                                    disabled=True,
-                                                    variant="filled",
-                                                    radius="md",
-                                                    size="xs",
-                                                    color="cyan",
-                                                    compact=False,
-                                                    loading=False,
-                                                    fullWidth=True,
-                                                    class_name="mr-5 mt-1",
-                                                ),
-                                            ],
-                                        ),
-                                        html.Div(
-                                            style={
-                                                "width": "calc(30% - 1.25rem)",
-                                                "display": "inline-block",
-                                            },
-                                            children=[
-                                                dmc.Button(
-                                                    children="Please choose a lipid above",
-                                                    id="page-4-add-lipid-button",
-                                                    disabled=True,
-                                                    variant="filled",
-                                                    radius="md",
-                                                    color="cyan",
-                                                    size="xs",
-                                                    compact=False,
-                                                    loading=False,
-                                                    fullWidth=True,
-                                                    class_name="ml-5",
-                                                ),
-                                                dmc.Button(
-                                                    children="Compare lipid expression in the selected structures",
-                                                    id="page-4-compare-structure-button",
-                                                    disabled=True,
-                                                    variant="filled",
-                                                    radius="md",
-                                                    size="xs",
-                                                    color="cyan",
-                                                    compact=False,
-                                                    loading=False,
-                                                    fullWidth=True,
-                                                    class_name="ml-5 mt-1",
-                                                ),
-                                            ],
-                                        ),
-                                    ],
-                                ),
-                            ],
-                        ),
+        children=[
+            # html.Div(className="mt-3"),
+            dash_draggable.ResponsiveGridLayout(
+                id="draggable",
+                clearSavedLayout=True,
+                isDraggable=False,
+                isResizable=False,
+                containerPadding=[2, 2],
+                breakpoints={"xxl": 1600, "lg": 1200, "md": 996, "sm": 768, "xs": 480, "xxs": 0,},
+                gridCols={"xxl": 12, "lg": 12, "md": 10, "sm": 6, "xs": 4, "xxs": 2,},
+                style={"background-color": "#1d1c1f",},
+                layouts={
+                    # x sets the lateral position, y the vertical one, w is in columns (whose size depends on the dimension), h is in rows (30px)
+                    # nb columns go 12->12->10->6->4->2
+                    "xxl": [
+                        {"i": "page-4-card-region-selection", "x": 3, "y": 0, "w": 6, "h": 16},
+                        {"i": "page-4-card-lipid-selection", "x": 3, "y": 16, "w": 6, "h": 10},
                     ],
-                ),
-                dbc.Card(
-                    style={
-                        "maxWidth": "100%",
-                        "margin": "0 auto",
-                        "width": "100%",
-                        "height": "100%",
-                    },
-                    id="page-4-card-lipid-selection",
-                    children=[
-                        # dbc.CardHeader(
-                        #     children="",  # "Current selection",
-                        #     style={"background-color": "#1d1c1f", "color": "white",},
-                        # ),
-                        dbc.CardBody(
-                            style={"background-color": "#1d1c1f"},
-                            className="pt-1",
-                            children=[
-                                dmc.Group(
-                                    direction="row",
-                                    grow=True,
-                                    align="flex-start",
-                                    children=[
-                                        dmc.Group(
-                                            direction="column",
-                                            grow=True,
-                                            class_name="ml-5",
-                                            children=[
-                                                dmc.Center(
-                                                    class_name="w-100",
-                                                    children=dmc.Text(
-                                                        "Brain structure selection",
-                                                        size="xl",
-                                                        color="white",
+                    "lg": [
+                        {"i": "page-4-card-region-selection", "x": 0, "y": 0, "w": 12, "h": 15},
+                        {"i": "page-4-card-lipid-selection", "x": 0, "y": 14, "w": 12, "h": 10},
+                    ],
+                    "md": [
+                        {"i": "page-4-card-region-selection", "x": 0, "y": 0, "w": 7, "h": 14},
+                        {"i": "page-4-card-lipid-selection", "x": 6, "y": 0, "w": 3, "h": 12},
+                    ],
+                    "sm": [
+                        {"i": "page-4-card-region-selection", "x": 0, "y": 0, "w": 6, "h": 19},
+                        {"i": "page-4-card-lipid-selection", "x": 0, "y": 19, "w": 6, "h": 11},
+                    ],
+                    "xs": [
+                        {"i": "page-4-card-region-selection", "x": 0, "y": 0, "w": 4, "h": 14},
+                        {"i": "page-4-card-lipid-selection", "x": 0, "y": 0, "w": 4, "h": 11},
+                    ],
+                    "xxs": [
+                        {"i": "page-4-card-region-selection", "x": 0, "y": 0, "w": 2, "h": 9},
+                        {"i": "page-4-card-lipid-selection", "x": 0, "y": 0, "w": 2, "h": 10},
+                    ],
+                },
+                children=[
+                    dbc.Card(
+                        id="page-4-card-region-selection",
+                        style={"width": "100%", "height": "100%", "background-color": "#1d1c1f"},
+                        children=[
+                            # dbc.CardHeader(
+                            #     children="",  # "Structure selection",
+                            #     style={"background-color": "#1d1c1f", "color": "white",},
+                            # ),
+                            dbc.CardBody(
+                                className="h-100",
+                                style={"background-color": "#1d1c1f"},
+                                children=[
+                                    html.Div(
+                                        className="d-flex",
+                                        children=[
+                                            html.Div(
+                                                style={"display": "inline-block", "width": "70%"},
+                                                children=[
+                                                    dmc.Center(
+                                                        dmc.Text(
+                                                            "Select brain structure(s)",
+                                                            size="xl",
+                                                            color="white",
+                                                        )
                                                     ),
-                                                ),
-                                                dbc.Toast(
-                                                    id="page-4-toast-region-1",
-                                                    header="name-region-1",
-                                                    # icon="primary",
-                                                    dismissable=True,
-                                                    is_open=False,
-                                                    bodyClassName="p-0",
-                                                    header_class_name="d-flex justify-content-center ml-2",
-                                                    className="mt-1",
-                                                    style={"margin": "auto"},
-                                                ),
-                                                dbc.Toast(
-                                                    id="page-4-toast-region-2",
-                                                    header="name-region-2",
-                                                    # icon="primary",
-                                                    dismissable=True,
-                                                    is_open=False,
-                                                    bodyClassName="p-0",
-                                                    header_class_name="d-flex justify-content-center ml-2",
-                                                    className="mt-1",
-                                                    style={"margin": "auto"},
-                                                ),
-                                                dbc.Toast(
-                                                    id="page-4-toast-region-3",
-                                                    header="name-region-3",
-                                                    # icon="primary",
-                                                    dismissable=True,
-                                                    is_open=False,
-                                                    header_class_name="d-flex justify-content-center ml-2",
-                                                    bodyClassName="p-0",
-                                                    className="mt-1",
-                                                    style={"margin": "auto"},
-                                                ),
-                                            ],
-                                        ),
-                                        dmc.Group(
-                                            direction="column",
-                                            # align="flex-start",
-                                            # class_name="w-50",
-                                            grow=True,
-                                            class_name="ml-5",
-                                            children=[
-                                                dmc.Center(
-                                                    class_name="w-100",
-                                                    children=dmc.Text(
-                                                        "Lipid selection", size="xl", color="white",
+                                                    dcc.Graph(
+                                                        id="page-4-graph-region-selection",
+                                                        config=basic_config,
+                                                        style={
+                                                            # "height": "100%",
+                                                            # "position": "absolute",
+                                                            # "left": "0",
+                                                        },
+                                                        figure=return_pickled_object(
+                                                            "figures/atlas_page/3D",
+                                                            "treemaps",
+                                                            force_update=True,
+                                                            compute_function=figures.compute_treemaps_figure,
+                                                        ),
                                                     ),
-                                                ),
-                                                dbc.Toast(
-                                                    id="page-4-toast-lipid-1",
-                                                    header="name-lipid-1",
-                                                    # icon="primary",
-                                                    dismissable=True,
-                                                    is_open=False,
-                                                    bodyClassName="p-0",
-                                                    header_class_name="d-flex justify-content-center ml-2",
-                                                    className="mt-1",
-                                                    style={"margin": "auto"},
-                                                ),
-                                                dbc.Toast(
-                                                    id="page-4-toast-lipid-2",
-                                                    header="name-lipid-2",
-                                                    # icon="primary",
-                                                    dismissable=True,
-                                                    is_open=False,
-                                                    bodyClassName="p-0",
-                                                    header_class_name="d-flex justify-content-center ml-2",
-                                                    className="mt-1",
-                                                    style={"margin": "auto"},
-                                                ),
-                                                dbc.Toast(
-                                                    id="page-4-toast-lipid-3",
-                                                    header="name-lipid-3",
-                                                    # icon="primary",
-                                                    dismissable=True,
-                                                    header_class_name="d-flex justify-content-center ml-2",
-                                                    is_open=False,
-                                                    bodyClassName="p-0",
-                                                    className="mt-1",
-                                                    style={"margin": "auto",},
-                                                ),
-                                                # html.Div(
-                                                #     id="page-4-warning-lipids-number",
-                                                #     className="text-center mt-1",
-                                                #     children=html.Strong(
-                                                #         children="Please delete some lipids to choose new ones.",
-                                                #         style={"color": "#df5034"},
-                                                #     ),
-                                                # ),
-                                            ],
-                                        ),
-                                    ],
-                                ),
-                            ],
-                        ),
-                        dbc.Modal(
-                            id="page-4-modal-volume",
-                            is_open=False,
-                            size="xl",
-                            children=[
-                                dbc.ModalHeader(
-                                    style={"background-color": "#1d1c1f",},
-                                    children=dbc.ModalTitle(
-                                        "Lipid selection interpolated in 3D",
-                                        style={"color": "white"},
+                                                ],
+                                            ),
+                                            dmc.Group(
+                                                direction="column",
+                                                style={"display": "inline-block", "width": "30%"},
+                                                align="center",
+                                                class_name="ml-5",
+                                                children=[
+                                                    dmc.Center(
+                                                        dmc.Text(
+                                                            "Select lipid(s)",
+                                                            size="xl",
+                                                            class_name="mb-5 pb-5 ",
+                                                            color="white",
+                                                        )
+                                                    ),
+                                                    # dbc.Tooltip(
+                                                    #     children="Please select the lipids of your choice (up to three):",
+                                                    #     target="page-4-card-lipid-selection",
+                                                    #     placement="left",
+                                                    # ),
+                                                    dmc.Select(
+                                                        label="Select lipid category:",
+                                                        placeholder="Select lipid cat",
+                                                        id="page-4-dropdown-lipid-names",
+                                                        data=[],
+                                                        searchable=True,
+                                                        nothingFound="No lipid found",
+                                                        radius="md",
+                                                        clearable=True,
+                                                        size="xs",
+                                                        transitionDuration=150,
+                                                        transition="pop-top-left",
+                                                        transitionTimingFunction="ease",
+                                                    ),
+                                                    dmc.Select(
+                                                        label="Select lipid structure:",
+                                                        placeholder="Select lipid struc",
+                                                        id="page-4-dropdown-lipid-structures",
+                                                        data=[],
+                                                        searchable=True,
+                                                        clearable=True,
+                                                        nothingFound="No lipid found",
+                                                        radius="md",
+                                                        size="xs",
+                                                        transitionDuration=150,
+                                                        transition="pop-top-left",
+                                                        transitionTimingFunction="ease",
+                                                    ),
+                                                    dmc.Select(
+                                                        label="Select lipid cation:",
+                                                        placeholder="Select lipid cat",
+                                                        id="page-4-dropdown-lipid-cations",
+                                                        data=[],
+                                                        clearable=True,
+                                                        searchable=True,
+                                                        nothingFound="No lipid found",
+                                                        radius="md",
+                                                        size="xs",
+                                                        transitionDuration=150,
+                                                        transition="pop-top-left",
+                                                        transitionTimingFunction="ease",
+                                                    ),
+                                                ],
+                                            ),
+                                        ],
                                     ),
-                                ),
-                                dbc.ModalBody(
-                                    style={"background-color": "#1d1c1f",},
-                                    children=[
-                                        dbc.Spinner(
-                                            color="light",
-                                            show_initially=False,
-                                            children=[
-                                                html.Div(
-                                                    className="page-1-fixed-aspect-ratio",
-                                                    children=[
-                                                        html.Div(
-                                                            id="page-4-alert",
-                                                            className="text-center my-2",
-                                                            children=html.Strong(
-                                                                children="Please select at least one lipid.",
-                                                                style={"color": "#df5034"},
+                                    html.Div(
+                                        # className="d-flex justify-content-around",
+                                        children=[
+                                            html.Div(
+                                                style={
+                                                    "width": "calc(70% - 1.75rem)",
+                                                    "display": "inline-block",
+                                                },
+                                                children=[
+                                                    dmc.Button(
+                                                        children="Please choose a structure above",
+                                                        id="page-4-add-structure-button",
+                                                        disabled=True,
+                                                        variant="filled",
+                                                        radius="md",
+                                                        size="xs",
+                                                        color="cyan",
+                                                        compact=False,
+                                                        loading=False,
+                                                        fullWidth=True,
+                                                        class_name="mr-5",
+                                                    ),
+                                                    dmc.Button(
+                                                        children="Display lipid expression in the selected structure(s)",
+                                                        id="page-4-display-button",
+                                                        disabled=True,
+                                                        variant="filled",
+                                                        radius="md",
+                                                        size="xs",
+                                                        color="cyan",
+                                                        compact=False,
+                                                        loading=False,
+                                                        fullWidth=True,
+                                                        class_name="mr-5 mt-1",
+                                                    ),
+                                                ],
+                                            ),
+                                            html.Div(
+                                                style={
+                                                    "width": "calc(30% - 1.25rem)",
+                                                    "display": "inline-block",
+                                                },
+                                                children=[
+                                                    dmc.Button(
+                                                        children="Please choose a lipid above",
+                                                        id="page-4-add-lipid-button",
+                                                        disabled=True,
+                                                        variant="filled",
+                                                        radius="md",
+                                                        color="cyan",
+                                                        size="xs",
+                                                        compact=False,
+                                                        loading=False,
+                                                        fullWidth=True,
+                                                        class_name="ml-5",
+                                                    ),
+                                                    dmc.Button(
+                                                        children="Compare lipid expression in the selected structures",
+                                                        id="page-4-compare-structure-button",
+                                                        disabled=True,
+                                                        variant="filled",
+                                                        radius="md",
+                                                        size="xs",
+                                                        color="cyan",
+                                                        compact=False,
+                                                        loading=False,
+                                                        fullWidth=True,
+                                                        class_name="ml-5 mt-1",
+                                                    ),
+                                                ],
+                                            ),
+                                        ],
+                                    ),
+                                ],
+                            ),
+                        ],
+                    ),
+                    dbc.Card(
+                        style={
+                            "maxWidth": "100%",
+                            "margin": "0 auto",
+                            "width": "100%",
+                            "height": "100%",
+                        },
+                        id="page-4-card-lipid-selection",
+                        children=[
+                            # dbc.CardHeader(
+                            #     children="",  # "Current selection",
+                            #     style={"background-color": "#1d1c1f", "color": "white",},
+                            # ),
+                            dbc.CardBody(
+                                style={"background-color": "#1d1c1f"},
+                                className="pt-1",
+                                children=[
+                                    dmc.Group(
+                                        direction="row",
+                                        grow=True,
+                                        align="flex-start",
+                                        children=[
+                                            dmc.Group(
+                                                direction="column",
+                                                grow=True,
+                                                class_name="ml-5",
+                                                children=[
+                                                    dmc.Center(
+                                                        class_name="w-100",
+                                                        children=dmc.Text(
+                                                            "Brain structure selection",
+                                                            size="xl",
+                                                            color="white",
+                                                        ),
+                                                    ),
+                                                    dbc.Toast(
+                                                        id="page-4-toast-region-1",
+                                                        header="name-region-1",
+                                                        # icon="primary",
+                                                        dismissable=True,
+                                                        is_open=False,
+                                                        bodyClassName="p-0",
+                                                        header_class_name="d-flex justify-content-center ml-2",
+                                                        # className="mt-1",
+                                                        style={"margin": "auto"},
+                                                    ),
+                                                    dbc.Toast(
+                                                        id="page-4-toast-region-2",
+                                                        header="name-region-2",
+                                                        # icon="primary",
+                                                        dismissable=True,
+                                                        is_open=False,
+                                                        bodyClassName="p-0",
+                                                        header_class_name="d-flex justify-content-center ml-2",
+                                                        # className="mt-1",
+                                                        style={"margin": "auto"},
+                                                    ),
+                                                    dbc.Toast(
+                                                        id="page-4-toast-region-3",
+                                                        header="name-region-3",
+                                                        # icon="primary",
+                                                        dismissable=True,
+                                                        is_open=False,
+                                                        header_class_name="d-flex justify-content-center ml-2",
+                                                        bodyClassName="p-0",
+                                                        # className="mt-1",
+                                                        style={"margin": "auto"},
+                                                    ),
+                                                ],
+                                            ),
+                                            dmc.Group(
+                                                direction="column",
+                                                # align="flex-start",
+                                                # class_name="w-50",
+                                                grow=True,
+                                                class_name="ml-5",
+                                                children=[
+                                                    dmc.Center(
+                                                        class_name="w-100",
+                                                        children=dmc.Text(
+                                                            "Lipid selection",
+                                                            size="xl",
+                                                            color="white",
+                                                        ),
+                                                    ),
+                                                    dbc.Toast(
+                                                        id="page-4-toast-lipid-1",
+                                                        header="name-lipid-1",
+                                                        # icon="primary",
+                                                        dismissable=True,
+                                                        is_open=False,
+                                                        bodyClassName="p-0",
+                                                        header_class_name="d-flex justify-content-center ml-2",
+                                                        # className="mt-1",
+                                                        style={"margin": "auto"},
+                                                    ),
+                                                    dbc.Toast(
+                                                        id="page-4-toast-lipid-2",
+                                                        header="name-lipid-2",
+                                                        # icon="primary",
+                                                        dismissable=True,
+                                                        is_open=False,
+                                                        bodyClassName="p-0",
+                                                        header_class_name="d-flex justify-content-center ml-2",
+                                                        # className="mt-1",
+                                                        style={"margin": "auto"},
+                                                    ),
+                                                    dbc.Toast(
+                                                        id="page-4-toast-lipid-3",
+                                                        header="name-lipid-3",
+                                                        # icon="primary",
+                                                        dismissable=True,
+                                                        header_class_name="d-flex justify-content-center ml-2",
+                                                        is_open=False,
+                                                        bodyClassName="p-0",
+                                                        # className="mt-1",
+                                                        style={"margin": "auto",},
+                                                    ),
+                                                    # html.Div(
+                                                    #     id="page-4-warning-lipids-number",
+                                                    #     className="text-center mt-1",
+                                                    #     children=html.Strong(
+                                                    #         children="Please delete some lipids to choose new ones.",
+                                                    #         style={"color": "#df5034"},
+                                                    #     ),
+                                                    # ),
+                                                ],
+                                            ),
+                                        ],
+                                    ),
+                                ],
+                            ),
+                            dbc.Modal(
+                                id="page-4-modal-volume",
+                                is_open=False,
+                                size="xl",
+                                children=[
+                                    dbc.ModalHeader(
+                                        style={"background-color": "#1d1c1f",},
+                                        children=dbc.ModalTitle(
+                                            "Lipid selection interpolated in 3D",
+                                            style={"color": "white"},
+                                        ),
+                                    ),
+                                    dbc.ModalBody(
+                                        style={"background-color": "#1d1c1f",},
+                                        children=[
+                                            dbc.Spinner(
+                                                color="light",
+                                                show_initially=False,
+                                                children=[
+                                                    html.Div(
+                                                        className="page-1-fixed-aspect-ratio",
+                                                        children=[
+                                                            html.Div(
+                                                                id="page-4-alert",
+                                                                className="text-center my-2",
+                                                                children=html.Strong(
+                                                                    children="Please select at least one lipid.",
+                                                                    style={"color": "#df5034"},
+                                                                ),
                                                             ),
-                                                        ),
-                                                        dcc.Graph(
-                                                            id="page-4-graph-volume",
-                                                            config=basic_config
-                                                            | {
-                                                                "toImageButtonOptions": {
-                                                                    "format": "png",
-                                                                    "filename": "brain_lipid_selection",
-                                                                    "scale": 2,
-                                                                }
-                                                            },
-                                                            style={
-                                                                "width": "100%",
-                                                                "height": "100%",
-                                                                "position": "absolute",
-                                                                "left": "0",
-                                                            },
-                                                        ),
-                                                    ],
-                                                ),
-                                            ],
-                                        ),
-                                    ],
-                                ),
-                            ],
-                        ),
-                        dbc.Modal(
-                            id="page-4-modal-heatmap",
-                            is_open=False,
-                            size="xl",
-                            children=[
-                                dbc.ModalHeader(
-                                    style={"background-color": "#1d1c1f",},
-                                    children=dbc.ModalTitle(
-                                        "Lipid expression comparison", style={"color": "white"},
+                                                            dcc.Graph(
+                                                                id="page-4-graph-volume",
+                                                                config=basic_config
+                                                                | {
+                                                                    "toImageButtonOptions": {
+                                                                        "format": "png",
+                                                                        "filename": "brain_lipid_selection",
+                                                                        "scale": 2,
+                                                                    }
+                                                                },
+                                                                style={
+                                                                    "width": "100%",
+                                                                    "height": "100%",
+                                                                    "position": "absolute",
+                                                                    "left": "0",
+                                                                },
+                                                            ),
+                                                        ],
+                                                    ),
+                                                ],
+                                            ),
+                                        ],
                                     ),
-                                ),
-                                dbc.ModalBody(
-                                    className="d-flex justify-content-center flex-column",
-                                    style={"background-color": "#1d1c1f",},
-                                    children=[
-                                        # dbc.CardHeader(className="d-flex", children="Lipid expression comparison",),
-                                        # dbc.CardBody(
-                                        #    className="py-0 mb-0 mt-2",
-                                        #    children=[
-                                        # dmc.RingProgress(
-                                        #     id="page-4-progress-bar-structure",
-                                        #     size=200,
-                                        #     thickness=12,
-                                        #     label="Loading data...",
-                                        #     sections=[{"value": 0, "color": "red"},],
-                                        # ),
-                                        dbc.Progress(
-                                            id="page-4-progress-bar-structure",
-                                            style={"width ": "100%"},
-                                            color="#ced4da",
+                                ],
+                            ),
+                            dbc.Modal(
+                                id="page-4-modal-heatmap",
+                                is_open=False,
+                                scrollable=False,
+                                size="xl",
+                                style={
+                                    "maxWidth": "100%",
+                                    "margin": "0 auto",
+                                    "width": "100%",
+                                    "height": "100%",
+                                },
+                                children=[
+                                    dbc.ModalHeader(
+                                        style={"background-color": "#1d1c1f",},
+                                        children=dbc.ModalTitle(
+                                            "Lipid expression comparison", style={"color": "white"},
                                         ),
-                                        dcc.Slider(
-                                            id="page-4-slider-percentile",
-                                            min=0,
-                                            max=99,
-                                            value=80,
-                                            marks={
-                                                0: {"label": "No filtering"},
-                                                25: {"label": "25%"},
-                                                50: {"label": "50%"},
-                                                75: {"label": "75%"},
-                                                99: {"label": "99%", "style": {"color": "#f50"}},
-                                            },
-                                        ),
-                                        # dbc.Spinner(
-                                        #     color="dark",
-                                        #     show_initially=False,
-                                        #     children=[
-                                        html.Div(
-                                            # className="page-1-fixed-aspect-ratio",
-                                            className="d-flex justify-content-center",
-                                            children=[
-                                                dcc.Graph(
-                                                    id="page-4-graph-heatmap",
-                                                    config=basic_config
-                                                    | {
-                                                        "toImageButtonOptions": {
-                                                            "format": "png",
-                                                            "filename": "brain_lipid_selection",
-                                                            "scale": 2,
-                                                        }
+                                    ),
+                                    dbc.ModalBody(
+                                        className="d-flex justify-content-center flex-column",
+                                        style={"background-color": "#1d1c1f",},
+                                        children=[
+                                            # dbc.CardHeader(className="d-flex", children="Lipid expression comparison",),
+                                            # dbc.CardBody(
+                                            #    className="py-0 mb-0 mt-2",
+                                            #    children=[
+                                            # dmc.RingProgress(
+                                            #     id="page-4-progress-bar-structure",
+                                            #     size=200,
+                                            #     thickness=12,
+                                            #     label="Loading data...",
+                                            #     sections=[{"value": 0, "color": "red"},],
+                                            # ),
+                                            dbc.Progress(
+                                                id="page-4-progress-bar-structure",
+                                                style={"width ": "100%"},
+                                                color="#ced4da",
+                                            ),
+                                            dcc.Slider(
+                                                id="page-4-slider-percentile",
+                                                min=0,
+                                                max=99,
+                                                value=80,
+                                                marks={
+                                                    0: {"label": "No filtering"},
+                                                    25: {"label": "25%"},
+                                                    50: {"label": "50%"},
+                                                    75: {"label": "75%"},
+                                                    99: {
+                                                        "label": "99%",
+                                                        "style": {"color": "#f50"},
                                                     },
-                                                    # style={
-                                                    # "width": "100%",
-                                                    # "height": "100%",
-                                                    # "margin": "auto",
-                                                    #    "position": "absolute",
-                                                    #    "left": "0",
-                                                    # },
-                                                ),
-                                            ],
-                                        ),
-                                    ],
-                                ),
-                            ],
-                        ),
-                    ],
-                ),
-            ],
-        ),
+                                                },
+                                            ),
+                                            # dbc.Spinner(
+                                            #     color="dark",
+                                            #     show_initially=False,
+                                            #     children=[
+                                            html.Div(
+                                                # className="page-1-fixed-aspect-ratio",
+                                                className="d-flex justify-content-center",
+                                                style={"margin-top": "-5rem"},
+                                                children=[
+                                                    dcc.Graph(
+                                                        id="page-4-graph-heatmap",
+                                                        config=basic_config
+                                                        | {
+                                                            "toImageButtonOptions": {
+                                                                "format": "png",
+                                                                "filename": "brain_lipid_selection",
+                                                                "scale": 2,
+                                                            }
+                                                        },
+                                                        style={
+                                                            # "width": "100%",
+                                                            "height": "100%",
+                                                            # "margin": "auto",
+                                                            #    "position": "absolute",
+                                                            #    "left": "0",
+                                                        },
+                                                    ),
+                                                ],
+                                            ),
+                                        ],
+                                    ),
+                                ],
+                            ),
+                        ],
+                    ),
+                ],
+            ),
+        ],
     )
     return page
 
@@ -1194,7 +1210,7 @@ def tab_2_active_display(
             np.sum(l_lipid_1_index + l_lipid_2_index + l_lipid_3_index)
             > -3 * app.data.get_slice_number()
         ):
-            return False, False
+            return True, False
 
         else:
             return True, True
