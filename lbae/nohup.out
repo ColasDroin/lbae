@@ -2274,3 +2274,350 @@ url pathname 18 None None /3D-exploration [] False
 2022-03-24 13:58:09.345 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
 2022-03-24 13:58:09.501 INFO misc - convert_image_to_base64: Image has been converted to base64. Returning it now.
 2022-03-24 13:58:09.530 INFO misc - return_pickled_object: figure_basic_image_projection_corrected_16_True.pickle being returned now from computation.
+2022-03-29 10:09:46.556 INFO index - render_page_content: Page/region-analysishas been selected	MemTotal: 2063.2421875
+2022-03-29 10:09:46.557 INFO misc - return_pickled_object: Returning figure_basic_image_projection_corrected_0_False_True.pickle from pickled file.	MemTotal: 2063.2421875
+2022-03-29 10:09:47.289 INFO index - render_page_content: Page/region-analysishas been selected	MemTotal: 2085.375
+2022-03-29 10:09:47.290 INFO misc - return_pickled_object: Returning figure_basic_image_projection_corrected_0_False_True.pickle from pickled file.	MemTotal: 2085.375
+2022-03-29 10:09:47.932 INFO misc - return_pickled_object: Returning figure_basic_image_projection_corrected_0_False.pickle from pickled file.	MemTotal: 2085.390625
+2022-03-29 10:09:47.938 INFO region_analysis - page_3_record_spectra: Starting to compute spectrum
+2022-03-29 10:09:47.939 DEBUG filesystemcache - delete: deleted key 'pages.region_analysis.global_spectrum_store_memver'
+2022-03-29 10:09:47.939 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-03-29 10:09:47.940 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-03-29 10:09:47.940 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> miss (expired)
+2022-03-29 10:09:47.940 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-03-29 10:09:47.940 DEBUG filesystemcache - set: set key 'pages.region_analysis.global_spectrum_store_memver'
+2022-03-29 10:09:47.940 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-03-29 10:09:47.941 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-03-29 10:09:47.941 DEBUG filesystemcache - get: get key 'qcrHrJ51w4U4ztl93YJXX9' -> miss 
+2022-03-29 10:09:47.941 INFO region_analysis - global_spectrum_store: Computing spectra now
+2022-03-29 10:09:47.941 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-03-29 10:09:47.941 DEBUG filesystemcache - set: set key 'qcrHrJ51w4U4ztl93YJXX9'
+2022-03-29 10:09:47.941 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-03-29 10:09:47.942 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-03-29 10:09:47.942 WARNING region_analysis - page_3_record_spectra: A bug appeared during spectrum computation
+2022-03-29 10:09:48.080 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Starting computing heatmap now
+2022-03-29 10:09:49.785 INFO index - render_page_content: Page/load-slicehas been selected	MemTotal: 2085.390625
+2022-03-29 10:09:49.786 INFO misc - return_pickled_object: Returning figure_basic_image_projection_corrected_0_False.pickle from pickled file.	MemTotal: 2085.390625
+2022-03-29 10:09:49.815 INFO misc - return_pickled_object: Returning figure_basic_image_projection_corrected_0_False_True.pickle from pickled file.	MemTotal: 2063.2421875
+2022-03-29 10:09:49.828 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Starting computing heatmap now
+2022-03-29 10:09:49.940 INFO load_slice - tab_1_load_image: Slider changed to value 1
+2022-03-29 10:09:51.871 INFO load_slice - tab_1_load_image: Slider changed to value 4
+2022-03-29 10:09:51.871 INFO misc - return_pickled_object: Returning figure_basic_image_projection_corrected_3_False.pickle from pickled file.	MemTotal: 2063.2421875
+2022-03-29 10:09:52.337 INFO load_slice - tab_1_load_image: Slider changed to value 8
+2022-03-29 10:09:52.339 INFO misc - return_pickled_object: Returning figure_basic_image_projection_corrected_7_False.pickle from pickled file.	MemTotal: 2063.2421875
+2022-03-29 10:09:52.872 INFO load_slice - tab_1_load_image: Slider changed to value 12
+2022-03-29 10:09:52.872 INFO misc - return_pickled_object: Returning figure_basic_image_projection_corrected_11_False.pickle from pickled file.	MemTotal: 2085.390625
+2022-03-29 10:09:54.269 INFO load_slice - tab_1_load_image: Slider changed to value 14
+2022-03-29 10:09:54.270 INFO misc - return_pickled_object: Returning figure_basic_image_projection_corrected_13_False.pickle from pickled file.	MemTotal: 2085.4609375
+2022-03-29 10:09:56.700 INFO misc - return_pickled_object: Returning slices_3D.pickle from pickled file.	MemTotal: 2063.2421875
+2022-03-29 10:10:02.451 INFO load_slice - tab_1_load_image: Slider changed to value 14
+2022-03-29 10:10:02.453 INFO misc - return_pickled_object: Returning figure_basic_image_atlas_13_False.pickle from pickled file.	MemTotal: 2063.2421875
+2022-03-29 10:10:03.653 INFO load_slice - tab_1_load_image: Slider changed to value 14
+2022-03-29 10:10:03.654 INFO misc - return_pickled_object: Returning figure_basic_image_projection_corrected_13_False.pickle from pickled file.	MemTotal: 2063.2421875
+2022-03-29 10:10:06.085 INFO load_slice - tab_1_load_image: Slider changed to value 14
+2022-03-29 10:10:06.086 INFO misc - return_pickled_object: figure_basic_image_projection_corrected_13_True.pickle could not be found or force_update is True. Computing the object and pickling it now.
+2022-03-29 10:10:06.086 INFO misc - return_pickled_object: Returning array_basic_images_projection_corrected.pickle from pickled file.	MemTotal: 2085.4609375
+2022-03-29 10:10:06.168 INFO misc - return_pickled_object: Returning list_projected_atlas_borders_arrays.pickle from pickled file.	MemTotal: 2159.234375
+2022-03-29 10:10:06.380 INFO misc - convert_image_to_base64: Entering string conversion function
+2022-03-29 10:10:06.397 INFO misc - convert_image_to_base64: Image has been converted from array to PIL image
+2022-03-29 10:10:06.408 INFO misc - convert_image_to_base64: Overlay has been added to the image
+2022-03-29 10:10:06.457 INFO misc - convert_image_to_base64: Empty pixels are now transparent
+2022-03-29 10:10:06.476 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-03-29 10:10:06.703 INFO misc - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-03-29 10:10:06.733 INFO misc - return_pickled_object: figure_basic_image_projection_corrected_13_True.pickle being returned now from computation.
+2022-03-29 10:10:06.751 INFO load_slice - tab_1_load_image: Slider changed to value 14
+2022-03-29 10:10:06.752 INFO misc - return_pickled_object: Returning figure_basic_image_projection_corrected_13_False.pickle from pickled file.	MemTotal: 2063.2421875
+2022-03-29 10:10:09.573 INFO index - render_page_content: Page/lipid-selectionhas been selected	MemTotal: 2063.2421875
+2022-03-29 10:10:09.573 INFO figures - compute_heatmap_per_mz: Starting figure computation, from mz boundaries
+2022-03-29 10:10:09.573 INFO figures - compute_heatmap_per_mz: Getting image array
+2022-03-29 10:10:09.573 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-03-29 10:10:09.658 INFO figures - compute_heatmap_per_mz: Done getting image array. Cleaning memory
+2022-03-29 10:10:09.666 INFO figures - compute_heatmap_per_mz: Memory cleaned
+2022-03-29 10:10:09.668 INFO figures - compute_heatmap_per_mz: Converting image to string
+2022-03-29 10:10:09.668 INFO misc - convert_image_to_base64: Entering string conversion function
+2022-03-29 10:10:09.733 INFO misc - convert_image_to_base64: Image has been converted from array to PIL image
+2022-03-29 10:10:09.810 INFO misc - convert_image_to_base64: Empty pixels are now transparent
+2022-03-29 10:10:09.829 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-03-29 10:10:09.882 INFO misc - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-03-29 10:10:09.882 INFO figures - compute_heatmap_per_mz: Adding image to figure
+2022-03-29 10:10:09.891 INFO figures - compute_heatmap_per_mz: Returning figure
+2022-03-29 10:10:09.892 INFO misc - return_pickled_object: Returning lipid_options.pickle from pickled file.	MemTotal: 2063.2421875
+2022-03-29 10:10:10.118 INFO lipid_selection - page_2_add_toast_selection: Entering function to update lipid data
+2022-03-29 10:10:10.197 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-03-29 10:10:11.474 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-03-29 10:10:11.986 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-03-29 10:10:13.257 INFO lipid_selection - page_2_add_toast_selection: Entering function to update lipid data
+2022-03-29 10:10:13.257 INFO lipid_selection - page_2_add_toast_selection: Returning updated lipid data
+2022-03-29 10:10:13.339 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-03-29 10:10:13.339 INFO figures - compute_heatmap_per_mz: Starting figure computation, from mz boundaries
+2022-03-29 10:10:13.339 INFO figures - compute_heatmap_per_mz: Getting image array
+2022-03-29 10:10:13.339 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-03-29 10:10:13.433 INFO figures - compute_heatmap_per_mz: Done getting image array. Cleaning memory
+2022-03-29 10:10:13.439 INFO figures - compute_heatmap_per_mz: Memory cleaned
+2022-03-29 10:10:13.441 INFO figures - compute_heatmap_per_mz: Converting image to string
+2022-03-29 10:10:13.441 INFO misc - convert_image_to_base64: Entering string conversion function
+2022-03-29 10:10:13.457 INFO misc - convert_image_to_base64: Image has been converted from array to PIL image
+2022-03-29 10:10:13.489 INFO misc - convert_image_to_base64: Empty pixels are now transparent
+2022-03-29 10:10:13.505 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-03-29 10:10:13.515 INFO misc - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-03-29 10:10:13.516 INFO figures - compute_heatmap_per_mz: Adding image to figure
+2022-03-29 10:10:13.522 INFO figures - compute_heatmap_per_mz: Returning figure
+2022-03-29 10:10:14.345 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-03-29 10:10:14.867 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-03-29 10:10:16.821 INFO index - render_page_content: Page/load-slicehas been selected	MemTotal: 2063.2421875
+2022-03-29 10:10:16.822 INFO misc - return_pickled_object: Returning figure_basic_image_projection_corrected_17_False.pickle from pickled file.	MemTotal: 2063.2421875
+2022-03-29 10:10:16.976 INFO load_slice - tab_1_load_image: Slider changed to value 18
+2022-03-29 10:10:18.594 INFO load_slice - tab_1_load_image: Slider changed to value 17
+2022-03-29 10:10:18.595 INFO misc - return_pickled_object: Returning figure_basic_image_projection_corrected_16_False.pickle from pickled file.	MemTotal: 2089.6484375
+2022-03-29 10:10:24.212 INFO load_slice - tab_1_load_image: Slider changed to value 17
+2022-03-29 10:10:24.212 INFO misc - return_pickled_object: Returning figure_basic_image_original_data_16_False.pickle from pickled file.	MemTotal: 2063.2421875
+2022-03-29 10:10:26.702 INFO load_slice - tab_1_load_image: Slider changed to value 17
+2022-03-29 10:10:26.703 INFO misc - return_pickled_object: Returning figure_basic_image_original_data_16_False.pickle from pickled file.	MemTotal: 2063.2421875
+2022-03-29 10:10:28.203 INFO load_slice - tab_1_load_image: Slider changed to value 17
+2022-03-29 10:10:28.204 INFO misc - return_pickled_object: figure_basic_image_warped_data_16_True.pickle could not be found or force_update is True. Computing the object and pickling it now.
+2022-03-29 10:10:28.205 INFO misc - return_pickled_object: Returning array_basic_images_warped_data.pickle from pickled file.	MemTotal: 2089.6484375
+2022-03-29 10:10:28.229 INFO misc - return_pickled_object: Returning list_projected_atlas_borders_arrays.pickle from pickled file.	MemTotal: 2089.5
+2022-03-29 10:10:28.365 INFO misc - convert_image_to_base64: Entering string conversion function
+2022-03-29 10:10:28.381 INFO misc - convert_image_to_base64: Image has been converted from array to PIL image
+2022-03-29 10:10:28.387 INFO misc - convert_image_to_base64: Overlay has been added to the image
+2022-03-29 10:10:28.423 INFO misc - convert_image_to_base64: Empty pixels are now transparent
+2022-03-29 10:10:28.442 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-03-29 10:10:28.718 INFO misc - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-03-29 10:10:28.747 INFO misc - return_pickled_object: figure_basic_image_warped_data_16_True.pickle being returned now from computation.
+2022-03-29 10:10:30.388 INFO load_slice - tab_1_load_image: Slider changed to value 17
+2022-03-29 10:10:30.389 INFO misc - return_pickled_object: Returning figure_basic_image_original_data_16_False.pickle from pickled file.	MemTotal: 2057.36328125
+2022-03-29 10:10:31.496 INFO load_slice - tab_1_load_image: Slider changed to value 17
+2022-03-29 10:10:31.497 INFO misc - return_pickled_object: Returning figure_basic_image_warped_data_16_True.pickle from pickled file.	MemTotal: 2057.36328125
+2022-03-29 10:10:33.421 INFO load_slice - tab_1_load_image: Slider changed to value 17
+2022-03-29 10:10:33.421 INFO misc - return_pickled_object: Returning figure_basic_image_original_data_16_False.pickle from pickled file.	MemTotal: 2057.36328125
+2022-03-29 10:10:35.574 INFO load_slice - tab_1_load_image: Slider changed to value 17
+2022-03-29 10:10:35.576 INFO misc - return_pickled_object: Returning figure_basic_image_warped_data_16_True.pickle from pickled file.	MemTotal: 2057.36328125
+2022-03-29 10:10:37.152 INFO load_slice - tab_1_load_image: Slider changed to value 17
+2022-03-29 10:10:37.152 INFO misc - return_pickled_object: Returning figure_basic_image_projection_corrected_16_True.pickle from pickled file.	MemTotal: 2057.36328125
+2022-03-29 10:10:39.764 INFO load_slice - tab_1_load_image: Slider changed to value 17
+2022-03-29 10:10:39.765 INFO misc - return_pickled_object: Returning figure_basic_image_atlas_16_True.pickle from pickled file.	MemTotal: 2063.2421875
+2022-03-29 10:10:40.599 INFO load_slice - tab_1_load_image: Slider changed to value 17
+2022-03-29 10:10:40.599 INFO misc - return_pickled_object: Returning figure_basic_image_projection_corrected_16_True.pickle from pickled file.	MemTotal: 2057.36328125
+2022-03-29 10:10:46.215 INFO index - render_page_content: Page/lipid-selectionhas been selected	MemTotal: 2063.2421875
+2022-03-29 10:10:46.215 INFO figures - compute_heatmap_per_mz: Starting figure computation, from mz boundaries
+2022-03-29 10:10:46.215 INFO figures - compute_heatmap_per_mz: Getting image array
+2022-03-29 10:10:46.215 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-03-29 10:10:46.282 INFO figures - compute_heatmap_per_mz: Done getting image array. Cleaning memory
+2022-03-29 10:10:46.285 INFO figures - compute_heatmap_per_mz: Memory cleaned
+2022-03-29 10:10:46.286 INFO figures - compute_heatmap_per_mz: Converting image to string
+2022-03-29 10:10:46.286 INFO misc - convert_image_to_base64: Entering string conversion function
+2022-03-29 10:10:46.300 INFO misc - convert_image_to_base64: Image has been converted from array to PIL image
+2022-03-29 10:10:46.332 INFO misc - convert_image_to_base64: Empty pixels are now transparent
+2022-03-29 10:10:46.352 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-03-29 10:10:46.393 INFO misc - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-03-29 10:10:46.393 INFO figures - compute_heatmap_per_mz: Adding image to figure
+2022-03-29 10:10:46.400 INFO figures - compute_heatmap_per_mz: Returning figure
+2022-03-29 10:10:46.400 INFO misc - return_pickled_object: Returning lipid_options.pickle from pickled file.	MemTotal: 2063.2421875
+2022-03-29 10:10:46.575 INFO lipid_selection - page_2_add_toast_selection: Entering function to update lipid data
+2022-03-29 10:10:46.668 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-03-29 10:10:54.179 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-03-29 10:11:18.707 INFO lipid_selection - page_2_add_toast_selection: Entering function to update lipid data
+2022-03-29 10:11:18.711 WARNING lipid_selection - page_2_add_toast_selection: More than one lipid corresponds to the selection
+2022-03-29 10:11:18.711 INFO lipid_selection - page_2_add_toast_selection: Changes have been made to the lipid selection or indexation, propagating callback.
+2022-03-29 10:11:18.745 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-03-29 10:11:18.746 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Right before calling the graphing function
+2022-03-29 10:11:18.747 INFO figures - compute_rgb_image_per_lipid_selection: Started RGB image computation for slice 17	MemTotal: 2057.36328125
+2022-03-29 10:11:18.748 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-03-29 10:11:18.876 INFO figures - compute_image_per_lipid: Normalization made with to percentile computed across all slices.
+2022-03-29 10:11:18.911 INFO figures - compute_rgb_image_per_lipid_selection: array_image acquired for slice 17	MemTotal: 2060.453125
+2022-03-29 10:11:18.911 INFO misc - convert_image_to_base64: Entering string conversion function
+2022-03-29 10:11:18.937 INFO misc - convert_image_to_base64: Image has been converted from array to PIL image
+2022-03-29 10:11:18.985 INFO misc - convert_image_to_base64: Empty pixels are now transparent
+2022-03-29 10:11:19.010 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-03-29 10:11:19.029 INFO misc - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-03-29 10:11:19.029 INFO figures - compute_rgb_image_per_lipid_selection: Started building graph for slice 17	MemTotal: 2060.453125
+2022-03-29 10:11:19.045 INFO figures - compute_rgb_image_per_lipid_selection: Returning fig for slice 17	MemTotal: 2060.6796875
+2022-03-29 10:11:20.991 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-03-29 10:11:20.994 INFO figures - compute_heatmap_per_lipid_selection: Compute heatmap per lipid selection[[(644.5952, 644.5992)], None, None]
+2022-03-29 10:11:20.995 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-03-29 10:11:21.114 INFO figures - compute_image_per_lipid: Normalization made with to percentile computed across all slices.
+2022-03-29 10:11:21.134 INFO misc - convert_image_to_base64: Entering string conversion function
+2022-03-29 10:11:21.165 INFO misc - convert_image_to_base64: Image has been converted from array to PIL image
+2022-03-29 10:11:21.216 INFO misc - convert_image_to_base64: Empty pixels are now transparent
+2022-03-29 10:11:21.236 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-03-29 10:11:21.248 INFO misc - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-03-29 10:11:24.550 INFO lipid_selection - page_2_add_toast_selection: Entering function to update lipid data
+2022-03-29 10:11:24.552 INFO lipid_selection - page_2_add_toast_selection: Changes have been made to the lipid selection or indexation, propagating callback.
+2022-03-29 10:11:24.581 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-03-29 10:11:24.582 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Right before calling the graphing function
+2022-03-29 10:11:24.582 INFO figures - compute_rgb_image_per_lipid_selection: Started RGB image computation for slice 17	MemTotal: 2063.2421875
+2022-03-29 10:11:24.583 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-03-29 10:11:24.637 INFO figures - compute_image_per_lipid: Normalization made with to percentile computed across all slices.
+2022-03-29 10:11:24.647 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-03-29 10:11:24.702 INFO figures - compute_image_per_lipid: Normalization made with to percentile computed across all slices.
+2022-03-29 10:11:24.740 INFO figures - compute_rgb_image_per_lipid_selection: array_image acquired for slice 17	MemTotal: 2063.2421875
+2022-03-29 10:11:24.741 INFO misc - convert_image_to_base64: Entering string conversion function
+2022-03-29 10:11:24.767 INFO misc - convert_image_to_base64: Image has been converted from array to PIL image
+2022-03-29 10:11:24.809 INFO misc - convert_image_to_base64: Empty pixels are now transparent
+2022-03-29 10:11:24.828 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-03-29 10:11:24.856 INFO misc - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-03-29 10:11:24.857 INFO figures - compute_rgb_image_per_lipid_selection: Started building graph for slice 17	MemTotal: 2063.2421875
+2022-03-29 10:11:24.863 INFO figures - compute_rgb_image_per_lipid_selection: Returning fig for slice 17	MemTotal: 2063.2421875
+2022-03-29 10:11:27.248 INFO lipid_selection - page_2_add_toast_selection: Entering function to update lipid data
+2022-03-29 10:11:27.250 INFO lipid_selection - page_2_add_toast_selection: Changes have been made to the lipid selection or indexation, propagating callback.
+2022-03-29 10:11:27.281 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-03-29 10:11:27.283 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Right before calling the graphing function
+2022-03-29 10:11:27.284 INFO figures - compute_rgb_image_per_lipid_selection: Started RGB image computation for slice 17	MemTotal: 2063.2421875
+2022-03-29 10:11:27.285 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-03-29 10:11:27.373 INFO figures - compute_image_per_lipid: Normalization made with to percentile computed across all slices.
+2022-03-29 10:11:27.381 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-03-29 10:11:27.449 INFO figures - compute_image_per_lipid: Normalization made with to percentile computed across all slices.
+2022-03-29 10:11:27.457 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-03-29 10:11:27.535 INFO figures - compute_rgb_image_per_lipid_selection: array_image acquired for slice 17	MemTotal: 2063.2421875
+2022-03-29 10:11:27.536 INFO misc - convert_image_to_base64: Entering string conversion function
+2022-03-29 10:11:27.561 INFO misc - convert_image_to_base64: Image has been converted from array to PIL image
+2022-03-29 10:11:27.603 INFO misc - convert_image_to_base64: Empty pixels are now transparent
+2022-03-29 10:11:27.619 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-03-29 10:11:27.652 INFO misc - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-03-29 10:11:27.652 INFO figures - compute_rgb_image_per_lipid_selection: Started building graph for slice 17	MemTotal: 2063.2421875
+2022-03-29 10:11:27.658 INFO figures - compute_rgb_image_per_lipid_selection: Returning fig for slice 17	MemTotal: 2063.2421875
+2022-03-29 10:11:34.659 INFO lipid_selection - page_2_add_toast_selection: Entering function to update lipid data
+2022-03-29 10:11:34.660 INFO lipid_selection - page_2_add_toast_selection: One or several lipids have been deleter. Cleaning lipid badges now.
+2022-03-29 10:11:34.688 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-03-29 10:11:34.691 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Right before calling the graphing function
+2022-03-29 10:11:34.692 INFO figures - compute_rgb_image_per_lipid_selection: Started RGB image computation for slice 17	MemTotal: 2060.73046875
+2022-03-29 10:11:34.695 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-03-29 10:11:34.850 INFO figures - compute_image_per_lipid: Normalization made with to percentile computed across all slices.
+2022-03-29 10:11:34.857 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-03-29 10:11:34.930 INFO figures - compute_rgb_image_per_lipid_selection: array_image acquired for slice 17	MemTotal: 2060.73046875
+2022-03-29 10:11:34.930 INFO misc - convert_image_to_base64: Entering string conversion function
+2022-03-29 10:11:34.950 INFO misc - convert_image_to_base64: Image has been converted from array to PIL image
+2022-03-29 10:11:34.987 INFO misc - convert_image_to_base64: Empty pixels are now transparent
+2022-03-29 10:11:35.006 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-03-29 10:11:35.045 INFO misc - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-03-29 10:11:35.045 INFO figures - compute_rgb_image_per_lipid_selection: Started building graph for slice 17	MemTotal: 2060.73046875
+2022-03-29 10:11:35.051 INFO figures - compute_rgb_image_per_lipid_selection: Returning fig for slice 17	MemTotal: 2060.73046875
+2022-03-29 10:11:39.388 INFO lipid_selection - page_2_add_toast_selection: Entering function to update lipid data
+2022-03-29 10:11:39.393 INFO lipid_selection - page_2_add_toast_selection: Changes have been made to the lipid selection or indexation, propagating callback.
+2022-03-29 10:11:39.435 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-03-29 10:11:39.442 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Right before calling the graphing function
+2022-03-29 10:11:39.442 INFO figures - compute_rgb_image_per_lipid_selection: Started RGB image computation for slice 17	MemTotal: 2060.73046875
+2022-03-29 10:11:39.444 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-03-29 10:11:39.575 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-03-29 10:11:39.628 INFO figures - compute_image_per_lipid: Normalization made with to percentile computed across all slices.
+2022-03-29 10:11:39.634 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-03-29 10:11:39.689 INFO figures - compute_rgb_image_per_lipid_selection: array_image acquired for slice 17	MemTotal: 2060.73046875
+2022-03-29 10:11:39.689 INFO misc - convert_image_to_base64: Entering string conversion function
+2022-03-29 10:11:39.708 INFO misc - convert_image_to_base64: Image has been converted from array to PIL image
+2022-03-29 10:11:39.750 INFO misc - convert_image_to_base64: Empty pixels are now transparent
+2022-03-29 10:11:39.769 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-03-29 10:11:39.801 INFO misc - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-03-29 10:11:39.801 INFO figures - compute_rgb_image_per_lipid_selection: Started building graph for slice 17	MemTotal: 2060.73046875
+2022-03-29 10:11:39.807 INFO figures - compute_rgb_image_per_lipid_selection: Returning fig for slice 17	MemTotal: 2060.73046875
+2022-03-29 10:12:07.660 INFO lipid_selection - page_2_add_toast_selection: Entering function to update lipid data
+2022-03-29 10:12:07.664 INFO lipid_selection - page_2_add_toast_selection: Returning updated lipid data
+2022-03-29 10:12:07.703 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-03-29 10:12:07.709 INFO figures - compute_rgb_image_per_lipid_selection: Started RGB image computation for slice 4	MemTotal: 2063.2421875
+2022-03-29 10:12:07.710 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-03-29 10:12:07.788 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-03-29 10:12:07.829 INFO figures - compute_image_per_lipid: Normalization made with to percentile computed across all slices.
+2022-03-29 10:12:07.839 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-03-29 10:12:07.904 INFO figures - compute_rgb_image_per_lipid_selection: array_image acquired for slice 4	MemTotal: 2063.2421875
+2022-03-29 10:12:07.904 INFO misc - convert_image_to_base64: Entering string conversion function
+2022-03-29 10:12:07.923 INFO misc - convert_image_to_base64: Image has been converted from array to PIL image
+2022-03-29 10:12:07.960 INFO misc - convert_image_to_base64: Empty pixels are now transparent
+2022-03-29 10:12:07.979 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-03-29 10:12:08.009 INFO misc - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-03-29 10:12:08.009 INFO figures - compute_rgb_image_per_lipid_selection: Started building graph for slice 4	MemTotal: 2063.2421875
+2022-03-29 10:12:08.016 INFO figures - compute_rgb_image_per_lipid_selection: Returning fig for slice 4	MemTotal: 2063.2421875
+2022-03-29 10:12:46.606 INFO lipid_selection - page_2_add_toast_selection: Entering function to update lipid data
+2022-03-29 10:12:46.610 INFO lipid_selection - page_2_add_toast_selection: Returning updated lipid data
+2022-03-29 10:12:46.703 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-03-29 10:12:46.704 INFO figures - compute_rgb_image_per_lipid_selection: Started RGB image computation for slice 7	MemTotal: 2063.25
+2022-03-29 10:12:46.705 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-03-29 10:12:46.810 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-03-29 10:12:46.836 INFO figures - compute_image_per_lipid: Normalization made with to percentile computed across all slices.
+2022-03-29 10:12:46.841 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-03-29 10:12:46.892 INFO figures - compute_rgb_image_per_lipid_selection: array_image acquired for slice 7	MemTotal: 2063.25390625
+2022-03-29 10:12:46.892 INFO misc - convert_image_to_base64: Entering string conversion function
+2022-03-29 10:12:46.909 INFO misc - convert_image_to_base64: Image has been converted from array to PIL image
+2022-03-29 10:12:46.943 INFO misc - convert_image_to_base64: Empty pixels are now transparent
+2022-03-29 10:12:46.959 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-03-29 10:12:46.990 INFO misc - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-03-29 10:12:46.990 INFO figures - compute_rgb_image_per_lipid_selection: Started building graph for slice 7	MemTotal: 2063.25390625
+2022-03-29 10:12:46.996 INFO figures - compute_rgb_image_per_lipid_selection: Returning fig for slice 7	MemTotal: 2063.25390625
+2022-03-29 10:12:58.174 INFO lipid_selection - page_2_add_toast_selection: Entering function to update lipid data
+2022-03-29 10:12:58.178 INFO lipid_selection - page_2_add_toast_selection: Returning updated lipid data
+2022-03-29 10:12:58.237 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-03-29 10:12:58.238 INFO figures - compute_rgb_image_per_lipid_selection: Started RGB image computation for slice 10	MemTotal: 2063.25390625
+2022-03-29 10:12:58.239 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-03-29 10:12:58.353 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-03-29 10:12:58.381 INFO figures - compute_image_per_lipid: Normalization made with to percentile computed across all slices.
+2022-03-29 10:12:58.386 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-03-29 10:12:58.443 INFO figures - compute_rgb_image_per_lipid_selection: array_image acquired for slice 10	MemTotal: 2063.25390625
+2022-03-29 10:12:58.443 INFO misc - convert_image_to_base64: Entering string conversion function
+2022-03-29 10:12:58.459 INFO misc - convert_image_to_base64: Image has been converted from array to PIL image
+2022-03-29 10:12:58.489 INFO misc - convert_image_to_base64: Empty pixels are now transparent
+2022-03-29 10:12:58.505 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-03-29 10:12:58.541 INFO misc - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-03-29 10:12:58.541 INFO figures - compute_rgb_image_per_lipid_selection: Started building graph for slice 10	MemTotal: 2063.25390625
+2022-03-29 10:12:58.546 INFO figures - compute_rgb_image_per_lipid_selection: Returning fig for slice 10	MemTotal: 2063.25390625
+2022-03-29 10:13:11.556 INFO lipid_selection - page_2_add_toast_selection: Entering function to update lipid data
+2022-03-29 10:13:11.561 INFO lipid_selection - page_2_add_toast_selection: Returning updated lipid data
+2022-03-29 10:13:11.654 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-03-29 10:13:11.656 INFO figures - compute_rgb_image_per_lipid_selection: Started RGB image computation for slice 13	MemTotal: 2061.0078125
+2022-03-29 10:13:11.657 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-03-29 10:13:11.761 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-03-29 10:13:11.792 INFO figures - compute_image_per_lipid: Normalization made with to percentile computed across all slices.
+2022-03-29 10:13:11.797 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-03-29 10:13:11.855 INFO figures - compute_rgb_image_per_lipid_selection: array_image acquired for slice 13	MemTotal: 2061.0078125
+2022-03-29 10:13:11.855 INFO misc - convert_image_to_base64: Entering string conversion function
+2022-03-29 10:13:11.871 INFO misc - convert_image_to_base64: Image has been converted from array to PIL image
+2022-03-29 10:13:11.901 INFO misc - convert_image_to_base64: Empty pixels are now transparent
+2022-03-29 10:13:11.916 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-03-29 10:13:11.950 INFO misc - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-03-29 10:13:11.950 INFO figures - compute_rgb_image_per_lipid_selection: Started building graph for slice 13	MemTotal: 2061.0078125
+2022-03-29 10:13:11.956 INFO figures - compute_rgb_image_per_lipid_selection: Returning fig for slice 13	MemTotal: 2061.0078125
+2022-03-29 10:13:22.245 INFO lipid_selection - page_2_add_toast_selection: Entering function to update lipid data
+2022-03-29 10:13:22.249 INFO lipid_selection - page_2_add_toast_selection: Returning updated lipid data
+2022-03-29 10:13:22.297 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-03-29 10:13:22.299 INFO figures - compute_rgb_image_per_lipid_selection: Started RGB image computation for slice 16	MemTotal: 2063.26171875
+2022-03-29 10:13:22.300 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-03-29 10:13:22.400 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-03-29 10:13:22.426 INFO figures - compute_image_per_lipid: Normalization made with to percentile computed across all slices.
+2022-03-29 10:13:22.431 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-03-29 10:13:22.486 INFO figures - compute_rgb_image_per_lipid_selection: array_image acquired for slice 16	MemTotal: 2063.2734375
+2022-03-29 10:13:22.486 INFO misc - convert_image_to_base64: Entering string conversion function
+2022-03-29 10:13:22.502 INFO misc - convert_image_to_base64: Image has been converted from array to PIL image
+2022-03-29 10:13:22.536 INFO misc - convert_image_to_base64: Empty pixels are now transparent
+2022-03-29 10:13:22.551 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-03-29 10:13:22.581 INFO misc - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-03-29 10:13:22.581 INFO figures - compute_rgb_image_per_lipid_selection: Started building graph for slice 16	MemTotal: 2063.2734375
+2022-03-29 10:13:22.587 INFO figures - compute_rgb_image_per_lipid_selection: Returning fig for slice 16	MemTotal: 2063.2734375
+2022-03-29 10:13:32.394 INFO lipid_selection - page_2_add_toast_selection: Entering function to update lipid data
+2022-03-29 10:13:32.399 INFO lipid_selection - page_2_add_toast_selection: Returning updated lipid data
+2022-03-29 10:13:32.563 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-03-29 10:13:32.565 INFO figures - compute_rgb_image_per_lipid_selection: Started RGB image computation for slice 19	MemTotal: 2061.1171875
+2022-03-29 10:13:32.566 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-03-29 10:13:32.633 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-03-29 10:13:32.661 INFO figures - compute_image_per_lipid: Normalization made with to percentile computed across all slices.
+2022-03-29 10:13:32.665 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-03-29 10:13:32.711 INFO figures - compute_rgb_image_per_lipid_selection: array_image acquired for slice 19	MemTotal: 2061.32421875
+2022-03-29 10:13:32.711 INFO misc - convert_image_to_base64: Entering string conversion function
+2022-03-29 10:13:32.727 INFO misc - convert_image_to_base64: Image has been converted from array to PIL image
+2022-03-29 10:13:32.758 INFO misc - convert_image_to_base64: Empty pixels are now transparent
+2022-03-29 10:13:32.773 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-03-29 10:13:32.801 INFO misc - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-03-29 10:13:32.801 INFO figures - compute_rgb_image_per_lipid_selection: Started building graph for slice 19	MemTotal: 2061.32421875
+2022-03-29 10:13:32.807 INFO figures - compute_rgb_image_per_lipid_selection: Returning fig for slice 19	MemTotal: 2061.32421875
+2022-03-29 10:13:40.224 INFO lipid_selection - page_2_add_toast_selection: Entering function to update lipid data
+2022-03-29 10:13:40.229 INFO lipid_selection - page_2_add_toast_selection: Returning updated lipid data
+2022-03-29 10:13:40.258 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-03-29 10:13:40.260 INFO figures - compute_rgb_image_per_lipid_selection: Started RGB image computation for slice 24	MemTotal: 2061.32421875
+2022-03-29 10:13:40.261 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-03-29 10:13:40.332 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-03-29 10:13:40.359 INFO figures - compute_image_per_lipid: Normalization made with to percentile computed across all slices.
+2022-03-29 10:13:40.364 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-03-29 10:13:40.409 INFO figures - compute_rgb_image_per_lipid_selection: array_image acquired for slice 24	MemTotal: 2061.33203125
+2022-03-29 10:13:40.410 INFO misc - convert_image_to_base64: Entering string conversion function
+2022-03-29 10:13:40.425 INFO misc - convert_image_to_base64: Image has been converted from array to PIL image
+2022-03-29 10:13:40.456 INFO misc - convert_image_to_base64: Empty pixels are now transparent
+2022-03-29 10:13:40.471 INFO misc - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-03-29 10:13:40.495 INFO misc - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-03-29 10:13:40.495 INFO figures - compute_rgb_image_per_lipid_selection: Started building graph for slice 24	MemTotal: 2061.33203125
+2022-03-29 10:13:40.500 INFO figures - compute_rgb_image_per_lipid_selection: Returning fig for slice 24	MemTotal: 2061.33203125

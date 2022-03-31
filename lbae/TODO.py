@@ -1,13 +1,10 @@
 #
-# TODO Finish redesign
 # TODO Incorporate brain 2
 # TODO Do a round of debug
 # TODO Make a careful memory analysis to free more memory
 # TODO Replace all "tabs" by "pages"
-# TODO Incoporate new brain slices
 # TODO Adress all # ! and # ? comments in the code
 # TODO Find out what must be precomputed and do a function to precompute it
-# TODO Make the app with tabs instead of pages to accelerate it?
 # TODO Move layouts to other files
 # TODO When everything is stable, create a function that delete all pickle files and repickle everything automatically
 # TODO Update notebooks with up-to-date classes
