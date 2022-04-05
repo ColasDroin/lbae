@@ -712,7 +712,7 @@ def page_4_add_toast_region_selection(
             l_selected_regions.remove(region_3_id)
             l_region_3_index = ""
         else:
-            print("BUG in tab_2_add_dropdown_selection")
+            print("BUG in page_2_add_dropdown_selection")
 
         return (
             header_1,
@@ -1071,7 +1071,7 @@ def page_2bis_add_toast_selection(
             l_selected_lipids.remove(l_lipid_3_index[0])
             l_lipid_3_index = empty_lipid_list
         else:
-            print("BUG in tab_2_add_dropdown_selection")
+            print("BUG in page_2_add_dropdown_selection")
 
         return (
             header_1,
@@ -1183,7 +1183,7 @@ def page_4_disable_dropdowns(l_lipid_1_index, l_lipid_2_index, l_lipid_3_index):
     Input("page-4-selected-region-2", "data"),
     Input("page-4-selected-region-3", "data"),
 )
-def tab_2_active_display(
+def page_2_active_display(
     l_lipid_1_index, l_lipid_2_index, l_lipid_3_index, region_1_id, region_2_id, region_3_id
 ):
 

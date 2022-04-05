@@ -390,7 +390,7 @@ def _compute_image_using_index_and_image_lookup_partial(
 ):
     """This internal function is wrapped by compute_image_using_index_and_image_lookup(). It is used 
     as a slower, memory-optimized, option, when the slice data must be manually extracted from a 
-    HDF5 (aka pytables.array) dataset. Please consult the documentation of 
+    pytables dataset. Please consult the documentation of 
     compute_image_using_index_and_image_lookup() for more information.
     """
     # Get a first approximate of the requested lipid image

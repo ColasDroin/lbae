@@ -411,7 +411,7 @@ def return_layout(basic_config, slice_index=1):
                                                                     ),
                                                                     dmc.Button(
                                                                         children="Download spectrum data",
-                                                                        id="tab-3-download-data-button",
+                                                                        id="page-3-download-data-button",
                                                                         disabled=False,
                                                                         variant="filled",
                                                                         radius="md",
@@ -701,7 +701,7 @@ def return_layout(basic_config, slice_index=1):
                             dmc.Center(
                                 class_name="w-100",
                                 children=[
-                                    dcc.Download(id="tab-3-download-data"),
+                                    dcc.Download(id="page-3-download-data"),
                                     dmc.Button(
                                         children="Close panel",
                                         id="page-4-close-drawer-region-selection",
@@ -762,7 +762,7 @@ def page_3_hover(hoverData, slice_index):
     Input("url", "pathname"),
     prevent_initial_call=True,
 )
-def tab_3_reset_layout(cliked_reset, url):
+def page_3_reset_layout(cliked_reset, url):
     return {}
 
 
@@ -1051,7 +1051,7 @@ def page_3_button_compute_spectra(relayoutData, clicked_reset, mask):
     return True
 
 
-# Function to make visible the m/z plot in tab 3
+# Function to make visible the m/z plot in page 3
 @app.app.callback(
     Output("page-3-graph-spectrum-per-pixel", "style"),
     Output("page-3-alert-2", "style"),
@@ -1062,7 +1062,7 @@ def page_3_button_compute_spectra(relayoutData, clicked_reset, mask):
     State("page-3-graph-heatmap-per-sel", "relayoutData"),
     prevent_initial_call=True,
 )
-def tab_3_display_high_res_mz_plot(clicked_reset, clicked_compute, mask, relayoutData):
+def page_3_display_high_res_mz_plot(clicked_reset, clicked_compute, mask, relayoutData):
 
     # Find out which input triggered the function
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
@@ -1136,7 +1136,7 @@ def page_3_display_switch(clicked_reset, fig_heatmap, relayoutData):
     return dash.no_update
 
 
-# Function to make visible the alert regarding the m/z plot in tab 3
+# Function to make visible the alert regarding the m/z plot in page 3
 @app.app.callback(
     Output("page-3-alert", "style"),
     Output("page-3-alert-3", "style"),
@@ -1717,12 +1717,12 @@ def page_3_draw_heatmap_per_lipid_selection(
 
 # Function that sends the spectra of the selected region for download
 @app.app.callback(
-    Output("tab-3-download-data", "data"),
-    Input("tab-3-download-data-button", "n_clicks"),
+    Output("page-3-download-data", "data"),
+    Input("page-3-download-data-button", "n_clicks"),
     State("page-3-graph-spectrum-per-pixel", "figure"),
     prevent_initial_call=True,
 )
-def tab_3_download(n_clicks, fig_mz):
+def page_3_download(n_clicks, fig_mz):
     if fig_mz is not None:
         fig_mz = go.Figure(data=fig_mz)
         if len(fig_mz.data) > 1:
@@ -1756,7 +1756,7 @@ def tab_3_download(n_clicks, fig_mz):
 
 # Function that deactivate the download button if not region drawn
 @app.app.callback(
-    Output("tab-3-download-data-button", "disabled"),
+    Output("page-3-download-data-button", "disabled"),
     Input("page-3-graph-spectrum-per-pixel", "figure"),
 )
 def page_3_reset_download(fig_mz):

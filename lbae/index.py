@@ -5,7 +5,6 @@
 different pages. All the dcc.store, used to store client data across pages, are created here. It is 
 also here that the URL routing is done.
 """
-# ! Update this description if I move from URL-based to tab-based app
 
 # ==================================================================================================
 # --- Imports

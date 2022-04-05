@@ -105,7 +105,7 @@ def return_layout(basic_config, slice_index):
                                         ),
                                         dmc.Button(
                                             children="Display as RGB",
-                                            id="tab-2-rgb-button",
+                                            id="page-2-rgb-button",
                                             variant="filled",
                                             color="gray",
                                             radius="md",
@@ -116,7 +116,7 @@ def return_layout(basic_config, slice_index):
                                         ),
                                         dmc.Button(
                                             children="Display as colormap",
-                                            id="tab-2-colormap-button",
+                                            id="page-2-colormap-button",
                                             variant="filled",
                                             color="gray",
                                             radius="md",
@@ -279,7 +279,7 @@ def return_layout(basic_config, slice_index):
                                 ),
                                 dmc.Button(
                                     children="Download data",
-                                    id="tab-2-download-data-button",
+                                    id="page-2-download-data-button",
                                     variant="filled",
                                     disabled=True,
                                     color="gray",
@@ -291,7 +291,7 @@ def return_layout(basic_config, slice_index):
                                 ),
                                 dmc.Button(
                                     children="Download image",
-                                    id="tab-2-download-image-button",
+                                    id="page-2-download-image-button",
                                     variant="filled",
                                     disabled=True,
                                     color="gray",
@@ -303,7 +303,7 @@ def return_layout(basic_config, slice_index):
                                 ),
                             ],
                         ),
-                        dcc.Download(id="tab-2-download-data"),
+                        dcc.Download(id="page-2-download-data"),
                     ],
                 ),
                 # ),
@@ -449,8 +449,8 @@ def return_layout(basic_config, slice_index):
     Input("page-2-selected-lipid-1", "data"),
     Input("page-2-selected-lipid-2", "data"),
     Input("page-2-selected-lipid-3", "data"),
-    Input("tab-2-rgb-button", "n_clicks"),
-    Input("tab-2-colormap-button", "n_clicks"),
+    Input("page-2-rgb-button", "n_clicks"),
+    Input("page-2-colormap-button", "n_clicks"),
     # Input("page-2-button-range", "n_clicks"),
     Input("page-2-button-bounds", "n_clicks"),
     State("page-2-lower-bound", "value"),
@@ -502,8 +502,8 @@ def page_2_plot_graph_heatmap_mz_selection(
         id_input == "page-2-selected-lipid-1"
         or id_input == "page-2-selected-lipid-2"
         or id_input == "page-2-selected-lipid-3"
-        or id_input == "tab-2-rgb-button"
-        or id_input == "tab-2-colormap-button"
+        or id_input == "page-2-rgb-button"
+        or id_input == "page-2-colormap-button"
         or (
             (id_input == "main-slider" or id_input == "page-2-toggle-apply-transform")
             and (
@@ -555,7 +555,7 @@ def page_2_plot_graph_heatmap_mz_selection(
                         logging.warning("Some pixel annotations intercept each other")
 
             if (
-                id_input == "tab-2-colormap-button"
+                id_input == "page-2-colormap-button"
                 or (
                     id_input == "main-slider"
                     and graph_input == "Current input: " + "Lipid selection colormap"
@@ -575,7 +575,7 @@ def page_2_plot_graph_heatmap_mz_selection(
                     "Current input: " + "Lipid selection colormap",
                 )
             elif (
-                id_input == "tab-2-rgb-button"
+                id_input == "page-2-rgb-button"
                 or (
                     id_input == "main-slider"
                     and graph_input == "Current input: " + "Lipid selection RGB"
@@ -657,8 +657,8 @@ def page_2_plot_graph_heatmap_mz_selection(
     State("page-2-selected-lipid-1", "data"),
     State("page-2-selected-lipid-2", "data"),
     State("page-2-selected-lipid-3", "data"),
-    Input("tab-2-rgb-button", "n_clicks"),
-    Input("tab-2-colormap-button", "n_clicks"),
+    Input("page-2-rgb-button", "n_clicks"),
+    Input("page-2-colormap-button", "n_clicks"),
     # Input("page-2-button-range", "n_clicks"),
     Input("page-2-button-bounds", "n_clicks"),
     State("page-2-lower-bound", "value"),
@@ -668,7 +668,7 @@ def page_2_plot_graph_heatmap_mz_selection(
     State("page-2-badge-input", "children"),
     State("page-2-graph-low-resolution-spectrum", "relayoutData"),
 )
-def tab_2_plot_graph_low_res_spectrum(
+def page_2_plot_graph_low_res_spectrum(
     slice_index,
     lipid_1_index,
     lipid_2_index,
@@ -693,8 +693,8 @@ def tab_2_plot_graph_low_res_spectrum(
         id_input == "page-2-selected-lipid-1"
         or id_input == "page-2-selected-lipid-2"
         or id_input == "page-2-selected-lipid-3"
-        or id_input == "tab-2-rgb-button"
-        or id_input == "tab-2-colormap-button"
+        or id_input == "page-2-rgb-button"
+        or id_input == "page-2-colormap-button"
         or (
             id_input == "main-slider"
             and (
@@ -779,8 +779,8 @@ def page_2_store_boundaries_mz_from_graph_low_res_spectrum(relayoutData, slice_i
     Input("page-2-selected-lipid-1", "data"),
     Input("page-2-selected-lipid-2", "data"),
     Input("page-2-selected-lipid-3", "data"),
-    Input("tab-2-rgb-button", "n_clicks"),
-    Input("tab-2-colormap-button", "n_clicks"),
+    Input("page-2-rgb-button", "n_clicks"),
+    Input("page-2-colormap-button", "n_clicks"),
     # Input("page-2-button-range", "n_clicks"),
     Input("page-2-button-bounds", "n_clicks"),
     State("page-2-lower-bound", "value"),
@@ -816,8 +816,8 @@ def page_2_plot_graph_high_res_spectrum(
         id_input == "page-2-selected-lipid-1"
         or id_input == "page-2-selected-lipid-2"
         or id_input == "page-2-selected-lipid-3"
-        or id_input == "tab-2-rgb-button"
-        or id_input == "tab-2-colormap-button"
+        or id_input == "page-2-rgb-button"
+        or id_input == "page-2-colormap-button"
         or id_input == "page-2-last-selected-lipids"
         or (
             id_input == "main-slider"
@@ -1169,12 +1169,12 @@ def page_2_add_toast_selection(
     return dash.no_update
 
 
-# Function to make visible the high-res m/z plot in tab 2
+# Function to make visible the high-res m/z plot in page 2
 @app.app.callback(
     Output("page-2-graph-high-resolution-spectrum", "style"),
     Input("page-2-graph-high-resolution-spectrum", "figure"),
 )
-def tab_2_display_high_res_mz_plot(figure):
+def page_2_display_high_res_mz_plot(figure):
     if figure is not None:
         if figure["data"][0]["x"] != [[]]:
             return {"height": HEIGHT_PLOTS}
@@ -1183,11 +1183,11 @@ def tab_2_display_high_res_mz_plot(figure):
     return {"display": "none"}
 
 
-# Function to make visible the alert regarding the high-res m/z plot in tab 2
+# Function to make visible the alert regarding the high-res m/z plot in page 2
 @app.app.callback(
     Output("page-2-alert", "style"), Input("page-2-graph-high-resolution-spectrum", "figure"),
 )
-def tab_2_display_alert(figure):
+def page_2_display_alert(figure):
     if figure is not None:
         if figure["data"][0]["x"] != [[]]:
             return {"display": "none"}
@@ -1195,8 +1195,8 @@ def tab_2_display_alert(figure):
 
 
 @app.app.callback(
-    Output("tab-2-download-data", "data"),
-    Input("tab-2-download-data-button", "n_clicks"),
+    Output("page-2-download-data", "data"),
+    Input("page-2-download-data-button", "n_clicks"),
     State("page-2-selected-lipid-1", "data"),
     State("page-2-selected-lipid-2", "data"),
     State("page-2-selected-lipid-3", "data"),
@@ -1204,7 +1204,7 @@ def tab_2_display_alert(figure):
     State("page-2-toggle-apply-transform", "checked"),
     prevent_initial_call=True,
 )
-def tab_2_download(
+def page_2_download(
     n_clicks, lipid_1_index, lipid_2_index, lipid_3_index, slice_index, apply_transform
 ):
 
@@ -1256,21 +1256,21 @@ clientside_callback(
         }
     }
     """,
-    Output("tab-2-download-image-button", "n_clicks"),
-    Input("tab-2-download-image-button", "n_clicks"),
+    Output("page-2-download-image-button", "n_clicks"),
+    Input("page-2-download-image-button", "n_clicks"),
 )
 
 
 @app.app.callback(
-    Output("tab-2-download-image-button", "disabled"),
-    Output("tab-2-download-data-button", "disabled"),
-    Output("tab-2-rgb-button", "disabled"),
-    Output("tab-2-colormap-button", "disabled"),
+    Output("page-2-download-image-button", "disabled"),
+    Output("page-2-download-data-button", "disabled"),
+    Output("page-2-rgb-button", "disabled"),
+    Output("page-2-colormap-button", "disabled"),
     Input("page-2-selected-lipid-1", "data"),
     Input("page-2-selected-lipid-2", "data"),
     Input("page-2-selected-lipid-3", "data"),
 )
-def tab_2_active_download(lipid_1_index, lipid_2_index, lipid_3_index):
+def page_2_active_download(lipid_1_index, lipid_2_index, lipid_3_index):
     l_lipids_indexes = [
         x for x in [lipid_1_index, lipid_2_index, lipid_3_index] if x is not None and x != -1
     ]
@@ -1286,7 +1286,7 @@ def tab_2_active_download(lipid_1_index, lipid_2_index, lipid_3_index):
     Input("page-2-lower-bound", "value"),
     Input("page-2-upper-bound", "value"),
 )
-def tab_2_button_window(lb, hb):
+def page_2_button_window(lb, hb):
     if lb is not None and hb is not None:
         lb, hb = float(lb), float(hb)
         if lb > 400 and hb < 1200 and hb - lb > 0 and hb - lb < 10:
