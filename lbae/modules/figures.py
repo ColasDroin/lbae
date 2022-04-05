@@ -512,7 +512,7 @@ class Figures:
             ),
             xaxis=dict(showgrid=False, zeroline=False),
             yaxis=dict(showgrid=False, zeroline=False),
-            # Do not specify height for now as plotly is buggued and resets it to 450px if switching tabs
+            # Do not specify height for now as plotly is buggued and resets it to 450px if switching pages
             # height=500,
         )
         fig.update_xaxes(showticklabels=False)
