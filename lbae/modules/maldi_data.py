@@ -140,26 +140,26 @@ class MaldiData:
 
         # Load lipid annotation (not user-session specific)
         self._df_annotations = pd.read_csv(path_annotations + "lipid_annotation.csv")
-        self._df_annotations["name"] = self._df_annotations["name"].map(lambda x: x.split("_")[1])
+        # self._df_annotations["name"] = self._df_annotations["name"].map(lambda x: x.split("_")[1])
 
         # Load lipid annotations of MAIA-transformed lipids for brain 1 and 2
         self._df_annotations_MAIA_transformed_lipids_brain_1 = pd.read_csv(
             path_annotations + "transformed_lipids_brain_1.csv"
         )
-        self._df_annotations_MAIA_transformed_lipids_brain_1[
-            "name"
-        ] = self._df_annotations_MAIA_transformed_lipids_brain_1["name"].map(
-            lambda x: x.split("_")[1]
-        )
+        # self._df_annotations_MAIA_transformed_lipids_brain_1[
+        #     "name"
+        # ] = self._df_annotations_MAIA_transformed_lipids_brain_1["name"].map(
+        #     lambda x: x.split("_")[1]
+        # )
 
         self._df_annotations_MAIA_transformed_lipids_brain_2 = pd.read_csv(
             path_annotations + "transformed_lipids_brain_2.csv"
         )
-        self._df_annotations_MAIA_transformed_lipids_brain_2[
-            "name"
-        ] = self._df_annotations_MAIA_transformed_lipids_brain_2["name"].map(
-            lambda x: x.split("_")[1]
-        )
+        # self._df_annotations_MAIA_transformed_lipids_brain_2[
+        #     "name"
+        # ] = self._df_annotations_MAIA_transformed_lipids_brain_2["name"].map(
+        #     lambda x: x.split("_")[1]
+        # )
 
     def get_annotations(self):
         return self._df_annotations

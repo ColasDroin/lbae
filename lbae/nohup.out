@@ -2621,3 +2621,54 @@ url pathname 18 None None /3D-exploration [] False
 2022-03-29 10:13:40.495 INFO misc - convert_image_to_base64: Image has been converted to base64. Returning it now.
 2022-03-29 10:13:40.495 INFO figures - compute_rgb_image_per_lipid_selection: Started building graph for slice 24	MemTotal: 2061.33203125
 2022-03-29 10:13:40.500 INFO figures - compute_rgb_image_per_lipid_selection: Returning fig for slice 24	MemTotal: 2061.33203125
+[2022-04-01 10:48:41 +0200] [16622] [CRITICAL] WORKER TIMEOUT (pid:20014)
+[2022-04-01 10:48:50 +0200] [20014] [INFO] Worker exiting (pid: 20014)
+[2022-04-01 10:49:09 +0200] [16622] [WARNING] Worker with pid 20014 was terminated due to signal 9
+[2022-04-01 10:49:09 +0200] [335105] [INFO] Booting worker with pid: 335105
+2022-04-01 10:49:10.725 INFO main - <module>: Starting import chain	MemTotal: 94.19921875
+2022-04-01 10:49:13.551 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 244.15234375
+2022-04-01 10:49:13.551 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 244.15234375
+[2022-04-01 10:49:17 +0200] [335105] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/gunicorn/arbiter.py", line 589, in spawn_worker
+    worker.init_process()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/gunicorn/workers/base.py", line 134, in init_process
+    self.load_wsgi()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/gunicorn/workers/base.py", line 146, in load_wsgi
+    self.wsgi = self.app.wsgi()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/gunicorn/app/base.py", line 67, in wsgi
+    self.callable = self.load()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/gunicorn/app/wsgiapp.py", line 58, in load
+    return self.load_wsgiapp()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/gunicorn/app/wsgiapp.py", line 48, in load_wsgiapp
+    return util.import_app(self.app_uri)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/gunicorn/util.py", line 359, in import_app
+    mod = importlib.import_module(module)
+  File "/home/colas/miniconda3/lib/python3.9/importlib/__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1030, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1007, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 986, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 680, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 850, in exec_module
+  File "<frozen importlib._bootstrap>", line 228, in _call_with_frames_removed
+  File "/home/colas/lbae/lbae/main.py", line 47, in <module>
+    from app import app
+  File "/home/colas/lbae/lbae/app.py", line 36, in <module>
+    data = MaldiData()
+  File "/home/colas/lbae/lbae/modules/maldi_data.py", line 143, in __init__
+    self._df_annotations["name"] = self._df_annotations["name"].map(lambda x: x.split("_")[1])
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/pandas/core/series.py", line 4161, in map
+    new_values = super()._map_values(arg, na_action=na_action)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/pandas/core/base.py", line 870, in _map_values
+    new_values = map_f(values, mapper)
+  File "pandas/_libs/lib.pyx", line 2859, in pandas._libs.lib.map_infer
+  File "/home/colas/lbae/lbae/modules/maldi_data.py", line 143, in <lambda>
+    self._df_annotations["name"] = self._df_annotations["name"].map(lambda x: x.split("_")[1])
+IndexError: list index out of range
+[2022-04-01 10:49:17 +0200] [335105] [INFO] Worker exiting (pid: 335105)
+[2022-04-01 10:49:18 +0200] [20013] [INFO] Worker exiting (pid: 20013)
+page-3-graph-heatmap-per-sel relayoutData 1 None None /region-analysis [] False
+url pathname 1 None None /load-slice [] False
+[2022-04-01 10:49:19 +0200] [16622] [INFO] Shutting down: Master
+[2022-04-01 10:49:19 +0200] [16622] [INFO] Reason: Worker failed to boot.
