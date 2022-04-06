@@ -13,7 +13,7 @@ import dash_mantine_components as dmc
 # Data module
 from app import figures, atlas, cache_flask
 import app
-from modules.tools.misc import return_db_object
+from modules.tools.misc import return_pickled_object
 
 ###### DEFFINE PAGE LAYOUT ######
 
@@ -103,7 +103,7 @@ def return_layout(basic_config, slice_index):
                                                             # "position": "absolute",
                                                             # "left": "0",
                                                         },
-                                                        figure=return_db_object(
+                                                        figure=return_pickled_object(
                                                             "figures/atlas_page/3D",
                                                             "treemaps",
                                                             force_update=True,
@@ -853,7 +853,7 @@ def page_4_plot_graph_volume(
                 )
             ]
 
-            return return_db_object(
+            return return_pickled_object(
                 "figures/3D_page",
                 "volume_interpolated_3D_"
                 + name_lipid_1
