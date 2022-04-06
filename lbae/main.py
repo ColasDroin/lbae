@@ -47,6 +47,7 @@ logging.info("Starting import chain" + logmem())
 from app import app
 from index import return_main_content, return_validation_layout
 
+# Redis initialization
 if app.use_redis:
     os.system("nohup ../redis/redis-6.2.6/src/redis-server ../redis/redis-6.2.6/src/redis.conf &")
 
@@ -70,12 +71,13 @@ server = app.server
 # ==================================================================================================
 if __name__ == "__main__":
     logging.info("Starting app" + logmem())
-    # try:
-    app.run_server(port=8073, debug=False)
-    # except:
-    #     if app.use_redis:
-    #         # Shut reddis server
-    #         os.system("../redis/redis-6.2.6/src/redis-cli shutdown")
-    #     else:
-    #         pass
+    try:
+        app.run_server(port=8073, debug=False)
+    except Exception as e:
+        print(e)
+        if app.use_redis:
+            # Shut reddis server
+            os.system("../redis/redis-6.2.6/src/redis-cli shutdown")
+        else:
+            pass
 

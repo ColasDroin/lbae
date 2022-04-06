@@ -10,7 +10,7 @@ import dash_draggable
 # App module
 import app
 from app import figures, atlas
-from modules.tools.misc import return_pickled_object
+from modules.tools.misc import return_db_object
 
 ###### DEFFINE PAGE LAYOUT ######
 
@@ -96,7 +96,7 @@ def return_layout(basic_config, slice_index):
                                                         "position": "absolute",
                                                         "left": "0",
                                                     },
-                                                    figure=return_pickled_object(
+                                                    figure=return_db_object(
                                                         "figures/atlas_page/3D",
                                                         "sunburst",
                                                         force_update=False,
@@ -163,7 +163,7 @@ def return_layout(basic_config, slice_index):
                                                 "position": "absolute",
                                                 "left": "0",
                                             },
-                                            figure=return_pickled_object(
+                                            figure=return_db_object(
                                                 "figures/atlas_page/3D",
                                                 "atlas_with_slider",
                                                 force_update=False,
@@ -223,7 +223,7 @@ def return_layout(basic_config, slice_index):
                                                         "position": "absolute",
                                                         "left": "0",
                                                     },
-                                                    figure=return_pickled_object(
+                                                    figure=return_db_object(
                                                         "figures/atlas_page/3D",
                                                         "",
                                                         force_update=False,
@@ -263,7 +263,7 @@ def tab_content(active_tab):
         view = "sagittal"
 
     if view is not None:
-        figure = return_pickled_object(
+        figure = return_db_object(
             "figures/atlas_page/3D",
             "atlas_with_slider",
             force_update=False,
@@ -311,7 +311,7 @@ def page_4_click(clickData):
             label = clickData["points"][0]["label"]
             acronym = atlas.dic_name_acronym[label]
             print("New 3d figure loading: ", label, acronym)
-            fig = return_pickled_object(
+            fig = return_db_object(
                 "figures/atlas_page/3D",
                 "",
                 force_update=False,

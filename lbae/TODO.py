@@ -17,7 +17,6 @@
 # TODO Make a docker container for the very final version of the app
 
 # ? Implement the app as a multipage app when the feature is available on Dash
-# ? Make layout perfect for every screen size. Maybe automate the process for a given figure shape?
 
 # http://cajal.epfl.ch:8050/
 

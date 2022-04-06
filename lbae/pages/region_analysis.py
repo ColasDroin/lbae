@@ -17,7 +17,7 @@ import dash_mantine_components as dmc
 import app
 from app import figures, data, atlas, cache_flask
 import config
-from modules.tools.misc import return_pickled_object, convert_image_to_base64
+from modules.tools.misc import return_db_object, convert_image_to_base64
 from modules.tools.spectra import (
     sample_rows_from_path,
     compute_spectrum_per_row_selection,
@@ -71,7 +71,7 @@ def return_layout(basic_config, slice_index=1):
                             "left": "2.5%",
                             # "max-height": "40vh",
                         },
-                        figure=return_pickled_object(
+                        figure=return_db_object(
                             "figures/load_page",
                             "figure_basic_image",
                             force_update=False,
@@ -810,7 +810,7 @@ def page_3_plot_heatmap(
         or id_input == "page-3-reset-button"
         or id_input == "url"
     ):
-        fig = return_pickled_object(
+        fig = return_db_object(
             "figures/load_page",
             "figure_basic_image",
             force_update=False,
@@ -840,7 +840,7 @@ def page_3_plot_heatmap(
         and cliked_reset is None
         and (l_mask_name is None or len(l_mask_name) == 0)
     ):
-        fig = return_pickled_object(
+        fig = return_db_object(
             "figures/load_page",
             "figure_basic_image",
             force_update=False,
@@ -861,7 +861,7 @@ def page_3_plot_heatmap(
 
     if id_input == "page-3-graph-heatmap-per-sel" or id_input == "page-3-dropdown-brain-regions":
         # Rebuild figure
-        fig = return_pickled_object(
+        fig = return_db_object(
             "figures/load_page",
             "figure_basic_image",
             force_update=False,
@@ -876,7 +876,7 @@ def page_3_plot_heatmap(
         if l_mask_name is not None:
 
             if len(l_mask_name) > 0:
-                # dic_masks = return_pickled_object(
+                # dic_masks = return_db_object(
                 #     "atlas/atlas_objects",
                 #     "dic_masks_and_spectra",
                 #     force_update=False,

@@ -19,9 +19,12 @@ from PIL import Image
 import shutil
 import psutil
 from numba import njit
+import transaction
 
 # LBAE modules
 from config import black_viridis
+from db import root
+from ZODB import blob
 
 # ==================================================================================================
 # --- Functions
@@ -40,7 +43,7 @@ def logmem():
     return "\t" + memory_string
 
 
-def return_pickled_object(
+def return_db_object(
     data_folder,
     file_name,
     force_update,
@@ -95,6 +98,62 @@ def return_pickled_object(
         # Save the result in a pickle file
         with open(path_folder + file_name, "wb") as file:
             pickle.dump(object, file)
+        logging.info(file_name + " being returned now from computation.")
+        return object
+
+
+def return_db_object(
+    data_folder,
+    file_name,
+    force_update,
+    compute_function,
+    ignore_arguments_naming=False,
+    **compute_function_args
+):
+    """This function checks if the result of the method or function compute_function has not been
+    computed and saved already. If yes, it returns this result from the corresponding ZODB file.
+    Else, it executes compute_function, saves the result in the ZODB file, and returns the result.
+
+    Args:
+        data_folder (str): The path of the folder in which the result of compute_function must be 
+            saved.
+        file_name (str): The name of the pickle file to save/load. Arguments will potentially be 
+            contatenated to file_name depending on the value of ignore_arguments_naming.
+        force_update (bool): If True, compute_function will be re-executed and saved despite the 
+            file result already existing.
+        compute_function (func): The function/method whose result must be loaded/saved.
+        ignore_arguments_naming (bool, optional): If True, the arguments of compute_function won't
+            be added to the filename of the result file. Defaults to False.
+        **compute_function_args: Arguments of compute_function.
+
+    Returns:
+        The result of compute_function. Type may vary depending on compute_function.
+    """
+    # Get path filename
+    complete_file_name = data_folder + "/" + file_name + "/"
+
+    # Complete filename with function arguments
+    if not ignore_arguments_naming:
+        for key, value in compute_function_args.items():
+            complete_file_name += "_" + str(value)
+
+    # Check if the object is in the folder already and return it
+    if complete_file_name in root.data and not force_update:
+        logging.info("Returning " + file_name + " from ZODB database." + logmem())
+        return root.data[complete_file_name]
+    else:
+        logging.info(
+            file_name
+            + " could not be found or force_update is True. "
+            + "Computing the object and storing it now."
+        )
+
+        # Execute compute_function
+        object = compute_function(**compute_function_args)
+
+        # Save the result in a pickle file
+        root.data[complete_file_name] = blob.Blob(object)
+        transaction.commit()
         logging.info(file_name + " being returned now from computation.")
         return object
 
