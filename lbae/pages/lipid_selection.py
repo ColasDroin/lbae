@@ -15,7 +15,7 @@ import dash_mantine_components as dmc
 # LBAE modules
 from app import figures, data
 import app
-from modules.tools.misc import return_pickled_object
+from modules.tools.misc import return_shelved_object
 
 HEIGHT_PLOTS = 280
 
@@ -83,7 +83,7 @@ def return_layout(basic_config, slice_index):
                                     children=[
                                         dmc.MultiSelect(
                                             id="page-2-dropdown-lipids",
-                                            data=return_pickled_object(
+                                            data=return_shelved_object(
                                                 "annotations/",
                                                 "lipid_options",
                                                 force_update=False,

@@ -15,7 +15,7 @@ import dash_bio as dashbio
 # Homemade functions
 from modules.tools import spectra
 from modules.tools.misc import (
-    return_pickled_object,
+    return_shelved_object,
     convert_image_to_base64,
 )
 from modules.tools.atlas import project_image, slice_to_atlas_transform
@@ -34,7 +34,7 @@ class Figures:
         self._atlas = atlas
 
         # Dic of basic contours figure (must be ultra fast because used with hovering)
-        self.dic_fig_contours = return_pickled_object(
+        self.dic_fig_contours = return_shelved_object(
             "figures/region_analysis",
             "dic_fig_contours",
             force_update=False,
@@ -42,7 +42,7 @@ class Figures:
         )
 
         # Dic of normalization factors across slices for MAIA normalized lipids
-        self.dic_normalization_factors = return_pickled_object(
+        self.dic_normalization_factors = return_shelved_object(
             "figures/lipid_selection",
             "dic_normalization_factors",
             force_update=False,
@@ -106,7 +106,7 @@ class Figures:
 
         else:
             # Get array of images
-            array_images = return_pickled_object(
+            array_images = return_shelved_object(
                 "figures/load_page",
                 "array_basic_images",
                 force_update=False,
@@ -186,7 +186,7 @@ class Figures:
     def compute_dic_fig_contours(self):
         dic = {}
         for slice_index in range(self._data.get_slice_number()):
-            fig = return_pickled_object(
+            fig = return_shelved_object(
                 "figures/load_page",
                 "figure_basic_image",
                 force_update=False,
@@ -208,7 +208,7 @@ class Figures:
         elif type_figure == "projection_corrected":
             array_images = self._atlas.array_projection_corrected
         elif type_figure == "atlas":
-            array_projected_images_atlas, array_projected_simplified_id = return_pickled_object(
+            array_projected_images_atlas, array_projected_simplified_id = return_shelved_object(
                 "atlas/atlas_objects",
                 "array_images_atlas",
                 force_update=False,
@@ -223,7 +223,7 @@ class Figures:
         self, type_figure="warped_data", plot_atlas_contours=False
     ):
         # Get array of images
-        array_images = return_pickled_object(
+        array_images = return_shelved_object(
             "figures/load_page",
             "array_basic_images",
             force_update=False,
@@ -883,7 +883,7 @@ class Figures:
     def compute_figure_slices_3D(self, reduce_resolution_factor=20):
 
         # get transform parameters (a,u,v) for each slice
-        l_transform_parameters = return_pickled_object(
+        l_transform_parameters = return_shelved_object(
             "atlas/atlas_objects",
             "l_transform_parameters",
             force_update=False,
@@ -1248,7 +1248,7 @@ class Figures:
         logging.info("Starting computing figure bubbles 3D")
 
         # Get 3D arrays for lipid distribution
-        array_x, array_y, array_z, array_c = return_pickled_object(
+        array_x, array_y, array_z, array_c = return_shelved_object(
             "figures/3D_page",
             "arrays_3D_" + name_lipid_1 + "_" + name_lipid_2 + "_" + name_lipid_3,
             force_update=False,
@@ -1461,7 +1461,7 @@ class Figures:
 
     def compute_3D_figure(self, structure=None):
 
-        root_lines = return_pickled_object(
+        root_lines = return_shelved_object(
             "figures/atlas_page/3D",
             "root",
             force_update=False,
@@ -1637,7 +1637,7 @@ class Figures:
         logging.info("Computed basic structure array")
 
         # Return the lipid expression in 3D
-        array_x, array_y, array_z, array_c = return_pickled_object(
+        array_x, array_y, array_z, array_c = return_shelved_object(
             "figures/3D_page",
             "arrays_3D_" + name_lipid_1 + "_" + name_lipid_2 + "_" + name_lipid_3,
             force_update=False,
@@ -1790,7 +1790,7 @@ class Figures:
         )
 
         # Get root figure
-        root_data = return_pickled_object(
+        root_data = return_shelved_object(
             "figures/3D_page",
             "volume_root",
             force_update=False,
@@ -2047,7 +2047,7 @@ class Figures:
                         name_lipid_2 = ""
                         name_lipid_3 = ""
 
-                        return_pickled_object(
+                        return_shelved_object(
                             "figures/3D_page",
                             "volume_interpolated_3D_"
                             + name_lipid_1

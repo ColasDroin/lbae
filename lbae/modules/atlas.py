@@ -27,7 +27,7 @@ from modules.tools.atlas import (
 )
 from modules.tools.spectra import compute_spectrum_per_row_selection
 from modules.atlas_labels import Labels, LabelContours
-from modules.tools.misc import return_db_object, convert_image_to_base64
+from modules.tools.misc import return_shelved_object, convert_image_to_base64
 from modules.tools.misc import logmem
 
 #! Overall, see if I can memmap all the objects in this class
@@ -68,7 +68,7 @@ class Atlas:
         self._simplified_labels_int = None
 
         # Compute a dictionnary that associates to each structure (acronym) the set of ids (int) of all of its children
-        self.dic_acronym_children_id = return_db_object(
+        self.dic_acronym_children_id = return_shelved_object(
             "atlas/atlas_objects",
             "dic_acronym_children_id",
             force_update=False,
@@ -89,7 +89,7 @@ class Atlas:
             self.l_parents,
             self.dic_name_acronym,
             self.dic_acronym_name,
-        ) = return_db_object(
+        ) = return_shelved_object(
             "atlas/atlas_objects",
             "hierarchy",
             force_update=False,
@@ -97,7 +97,7 @@ class Atlas:
         )
 
         # Array_projection_corrected is used a lot
-        self.array_projection_correspondence_corrected = return_db_object(
+        self.array_projection_correspondence_corrected = return_shelved_object(
             "atlas/atlas_objects",
             "arrays_projection_corrected",
             force_update=False,
@@ -119,7 +119,7 @@ class Atlas:
     # Load arrays of images using atlas projection
     @property
     def array_projection_corrected(self):
-        (array_projection_corrected, _, _,) = return_db_object(
+        (array_projection_corrected, _, _,) = return_shelved_object(
             "atlas/atlas_objects",
             "arrays_projection_corrected",
             force_update=False,
@@ -131,7 +131,7 @@ class Atlas:
 
     @property
     def l_original_coor(self):
-        (_, _, l_original_coor,) = return_db_object(
+        (_, _, l_original_coor,) = return_shelved_object(
             "atlas/atlas_objects",
             "arrays_projection_corrected",
             force_update=False,
@@ -151,7 +151,7 @@ class Atlas:
     # Load array of projected atlas borders
     @property
     def list_projected_atlas_borders_arrays(self):
-        return return_db_object(
+        return return_shelved_object(
             "atlas/atlas_objects",
             "list_projected_atlas_borders_arrays",
             force_update=False,
@@ -227,7 +227,7 @@ class Atlas:
 
         # list of orginal coordinates
         l_original_coor = []
-        l_transform_parameters = return_db_object(
+        l_transform_parameters = return_shelved_object(
             "atlas/atlas_objects",
             "l_transform_parameters",
             force_update=False,
@@ -293,7 +293,7 @@ class Atlas:
     def compute_list_projected_atlas_borders_figures(self):
         l_array_images = []
         # Load array of atlas images corresponding to our data and how it is projected
-        array_projected_images_atlas, array_projected_simplified_id = return_db_object(
+        array_projected_images_atlas, array_projected_simplified_id = return_shelved_object(
             "atlas/atlas_objects",
             "array_images_atlas",
             force_update=False,
@@ -329,6 +329,7 @@ class Atlas:
 
         return l_array_images
 
+    # ! See if I can numba-ize that
     # * This is quite long to execute (~10mn)
     def compute_array_images_atlas(self, zero_out_of_annotation=False):
         array_images = np.empty(self.array_coordinates_warped_data.shape[:-1], dtype=np.uint8)
