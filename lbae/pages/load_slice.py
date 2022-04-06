@@ -13,7 +13,7 @@ import dash_mantine_components as dmc
 # LBAE modules
 import app
 from app import figures, data
-from modules.tools.misc import return_db_object
+from modules.tools.misc import return_pickled_object
 
 ###### DEFFINE PAGE LAYOUT ######
 # ! It seems that some things (useless?) are loaded at startup and take time
@@ -97,7 +97,7 @@ def return_layout(basic_config, slice_index):
                             }
                         },
                         # | {"staticPlot": True},
-                        figure=return_db_object(
+                        figure=return_pickled_object(
                             "figures/load_page",
                             "figure_basic_image",
                             force_update=False,
@@ -200,7 +200,7 @@ def tab_1_load_image(value_slider, active_tab, display_annotations):
         }
 
         # Force no annotation for the original data
-        return return_db_object(
+        return return_pickled_object(
             "figures/load_page",
             "figure_basic_image",
             force_update=False,
@@ -276,7 +276,7 @@ def toggle_modal(n1, is_open):
 )
 def page_1_plot_graph_modal(n1):
     if n1:
-        return return_db_object(
+        return return_pickled_object(
             "figures/3D_page",
             "slices_3D",
             force_update=True,
