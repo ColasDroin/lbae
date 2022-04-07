@@ -1982,7 +1982,7 @@ class Figures:
         return fig_heatmap_lipids
 
     ###### PICKLING FUNCTIONS ######
-    def pickle_all_figure_3D(self, force_update=False):
+    def shelve_all_figure_3D(self, force_update=False):
 
         # simulate a click on all lipid names
         for name in sorted(self._data.get_annotations().name.unique()):

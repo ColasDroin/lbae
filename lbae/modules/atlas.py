@@ -4,7 +4,6 @@
 import numpy as np
 import os
 import matplotlib.pyplot as plt
-import pickle
 import plotly.graph_objects as go
 from bg_atlasapi import BrainGlobeAtlas
 from PIL import Image
@@ -27,7 +26,7 @@ from modules.tools.atlas import (
 )
 from modules.tools.spectra import compute_spectrum_per_row_selection
 from modules.atlas_labels import Labels, LabelContours
-from modules.tools.misc import return_shelved_object, convert_image_to_base64
+from modules.tools.misc import return_shelved_object, dump_shelved_object, load_shelved_object
 from modules.tools.misc import logmem
 
 #! Overall, see if I can memmap all the objects in this class
@@ -75,7 +74,8 @@ class Atlas:
             compute_function=self.compute_dic_acronym_children_id,
         )
 
-        # Load array of coordinates for warped data (can't be pickled as used with hovering)
+        # Load array of coordinates for warped data (can't be load on the fly from shelve as used
+        # with hovering)
         self.array_coordinates_warped_data = np.array(
             skimage.io.imread("data/tiff_files/coordinates_warped_data.tif"), dtype=np.float32
         )
@@ -108,8 +108,9 @@ class Atlas:
 
         # Dictionnary of existing masks per slice, which associates slice index (key) to a set of masks acronyms
         try:
-            with open("data/atlas/atlas_objects/dic_existing_masks" + ".pickle", "rb") as file:
-                self.dic_existing_masks = pickle.load(file)
+            self.dic_existing_masks = load_shelved_object(
+                "data/atlas/atlas_objects", "dic_existing_masks"
+            )
         except:
             logging.info(
                 "The dictionnary of available mask per slice has not been computed yet, doing it now."
@@ -471,34 +472,31 @@ class Atlas:
                     slice_index, projected_mask, MAIA_correction=False
                 )
 
-                # Dump the mask and data with pickle
-                with open(
-                    "data/atlas/atlas_objects/mask_and_spectrum_"
-                    + str(slice_index)
-                    + "_"
-                    + str(id_mask).replace("/", "")
-                    + ".pickle",
-                    "wb",
-                ) as file:
-                    pickle.dump((projected_mask, grah_scattergl_data), file)
+                # Dump the mask and data with shelve
+                dump_shelved_object(
+                    "data/atlas/atlas_objects",
+                    "mask_and_spectrum_" + str(slice_index) + "_" + str(id_mask).replace("/", ""),
+                    (projected_mask, grah_scattergl_data),
+                )
 
                 # Same with MAIA corrected data
                 grah_scattergl_data = self.compute_spectrum_data(
                     slice_index, projected_mask, MAIA_correction=True
                 )
-                with open(
-                    "data/atlas/atlas_objects/mask_and_spectrum_MAIA_corrected_"
+
+                dump_shelved_object(
+                    "data/atlas/atlas_objects",
+                    "mask_and_spectrum_MAIA_corrected_"
                     + str(slice_index)
                     + "_"
-                    + str(id_mask).replace("/", "")
-                    + ".pickle",
-                    "wb",
-                ) as file:
-                    pickle.dump((projected_mask, grah_scattergl_data), file)
+                    + str(id_mask).replace("/", ""),
+                    (projected_mask, grah_scattergl_data),
+                )
 
-        # Dump the dictionnary of existing masks with pickle
-        with open("data/atlas/atlas_objects/dic_existing_masks" + ".pickle", "wb") as file:
-            pickle.dump(dic_existing_masks, file)
+        # Dump the dictionnary of existing masks with shelve
+        dump_shelved_object(
+            "data/atlas/atlas_objects", "dic_existing_masks", dic_existing_masks,
+        )
 
         logging.info("Projected masks and spectra have all been computed.")
         self.dic_existing_masks = dic_existing_masks
@@ -506,27 +504,20 @@ class Atlas:
     def get_projected_mask_and_spectrum(self, slice_index, mask_name, MAIA_correction=False):
         id_mask = self.dic_name_acronym[mask_name]
         if MAIA_correction:
-            path = (
-                "data/atlas/atlas_objects/mask_and_spectrum_MAIA_corrected_"
+            filename = (
+                "mask_and_spectrum_MAIA_corrected_"
                 + str(slice_index)
                 + "_"
                 + str(id_mask).replace("/", "")
-                + ".pickle"
             )
         else:
-            path = (
-                "data/atlas/atlas_objects/mask_and_spectrum_"
-                + str(slice_index)
-                + "_"
-                + str(id_mask).replace("/", "")
-                + ".pickle"
-            )
+            filename = "mask_and_spectrum_" + str(slice_index) + "_" + str(id_mask).replace("/", "")
+
         logging.info(
-            "Loading " + mask_name + " for slice " + str(slice_index) + " from pickle file."
+            "Loading " + mask_name + " for slice " + str(slice_index) + " from shelve file."
         )
         try:
-            with open(path, "rb") as file:
-                return pickle.load(file)
+            load_shelved_object("data/atlas/atlas_objects", filename)
         except:
             logging.warning(
                 "The mask and spectrum data could not be found for "
