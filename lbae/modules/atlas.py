@@ -48,7 +48,7 @@ class Atlas:
         self.data = maldi_data
 
         # Load or download the atlas if it's the first time
-        brainglobe_dir = "data/atlas/brain_globe/"
+        brainglobe_dir = "data/atlas/"
         os.makedirs(brainglobe_dir, exist_ok=True)
         self.bg_atlas = BrainGlobeAtlas(
             "allen_mouse_" + str(resolution) + "um",
