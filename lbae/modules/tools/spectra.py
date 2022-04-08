@@ -45,7 +45,7 @@ def convert_coor_to_spectrum_idx(coordinate, shape):
         shape (tuple(int)): Shape of the MALDI acquisition of the corresponding slice.
 
     Returns:
-        (int): Pixel index in a flattened version of the slice image.
+        int: Pixel index in a flattened version of the slice image.
     """
     ind = coordinate[0] * shape[1] + coordinate[1]
     if ind >= shape[0] * shape[1]:
@@ -141,7 +141,7 @@ def convert_array_to_fine_grained(array, resolution, lb=350, hb=1250):
         hb (int, optional): Higher bound for the fine-grained array. Defaults to 1250.
 
     Returns:
-        (np.ndarray): A sparse, fine-grained array of shape (2,m) containing spectrum data (m/z and 
+        np.ndarray: A sparse, fine-grained array of shape (2,m) containing spectrum data (m/z and 
         intensity).
     """
     # Build an empty (zeroed) array with the requested uncompressed size
@@ -165,7 +165,7 @@ def strip_zeros(array):
             and intensity).
 
     Returns:
-        (np.ndarray): The same array stripped from its zero intensity values. Now of shape (2,m).
+        np.ndarray: The same array stripped from its zero intensity values. Now of shape (2,m).
     """
     # Look for the non-zero values and store them in l_to_keep
     l_to_keep = [idx for idx, x in enumerate(array[1, :]) if x != 0 and not np.isnan(x)]
@@ -1255,8 +1255,7 @@ def compute_avg_intensity_per_lipid(l_intensity_with_lipids, l_idx_labels):
 
     Returns:
         list(int), list(float): The first list provides the lipid indices, while the second provide 
-        the lipid average 
-            intensities. Peaks corresponding to identical lipid have been averaged.
+        the lipid average intensities. Peaks corresponding to identical lipid have been averaged.
     """
     # Define empty lists for the lipid indices and intensities
     l_unique_idx_labels = []

@@ -17,8 +17,7 @@ from numba import njit
 # --- Functions
 # ==================================================================================================
 
-# Define a numba function to accelerate the loop in which the ccfv3 coordinates are computed and the
-# final arrays are filled
+
 @njit
 def filter_voxels(
     array_data_stripped,
@@ -33,6 +32,31 @@ def filter_voxels(
     reference_shape,
     resolution,
 ):
+    """This function takes a given array of coordinates 'coordinates_stripped' and checks if it
+    corresponds to a given annotation in the atlas. If so, the coordinates are added to the arrays
+    'array_x', 'array_y', 'array_z' to be used for the 3D graphing. Else, it's filtered out.
+
+    Args:
+        array_data_stripped (np.ndarray): A 2-dimensional array of voxel intensity for the current 
+            slice, stripped of zero values.
+        coordinates_stripped (np.ndarray): A 2-dimensional array of voxel coordinates for the current 
+            slice, stripped of zero values.
+        array_annotations (np.ndarray): The 3-dimensional array of annotation coming from the Allen 
+            Brain Atlas.
+        percentile (float): The value above which the voxels are considered for the graphing.
+        array_x (np.ndarray): A flat array of x coordinates for the 3D graphing.
+        array_y (np.ndarray): A flat array of y coordinates for the 3D graphing.
+        array_z (np.ndarray): A flat array of z coordinates for the 3D graphing.
+        array_c (np.ndarray): A flat array of color values (float) for the 3D graphing.
+        total_index (int): An integer used to keep track of the array indexing outside of this 
+            function.
+        reference_shape (np.ndarray): Array containing the reference atlas shape.
+        resolution (int): Integer representing the resolution of the atlas.
+
+    Returns:
+        (np.ndarray, np.ndarray, np.ndarray, np.ndarray, int): The filled arrays of coordinates or 
+            color for the current slice, and the updated total_index.
+    """
     # Keep track of the array indexing even outside of this function
     total_index_temp = 0
     for i in range(array_data_stripped.shape[0]):
@@ -55,8 +79,7 @@ def filter_voxels(
         if array_annotations[x_temp, y_temp, z_temp] == 0:
             continue
 
-        # if array_data_stripped[i] >= percentile:
-        if True:
+        if array_data_stripped[i] >= percentile:
             # * careful, x,y,z are switched
             array_x[total_index + total_index_temp] = z_atlas
             array_y[total_index + total_index_temp] = x_atlas
@@ -68,17 +91,33 @@ def filter_voxels(
     return array_x, array_y, array_z, array_c, total_index
 
 
-# Compute an array of boundaries for volume plot
-# -2 is outside brain
-# -0.1 is border
-# -0.01 is inside brain/structure
-# the -0.01 numbers get changed after assignment to lipid expression
-
-# ! need to opitmize by turning keep_structure_id into a set
+# * This function could be optimized by turning keep_structure_id into a set
 @njit
 def fill_array_borders(
     array_annotation, differentiate_borders=False, color_near_borders=False, keep_structure_id=None
 ):
+    """This function takes the Allen Brain atlas array of annotation and returns an array 
+    representing the borders of the atlas, to be used later for the volume plot. Values in the array
+    are as follows:
+    -2 is outside brain
+    -0.1 is border
+    -0.01 is inside brain/structure
+    NB: the -0.01 values get changed after assignment to lipid expression, later on in 
+    fill_array_interpolation.
+
+    Args:
+        array_annotation (np.ndarray): Three-dimensional array of annotation coming from the Allen 
+            Brain Atlas.
+        differentiate_borders (bool, optional): If True, represent the brain border with a different 
+            value. Defaults to False.
+        color_near_borders (bool, optional): If True, the region surrounding the brain border is 
+            also filled. Defaults to False.
+        keep_structure_id (np.ndarray, optional): Array containing the id of the brain regions whose 
+            border must be annotated. Defaults to None.
+
+    Returns:
+        np.ndarray: A numpy array representing the borders of the atlas.
+    """
     array_atlas_borders = np.full_like(array_annotation, -2.0, dtype=np.float32)
     for x in range(1, array_annotation.shape[0] - 1):
         for y in range(1, array_annotation.shape[1] - 1):
@@ -111,17 +150,18 @@ def fill_array_borders(
                     else:
                         array_atlas_borders[x, y, z] = -0.01
 
-    # if color_near_borders:
-    #     for x in range(1, array_annotation.shape[0] - 1):
-    #         for y in range(1, array_annotation.shape[1] - 1):
-    #             for z in range(1, array_annotation.shape[2] - 1):
-    #                 if np.abs(array_atlas_borders[x, y, z] - (-0.1)) < 10 ** -4:
-    #                     for xt in range(x - 1, x + 2):
-    #                         for yt in range(y - 1, y + 2):
-    #                             for zt in range(z - 1, z + 2):
-    #                                 # not on the border
-    #                                 if np.abs(array_atlas_borders[xt, yt, zt] - (-0.1)) > 10 ** -4:
-    #                                     array_atlas_borders[xt, yt, zt] = -0.2
+    # Also color the region surrounding the border
+    if color_near_borders:
+        for x in range(1, array_annotation.shape[0] - 1):
+            for y in range(1, array_annotation.shape[1] - 1):
+                for z in range(1, array_annotation.shape[2] - 1):
+                    if np.abs(array_atlas_borders[x, y, z] - (-0.1)) < 10 ** -4:
+                        for xt in range(x - 1, x + 2):
+                            for yt in range(y - 1, y + 2):
+                                for zt in range(z - 1, z + 2):
+                                    # not on the border
+                                    if np.abs(array_atlas_borders[xt, yt, zt] - (-0.1)) > 10 ** -4:
+                                        array_atlas_borders[xt, yt, zt] = -0.2
 
     return array_atlas_borders
 
@@ -129,6 +169,20 @@ def fill_array_borders(
 # Do interpolation between the slices
 @njit
 def fill_array_interpolation(array_annotation, array_slices, divider_radius=5):
+    """This function is used to fill the empty space (unassigned voxels) between the slices with 
+    interpolated values.
+
+    Args:
+        array_annotation (np.ndarray): Three-dimensional array of annotation coming from the Allen 
+            Brain Atlas.
+        array_slices (np.ndarray): Three-dimensional array containing the lipid intensity values 
+            from the MALDI experiments (with many unassigned voxels).
+        divider_radius (int, optional): Divides the radius of the region used for interpolation 
+            (the bigger, the lower the number of voxels used). Defaults to 5.
+
+    Returns:
+        np.ndarray: A three-dimensional array containing the interpolated lipid intensity values.
+    """
     array_interpolated = np.copy(array_slices)
     for x in range(0, array_annotation.shape[0]):
         for y in range(0, array_annotation.shape[1]):

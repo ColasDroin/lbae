@@ -13,7 +13,7 @@ import dash_mantine_components as dmc
 # Data module
 from app import figures, atlas, cache_flask
 import app
-from modules.tools.misc import return_shelved_object
+from modules.tools.storage import return_shelved_object
 
 ###### DEFFINE PAGE LAYOUT ######
 

@@ -523,6 +523,8 @@ class Atlas:
                         + str(id_mask).replace("/", ""),
                         (projected_mask, grah_scattergl_data),
                     )
+                else:
+                    dic_existing_masks[slice_index].add(id_mask)
 
         # Dump the dictionnary of existing masks with shelve
         dump_shelved_object(

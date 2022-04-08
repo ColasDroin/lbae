@@ -1201,7 +1201,8 @@ class Figures:
                     continue
 
                 # Compute the percentile of expression to filter out lowly expressed pixels
-                percentile = np.percentile(array_data_stripped, 10)
+                # Set to 0 for now, as no filtering is done
+                percentile = 0 #np.percentile(array_data_stripped, 10)
 
                 # Get the coordinates of the pixels in the ccfv3
                 coordinates = l_coor[slice_index]
