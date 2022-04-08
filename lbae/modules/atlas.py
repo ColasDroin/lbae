@@ -26,7 +26,12 @@ from modules.tools.atlas import (
 )
 from modules.tools.spectra import compute_spectrum_per_row_selection
 from modules.atlas_labels import Labels, LabelContours
-from modules.tools.misc import return_shelved_object, dump_shelved_object, load_shelved_object
+from modules.tools.misc import (
+    return_shelved_object,
+    dump_shelved_object,
+    load_shelved_object,
+    check_shelved_object,
+)
 from modules.tools.misc import logmem
 
 #! Overall, see if I can memmap all the objects in this class
@@ -107,13 +112,14 @@ class Atlas:
         )[1]
 
         # Dictionnary of existing masks per slice, which associates slice index (key) to a set of masks acronyms
-        try:
+        if check_shelved_object("data/atlas/atlas_objects", "dic_existing_masks"):
             self.dic_existing_masks = load_shelved_object(
                 "data/atlas/atlas_objects", "dic_existing_masks"
             )
-        except:
+        else:
             logging.info(
-                "The dictionnary of available mask per slice has not been computed yet, doing it now."
+                "The dictionnary of available mask per slice has not been computed yet."
+                + "Doing it now, This will take several hours."
             )
             self.save_all_projected_masks_and_spectra()
 
@@ -433,10 +439,13 @@ class Atlas:
             )
         return grah_scattergl_data
 
-    def save_all_projected_masks_and_spectra(self):
+    def save_all_projected_masks_and_spectra(self, force_update=False):
 
         # Define a dictionnary that contains all the masks that exist for every slice
         dic_existing_masks = {}
+
+        # Path atlas for shelving
+        path_atlas = "data/atlas/atlas_objects"
 
         for slice_index in range(self.data.get_slice_number()):
             logging.info("Starting slice " + str(slice_index))
@@ -451,51 +460,73 @@ class Atlas:
 
             # Get hierarchical tree of brain structures -
             for mask_name, id_mask in self.dic_name_acronym.items():
-                # get the array corresponding to the projected mask
-                stack_mask = self.get_atlas_mask(id_mask)
-                projected_mask = project_atlas_mask(
-                    stack_mask, slice_coor_rescaled, self.bg_atlas.reference.shape
-                )
-                if np.sum(projected_mask) == 0:
-                    logging.info(
-                        "The structure "
-                        + mask_name
-                        + " is not present in slice "
-                        + str(slice_index)
+                if (
+                    not (
+                        check_shelved_object(
+                            path_atlas,
+                            "mask_and_spectrum_"
+                            + str(slice_index)
+                            + "_"
+                            + str(id_mask).replace("/", ""),
+                        )
+                        and check_shelved_object(
+                            path_atlas,
+                            "mask_and_spectrum_MAIA_corrected_"
+                            + str(slice_index)
+                            + "_"
+                            + str(id_mask).replace("/", ""),
+                        )
                     )
-                    continue
-                else:
-                    dic_existing_masks[slice_index].add(id_mask)
+                    or force_update
+                ):
+                    # get the array corresponding to the projected mask
+                    stack_mask = self.get_atlas_mask(id_mask)
+                    projected_mask = project_atlas_mask(
+                        stack_mask, slice_coor_rescaled, self.bg_atlas.reference.shape
+                    )
+                    if np.sum(projected_mask) == 0:
+                        logging.info(
+                            "The structure "
+                            + mask_name
+                            + " is not present in slice "
+                            + str(slice_index)
+                        )
+                        continue
+                    else:
+                        dic_existing_masks[slice_index].add(id_mask)
 
-                # Compute average spectrum in the mask
-                grah_scattergl_data = self.compute_spectrum_data(
-                    slice_index, projected_mask, MAIA_correction=False
-                )
+                    # Compute average spectrum in the mask
+                    grah_scattergl_data = self.compute_spectrum_data(
+                        slice_index, projected_mask, MAIA_correction=False
+                    )
 
-                # Dump the mask and data with shelve
-                dump_shelved_object(
-                    "data/atlas/atlas_objects",
-                    "mask_and_spectrum_" + str(slice_index) + "_" + str(id_mask).replace("/", ""),
-                    (projected_mask, grah_scattergl_data),
-                )
+                    # Dump the mask and data with shelve
+                    dump_shelved_object(
+                        path_atlas,
+                        "mask_and_spectrum_"
+                        + str(slice_index)
+                        + "_"
+                        + str(id_mask).replace("/", ""),
+                        (projected_mask, grah_scattergl_data),
+                    )
 
-                # Same with MAIA corrected data
-                grah_scattergl_data = self.compute_spectrum_data(
-                    slice_index, projected_mask, MAIA_correction=True
-                )
+                    # Same with MAIA corrected data
+                    grah_scattergl_data = self.compute_spectrum_data(
+                        slice_index, projected_mask, MAIA_correction=True
+                    )
 
-                dump_shelved_object(
-                    "data/atlas/atlas_objects",
-                    "mask_and_spectrum_MAIA_corrected_"
-                    + str(slice_index)
-                    + "_"
-                    + str(id_mask).replace("/", ""),
-                    (projected_mask, grah_scattergl_data),
-                )
+                    dump_shelved_object(
+                        path_atlas,
+                        "mask_and_spectrum_MAIA_corrected_"
+                        + str(slice_index)
+                        + "_"
+                        + str(id_mask).replace("/", ""),
+                        (projected_mask, grah_scattergl_data),
+                    )
 
         # Dump the dictionnary of existing masks with shelve
         dump_shelved_object(
-            "data/atlas/atlas_objects", "dic_existing_masks", dic_existing_masks,
+            path_atlas, "dic_existing_masks", dic_existing_masks,
         )
 
         logging.info("Projected masks and spectra have all been computed.")
