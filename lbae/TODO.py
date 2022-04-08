@@ -14,7 +14,7 @@
 # TODO Add an icon for documentation in the left bar
 # TODO Make a tour with dash_tour_component?
 # TODO Redesign repo according to : https://dev.to/codemouse92/dead-simple-python-project-structure-and-imports-38c6
-# TODO Make a sample with version of the app
+# TODO Make a sample version of the app and host on heroku
 # TODO Make a docker container for the very final version of the app
 
 # ? Implement the app as a multipage app when the feature is available on Dash

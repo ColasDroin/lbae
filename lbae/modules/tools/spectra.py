@@ -1281,11 +1281,21 @@ def compute_avg_intensity_per_lipid(l_intensity_with_lipids, l_idx_labels):
     return l_unique_idx_labels, l_avg_intensity
 
 
-# ! Need to write docstring
-# Global function to memoize/compute lipid label indexes
 # Not cached as the caching/retrieving takes as long as the function itself
 # @cache.memoize()
 def global_lipid_index_store(data, slice_index, l_spectra):
+    """This function is used to extract the lipid label indexes for a given list of spectra, coming 
+    from a given slice (slice_index).
+
+    Args:
+        data (MaldiData): The object used to access the MALDI data.
+        slice_index (int): Index of the current slice.
+        l_spectra (list(np.ndarray)): A list of spectra (two dimensional numpy arrays), coming from 
+            the slice having index slice_index.
+
+    Returns:
+        list(list(str)): A list of list of lipid labels, one list per spectrum.
+    """
     logging.info("Starting computing ll_idx_labels")
     ll_idx_labels = []
     for spectrum in l_spectra:
