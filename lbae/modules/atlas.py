@@ -26,7 +26,7 @@ from modules.tools.atlas import (
 )
 from modules.tools.spectra import compute_spectrum_per_row_selection
 from modules.atlas_labels import Labels, LabelContours
-from modules.tools.misc import (
+from modules.tools.storage import (
     return_shelved_object,
     dump_shelved_object,
     load_shelved_object,

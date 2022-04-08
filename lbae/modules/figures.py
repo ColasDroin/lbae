@@ -14,10 +14,8 @@ import dash_bio as dashbio
 
 # Homemade functions
 from modules.tools import spectra
-from modules.tools.misc import (
-    return_shelved_object,
-    convert_image_to_base64,
-)
+from modules.tools.image import convert_image_to_base64
+from modules.tools.storage import return_shelved_object
 from modules.tools.atlas import project_image, slice_to_atlas_transform
 from modules.tools.misc import logmem
 from modules.tools.volume import filter_voxels, fill_array_borders, fill_array_interpolation

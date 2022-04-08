@@ -1,10 +1,22 @@
-###### IMPORT MODULES ######
+# Copyright (c) 2022, Colas Droin. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+
+""" In this module, functions linking the MALDI data to the CCFv3 (e.g. getting mask or resolution 
+change) are defined.
+"""
+
+# ==================================================================================================
+# --- Imports
+# ==================================================================================================
+
 # Standard import
 import logging
 import numpy as np
 from numba import njit
 
-###### DEFINE UTILITY FUNCTIONS ######
+# ==================================================================================================
+# --- Functions
+# ==================================================================================================
 @njit
 def project_image(slice_index, original_image, array_projection_correspondence):
     """This function is used to project the original maldi acquisition (low-resolution, possibly 

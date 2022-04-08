@@ -1,13 +1,21 @@
-###### IMPORT MODULES ######
+# Copyright (c) 2022, Colas Droin. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+
+""" In this module, functions used to handle 3D graphing (e.g. voxel filtering, interpolations, etc) 
+are defined.
+"""
+
+# ==================================================================================================
+# --- Imports
+# ==================================================================================================
 
 # Standard modules
 import numpy as np
 from numba import njit
-import logging
 
-# TODO : do docstrings of the functions here
-
-###### FUNCTIONS USED IN 3D GRAPHING ######
+# ==================================================================================================
+# --- Functions
+# ==================================================================================================
 
 # Define a numba function to accelerate the loop in which the ccfv3 coordinates are computed and the
 # final arrays are filled

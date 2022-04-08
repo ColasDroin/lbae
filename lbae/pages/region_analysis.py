@@ -17,7 +17,9 @@ import dash_mantine_components as dmc
 import app
 from app import figures, data, atlas, cache_flask
 import config
-from modules.tools.misc import return_shelved_object, convert_image_to_base64
+from modules.tools.storage import return_shelved_object
+from modules.tools.image import convert_image_to_base64
+
 from modules.tools.spectra import (
     sample_rows_from_path,
     compute_spectrum_per_row_selection,

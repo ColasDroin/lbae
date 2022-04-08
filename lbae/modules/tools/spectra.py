@@ -1,14 +1,25 @@
-###### IMPORT MODULES ######
+# Copyright (c) 2022, Colas Droin. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+
+""" In this module, functions used to handle the MALDI data (e.g. get all pixels values for a given 
+lipid annoation, for of a given slice) are defined.
+"""
+
+# ==================================================================================================
+# --- Imports
+# ==================================================================================================
 
 # Standard modules
 import numpy as np
 from numba import njit, jit
 import logging
 
-# Homemade packages
+# mspec module
 from modules.tools.external_lib.mspec import reduce_resolution_sorted
 
-###### FUNCTIONS TO CONVERT PIXEL COORDINATES ######
+# ==================================================================================================
+# --- Functions
+# ==================================================================================================
 @njit
 def convert_spectrum_idx_to_coor(index, shape):
     """This function takes a pixel index and converts it into a tuple of integers representing the 
