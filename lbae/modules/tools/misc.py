@@ -75,6 +75,26 @@ def load_shelved_object(data_folder, file_name):
         return db[complete_file_name]
 
 
+def check_shelved_object(data_folder, file_name):
+    """This function checks if an object is in a shelve database.
+
+    Args:
+        data_folder (str): The path of the folder in which the object must be 
+            saved.
+        file_name (str): The name of the file to save/load.
+    """
+
+    # Get complete file name
+    complete_file_name = data_folder + "/" + file_name
+
+    # Load from in db
+    with shelve.open("data/app_data/data.db") as db:
+        if complete_file_name in db:
+            return True
+        else:
+            return False
+
+
 def return_shelved_object(
     data_folder,
     file_name,
