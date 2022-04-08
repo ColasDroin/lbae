@@ -89,55 +89,10 @@ def return_main_content():
             # Record the lipids expressed in the region in page 3
             dcc.Store(id="page-3-dcc-store-lipids-region", data=[]),
             # Actual app layout
-            # dbc.Container(
-            #    fluid=True,
             html.Div(
                 children=[
                     sidebar.layout,
                     html.Div(id="content"),
-                    # dmc.Center(
-                    #     id="main-slider-center",
-                    #     children=dmc.Group(
-                    #         direction="column",
-                    #         spacing=0,  # "xs",
-                    #         children=[
-                    #             html.Div(children="Slice: ", className="fs-5 text-light",),
-                    #             dcc.Slider(
-                    #                 id="main-slider",
-                    #                 min=1,
-                    #                 max=data.get_slice_number(),
-                    #                 step=1,
-                    #                 marks=[
-                    #                     {
-                    #                         "value": slice_index,
-                    #                         "label": str(data.get_slice_number() - slice_index + 1),
-                    #                     }
-                    #                     for slice_index in range(0, data.get_slice_number() + 1)
-                    #                 ],
-                    #                 # tooltip={"placement": "right", "always_visible": True,},
-                    #                 # class_name="pb-3",
-                    #                 value=data.get_slice_number(),
-                    #                 vertical=True,
-                    #                 className="ml-1",
-                    #                 included=False,
-                    #             ),
-                    #             # dmc.SegmentedControl(
-                    #             #     data=[
-                    #             #         dict(label=str(slice_index), value=slice_index)
-                    #             #         for slice_index in range(1, data.get_slice_number() + 1)
-                    #             #     ],
-                    #             #     id="main-slider",
-                    #             #     value=2,
-                    #             #     radius="sm",
-                    #             #     color="cyan",
-                    #             #     #orientation="vertical",
-                    #             # ),
-                    #         ],
-                    #     ),
-                    #     style={"position": "fixed", "left": "10rem", "top": "30%",},
-                    # ),
-                    # Space to ensure the slider for sections doesn't hide anything
-                    # dmc.Paper(
                     html.Div(
                         id="main-paper-slider",
                         style={
@@ -147,13 +102,7 @@ def return_main_content():
                             "left": "6rem",  # "25%",
                             "right": 0,  # "20%",
                             "background-color": "#1d1c1f",
-                            # "margin": "auto",
-                            # "width": "50vw",
                         },
-                        # radius="lg",
-                        # padding="lg",
-                        # shadow="xs",
-                        # withBorder=False,
                         children=dmc.Slider(
                             id="main-slider",
                             min=1,
@@ -170,7 +119,6 @@ def return_main_content():
                             class_name="mt-2 mx-5",
                         ),
                     ),
-                    # dmc.Space(h=70),
                     # Documentation in a lateral drawer
                     dmc.Drawer(
                         id="drawer",

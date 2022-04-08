@@ -86,5 +86,6 @@ else:
         "CACHE_THRESHOLD": 200,
     }
 
+# Initiate Cache
 cache_flask = Cache()
 cache_flask.init_app(app.server, config=CACHE_CONFIG)

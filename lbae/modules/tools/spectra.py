@@ -789,14 +789,14 @@ def compute_zeros_extended_spectrum_per_pixel(idx_pix, array_spectra, array_pixe
 
     Args:
         idx_pix (int): Index of the pixel to return.
-        array_spectra (np.ndarray or pytables.array): An array of shape (2,n) containing spectrum data (m/z and 
-            intensity) for each pixel.
-        array_pixel_indexes (np.ndarray): An array of shape (m,2) containing the boundary indices of each pixel in 
-            array_spectra.
+        array_spectra (np.ndarray or pytables.array): An array of shape (2,n) containing spectrum 
+            data (m/z and intensity) for each pixel.
+        array_pixel_indexes (np.ndarray): An array of shape (m,2) containing the boundary indices of 
+            each pixel in array_spectra.
 
     Returns:
-        np.ndarray: An array of shape (2,m) containing the zero-padded spectrum data (m/z and intensity) for the 
-            requested pixel.
+        np.ndarray: An array of shape (2,m) containing the zero-padded spectrum data (m/z and 
+            intensity) for the requested pixel.
     """
     array_spectra = return_spectrum_per_pixel(idx_pix, array_spectra, array_pixel_indexes)
     new_array_spectra, array_index_padding = add_zeros_to_spectrum(array_spectra)
@@ -805,18 +805,22 @@ def compute_zeros_extended_spectrum_per_pixel(idx_pix, array_spectra, array_pixe
 
 @njit
 def reduce_resolution_sorted_array_spectra(array_spectra, resolution=10 ** -3):
-    """Recompute a sparce representation of the spectrum at a lower (fixed) resolution, summing over the redundant bins.
-    Resolution should be <=10**-4 as it's about the maximum precision allowd by float32.
+    """Recompute a sparce representation of the spectrum at a lower (fixed) resolution, summing over 
+        the redundant bins. Resolution should be <=10**-4 as it's about the maximum precision 
+        allowed by float32.
 
     Args:
-        array_spectra (np.ndarray or pytables.array): An array of shape (2,n) containing spectrum data (m/z and 
-            intensity) for each pixel.
-        resolution (float, optional): The size of the bin used to merge intensities. Defaults to 10**-3.
+        array_spectra (np.ndarray or pytables.array): An array of shape (2,n) containing spectrum 
+            data (m/z and intensity) for each pixel.
+        resolution (float, optional): The size of the bin used to merge intensities. Defaults 
+            to 10**-3.
 
     Returns:
-        (np.ndarray): Array of shape=(2, m) similar to the input array but with a new sampling resolution.
+        (np.ndarray): Array of shape=(2, m) similar to the input array but with a new sampling 
+            resolution.
     """
-    # Get the re-sampled m/z and intensities from mspec library, with max_intensity = False to sum over redundant bins
+    # Get the re-sampled m/z and intensities from mspec library, with max_intensity = False to sum
+    # over redundant bins
     new_mz, new_intensity = reduce_resolution_sorted(
         array_spectra[0, :], array_spectra[1, :], resolution, max_intensity=False
     )

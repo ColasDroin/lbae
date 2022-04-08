@@ -9,8 +9,8 @@ import logging
 
 ###### FUNCTIONS USED IN 3D GRAPHING ######
 
-# Define a numba function to accelerate the loop in which the ccfv3 coordinates are computed and the final
-# arrays are filled
+# Define a numba function to accelerate the loop in which the ccfv3 coordinates are computed and the
+# final arrays are filled
 @njit
 def filter_voxels(
     array_data_stripped,
@@ -87,7 +87,8 @@ def fill_array_borders(
                         for xt in range(x - 1, x + 2):
                             for yt in range(y - 1, y + 2):
                                 for zt in range(z - 1, z + 2):
-                                    # two cases in which there's a border around, depending if keep_structure_id is defined
+                                    # two cases in which there's a border around, depending if
+                                    # keep_structure_id is defined
                                     if keep_structure_id is None:
                                         if array_annotation[xt, yt, zt] == 0:
                                             found = True
@@ -165,7 +166,7 @@ def fill_array_interpolation(array_annotation, array_slices, divider_radius=5):
                                             sum_weights += np.exp(-d)
                     if sum_weights == 0:
                         pass
-                        # print("No other voxel was found for structure ", array_annotation[x, y, z])
+                        # print("No other voxel found for structure ", array_annotation[x, y, z])
                     else:
                         # print('Voxel found for structure', array_annotation[x, y, z])
                         value_voxel = value_voxel / sum_weights
