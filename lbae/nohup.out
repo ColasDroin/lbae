@@ -1,0 +1,1532 @@
+[2022-04-08 18:15:50 +0200] [180804] [INFO] Starting gunicorn 20.1.0
+[2022-04-08 18:15:50 +0200] [180804] [INFO] Listening at: http://0.0.0.0:8050 (180804)
+[2022-04-08 18:15:50 +0200] [180804] [INFO] Using worker: sync
+[2022-04-08 18:15:50 +0200] [180807] [INFO] Booting worker with pid: 180807
+[2022-04-08 18:15:50 +0200] [180808] [INFO] Booting worker with pid: 180808
+2022-04-08 18:15:50.413 INFO main - <module>: Starting import chain	MemTotal: 30.30859375
+2022-04-08 18:15:50.413 INFO main - <module>: Starting import chain	MemTotal: 30.296875
+2022-04-08 18:15:54.462 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 243.74609375
+2022-04-08 18:15:54.462 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 243.75
+2022-04-08 18:15:54.462 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 243.74609375
+2022-04-08 18:15:54.463 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 243.75
+2022-04-08 18:15:58.019 INFO atlas - __init__: Initializing Atlas object	MemTotal: 1084.19921875
+2022-04-08 18:15:58.019 INFO atlas - __init__: Initializing Atlas object	MemTotal: 1084.19921875
+2022-04-08 18:15:59.060 INFO storage - return_shelved_object: Returning dic_acronym_children_id from shelve file.	MemTotal: 1382.9140625
+2022-04-08 18:15:59.060 INFO storage - return_shelved_object: Returning dic_acronym_children_id from shelve file.	MemTotal: 1382.9140625
+2022-04-08 18:16:00.752 INFO storage - return_shelved_object: Returning hierarchy from shelve file.	MemTotal: 1823.86328125
+2022-04-08 18:16:00.807 INFO storage - return_shelved_object: Returning hierarchy from shelve file.	MemTotal: 1823.859375
+2022-04-08 18:16:00.859 INFO storage - return_shelved_object: Returning arrays_projection_corrected from shelve file.	MemTotal: 1824.41015625
+2022-04-08 18:16:00.910 INFO storage - return_shelved_object: Returning arrays_projection_corrected from shelve file.	MemTotal: 1824.40625
+2022-04-08 18:16:01.771 INFO figures - __init__: Initializing Figures object	MemTotal: 1975.40625
+2022-04-08 18:16:01.783 INFO figures - __init__: Initializing Figures object	MemTotal: 1975.40625
+2022-04-08 18:16:01.873 INFO storage - return_shelved_object: Returning dic_fig_contours from shelve file.	MemTotal: 1975.40625
+2022-04-08 18:16:01.896 INFO storage - return_shelved_object: Returning dic_fig_contours from shelve file.	MemTotal: 1975.40625
+2022-04-08 18:16:02.762 INFO storage - return_shelved_object: Returning dic_normalization_factors from shelve file.	MemTotal: 1987.7109375
+2022-04-08 18:16:02.763 INFO app - <module>: Memory use after three main object have been instantiated	MemTotal: 1987.7109375
+2022-04-08 18:16:02.773 INFO storage - return_shelved_object: Returning dic_normalization_factors from shelve file.	MemTotal: 1987.72265625
+2022-04-08 18:16:02.774 INFO app - <module>: Memory use after three main object have been instantiated	MemTotal: 1987.72265625
+2022-04-08 18:16:02.851 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-04-08 18:16:02.851 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-04-08 18:16:02.975 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 1989.5546875
+2022-04-08 18:16:02.976 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 1989.56640625
+2022-04-08 18:16:02.994 INFO figures - compute_heatmap_per_mz: Starting figure computation, from mz boundaries
+2022-04-08 18:16:02.994 INFO figures - compute_heatmap_per_mz: Getting image array
+2022-04-08 18:16:02.994 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-08 18:16:02.994 INFO figures - compute_heatmap_per_mz: Starting figure computation, from mz boundaries
+2022-04-08 18:16:02.995 INFO figures - compute_heatmap_per_mz: Getting image array
+2022-04-08 18:16:02.995 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-08 18:16:04.676 INFO figures - compute_heatmap_per_mz: Done getting image array. Cleaning memory
+2022-04-08 18:16:04.676 INFO figures - compute_heatmap_per_mz: Done getting image array. Cleaning memory
+2022-04-08 18:16:04.679 INFO figures - compute_heatmap_per_mz: Memory cleaned
+2022-04-08 18:16:04.679 INFO figures - compute_heatmap_per_mz: Converting image to string
+2022-04-08 18:16:04.679 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-08 18:16:04.681 INFO figures - compute_heatmap_per_mz: Memory cleaned
+2022-04-08 18:16:04.681 INFO figures - compute_heatmap_per_mz: Converting image to string
+2022-04-08 18:16:04.681 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-08 18:16:04.727 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-08 18:16:04.727 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-08 18:16:04.772 INFO image - convert_image_to_base64: Empty pixels are now transparent
+2022-04-08 18:16:04.772 INFO image - convert_image_to_base64: Empty pixels are now transparent
+2022-04-08 18:16:04.789 INFO image - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-04-08 18:16:04.789 INFO image - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-04-08 18:16:04.817 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-08 18:16:04.817 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-08 18:16:04.827 INFO figures - compute_heatmap_per_mz: Adding image to figure
+2022-04-08 18:16:04.827 INFO figures - compute_heatmap_per_mz: Adding image to figure
+2022-04-08 18:16:04.864 INFO figures - compute_heatmap_per_mz: Returning figure
+2022-04-08 18:16:04.864 INFO figures - compute_heatmap_per_mz: Returning figure
+2022-04-08 18:16:04.980 INFO storage - return_shelved_object: Returning lipid_options from shelve file.	MemTotal: 2015.88671875
+2022-04-08 18:16:04.980 INFO storage - return_shelved_object: Returning lipid_options from shelve file.	MemTotal: 2015.83984375
+2022-04-08 18:16:05.142 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2015.92578125
+2022-04-08 18:16:05.142 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2015.875
+2022-04-08 18:16:05.270 INFO storage - return_shelved_object: treemaps could not be found or force_update is True. Computing the object and shelving it now.
+2022-04-08 18:16:05.271 INFO storage - return_shelved_object: treemaps could not be found or force_update is True. Computing the object and shelving it now.
+2022-04-08 18:16:05.499 INFO storage - return_shelved_object: treemaps being returned now from computation.
+2022-04-08 18:16:05.499 INFO storage - return_shelved_object: treemaps being returned now from computation.
+2022-04-08 18:16:05.652 INFO storage - return_shelved_object: Returning sunburst from shelve file.	MemTotal: 2017.3984375
+2022-04-08 18:16:05.657 INFO storage - return_shelved_object: Returning sunburst from shelve file.	MemTotal: 2017.4453125
+2022-04-08 18:16:05.783 INFO storage - return_shelved_object: Returning atlas_with_slider from shelve file.	MemTotal: 2017.72265625
+2022-04-08 18:16:05.783 INFO storage - return_shelved_object: Returning atlas_with_slider from shelve file.	MemTotal: 2017.86328125
+2022-04-08 18:16:05.928 INFO storage - return_shelved_object: Returning  from shelve file.	MemTotal: 2018.3515625
+2022-04-08 18:16:05.928 INFO storage - return_shelved_object: Returning  from shelve file.	MemTotal: 2018.2734375
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+2022-04-08 18:16:07.742 INFO index - render_page_content: Page/3D-explorationhas been selected	MemTotal: 2029.66015625
+2022-04-08 18:16:07.847 INFO storage - return_shelved_object: treemaps could not be found or force_update is True. Computing the object and shelving it now.
+2022-04-08 18:16:07.999 INFO storage - return_shelved_object: treemaps being returned now from computation.
+2022-04-08 18:16:28.027 INFO index - render_page_content: Page/region-analysishas been selected	MemTotal: 2033.18359375
+2022-04-08 18:16:28.134 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2033.4453125
+2022-04-08 18:16:28.340 INFO region_analysis - page_3_record_spectra: Starting to compute spectrum
+2022-04-08 18:16:28.340 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-08 18:16:28.341 DEBUG filesystemcache - get: get key 'qcrHrJ51w4U4ztl93fcKbf' -> hit 
+2022-04-08 18:16:28.341 WARNING region_analysis - page_3_record_spectra: A bug appeared during spectrum computation
+2022-04-08 18:16:28.432 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Starting computing heatmap now
+2022-04-08 18:16:28.439 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2030.13671875
+2022-04-08 18:16:29.724 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2033.83203125
+2022-04-08 18:16:29.994 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2030.3671875
+2022-04-08 18:16:30.646 INFO region_analysis - page_3_display_high_res_mz_plot: Compute spectra button has been clicked
+2022-04-08 18:16:30.646 INFO region_analysis - page_3_display_high_res_mz_plot: One or several shapes have been selected, displaying graphs
+2022-04-08 18:16:30.652 INFO region_analysis - page_3_record_spectra: Starting to compute spectrum
+2022-04-08 18:16:30.652 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-08 18:16:30.653 DEBUG filesystemcache - get: get key 'PTlQGu4aIq1meswv3fcKbf' -> miss 
+2022-04-08 18:16:30.653 INFO region_analysis - global_spectrum_store: Computing spectra now
+2022-04-08 18:16:30.653 INFO region_analysis - global_spectrum_store: Start computing path
+2022-04-08 18:16:30.653 INFO region_analysis - global_spectrum_store: Computing path finished
+2022-04-08 18:16:37.869 INFO region_analysis - global_spectrum_store: Start computing path
+2022-04-08 18:16:37.869 INFO region_analysis - global_spectrum_store: Computing path finished
+2022-04-08 18:16:37.871 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-08 18:16:37.894 DEBUG filesystemcache - set: set key 'PTlQGu4aIq1meswv3fcKbf'
+2022-04-08 18:16:37.894 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-08 18:16:37.914 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-04-08 18:16:37.915 INFO region_analysis - page_3_record_spectra: Spectra computed, returning it now
+2022-04-08 18:16:38.171 INFO region_analysis - page_3_plot_spectrum: Starting spectra plotting now
+2022-04-08 18:16:38.173 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-08 18:16:38.173 DEBUG filesystemcache - get: get key 'PTlQGu4aIq1meswv3fcKbf' -> hit 
+2022-04-08 18:16:38.173 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-08 18:16:38.174 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Starting computing heatmap now
+2022-04-08 18:16:38.174 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-08 18:16:38.175 DEBUG filesystemcache - get: get key 'PTlQGu4aIq1meswv3fcKbf' -> hit 
+2022-04-08 18:16:38.175 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-08 18:16:38.377 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-08 18:16:38.383 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-08 18:16:38.622 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Heatmap computed. Returning it now
+2022-04-08 18:16:38.854 INFO region_analysis - page_3_fill_dropdown_options: Starting computing lipid dropdown now.
+2022-04-08 18:16:38.921 INFO region_analysis - page_3_fill_dropdown_options: Dropdown values computed. Updating it with new lipids now.
+2022-04-08 18:16:39.056 INFO region_analysis - draw_modal_graph: Modal graph function triggered with input page-3-open-modal
+2022-04-08 18:16:39.056 INFO region_analysis - draw_modal_graph: At least one lipid has been selected, starting computing modal graph now.
+2022-04-08 18:16:39.059 INFO figures - compute_rgb_image_per_lipid_selection: Started RGB image computation for slice 1	MemTotal: 2031.046875
+2022-04-08 18:16:39.059 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-08 18:16:39.507 INFO region_analysis - page_3_plot_spectrum: Spectra plotted. Returning it now
+2022-04-08 18:16:40.312 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-08 18:16:40.349 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-08 18:16:40.415 INFO figures - compute_rgb_image_per_lipid_selection: array_image acquired for slice 1	MemTotal: 2068.5
+2022-04-08 18:16:40.415 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-08 18:16:40.433 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-08 18:16:40.468 INFO image - convert_image_to_base64: Empty pixels are now transparent
+2022-04-08 18:16:40.486 INFO image - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-04-08 18:16:40.503 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-08 18:16:40.503 INFO figures - compute_rgb_image_per_lipid_selection: Started building graph for slice 1	MemTotal: 2068.515625
+2022-04-08 18:16:40.522 INFO figures - compute_rgb_image_per_lipid_selection: Returning fig for slice 1	MemTotal: 2068.515625
+2022-04-08 18:16:40.522 INFO region_analysis - draw_modal_graph: Modal graph computed. Returning it now
+2022-04-08 18:17:27.801 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2068.515625
+2022-04-08 18:17:27.895 INFO region_analysis - draw_modal_graph: Modal graph function triggered with input page-3-reset-button
+2022-04-08 18:17:27.895 INFO region_analysis - draw_modal_graph: Resetting modal graph
+2022-04-08 18:17:29.045 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2068.515625
+2022-04-08 18:17:29.374 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2068.515625
+2022-04-08 18:17:30.003 INFO region_analysis - page_3_display_high_res_mz_plot: Compute spectra button has been clicked
+2022-04-08 18:17:30.003 INFO region_analysis - page_3_display_high_res_mz_plot: One or several shapes have been selected, displaying graphs
+2022-04-08 18:17:30.005 INFO region_analysis - page_3_record_spectra: Starting to compute spectrum
+2022-04-08 18:17:30.005 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-08 18:17:30.006 DEBUG filesystemcache - get: get key 'KW9qJ9aOwuLhu8883fcKbf' -> miss 
+2022-04-08 18:17:30.006 INFO region_analysis - global_spectrum_store: Computing spectra now
+2022-04-08 18:17:30.006 INFO region_analysis - global_spectrum_store: Start computing path
+2022-04-08 18:17:30.006 INFO region_analysis - global_spectrum_store: Computing path finished
+2022-04-08 18:17:36.713 INFO region_analysis - global_spectrum_store: Start computing path
+2022-04-08 18:17:36.713 INFO region_analysis - global_spectrum_store: Computing path finished
+2022-04-08 18:17:36.718 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-08 18:17:36.739 DEBUG filesystemcache - set: set key 'KW9qJ9aOwuLhu8883fcKbf'
+2022-04-08 18:17:36.739 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-08 18:17:36.757 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-04-08 18:17:36.757 INFO region_analysis - page_3_record_spectra: Spectra computed, returning it now
+2022-04-08 18:17:36.946 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Starting computing heatmap now
+2022-04-08 18:17:36.946 INFO region_analysis - page_3_plot_spectrum: Starting spectra plotting now
+2022-04-08 18:17:36.946 DEBUG filesystemcache - delete: deleted key 'pages.region_analysis.global_spectrum_store_memver'
+2022-04-08 18:17:36.946 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-08 18:17:36.959 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> miss 
+2022-04-08 18:17:36.959 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-04-08 18:17:36.959 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-08 18:17:36.971 DEBUG filesystemcache - set: set key 'pages.region_analysis.global_spectrum_store_memver'
+2022-04-08 18:17:36.971 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> miss (expired)
+2022-04-08 18:17:36.971 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-08 18:17:36.971 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-08 18:17:36.985 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-04-08 18:17:36.985 DEBUG filesystemcache - set: set key 'pages.region_analysis.global_spectrum_store_memver'
+2022-04-08 18:17:36.985 DEBUG filesystemcache - get: get key 'KW9qJ9aOwuLhu888BYINSc' -> miss 
+2022-04-08 18:17:36.985 DEBUG filesystemcache - get: get key 'KW9qJ9aOwuLhu888ymuLyq' -> miss 
+2022-04-08 18:17:36.985 INFO region_analysis - global_spectrum_store: Computing spectra now
+2022-04-08 18:17:36.985 INFO region_analysis - global_spectrum_store: Start computing path
+2022-04-08 18:17:36.985 INFO region_analysis - global_spectrum_store: Computing spectra now
+2022-04-08 18:17:36.985 INFO region_analysis - global_spectrum_store: Start computing path
+2022-04-08 18:17:36.986 INFO region_analysis - global_spectrum_store: Computing path finished
+2022-04-08 18:17:36.986 INFO region_analysis - global_spectrum_store: Computing path finished
+2022-04-08 18:17:36.999 INFO region_analysis - global_spectrum_store: Start computing path
+2022-04-08 18:17:36.999 INFO region_analysis - global_spectrum_store: Computing path finished
+2022-04-08 18:17:37.001 INFO region_analysis - global_spectrum_store: Start computing path
+2022-04-08 18:17:37.001 INFO region_analysis - global_spectrum_store: Computing path finished
+2022-04-08 18:17:37.004 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-08 18:17:37.006 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-08 18:17:37.028 DEBUG filesystemcache - set: set key 'KW9qJ9aOwuLhu888ymuLyq'
+2022-04-08 18:17:37.028 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-08 18:17:37.040 DEBUG filesystemcache - set: set key 'KW9qJ9aOwuLhu888BYINSc'
+2022-04-08 18:17:37.040 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-08 18:17:37.040 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-04-08 18:17:37.040 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-08 18:17:37.042 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-08 18:17:37.044 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-04-08 18:17:37.044 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-08 18:17:37.046 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-08 18:17:37.137 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Heatmap computed. Returning it now
+2022-04-08 18:17:37.347 INFO region_analysis - page_3_fill_dropdown_options: Starting computing lipid dropdown now.
+2022-04-08 18:17:37.411 INFO region_analysis - page_3_fill_dropdown_options: Dropdown values computed. Updating it with new lipids now.
+2022-04-08 18:17:37.512 INFO region_analysis - draw_modal_graph: Modal graph function triggered with input page-3-open-modal
+2022-04-08 18:17:37.512 INFO region_analysis - draw_modal_graph: At least one lipid has been selected, starting computing modal graph now.
+2022-04-08 18:17:37.514 INFO figures - compute_rgb_image_per_lipid_selection: Started RGB image computation for slice 1	MemTotal: 2082.1484375
+2022-04-08 18:17:37.516 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-08 18:17:37.544 INFO region_analysis - page_3_plot_spectrum: Spectra plotted. Returning it now
+2022-04-08 18:17:37.574 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-08 18:17:37.601 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-08 18:17:37.691 INFO figures - compute_rgb_image_per_lipid_selection: array_image acquired for slice 1	MemTotal: 2122.82421875
+2022-04-08 18:17:37.692 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-08 18:17:37.710 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-08 18:17:37.746 INFO image - convert_image_to_base64: Empty pixels are now transparent
+2022-04-08 18:17:37.764 INFO image - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-04-08 18:17:37.775 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-08 18:17:37.776 INFO figures - compute_rgb_image_per_lipid_selection: Started building graph for slice 1	MemTotal: 2122.82421875
+2022-04-08 18:17:37.795 INFO figures - compute_rgb_image_per_lipid_selection: Returning fig for slice 1	MemTotal: 2122.82421875
+2022-04-08 18:17:37.804 INFO region_analysis - draw_modal_graph: Modal graph computed. Returning it now
+2022-04-08 18:17:40.951 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2062.54296875
+2022-04-08 18:17:40.992 INFO region_analysis - draw_modal_graph: Modal graph function triggered with input page-3-reset-button
+2022-04-08 18:17:40.992 INFO region_analysis - draw_modal_graph: Resetting modal graph
+2022-04-08 18:17:41.705 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2073.21875
+2022-04-08 18:17:42.259 INFO region_analysis - page_3_display_high_res_mz_plot: Compute spectra button has been clicked
+2022-04-08 18:17:42.259 INFO region_analysis - page_3_display_high_res_mz_plot: One or several shapes have been selected, displaying graphs
+2022-04-08 18:17:42.261 INFO region_analysis - page_3_record_spectra: Starting to compute spectrum
+2022-04-08 18:17:42.261 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-08 18:17:42.261 DEBUG filesystemcache - get: get key 'genE9Zqdynkqep4YymuLyq' -> miss 
+2022-04-08 18:17:42.261 INFO region_analysis - global_spectrum_store: Computing spectra now
+2022-04-08 18:17:42.261 INFO region_analysis - global_spectrum_store: Start computing path
+2022-04-08 18:17:42.261 INFO region_analysis - global_spectrum_store: Computing path finished
+2022-04-08 18:17:42.297 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-08 18:17:42.313 DEBUG filesystemcache - set: set key 'genE9Zqdynkqep4YymuLyq'
+2022-04-08 18:17:42.313 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-08 18:17:42.323 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-04-08 18:17:42.324 INFO region_analysis - page_3_record_spectra: Spectra computed, returning it now
+2022-04-08 18:17:42.409 INFO region_analysis - page_3_plot_spectrum: Starting spectra plotting now
+2022-04-08 18:17:42.410 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Starting computing heatmap now
+2022-04-08 18:17:42.410 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-08 18:17:42.410 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-08 18:17:42.410 DEBUG filesystemcache - get: get key 'genE9Zqdynkqep4YymuLyq' -> hit 
+2022-04-08 18:17:42.410 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-08 18:17:42.411 DEBUG filesystemcache - get: get key 'genE9Zqdynkqep4YymuLyq' -> hit 
+2022-04-08 18:17:42.411 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-08 18:17:42.412 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-08 18:17:42.412 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-08 18:17:42.507 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Heatmap computed. Returning it now
+2022-04-08 18:17:42.684 INFO region_analysis - page_3_plot_spectrum: Spectra plotted. Returning it now
+2022-04-08 18:17:42.718 INFO region_analysis - page_3_fill_dropdown_options: Starting computing lipid dropdown now.
+2022-04-08 18:17:42.784 INFO region_analysis - page_3_fill_dropdown_options: Dropdown values computed. Updating it with new lipids now.
+2022-04-08 18:17:42.884 INFO region_analysis - draw_modal_graph: Modal graph function triggered with input page-3-open-modal
+2022-04-08 18:17:42.884 INFO region_analysis - draw_modal_graph: At least one lipid has been selected, starting computing modal graph now.
+2022-04-08 18:17:42.885 INFO figures - compute_rgb_image_per_lipid_selection: Started RGB image computation for slice 1	MemTotal: 2072.55078125
+2022-04-08 18:17:42.886 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-08 18:17:42.964 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-08 18:17:42.995 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-08 18:17:43.058 INFO figures - compute_rgb_image_per_lipid_selection: array_image acquired for slice 1	MemTotal: 2122.828125
+2022-04-08 18:17:43.058 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-08 18:17:43.076 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-08 18:17:43.110 INFO image - convert_image_to_base64: Empty pixels are now transparent
+2022-04-08 18:17:43.127 INFO image - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-04-08 18:17:43.143 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-08 18:17:43.143 INFO figures - compute_rgb_image_per_lipid_selection: Started building graph for slice 1	MemTotal: 2122.828125
+2022-04-08 18:17:43.161 INFO figures - compute_rgb_image_per_lipid_selection: Returning fig for slice 1	MemTotal: 2122.828125
+2022-04-08 18:17:43.167 INFO region_analysis - draw_modal_graph: Modal graph computed. Returning it now
+2022-04-08 18:17:44.306 INFO index - render_page_content: Page/3D-explorationhas been selected	MemTotal: 2062.21875
+2022-04-08 18:17:44.423 INFO storage - return_shelved_object: treemaps could not be found or force_update is True. Computing the object and shelving it now.
+2022-04-08 18:17:44.459 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2073.21875
+2022-04-08 18:17:44.501 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Starting computing heatmap now
+2022-04-08 18:17:44.584 INFO storage - return_shelved_object: treemaps being returned now from computation.
+page-3-graph-heatmap-per-sel relayoutData 1 None None /region-analysis [] False
+page-3-graph-heatmap-per-sel relayoutData 1 None None /region-analysis [] False
+page-3-graph-heatmap-per-sel relayoutData 1 2 [] /region-analysis [] True
+url pathname 1 2 [] /3D-exploration [] False
+2022-04-08 18:17:52.233 INFO figures - compute_clustergram_figure: Starting computing clustergram figure
+2022-04-08 18:17:52.234 DEBUG filesystemcache - get: get key 'modules.figures.Figures.compute_clustergram_figure.<locals>.return_df_avg_lipids_memver' -> hit 
+2022-04-08 18:17:52.235 DEBUG filesystemcache - get: get key 'IAfBEhsrBSaaY08r5jjdFs' -> miss 
+2022-04-08 18:17:52.235 INFO atlas - get_projected_mask_and_spectrum: Loading Cerebrum for slice 0 from shelve file.
+Process Process-4:
+Traceback (most recent call last):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/multiprocess/process.py", line 315, in _bootstrap
+    self.run()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/multiprocess/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/long_callback/managers/diskcache_manager.py", line 146, in job_fn
+    user_callback_output = fn(*maybe_progress, *user_callback_args)
+  File "/home/colas/lbae/lbae/pages/threeD_exploration.py", line 932, in page_4_plot_graph_heatmap_mz_selection
+    return figures.compute_clustergram_figure(
+  File "/home/colas/lbae/lbae/modules/figures.py", line 1926, in compute_clustergram_figure
+    df_avg_intensity_lipids = return_df_avg_lipids(l_selected_regions)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask_caching/__init__.py", line 952, in decorated_function
+    rv = f(*args, **kwargs)
+  File "/home/colas/lbae/lbae/modules/figures.py", line 1868, in return_df_avg_lipids
+    grah_scattergl_data = self._atlas.get_projected_mask_and_spectrum(
+TypeError: 'NoneType' object is not subscriptable
+page-3-graph-heatmap-per-sel relayoutData 1 None None /region-analysis [] False
+page-3-graph-heatmap-per-sel relayoutData 1 None None /region-analysis [] False
+page-3-reset-button n_clicks 1 1 [] /region-analysis [] False
+page-3-graph-heatmap-per-sel relayoutData 1 1 [] /region-analysis [] True
+page-3-graph-heatmap-per-sel relayoutData 1 1 [] /region-analysis [] False
+page-3-reset-button n_clicks 1 2 [] /region-analysis [] False
+[2022-04-08 18:19:12 +0200] [180804] [INFO] Handling signal: hup
+[2022-04-08 18:19:12 +0200] [180804] [INFO] Hang up: Master
+[2022-04-08 18:19:12 +0200] [181101] [INFO] Booting worker with pid: 181101
+[2022-04-08 18:19:12 +0200] [181102] [INFO] Booting worker with pid: 181102
+[2022-04-08 18:19:12 +0200] [180804] [WARNING] Worker with pid 180807 was terminated due to signal 1
+[2022-04-08 18:19:12 +0200] [180804] [WARNING] Worker with pid 180808 was terminated due to signal 1
+2022-04-08 18:19:12.588 INFO main - <module>: Starting import chain	MemTotal: 30.33984375
+2022-04-08 18:19:12.588 INFO main - <module>: Starting import chain	MemTotal: 30.33984375
+2022-04-08 18:19:15.715 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 243.96875
+2022-04-08 18:19:15.715 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 244.015625
+2022-04-08 18:19:15.716 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 243.96875
+2022-04-08 18:19:15.716 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 244.015625
+2022-04-08 18:19:16.986 INFO atlas - __init__: Initializing Atlas object	MemTotal: 1084.3359375
+2022-04-08 18:19:16.986 INFO atlas - __init__: Initializing Atlas object	MemTotal: 1084.30859375
+2022-04-08 18:19:17.830 INFO storage - return_shelved_object: Returning dic_acronym_children_id from shelve file.	MemTotal: 1383.03515625
+2022-04-08 18:19:17.830 INFO storage - return_shelved_object: Returning dic_acronym_children_id from shelve file.	MemTotal: 1383.05859375
+2022-04-08 18:19:19.356 INFO storage - return_shelved_object: Returning hierarchy from shelve file.	MemTotal: 1824.43359375
+2022-04-08 18:19:19.360 INFO storage - return_shelved_object: Returning hierarchy from shelve file.	MemTotal: 1824.45703125
+2022-04-08 18:19:19.453 INFO storage - return_shelved_object: Returning arrays_projection_corrected from shelve file.	MemTotal: 1824.46484375
+2022-04-08 18:19:19.457 INFO storage - return_shelved_object: Returning arrays_projection_corrected from shelve file.	MemTotal: 1824.4609375
+2022-04-08 18:19:20.412 INFO figures - __init__: Initializing Figures object	MemTotal: 1975.56640625
+2022-04-08 18:19:20.417 INFO figures - __init__: Initializing Figures object	MemTotal: 1975.58984375
+2022-04-08 18:19:20.513 INFO storage - return_shelved_object: Returning dic_fig_contours from shelve file.	MemTotal: 1975.58984375
+2022-04-08 18:19:20.516 INFO storage - return_shelved_object: Returning dic_fig_contours from shelve file.	MemTotal: 1975.56640625
+2022-04-08 18:19:21.272 INFO storage - return_shelved_object: Returning dic_normalization_factors from shelve file.	MemTotal: 1988.00390625
+2022-04-08 18:19:21.272 INFO storage - return_shelved_object: Returning dic_normalization_factors from shelve file.	MemTotal: 1987.96484375
+2022-04-08 18:19:21.273 INFO app - <module>: Memory use after three main object have been instantiated	MemTotal: 1988.00390625
+2022-04-08 18:19:21.273 INFO app - <module>: Memory use after three main object have been instantiated	MemTotal: 1987.96484375
+2022-04-08 18:19:21.320 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-04-08 18:19:21.320 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-04-08 18:19:21.438 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 1989.87109375
+2022-04-08 18:19:21.438 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 1989.80078125
+2022-04-08 18:19:21.452 INFO figures - compute_heatmap_per_mz: Starting figure computation, from mz boundaries
+2022-04-08 18:19:21.452 INFO figures - compute_heatmap_per_mz: Starting figure computation, from mz boundaries
+2022-04-08 18:19:21.452 INFO figures - compute_heatmap_per_mz: Getting image array
+2022-04-08 18:19:21.452 INFO figures - compute_heatmap_per_mz: Getting image array
+2022-04-08 18:19:21.452 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-08 18:19:21.452 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-08 18:19:22.763 INFO figures - compute_heatmap_per_mz: Done getting image array. Cleaning memory
+2022-04-08 18:19:22.766 INFO figures - compute_heatmap_per_mz: Memory cleaned
+2022-04-08 18:19:22.766 INFO figures - compute_heatmap_per_mz: Converting image to string
+2022-04-08 18:19:22.766 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-08 18:19:22.804 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-08 18:19:22.844 INFO image - convert_image_to_base64: Empty pixels are now transparent
+2022-04-08 18:19:22.860 INFO image - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-04-08 18:19:22.881 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-08 18:19:22.884 INFO figures - compute_heatmap_per_mz: Adding image to figure
+2022-04-08 18:19:22.913 INFO figures - compute_heatmap_per_mz: Returning figure
+2022-04-08 18:19:22.931 INFO figures - compute_heatmap_per_mz: Done getting image array. Cleaning memory
+2022-04-08 18:19:22.936 INFO figures - compute_heatmap_per_mz: Memory cleaned
+2022-04-08 18:19:22.936 INFO figures - compute_heatmap_per_mz: Converting image to string
+2022-04-08 18:19:22.936 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-08 18:19:22.979 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-08 18:19:23.009 INFO storage - return_shelved_object: Returning lipid_options from shelve file.	MemTotal: 2016.1015625
+2022-04-08 18:19:23.018 INFO image - convert_image_to_base64: Empty pixels are now transparent
+2022-04-08 18:19:23.034 INFO image - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-04-08 18:19:23.054 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-08 18:19:23.058 INFO figures - compute_heatmap_per_mz: Adding image to figure
+2022-04-08 18:19:23.081 INFO figures - compute_heatmap_per_mz: Returning figure
+2022-04-08 18:19:23.138 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2016.2265625
+2022-04-08 18:19:23.190 INFO storage - return_shelved_object: Returning lipid_options from shelve file.	MemTotal: 2015.98828125
+2022-04-08 18:19:23.247 INFO storage - return_shelved_object: treemaps could not be found or force_update is True. Computing the object and shelving it now.
+2022-04-08 18:19:23.325 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2016.12890625
+2022-04-08 18:19:23.423 INFO storage - return_shelved_object: treemaps being returned now from computation.
+2022-04-08 18:19:23.446 INFO storage - return_shelved_object: treemaps could not be found or force_update is True. Computing the object and shelving it now.
+2022-04-08 18:19:23.541 INFO storage - return_shelved_object: Returning sunburst from shelve file.	MemTotal: 2017.5234375
+2022-04-08 18:19:23.602 INFO storage - return_shelved_object: treemaps being returned now from computation.
+2022-04-08 18:19:23.655 INFO storage - return_shelved_object: Returning atlas_with_slider from shelve file.	MemTotal: 2018.0234375
+2022-04-08 18:19:23.721 INFO storage - return_shelved_object: Returning sunburst from shelve file.	MemTotal: 2017.43359375
+2022-04-08 18:19:23.772 INFO storage - return_shelved_object: Returning  from shelve file.	MemTotal: 2018.28125
+2022-04-08 18:19:23.832 INFO storage - return_shelved_object: Returning atlas_with_slider from shelve file.	MemTotal: 2017.93359375
+2022-04-08 18:19:23.946 INFO storage - return_shelved_object: Returning  from shelve file.	MemTotal: 2018.44140625
+2022-04-08 19:02:51.924 INFO index - render_page_content: Page/has been selected	MemTotal: 1985.0625
+2022-04-08 19:02:52.884 INFO index - render_page_content: Page/region-analysishas been selected	MemTotal: 1985.0625
+2022-04-08 19:02:52.983 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 1985.234375
+2022-04-08 19:02:53.831 INFO region_analysis - page_3_record_spectra: Starting to compute spectrum
+2022-04-08 19:02:53.832 DEBUG filesystemcache - delete: deleted key 'pages.region_analysis.global_spectrum_store_memver'
+2022-04-08 19:02:53.833 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-08 19:02:53.837 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-04-08 19:02:53.837 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> miss (expired)
+2022-04-08 19:02:53.838 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-08 19:02:53.838 DEBUG filesystemcache - set: set key 'pages.region_analysis.global_spectrum_store_memver'
+2022-04-08 19:02:53.838 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-08 19:02:53.839 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-04-08 19:02:53.839 DEBUG filesystemcache - get: get key 'qcrHrJ51w4U4ztl9iKUHPY' -> miss 
+2022-04-08 19:02:53.839 INFO region_analysis - global_spectrum_store: Computing spectra now
+2022-04-08 19:02:53.839 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-08 19:02:53.840 DEBUG filesystemcache - set: set key 'qcrHrJ51w4U4ztl9iKUHPY'
+2022-04-08 19:02:53.840 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-08 19:02:53.840 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-04-08 19:02:53.840 WARNING region_analysis - page_3_record_spectra: A bug appeared during spectrum computation
+2022-04-08 19:02:53.926 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 1985.48828125
+2022-04-08 19:02:53.926 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Starting computing heatmap now
+2022-04-08 19:02:54.590 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 1982.4453125
+2022-04-08 19:02:55.161 INFO region_analysis - page_3_display_high_res_mz_plot: Compute spectra button has been clicked
+2022-04-08 19:02:55.161 INFO region_analysis - page_3_display_high_res_mz_plot: One or several shapes have been selected, displaying graphs
+2022-04-08 19:02:55.162 INFO region_analysis - page_3_record_spectra: Starting to compute spectrum
+2022-04-08 19:02:55.162 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-08 19:02:55.163 DEBUG filesystemcache - get: get key '/wI9D7s08rtkY3z4iKUHPY' -> miss 
+2022-04-08 19:02:55.163 INFO region_analysis - global_spectrum_store: Computing spectra now
+2022-04-08 19:02:55.163 INFO region_analysis - global_spectrum_store: Start computing path
+2022-04-08 19:02:55.163 INFO region_analysis - global_spectrum_store: Computing path finished
+2022-04-08 19:03:01.519 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-08 19:03:01.520 DEBUG filesystemcache - set: set key '/wI9D7s08rtkY3z4iKUHPY'
+2022-04-08 19:03:01.520 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-08 19:03:01.522 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-04-08 19:03:01.522 INFO region_analysis - page_3_record_spectra: Spectra computed, returning it now
+2022-04-08 19:03:01.809 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Starting computing heatmap now
+2022-04-08 19:03:01.810 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-08 19:03:01.810 DEBUG filesystemcache - get: get key '/wI9D7s08rtkY3z4iKUHPY' -> hit 
+2022-04-08 19:03:01.810 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-08 19:03:01.810 INFO region_analysis - page_3_plot_spectrum: Starting spectra plotting now
+2022-04-08 19:03:01.812 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-08 19:03:01.812 DEBUG filesystemcache - get: get key '/wI9D7s08rtkY3z4iKUHPY' -> hit 
+2022-04-08 19:03:01.812 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-08 19:03:02.007 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-08 19:03:02.011 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-08 19:03:02.242 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Heatmap computed. Returning it now
+2022-04-08 19:03:02.540 INFO region_analysis - page_3_plot_spectrum: Spectra plotted. Returning it now
+2022-04-08 19:03:02.629 INFO region_analysis - page_3_fill_dropdown_options: Starting computing lipid dropdown now.
+2022-04-08 19:03:02.689 INFO region_analysis - page_3_fill_dropdown_options: Dropdown values computed. Updating it with new lipids now.
+2022-04-08 19:03:02.824 INFO region_analysis - draw_modal_graph: Modal graph function triggered with input page-3-open-modal
+2022-04-08 19:03:02.824 INFO region_analysis - draw_modal_graph: At least one lipid has been selected, starting computing modal graph now.
+2022-04-08 19:03:02.826 INFO figures - compute_rgb_image_per_lipid_selection: Started RGB image computation for slice 1	MemTotal: 2033.62890625
+2022-04-08 19:03:02.826 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-08 19:03:03.836 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-08 19:03:03.858 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-08 19:03:03.915 INFO figures - compute_rgb_image_per_lipid_selection: array_image acquired for slice 1	MemTotal: 2060.97265625
+2022-04-08 19:03:03.915 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-08 19:03:03.933 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-08 19:03:03.964 INFO image - convert_image_to_base64: Empty pixels are now transparent
+2022-04-08 19:03:03.980 INFO image - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-04-08 19:03:03.994 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-08 19:03:03.994 INFO figures - compute_rgb_image_per_lipid_selection: Started building graph for slice 1	MemTotal: 2061.05859375
+2022-04-08 19:03:04.011 INFO figures - compute_rgb_image_per_lipid_selection: Returning fig for slice 1	MemTotal: 2061.11328125
+2022-04-08 19:03:04.011 INFO region_analysis - draw_modal_graph: Modal graph computed. Returning it now
+2022-04-08 19:03:10.199 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2061.11328125
+2022-04-08 19:03:10.248 INFO region_analysis - draw_modal_graph: Modal graph function triggered with input page-3-reset-button
+2022-04-08 19:03:10.248 INFO region_analysis - draw_modal_graph: Resetting modal graph
+2022-04-08 19:03:10.948 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 1996.37890625
+2022-04-08 19:03:11.706 INFO region_analysis - page_3_display_high_res_mz_plot: Compute spectra button has been clicked
+2022-04-08 19:03:11.706 INFO region_analysis - page_3_display_high_res_mz_plot: One or several shapes have been selected, displaying graphs
+2022-04-08 19:03:11.707 INFO region_analysis - page_3_record_spectra: Starting to compute spectrum
+2022-04-08 19:03:11.707 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-08 19:03:11.708 DEBUG filesystemcache - get: get key 'h69saiKIm+82B/3LiKUHPY' -> miss 
+2022-04-08 19:03:11.708 INFO region_analysis - global_spectrum_store: Computing spectra now
+2022-04-08 19:03:11.708 INFO region_analysis - global_spectrum_store: Start computing path
+2022-04-08 19:03:11.708 INFO region_analysis - global_spectrum_store: Computing path finished
+2022-04-08 19:03:11.768 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-08 19:03:11.769 DEBUG filesystemcache - set: set key 'h69saiKIm+82B/3LiKUHPY'
+2022-04-08 19:03:11.769 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-08 19:03:11.777 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-04-08 19:03:11.777 INFO region_analysis - page_3_record_spectra: Spectra computed, returning it now
+2022-04-08 19:03:11.898 INFO region_analysis - page_3_plot_spectrum: Starting spectra plotting now
+2022-04-08 19:03:11.898 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Starting computing heatmap now
+2022-04-08 19:03:11.899 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-08 19:03:11.899 DEBUG filesystemcache - get: get key 'h69saiKIm+82B/3LiKUHPY' -> hit 
+2022-04-08 19:03:11.899 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-08 19:03:11.900 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-08 19:03:11.900 DEBUG filesystemcache - get: get key 'h69saiKIm+82B/3LiKUHPY' -> hit 
+2022-04-08 19:03:11.900 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-08 19:03:11.900 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-08 19:03:11.901 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-08 19:03:11.991 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Heatmap computed. Returning it now
+2022-04-08 19:03:12.157 INFO region_analysis - page_3_plot_spectrum: Spectra plotted. Returning it now
+2022-04-08 19:03:12.183 INFO region_analysis - page_3_fill_dropdown_options: Starting computing lipid dropdown now.
+2022-04-08 19:03:12.244 INFO region_analysis - page_3_fill_dropdown_options: Dropdown values computed. Updating it with new lipids now.
+2022-04-08 19:03:12.356 INFO region_analysis - draw_modal_graph: Modal graph function triggered with input page-3-open-modal
+2022-04-08 19:03:12.357 INFO region_analysis - draw_modal_graph: At least one lipid has been selected, starting computing modal graph now.
+2022-04-08 19:03:12.358 INFO figures - compute_rgb_image_per_lipid_selection: Started RGB image computation for slice 1	MemTotal: 1996.3515625
+2022-04-08 19:03:12.358 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-08 19:03:13.149 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-08 19:03:13.170 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-08 19:03:13.230 INFO figures - compute_rgb_image_per_lipid_selection: array_image acquired for slice 1	MemTotal: 2028.01171875
+2022-04-08 19:03:13.230 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-08 19:03:13.247 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-08 19:03:13.278 INFO image - convert_image_to_base64: Empty pixels are now transparent
+2022-04-08 19:03:13.293 INFO image - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-04-08 19:03:13.307 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-08 19:03:13.308 INFO figures - compute_rgb_image_per_lipid_selection: Started building graph for slice 1	MemTotal: 2028.01171875
+2022-04-08 19:03:13.324 INFO figures - compute_rgb_image_per_lipid_selection: Returning fig for slice 1	MemTotal: 2028.2578125
+2022-04-08 19:03:13.324 INFO region_analysis - draw_modal_graph: Modal graph computed. Returning it now
+2022-04-08 19:03:16.905 INFO index - render_page_content: Page/region-analysishas been selected	MemTotal: 2052.2265625
+2022-04-08 19:03:17.005 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2053.99609375
+2022-04-08 19:03:17.723 INFO region_analysis - page_3_record_spectra: Starting to compute spectrum
+2022-04-08 19:03:17.723 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-08 19:03:17.724 DEBUG filesystemcache - get: get key 'qcrHrJ51w4U4ztl9iKUHPY' -> hit 
+2022-04-08 19:03:17.724 WARNING region_analysis - page_3_record_spectra: A bug appeared during spectrum computation
+2022-04-08 19:03:17.801 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Starting computing heatmap now
+2022-04-08 19:03:17.814 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2066.6640625
+2022-04-08 19:03:18.346 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2054.25390625
+2022-04-08 19:03:19.053 INFO region_analysis - page_3_display_high_res_mz_plot: Compute spectra button has been clicked
+2022-04-08 19:03:19.053 INFO region_analysis - page_3_display_high_res_mz_plot: One or several shapes have been selected, displaying graphs
+2022-04-08 19:03:19.057 INFO region_analysis - page_3_record_spectra: Starting to compute spectrum
+2022-04-08 19:03:19.058 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-08 19:03:19.058 DEBUG filesystemcache - get: get key 'vPAYMznWGpZOJeNPiKUHPY' -> miss 
+2022-04-08 19:03:19.058 INFO region_analysis - global_spectrum_store: Computing spectra now
+2022-04-08 19:03:19.058 INFO region_analysis - global_spectrum_store: Start computing path
+2022-04-08 19:03:19.058 INFO region_analysis - global_spectrum_store: Computing path finished
+2022-04-08 19:03:19.074 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-08 19:03:19.074 DEBUG filesystemcache - set: set key 'vPAYMznWGpZOJeNPiKUHPY'
+2022-04-08 19:03:19.074 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-08 19:03:19.075 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-04-08 19:03:19.075 INFO region_analysis - page_3_record_spectra: Spectra computed, returning it now
+2022-04-08 19:03:19.260 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Starting computing heatmap now
+2022-04-08 19:03:19.260 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-08 19:03:19.260 DEBUG filesystemcache - get: get key 'vPAYMznWGpZOJeNPiKUHPY' -> hit 
+2022-04-08 19:03:19.260 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-08 19:03:19.261 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-08 19:03:19.266 INFO region_analysis - page_3_plot_spectrum: Starting spectra plotting now
+2022-04-08 19:03:19.268 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-08 19:03:19.268 DEBUG filesystemcache - get: get key 'vPAYMznWGpZOJeNPiKUHPY' -> hit 
+2022-04-08 19:03:19.268 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-08 19:03:19.270 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-08 19:03:19.535 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Heatmap computed. Returning it now
+2022-04-08 19:03:19.730 INFO region_analysis - page_3_fill_dropdown_options: Starting computing lipid dropdown now.
+2022-04-08 19:03:19.791 INFO region_analysis - page_3_fill_dropdown_options: Dropdown values computed. Updating it with new lipids now.
+2022-04-08 19:03:19.914 INFO region_analysis - draw_modal_graph: Modal graph function triggered with input page-3-open-modal
+2022-04-08 19:03:19.914 INFO region_analysis - draw_modal_graph: At least one lipid has been selected, starting computing modal graph now.
+2022-04-08 19:03:19.915 INFO figures - compute_rgb_image_per_lipid_selection: Started RGB image computation for slice 1	MemTotal: 2068.36328125
+2022-04-08 19:03:19.916 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-08 19:03:19.972 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-08 19:03:19.987 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-08 19:03:20.033 INFO figures - compute_rgb_image_per_lipid_selection: array_image acquired for slice 1	MemTotal: 2089.8515625
+2022-04-08 19:03:20.033 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-08 19:03:20.049 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-08 19:03:20.079 INFO image - convert_image_to_base64: Empty pixels are now transparent
+2022-04-08 19:03:20.095 INFO image - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-04-08 19:03:20.109 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-08 19:03:20.109 INFO figures - compute_rgb_image_per_lipid_selection: Started building graph for slice 1	MemTotal: 2089.8515625
+2022-04-08 19:03:20.126 INFO figures - compute_rgb_image_per_lipid_selection: Returning fig for slice 1	MemTotal: 2089.8515625
+2022-04-08 19:03:20.126 INFO region_analysis - draw_modal_graph: Modal graph computed. Returning it now
+2022-04-08 19:03:20.135 INFO region_analysis - page_3_plot_spectrum: Spectra plotted. Returning it now
+[2022-04-11 11:41:31 +0200] [180804] [INFO] Handling signal: term
+[2022-04-11 11:41:31 +0200] [181101] [INFO] Worker exiting (pid: 181101)
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+page-3-graph-heatmap-per-sel relayoutData 1 None None /region-analysis [] False
+page-3-graph-heatmap-per-sel relayoutData 1 None None /region-analysis [] False
+page-3-reset-button n_clicks 1 1 [] /region-analysis [] False
+page-3-graph-heatmap-per-sel relayoutData 1 None None /region-analysis [] False
+page-3-graph-heatmap-per-sel relayoutData 1 None None /region-analysis [] False
+[2022-04-11 11:41:31 +0200] [181102] [INFO] Worker exiting (pid: 181102)
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+page-3-graph-heatmap-per-sel relayoutData 1 None None /region-analysis [] False
+page-3-graph-heatmap-per-sel relayoutData 1 1 [] /region-analysis [] True
+page-3-graph-heatmap-per-sel relayoutData 1 None None /region-analysis [] False
+[2022-04-11 11:41:32 +0200] [180804] [INFO] Shutting down: Master
+[2022-04-11 11:41:50 +0200] [446337] [INFO] Starting gunicorn 20.1.0
+[2022-04-11 11:41:50 +0200] [446337] [INFO] Listening at: http://0.0.0.0:8050 (446337)
+[2022-04-11 11:41:50 +0200] [446337] [INFO] Using worker: sync
+[2022-04-11 11:41:50 +0200] [446338] [INFO] Booting worker with pid: 446338
+[2022-04-11 11:41:50 +0200] [446339] [INFO] Booting worker with pid: 446339
+2022-04-11 11:41:50.544 INFO main - <module>: Starting import chain	MemTotal: 30.33203125
+2022-04-11 11:41:50.555 INFO main - <module>: Starting import chain	MemTotal: 30.33203125
+2022-04-11 11:41:53.421 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 243.921875
+2022-04-11 11:41:53.421 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 244.03125
+2022-04-11 11:41:53.421 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 243.921875
+2022-04-11 11:41:53.421 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 244.03125
+2022-04-11 11:41:54.881 INFO atlas - __init__: Initializing Atlas object	MemTotal: 1084.26953125
+2022-04-11 11:41:54.881 INFO atlas - __init__: Initializing Atlas object	MemTotal: 1084.26953125
+2022-04-11 11:41:55.813 INFO storage - return_shelved_object: Returning dic_acronym_children_id from shelve file.	MemTotal: 1382.98046875
+2022-04-11 11:41:55.813 INFO storage - return_shelved_object: Returning dic_acronym_children_id from shelve file.	MemTotal: 1382.98046875
+2022-04-11 11:41:57.088 INFO storage - return_shelved_object: Returning hierarchy from shelve file.	MemTotal: 1823.92578125
+2022-04-11 11:41:57.099 INFO storage - return_shelved_object: Returning hierarchy from shelve file.	MemTotal: 1823.9296875
+2022-04-11 11:41:57.192 INFO storage - return_shelved_object: Returning arrays_projection_corrected from shelve file.	MemTotal: 1824.47265625
+2022-04-11 11:41:57.215 INFO storage - return_shelved_object: Returning arrays_projection_corrected from shelve file.	MemTotal: 1824.47265625
+2022-04-11 11:41:58.062 INFO figures - __init__: Initializing Figures object	MemTotal: 1963.25390625
+2022-04-11 11:41:58.062 INFO figures - __init__: Initializing Figures object	MemTotal: 1963.25390625
+2022-04-11 11:41:58.163 INFO storage - return_shelved_object: Returning dic_fig_contours from shelve file.	MemTotal: 1963.25390625
+2022-04-11 11:41:58.164 INFO storage - return_shelved_object: Returning dic_fig_contours from shelve file.	MemTotal: 1963.25390625
+2022-04-11 11:41:58.947 INFO storage - return_shelved_object: Returning dic_normalization_factors from shelve file.	MemTotal: 1975.625
+2022-04-11 11:41:58.948 INFO app - <module>: Memory use after three main object have been instantiated	MemTotal: 1975.625
+2022-04-11 11:41:58.970 INFO storage - return_shelved_object: Returning dic_normalization_factors from shelve file.	MemTotal: 1975.61328125
+2022-04-11 11:41:58.971 INFO app - <module>: Memory use after three main object have been instantiated	MemTotal: 1975.61328125
+2022-04-11 11:41:58.985 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-04-11 11:41:58.990 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-04-11 11:41:59.109 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 1977.4296875
+2022-04-11 11:41:59.109 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 1977.40625
+2022-04-11 11:41:59.123 INFO figures - compute_heatmap_per_mz: Starting figure computation, from mz boundaries
+2022-04-11 11:41:59.123 INFO figures - compute_heatmap_per_mz: Getting image array
+2022-04-11 11:41:59.123 INFO figures - compute_heatmap_per_mz: Starting figure computation, from mz boundaries
+2022-04-11 11:41:59.123 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-11 11:41:59.123 INFO figures - compute_heatmap_per_mz: Getting image array
+2022-04-11 11:41:59.123 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-11 11:42:00.633 INFO figures - compute_heatmap_per_mz: Done getting image array. Cleaning memory
+2022-04-11 11:42:00.635 INFO figures - compute_heatmap_per_mz: Done getting image array. Cleaning memory
+2022-04-11 11:42:00.643 INFO figures - compute_heatmap_per_mz: Memory cleaned
+2022-04-11 11:42:00.643 INFO figures - compute_heatmap_per_mz: Converting image to string
+2022-04-11 11:42:00.643 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-11 11:42:00.643 INFO figures - compute_heatmap_per_mz: Memory cleaned
+2022-04-11 11:42:00.643 INFO figures - compute_heatmap_per_mz: Converting image to string
+2022-04-11 11:42:00.643 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-11 11:42:00.702 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-11 11:42:00.704 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-11 11:42:00.748 INFO image - convert_image_to_base64: Empty pixels are now transparent
+2022-04-11 11:42:00.753 INFO image - convert_image_to_base64: Empty pixels are now transparent
+2022-04-11 11:42:00.765 INFO image - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-04-11 11:42:00.770 INFO image - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-04-11 11:42:00.790 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-11 11:42:00.790 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-11 11:42:00.795 INFO figures - compute_heatmap_per_mz: Adding image to figure
+2022-04-11 11:42:00.796 INFO figures - compute_heatmap_per_mz: Adding image to figure
+2022-04-11 11:42:00.822 INFO figures - compute_heatmap_per_mz: Returning figure
+2022-04-11 11:42:00.823 INFO figures - compute_heatmap_per_mz: Returning figure
+2022-04-11 11:42:00.928 INFO storage - return_shelved_object: Returning lipid_options from shelve file.	MemTotal: 2003.765625
+2022-04-11 11:42:00.929 INFO storage - return_shelved_object: Returning lipid_options from shelve file.	MemTotal: 2003.76171875
+2022-04-11 11:42:01.071 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2003.796875
+2022-04-11 11:42:01.072 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2003.7890625
+2022-04-11 11:42:01.189 INFO storage - return_shelved_object: treemaps could not be found or force_update is True. Computing the object and shelving it now.
+2022-04-11 11:42:01.189 INFO storage - return_shelved_object: treemaps could not be found or force_update is True. Computing the object and shelving it now.
+2022-04-11 11:42:01.383 INFO storage - return_shelved_object: treemaps being returned now from computation.
+2022-04-11 11:42:01.383 INFO storage - return_shelved_object: treemaps being returned now from computation.
+[2022-04-11 11:42:01 +0200] [446339] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/gunicorn/arbiter.py", line 589, in spawn_worker
+    worker.init_process()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/gunicorn/workers/base.py", line 134, in init_process
+    self.load_wsgi()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/gunicorn/workers/base.py", line 146, in load_wsgi
+    self.wsgi = self.app.wsgi()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/gunicorn/app/base.py", line 67, in wsgi
+    self.callable = self.load()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/gunicorn/app/wsgiapp.py", line 58, in load
+    return self.load_wsgiapp()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/gunicorn/app/wsgiapp.py", line 48, in load_wsgiapp
+    return util.import_app(self.app_uri)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/gunicorn/util.py", line 359, in import_app
+    mod = importlib.import_module(module)
+  File "/home/colas/miniconda3/lib/python3.9/importlib/__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1030, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1007, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 986, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 680, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 850, in exec_module
+  File "<frozen importlib._bootstrap>", line 228, in _call_with_frames_removed
+  File "/home/colas/lbae/lbae/main.py", line 64, in <module>
+    app.validation_layout = return_validation_layout(main_content)
+  File "/home/colas/lbae/lbae/index.py", line 193, in return_validation_layout
+    threeD_exploration.return_layout(basic_config, initial_slice),
+  File "/home/colas/lbae/lbae/pages/threeD_exploration.py", line 106, in return_layout
+    figure=return_shelved_object(
+  File "/home/colas/lbae/lbae/modules/tools/storage.py", line 141, in return_shelved_object
+    db.close()
+  File "/home/colas/miniconda3/lib/python3.9/shelve.py", line 144, in close
+    self.sync()
+  File "/home/colas/miniconda3/lib/python3.9/shelve.py", line 172, in sync
+    self.dict.sync()
+  File "/home/colas/miniconda3/lib/python3.9/dbm/dumb.py", line 130, in _commit
+    self._chmod(self._dirfile)
+  File "/home/colas/miniconda3/lib/python3.9/dbm/dumb.py", line 281, in _chmod
+    self._os.chmod(file, self._mode)
+FileNotFoundError: [Errno 2] No such file or directory: 'data/app_data/data.db.dir'
+[2022-04-11 11:42:01 +0200] [446339] [INFO] Worker exiting (pid: 446339)
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+2022-04-11 11:42:01.519 INFO storage - return_shelved_object: Returning sunburst from shelve file.	MemTotal: 2005.19921875
+2022-04-11 11:42:01.642 INFO storage - return_shelved_object: Returning atlas_with_slider from shelve file.	MemTotal: 2005.6875
+2022-04-11 11:42:01.766 INFO storage - return_shelved_object: Returning  from shelve file.	MemTotal: 2005.9375
+[2022-04-11 11:42:02 +0200] [446338] [INFO] Worker exiting (pid: 446338)
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+[2022-04-11 11:42:03 +0200] [446337] [INFO] Shutting down: Master
+[2022-04-11 11:42:03 +0200] [446337] [INFO] Reason: Worker failed to boot.
+[2022-04-11 11:44:16 +0200] [446859] [INFO] Starting gunicorn 20.1.0
+[2022-04-11 11:44:16 +0200] [446859] [INFO] Listening at: http://0.0.0.0:8050 (446859)
+[2022-04-11 11:44:16 +0200] [446859] [INFO] Using worker: sync
+[2022-04-11 11:44:16 +0200] [446860] [INFO] Booting worker with pid: 446860
+[2022-04-11 11:44:16 +0200] [446861] [INFO] Booting worker with pid: 446861
+2022-04-11 11:44:16.410 INFO main - <module>: Starting import chain	MemTotal: 30.3203125
+2022-04-11 11:44:16.510 INFO main - <module>: Starting import chain	MemTotal: 30.3203125
+2022-04-11 11:44:18.400 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 244.0703125
+2022-04-11 11:44:18.400 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 244.0703125
+2022-04-11 11:44:18.529 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 244.06640625
+2022-04-11 11:44:18.529 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 244.06640625
+2022-04-11 11:44:19.139 INFO atlas - __init__: Initializing Atlas object	MemTotal: 1084.25
+2022-04-11 11:44:19.144 INFO atlas - __init__: Initializing Atlas object	MemTotal: 1084.2421875
+2022-04-11 11:44:19.822 INFO storage - return_shelved_object: Returning dic_acronym_children_id from shelve file.	MemTotal: 1382.953125
+2022-04-11 11:44:19.836 INFO storage - return_shelved_object: Returning dic_acronym_children_id from shelve file.	MemTotal: 1382.9609375
+2022-04-11 11:44:21.028 INFO storage - return_shelved_object: Returning hierarchy from shelve file.	MemTotal: 1824.12890625
+2022-04-11 11:44:21.049 INFO storage - return_shelved_object: Returning hierarchy from shelve file.	MemTotal: 1824.13671875
+2022-04-11 11:44:21.125 INFO storage - return_shelved_object: Returning arrays_projection_corrected from shelve file.	MemTotal: 1824.46875
+2022-04-11 11:44:21.146 INFO storage - return_shelved_object: Returning arrays_projection_corrected from shelve file.	MemTotal: 1824.47265625
+2022-04-11 11:44:22.048 INFO figures - __init__: Initializing Figures object	MemTotal: 1972.3203125
+2022-04-11 11:44:22.095 INFO figures - __init__: Initializing Figures object	MemTotal: 1972.328125
+2022-04-11 11:44:22.142 INFO storage - return_shelved_object: Returning dic_fig_contours from shelve file.	MemTotal: 1972.3203125
+2022-04-11 11:44:22.196 INFO storage - return_shelved_object: Returning dic_fig_contours from shelve file.	MemTotal: 1972.328125
+2022-04-11 11:44:23.044 INFO storage - return_shelved_object: Returning dic_normalization_factors from shelve file.	MemTotal: 1984.7890625
+2022-04-11 11:44:23.045 INFO app - <module>: Memory use after three main object have been instantiated	MemTotal: 1984.7890625
+2022-04-11 11:44:23.047 INFO storage - return_shelved_object: Returning dic_normalization_factors from shelve file.	MemTotal: 1984.609375
+2022-04-11 11:44:23.049 INFO app - <module>: Memory use after three main object have been instantiated	MemTotal: 1984.84375
+2022-04-11 11:44:23.081 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-04-11 11:44:23.081 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-04-11 11:44:23.211 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 1986.73046875
+2022-04-11 11:44:23.211 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 1986.7265625
+2022-04-11 11:44:23.226 INFO figures - compute_heatmap_per_mz: Starting figure computation, from mz boundaries
+2022-04-11 11:44:23.226 INFO figures - compute_heatmap_per_mz: Getting image array
+2022-04-11 11:44:23.226 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-11 11:44:23.226 INFO figures - compute_heatmap_per_mz: Starting figure computation, from mz boundaries
+2022-04-11 11:44:23.226 INFO figures - compute_heatmap_per_mz: Getting image array
+2022-04-11 11:44:23.226 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-11 11:44:24.812 INFO figures - compute_heatmap_per_mz: Done getting image array. Cleaning memory
+2022-04-11 11:44:24.816 INFO figures - compute_heatmap_per_mz: Memory cleaned
+2022-04-11 11:44:24.816 INFO figures - compute_heatmap_per_mz: Converting image to string
+2022-04-11 11:44:24.816 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-11 11:44:24.861 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-11 11:44:24.902 INFO image - convert_image_to_base64: Empty pixels are now transparent
+2022-04-11 11:44:24.919 INFO image - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-04-11 11:44:24.934 INFO figures - compute_heatmap_per_mz: Done getting image array. Cleaning memory
+2022-04-11 11:44:24.938 INFO figures - compute_heatmap_per_mz: Memory cleaned
+2022-04-11 11:44:24.938 INFO figures - compute_heatmap_per_mz: Converting image to string
+2022-04-11 11:44:24.938 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-11 11:44:24.946 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-11 11:44:24.952 INFO figures - compute_heatmap_per_mz: Adding image to figure
+2022-04-11 11:44:24.984 INFO figures - compute_heatmap_per_mz: Returning figure
+2022-04-11 11:44:25.001 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-11 11:44:25.054 INFO image - convert_image_to_base64: Empty pixels are now transparent
+2022-04-11 11:44:25.073 INFO image - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-04-11 11:44:25.098 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-11 11:44:25.104 INFO figures - compute_heatmap_per_mz: Adding image to figure
+2022-04-11 11:44:25.105 INFO storage - return_shelved_object: Returning lipid_options from shelve file.	MemTotal: 2012.765625
+2022-04-11 11:44:25.133 INFO figures - compute_heatmap_per_mz: Returning figure
+2022-04-11 11:44:25.250 INFO storage - return_shelved_object: Returning lipid_options from shelve file.	MemTotal: 2012.3125
+2022-04-11 11:44:25.283 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2012.76953125
+2022-04-11 11:44:25.397 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2012.3359375
+2022-04-11 11:44:25.414 INFO storage - return_shelved_object: treemaps could not be found or force_update is True. Computing the object and shelving it now.
+2022-04-11 11:44:25.526 INFO storage - return_shelved_object: treemaps could not be found or force_update is True. Computing the object and shelving it now.
+2022-04-11 11:44:25.630 INFO storage - return_shelved_object: treemaps being returned now from computation.
+2022-04-11 11:44:25.709 INFO storage - return_shelved_object: treemaps being returned now from computation.
+2022-04-11 11:44:25.774 INFO storage - return_shelved_object: Returning sunburst from shelve file.	MemTotal: 2014.27734375
+2022-04-11 11:44:25.844 INFO storage - return_shelved_object: Returning sunburst from shelve file.	MemTotal: 2013.875
+2022-04-11 11:44:25.911 INFO storage - return_shelved_object: Returning atlas_with_slider from shelve file.	MemTotal: 2014.703125
+2022-04-11 11:44:25.961 INFO storage - return_shelved_object: Returning atlas_with_slider from shelve file.	MemTotal: 2014.36328125
+2022-04-11 11:44:26.046 INFO storage - return_shelved_object: Returning  from shelve file.	MemTotal: 2015.16796875
+2022-04-11 11:44:26.077 INFO storage - return_shelved_object: Returning  from shelve file.	MemTotal: 2014.84765625
+2022-04-11 11:44:42.908 INFO index - render_page_content: Page/region-analysishas been selected	MemTotal: 2026.5703125
+2022-04-11 11:44:43.017 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2026.5703125
+2022-04-11 11:44:43.551 INFO region_analysis - page_3_record_spectra: Starting to compute spectrum
+2022-04-11 11:44:43.552 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-11 11:44:43.553 DEBUG filesystemcache - get: get key 'qcrHrJ51w4U4ztl9dURreP' -> hit 
+2022-04-11 11:44:43.553 WARNING region_analysis - page_3_record_spectra: A bug appeared during spectrum computation
+2022-04-11 11:44:43.594 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Starting computing heatmap now
+2022-04-11 11:44:43.654 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2026.9921875
+2022-04-11 11:44:44.972 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2026.9921875
+2022-04-11 11:44:44.986 INFO atlas - get_projected_mask_and_spectrum: Loading Orbital area, ventrolateral part, layer 6a for slice 0 from shelve file.
+2022-04-11 11:44:45.146 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-11 11:44:45.172 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-11 11:44:45.195 INFO image - convert_image_to_base64: gif mode selected, quality argument is not supported
+2022-04-11 11:44:45.202 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-11 11:44:45.845 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2029.59765625
+2022-04-11 11:44:45.860 INFO atlas - get_projected_mask_and_spectrum: Loading Orbital area, ventrolateral part, layer 6a for slice 0 from shelve file.
+2022-04-11 11:44:46.013 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-11 11:44:46.039 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-11 11:44:46.062 INFO image - convert_image_to_base64: gif mode selected, quality argument is not supported
+2022-04-11 11:44:46.069 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-11 11:44:46.070 INFO atlas - get_projected_mask_and_spectrum: Loading Agranular insular area, ventral part, layer 5 for slice 0 from shelve file.
+2022-04-11 11:44:46.221 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-11 11:44:46.244 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-11 11:44:46.263 INFO image - convert_image_to_base64: gif mode selected, quality argument is not supported
+2022-04-11 11:44:46.270 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-11 11:44:47.213 INFO region_analysis - page_3_display_high_res_mz_plot: Compute spectra button has been clicked
+2022-04-11 11:44:47.213 INFO region_analysis - page_3_display_high_res_mz_plot: One or several masks have been selected, displaying graphs
+2022-04-11 11:44:47.222 INFO region_analysis - page_3_record_spectra: Starting to compute spectrum
+2022-04-11 11:44:47.222 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-11 11:44:47.223 DEBUG filesystemcache - get: get key 'FHIJMQzkFVLZimPhdURreP' -> miss 
+2022-04-11 11:44:47.223 INFO region_analysis - global_spectrum_store: Computing spectra now
+2022-04-11 11:44:47.223 INFO atlas - get_projected_mask_and_spectrum: Loading Orbital area, ventrolateral part, layer 6a for slice 0 from shelve file.
+2022-04-11 11:44:47.347 INFO atlas - get_projected_mask_and_spectrum: Loading Agranular insular area, ventral part, layer 5 for slice 0 from shelve file.
+2022-04-11 11:44:47.465 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-11 11:44:47.466 DEBUG filesystemcache - set: set key 'FHIJMQzkFVLZimPhdURreP'
+2022-04-11 11:44:47.466 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-11 11:44:47.467 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-04-11 11:44:47.467 WARNING region_analysis - page_3_record_spectra: A bug appeared during spectrum computation
+2022-04-11 11:44:47.527 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Starting computing heatmap now
+2022-04-11 11:45:11.664 INFO region_analysis - draw_modal_graph: Modal graph function triggered with input page-3-reset-button
+2022-04-11 11:45:11.664 INFO region_analysis - draw_modal_graph: Resetting modal graph
+2022-04-11 11:45:11.675 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2026.46484375
+2022-04-11 11:45:12.654 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2026.47265625
+2022-04-11 11:45:12.667 INFO atlas - get_projected_mask_and_spectrum: Loading Agranular insular area, ventral part for slice 0 from shelve file.
+2022-04-11 11:45:12.807 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-11 11:45:12.829 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-11 11:45:12.848 INFO image - convert_image_to_base64: gif mode selected, quality argument is not supported
+2022-04-11 11:45:12.854 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-11 11:45:13.534 INFO region_analysis - page_3_display_high_res_mz_plot: Compute spectra button has been clicked
+2022-04-11 11:45:13.534 INFO region_analysis - page_3_display_high_res_mz_plot: One or several masks have been selected, displaying graphs
+2022-04-11 11:45:13.538 INFO region_analysis - page_3_record_spectra: Starting to compute spectrum
+2022-04-11 11:45:13.538 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-11 11:45:13.538 DEBUG filesystemcache - get: get key 'CBYDxUbNgCEKu8yrdURreP' -> miss 
+2022-04-11 11:45:13.538 INFO region_analysis - global_spectrum_store: Computing spectra now
+2022-04-11 11:45:13.538 INFO atlas - get_projected_mask_and_spectrum: Loading Agranular insular area, ventral part for slice 0 from shelve file.
+2022-04-11 11:45:13.641 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-11 11:45:13.642 DEBUG filesystemcache - set: set key 'CBYDxUbNgCEKu8yrdURreP'
+2022-04-11 11:45:13.643 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-11 11:45:13.644 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-04-11 11:45:13.644 INFO region_analysis - page_3_record_spectra: Spectra computed, returning it now
+2022-04-11 11:45:13.704 INFO region_analysis - page_3_plot_spectrum: Starting spectra plotting now
+2022-04-11 11:45:13.705 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-11 11:45:13.706 DEBUG filesystemcache - get: get key 'CBYDxUbNgCEKu8yrdURreP' -> hit 
+2022-04-11 11:45:13.706 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-11 11:45:13.706 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Starting computing heatmap now
+2022-04-11 11:45:13.707 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-11 11:45:13.707 DEBUG filesystemcache - get: get key 'CBYDxUbNgCEKu8yrdURreP' -> hit 
+2022-04-11 11:45:13.707 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-11 11:45:13.901 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-11 11:45:13.904 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-11 11:45:14.117 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Heatmap computed. Returning it now
+2022-04-11 11:45:14.302 INFO region_analysis - page_3_fill_dropdown_options: Starting computing lipid dropdown now.
+2022-04-11 11:45:14.356 INFO region_analysis - page_3_fill_dropdown_options: Dropdown values computed. Updating it with new lipids now.
+2022-04-11 11:45:14.439 INFO region_analysis - draw_modal_graph: Modal graph function triggered with input page-3-open-modal
+2022-04-11 11:45:14.439 INFO region_analysis - draw_modal_graph: At least one lipid has been selected, starting computing modal graph now.
+2022-04-11 11:45:14.440 INFO figures - compute_rgb_image_per_lipid_selection: Started RGB image computation for slice 1	MemTotal: 2032.83203125
+2022-04-11 11:45:14.441 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-11 11:45:14.498 INFO region_analysis - page_3_plot_spectrum: Spectra plotted. Returning it now
+2022-04-11 11:45:15.428 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-11 11:45:15.454 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-11 11:45:15.520 INFO figures - compute_rgb_image_per_lipid_selection: array_image acquired for slice 1	MemTotal: 2033.16796875
+2022-04-11 11:45:15.520 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-11 11:45:15.540 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-11 11:45:15.580 INFO image - convert_image_to_base64: Empty pixels are now transparent
+2022-04-11 11:45:15.597 INFO image - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-04-11 11:45:15.613 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-11 11:45:15.613 INFO figures - compute_rgb_image_per_lipid_selection: Started building graph for slice 1	MemTotal: 2059.203125
+2022-04-11 11:45:15.630 INFO figures - compute_rgb_image_per_lipid_selection: Returning fig for slice 1	MemTotal: 2059.203125
+2022-04-11 11:45:15.630 INFO region_analysis - draw_modal_graph: Modal graph computed. Returning it now
+2022-04-11 11:45:18.006 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2059.45703125
+2022-04-11 11:45:18.018 INFO region_analysis - draw_modal_graph: Modal graph function triggered with input page-3-reset-button
+2022-04-11 11:45:18.018 INFO region_analysis - draw_modal_graph: Resetting modal graph
+2022-04-11 11:45:19.304 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2059.45703125
+2022-04-11 11:45:19.315 INFO atlas - get_projected_mask_and_spectrum: Loading Orbital area, ventrolateral part, layer 2/3 for slice 0 from shelve file.
+2022-04-11 11:45:19.443 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-11 11:45:19.465 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-11 11:45:19.485 INFO image - convert_image_to_base64: gif mode selected, quality argument is not supported
+2022-04-11 11:45:19.490 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-11 11:45:20.061 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2036.9296875
+2022-04-11 11:45:20.073 INFO atlas - get_projected_mask_and_spectrum: Loading Orbital area, ventrolateral part, layer 2/3 for slice 0 from shelve file.
+2022-04-11 11:45:20.208 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-11 11:45:20.230 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-11 11:45:20.249 INFO image - convert_image_to_base64: gif mode selected, quality argument is not supported
+2022-04-11 11:45:20.255 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-11 11:45:20.256 INFO atlas - get_projected_mask_and_spectrum: Loading Orbital area, medial part, layer 1 for slice 0 from shelve file.
+2022-04-11 11:45:20.387 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-11 11:45:20.407 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-11 11:45:20.423 INFO image - convert_image_to_base64: gif mode selected, quality argument is not supported
+2022-04-11 11:45:20.428 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-11 11:45:21.340 INFO region_analysis - page_3_display_high_res_mz_plot: Compute spectra button has been clicked
+2022-04-11 11:45:21.341 INFO region_analysis - page_3_display_high_res_mz_plot: One or several masks have been selected, displaying graphs
+2022-04-11 11:45:21.342 INFO region_analysis - page_3_record_spectra: Starting to compute spectrum
+2022-04-11 11:45:21.342 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-11 11:45:21.343 DEBUG filesystemcache - get: get key 'w7c8o2QjFF1QFR4jdURreP' -> miss 
+2022-04-11 11:45:21.343 INFO region_analysis - global_spectrum_store: Computing spectra now
+2022-04-11 11:45:21.343 INFO atlas - get_projected_mask_and_spectrum: Loading Orbital area, ventrolateral part, layer 2/3 for slice 0 from shelve file.
+2022-04-11 11:45:21.448 INFO atlas - get_projected_mask_and_spectrum: Loading Orbital area, medial part, layer 1 for slice 0 from shelve file.
+2022-04-11 11:45:21.548 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-11 11:45:21.549 DEBUG filesystemcache - set: set key 'w7c8o2QjFF1QFR4jdURreP'
+2022-04-11 11:45:21.549 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-11 11:45:21.549 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-04-11 11:45:21.549 INFO region_analysis - page_3_record_spectra: Spectra computed, returning it now
+2022-04-11 11:45:21.574 INFO region_analysis - page_3_plot_spectrum: Starting spectra plotting now
+2022-04-11 11:45:21.575 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-11 11:45:21.576 DEBUG filesystemcache - get: get key 'w7c8o2QjFF1QFR4jdURreP' -> hit 
+2022-04-11 11:45:21.576 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-11 11:45:21.576 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Starting computing heatmap now
+2022-04-11 11:45:21.576 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-11 11:45:21.577 DEBUG filesystemcache - get: get key 'w7c8o2QjFF1QFR4jdURreP' -> hit 
+2022-04-11 11:45:21.577 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-11 11:45:21.578 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-11 11:45:21.578 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-11 11:45:21.669 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Heatmap computed. Returning it now
+2022-04-11 11:45:21.814 INFO region_analysis - page_3_fill_dropdown_options: Starting computing lipid dropdown now.
+2022-04-11 11:45:21.876 INFO region_analysis - page_3_fill_dropdown_options: Dropdown values computed. Updating it with new lipids now.
+2022-04-11 11:45:21.955 INFO region_analysis - draw_modal_graph: Modal graph function triggered with input page-3-open-modal
+2022-04-11 11:45:21.955 INFO region_analysis - draw_modal_graph: At least one lipid has been selected, starting computing modal graph now.
+2022-04-11 11:45:21.956 INFO figures - compute_rgb_image_per_lipid_selection: Started RGB image computation for slice 1	MemTotal: 2042.50390625
+2022-04-11 11:45:21.957 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-11 11:45:22.009 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-11 11:45:22.043 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-11 11:45:22.073 INFO region_analysis - page_3_plot_spectrum: Spectra plotted. Returning it now
+2022-04-11 11:45:22.104 INFO figures - compute_rgb_image_per_lipid_selection: array_image acquired for slice 1	MemTotal: 2091.55859375
+2022-04-11 11:45:22.104 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-11 11:45:22.120 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-11 11:45:22.153 INFO image - convert_image_to_base64: Empty pixels are now transparent
+2022-04-11 11:45:22.170 INFO image - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-04-11 11:45:22.181 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-11 11:45:22.181 INFO figures - compute_rgb_image_per_lipid_selection: Started building graph for slice 1	MemTotal: 2091.55859375
+2022-04-11 11:45:22.198 INFO figures - compute_rgb_image_per_lipid_selection: Returning fig for slice 1	MemTotal: 2091.55859375
+2022-04-11 11:45:22.204 INFO region_analysis - draw_modal_graph: Modal graph computed. Returning it now
+2022-04-11 11:45:26.056 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2035.515625
+2022-04-11 11:45:26.169 INFO region_analysis - draw_modal_graph: Modal graph function triggered with input page-3-reset-button
+2022-04-11 11:45:26.169 INFO region_analysis - draw_modal_graph: Resetting modal graph
+2022-04-11 11:45:26.980 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2035.515625
+2022-04-11 11:45:27.355 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2039.05859375
+2022-04-11 11:45:28.084 INFO region_analysis - page_3_display_high_res_mz_plot: Compute spectra button has been clicked
+2022-04-11 11:45:28.084 INFO region_analysis - page_3_display_high_res_mz_plot: One or several shapes have been selected, displaying graphs
+2022-04-11 11:45:28.085 INFO region_analysis - page_3_record_spectra: Starting to compute spectrum
+2022-04-11 11:45:28.085 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-11 11:45:28.085 DEBUG filesystemcache - get: get key '1cAkcWQB/stf+t8fdURreP' -> miss 
+2022-04-11 11:45:28.085 INFO region_analysis - global_spectrum_store: Computing spectra now
+2022-04-11 11:45:28.086 INFO region_analysis - global_spectrum_store: Start computing path
+2022-04-11 11:45:28.086 INFO region_analysis - global_spectrum_store: Computing path finished
+2022-04-11 11:45:34.549 INFO region_analysis - global_spectrum_store: Start computing path
+2022-04-11 11:45:34.550 INFO region_analysis - global_spectrum_store: Computing path finished
+2022-04-11 11:45:34.552 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-11 11:45:34.553 DEBUG filesystemcache - set: set key '1cAkcWQB/stf+t8fdURreP'
+2022-04-11 11:45:34.553 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-11 11:45:34.553 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-04-11 11:45:34.553 INFO region_analysis - page_3_record_spectra: Spectra computed, returning it now
+2022-04-11 11:45:34.620 INFO region_analysis - page_3_plot_spectrum: Starting spectra plotting now
+2022-04-11 11:45:34.620 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Starting computing heatmap now
+2022-04-11 11:45:34.620 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-11 11:45:34.621 DEBUG filesystemcache - get: get key '1cAkcWQB/stf+t8fdURreP' -> hit 
+2022-04-11 11:45:34.621 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-11 11:45:34.621 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-11 11:45:34.621 DEBUG filesystemcache - get: get key '1cAkcWQB/stf+t8fdURreP' -> hit 
+2022-04-11 11:45:34.621 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-11 11:45:34.622 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-11 11:45:34.623 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-11 11:45:34.713 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Heatmap computed. Returning it now
+2022-04-11 11:45:34.885 INFO region_analysis - page_3_fill_dropdown_options: Starting computing lipid dropdown now.
+2022-04-11 11:45:34.944 INFO region_analysis - page_3_fill_dropdown_options: Dropdown values computed. Updating it with new lipids now.
+2022-04-11 11:45:35.020 INFO region_analysis - draw_modal_graph: Modal graph function triggered with input page-3-open-modal
+2022-04-11 11:45:35.021 INFO region_analysis - draw_modal_graph: At least one lipid has been selected, starting computing modal graph now.
+2022-04-11 11:45:35.022 INFO figures - compute_rgb_image_per_lipid_selection: Started RGB image computation for slice 1	MemTotal: 2035.515625
+2022-04-11 11:45:35.022 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-11 11:45:35.077 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-11 11:45:35.084 INFO region_analysis - page_3_plot_spectrum: Spectra plotted. Returning it now
+2022-04-11 11:45:35.114 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-11 11:45:35.181 INFO figures - compute_rgb_image_per_lipid_selection: array_image acquired for slice 1	MemTotal: 2092.3984375
+2022-04-11 11:45:35.181 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-11 11:45:35.198 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-11 11:45:35.229 INFO image - convert_image_to_base64: Empty pixels are now transparent
+2022-04-11 11:45:35.245 INFO image - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-04-11 11:45:35.262 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-11 11:45:35.262 INFO figures - compute_rgb_image_per_lipid_selection: Started building graph for slice 1	MemTotal: 2092.3984375
+2022-04-11 11:45:35.278 INFO figures - compute_rgb_image_per_lipid_selection: Returning fig for slice 1	MemTotal: 2092.3984375
+2022-04-11 11:45:35.285 INFO region_analysis - draw_modal_graph: Modal graph computed. Returning it now
+2022-04-11 11:45:37.736 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2062.84765625
+2022-04-11 11:45:37.747 INFO region_analysis - draw_modal_graph: Modal graph function triggered with input page-3-reset-button
+2022-04-11 11:45:37.747 INFO region_analysis - draw_modal_graph: Resetting modal graph
+2022-04-11 11:45:40.163 INFO index - render_page_content: Page/region-analysishas been selected	MemTotal: 2034.08203125
+2022-04-11 11:45:40.265 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2034.08203125
+2022-04-11 11:45:40.810 INFO region_analysis - page_3_record_spectra: Starting to compute spectrum
+2022-04-11 11:45:40.810 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-11 11:45:40.811 DEBUG filesystemcache - get: get key 'qcrHrJ51w4U4ztl9dURreP' -> hit 
+2022-04-11 11:45:40.811 WARNING region_analysis - page_3_record_spectra: A bug appeared during spectrum computation
+2022-04-11 11:45:40.858 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Starting computing heatmap now
+2022-04-11 11:45:40.900 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2035.765625
+2022-04-11 11:45:41.649 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2071.47265625
+2022-04-11 11:45:42.063 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2036.0078125
+2022-04-11 11:45:42.874 INFO region_analysis - page_3_record_spectra: Starting to compute spectrum
+2022-04-11 11:45:42.874 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-11 11:45:42.874 DEBUG filesystemcache - get: get key 'pwM3b9jlONcW4l5LdURreP' -> miss 
+2022-04-11 11:45:42.874 INFO region_analysis - global_spectrum_store: Computing spectra now
+2022-04-11 11:45:42.874 INFO region_analysis - global_spectrum_store: Start computing path
+2022-04-11 11:45:42.874 INFO region_analysis - page_3_display_high_res_mz_plot: Compute spectra button has been clicked
+2022-04-11 11:45:42.875 INFO region_analysis - page_3_display_high_res_mz_plot: One or several shapes have been selected, displaying graphs
+2022-04-11 11:45:42.875 INFO region_analysis - global_spectrum_store: Computing path finished
+2022-04-11 11:45:49.030 INFO region_analysis - global_spectrum_store: Start computing path
+2022-04-11 11:45:49.030 INFO region_analysis - global_spectrum_store: Computing path finished
+2022-04-11 11:45:49.033 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-11 11:45:49.034 DEBUG filesystemcache - set: set key 'pwM3b9jlONcW4l5LdURreP'
+2022-04-11 11:45:49.034 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-11 11:45:49.034 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-04-11 11:45:49.034 INFO region_analysis - page_3_record_spectra: Spectra computed, returning it now
+2022-04-11 11:45:49.171 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Starting computing heatmap now
+2022-04-11 11:45:49.172 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-11 11:45:49.172 INFO region_analysis - page_3_plot_spectrum: Starting spectra plotting now
+2022-04-11 11:45:49.172 DEBUG filesystemcache - get: get key 'pwM3b9jlONcW4l5LdURreP' -> hit 
+2022-04-11 11:45:49.172 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-11 11:45:49.173 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-11 11:45:49.174 DEBUG filesystemcache - get: get key 'pwM3b9jlONcW4l5LdURreP' -> hit 
+2022-04-11 11:45:49.174 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-11 11:45:49.174 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-11 11:45:49.175 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-11 11:45:49.267 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Heatmap computed. Returning it now
+2022-04-11 11:45:49.433 INFO region_analysis - page_3_fill_dropdown_options: Starting computing lipid dropdown now.
+2022-04-11 11:45:49.494 INFO region_analysis - page_3_fill_dropdown_options: Dropdown values computed. Updating it with new lipids now.
+2022-04-11 11:45:49.579 INFO region_analysis - draw_modal_graph: Modal graph function triggered with input page-3-open-modal
+2022-04-11 11:45:49.579 INFO region_analysis - draw_modal_graph: At least one lipid has been selected, starting computing modal graph now.
+2022-04-11 11:45:49.581 INFO figures - compute_rgb_image_per_lipid_selection: Started RGB image computation for slice 1	MemTotal: 2064.3671875
+2022-04-11 11:45:49.581 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-11 11:45:49.643 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-11 11:45:49.652 INFO region_analysis - page_3_plot_spectrum: Spectra plotted. Returning it now
+2022-04-11 11:45:49.681 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-11 11:45:49.741 INFO figures - compute_rgb_image_per_lipid_selection: array_image acquired for slice 1	MemTotal: 2121.6640625
+2022-04-11 11:45:49.741 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-11 11:45:49.758 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-11 11:45:49.790 INFO image - convert_image_to_base64: Empty pixels are now transparent
+2022-04-11 11:45:49.806 INFO image - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-04-11 11:45:49.823 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-11 11:45:49.824 INFO figures - compute_rgb_image_per_lipid_selection: Started building graph for slice 1	MemTotal: 2121.765625
+2022-04-11 11:45:49.841 INFO figures - compute_rgb_image_per_lipid_selection: Returning fig for slice 1	MemTotal: 2121.765625
+2022-04-11 11:45:49.848 INFO region_analysis - draw_modal_graph: Modal graph computed. Returning it now
+2022-04-11 11:45:53.559 INFO index - render_page_content: Page/region-analysishas been selected	MemTotal: 2114.1171875
+2022-04-11 11:45:53.662 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2114.1171875
+2022-04-11 11:45:54.186 INFO region_analysis - page_3_record_spectra: Starting to compute spectrum
+2022-04-11 11:45:54.186 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-11 11:45:54.187 DEBUG filesystemcache - get: get key 'qcrHrJ51w4U4ztl9dURreP' -> hit 
+2022-04-11 11:45:54.187 WARNING region_analysis - page_3_record_spectra: A bug appeared during spectrum computation
+2022-04-11 11:45:54.265 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Starting computing heatmap now
+2022-04-11 11:45:54.266 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2114.2734375
+2022-04-11 11:45:54.981 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2072.09375
+2022-04-11 11:45:55.376 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2114.2734375
+2022-04-11 11:45:56.162 INFO region_analysis - page_3_record_spectra: Starting to compute spectrum
+2022-04-11 11:45:56.162 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-11 11:45:56.162 INFO region_analysis - page_3_display_high_res_mz_plot: Compute spectra button has been clicked
+2022-04-11 11:45:56.162 INFO region_analysis - page_3_display_high_res_mz_plot: One or several shapes have been selected, displaying graphs
+2022-04-11 11:45:56.162 DEBUG filesystemcache - get: get key 'dFpF5UGN/IeN3T7LdURreP' -> miss 
+2022-04-11 11:45:56.162 INFO region_analysis - global_spectrum_store: Computing spectra now
+2022-04-11 11:45:56.162 INFO region_analysis - global_spectrum_store: Start computing path
+2022-04-11 11:45:56.162 INFO region_analysis - global_spectrum_store: Computing path finished
+2022-04-11 11:45:56.178 INFO region_analysis - global_spectrum_store: Start computing path
+2022-04-11 11:45:56.178 INFO region_analysis - global_spectrum_store: Computing path finished
+2022-04-11 11:45:56.185 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-11 11:45:56.185 DEBUG filesystemcache - set: set key 'dFpF5UGN/IeN3T7LdURreP'
+2022-04-11 11:45:56.185 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-11 11:45:56.185 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-04-11 11:45:56.186 INFO region_analysis - page_3_record_spectra: Spectra computed, returning it now
+2022-04-11 11:45:56.344 INFO region_analysis - page_3_plot_spectrum: Starting spectra plotting now
+2022-04-11 11:45:56.344 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Starting computing heatmap now
+2022-04-11 11:45:56.344 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-11 11:45:56.345 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-11 11:45:56.345 DEBUG filesystemcache - get: get key 'dFpF5UGN/IeN3T7LdURreP' -> hit 
+2022-04-11 11:45:56.345 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-11 11:45:56.345 DEBUG filesystemcache - get: get key 'dFpF5UGN/IeN3T7LdURreP' -> hit 
+2022-04-11 11:45:56.345 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-11 11:45:56.346 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-11 11:45:56.347 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-11 11:45:56.438 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Heatmap computed. Returning it now
+2022-04-11 11:45:56.696 INFO region_analysis - page_3_fill_dropdown_options: Starting computing lipid dropdown now.
+2022-04-11 11:45:56.763 INFO region_analysis - page_3_fill_dropdown_options: Dropdown values computed. Updating it with new lipids now.
+2022-04-11 11:45:56.836 INFO region_analysis - page_3_plot_spectrum: Spectra plotted. Returning it now
+2022-04-11 11:45:56.875 INFO region_analysis - draw_modal_graph: Modal graph function triggered with input page-3-open-modal
+2022-04-11 11:45:56.875 INFO region_analysis - draw_modal_graph: At least one lipid has been selected, starting computing modal graph now.
+2022-04-11 11:45:56.876 INFO figures - compute_rgb_image_per_lipid_selection: Started RGB image computation for slice 1	MemTotal: 2116.40625
+2022-04-11 11:45:56.877 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-11 11:45:56.939 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-11 11:45:56.964 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-11 11:45:57.008 INFO figures - compute_rgb_image_per_lipid_selection: array_image acquired for slice 1	MemTotal: 2121.66796875
+2022-04-11 11:45:57.008 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-11 11:45:57.025 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-11 11:45:57.059 INFO image - convert_image_to_base64: Empty pixels are now transparent
+2022-04-11 11:45:57.076 INFO image - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-04-11 11:45:57.094 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-11 11:45:57.094 INFO figures - compute_rgb_image_per_lipid_selection: Started building graph for slice 1	MemTotal: 2121.66796875
+2022-04-11 11:45:57.111 INFO figures - compute_rgb_image_per_lipid_selection: Returning fig for slice 1	MemTotal: 2121.66796875
+2022-04-11 11:45:57.117 INFO region_analysis - draw_modal_graph: Modal graph computed. Returning it now
+2022-04-11 11:45:59.697 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2074.1484375
+2022-04-11 11:45:59.706 INFO region_analysis - draw_modal_graph: Modal graph function triggered with input page-3-reset-button
+2022-04-11 11:45:59.706 INFO region_analysis - draw_modal_graph: Resetting modal graph
+2022-04-11 11:46:00.492 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2074.1484375
+2022-04-11 11:46:00.503 INFO atlas - get_projected_mask_and_spectrum: Loading olfactory nerve for slice 0 from shelve file.
+2022-04-11 11:46:00.642 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-11 11:46:00.663 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-11 11:46:00.683 INFO image - convert_image_to_base64: gif mode selected, quality argument is not supported
+2022-04-11 11:46:00.688 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-11 11:46:01.072 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2064.14453125
+2022-04-11 11:46:01.083 INFO atlas - get_projected_mask_and_spectrum: Loading olfactory nerve for slice 0 from shelve file.
+2022-04-11 11:46:01.218 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-11 11:46:01.239 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-11 11:46:01.262 INFO image - convert_image_to_base64: gif mode selected, quality argument is not supported
+2022-04-11 11:46:01.267 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-11 11:46:01.268 INFO atlas - get_projected_mask_and_spectrum: Loading Orbital area, ventrolateral part, layer 5 for slice 0 from shelve file.
+2022-04-11 11:46:01.402 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-11 11:46:01.421 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-11 11:46:01.437 INFO image - convert_image_to_base64: gif mode selected, quality argument is not supported
+2022-04-11 11:46:01.442 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-11 11:46:02.589 INFO region_analysis - page_3_display_high_res_mz_plot: Compute spectra button has been clicked
+2022-04-11 11:46:02.589 INFO region_analysis - page_3_display_high_res_mz_plot: One or several masks have been selected, displaying graphs
+2022-04-11 11:46:02.601 INFO region_analysis - page_3_record_spectra: Starting to compute spectrum
+2022-04-11 11:46:02.601 DEBUG filesystemcache - delete: deleted key 'pages.region_analysis.global_spectrum_store_memver'
+2022-04-11 11:46:02.601 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-11 11:46:02.601 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-04-11 11:46:02.601 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> miss (expired)
+2022-04-11 11:46:02.601 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-11 11:46:02.602 DEBUG filesystemcache - set: set key 'pages.region_analysis.global_spectrum_store_memver'
+2022-04-11 11:46:02.602 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-11 11:46:02.602 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-04-11 11:46:02.602 DEBUG filesystemcache - get: get key 'P3lLBYP9E1AbBCsviqaw4N' -> miss 
+2022-04-11 11:46:02.602 INFO region_analysis - global_spectrum_store: Computing spectra now
+2022-04-11 11:46:02.602 INFO atlas - get_projected_mask_and_spectrum: Loading olfactory nerve for slice 0 from shelve file.
+2022-04-11 11:46:02.708 INFO atlas - get_projected_mask_and_spectrum: Loading Orbital area, ventrolateral part, layer 5 for slice 0 from shelve file.
+2022-04-11 11:46:02.810 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-11 11:46:02.810 DEBUG filesystemcache - set: set key 'P3lLBYP9E1AbBCsviqaw4N'
+2022-04-11 11:46:02.810 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-11 11:46:02.810 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-04-11 11:46:02.810 INFO region_analysis - page_3_record_spectra: Spectra computed, returning it now
+2022-04-11 11:46:02.836 INFO region_analysis - page_3_plot_spectrum: Starting spectra plotting now
+2022-04-11 11:46:02.836 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Starting computing heatmap now
+2022-04-11 11:46:02.836 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-11 11:46:02.837 DEBUG filesystemcache - get: get key 'P3lLBYP9E1AbBCsviqaw4N' -> hit 
+2022-04-11 11:46:02.837 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-11 11:46:02.837 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-11 11:46:02.837 DEBUG filesystemcache - get: get key 'P3lLBYP9E1AbBCsviqaw4N' -> hit 
+2022-04-11 11:46:02.838 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-11 11:46:02.839 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-11 11:46:02.839 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-11 11:46:03.066 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Heatmap computed. Returning it now
+2022-04-11 11:46:03.225 INFO region_analysis - page_3_fill_dropdown_options: Starting computing lipid dropdown now.
+2022-04-11 11:46:03.291 INFO region_analysis - page_3_fill_dropdown_options: Dropdown values computed. Updating it with new lipids now.
+2022-04-11 11:46:03.365 INFO region_analysis - draw_modal_graph: Modal graph function triggered with input page-3-open-modal
+2022-04-11 11:46:03.366 INFO region_analysis - draw_modal_graph: At least one lipid has been selected, starting computing modal graph now.
+2022-04-11 11:46:03.367 INFO figures - compute_rgb_image_per_lipid_selection: Started RGB image computation for slice 1	MemTotal: 2077.1875
+2022-04-11 11:46:03.368 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-11 11:46:03.623 INFO region_analysis - page_3_plot_spectrum: Spectra plotted. Returning it now
+2022-04-11 11:46:04.400 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-11 11:46:04.435 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-11 11:46:04.493 INFO figures - compute_rgb_image_per_lipid_selection: array_image acquired for slice 1	MemTotal: 2105.5390625
+2022-04-11 11:46:04.493 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-11 11:46:04.510 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-11 11:46:04.542 INFO image - convert_image_to_base64: Empty pixels are now transparent
+2022-04-11 11:46:04.558 INFO image - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-04-11 11:46:04.571 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-11 11:46:04.572 INFO figures - compute_rgb_image_per_lipid_selection: Started building graph for slice 1	MemTotal: 2105.5390625
+2022-04-11 11:46:04.591 INFO figures - compute_rgb_image_per_lipid_selection: Returning fig for slice 1	MemTotal: 2105.5390625
+2022-04-11 11:46:04.591 INFO region_analysis - draw_modal_graph: Modal graph computed. Returning it now
+2022-04-11 11:46:08.137 INFO index - render_page_content: Page/region-analysishas been selected	MemTotal: 2105.5546875
+2022-04-11 11:46:08.245 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2105.5546875
+2022-04-11 11:46:08.765 INFO region_analysis - page_3_record_spectra: Starting to compute spectrum
+2022-04-11 11:46:08.765 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-11 11:46:08.765 DEBUG filesystemcache - get: get key 'qcrHrJ51w4U4ztl9iqaw4N' -> miss 
+2022-04-11 11:46:08.765 INFO region_analysis - global_spectrum_store: Computing spectra now
+2022-04-11 11:46:08.765 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-11 11:46:08.765 DEBUG filesystemcache - set: set key 'qcrHrJ51w4U4ztl9iqaw4N'
+2022-04-11 11:46:08.766 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-11 11:46:08.766 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-04-11 11:46:08.766 WARNING region_analysis - page_3_record_spectra: A bug appeared during spectrum computation
+2022-04-11 11:46:08.810 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Starting computing heatmap now
+2022-04-11 11:46:08.859 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2119.83984375
+2022-04-11 11:46:09.680 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2105.5546875
+2022-04-11 11:46:09.690 INFO atlas - get_projected_mask_and_spectrum: Loading Agranular insular area, ventral part for slice 0 from shelve file.
+2022-04-11 11:46:09.831 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-11 11:46:09.852 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-11 11:46:09.872 INFO image - convert_image_to_base64: gif mode selected, quality argument is not supported
+2022-04-11 11:46:09.878 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-11 11:46:10.485 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2072.83203125
+2022-04-11 11:46:10.498 INFO atlas - get_projected_mask_and_spectrum: Loading Agranular insular area, ventral part for slice 0 from shelve file.
+2022-04-11 11:46:10.634 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-11 11:46:10.656 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-11 11:46:10.676 INFO image - convert_image_to_base64: gif mode selected, quality argument is not supported
+2022-04-11 11:46:10.681 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-11 11:46:10.682 INFO atlas - get_projected_mask_and_spectrum: Loading Agranular insular area, ventral part, layer 5 for slice 0 from shelve file.
+2022-04-11 11:46:10.824 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-11 11:46:10.844 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-11 11:46:10.862 INFO image - convert_image_to_base64: gif mode selected, quality argument is not supported
+2022-04-11 11:46:10.868 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-11 11:46:12.352 INFO region_analysis - page_3_display_high_res_mz_plot: Compute spectra button has been clicked
+2022-04-11 11:46:12.352 INFO region_analysis - page_3_display_high_res_mz_plot: One or several masks have been selected, displaying graphs
+2022-04-11 11:46:12.353 INFO region_analysis - page_3_record_spectra: Starting to compute spectrum
+2022-04-11 11:46:12.353 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-11 11:46:12.354 DEBUG filesystemcache - get: get key 'SvgTe/AXeRZvjludiqaw4N' -> miss 
+2022-04-11 11:46:12.354 INFO region_analysis - global_spectrum_store: Computing spectra now
+2022-04-11 11:46:12.354 INFO atlas - get_projected_mask_and_spectrum: Loading Agranular insular area, ventral part for slice 0 from shelve file.
+2022-04-11 11:46:12.464 INFO atlas - get_projected_mask_and_spectrum: Loading Agranular insular area, ventral part, layer 5 for slice 0 from shelve file.
+2022-04-11 11:46:12.567 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-11 11:46:12.568 DEBUG filesystemcache - set: set key 'SvgTe/AXeRZvjludiqaw4N'
+2022-04-11 11:46:12.568 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-11 11:46:12.568 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-04-11 11:46:12.568 WARNING region_analysis - page_3_record_spectra: A bug appeared during spectrum computation
+2022-04-11 11:46:12.592 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Starting computing heatmap now
+2022-04-11 11:46:21.517 INFO region_analysis - draw_modal_graph: Modal graph function triggered with input page-3-reset-button
+2022-04-11 11:46:21.517 INFO region_analysis - draw_modal_graph: Resetting modal graph
+2022-04-11 11:46:21.563 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2072.81640625
+2022-04-11 11:46:23.231 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2072.83203125
+2022-04-11 11:46:23.241 INFO atlas - get_projected_mask_and_spectrum: Loading Orbital area, lateral part, layer 1 for slice 0 from shelve file.
+2022-04-11 11:46:23.388 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-11 11:46:23.410 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-11 11:46:23.429 INFO image - convert_image_to_base64: gif mode selected, quality argument is not supported
+2022-04-11 11:46:23.435 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-11 11:46:24.156 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2072.73046875
+2022-04-11 11:46:24.172 INFO atlas - get_projected_mask_and_spectrum: Loading Orbital area, lateral part, layer 1 for slice 0 from shelve file.
+2022-04-11 11:46:24.314 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-11 11:46:24.335 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-11 11:46:24.355 INFO image - convert_image_to_base64: gif mode selected, quality argument is not supported
+2022-04-11 11:46:24.360 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-11 11:46:24.361 INFO atlas - get_projected_mask_and_spectrum: Loading Prelimbic area, layer 2/3 for slice 0 from shelve file.
+2022-04-11 11:46:24.505 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-11 11:46:24.525 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-11 11:46:24.541 INFO image - convert_image_to_base64: gif mode selected, quality argument is not supported
+2022-04-11 11:46:24.546 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-11 11:46:25.382 INFO region_analysis - page_3_display_high_res_mz_plot: Compute spectra button has been clicked
+2022-04-11 11:46:25.382 INFO region_analysis - page_3_display_high_res_mz_plot: One or several masks have been selected, displaying graphs
+2022-04-11 11:46:25.393 INFO region_analysis - page_3_record_spectra: Starting to compute spectrum
+2022-04-11 11:46:25.393 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-11 11:46:25.393 DEBUG filesystemcache - get: get key 'dltYBmHxWEjWy/gQiqaw4N' -> miss 
+2022-04-11 11:46:25.393 INFO region_analysis - global_spectrum_store: Computing spectra now
+2022-04-11 11:46:25.393 INFO atlas - get_projected_mask_and_spectrum: Loading Orbital area, lateral part, layer 1 for slice 0 from shelve file.
+2022-04-11 11:46:25.500 INFO atlas - get_projected_mask_and_spectrum: Loading Prelimbic area, layer 2/3 for slice 0 from shelve file.
+2022-04-11 11:46:25.601 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-11 11:46:25.601 DEBUG filesystemcache - set: set key 'dltYBmHxWEjWy/gQiqaw4N'
+2022-04-11 11:46:25.602 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-11 11:46:25.602 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-04-11 11:46:25.602 INFO region_analysis - page_3_record_spectra: Spectra computed, returning it now
+2022-04-11 11:46:25.625 INFO region_analysis - page_3_plot_spectrum: Starting spectra plotting now
+2022-04-11 11:46:25.626 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-11 11:46:25.627 DEBUG filesystemcache - get: get key 'dltYBmHxWEjWy/gQiqaw4N' -> hit 
+2022-04-11 11:46:25.627 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-11 11:46:25.627 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Starting computing heatmap now
+2022-04-11 11:46:25.627 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-11 11:46:25.628 DEBUG filesystemcache - get: get key 'dltYBmHxWEjWy/gQiqaw4N' -> hit 
+2022-04-11 11:46:25.628 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-11 11:46:25.629 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-11 11:46:25.630 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-11 11:46:25.720 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Heatmap computed. Returning it now
+2022-04-11 11:46:25.859 INFO region_analysis - page_3_fill_dropdown_options: Starting computing lipid dropdown now.
+2022-04-11 11:46:25.922 INFO region_analysis - page_3_fill_dropdown_options: Dropdown values computed. Updating it with new lipids now.
+2022-04-11 11:46:26.016 INFO region_analysis - draw_modal_graph: Modal graph function triggered with input page-3-open-modal
+2022-04-11 11:46:26.016 INFO region_analysis - draw_modal_graph: At least one lipid has been selected, starting computing modal graph now.
+2022-04-11 11:46:26.017 INFO figures - compute_rgb_image_per_lipid_selection: Started RGB image computation for slice 1	MemTotal: 2119.83984375
+2022-04-11 11:46:26.018 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-11 11:46:26.065 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-11 11:46:26.098 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-11 11:46:26.140 INFO figures - compute_rgb_image_per_lipid_selection: array_image acquired for slice 1	MemTotal: 2128.9609375
+2022-04-11 11:46:26.141 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-11 11:46:26.158 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-11 11:46:26.160 INFO region_analysis - page_3_plot_spectrum: Spectra plotted. Returning it now
+2022-04-11 11:46:26.191 INFO image - convert_image_to_base64: Empty pixels are now transparent
+2022-04-11 11:46:26.207 INFO image - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-04-11 11:46:26.218 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-11 11:46:26.218 INFO figures - compute_rgb_image_per_lipid_selection: Started building graph for slice 1	MemTotal: 2129.0546875
+2022-04-11 11:46:26.236 INFO figures - compute_rgb_image_per_lipid_selection: Returning fig for slice 1	MemTotal: 2129.0546875
+2022-04-11 11:46:26.242 INFO region_analysis - draw_modal_graph: Modal graph computed. Returning it now
+2022-04-11 11:46:28.782 INFO region_analysis - draw_modal_graph: Modal graph function triggered with input page-3-reset-button
+2022-04-11 11:46:28.782 INFO region_analysis - draw_modal_graph: Resetting modal graph
+2022-04-11 11:46:28.787 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2082.23828125
+2022-04-11 11:46:29.412 INFO index - render_page_content: Page/3D-explorationhas been selected	MemTotal: 2082.23828125
+2022-04-11 11:46:29.516 INFO storage - return_shelved_object: treemaps could not be found or force_update is True. Computing the object and shelving it now.
+2022-04-11 11:46:29.542 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2068.34765625
+2022-04-11 11:46:29.560 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Starting computing heatmap now
+2022-04-11 11:46:29.661 INFO storage - return_shelved_object: treemaps being returned now from computation.
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+page-3-graph-heatmap-per-sel relayoutData 1 None None /region-analysis [] False
+page-3-dropdown-brain-regions value 1 None ['Orbital area, ventrolateral part, layer 6a'] /region-analysis [] False
+page-3-reset-button n_clicks 1 2 [] /region-analysis [[80, 189, 218, 200]] False
+page-3-dropdown-brain-regions value 1 2 ['Orbital area, ventrolateral part, layer 2/3'] /region-analysis [] True
+page-3-reset-button n_clicks 1 3 [] /region-analysis [[80, 189, 218, 200], [95, 169, 112, 200]] False
+page-3-graph-heatmap-per-sel relayoutData 1 3 [] /region-analysis [] True
+page-3-graph-heatmap-per-sel relayoutData 1 None None /region-analysis [] False
+page-3-graph-heatmap-per-sel relayoutData 1 None None /region-analysis [] False
+page-3-graph-heatmap-per-sel relayoutData 1 None None /region-analysis [] False
+page-3-graph-heatmap-per-sel relayoutData 1 None None /region-analysis [] False
+page-3-graph-heatmap-per-sel relayoutData 1 None None /region-analysis [] False
+page-3-dropdown-brain-regions value 1 1 ['olfactory nerve', 'Orbital area, ventrolateral part, layer 5'] /region-analysis [[80, 189, 218, 200]] False
+page-3-graph-heatmap-per-sel relayoutData 1 None None /region-analysis [] False
+page-3-graph-heatmap-per-sel relayoutData 1 None None /region-analysis [] False
+url pathname 1 2 [] /3D-exploration [] True
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+page-3-graph-heatmap-per-sel relayoutData 1 None None /region-analysis [] False
+page-3-dropdown-brain-regions value 1 None ['Orbital area, ventrolateral part, layer 6a', 'Agranular insular area, ventral part, layer 5'] /region-analysis [[80, 189, 218, 200]] False
+page-3-reset-button n_clicks 1 1 [] /region-analysis [[80, 189, 218, 200], [95, 169, 112, 200]] False
+page-3-dropdown-brain-regions value 1 1 ['Agranular insular area, ventral part'] /region-analysis [] True
+page-3-dropdown-brain-regions value 1 2 ['Orbital area, ventrolateral part, layer 2/3', 'Orbital area, medial part, layer 1'] /region-analysis [[80, 189, 218, 200]] False
+page-3-graph-heatmap-per-sel relayoutData 1 3 [] /region-analysis [] False
+page-3-reset-button n_clicks 1 4 [] /region-analysis [] False
+page-3-graph-heatmap-per-sel relayoutData 1 None None /region-analysis [] False
+page-3-graph-heatmap-per-sel relayoutData 1 None None /region-analysis [] False
+page-3-graph-heatmap-per-sel relayoutData 1 None None /region-analysis [] False
+page-3-reset-button n_clicks 1 1 [] /region-analysis [] False
+page-3-dropdown-brain-regions value 1 1 ['olfactory nerve'] /region-analysis [] True
+page-3-dropdown-brain-regions value 1 None ['Agranular insular area, ventral part'] /region-analysis [] False
+page-3-dropdown-brain-regions value 1 None ['Agranular insular area, ventral part', 'Agranular insular area, ventral part, layer 5'] /region-analysis [[80, 189, 218, 200]] False
+page-3-reset-button n_clicks 1 1 [] /region-analysis [[80, 189, 218, 200], [95, 169, 112, 200]] False
+page-3-dropdown-brain-regions value 1 1 ['Orbital area, lateral part, layer 1'] /region-analysis [] True
+page-3-dropdown-brain-regions value 1 1 ['Orbital area, lateral part, layer 1', 'Prelimbic area, layer 2/3'] /region-analysis [[80, 189, 218, 200]] False
+page-3-reset-button n_clicks 1 2 [] /region-analysis [[80, 189, 218, 200], [95, 169, 112, 200]] False
+2022-04-11 11:46:42.218 INFO figures - compute_clustergram_figure: Starting computing clustergram figure
+2022-04-11 11:46:42.220 DEBUG filesystemcache - delete: deleted key 'modules.figures.Figures.compute_clustergram_figure.<locals>.return_df_avg_lipids_memver'
+2022-04-11 11:46:42.220 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-11 11:46:42.221 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-04-11 11:46:42.221 DEBUG filesystemcache - get: get key 'modules.figures.Figures.compute_clustergram_figure.<locals>.return_df_avg_lipids_memver' -> miss (expired)
+2022-04-11 11:46:42.221 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-11 11:46:42.222 DEBUG filesystemcache - set: set key 'modules.figures.Figures.compute_clustergram_figure.<locals>.return_df_avg_lipids_memver'
+2022-04-11 11:46:42.222 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-11 11:46:42.222 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-04-11 11:46:42.222 DEBUG filesystemcache - get: get key '6JUBIIozCj/vEk2vfV9KGs' -> miss 
+2022-04-11 11:46:42.223 INFO atlas - get_projected_mask_and_spectrum: Loading Cerebrum for slice 0 from shelve file.
+2022-04-11 11:46:42.346 INFO atlas - get_projected_mask_and_spectrum: Loading root for slice 0 from shelve file.
+2022-04-11 11:46:42.452 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-11 11:46:42.457 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-11 11:46:42.457 INFO figures - return_df_avg_lipids: Computing dictionnary for averaging slice 0
+2022-04-11 11:46:42.457 INFO atlas - get_projected_mask_and_spectrum: Loading Cerebrum for slice 1 from shelve file.
+2022-04-11 11:46:42.563 INFO atlas - get_projected_mask_and_spectrum: Loading root for slice 1 from shelve file.
+2022-04-11 11:46:42.669 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-11 11:46:42.670 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-11 11:46:42.670 INFO figures - return_df_avg_lipids: Computing dictionnary for averaging slice 1
+2022-04-11 11:46:42.671 INFO atlas - get_projected_mask_and_spectrum: Loading Cerebrum for slice 2 from shelve file.
+2022-04-11 11:46:42.777 INFO atlas - get_projected_mask_and_spectrum: Loading root for slice 2 from shelve file.
+2022-04-11 11:46:42.883 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-11 11:46:42.885 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-11 11:46:42.885 INFO figures - return_df_avg_lipids: Computing dictionnary for averaging slice 2
+2022-04-11 11:46:42.885 INFO atlas - get_projected_mask_and_spectrum: Loading Cerebrum for slice 3 from shelve file.
+2022-04-11 11:46:42.991 INFO atlas - get_projected_mask_and_spectrum: Loading root for slice 3 from shelve file.
+2022-04-11 11:46:43.096 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-11 11:46:43.098 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-11 11:46:43.098 INFO figures - return_df_avg_lipids: Computing dictionnary for averaging slice 3
+2022-04-11 11:46:43.098 INFO atlas - get_projected_mask_and_spectrum: Loading Cerebrum for slice 4 from shelve file.
+2022-04-11 11:46:43.206 INFO atlas - get_projected_mask_and_spectrum: Loading root for slice 4 from shelve file.
+2022-04-11 11:46:43.321 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-11 11:46:43.323 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-11 11:46:43.323 INFO figures - return_df_avg_lipids: Computing dictionnary for averaging slice 4
+2022-04-11 11:46:43.323 INFO atlas - get_projected_mask_and_spectrum: Loading Cerebrum for slice 5 from shelve file.
+2022-04-11 11:46:43.429 INFO atlas - get_projected_mask_and_spectrum: Loading root for slice 5 from shelve file.
+2022-04-11 11:46:43.536 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-11 11:46:43.538 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-11 11:46:43.538 INFO figures - return_df_avg_lipids: Computing dictionnary for averaging slice 5
+2022-04-11 11:46:43.538 INFO atlas - get_projected_mask_and_spectrum: Loading Cerebrum for slice 6 from shelve file.
+2022-04-11 11:46:43.652 INFO atlas - get_projected_mask_and_spectrum: Loading root for slice 6 from shelve file.
+2022-04-11 11:46:43.759 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-11 11:46:43.760 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-11 11:46:43.761 INFO figures - return_df_avg_lipids: Computing dictionnary for averaging slice 6
+2022-04-11 11:46:43.761 INFO atlas - get_projected_mask_and_spectrum: Loading Cerebrum for slice 7 from shelve file.
+2022-04-11 11:46:43.874 INFO atlas - get_projected_mask_and_spectrum: Loading root for slice 7 from shelve file.
+2022-04-11 11:46:43.980 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-11 11:46:43.982 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-11 11:46:43.982 INFO figures - return_df_avg_lipids: Computing dictionnary for averaging slice 7
+2022-04-11 11:46:43.982 INFO atlas - get_projected_mask_and_spectrum: Loading Cerebrum for slice 8 from shelve file.
+2022-04-11 11:46:44.088 INFO atlas - get_projected_mask_and_spectrum: Loading root for slice 8 from shelve file.
+2022-04-11 11:46:44.195 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-11 11:46:44.195 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-11 11:46:44.195 INFO figures - return_df_avg_lipids: Computing dictionnary for averaging slice 8
+2022-04-11 11:46:44.195 INFO atlas - get_projected_mask_and_spectrum: Loading Cerebrum for slice 9 from shelve file.
+2022-04-11 11:46:44.307 INFO atlas - get_projected_mask_and_spectrum: Loading root for slice 9 from shelve file.
+2022-04-11 11:46:44.427 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-11 11:46:44.429 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-11 11:46:44.429 INFO figures - return_df_avg_lipids: Computing dictionnary for averaging slice 9
+2022-04-11 11:46:44.430 INFO atlas - get_projected_mask_and_spectrum: Loading Cerebrum for slice 10 from shelve file.
+2022-04-11 11:46:44.538 INFO atlas - get_projected_mask_and_spectrum: Loading root for slice 10 from shelve file.
+2022-04-11 11:46:44.645 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-11 11:46:44.646 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-11 11:46:44.646 INFO figures - return_df_avg_lipids: Computing dictionnary for averaging slice 10
+2022-04-11 11:46:44.646 INFO atlas - get_projected_mask_and_spectrum: Loading Cerebrum for slice 11 from shelve file.
+2022-04-11 11:46:44.754 INFO atlas - get_projected_mask_and_spectrum: Loading root for slice 11 from shelve file.
+2022-04-11 11:46:44.863 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-11 11:46:44.864 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-11 11:46:44.864 INFO figures - return_df_avg_lipids: Computing dictionnary for averaging slice 11
+2022-04-11 11:46:44.864 INFO atlas - get_projected_mask_and_spectrum: Loading Cerebrum for slice 12 from shelve file.
+2022-04-11 11:46:44.988 INFO atlas - get_projected_mask_and_spectrum: Loading root for slice 12 from shelve file.
+2022-04-11 11:46:45.096 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-11 11:46:45.097 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-11 11:46:45.098 INFO figures - return_df_avg_lipids: Computing dictionnary for averaging slice 12
+2022-04-11 11:46:45.098 INFO atlas - get_projected_mask_and_spectrum: Loading Cerebrum for slice 13 from shelve file.
+2022-04-11 11:46:45.206 INFO atlas - get_projected_mask_and_spectrum: Loading root for slice 13 from shelve file.
+2022-04-11 11:46:45.314 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-11 11:46:45.315 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-11 11:46:45.315 INFO figures - return_df_avg_lipids: Computing dictionnary for averaging slice 13
+2022-04-11 11:46:45.315 INFO atlas - get_projected_mask_and_spectrum: Loading Cerebrum for slice 14 from shelve file.
+2022-04-11 11:46:45.422 INFO atlas - get_projected_mask_and_spectrum: Loading root for slice 14 from shelve file.
+2022-04-11 11:46:45.534 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-11 11:46:45.535 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-11 11:46:45.535 INFO figures - return_df_avg_lipids: Computing dictionnary for averaging slice 14
+2022-04-11 11:46:45.535 INFO atlas - get_projected_mask_and_spectrum: Loading Cerebrum for slice 15 from shelve file.
+2022-04-11 11:46:45.643 INFO atlas - get_projected_mask_and_spectrum: Loading root for slice 15 from shelve file.
+2022-04-11 11:46:45.754 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-11 11:46:45.756 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-11 11:46:45.756 INFO figures - return_df_avg_lipids: Computing dictionnary for averaging slice 15
+2022-04-11 11:46:45.756 INFO atlas - get_projected_mask_and_spectrum: Loading Cerebrum for slice 16 from shelve file.
+2022-04-11 11:46:45.863 INFO atlas - get_projected_mask_and_spectrum: Loading root for slice 16 from shelve file.
+2022-04-11 11:46:45.970 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-11 11:46:45.971 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-11 11:46:45.971 INFO figures - return_df_avg_lipids: Computing dictionnary for averaging slice 16
+2022-04-11 11:46:45.972 INFO atlas - get_projected_mask_and_spectrum: Loading Cerebrum for slice 17 from shelve file.
+2022-04-11 11:46:46.101 INFO atlas - get_projected_mask_and_spectrum: Loading root for slice 17 from shelve file.
+2022-04-11 11:46:46.221 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-11 11:46:46.224 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-11 11:46:46.224 INFO figures - return_df_avg_lipids: Computing dictionnary for averaging slice 17
+2022-04-11 11:46:46.224 INFO atlas - get_projected_mask_and_spectrum: Loading Cerebrum for slice 18 from shelve file.
+2022-04-11 11:46:46.344 INFO atlas - get_projected_mask_and_spectrum: Loading root for slice 18 from shelve file.
+2022-04-11 11:46:46.464 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-11 11:46:46.465 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-11 11:46:46.465 INFO figures - return_df_avg_lipids: Computing dictionnary for averaging slice 18
+2022-04-11 11:46:46.466 INFO atlas - get_projected_mask_and_spectrum: Loading Cerebrum for slice 19 from shelve file.
+2022-04-11 11:46:46.599 INFO atlas - get_projected_mask_and_spectrum: Loading root for slice 19 from shelve file.
+2022-04-11 11:46:46.719 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-11 11:46:46.720 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-11 11:46:46.721 INFO figures - return_df_avg_lipids: Computing dictionnary for averaging slice 19
+2022-04-11 11:46:46.721 INFO atlas - get_projected_mask_and_spectrum: Loading Cerebrum for slice 20 from shelve file.
+2022-04-11 11:46:46.840 INFO atlas - get_projected_mask_and_spectrum: Loading root for slice 20 from shelve file.
+2022-04-11 11:46:46.957 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-11 11:46:46.958 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-11 11:46:46.958 INFO figures - return_df_avg_lipids: Computing dictionnary for averaging slice 20
+2022-04-11 11:46:46.959 INFO atlas - get_projected_mask_and_spectrum: Loading Cerebrum for slice 21 from shelve file.
+2022-04-11 11:46:47.082 INFO atlas - get_projected_mask_and_spectrum: Loading root for slice 21 from shelve file.
+2022-04-11 11:46:47.203 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-11 11:46:47.205 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-11 11:46:47.205 INFO figures - return_df_avg_lipids: Computing dictionnary for averaging slice 21
+2022-04-11 11:46:47.205 INFO atlas - get_projected_mask_and_spectrum: Loading Cerebrum for slice 22 from shelve file.
+2022-04-11 11:46:47.331 INFO atlas - get_projected_mask_and_spectrum: Loading root for slice 22 from shelve file.
+2022-04-11 11:46:47.454 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-11 11:46:47.455 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-11 11:46:47.455 INFO figures - return_df_avg_lipids: Computing dictionnary for averaging slice 22
+2022-04-11 11:46:47.455 INFO atlas - get_projected_mask_and_spectrum: Loading Cerebrum for slice 23 from shelve file.
+2022-04-11 11:46:47.586 INFO atlas - get_projected_mask_and_spectrum: Loading root for slice 23 from shelve file.
+2022-04-11 11:46:47.708 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-11 11:46:47.711 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-11 11:46:47.711 INFO figures - return_df_avg_lipids: Computing dictionnary for averaging slice 23
+2022-04-11 11:46:47.712 INFO atlas - get_projected_mask_and_spectrum: Loading Cerebrum for slice 24 from shelve file.
+2022-04-11 11:46:47.834 INFO atlas - get_projected_mask_and_spectrum: Loading root for slice 24 from shelve file.
+2022-04-11 11:46:47.967 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-11 11:46:47.969 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-11 11:46:47.969 INFO figures - return_df_avg_lipids: Computing dictionnary for averaging slice 24
+2022-04-11 11:46:47.970 INFO atlas - get_projected_mask_and_spectrum: Loading Cerebrum for slice 25 from shelve file.
+2022-04-11 11:46:48.092 INFO atlas - get_projected_mask_and_spectrum: Loading root for slice 25 from shelve file.
+2022-04-11 11:46:48.215 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-11 11:46:48.216 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-11 11:46:48.216 INFO figures - return_df_avg_lipids: Computing dictionnary for averaging slice 25
+2022-04-11 11:46:48.216 INFO atlas - get_projected_mask_and_spectrum: Loading Cerebrum for slice 26 from shelve file.
+2022-04-11 11:46:48.335 INFO atlas - get_projected_mask_and_spectrum: Loading root for slice 26 from shelve file.
+2022-04-11 11:46:48.456 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-11 11:46:48.457 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-11 11:46:48.457 INFO figures - return_df_avg_lipids: Computing dictionnary for averaging slice 26
+2022-04-11 11:46:48.457 INFO atlas - get_projected_mask_and_spectrum: Loading Cerebrum for slice 27 from shelve file.
+2022-04-11 11:46:48.577 INFO atlas - get_projected_mask_and_spectrum: Loading root for slice 27 from shelve file.
+2022-04-11 11:46:48.697 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-11 11:46:48.698 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-11 11:46:48.698 INFO figures - return_df_avg_lipids: Computing dictionnary for averaging slice 27
+2022-04-11 11:46:48.698 INFO atlas - get_projected_mask_and_spectrum: Loading Cerebrum for slice 28 from shelve file.
+2022-04-11 11:46:48.816 INFO atlas - get_projected_mask_and_spectrum: Loading root for slice 28 from shelve file.
+2022-04-11 11:46:48.941 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-11 11:46:48.942 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-11 11:46:48.942 INFO figures - return_df_avg_lipids: Computing dictionnary for averaging slice 28
+2022-04-11 11:46:48.943 INFO atlas - get_projected_mask_and_spectrum: Loading Cerebrum for slice 29 from shelve file.
+2022-04-11 11:46:49.062 INFO atlas - get_projected_mask_and_spectrum: Loading root for slice 29 from shelve file.
+2022-04-11 11:46:49.181 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-11 11:46:49.182 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-11 11:46:49.182 INFO figures - return_df_avg_lipids: Computing dictionnary for averaging slice 29
+2022-04-11 11:46:49.183 INFO atlas - get_projected_mask_and_spectrum: Loading Cerebrum for slice 30 from shelve file.
+2022-04-11 11:46:49.313 INFO atlas - get_projected_mask_and_spectrum: Loading root for slice 30 from shelve file.
+2022-04-11 11:46:49.436 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-11 11:46:49.438 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-11 11:46:49.438 INFO figures - return_df_avg_lipids: Computing dictionnary for averaging slice 30
+2022-04-11 11:46:49.438 INFO atlas - get_projected_mask_and_spectrum: Loading Cerebrum for slice 31 from shelve file.
+2022-04-11 11:46:49.558 INFO atlas - get_projected_mask_and_spectrum: Loading root for slice 31 from shelve file.
+2022-04-11 11:46:49.678 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-11 11:46:49.678 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-11 11:46:49.678 INFO figures - return_df_avg_lipids: Computing dictionnary for averaging slice 31
+2022-04-11 11:46:49.679 INFO figures - return_df_avg_lipids: Averaging all lipid values across slices
+2022-04-11 11:46:49.688 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-11 11:46:49.689 DEBUG filesystemcache - set: set key '6JUBIIozCj/vEk2vfV9KGs'
+2022-04-11 11:46:49.689 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-11 11:46:49.689 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-04-11 11:46:49.689 INFO figures - compute_clustergram_figure: Averaging done for all slices
+2022-04-11 11:46:49.693 INFO figures - compute_clustergram_figure: Lowly expressed lipids excluded
+2022-04-11 11:46:49.707 INFO figures - compute_clustergram_figure: Lipid indexes replaced by names
+2022-04-11 11:46:49.707 INFO figures - compute_clustergram_figure: Preparing plot
+2022-04-11 11:46:49.981 INFO figures - compute_clustergram_figure: Returning figure
+2022-04-11 11:46:54.182 INFO threeD_exploration - page_4_plot_graph_volume: For the computation of 3D volume, decrease_resolution_factor is 7
+2022-04-11 11:46:54.290 INFO storage - return_shelved_object: volume_interpolated_3D_CL 36:4 K_name-lipid-2_name-lipid-3_CH_root_ could not be found or force_update is True. Computing the object and shelving it now.
+2022-04-11 11:46:54.291 INFO figures - compute_3D_volume_figure: Starting 3D volume computation
+2022-04-11 11:46:54.863 INFO figures - compute_3D_volume_figure: Computed basic structure array
+2022-04-11 11:46:54.962 INFO storage - return_shelved_object: Returning arrays_3D_CL 36:4 K_name-lipid-2_name-lipid-3 from shelve file.	MemTotal: 2082.33203125
+2022-04-11 11:46:54.963 INFO figures - compute_3D_volume_figure: Computed array of expression in original space
+2022-04-11 11:46:55.180 INFO figures - compute_3D_volume_figure: Filled basic structure array with array of expression
+2022-04-11 11:46:55.291 INFO figures - compute_3D_volume_figure: Cropped the figure to only keep areas in which lipids are expressed
+2022-04-11 11:47:05.463 INFO storage - return_shelved_object: Returning volume_root from shelve file.	MemTotal: 2087.6640625
+2022-04-11 11:47:05.495 INFO figures - compute_3D_volume_figure: Building final figure
+2022-04-11 11:47:05.548 INFO figures - compute_3D_volume_figure: Done computing 3D volume figure
+2022-04-11 11:47:05.671 INFO storage - return_shelved_object: volume_interpolated_3D_CL 36:4 K_name-lipid-2_name-lipid-3_CH_root_ being returned now from computation.
+2022-04-11 11:47:27.158 INFO index - render_page_content: Page/3D-explorationhas been selected	MemTotal: 2119.9140625
+2022-04-11 11:47:27.258 INFO storage - return_shelved_object: treemaps could not be found or force_update is True. Computing the object and shelving it now.
+2022-04-11 11:47:27.398 INFO storage - return_shelved_object: treemaps being returned now from computation.
+2022-04-11 11:47:37.041 INFO threeD_exploration - page_4_plot_graph_volume: For the computation of 3D volume, decrease_resolution_factor is 7
+2022-04-11 11:47:37.149 INFO storage - return_shelved_object: volume_interpolated_3D_CerP d44:3 Na_name-lipid-2_name-lipid-3_CH__ could not be found or force_update is True. Computing the object and shelving it now.
+2022-04-11 11:47:37.149 INFO figures - compute_3D_volume_figure: Starting 3D volume computation
+2022-04-11 11:47:37.191 INFO figures - compute_3D_volume_figure: Computed basic structure array
+2022-04-11 11:47:37.291 INFO storage - return_shelved_object: arrays_3D_CerP d44:3 Na_name-lipid-2_name-lipid-3 could not be found or force_update is True. Computing the object and shelving it now.
+2022-04-11 11:47:37.292 INFO figures - compute_array_3D: Starting computing 3D arrays	MemTotal: 2171.8671875
+2022-04-11 11:47:37.393 INFO storage - return_shelved_object: Returning arrays_projection_corrected from shelve file.	MemTotal: 2171.8671875
+2022-04-11 11:47:38.121 DEBUG figures - compute_array_3D: Size array_x: 19.53
+2022-04-11 11:47:38.121 INFO figures - compute_array_3D: Starting slice iteration	MemTotal: 2171.87890625
+2022-04-11 11:47:38.755 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-11 11:47:39.611 INFO figures - compute_array_3D: Slice 1 done	MemTotal: 2614.98046875
+2022-04-11 11:47:39.611 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-11 11:47:39.745 INFO figures - compute_array_3D: Slice 2 done	MemTotal: 2615.22265625
+2022-04-11 11:47:39.745 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-11 11:47:39.848 INFO figures - compute_array_3D: Slice 3 done	MemTotal: 2615.53515625
+2022-04-11 11:47:39.848 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-11 11:47:40.068 INFO figures - compute_array_3D: Slice 4 done	MemTotal: 2615.8671875
+2022-04-11 11:47:40.068 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-11 11:47:40.442 INFO figures - compute_array_3D: Slice 5 done	MemTotal: 2616.25390625
+2022-04-11 11:47:40.442 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-11 11:47:40.845 INFO figures - compute_array_3D: Slice 6 done	MemTotal: 2616.640625
+2022-04-11 11:47:40.845 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-11 11:47:41.134 INFO figures - compute_array_3D: Slice 7 done	MemTotal: 2617.05078125
+2022-04-11 11:47:41.134 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-11 11:47:41.640 INFO figures - compute_array_3D: Slice 8 done	MemTotal: 2612.359375
+2022-04-11 11:47:41.640 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-11 11:47:42.141 INFO figures - compute_array_3D: Slice 9 done	MemTotal: 2612.84765625
+2022-04-11 11:47:42.142 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-11 11:47:42.621 INFO figures - compute_array_3D: Slice 10 done	MemTotal: 2613.33203125
+2022-04-11 11:47:42.622 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-11 11:47:43.032 INFO figures - compute_array_3D: Slice 11 done	MemTotal: 2613.7890625
+2022-04-11 11:47:43.033 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-11 11:47:43.462 INFO figures - compute_array_3D: Slice 12 done	MemTotal: 2600.78125
+2022-04-11 11:47:43.462 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-11 11:47:43.855 INFO figures - compute_array_3D: Slice 13 done	MemTotal: 2601.2734375
+2022-04-11 11:47:43.856 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-11 11:47:44.326 INFO figures - compute_array_3D: Slice 14 done	MemTotal: 2601.73046875
+2022-04-11 11:47:44.326 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-11 11:47:44.764 INFO figures - compute_array_3D: Slice 15 done	MemTotal: 2602.12890625
+2022-04-11 11:47:44.765 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-11 11:47:45.089 INFO figures - compute_array_3D: Slice 16 done	MemTotal: 2602.5703125
+2022-04-11 11:47:45.089 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-11 11:47:45.410 INFO figures - compute_array_3D: Slice 17 done	MemTotal: 2602.984375
+2022-04-11 11:47:45.410 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-11 11:47:45.681 INFO figures - compute_array_3D: Slice 18 done	MemTotal: 2603.29296875
+2022-04-11 11:47:45.681 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-11 11:47:46.019 INFO figures - compute_array_3D: Slice 19 done	MemTotal: 2603.62890625
+2022-04-11 11:47:46.019 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-11 11:47:46.297 INFO figures - compute_array_3D: Slice 20 done	MemTotal: 2603.9375
+2022-04-11 11:47:46.297 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-11 11:47:46.543 INFO figures - compute_array_3D: Slice 21 done	MemTotal: 2604.16796875
+2022-04-11 11:47:46.544 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-11 11:47:46.755 INFO figures - compute_array_3D: Slice 22 done	MemTotal: 2604.4453125
+2022-04-11 11:47:46.755 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-11 11:47:47.044 INFO figures - compute_array_3D: Slice 23 done	MemTotal: 2604.7578125
+2022-04-11 11:47:47.044 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-11 11:47:47.314 INFO figures - compute_array_3D: Slice 24 done	MemTotal: 2605.0703125
+2022-04-11 11:47:47.314 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-11 11:47:47.591 INFO figures - compute_array_3D: Slice 25 done	MemTotal: 2605.375
+2022-04-11 11:47:47.591 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-11 11:47:48.021 INFO figures - compute_array_3D: Slice 26 done	MemTotal: 2605.6796875
+2022-04-11 11:47:48.021 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-11 11:47:48.278 INFO figures - compute_array_3D: Slice 27 done	MemTotal: 2605.98828125
+2022-04-11 11:47:48.278 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-11 11:47:48.558 INFO figures - compute_array_3D: Slice 28 done	MemTotal: 2606.28515625
+2022-04-11 11:47:48.558 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-11 11:47:48.940 INFO figures - compute_array_3D: Slice 29 done	MemTotal: 2606.5546875
+2022-04-11 11:47:48.940 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-11 11:47:49.260 INFO figures - compute_array_3D: Slice 30 done	MemTotal: 2606.7890625
+2022-04-11 11:47:49.260 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-11 11:47:49.464 INFO figures - compute_array_3D: Slice 31 done	MemTotal: 2606.9609375
+2022-04-11 11:47:49.737 INFO storage - return_shelved_object: arrays_3D_CerP d44:3 Na_name-lipid-2_name-lipid-3 being returned now from computation.
+2022-04-11 11:47:49.761 INFO figures - compute_3D_volume_figure: Computed array of expression in original space
+2022-04-11 11:47:50.099 INFO figures - compute_3D_volume_figure: Filled basic structure array with array of expression
+2022-04-11 11:47:50.181 INFO figures - compute_3D_volume_figure: Cropped the figure to only keep areas in which lipids are expressed
+2022-04-11 11:47:53.838 INFO storage - return_shelved_object: Returning volume_root from shelve file.	MemTotal: 2355.53515625
+2022-04-11 11:47:53.852 INFO figures - compute_3D_volume_figure: Building final figure
+2022-04-11 11:47:53.883 INFO figures - compute_3D_volume_figure: Done computing 3D volume figure
+2022-04-11 11:47:54.007 INFO storage - return_shelved_object: volume_interpolated_3D_CerP d44:3 Na_name-lipid-2_name-lipid-3_CH__ being returned now from computation.

@@ -550,7 +550,7 @@ class Atlas:
             "Loading " + mask_name + " for slice " + str(slice_index) + " from shelve file."
         )
         try:
-            load_shelved_object("data/atlas/atlas_objects", filename)
+            return load_shelved_object("data/atlas/atlas_objects", filename)
         except:
             logging.warning(
                 "The mask and spectrum data could not be found for "
