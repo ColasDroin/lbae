@@ -24,7 +24,7 @@ from modules.tools.atlas import (
     fill_array_projection,
     solve_plane_equation,
 )
-from modules.tools.spectra import compute_spectrum_per_row_selection
+from modules.tools.spectra import compute_spectrum_per_row_selection, compute_thread_safe_function
 from modules.atlas_labels import Labels, LabelContours
 from modules.tools.storage import (
     return_shelved_object,
@@ -122,6 +122,7 @@ class Atlas:
                 "The dictionnary of available mask per slice has not been computed yet."
                 + "Doing it now, This will take several hours."
             )
+            # Since this function is called at launch, no data locking is needed
             self.save_all_projected_masks_and_spectra(cache_flask=None)
 
     # Load arrays of images using atlas projection
@@ -428,7 +429,9 @@ class Atlas:
             grah_scattergl_data = None
         else:
             # do the average
-            grah_scattergl_data = compute_spectrum_per_row_selection(
+            grah_scattergl_data = compute_thread_safe_function(
+                compute_spectrum_per_row_selection,
+                cache_flask,
                 list_index_bound_rows,
                 list_index_bound_column_per_row,
                 self.data.get_array_spectra(slice_index + 1),
