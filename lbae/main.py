@@ -1,7 +1,7 @@
 # Copyright (c) 2022, Colas Droin. All rights reserved.
 # Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
 
-""" This script is used to run the app, setup logging settings, and start redis if needed. 
+""" This script is used to run the app and setup logging settings. 
 To run the app with gunicorn, use the following command in the (child) lbae folder: 
 gunicorn main:server -b:8050 --workers=2
 
@@ -47,10 +47,6 @@ logging.info("Starting import chain" + logmem())
 from app import app
 from index import return_main_content, return_validation_layout
 
-# Redis initialization
-if app.use_redis:
-    os.system("nohup ../redis/redis-6.2.6/src/redis-server ../redis/redis-6.2.6/src/redis.conf &")
-
 # Define app layout
 main_content = return_main_content()
 
@@ -75,9 +71,4 @@ if __name__ == "__main__":
         app.run_server(port=8073, debug=False)
     except Exception as e:
         print(e)
-        if app.use_redis:
-            # Shut reddis server
-            os.system("../redis/redis-6.2.6/src/redis-cli shutdown")
-        else:
-            pass
 

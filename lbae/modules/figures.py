@@ -21,6 +21,7 @@ from modules.tools.misc import logmem
 from modules.tools.volume import filter_voxels, fill_array_borders, fill_array_interpolation
 from config import dic_colors, l_colors, l_colors_progress
 from modules.tools.spectra import compute_avg_intensity_per_lipid, global_lipid_index_store
+from app import cache_flask
 
 ###### DEFINE FIGURES CLASS ######
 class Figures:
@@ -340,11 +341,11 @@ class Figures:
         image = spectra.compute_image_using_index_and_image_lookup(
             lb_mz,
             hb_mz,
-            self._data.get_array_spectra(slice_index),
+            self._data.get_array_spectra(slice_index, cache_flask),
             self._data.get_array_lookup_pixels(slice_index),
             self._data.get_image_shape(slice_index),
-            self._data.get_array_lookup_mz(slice_index),
-            self._data.get_array_cumulated_lookup_mz_image(slice_index),
+            self._data.get_array_lookup_mz(slice_index, cache_flask),
+            self._data.get_array_cumulated_lookup_mz_image(slice_index, cache_flask),
             self._data.get_divider_lookup(slice_index),
             self._data.get_array_peaks_transformed_lipids(slice_index),
             self._data.get_array_corrective_factors(slice_index),
@@ -422,11 +423,11 @@ class Figures:
                     image = spectra.compute_image_using_index_and_image_lookup(
                         lb_mz,
                         hb_mz,
-                        self._data.get_array_spectra(slice_index),
+                        self._data.get_array_spectra(slice_index, cache_flask),
                         self._data.get_array_lookup_pixels(slice_index),
                         self._data.get_image_shape(slice_index),
-                        self._data.get_array_lookup_mz(slice_index),
-                        self._data.get_array_cumulated_lookup_mz_image(slice_index),
+                        self._data.get_array_lookup_mz(slice_index, cache_flask),
+                        self._data.get_array_cumulated_lookup_mz_image(slice_index, cache_flask),
                         self._data.get_divider_lookup(slice_index),
                         self._data.get_array_peaks_transformed_lipids(slice_index),
                         self._data.get_array_corrective_factors(slice_index),
@@ -786,7 +787,7 @@ class Figures:
         # If boundaries are provided, get their index
         else:
             array_spectra_avg = self._data.get_array_avg_spectrum(
-                slice_index, standardization=standardization
+                slice_index, standardization=standardization, cache=cache_flask
             )
             index_lb, index_hb = spectra.compute_index_boundaries(
                 lb,
@@ -1202,7 +1203,7 @@ class Figures:
 
                 # Compute the percentile of expression to filter out lowly expressed pixels
                 # Set to 0 for now, as no filtering is done
-                percentile = 0 #np.percentile(array_data_stripped, 10)
+                percentile = 0  # np.percentile(array_data_stripped, 10)
 
                 # Get the coordinates of the pixels in the ccfv3
                 coordinates = l_coor[slice_index]
