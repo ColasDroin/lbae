@@ -342,11 +342,11 @@ class Figures:
         image = spectra.compute_image_using_index_and_image_lookup(
             lb_mz,
             hb_mz,
-            self._data.get_array_spectra(slice_index, cache_flask),
+            self._data.get_array_spectra(slice_index),
             self._data.get_array_lookup_pixels(slice_index),
             self._data.get_image_shape(slice_index),
-            self._data.get_array_lookup_mz(slice_index, cache_flask),
-            self._data.get_array_cumulated_lookup_mz_image(slice_index, cache_flask),
+            self._data.get_array_lookup_mz(slice_index),
+            self._data.get_array_cumulated_lookup_mz_image(slice_index),
             self._data.get_divider_lookup(slice_index),
             self._data.get_array_peaks_transformed_lipids(slice_index),
             self._data.get_array_corrective_factors(slice_index),
@@ -424,11 +424,11 @@ class Figures:
                     image = spectra.compute_image_using_index_and_image_lookup(
                         lb_mz,
                         hb_mz,
-                        self._data.get_array_spectra(slice_index, cache_flask),
+                        self._data.get_array_spectra(slice_index),
                         self._data.get_array_lookup_pixels(slice_index),
                         self._data.get_image_shape(slice_index),
-                        self._data.get_array_lookup_mz(slice_index, cache_flask),
-                        self._data.get_array_cumulated_lookup_mz_image(slice_index, cache_flask),
+                        self._data.get_array_lookup_mz(slice_index),
+                        self._data.get_array_cumulated_lookup_mz_image(slice_index),
                         self._data.get_divider_lookup(slice_index),
                         self._data.get_array_peaks_transformed_lipids(slice_index),
                         self._data.get_array_corrective_factors(slice_index),
@@ -574,7 +574,7 @@ class Figures:
                         image += image_temp
 
         # Clean memmap memory
-        self._data.clean_memory(slice_index=slice_index, cache = cache_flask)
+        self._data.clean_memory(slice_index=slice_index, cache=cache_flask)
 
         # Set optimize to False to gain computation time
         base64_string = convert_image_to_base64(image, transparent_zeros=True, optimize=False)
@@ -658,7 +658,7 @@ class Figures:
         array_image = np.moveaxis(np.array(l_images), 0, 2)
 
         # Clean memmap memory
-        self._data.clean_memory(slice_index=slice_index, cache = cache_flask)
+        self._data.clean_memory(slice_index=slice_index, cache=cache_flask)
 
         return np.asarray(array_image, dtype=np.uint8)
 

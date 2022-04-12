@@ -91,4 +91,5 @@ cache_flask = Cache()
 cache_flask.init_app(app.server, config=CACHE_CONFIG)
 
 # Initiate the cache as unlocked
-cache_flask.set("locked", False)
+cache_flask.set("locked-cleaning", False)
+cache_flask.set("locked-reading", False)

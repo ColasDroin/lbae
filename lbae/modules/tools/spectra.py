@@ -10,6 +10,7 @@ lipid annoation, for of a given slice) are defined.
 # ==================================================================================================
 
 # Standard modules
+import time
 import numpy as np
 from numba import njit, jit
 import logging
@@ -18,7 +19,7 @@ import logging
 from modules.tools.external_lib.mspec import reduce_resolution_sorted
 
 # ==================================================================================================
-# --- Functions
+# --- Functions for coordinates indices manipulation
 # ==================================================================================================
 @njit
 def convert_spectrum_idx_to_coor(index, shape):
@@ -54,7 +55,11 @@ def convert_coor_to_spectrum_idx(coordinate, shape):
     return ind
 
 
-###### FUNCTIONS TO NORMALIZE SPECTRUM ######
+# ==================================================================================================
+# --- Functions to normalize spectrum
+# ==================================================================================================
+
+
 @njit
 def compute_normalized_spectra(array_spectra, array_pixel_indexes):
     """This function takes an array of spectra and returns it normalized (per pixel). In pratice, 
@@ -176,7 +181,11 @@ def strip_zeros(array):
     return np.vstack((array_mz, array_intensity))
 
 
-###### FUNCTIONS TO COMPUTE IMAGE FROM LIPID SELECTION ######
+# ==================================================================================================
+# --- Functions to compute image from lipid selection
+# ==================================================================================================
+
+
 @jit
 def compute_image_using_index_lookup(
     low_bound,
@@ -574,7 +583,9 @@ def compute_normalized_image_per_lipid(
     return image
 
 
-###### FUNCTIONS TO COMPUTE M/Z BOUNDARIES FOR AVERAGED ARRAYS (1-D LOOKUP TABLE) ######
+# ==================================================================================================
+# --- Functions to compute m/z boundaries for averaged arrays (1-D lookup table)
+# ==================================================================================================
 @njit
 def compute_index_boundaries_nolookup(low_bound, high_bound, array_spectra_avg):
     """This function computes, from array_spectra_avg, the first existing indices corresponding to 
@@ -685,7 +696,11 @@ def _loop_compute_index_boundaries(
     return index_low_bound, index_high_bound
 
 
-###### FUNCTIONS TO COMPUTE SPECTRA AVERAGED FROM A MANUAL SELECTION OR A MASK SELECTION ######
+# ==================================================================================================
+# --- Functions to compute spectra averaged from a manual selection or a mask selection
+# ==================================================================================================
+
+
 @njit
 def return_spectrum_per_pixel(idx_pix, array_spectra, array_pixel_indexes):
     """This function returns the spectrum of the pixel having index pixel_idx, using the lookup 
@@ -1318,3 +1333,42 @@ def global_lipid_index_store(data, slice_index, l_spectra):
         ll_idx_labels.append(l_idx_labels)
     logging.info("Returning ll_idx_labels")
     return ll_idx_labels
+
+
+# ==================================================================================================
+# --- Functions for safe multiprocessing and multithreading
+# ==================================================================================================
+
+
+def compute_thread_safe_function(
+    compute_function, cache, *args_compute_function, **kwargs_compute_function
+):
+    """This function is a wrapper for safe multithreading and multiprocessing execution of 
+    compute_function. This is needed due to the regular cleansing of memory-mapped object.
+    
+    Args:
+        compute_function (func): The function/method whose result must be loaded/saved.
+        cache (flask_caching.Cache): A caching object, used to check if the reading of memory-mapped 
+            data is safe
+        *args_compute_function: Arguments of compute_function.
+        *kwargs_compute_function: Named arguments of compute_function.
+
+    Returns:
+        The result of compute_function. Type may vary depending on compute_function.
+    """
+
+    # Wait for the data to be safe for reading
+    while cache.get("locked-cleaning"):
+        time.sleep(0.05)
+
+    # Lock it while while it's being read
+    cache.set("locked-reading", True)
+
+    # Run the actual function
+    result = compute_function(*args_compute_function, **kwargs_compute_function)
+
+    # Unlock the data
+    cache.set("locked-reading", False)
+
+    # Return result
+    return result

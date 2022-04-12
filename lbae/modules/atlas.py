@@ -431,7 +431,7 @@ class Atlas:
             grah_scattergl_data = compute_spectrum_per_row_selection(
                 list_index_bound_rows,
                 list_index_bound_column_per_row,
-                self.data.get_array_spectra(slice_index + 1, cache_flask),
+                self.data.get_array_spectra(slice_index + 1),
                 self.data.get_array_lookup_pixels(slice_index + 1),
                 original_shape,
                 self.data.get_array_peaks_transformed_lipids(slice_index + 1),

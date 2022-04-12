@@ -1,4 +1,7 @@
 #
+# TODO check for remaining cache flask
+# TODO wrong data downloaded when using bounds
+# TODO fix layout for small screens
 # TODO Incorporate brain 2
 # TODO Do a round of debug
 # TODO Make a careful memory analysis to free more memory

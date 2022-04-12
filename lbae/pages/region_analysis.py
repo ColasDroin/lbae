@@ -28,6 +28,7 @@ from modules.tools.spectra import (
     add_zeros_to_spectrum,
     compute_avg_intensity_per_lipid,
     global_lipid_index_store,
+    compute_thread_safe_function,
 )
 
 HEIGHT_PLOTS = 300
@@ -1252,7 +1253,7 @@ def global_spectrum_store(
                     grah_scattergl_data = compute_spectrum_per_row_selection(
                         list_index_bound_rows,
                         list_index_bound_column_per_row,
-                        data.get_array_spectra(slice_index, cache_flask),
+                        data.get_array_spectra(slice_index),
                         data.get_array_lookup_pixels(slice_index),
                         data.get_image_shape(slice_index),
                         data.get_array_peaks_transformed_lipids(slice_index),
@@ -1274,17 +1275,22 @@ def global_spectrum_store(
                 grah_scattergl_data[1, :] /= np.sum(grah_scattergl_data[1, :])
 
                 # then convert to uncompressed version
-                grah_scattergl_data = convert_array_to_fine_grained(
-                    grah_scattergl_data, 10 ** -3, lb=350, hb=1250
+                grah_scattergl_data = compute_thread_safe_function(
+                    convert_array_to_fine_grained,
+                    cache_flask,
+                    grah_scattergl_data,
+                    10 ** -3,
+                    lb=350,
+                    hb=1250,
                 )
+                # grah_scattergl_data = convert_array_to_fine_grained(
+                #     grah_scattergl_data, 10 ** -3, lb=350, hb=1250
+                # )
 
                 # then normalize to the sum of all pixels
                 grah_scattergl_data[1, :] /= (
                     convert_array_to_fine_grained(
-                        data.get_array_spectra(slice_index - 1, cache_flask),
-                        10 ** -3,
-                        lb=350,
-                        hb=1250,
+                        data.get_array_spectra(slice_index - 1), 10 ** -3, lb=350, hb=1250,
                     )[1, :]
                     + 1
                 )

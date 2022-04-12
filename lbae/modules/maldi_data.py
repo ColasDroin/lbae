@@ -81,18 +81,18 @@ class MaldiData:
         # ! Finish docstring here
         get_array_lookup_pixels(slice_index):
         get_array_lookup_mz_avg(slice_index):
-        get_array_spectra(slice_index, cache=None):
-        get_array_mz(slice_index, cache=None):
-        get_array_intensity(slice_index, cache=None):
-        get_array_avg_spectrum(slice_index, standardization = True, cache=None):
-        get_array_lookup_mz(slice_index, cache=None):
-        get_array_cumulated_lookup_mz_image(slice_index, cache=None):
-        get_partial_array_spectra(slice_index, lb=None, hb=None, index=None, cache=None):
-        get_partial_array_mz(slice_index, lb=None, hb=None, index=None, cache=None):
-        get_partial_array_intensity(slice_index, lb=None, hb=None, index=None, cache=None):
-        get_partial_array_avg_spectrum(slice_index, lb=None, hb=None, standardization = True, cache=None):
-        get_lookup_mz(slice_index, index, cache=None):
-        get_cumulated_lookup_mz_image(slice_index, index, cache=None):
+        get_array_spectra(slice_index):
+        get_array_mz(slice_index):
+        get_array_intensity(slice_index):
+        get_array_avg_spectrum(slice_index, standardization = True):
+        get_array_lookup_mz(slice_index):
+        get_array_cumulated_lookup_mz_image(slice_index):
+        get_partial_array_spectra(slice_index, lb=None, hb=None, index=None):
+        get_partial_array_mz(slice_index, lb=None, hb=None, index=None):
+        get_partial_array_intensity(slice_index, lb=None, hb=None, index=None):
+        get_partial_array_avg_spectrum(slice_index, lb=None, hb=None, standardization = True):
+        get_lookup_mz(slice_index, index):
+        get_cumulated_lookup_mz_image(slice_index, index):
     """
 
     __slots__ = [
@@ -200,42 +200,22 @@ class MaldiData:
     def get_array_corrective_factors(self, slice_index):
         return self._dic_lightweight[slice_index]["array_corrective_factors"]
 
-    def get_array_spectra(self, slice_index, cache=None):
-
-        # Wait for memory to be released before taking action
-        if cache is not None:
-            while cache.get("locked"):
-                time.sleep(0.05)
+    def get_array_spectra(self, slice_index):
 
         # Previously called array_spectra_high_res.
         return self._dic_memmap[slice_index]["array_spectra"]
 
-    def get_array_mz(self, slice_index, cache=None):
-
-        # Wait for memory to be released before taking action
-        if cache is not None:
-            while cache.get("locked"):
-                time.sleep(0.05)
+    def get_array_mz(self, slice_index):
 
         # Previously called array_spectra_high_res
         return self._dic_memmap[slice_index]["array_spectra"][0, :]
 
-    def get_array_intensity(self, slice_index, cache=None):
-
-        # Wait for memory to be released before taking action
-        if cache is not None:
-            while cache.get("locked"):
-                time.sleep(0.05)
+    def get_array_intensity(self, slice_index):
 
         # Previously called array_spectra_high_res
         return self._dic_memmap[slice_index]["array_spectra"][1, :]
 
-    def get_array_avg_spectrum(self, slice_index, standardization=True, cache=None):
-
-        # Wait for memory to be released before taking action
-        if cache is not None:
-            while cache.get("locked"):
-                time.sleep(0.05)
+    def get_array_avg_spectrum(self, slice_index, standardization=True):
 
         if not standardization:
             # Previously called array_averaged_mz_intensity_high_res
@@ -243,32 +223,17 @@ class MaldiData:
         else:
             return self._dic_memmap[slice_index]["array_avg_spectrum_after_standardization"]
 
-    def get_array_lookup_mz(self, slice_index, cache=None):
-
-        # Wait for memory to be released before taking action
-        if cache is not None:
-            while cache.get("locked"):
-                time.sleep(0.05)
+    def get_array_lookup_mz(self, slice_index):
 
         # Previously called lookup_table_spectra_high_res
         return self._dic_memmap[slice_index]["array_lookup_mz"]
 
-    def get_array_cumulated_lookup_mz_image(self, slice_index, cache=None):
-
-        # Wait for memory to be released before taking action
-        if cache is not None:
-            while cache.get("locked"):
-                time.sleep(0.05)
+    def get_array_cumulated_lookup_mz_image(self, slice_index):
 
         # Previously called cumulated_image_lookup_table_high_res
         return self._dic_memmap[slice_index]["array_cumulated_lookup_mz_image"]
 
-    def get_partial_array_spectra(self, slice_index, lb=None, hb=None, index=None, cache=None):
-
-        # Wait for memory to be released before taking action
-        if cache is not None:
-            while cache.get("locked"):
-                time.sleep(0.05)
+    def get_partial_array_spectra(self, slice_index, lb=None, hb=None, index=None):
 
         # If not specific index has been provided, it returns a range
         if index is None:
@@ -279,7 +244,7 @@ class MaldiData:
 
             # Second most likely case : full slice
             elif lb is None and hb is None:
-                return self.get_array_intensity(slice_index, cache)
+                return self.get_array_intensity(slice_index)
 
             # Most likely the remaining cases won't be used
             elif lb is None:
@@ -296,12 +261,7 @@ class MaldiData:
                 )
             return self._dic_memmap[slice_index]["array_spectra"][:, index]
 
-    def get_partial_array_mz(self, slice_index, lb=None, hb=None, index=None, cache=None):
-
-        # Wait for memory to be released before taking action
-        if cache is not None:
-            while cache.get("locked"):
-                time.sleep(0.05)
+    def get_partial_array_mz(self, slice_index, lb=None, hb=None, index=None):
 
         # If not specific index has been provided, it returns a range
         if index is None:
@@ -312,7 +272,7 @@ class MaldiData:
 
             # Second most likely case : full slice
             elif lb is None and hb is None:
-                return self.get_array_mz(slice_index, cache)
+                return self.get_array_mz(slice_index)
 
             # Most likely the remaining cases won't be used
             elif lb is None:
@@ -330,12 +290,7 @@ class MaldiData:
                 )
             return self._dic_memmap[slice_index]["array_spectra"][0, index]
 
-    def get_partial_array_intensity(self, slice_index, lb=None, hb=None, index=None, cache=None):
-
-        # Wait for memory to be released before taking action
-        if cache is not None:
-            while cache.get("locked"):
-                time.sleep(0.05)
+    def get_partial_array_intensity(self, slice_index, lb=None, hb=None, index=None):
 
         # If not specific index has been provided, it returns a range
         if index is None:
@@ -346,7 +301,7 @@ class MaldiData:
 
             # Second most likely case : full slice
             elif lb is None and hb is None:
-                return self.get_array_intensity(slice_index, cache)
+                return self.get_array_intensity(slice_index)
 
             # Most likely the remaining cases won't be used
             elif lb is None:
@@ -364,14 +319,7 @@ class MaldiData:
                 )
             return self._dic_memmap[slice_index]["array_spectra"][1, index]
 
-    def get_partial_array_avg_spectrum(
-        self, slice_index, lb=None, hb=None, standardization=True, cache=None
-    ):
-
-        # Wait for memory to be released before taking action
-        if cache is not None:
-            while cache.get("locked"):
-                time.sleep(0.05)
+    def get_partial_array_avg_spectrum(self, slice_index, lb=None, hb=None, standardization=True):
 
         # Start with most likely case
         if hb is not None and lb is not None:
@@ -384,7 +332,7 @@ class MaldiData:
 
         # Second most likely case : full slice
         elif lb is None and hb is None:
-            return self.get_array_avg_spectrum(slice_index, standardization, cache)
+            return self.get_array_avg_spectrum(slice_index, standardization)
 
         # Most likely the remaining cases won't be used
         elif lb is None:
@@ -402,22 +350,12 @@ class MaldiData:
                     :, lb:
                 ]
 
-    def get_lookup_mz(self, slice_index, index, cache=None):
-
-        # Wait for memory to be released before taking action
-        if cache is not None:
-            while cache.get("locked"):
-                time.sleep(0.05)
+    def get_lookup_mz(self, slice_index, index):
 
         # Just return the (one) required lookup to go faster
         return self._dic_memmap[slice_index]["array_lookup_mz"][index]
 
-    def get_cumulated_lookup_mz_image(self, slice_index, index, cache=None):
-
-        # Wait for memory to be released before taking action
-        if cache is not None:
-            while cache.get("locked"):
-                time.sleep(0.05)
+    def get_cumulated_lookup_mz_image(self, slice_index, index):
 
         # Just return the (one) required lookup to go faster
         return self._dic_memmap[slice_index]["array_cumulated_lookup_mz_image"][index]
@@ -428,11 +366,11 @@ class MaldiData:
 
         # Wait for memory to be released before taking action
         if cache is not None:
-            while cache.get("locked"):
+            while cache.get("locked-reading") or cache.get("locked-cleaning"):
                 time.sleep(0.05)
 
             # Lock memory to prevent other processes from accessing it
-            cache.set("locked", True)
+            cache.set("locked-cleaning", True)
 
         # Case no array name has been provided
         if array is None:
@@ -487,7 +425,7 @@ class MaldiData:
 
         # Release memory
         if cache is not None:
-            cache.set("locked", False)
+            cache.set("locked-cleaning", False)
 
     def compute_l_labels(self):
         l_labels = (
