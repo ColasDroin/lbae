@@ -1258,8 +1258,7 @@ def return_index_labels(l_min, l_max, l_mz, zero_padding_extra=5 * 10 ** -5):
 @njit
 def compute_avg_intensity_per_lipid(l_intensity_with_lipids, l_idx_labels):
     """This function computes the average intensity of each annotated lipid (summing over peaks 
-    coming from the same 
-    lipid) from a given spectrum.
+    coming from the same lipid) from a given spectrum.
 
     Args:
         l_intensity_with_lipids (list(float)): A list of peak intensities (where one lipid can 
@@ -1357,18 +1356,28 @@ def compute_thread_safe_function(
         The result of compute_function. Type may vary depending on compute_function.
     """
 
-    # Wait for the data to be safe for reading
-    while cache.get("locked-cleaning"):
-        time.sleep(0.05)
+    logging.info(
+        "Computing the thread-safe version of" + str(compute_function).split("<")[1].split("at")[0]
+    )
 
-    # Lock it while while it's being read
-    cache.set("locked-reading", True)
+    if cache is not None:
+
+        # Wait for the data to be safe for reading
+        while cache.get("locked-cleaning"):
+            time.sleep(0.05)
+
+        # Lock it while while it's being read
+        cache.set("locked-reading", True)
+
+    else:
+        logging.warning("No cache provided, the thread unsafe version of the function will be run")
 
     # Run the actual function
     result = compute_function(*args_compute_function, **kwargs_compute_function)
 
-    # Unlock the data
-    cache.set("locked-reading", False)
+    if cache is not None:
+        # Unlock the data
+        cache.set("locked-reading", False)
 
     # Return result
     return result

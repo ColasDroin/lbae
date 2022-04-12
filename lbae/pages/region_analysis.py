@@ -1250,7 +1250,9 @@ def global_spectrum_store(
                         np.array(path, dtype=np.int32)
                     )
 
-                    grah_scattergl_data = compute_spectrum_per_row_selection(
+                    grah_scattergl_data = compute_thread_safe_function(
+                        compute_spectrum_per_row_selection,
+                        cache_flask,
                         list_index_bound_rows,
                         list_index_bound_column_per_row,
                         data.get_array_spectra(slice_index),
@@ -1261,8 +1263,10 @@ def global_spectrum_store(
                         zeros_extend=False,
                         apply_correction=False,
                     )
-            except:
+
+            except Exception as e:
                 logging.warning("Bug, the selected path does't exist")
+                logging.warning(e)
                 return None
         else:
             logging.warning("Bug, the shape type doesn't exit")
@@ -1283,20 +1287,24 @@ def global_spectrum_store(
                     lb=350,
                     hb=1250,
                 )
-                # grah_scattergl_data = convert_array_to_fine_grained(
-                #     grah_scattergl_data, 10 ** -3, lb=350, hb=1250
-                # )
 
                 # then normalize to the sum of all pixels
                 grah_scattergl_data[1, :] /= (
-                    convert_array_to_fine_grained(
-                        data.get_array_spectra(slice_index - 1), 10 ** -3, lb=350, hb=1250,
+                    compute_thread_safe_function(
+                        convert_array_to_fine_grained,
+                        cache_flask,
+                        data.get_array_spectra(slice_index - 1),
+                        10 ** -3,
+                        lb=350,
+                        hb=1250,
                     )[1, :]
                     + 1
                 )
 
                 # go back to compressed
-                grah_scattergl_data = strip_zeros(grah_scattergl_data)
+                grah_scattergl_data = compute_thread_safe_function(
+                    strip_zeros, cache_flask, grah_scattergl_data
+                )
 
                 # re-normalize with respect to the number of values in the spectrum
                 # so that pixels with more lipids do no have lower peaks
@@ -1456,8 +1464,12 @@ def page_3_plot_spectrum(
                 (
                     grah_scattergl_data_padded_annotated,
                     array_index_padding,
-                ) = add_zeros_to_spectrum(
-                    grah_scattergl_data[:, l_idx_kept], pad_individual_peaks=True, padding=10 ** -4,
+                ) = compute_thread_safe_function(
+                    add_zeros_to_spectrum,
+                    cache_flask,
+                    grah_scattergl_data[:, l_idx_kept],
+                    pad_individual_peaks=True,
+                    padding=10 ** -4,
                 )
                 l_mz_with_lipids = grah_scattergl_data_padded_annotated[0, :]
                 l_intensity_with_lipids = grah_scattergl_data_padded_annotated[1, :]
@@ -1499,7 +1511,7 @@ def page_3_plot_spectrum(
                 )
 
                 # Pad not annotated traces peaks with zeros
-                grah_scattergl_data_padded, array_index_padding = add_zeros_to_spectrum(
+                grah_scattergl_data_padded, array_index_padding = compute_thread_safe_function(add_zeros_to_spectrum, cache_flask,
                     grah_scattergl_data[:, l_idx_unkept],
                     pad_individual_peaks=True,
                     padding=10 ** -4,

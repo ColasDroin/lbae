@@ -13,14 +13,19 @@ import pandas as pd
 import dash_bio as dashbio
 
 # Homemade functions
-from modules.tools import spectra
 from modules.tools.image import convert_image_to_base64
 from modules.tools.storage import return_shelved_object
 from modules.tools.atlas import project_image, slice_to_atlas_transform
 from modules.tools.misc import logmem
 from modules.tools.volume import filter_voxels, fill_array_borders, fill_array_interpolation
 from config import dic_colors, l_colors, l_colors_progress
-from modules.tools.spectra import compute_avg_intensity_per_lipid, global_lipid_index_store
+from modules.tools.spectra import (
+    compute_image_using_index_and_image_lookup,
+    compute_index_boundaries,
+    compute_avg_intensity_per_lipid,
+    global_lipid_index_store,
+    compute_thread_safe_function,
+)
 
 ###### DEFINE FIGURES CLASS ######
 class Figures:
@@ -339,7 +344,9 @@ class Figures:
     ):
         logging.info("Entering compute_image_per_lipid")
         # Get image from raw mass spec data
-        image = spectra.compute_image_using_index_and_image_lookup(
+        image = compute_thread_safe_function(
+            compute_image_using_index_and_image_lookup,
+            cache_flask,
             lb_mz,
             hb_mz,
             self._data.get_array_spectra(slice_index),
@@ -421,7 +428,9 @@ class Figures:
                     hb_mz = float(self._data.get_annotations().iloc[index]["max"])
 
                     # Get corresponding image
-                    image = spectra.compute_image_using_index_and_image_lookup(
+                    image = compute_thread_safe_function(
+                        compute_image_using_index_and_image_lookup,
+                        cache_flask,
                         lb_mz,
                         hb_mz,
                         self._data.get_array_spectra(slice_index),
@@ -803,7 +812,9 @@ class Figures:
             array_spectra_avg = self._data.get_array_avg_spectrum(
                 slice_index, standardization=standardization, cache=cache_flask
             )
-            index_lb, index_hb = spectra.compute_index_boundaries(
+            index_lb, index_hb = compute_thread_safe_function(
+                compute_index_boundaries,
+                cache_flask,
                 lb,
                 hb,
                 array_spectra_avg=array_spectra_avg,
