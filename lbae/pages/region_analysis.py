@@ -1252,7 +1252,7 @@ def global_spectrum_store(
                     grah_scattergl_data = compute_spectrum_per_row_selection(
                         list_index_bound_rows,
                         list_index_bound_column_per_row,
-                        data.get_array_spectra(slice_index),
+                        data.get_array_spectra(slice_index, cache_flask),
                         data.get_array_lookup_pixels(slice_index),
                         data.get_image_shape(slice_index),
                         data.get_array_peaks_transformed_lipids(slice_index),
@@ -1281,7 +1281,10 @@ def global_spectrum_store(
                 # then normalize to the sum of all pixels
                 grah_scattergl_data[1, :] /= (
                     convert_array_to_fine_grained(
-                        data.get_array_spectra(slice_index - 1), 10 ** -3, lb=350, hb=1250,
+                        data.get_array_spectra(slice_index - 1, cache_flask),
+                        10 ** -3,
+                        lb=350,
+                        hb=1250,
                     )[1, :]
                     + 1
                 )
@@ -1355,9 +1358,6 @@ def page_3_record_spectra(
         l_spectra = global_spectrum_store(
             slice_index, l_shapes_and_masks, l_mask_name, relayoutData, as_enrichment, log_transform
         )
-
-        # Set progress bar to 40 in redis db
-        # r.set(session_id + "page-3-progress", 40)
 
         if l_spectra is not None:
             if l_spectra != []:
@@ -1959,9 +1959,6 @@ def draw_modal_graph(
                 # else:
                 #    fig["layout"]["shapes"] = tuple(list(fig["layout"]["shapes"]).append(draw))
         logging.info("Modal graph computed. Returning it now")
-
-        # Set progress bar to 90 in redis db
-        # r.set(session_id + "page-3-progress", 100)
 
         return fig
 
