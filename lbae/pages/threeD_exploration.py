@@ -876,6 +876,7 @@ def page_4_plot_graph_volume(
                 name_lipid_3=name_lipid_3,
                 set_id_regions=set_id,
                 decrease_dimensionality_factor=decrease_resolution_factor,
+                cache_flask=cache_flask,
             )
 
         else:

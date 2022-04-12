@@ -424,14 +424,15 @@ class MaldiData:
 
     # ? For the docstring : this function takes only about 5ms to run on all memmaps, and 1ms on a given slice
     # ! Does the GIL handle this properly? Must try with several users at once
-    def clean_memory(self, cache, slice_index=None, array=None):
+    def clean_memory(self, slice_index=None, array=None, cache=None):
 
         # Wait for memory to be released before taking action
-        while cache.get("locked"):
-            time.sleep(0.05)
+        if cache is not None:
+            while cache.get("locked"):
+                time.sleep(0.05)
 
-        # Lock memory to prevent other processes from accessing it
-        cache.set("locked", True)
+            # Lock memory to prevent other processes from accessing it
+            cache.set("locked", True)
 
         # Case no array name has been provided
         if array is None:
@@ -485,7 +486,8 @@ class MaldiData:
                 )
 
         # Release memory
-        cache.set("locked", False)
+        if cache is not None:
+            cache.set("locked", False)
 
     def compute_l_labels(self):
         l_labels = (

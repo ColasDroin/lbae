@@ -33,7 +33,6 @@ from modules.tools.storage import (
     check_shelved_object,
 )
 from modules.tools.misc import logmem
-from app import cache_flask
 
 
 #! Overall, see if I can memmap all the objects in this class
@@ -123,7 +122,7 @@ class Atlas:
                 "The dictionnary of available mask per slice has not been computed yet."
                 + "Doing it now, This will take several hours."
             )
-            self.save_all_projected_masks_and_spectra()
+            self.save_all_projected_masks_and_spectra(cache_flask=None)
 
     # Load arrays of images using atlas projection
     @property
@@ -396,6 +395,7 @@ class Atlas:
         mask_name=None,
         slice_coor_rescaled=None,
         MAIA_correction=False,
+        cache_flask=None,
     ):
         if projected_mask is None and mask_name is None:
             print("Either a mask or a mask name must be provided")
@@ -441,7 +441,7 @@ class Atlas:
             )
         return grah_scattergl_data
 
-    def save_all_projected_masks_and_spectra(self, force_update=False):
+    def save_all_projected_masks_and_spectra(self, force_update=False, cache_flask=None):
 
         # Define a dictionnary that contains all the masks that exist for every slice
         dic_existing_masks = {}
@@ -499,7 +499,7 @@ class Atlas:
 
                     # Compute average spectrum in the mask
                     grah_scattergl_data = self.compute_spectrum_data(
-                        slice_index, projected_mask, MAIA_correction=False
+                        slice_index, projected_mask, MAIA_correction=False, cache_flask=cache_flask
                     )
 
                     # Dump the mask and data with shelve
@@ -514,7 +514,7 @@ class Atlas:
 
                     # Same with MAIA corrected data
                     grah_scattergl_data = self.compute_spectrum_data(
-                        slice_index, projected_mask, MAIA_correction=True
+                        slice_index, projected_mask, MAIA_correction=True, cache_flask=cache_flask
                     )
 
                     dump_shelved_object(

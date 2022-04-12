@@ -1940,7 +1940,11 @@ def draw_modal_graph(
         ]
 
         fig = figures.compute_rgb_image_per_lipid_selection(
-            slice_index, l_lipid_bounds, enrichment=as_enrichment, log=log_transform
+            slice_index,
+            l_lipid_bounds,
+            enrichment=as_enrichment,
+            log=log_transform,
+            cache_flask=cache_flask,
         )
         if boolean_mask:
             if l_shapes_and_masks is not None:

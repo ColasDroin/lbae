@@ -13,7 +13,7 @@ import numpy as np
 import dash_mantine_components as dmc
 
 # LBAE modules
-from app import figures, data
+from app import figures, data, cache_flask
 import app
 from modules.tools.storage import return_shelved_object
 
@@ -66,7 +66,11 @@ def return_layout(basic_config, slice_index):
                                     "background-color": "#1d1c1f",
                                 },
                                 figure=figures.compute_heatmap_per_mz(
-                                    slice_index, 600, 605, binary_string=False
+                                    slice_index,
+                                    600,
+                                    605,
+                                    binary_string=False,
+                                    cache_flask=cache_flask,
                                 ),
                             ),
                         ),
@@ -491,7 +495,9 @@ def page_2_plot_graph_heatmap_mz_selection(
             lb, hb = float(lb), float(hb)
             if lb > 400 and hb < 1200 and hb - lb > 0 and hb - lb < 10:
                 return (
-                    figures.compute_heatmap_per_mz(slice_index, lb, hb, binary_string=False),
+                    figures.compute_heatmap_per_mz(
+                        slice_index, lb, hb, binary_string=False, cache_flask=cache_flask
+                    ),
                     "Current input: " + "m/z boundaries",
                 )
 
@@ -571,6 +577,7 @@ def page_2_plot_graph_heatmap_mz_selection(
                         ll_lipid_bounds,
                         apply_transform=apply_transform,
                         ll_lipid_names=ll_lipid_names,
+                        cache_flask=cache_flask,
                     ),
                     "Current input: " + "Lipid selection colormap",
                 )
@@ -591,6 +598,7 @@ def page_2_plot_graph_heatmap_mz_selection(
                         ll_lipid_bounds,
                         apply_transform=apply_transform,
                         ll_lipid_names=ll_lipid_names,
+                        cache_flask=cache_flask,
                     ),
                     "Current input: " + "Lipid selection RGB",
                 )
@@ -602,6 +610,7 @@ def page_2_plot_graph_heatmap_mz_selection(
                         ll_lipid_bounds,
                         apply_transform=apply_transform,
                         ll_lipid_names=ll_lipid_names,
+                        cache_flask=cache_flask,
                     ),
                     "Current input: " + "Lipid selection RGB",
                 )
@@ -620,7 +629,11 @@ def page_2_plot_graph_heatmap_mz_selection(
             bound_high_res = json.loads(bound_high_res)
             return (
                 figures.compute_heatmap_per_mz(
-                    slice_index, bound_high_res[0], bound_high_res[1], binary_string=False
+                    slice_index,
+                    bound_high_res[0],
+                    bound_high_res[1],
+                    binary_string=False,
+                    cache_flask=cache_flask,
                 ),
                 "Current input: " + "Selection from high-res m/z graph",
             )
@@ -639,6 +652,7 @@ def page_2_plot_graph_heatmap_mz_selection(
                     bound_low_res[1],
                     binary_string=False,
                     plot_contours=False,
+                    cache_flask=cache_flask,
                 ),
                 "Current input: " + "Selection from low-res m/z graph",
             )
@@ -853,6 +867,7 @@ def page_2_plot_graph_high_res_spectrum(
                 annotations=l_lipid_bounds,
                 force_xlim=True,
                 standardization=apply_transform,
+                cache_flask=cache_flask,
             )
 
     elif id_input == "page-2-button-bounds" or (
@@ -867,6 +882,7 @@ def page_2_plot_graph_high_res_spectrum(
                 hb + 10 ** -2,
                 force_xlim=True,  # annotations=l_lipid_bounds,
                 standardization=apply_transform,
+                cache_flask=cache_flask,
             )
 
     # If the figure is created at app launch or after load button is cliked, or with an empty lipid
@@ -881,7 +897,11 @@ def page_2_plot_graph_high_res_spectrum(
         # Case the zoom is high enough
         if bound_high_res[1] - bound_high_res[0] <= 3:
             return figures.compute_spectrum_high_res(
-                slice_index, bound_high_res[0], bound_high_res[1], standardization=apply_transform,
+                slice_index,
+                bound_high_res[0],
+                bound_high_res[1],
+                standardization=apply_transform,
+                cache_flask=cache_flask,
             )
         # Otherwise just return default (empty) graph
         else:
@@ -1233,7 +1253,12 @@ def page_2_download(
                 lb = float(data.get_annotations().iloc[index]["min"]) - 10 ** -2
                 hb = float(data.get_annotations().iloc[index]["max"]) + 10 ** -2
                 x, y = figures.compute_spectrum_high_res(
-                    slice_index, lb, hb, plot=False, standardization=apply_transform
+                    slice_index,
+                    lb,
+                    hb,
+                    plot=False,
+                    standardization=apply_transform,
+                    cache_flask=cache_flask,
                 )
                 df = pd.DataFrame.from_dict({"m/z": x, "Intensity": y})
                 df.to_excel(xlsx_writer, index=False, sheet_name=name[:31])

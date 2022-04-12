@@ -89,3 +89,6 @@ else:
 # Initiate Cache
 cache_flask = Cache()
 cache_flask.init_app(app.server, config=CACHE_CONFIG)
+
+# Initiate the cache as unlocked
+cache_flask.set("locked", False)

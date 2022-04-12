@@ -21,7 +21,6 @@ from modules.tools.misc import logmem
 from modules.tools.volume import filter_voxels, fill_array_borders, fill_array_interpolation
 from config import dic_colors, l_colors, l_colors_progress
 from modules.tools.spectra import compute_avg_intensity_per_lipid, global_lipid_index_store
-from app import cache_flask
 
 ###### DEFINE FIGURES CLASS ######
 class Figures:
@@ -46,6 +45,7 @@ class Figures:
             "dic_normalization_factors",
             force_update=False,
             compute_function=self.compute_normalization_factor_across_slices,
+            cache_flask=None,
         )
 
     ###### FUNCTIONS FOR FIGURE IN LOAD_SLICE PAGE ######
@@ -335,6 +335,7 @@ class Figures:
         projected_image=True,
         apply_transform=False,
         lipid_name="",
+        cache_flask=None,
     ):
         logging.info("Entering compute_image_per_lipid")
         # Get image from raw mass spec data
@@ -383,7 +384,7 @@ class Figures:
             )
         return image
 
-    def compute_normalization_factor_across_slices(self):
+    def compute_normalization_factor_across_slices(self, cache_flask=None):
         logging.info(
             "Compute normalization factor across slices for MAIA transformed lipids..."
             + " It may takes a while"
@@ -456,6 +457,7 @@ class Figures:
         projected_image=True,
         plot_contours=False,
         return_base64_string=False,
+        cache_flask=None,
     ):
 
         logging.info("Starting figure computation, from mz boundaries")
@@ -474,12 +476,17 @@ class Figures:
         logging.info("Getting image array")
         # Compute image with given bounds
         image = self.compute_image_per_lipid(
-            slice_index, lb_mz, hb_mz, RGB_format=True, projected_image=projected_image
+            slice_index,
+            lb_mz,
+            hb_mz,
+            RGB_format=True,
+            projected_image=projected_image,
+            cache_flask=cache_flask,
         )
 
         logging.info("Done getting image array. Cleaning memory")
         # Clean memmap memory
-        self._data.clean_memory(slice_index=slice_index)
+        self._data.clean_memory(slice_index=slice_index, cache=cache_flask)
         logging.info("Memory cleaned")
 
         # Get image
@@ -538,6 +545,7 @@ class Figures:
         apply_transform=False,
         ll_lipid_names=None,
         return_base64_string=False,
+        cache_flask=None,
     ):
 
         logging.info("Compute heatmap per lipid selection" + str(ll_t_bounds))
@@ -561,11 +569,12 @@ class Figures:
                             projected_image=projected_image,
                             apply_transform=apply_transform,
                             lipid_name=lipid_name,
+                            cache_flask=cache_flask,
                         )
                         image += image_temp
 
         # Clean memmap memory
-        self._data.clean_memory(slice_index=slice_index)
+        self._data.clean_memory(slice_index=slice_index, cache = cache_flask)
 
         # Set optimize to False to gain computation time
         base64_string = convert_image_to_base64(image, transparent_zeros=True, optimize=False)
@@ -605,6 +614,7 @@ class Figures:
         enrichment=False,
         apply_transform=False,
         ll_lipid_names=None,
+        cache_flask=None,
     ):
 
         # Empty lipid names if no names provided
@@ -637,6 +647,7 @@ class Figures:
                             log=log,
                             apply_transform=apply_transform,
                             lipid_name=lipid_name,
+                            cache_flask=cache_flask,
                         )
 
                         image += image_temp
@@ -647,7 +658,7 @@ class Figures:
         array_image = np.moveaxis(np.array(l_images), 0, 2)
 
         # Clean memmap memory
-        self._data.clean_memory(slice_index=slice_index)
+        self._data.clean_memory(slice_index=slice_index, cache = cache_flask)
 
         return np.asarray(array_image, dtype=np.uint8)
 
@@ -664,6 +675,7 @@ class Figures:
         apply_transform=False,
         ll_lipid_names=None,
         return_base64_string=False,
+        cache_flask=None,
     ):
         logging.info("Started RGB image computation for slice " + str(slice_index) + logmem())
 
@@ -681,6 +693,7 @@ class Figures:
             enrichment=enrichment,
             apply_transform=apply_transform,
             ll_lipid_names=ll_lipid_names,
+            cache_flask=cache_flask,
         )
         logging.info("array_image acquired for slice " + str(slice_index) + logmem())
 
@@ -777,6 +790,7 @@ class Figures:
         force_xlim=False,
         plot=True,
         standardization=False,
+        cache_flask=None,
     ):
 
         # Define default values for graph (empty)
@@ -1052,7 +1066,8 @@ class Figures:
         )
         return surface
 
-    def compute_figure_slices_2D(self, ll_t_bounds, normalize_independently=True):
+    # ! This function seems unused
+    def compute_figure_slices_2D(self, ll_t_bounds, normalize_independently=True, cache_flask=None):
 
         fig = go.Figure(
             frames=[
@@ -1067,6 +1082,7 @@ class Figures:
                         log=False,
                         return_image=True,
                         use_pil=True,
+                        cache_flask=cache_flask,
                     ),
                     name=str(i),
                 )
@@ -1090,6 +1106,7 @@ class Figures:
                 log=False,
                 return_image=True,
                 use_pil=True,
+                cache_flask=cache_flask,
             ),
         )
 
@@ -1148,7 +1165,9 @@ class Figures:
 
         return fig
 
-    def compute_array_3D(self, ll_t_bounds, normalize_independently=True, high_res=False):
+    def compute_array_3D(
+        self, ll_t_bounds, normalize_independently=True, high_res=False, cache_flask=None
+    ):
 
         logging.info("Starting computing 3D arrays" + logmem())
 
@@ -1188,6 +1207,7 @@ class Figures:
                     log=False,
                     enrichment=False,
                     apply_transform=True,
+                    cache_flask=cache_flask,
                 )
 
                 # Sum array colors (i.e. lipids)
@@ -1235,6 +1255,7 @@ class Figures:
         # Return the arrays for the 3D figure
         return array_x, array_y, array_z, array_c
 
+    # ! This function seems unused
     # This function sums over the selected lipids for now
     def compute_figure_bubbles_3D(
         self,
@@ -1244,6 +1265,7 @@ class Figures:
         name_lipid_1="",
         name_lipid_2="",
         name_lipid_3="",
+        cache_flask=None,
     ):
         logging.info("Starting computing figure bubbles 3D")
 
@@ -1257,6 +1279,7 @@ class Figures:
             ll_t_bounds=ll_t_bounds,
             normalize_independently=normalize_independently,  # normalize_independently,
             high_res=high_res,
+            cache_flask=cache_flask,
         )
 
         # Build figure
@@ -1611,6 +1634,7 @@ class Figures:
         name_lipid_3="",
         set_id_regions=None,
         decrease_dimensionality_factor=7,
+        cache_flask=None,
     ):
         logging.info("Starting 3D volume computation")
 
@@ -1646,6 +1670,7 @@ class Figures:
             ll_t_bounds=ll_t_bounds,
             normalize_independently=True,
             high_res=False,
+            cache_flask=cache_flask,
         )
 
         logging.info("Computed array of expression in original space")
@@ -2062,4 +2087,5 @@ class Figures:
                             name_lipid_1=name_lipid_1,
                             name_lipid_2=name_lipid_2,
                             name_lipid_3=name_lipid_3,
+                            cache_flask=None,
                         )
