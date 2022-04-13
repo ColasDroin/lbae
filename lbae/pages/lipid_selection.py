@@ -285,7 +285,7 @@ def return_layout(basic_config, slice_index):
                                     children="Download data",
                                     id="page-2-download-data-button",
                                     variant="filled",
-                                    disabled=True,
+                                    disabled=False,
                                     color="gray",
                                     radius="md",
                                     size="xs",
@@ -297,7 +297,7 @@ def return_layout(basic_config, slice_index):
                                     children="Download image",
                                     id="page-2-download-image-button",
                                     variant="filled",
-                                    disabled=True,
+                                    disabled=False,
                                     color="gray",
                                     radius="md",
                                     size="xs",
@@ -795,12 +795,9 @@ def page_2_store_boundaries_mz_from_graph_low_res_spectrum(relayoutData, slice_i
     Input("page-2-selected-lipid-3", "data"),
     Input("page-2-rgb-button", "n_clicks"),
     Input("page-2-colormap-button", "n_clicks"),
-    # Input("page-2-button-range", "n_clicks"),
     Input("page-2-button-bounds", "n_clicks"),
     State("page-2-lower-bound", "value"),
     State("page-2-upper-bound", "value"),
-    # State("page-2-mz-value", "value"),
-    # State("page-2-mz-range", "value"),
     State("page-2-badge-input", "children"),
     Input("page-2-toggle-apply-transform", "checked"),
 )
@@ -812,12 +809,9 @@ def page_2_plot_graph_high_res_spectrum(
     lipid_3_index,
     n_clicks_rgb,
     n_clicks_colormap,
-    # n_clicks_button_range,
     n_clicks_button_bounds,
     lb,
     hb,
-    # mz,
-    # mz_range,
     graph_input,
     apply_transform,
 ):
@@ -1222,51 +1216,127 @@ def page_2_display_alert(figure):
     State("page-2-selected-lipid-3", "data"),
     State("main-slider", "value"),
     State("page-2-toggle-apply-transform", "checked"),
+    State("page-2-badge-input", "children"),
+    State("boundaries-low-resolution-mz-plot", "data"),
+    State("page-2-lower-bound", "value"),
+    State("page-2-upper-bound", "value"),
     prevent_initial_call=True,
 )
 def page_2_download(
-    n_clicks, lipid_1_index, lipid_2_index, lipid_3_index, slice_index, apply_transform
+    n_clicks,
+    lipid_1_index,
+    lipid_2_index,
+    lipid_3_index,
+    slice_index,
+    apply_transform,
+    graph_input,
+    bound_high_res,
+    lb,
+    hb,
 ):
 
-    l_lipids_indexes = [
-        x for x in [lipid_1_index, lipid_2_index, lipid_3_index] if x is not None and x != -1
-    ]
-    # If lipids has been selected from the dropdown, filter them in the df and download them
-    if len(l_lipids_indexes) > 0:
+    # Current input is lipid selection
+    if (
+        graph_input == "Current input: " + "Lipid selection colormap"
+        or graph_input == "Current input: " + "Lipid selection RGB"
+    ):
 
-        def to_excel(bytes_io):
-            xlsx_writer = pd.ExcelWriter(bytes_io, engine="xlsxwriter")
-            data.get_annotations().iloc[l_lipids_indexes].to_excel(
-                xlsx_writer, index=False, sheet_name="Selected lipids"
-            )
-            for i, index in enumerate(l_lipids_indexes):
-                name = (
-                    data.get_annotations().iloc[index]["name"]
-                    + "_"
-                    + data.get_annotations().iloc[index]["structure"]
-                    + "_"
-                    + data.get_annotations().iloc[index]["cation"]
+        l_lipids_indexes = [
+            x for x in [lipid_1_index, lipid_2_index, lipid_3_index] if x is not None and x != -1
+        ]
+        # If lipids has been selected from the dropdown, filter them in the df and download them
+        if len(l_lipids_indexes) > 0:
+
+            def to_excel(bytes_io):
+                xlsx_writer = pd.ExcelWriter(bytes_io, engine="xlsxwriter")
+                data.get_annotations().iloc[l_lipids_indexes].to_excel(
+                    xlsx_writer, index=False, sheet_name="Selected lipids"
                 )
+                for i, index in enumerate(l_lipids_indexes):
+                    name = (
+                        data.get_annotations().iloc[index]["name"]
+                        + "_"
+                        + data.get_annotations().iloc[index]["structure"]
+                        + "_"
+                        + data.get_annotations().iloc[index]["cation"]
+                    )
 
-                # Need to clean name to use it as a sheet name
-                name = name.replace(":", "").replace("/", "")
-                lb = float(data.get_annotations().iloc[index]["min"]) - 10 ** -2
-                hb = float(data.get_annotations().iloc[index]["max"]) + 10 ** -2
-                x, y = figures.compute_spectrum_high_res(
+                    # Need to clean name to use it as a sheet name
+                    name = name.replace(":", "").replace("/", "")
+                    lb = float(data.get_annotations().iloc[index]["min"]) - 10 ** -2
+                    hb = float(data.get_annotations().iloc[index]["max"]) + 10 ** -2
+                    x, y = figures.compute_spectrum_high_res(
+                        slice_index,
+                        lb,
+                        hb,
+                        plot=False,
+                        standardization=apply_transform,
+                        cache_flask=cache_flask,
+                    )
+                    df = pd.DataFrame.from_dict({"m/z": x, "Intensity": y})
+                    df.to_excel(xlsx_writer, index=False, sheet_name=name[:31])
+                xlsx_writer.save()
+
+            return dcc.send_data_frame(to_excel, "my_lipid_selection.xlsx")
+
+    # Current input is manual boundaries selection from input box
+    if graph_input == "Current input: " + "m/z boundaries":
+        lb, hb = float(lb), float(hb)
+        if lb >= 400 and hb <= 1600 and hb - lb > 0 and hb - lb < 10:
+
+            def to_excel(bytes_io):
+
+                # Get spectral data
+                mz, intensity = figures.compute_spectrum_high_res(
                     slice_index,
-                    lb,
-                    hb,
-                    plot=False,
+                    lb - 10 ** -2,
+                    hb + 10 ** -2,
+                    force_xlim=True,
                     standardization=apply_transform,
                     cache_flask=cache_flask,
+                    plot=False,
                 )
-                df = pd.DataFrame.from_dict({"m/z": x, "Intensity": y})
-                df.to_excel(xlsx_writer, index=False, sheet_name=name[:31])
-            xlsx_writer.save()
 
-        return dcc.send_data_frame(to_excel, "my_lipid_selection.xlsx")
-    else:
-        return dash.no_update
+                # Turn to dataframe
+                dataset = pd.DataFrame.from_dict({"m/z": mz, "Intensity": intensity})
+
+                # Export to excel
+                xlsx_writer = pd.ExcelWriter(bytes_io, engine="xlsxwriter")
+                dataset.to_excel(xlsx_writer, index=False, sheet_name="mz selection")
+                xlsx_writer.save()
+
+            return dcc.send_data_frame(to_excel, "my_boundaries_selection.xlsx")
+
+    # Current input is boundaries from the low-res m/z plot
+    elif graph_input == "Current input: " + "Selection from high-res m/z graph":
+        if bound_high_res is not None:
+            # Case the zoom is high enough
+            if bound_high_res[1] - bound_high_res[0] <= 3:
+
+                def to_excel(bytes_io):
+
+                    # Get spectral data
+                    bound_high_res = json.loads(bound_high_res)
+                    mz, intensity = figures.compute_spectrum_high_res(
+                        slice_index,
+                        bound_high_res[0],
+                        bound_high_res[1],
+                        standardization=apply_transform,
+                        cache_flask=cache_flask,
+                        plot=False,
+                    )
+
+                    # Turn to dataframe
+                    dataset = pd.DataFrame.from_dict({"m/z": mz, "Intensity": intensity})
+
+                    # Export to excel
+                    xlsx_writer = pd.ExcelWriter(bytes_io, engine="xlsxwriter")
+                    dataset.to_excel(xlsx_writer, index=False, sheet_name="mz selection")
+                    xlsx_writer.save()
+
+                return dcc.send_data_frame(to_excel, "my_boundaries_selection.xlsx")
+
+    return dash.no_update
 
 
 clientside_callback(
@@ -1286,24 +1356,24 @@ clientside_callback(
 )
 
 
-@app.app.callback(
-    Output("page-2-download-image-button", "disabled"),
-    Output("page-2-download-data-button", "disabled"),
-    Output("page-2-rgb-button", "disabled"),
-    Output("page-2-colormap-button", "disabled"),
-    Input("page-2-selected-lipid-1", "data"),
-    Input("page-2-selected-lipid-2", "data"),
-    Input("page-2-selected-lipid-3", "data"),
-)
-def page_2_active_download(lipid_1_index, lipid_2_index, lipid_3_index):
-    l_lipids_indexes = [
-        x for x in [lipid_1_index, lipid_2_index, lipid_3_index] if x is not None and x != -1
-    ]
-    # If lipids has been selected from the dropdown, activate button
-    if len(l_lipids_indexes) > 0:
-        return False, False, False, False
-    else:
-        return True, True, True, True
+# @app.app.callback(
+#     Output("page-2-download-image-button", "disabled"),
+#     Output("page-2-download-data-button", "disabled"),
+#     Output("page-2-rgb-button", "disabled"),
+#     Output("page-2-colormap-button", "disabled"),
+#     Input("page-2-selected-lipid-1", "data"),
+#     Input("page-2-selected-lipid-2", "data"),
+#     Input("page-2-selected-lipid-3", "data"),
+# )
+# def page_2_active_download(lipid_1_index, lipid_2_index, lipid_3_index):
+#     l_lipids_indexes = [
+#         x for x in [lipid_1_index, lipid_2_index, lipid_3_index] if x is not None and x != -1
+#     ]
+#     # If lipids has been selected from the dropdown, activate button
+#     if len(l_lipids_indexes) > 0:
+#         return False, False, False, False
+#     else:
+#         return True, True, True, True
 
 
 @app.app.callback(
