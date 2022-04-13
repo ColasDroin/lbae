@@ -1,8 +1,6 @@
 ###### IMPORT MODULES ######
 
-import dash_bootstrap_components as dbc
-from dash.dependencies import Input, Output, State
-from dash import dcc, html
+from dash import html
 import dash_mantine_components as dmc
 
 ###### DEFFINE PAGE LAYOUT ######

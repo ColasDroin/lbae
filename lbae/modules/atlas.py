@@ -122,7 +122,7 @@ class Atlas:
                 "The dictionnary of available mask per slice has not been computed yet."
                 + "Doing it now, This will take several hours."
             )
-            # Since this function is called at launch, no data locking is needed
+            # Since this function is called at startup, no data locking is needed
             self.save_all_projected_masks_and_spectra(cache_flask=None)
 
     # Load arrays of images using atlas projection

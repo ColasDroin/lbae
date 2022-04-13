@@ -6,13 +6,12 @@ from dash import dcc, html
 from dash.dependencies import Input, Output, State
 import dash
 import numpy as np
-import dash_draggable
 import logging
 import dash_mantine_components as dmc
 
 # LBAE modules
 import app
-from app import figures, data
+from app import figures
 from modules.tools.storage import return_shelved_object
 
 ###### DEFFINE PAGE LAYOUT ######

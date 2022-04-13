@@ -7653,3 +7653,1505 @@ page-3-graph-heatmap-per-sel relayoutData 11 None None /region-analysis [] False
 2022-04-12 16:41:55.463 INFO figures - compute_rgb_image_per_lipid_selection: Started building graph for slice 3	MemTotal: 2366.1640625
 2022-04-12 16:41:55.481 INFO figures - compute_rgb_image_per_lipid_selection: Returning fig for slice 3	MemTotal: 2366.1640625
 2022-04-12 16:41:55.481 INFO region_analysis - draw_modal_graph: Modal graph computed. Returning it now
+2022-04-13 10:12:20.252 INFO index - render_page_content: Page/has been selected	MemTotal: 2346.265625
+2022-04-13 10:12:23.071 INFO index - render_page_content: Page/load-slicehas been selected	MemTotal: 2319.43359375
+2022-04-13 10:12:23.175 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2319.7109375
+2022-04-13 10:12:23.286 INFO load_slice - tab_1_load_image: Slider changed to value 1
+2022-04-13 10:12:37.098 INFO storage - return_shelved_object: slices_3D could not be found or force_update is True. Computing the object and shelving it now.
+2022-04-13 10:12:37.198 INFO storage - return_shelved_object: Returning l_transform_parameters from shelve file.	MemTotal: 2346.90625
+2022-04-13 10:12:37.299 INFO storage - return_shelved_object: Returning arrays_projection_corrected from shelve file.	MemTotal: 2346.90625
+2022-04-13 10:12:37.808 INFO storage - return_shelved_object: Returning arrays_projection_corrected from shelve file.	MemTotal: 2347.1640625
+2022-04-13 10:12:40.804 INFO storage - return_shelved_object: slices_3D being returned now from computation.
+2022-04-13 10:12:47.180 INFO storage - return_shelved_object: slices_3D could not be found or force_update is True. Computing the object and shelving it now.
+2022-04-13 10:12:47.280 INFO storage - return_shelved_object: Returning l_transform_parameters from shelve file.	MemTotal: 2320.33203125
+2022-04-13 10:12:47.383 INFO storage - return_shelved_object: Returning arrays_projection_corrected from shelve file.	MemTotal: 2320.3515625
+2022-04-13 10:12:47.863 INFO storage - return_shelved_object: Returning arrays_projection_corrected from shelve file.	MemTotal: 2320.609375
+2022-04-13 10:12:50.608 INFO storage - return_shelved_object: slices_3D being returned now from computation.
+2022-04-13 10:13:12.923 INFO load_slice - tab_1_load_image: Slider changed to value 2
+2022-04-13 10:13:13.023 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2320.87109375
+2022-04-13 10:13:13.679 INFO load_slice - tab_1_load_image: Slider changed to value 3
+2022-04-13 10:13:13.778 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2320.87109375
+2022-04-13 10:13:14.001 INFO load_slice - tab_1_load_image: Slider changed to value 4
+2022-04-13 10:13:14.100 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2320.87109375
+2022-04-13 10:13:14.664 INFO load_slice - tab_1_load_image: Slider changed to value 5
+2022-04-13 10:13:14.762 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2320.87109375
+2022-04-13 10:13:15.219 INFO load_slice - tab_1_load_image: Slider changed to value 6
+2022-04-13 10:13:15.317 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2320.87109375
+2022-04-13 10:13:15.762 INFO load_slice - tab_1_load_image: Slider changed to value 7
+2022-04-13 10:13:15.861 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2320.87109375
+2022-04-13 10:13:16.389 INFO load_slice - tab_1_load_image: Slider changed to value 8
+2022-04-13 10:13:16.488 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2320.87109375
+2022-04-13 10:13:16.921 INFO load_slice - tab_1_load_image: Slider changed to value 9
+2022-04-13 10:13:17.020 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2320.87109375
+2022-04-13 10:13:17.326 INFO load_slice - tab_1_load_image: Slider changed to value 10
+2022-04-13 10:13:17.425 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2320.87109375
+2022-04-13 10:13:17.785 INFO load_slice - tab_1_load_image: Slider changed to value 11
+2022-04-13 10:13:17.884 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2320.87109375
+2022-04-13 10:13:18.122 INFO load_slice - tab_1_load_image: Slider changed to value 12
+2022-04-13 10:13:18.226 INFO storage - return_shelved_object: figure_basic_image could not be found or force_update is True. Computing the object and shelving it now.
+2022-04-13 10:13:18.327 INFO storage - return_shelved_object: Returning array_basic_images from shelve file.	MemTotal: 2320.87109375
+2022-04-13 10:13:18.478 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-13 10:13:18.496 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-13 10:13:18.517 INFO load_slice - tab_1_load_image: Slider changed to value 13
+2022-04-13 10:13:18.533 INFO image - convert_image_to_base64: Empty pixels are now transparent
+2022-04-13 10:13:18.563 INFO image - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-04-13 10:13:18.665 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2347.4453125
+2022-04-13 10:13:18.946 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-13 10:13:19.071 INFO storage - return_shelved_object: figure_basic_image being returned now from computation.
+2022-04-13 10:13:19.202 INFO load_slice - tab_1_load_image: Slider changed to value 14
+2022-04-13 10:13:19.302 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2321.21875
+2022-04-13 10:13:19.814 INFO load_slice - tab_1_load_image: Slider changed to value 15
+2022-04-13 10:13:19.912 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2321.21875
+2022-04-13 10:13:20.221 INFO load_slice - tab_1_load_image: Slider changed to value 16
+2022-04-13 10:13:20.319 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2321.21875
+2022-04-13 10:13:20.850 INFO load_slice - tab_1_load_image: Slider changed to value 17
+2022-04-13 10:13:20.948 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2321.21875
+2022-04-13 10:13:21.284 INFO load_slice - tab_1_load_image: Slider changed to value 18
+2022-04-13 10:13:21.382 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2321.21875
+2022-04-13 10:13:21.573 INFO load_slice - tab_1_load_image: Slider changed to value 19
+2022-04-13 10:13:21.672 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2321.21875
+2022-04-13 10:13:21.983 INFO load_slice - tab_1_load_image: Slider changed to value 20
+2022-04-13 10:13:22.094 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2321.21875
+2022-04-13 10:13:22.641 INFO load_slice - tab_1_load_image: Slider changed to value 21
+2022-04-13 10:13:22.739 INFO storage - return_shelved_object: figure_basic_image could not be found or force_update is True. Computing the object and shelving it now.
+2022-04-13 10:13:22.837 INFO storage - return_shelved_object: Returning array_basic_images from shelve file.	MemTotal: 2321.21875
+2022-04-13 10:13:22.917 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-13 10:13:22.932 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-13 10:13:22.962 INFO image - convert_image_to_base64: Empty pixels are now transparent
+2022-04-13 10:13:22.978 INFO image - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-04-13 10:13:23.171 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-13 10:13:23.295 INFO storage - return_shelved_object: figure_basic_image being returned now from computation.
+2022-04-13 10:13:23.566 INFO load_slice - tab_1_load_image: Slider changed to value 22
+2022-04-13 10:13:23.665 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2321.21875
+2022-04-13 10:13:24.335 INFO load_slice - tab_1_load_image: Slider changed to value 23
+2022-04-13 10:13:24.438 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2321.21875
+2022-04-13 10:13:25.078 INFO load_slice - tab_1_load_image: Slider changed to value 24
+2022-04-13 10:13:25.176 INFO storage - return_shelved_object: figure_basic_image could not be found or force_update is True. Computing the object and shelving it now.
+2022-04-13 10:13:25.274 INFO storage - return_shelved_object: Returning array_basic_images from shelve file.	MemTotal: 2321.21875
+2022-04-13 10:13:25.351 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-13 10:13:25.366 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-13 10:13:25.396 INFO image - convert_image_to_base64: Empty pixels are now transparent
+2022-04-13 10:13:25.414 INFO image - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-04-13 10:13:25.543 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-13 10:13:25.668 INFO storage - return_shelved_object: figure_basic_image being returned now from computation.
+2022-04-13 10:13:26.058 INFO load_slice - tab_1_load_image: Slider changed to value 25
+2022-04-13 10:13:26.156 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2321.21875
+2022-04-13 10:13:33.629 INFO index - render_page_content: Page/lipid-selectionhas been selected	MemTotal: 2321.21875
+2022-04-13 10:13:33.629 INFO figures - compute_heatmap_per_mz: Starting figure computation, from mz boundaries
+2022-04-13 10:13:33.629 INFO figures - compute_heatmap_per_mz: Getting image array
+2022-04-13 10:13:33.629 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-13 10:13:33.730 INFO figures - compute_heatmap_per_mz: Done getting image array. Cleaning memory
+2022-04-13 10:13:33.734 INFO figures - compute_heatmap_per_mz: Memory cleaned
+2022-04-13 10:13:33.734 INFO figures - compute_heatmap_per_mz: Converting image to string
+2022-04-13 10:13:33.734 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-13 10:13:33.757 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-13 10:13:33.790 INFO image - convert_image_to_base64: Empty pixels are now transparent
+2022-04-13 10:13:33.806 INFO image - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-04-13 10:13:33.833 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-13 10:13:33.835 INFO figures - compute_heatmap_per_mz: Adding image to figure
+2022-04-13 10:13:33.852 INFO figures - compute_heatmap_per_mz: Returning figure
+2022-04-13 10:13:33.952 INFO storage - return_shelved_object: Returning lipid_options from shelve file.	MemTotal: 2321.3515625
+2022-04-13 10:13:34.295 INFO lipid_selection - page_2_add_toast_selection: Entering function to update lipid data
+2022-04-13 10:13:34.759 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-04-13 10:13:49.060 INFO lipid_selection - page_2_add_toast_selection: Entering function to update lipid data
+2022-04-13 10:13:49.064 WARNING lipid_selection - page_2_add_toast_selection: No lipid annotation exist. Taking another slice annotation
+2022-04-13 10:13:49.067 INFO lipid_selection - page_2_add_toast_selection: Changes have been made to the lipid selection or indexation, propagating callback.
+2022-04-13 10:13:49.305 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-04-13 10:13:49.306 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Right before calling the graphing function
+2022-04-13 10:13:49.306 INFO figures - compute_rgb_image_per_lipid_selection: Started RGB image computation for slice 25	MemTotal: 2347.6484375
+2022-04-13 10:13:49.308 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-13 10:13:49.360 INFO figures - compute_rgb_image_per_lipid_selection: array_image acquired for slice 25	MemTotal: 2347.83203125
+2022-04-13 10:13:49.361 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-13 10:13:49.378 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-13 10:13:49.410 INFO image - convert_image_to_base64: Empty pixels are now transparent
+2022-04-13 10:13:49.426 INFO image - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-04-13 10:13:49.431 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-13 10:13:49.432 INFO figures - compute_rgb_image_per_lipid_selection: Started building graph for slice 25	MemTotal: 2347.9921875
+2022-04-13 10:13:49.449 INFO figures - compute_rgb_image_per_lipid_selection: Returning fig for slice 25	MemTotal: 2347.9921875
+2022-04-13 10:13:52.849 INFO lipid_selection - page_2_add_toast_selection: Entering function to update lipid data
+2022-04-13 10:13:52.849 INFO lipid_selection - page_2_add_toast_selection: One or several lipids have been deleter. Cleaning lipid badges now.
+2022-04-13 10:13:53.044 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-04-13 10:13:54.666 INFO lipid_selection - page_2_add_toast_selection: Entering function to update lipid data
+2022-04-13 10:13:54.670 INFO lipid_selection - page_2_add_toast_selection: Changes have been made to the lipid selection or indexation, propagating callback.
+2022-04-13 10:13:54.867 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-04-13 10:13:54.867 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Right before calling the graphing function
+2022-04-13 10:13:54.868 INFO figures - compute_rgb_image_per_lipid_selection: Started RGB image computation for slice 25	MemTotal: 2347.9921875
+2022-04-13 10:13:54.869 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-13 10:13:54.919 INFO figures - compute_rgb_image_per_lipid_selection: array_image acquired for slice 25	MemTotal: 2347.9921875
+2022-04-13 10:13:54.919 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-13 10:13:54.935 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-13 10:13:54.966 INFO image - convert_image_to_base64: Empty pixels are now transparent
+2022-04-13 10:13:54.983 INFO image - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-04-13 10:13:54.989 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-13 10:13:54.990 INFO figures - compute_rgb_image_per_lipid_selection: Started building graph for slice 25	MemTotal: 2347.9921875
+2022-04-13 10:13:55.006 INFO figures - compute_rgb_image_per_lipid_selection: Returning fig for slice 25	MemTotal: 2347.9921875
+2022-04-13 10:13:57.825 INFO lipid_selection - page_2_add_toast_selection: Entering function to update lipid data
+2022-04-13 10:13:57.825 INFO lipid_selection - page_2_add_toast_selection: One or several lipids have been deleter. Cleaning lipid badges now.
+2022-04-13 10:13:58.031 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-04-13 10:13:59.593 INFO lipid_selection - page_2_add_toast_selection: Entering function to update lipid data
+page-3-graph-heatmap-per-sel relayoutData 1 None None /region-analysis [] False
+url pathname 1 None None /lipid-selection [] False
+page-3-graph-heatmap-per-sel relayoutData 3 None None /region-analysis [] True
+page-3-graph-heatmap-per-sel relayoutData 3 None None /region-analysis [] True
+Exception on /_dash-update-component [POST]
+Traceback (most recent call last):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/dash.py", line 1344, in dispatch
+    response.set_data(func(*args, outputs_list=outputs_list))
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/_callback.py", line 151, in add_context
+    output_value = func(*func_args, **func_kwargs)  # %% callback invoked %%
+  File "/home/colas/lbae/lbae/pages/lipid_selection.py", line 1079, in page_2_add_toast_selection
+    lipid_2_index = lipid_index
+ValueError: too many values to unpack (expected 3)
+2022-04-13 10:13:59.593 ERROR app - log_exception: Exception on /_dash-update-component [POST]
+Traceback (most recent call last):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/dash.py", line 1344, in dispatch
+    response.set_data(func(*args, outputs_list=outputs_list))
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/_callback.py", line 151, in add_context
+    output_value = func(*func_args, **func_kwargs)  # %% callback invoked %%
+  File "/home/colas/lbae/lbae/pages/lipid_selection.py", line 1079, in page_2_add_toast_selection
+    lipid_2_index = lipid_index
+ValueError: too many values to unpack (expected 3)
+2022-04-13 10:14:00.935 INFO lipid_selection - page_2_add_toast_selection: Entering function to update lipid data
+2022-04-13 10:14:00.939 INFO lipid_selection - page_2_add_toast_selection: Changes have been made to the lipid selection or indexation, propagating callback.
+2022-04-13 10:14:01.234 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-04-13 10:14:01.234 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Right before calling the graphing function
+2022-04-13 10:14:01.235 INFO figures - compute_rgb_image_per_lipid_selection: Started RGB image computation for slice 25	MemTotal: 2321.609375
+2022-04-13 10:14:01.236 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-13 10:14:01.287 INFO figures - compute_rgb_image_per_lipid_selection: array_image acquired for slice 25	MemTotal: 2321.62109375
+2022-04-13 10:14:01.287 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-13 10:14:01.303 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-13 10:14:01.334 INFO image - convert_image_to_base64: Empty pixels are now transparent
+2022-04-13 10:14:01.350 INFO image - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-04-13 10:14:01.355 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-13 10:14:01.356 INFO figures - compute_rgb_image_per_lipid_selection: Started building graph for slice 25	MemTotal: 2321.62109375
+2022-04-13 10:14:01.371 INFO figures - compute_rgb_image_per_lipid_selection: Returning fig for slice 25	MemTotal: 2321.62109375
+2022-04-13 10:14:02.930 INFO lipid_selection - page_2_add_toast_selection: Entering function to update lipid data
+2022-04-13 10:14:02.934 INFO lipid_selection - page_2_add_toast_selection: Changes have been made to the lipid selection or indexation, propagating callback.
+2022-04-13 10:14:03.134 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-04-13 10:14:03.134 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Right before calling the graphing function
+2022-04-13 10:14:03.134 INFO figures - compute_rgb_image_per_lipid_selection: Started RGB image computation for slice 25	MemTotal: 2347.99609375
+2022-04-13 10:14:03.135 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-13 10:14:03.184 INFO figures - compute_rgb_image_per_lipid_selection: array_image acquired for slice 25	MemTotal: 2347.99609375
+2022-04-13 10:14:03.184 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-13 10:14:03.200 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-13 10:14:03.231 INFO image - convert_image_to_base64: Empty pixels are now transparent
+2022-04-13 10:14:03.246 INFO image - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-04-13 10:14:03.252 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-13 10:14:03.252 INFO figures - compute_rgb_image_per_lipid_selection: Started building graph for slice 25	MemTotal: 2347.99609375
+2022-04-13 10:14:03.268 INFO figures - compute_rgb_image_per_lipid_selection: Returning fig for slice 25	MemTotal: 2347.99609375
+2022-04-13 10:14:03.812 INFO lipid_selection - page_2_add_toast_selection: Entering function to update lipid data
+2022-04-13 10:14:03.812 INFO lipid_selection - page_2_add_toast_selection: One or several lipids have been deleter. Cleaning lipid badges now.
+2022-04-13 10:14:03.999 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-04-13 10:14:05.570 INFO lipid_selection - page_2_add_toast_selection: Entering function to update lipid data
+Exception on /_dash-update-component [POST]
+Traceback (most recent call last):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/dash.py", line 1344, in dispatch
+    response.set_data(func(*args, outputs_list=outputs_list))
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/_callback.py", line 151, in add_context
+    output_value = func(*func_args, **func_kwargs)  # %% callback invoked %%
+  File "/home/colas/lbae/lbae/pages/lipid_selection.py", line 1079, in page_2_add_toast_selection
+    lipid_2_index = lipid_index
+ValueError: too many values to unpack (expected 3)
+2022-04-13 10:14:05.570 ERROR app - log_exception: Exception on /_dash-update-component [POST]
+Traceback (most recent call last):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/dash.py", line 1344, in dispatch
+    response.set_data(func(*args, outputs_list=outputs_list))
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/_callback.py", line 151, in add_context
+    output_value = func(*func_args, **func_kwargs)  # %% callback invoked %%
+  File "/home/colas/lbae/lbae/pages/lipid_selection.py", line 1079, in page_2_add_toast_selection
+    lipid_2_index = lipid_index
+ValueError: too many values to unpack (expected 3)
+2022-04-13 10:14:11.909 INFO index - render_page_content: Page/lipid-selectionhas been selected	MemTotal: 2321.66796875
+2022-04-13 10:14:11.909 INFO figures - compute_heatmap_per_mz: Starting figure computation, from mz boundaries
+2022-04-13 10:14:11.909 INFO figures - compute_heatmap_per_mz: Getting image array
+2022-04-13 10:14:11.909 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-13 10:14:11.961 INFO figures - compute_heatmap_per_mz: Done getting image array. Cleaning memory
+2022-04-13 10:14:11.967 INFO figures - compute_heatmap_per_mz: Memory cleaned
+2022-04-13 10:14:11.967 INFO figures - compute_heatmap_per_mz: Converting image to string
+2022-04-13 10:14:11.967 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-13 10:14:11.983 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-13 10:14:12.016 INFO image - convert_image_to_base64: Empty pixels are now transparent
+2022-04-13 10:14:12.032 INFO image - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-04-13 10:14:12.049 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-13 10:14:12.050 INFO figures - compute_heatmap_per_mz: Adding image to figure
+2022-04-13 10:14:12.066 INFO figures - compute_heatmap_per_mz: Returning figure
+2022-04-13 10:14:12.168 INFO storage - return_shelved_object: Returning lipid_options from shelve file.	MemTotal: 2321.66796875
+2022-04-13 10:14:12.396 INFO lipid_selection - page_2_add_toast_selection: Entering function to update lipid data
+2022-04-13 10:14:13.353 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-04-13 10:14:15.576 INFO lipid_selection - page_2_add_toast_selection: Entering function to update lipid data
+2022-04-13 10:14:15.580 INFO lipid_selection - page_2_add_toast_selection: Changes have been made to the lipid selection or indexation, propagating callback.
+2022-04-13 10:14:15.796 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-04-13 10:14:15.797 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Right before calling the graphing function
+2022-04-13 10:14:15.797 INFO figures - compute_rgb_image_per_lipid_selection: Started RGB image computation for slice 1	MemTotal: 2347.99609375
+2022-04-13 10:14:15.798 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-13 10:14:15.893 INFO figures - compute_rgb_image_per_lipid_selection: array_image acquired for slice 1	MemTotal: 2347.99609375
+2022-04-13 10:14:15.893 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-13 10:14:15.909 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-13 10:14:15.942 INFO image - convert_image_to_base64: Empty pixels are now transparent
+2022-04-13 10:14:15.958 INFO image - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-04-13 10:14:15.973 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-13 10:14:15.973 INFO figures - compute_rgb_image_per_lipid_selection: Started building graph for slice 1	MemTotal: 2347.99609375
+2022-04-13 10:14:15.990 INFO figures - compute_rgb_image_per_lipid_selection: Returning fig for slice 1	MemTotal: 2347.99609375
+2022-04-13 10:14:17.608 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-04-13 10:14:17.609 INFO figures - compute_heatmap_per_lipid_selection: Compute heatmap per lipid selection[[(782.6483000000001, 782.6523000000001)], None, None]
+2022-04-13 10:14:17.610 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-13 10:14:17.690 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-13 10:14:17.709 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-13 10:14:17.741 INFO image - convert_image_to_base64: Empty pixels are now transparent
+2022-04-13 10:14:17.757 INFO image - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-04-13 10:14:17.772 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-13 10:14:44.426 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-04-13 10:17:04.879 INFO lipid_selection - page_2_add_toast_selection: Entering function to update lipid data
+2022-04-13 10:17:04.879 INFO lipid_selection - page_2_add_toast_selection: One or several lipids have been deleter. Cleaning lipid badges now.
+2022-04-13 10:17:05.139 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-04-13 10:17:07.471 INFO lipid_selection - page_2_add_toast_selection: Entering function to update lipid data
+2022-04-13 10:17:07.475 WARNING lipid_selection - page_2_add_toast_selection: No lipid annotation exist. Taking another slice annotation
+2022-04-13 10:17:07.478 INFO lipid_selection - page_2_add_toast_selection: Changes have been made to the lipid selection or indexation, propagating callback.
+2022-04-13 10:17:07.676 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-04-13 10:17:07.676 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Right before calling the graphing function
+2022-04-13 10:17:07.676 INFO figures - compute_rgb_image_per_lipid_selection: Started RGB image computation for slice 1	MemTotal: 2321.6796875
+2022-04-13 10:17:07.677 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-13 10:17:07.741 INFO figures - compute_rgb_image_per_lipid_selection: array_image acquired for slice 1	MemTotal: 2321.6796875
+2022-04-13 10:17:07.741 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-13 10:17:07.757 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-13 10:17:07.788 INFO image - convert_image_to_base64: Empty pixels are now transparent
+2022-04-13 10:17:07.804 INFO image - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-04-13 10:17:07.809 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-13 10:17:07.809 INFO figures - compute_rgb_image_per_lipid_selection: Started building graph for slice 1	MemTotal: 2321.6796875
+2022-04-13 10:17:07.825 INFO figures - compute_rgb_image_per_lipid_selection: Returning fig for slice 1	MemTotal: 2321.6796875
+2022-04-13 10:17:13.293 INFO lipid_selection - page_2_add_toast_selection: Entering function to update lipid data
+2022-04-13 10:17:13.298 INFO lipid_selection - page_2_add_toast_selection: Returning updated lipid data
+2022-04-13 10:17:13.516 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-04-13 10:17:13.517 INFO figures - compute_rgb_image_per_lipid_selection: Started RGB image computation for slice 27	MemTotal: 2348.48828125
+2022-04-13 10:17:13.518 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-13 10:17:13.708 INFO figures - compute_rgb_image_per_lipid_selection: array_image acquired for slice 27	MemTotal: 2348.48828125
+2022-04-13 10:17:13.708 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-13 10:17:13.724 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-13 10:17:13.756 INFO image - convert_image_to_base64: Empty pixels are now transparent
+2022-04-13 10:17:13.771 INFO image - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-04-13 10:17:13.777 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-13 10:17:13.777 INFO figures - compute_rgb_image_per_lipid_selection: Started building graph for slice 27	MemTotal: 2348.48828125
+2022-04-13 10:17:13.793 INFO figures - compute_rgb_image_per_lipid_selection: Returning fig for slice 27	MemTotal: 2348.48828125
+2022-04-13 10:17:14.569 INFO lipid_selection - page_2_add_toast_selection: Entering function to update lipid data
+2022-04-13 10:17:14.573 INFO lipid_selection - page_2_add_toast_selection: Returning updated lipid data
+2022-04-13 10:17:14.822 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-04-13 10:17:14.823 INFO figures - compute_rgb_image_per_lipid_selection: Started RGB image computation for slice 25	MemTotal: 2348.48828125
+2022-04-13 10:17:14.824 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-13 10:17:14.872 INFO figures - compute_rgb_image_per_lipid_selection: array_image acquired for slice 25	MemTotal: 2348.48828125
+2022-04-13 10:17:14.872 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-13 10:17:14.889 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-13 10:17:14.920 INFO image - convert_image_to_base64: Empty pixels are now transparent
+2022-04-13 10:17:14.936 INFO image - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-04-13 10:17:14.942 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-13 10:17:14.942 INFO figures - compute_rgb_image_per_lipid_selection: Started building graph for slice 25	MemTotal: 2348.48828125
+2022-04-13 10:17:14.958 INFO figures - compute_rgb_image_per_lipid_selection: Returning fig for slice 25	MemTotal: 2348.48828125
+2022-04-13 10:17:15.885 INFO lipid_selection - page_2_add_toast_selection: Entering function to update lipid data
+2022-04-13 10:17:15.889 INFO lipid_selection - page_2_add_toast_selection: Returning updated lipid data
+2022-04-13 10:17:16.188 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-04-13 10:17:16.188 INFO figures - compute_rgb_image_per_lipid_selection: Started RGB image computation for slice 23	MemTotal: 2348.48828125
+2022-04-13 10:17:16.189 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-13 10:17:16.278 INFO figures - compute_rgb_image_per_lipid_selection: array_image acquired for slice 23	MemTotal: 2348.48828125
+2022-04-13 10:17:16.278 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-13 10:17:16.294 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-13 10:17:16.325 INFO image - convert_image_to_base64: Empty pixels are now transparent
+2022-04-13 10:17:16.341 INFO image - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-04-13 10:17:16.346 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-13 10:17:16.347 INFO figures - compute_rgb_image_per_lipid_selection: Started building graph for slice 23	MemTotal: 2348.48828125
+2022-04-13 10:17:16.363 INFO figures - compute_rgb_image_per_lipid_selection: Returning fig for slice 23	MemTotal: 2348.48828125
+2022-04-13 10:17:23.254 INFO lipid_selection - page_2_add_toast_selection: Entering function to update lipid data
+2022-04-13 10:17:23.258 INFO lipid_selection - page_2_add_toast_selection: Returning updated lipid data
+2022-04-13 10:17:23.505 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-04-13 10:17:23.506 INFO figures - compute_rgb_image_per_lipid_selection: Started RGB image computation for slice 22	MemTotal: 2348.48828125
+2022-04-13 10:17:23.507 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-13 10:17:23.619 INFO figures - compute_rgb_image_per_lipid_selection: array_image acquired for slice 22	MemTotal: 2348.48828125
+2022-04-13 10:17:23.619 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-13 10:17:23.636 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-13 10:17:23.668 INFO image - convert_image_to_base64: Empty pixels are now transparent
+2022-04-13 10:17:23.683 INFO image - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-04-13 10:17:23.689 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-13 10:17:23.689 INFO figures - compute_rgb_image_per_lipid_selection: Started building graph for slice 22	MemTotal: 2348.48828125
+2022-04-13 10:17:23.705 INFO figures - compute_rgb_image_per_lipid_selection: Returning fig for slice 22	MemTotal: 2348.48828125
+2022-04-13 10:17:24.289 INFO lipid_selection - page_2_add_toast_selection: Entering function to update lipid data
+2022-04-13 10:17:24.293 INFO lipid_selection - page_2_add_toast_selection: Returning updated lipid data
+2022-04-13 10:17:24.528 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-04-13 10:17:24.529 INFO figures - compute_rgb_image_per_lipid_selection: Started RGB image computation for slice 21	MemTotal: 2348.48828125
+2022-04-13 10:17:24.530 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-13 10:17:24.659 INFO figures - compute_rgb_image_per_lipid_selection: array_image acquired for slice 21	MemTotal: 2348.48828125
+2022-04-13 10:17:24.659 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-13 10:17:24.675 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-13 10:17:24.706 INFO image - convert_image_to_base64: Empty pixels are now transparent
+2022-04-13 10:17:24.722 INFO image - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-04-13 10:17:24.727 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-13 10:17:24.728 INFO figures - compute_rgb_image_per_lipid_selection: Started building graph for slice 21	MemTotal: 2348.48828125
+2022-04-13 10:17:24.745 INFO figures - compute_rgb_image_per_lipid_selection: Returning fig for slice 21	MemTotal: 2348.48828125
+2022-04-13 10:17:25.479 INFO lipid_selection - page_2_add_toast_selection: Entering function to update lipid data
+2022-04-13 10:17:25.483 INFO lipid_selection - page_2_add_toast_selection: Returning updated lipid data
+2022-04-13 10:17:25.741 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-04-13 10:17:25.741 INFO figures - compute_rgb_image_per_lipid_selection: Started RGB image computation for slice 19	MemTotal: 2348.48828125
+2022-04-13 10:17:25.742 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-13 10:17:25.854 INFO figures - compute_rgb_image_per_lipid_selection: array_image acquired for slice 19	MemTotal: 2348.48828125
+2022-04-13 10:17:25.854 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-13 10:17:25.870 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-13 10:17:25.901 INFO image - convert_image_to_base64: Empty pixels are now transparent
+2022-04-13 10:17:25.917 INFO image - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-04-13 10:17:25.922 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-13 10:17:25.923 INFO figures - compute_rgb_image_per_lipid_selection: Started building graph for slice 19	MemTotal: 2348.48828125
+2022-04-13 10:17:25.939 INFO figures - compute_rgb_image_per_lipid_selection: Returning fig for slice 19	MemTotal: 2348.48828125
+2022-04-13 10:17:26.562 INFO lipid_selection - page_2_add_toast_selection: Entering function to update lipid data
+2022-04-13 10:17:26.566 INFO lipid_selection - page_2_add_toast_selection: Returning updated lipid data
+2022-04-13 10:17:26.806 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-04-13 10:17:26.807 INFO figures - compute_rgb_image_per_lipid_selection: Started RGB image computation for slice 18	MemTotal: 2321.78125
+2022-04-13 10:17:26.808 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-13 10:17:26.941 INFO figures - compute_rgb_image_per_lipid_selection: array_image acquired for slice 18	MemTotal: 2321.7890625
+2022-04-13 10:17:26.941 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-13 10:17:26.962 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-13 10:17:26.994 INFO image - convert_image_to_base64: Empty pixels are now transparent
+2022-04-13 10:17:27.009 INFO image - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-04-13 10:17:27.015 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-13 10:17:27.015 INFO figures - compute_rgb_image_per_lipid_selection: Started building graph for slice 18	MemTotal: 2321.7890625
+2022-04-13 10:17:27.033 INFO figures - compute_rgb_image_per_lipid_selection: Returning fig for slice 18	MemTotal: 2321.7890625
+2022-04-13 10:17:27.926 INFO lipid_selection - page_2_add_toast_selection: Entering function to update lipid data
+2022-04-13 10:17:27.931 INFO lipid_selection - page_2_add_toast_selection: Returning updated lipid data
+2022-04-13 10:17:28.169 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-04-13 10:17:28.170 INFO figures - compute_rgb_image_per_lipid_selection: Started RGB image computation for slice 17	MemTotal: 2321.7890625
+2022-04-13 10:17:28.171 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-13 10:17:28.310 INFO figures - compute_rgb_image_per_lipid_selection: array_image acquired for slice 17	MemTotal: 2321.7890625
+2022-04-13 10:17:28.310 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-13 10:17:28.326 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-13 10:17:28.357 INFO image - convert_image_to_base64: Empty pixels are now transparent
+2022-04-13 10:17:28.373 INFO image - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-04-13 10:17:28.378 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-13 10:17:28.379 INFO figures - compute_rgb_image_per_lipid_selection: Started building graph for slice 17	MemTotal: 2321.7890625
+2022-04-13 10:17:28.394 INFO figures - compute_rgb_image_per_lipid_selection: Returning fig for slice 17	MemTotal: 2321.7890625
+2022-04-13 10:17:28.776 INFO lipid_selection - page_2_add_toast_selection: Entering function to update lipid data
+2022-04-13 10:17:28.783 INFO lipid_selection - page_2_add_toast_selection: Returning updated lipid data
+2022-04-13 10:17:29.050 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-04-13 10:17:29.051 INFO figures - compute_rgb_image_per_lipid_selection: Started RGB image computation for slice 16	MemTotal: 2321.7890625
+2022-04-13 10:17:29.052 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-13 10:17:29.216 INFO figures - compute_rgb_image_per_lipid_selection: array_image acquired for slice 16	MemTotal: 2321.7890625
+2022-04-13 10:17:29.216 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-13 10:17:29.233 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-13 10:17:29.272 INFO image - convert_image_to_base64: Empty pixels are now transparent
+2022-04-13 10:17:29.287 INFO image - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-04-13 10:17:29.293 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-13 10:17:29.294 INFO figures - compute_rgb_image_per_lipid_selection: Started building graph for slice 16	MemTotal: 2321.7890625
+2022-04-13 10:17:29.311 INFO figures - compute_rgb_image_per_lipid_selection: Returning fig for slice 16	MemTotal: 2321.7890625
+2022-04-13 10:19:16.393 INFO index - render_page_content: Page/region-analysishas been selected	MemTotal: 2321.7890625
+2022-04-13 10:19:16.492 INFO storage - return_shelved_object: figure_basic_image could not be found or force_update is True. Computing the object and shelving it now.
+2022-04-13 10:19:16.591 INFO storage - return_shelved_object: Returning array_basic_images from shelve file.	MemTotal: 2321.7890625
+2022-04-13 10:19:16.677 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-13 10:19:16.691 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-13 10:19:16.724 INFO image - convert_image_to_base64: Empty pixels are now transparent
+2022-04-13 10:19:16.739 INFO image - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-04-13 10:19:17.042 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-13 10:19:17.175 INFO storage - return_shelved_object: figure_basic_image being returned now from computation.
+2022-04-13 10:19:17.377 INFO region_analysis - page_3_record_spectra: Starting to compute spectrum
+2022-04-13 10:19:17.378 DEBUG filesystemcache - delete: deleted key 'pages.region_analysis.global_spectrum_store_memver'
+2022-04-13 10:19:17.378 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-13 10:19:17.378 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-04-13 10:19:17.378 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> miss (expired)
+2022-04-13 10:19:17.379 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-13 10:19:17.379 DEBUG filesystemcache - set: set key 'pages.region_analysis.global_spectrum_store_memver'
+2022-04-13 10:19:17.379 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-13 10:19:17.379 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-04-13 10:19:17.380 DEBUG filesystemcache - get: get key 'srcZK0/wBSM37i+2vh61rD' -> miss 
+2022-04-13 10:19:17.380 INFO region_analysis - global_spectrum_store: Computing spectra now
+2022-04-13 10:19:17.380 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-13 10:19:17.380 DEBUG filesystemcache - set: set key 'srcZK0/wBSM37i+2vh61rD'
+2022-04-13 10:19:17.380 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-13 10:19:17.380 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-04-13 10:19:17.380 WARNING region_analysis - page_3_record_spectra: A bug appeared during spectrum computation
+2022-04-13 10:19:17.474 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2321.7890625
+2022-04-13 10:19:17.534 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Starting computing heatmap now
+2022-04-13 10:19:20.469 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2348.5390625
+2022-04-13 10:19:21.731 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2321.7890625
+2022-04-13 10:19:22.333 INFO region_analysis - page_3_display_high_res_mz_plot: Compute spectra button has been clicked
+2022-04-13 10:19:22.333 INFO region_analysis - page_3_display_high_res_mz_plot: One or several shapes have been selected, displaying graphs
+2022-04-13 10:19:22.338 INFO region_analysis - page_3_record_spectra: Starting to compute spectrum
+2022-04-13 10:19:22.339 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-13 10:19:22.339 DEBUG filesystemcache - get: get key 'gjhB8i8DVZ+nWFdDvh61rD' -> miss 
+2022-04-13 10:19:22.339 INFO region_analysis - global_spectrum_store: Computing spectra now
+2022-04-13 10:19:22.339 INFO region_analysis - global_spectrum_store: Start computing path
+2022-04-13 10:19:22.339 INFO region_analysis - global_spectrum_store: Computing path finished
+2022-04-13 10:19:22.385 INFO region_analysis - global_spectrum_store: Start computing path
+2022-04-13 10:19:22.385 INFO region_analysis - global_spectrum_store: Computing path finished
+2022-04-13 10:19:22.422 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-13 10:19:22.423 DEBUG filesystemcache - set: set key 'gjhB8i8DVZ+nWFdDvh61rD'
+2022-04-13 10:19:22.423 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-13 10:19:22.423 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-04-13 10:19:22.423 INFO region_analysis - page_3_record_spectra: Spectra computed, returning it now
+2022-04-13 10:19:22.670 INFO region_analysis - page_3_plot_spectrum: Starting spectra plotting now
+2022-04-13 10:19:22.672 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-13 10:19:22.672 DEBUG filesystemcache - get: get key 'gjhB8i8DVZ+nWFdDvh61rD' -> hit 
+2022-04-13 10:19:22.672 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-13 10:19:22.674 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-13 10:19:22.676 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Starting computing heatmap now
+2022-04-13 10:19:22.676 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-13 10:19:22.677 DEBUG filesystemcache - get: get key 'gjhB8i8DVZ+nWFdDvh61rD' -> hit 
+2022-04-13 10:19:22.677 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-13 10:19:22.679 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-13 10:19:22.771 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Heatmap computed. Returning it now
+2022-04-13 10:19:23.019 INFO region_analysis - page_3_fill_dropdown_options: Starting computing lipid dropdown now.
+2022-04-13 10:19:23.081 INFO region_analysis - page_3_fill_dropdown_options: Dropdown values computed. Updating it with new lipids now.
+2022-04-13 10:19:23.314 INFO region_analysis - draw_modal_graph: Modal graph function triggered with input page-3-open-modal
+2022-04-13 10:19:23.314 INFO region_analysis - draw_modal_graph: At least one lipid has been selected, starting computing modal graph now.
+2022-04-13 10:19:23.315 INFO figures - compute_rgb_image_per_lipid_selection: Started RGB image computation for slice 16	MemTotal: 2327.47265625
+2022-04-13 10:19:23.317 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-13 10:19:23.482 INFO region_analysis - page_3_plot_spectrum: Spectra plotted. Returning it now
+2022-04-13 10:19:23.515 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-13 10:19:23.615 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-13 10:19:23.668 INFO figures - compute_rgb_image_per_lipid_selection: array_image acquired for slice 16	MemTotal: 2322.046875
+2022-04-13 10:19:23.668 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-13 10:19:23.684 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-13 10:19:23.719 INFO image - convert_image_to_base64: Empty pixels are now transparent
+2022-04-13 10:19:23.737 INFO image - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-04-13 10:19:23.761 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-13 10:19:23.762 INFO figures - compute_rgb_image_per_lipid_selection: Started building graph for slice 16	MemTotal: 2322.046875
+2022-04-13 10:19:23.780 INFO figures - compute_rgb_image_per_lipid_selection: Returning fig for slice 16	MemTotal: 2322.046875
+2022-04-13 10:19:23.780 INFO region_analysis - draw_modal_graph: Modal graph computed. Returning it now
+2022-04-13 10:20:59.173 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Starting computing heatmap now
+2022-04-13 10:20:59.173 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-13 10:20:59.174 DEBUG filesystemcache - get: get key 'H1Y4KDFVdxbNMc53vh61rD' -> miss 
+2022-04-13 10:20:59.174 INFO region_analysis - global_spectrum_store: Computing spectra now
+2022-04-13 10:20:59.174 INFO region_analysis - global_spectrum_store: Start computing path
+page-3-graph-heatmap-per-sel relayoutData 16 None None /region-analysis [] False
+page-3-graph-heatmap-per-sel relayoutData 16 None None /region-analysis [] False
+page-3-graph-heatmap-per-sel relayoutData 16 None None /region-analysis [] False
+Exception on /_dash-update-component [POST]
+Traceback (most recent call last):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/dash.py", line 1344, in dispatch
+    response.set_data(func(*args, outputs_list=outputs_list))
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/_callback.py", line 151, in add_context
+    output_value = func(*func_args, **func_kwargs)  # %% callback invoked %%
+  File "/home/colas/lbae/lbae/pages/region_analysis.py", line 1613, in page_3_draw_heatmap_per_lipid_selection
+    ):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask_caching/__init__.py", line 952, in decorated_function
+    rv = f(*args, **kwargs)
+  File "/home/colas/lbae/lbae/pages/region_analysis.py", line 1213, in global_spectrum_store
+    l_paths = []
+KeyError: 'shapes'
+2022-04-13 10:20:59.174 ERROR app - log_exception: Exception on /_dash-update-component [POST]
+Traceback (most recent call last):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/dash.py", line 1344, in dispatch
+    response.set_data(func(*args, outputs_list=outputs_list))
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/_callback.py", line 151, in add_context
+    output_value = func(*func_args, **func_kwargs)  # %% callback invoked %%
+  File "/home/colas/lbae/lbae/pages/region_analysis.py", line 1613, in page_3_draw_heatmap_per_lipid_selection
+    ):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask_caching/__init__.py", line 952, in decorated_function
+    rv = f(*args, **kwargs)
+  File "/home/colas/lbae/lbae/pages/region_analysis.py", line 1213, in global_spectrum_store
+    l_paths = []
+KeyError: 'shapes'
+2022-04-13 10:21:03.132 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Starting computing heatmap now
+2022-04-13 10:21:03.132 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-13 10:21:03.132 DEBUG filesystemcache - get: get key 'H1Y4KDFVdxbNMc53vh61rD' -> miss 
+2022-04-13 10:21:03.132 INFO region_analysis - global_spectrum_store: Computing spectra now
+2022-04-13 10:21:03.132 INFO region_analysis - global_spectrum_store: Start computing path
+Exception on /_dash-update-component [POST]
+Traceback (most recent call last):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/dash.py", line 1344, in dispatch
+    response.set_data(func(*args, outputs_list=outputs_list))
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/_callback.py", line 151, in add_context
+    output_value = func(*func_args, **func_kwargs)  # %% callback invoked %%
+  File "/home/colas/lbae/lbae/pages/region_analysis.py", line 1613, in page_3_draw_heatmap_per_lipid_selection
+    ):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask_caching/__init__.py", line 952, in decorated_function
+    rv = f(*args, **kwargs)
+  File "/home/colas/lbae/lbae/pages/region_analysis.py", line 1213, in global_spectrum_store
+    l_paths = []
+KeyError: 'shapes'
+2022-04-13 10:21:03.132 ERROR app - log_exception: Exception on /_dash-update-component [POST]
+Traceback (most recent call last):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/dash.py", line 1344, in dispatch
+    response.set_data(func(*args, outputs_list=outputs_list))
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/_callback.py", line 151, in add_context
+    output_value = func(*func_args, **func_kwargs)  # %% callback invoked %%
+  File "/home/colas/lbae/lbae/pages/region_analysis.py", line 1613, in page_3_draw_heatmap_per_lipid_selection
+    ):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask_caching/__init__.py", line 952, in decorated_function
+    rv = f(*args, **kwargs)
+  File "/home/colas/lbae/lbae/pages/region_analysis.py", line 1213, in global_spectrum_store
+    l_paths = []
+KeyError: 'shapes'
+2022-04-13 10:21:04.260 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Starting computing heatmap now
+2022-04-13 10:21:04.260 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-13 10:21:04.260 DEBUG filesystemcache - get: get key 'H1Y4KDFVdxbNMc53vh61rD' -> miss 
+2022-04-13 10:21:04.260 INFO region_analysis - global_spectrum_store: Computing spectra now
+2022-04-13 10:21:04.260 INFO region_analysis - global_spectrum_store: Start computing path
+Exception on /_dash-update-component [POST]
+Traceback (most recent call last):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/dash.py", line 1344, in dispatch
+    response.set_data(func(*args, outputs_list=outputs_list))
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/_callback.py", line 151, in add_context
+    output_value = func(*func_args, **func_kwargs)  # %% callback invoked %%
+  File "/home/colas/lbae/lbae/pages/region_analysis.py", line 1613, in page_3_draw_heatmap_per_lipid_selection
+    ):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask_caching/__init__.py", line 952, in decorated_function
+    rv = f(*args, **kwargs)
+  File "/home/colas/lbae/lbae/pages/region_analysis.py", line 1213, in global_spectrum_store
+    l_paths = []
+KeyError: 'shapes'
+2022-04-13 10:21:04.260 ERROR app - log_exception: Exception on /_dash-update-component [POST]
+Traceback (most recent call last):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/dash.py", line 1344, in dispatch
+    response.set_data(func(*args, outputs_list=outputs_list))
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/_callback.py", line 151, in add_context
+    output_value = func(*func_args, **func_kwargs)  # %% callback invoked %%
+  File "/home/colas/lbae/lbae/pages/region_analysis.py", line 1613, in page_3_draw_heatmap_per_lipid_selection
+    ):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask_caching/__init__.py", line 952, in decorated_function
+    rv = f(*args, **kwargs)
+  File "/home/colas/lbae/lbae/pages/region_analysis.py", line 1213, in global_spectrum_store
+    l_paths = []
+KeyError: 'shapes'
+2022-04-13 10:21:05.581 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Starting computing heatmap now
+2022-04-13 10:21:05.581 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-13 10:21:05.581 DEBUG filesystemcache - get: get key 'H1Y4KDFVdxbNMc53vh61rD' -> miss 
+2022-04-13 10:21:05.581 INFO region_analysis - global_spectrum_store: Computing spectra now
+2022-04-13 10:21:05.581 INFO region_analysis - global_spectrum_store: Start computing path
+Exception on /_dash-update-component [POST]
+Traceback (most recent call last):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/dash.py", line 1344, in dispatch
+    response.set_data(func(*args, outputs_list=outputs_list))
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/_callback.py", line 151, in add_context
+    output_value = func(*func_args, **func_kwargs)  # %% callback invoked %%
+  File "/home/colas/lbae/lbae/pages/region_analysis.py", line 1613, in page_3_draw_heatmap_per_lipid_selection
+    ):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask_caching/__init__.py", line 952, in decorated_function
+    rv = f(*args, **kwargs)
+  File "/home/colas/lbae/lbae/pages/region_analysis.py", line 1213, in global_spectrum_store
+    l_paths = []
+KeyError: 'shapes'
+2022-04-13 10:21:05.581 ERROR app - log_exception: Exception on /_dash-update-component [POST]
+Traceback (most recent call last):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/dash.py", line 1344, in dispatch
+    response.set_data(func(*args, outputs_list=outputs_list))
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/_callback.py", line 151, in add_context
+    output_value = func(*func_args, **func_kwargs)  # %% callback invoked %%
+  File "/home/colas/lbae/lbae/pages/region_analysis.py", line 1613, in page_3_draw_heatmap_per_lipid_selection
+    ):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask_caching/__init__.py", line 952, in decorated_function
+    rv = f(*args, **kwargs)
+  File "/home/colas/lbae/lbae/pages/region_analysis.py", line 1213, in global_spectrum_store
+    l_paths = []
+KeyError: 'shapes'
+2022-04-13 10:21:06.867 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Starting computing heatmap now
+2022-04-13 10:21:06.867 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-13 10:21:06.867 DEBUG filesystemcache - get: get key 'H1Y4KDFVdxbNMc53vh61rD' -> miss 
+2022-04-13 10:21:06.867 INFO region_analysis - global_spectrum_store: Computing spectra now
+2022-04-13 10:21:06.867 INFO region_analysis - global_spectrum_store: Start computing path
+Exception on /_dash-update-component [POST]
+Traceback (most recent call last):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/dash.py", line 1344, in dispatch
+    response.set_data(func(*args, outputs_list=outputs_list))
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/_callback.py", line 151, in add_context
+    output_value = func(*func_args, **func_kwargs)  # %% callback invoked %%
+  File "/home/colas/lbae/lbae/pages/region_analysis.py", line 1613, in page_3_draw_heatmap_per_lipid_selection
+    ):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask_caching/__init__.py", line 952, in decorated_function
+    rv = f(*args, **kwargs)
+  File "/home/colas/lbae/lbae/pages/region_analysis.py", line 1213, in global_spectrum_store
+    l_paths = []
+KeyError: 'shapes'
+2022-04-13 10:21:06.867 ERROR app - log_exception: Exception on /_dash-update-component [POST]
+Traceback (most recent call last):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/dash.py", line 1344, in dispatch
+    response.set_data(func(*args, outputs_list=outputs_list))
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/_callback.py", line 151, in add_context
+    output_value = func(*func_args, **func_kwargs)  # %% callback invoked %%
+  File "/home/colas/lbae/lbae/pages/region_analysis.py", line 1613, in page_3_draw_heatmap_per_lipid_selection
+    ):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask_caching/__init__.py", line 952, in decorated_function
+    rv = f(*args, **kwargs)
+  File "/home/colas/lbae/lbae/pages/region_analysis.py", line 1213, in global_spectrum_store
+    l_paths = []
+KeyError: 'shapes'
+2022-04-13 10:21:09.204 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Starting computing heatmap now
+2022-04-13 10:21:09.204 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-13 10:21:09.204 DEBUG filesystemcache - get: get key 'H1Y4KDFVdxbNMc53vh61rD' -> miss 
+2022-04-13 10:21:09.204 INFO region_analysis - global_spectrum_store: Computing spectra now
+2022-04-13 10:21:09.204 INFO region_analysis - global_spectrum_store: Start computing path
+Exception on /_dash-update-component [POST]
+Traceback (most recent call last):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/dash.py", line 1344, in dispatch
+    response.set_data(func(*args, outputs_list=outputs_list))
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/_callback.py", line 151, in add_context
+    output_value = func(*func_args, **func_kwargs)  # %% callback invoked %%
+  File "/home/colas/lbae/lbae/pages/region_analysis.py", line 1613, in page_3_draw_heatmap_per_lipid_selection
+    ):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask_caching/__init__.py", line 952, in decorated_function
+    rv = f(*args, **kwargs)
+  File "/home/colas/lbae/lbae/pages/region_analysis.py", line 1213, in global_spectrum_store
+    l_paths = []
+KeyError: 'shapes'
+2022-04-13 10:21:09.204 ERROR app - log_exception: Exception on /_dash-update-component [POST]
+Traceback (most recent call last):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/dash.py", line 1344, in dispatch
+    response.set_data(func(*args, outputs_list=outputs_list))
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/_callback.py", line 151, in add_context
+    output_value = func(*func_args, **func_kwargs)  # %% callback invoked %%
+  File "/home/colas/lbae/lbae/pages/region_analysis.py", line 1613, in page_3_draw_heatmap_per_lipid_selection
+    ):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask_caching/__init__.py", line 952, in decorated_function
+    rv = f(*args, **kwargs)
+  File "/home/colas/lbae/lbae/pages/region_analysis.py", line 1213, in global_spectrum_store
+    l_paths = []
+KeyError: 'shapes'
+2022-04-13 10:21:11.033 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Starting computing heatmap now
+2022-04-13 10:21:11.033 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-13 10:21:11.033 DEBUG filesystemcache - get: get key 'H1Y4KDFVdxbNMc53vh61rD' -> miss 
+2022-04-13 10:21:11.033 INFO region_analysis - global_spectrum_store: Computing spectra now
+2022-04-13 10:21:11.033 INFO region_analysis - global_spectrum_store: Start computing path
+Exception on /_dash-update-component [POST]
+Traceback (most recent call last):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/dash.py", line 1344, in dispatch
+    response.set_data(func(*args, outputs_list=outputs_list))
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/_callback.py", line 151, in add_context
+    output_value = func(*func_args, **func_kwargs)  # %% callback invoked %%
+  File "/home/colas/lbae/lbae/pages/region_analysis.py", line 1613, in page_3_draw_heatmap_per_lipid_selection
+    ):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask_caching/__init__.py", line 952, in decorated_function
+    rv = f(*args, **kwargs)
+  File "/home/colas/lbae/lbae/pages/region_analysis.py", line 1213, in global_spectrum_store
+    l_paths = []
+KeyError: 'shapes'
+2022-04-13 10:21:11.033 ERROR app - log_exception: Exception on /_dash-update-component [POST]
+Traceback (most recent call last):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/dash.py", line 1344, in dispatch
+    response.set_data(func(*args, outputs_list=outputs_list))
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/_callback.py", line 151, in add_context
+    output_value = func(*func_args, **func_kwargs)  # %% callback invoked %%
+  File "/home/colas/lbae/lbae/pages/region_analysis.py", line 1613, in page_3_draw_heatmap_per_lipid_selection
+    ):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask_caching/__init__.py", line 952, in decorated_function
+    rv = f(*args, **kwargs)
+  File "/home/colas/lbae/lbae/pages/region_analysis.py", line 1213, in global_spectrum_store
+    l_paths = []
+KeyError: 'shapes'
+2022-04-13 10:21:11.999 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Starting computing heatmap now
+2022-04-13 10:21:11.999 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-13 10:21:11.999 DEBUG filesystemcache - get: get key 'H1Y4KDFVdxbNMc53vh61rD' -> miss 
+2022-04-13 10:21:11.999 INFO region_analysis - global_spectrum_store: Computing spectra now
+2022-04-13 10:21:11.999 INFO region_analysis - global_spectrum_store: Start computing path
+Exception on /_dash-update-component [POST]
+Traceback (most recent call last):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/dash.py", line 1344, in dispatch
+    response.set_data(func(*args, outputs_list=outputs_list))
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/_callback.py", line 151, in add_context
+    output_value = func(*func_args, **func_kwargs)  # %% callback invoked %%
+  File "/home/colas/lbae/lbae/pages/region_analysis.py", line 1613, in page_3_draw_heatmap_per_lipid_selection
+    ):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask_caching/__init__.py", line 952, in decorated_function
+    rv = f(*args, **kwargs)
+  File "/home/colas/lbae/lbae/pages/region_analysis.py", line 1213, in global_spectrum_store
+    l_paths = []
+KeyError: 'shapes'
+2022-04-13 10:21:11.999 ERROR app - log_exception: Exception on /_dash-update-component [POST]
+Traceback (most recent call last):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/dash.py", line 1344, in dispatch
+    response.set_data(func(*args, outputs_list=outputs_list))
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/_callback.py", line 151, in add_context
+    output_value = func(*func_args, **func_kwargs)  # %% callback invoked %%
+  File "/home/colas/lbae/lbae/pages/region_analysis.py", line 1613, in page_3_draw_heatmap_per_lipid_selection
+    ):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask_caching/__init__.py", line 952, in decorated_function
+    rv = f(*args, **kwargs)
+  File "/home/colas/lbae/lbae/pages/region_analysis.py", line 1213, in global_spectrum_store
+    l_paths = []
+KeyError: 'shapes'
+2022-04-13 10:21:21.053 INFO index - render_page_content: Page/region-analysishas been selected	MemTotal: 2326.9921875
+2022-04-13 10:21:21.154 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2326.9921875
+2022-04-13 10:21:22.260 INFO region_analysis - page_3_record_spectra: Starting to compute spectrum
+2022-04-13 10:21:22.261 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-13 10:21:22.261 DEBUG filesystemcache - get: get key 'qcrHrJ51w4U4ztl9vh61rD' -> miss 
+2022-04-13 10:21:22.261 INFO region_analysis - global_spectrum_store: Computing spectra now
+2022-04-13 10:21:22.261 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-13 10:21:22.261 DEBUG filesystemcache - set: set key 'qcrHrJ51w4U4ztl9vh61rD'
+2022-04-13 10:21:22.261 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-13 10:21:22.261 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-04-13 10:21:22.261 WARNING region_analysis - page_3_record_spectra: A bug appeared during spectrum computation
+2022-04-13 10:21:22.307 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2326.9921875
+2022-04-13 10:21:22.458 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Starting computing heatmap now
+2022-04-13 10:21:25.041 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2363.15625
+2022-04-13 10:21:26.329 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2326.9921875
+2022-04-13 10:21:27.731 INFO region_analysis - page_3_display_high_res_mz_plot: Compute spectra button has been clicked
+2022-04-13 10:21:27.731 INFO region_analysis - page_3_display_high_res_mz_plot: One or several shapes have been selected, displaying graphs
+2022-04-13 10:21:27.731 INFO region_analysis - page_3_record_spectra: Starting to compute spectrum
+2022-04-13 10:21:27.732 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-13 10:21:27.732 DEBUG filesystemcache - get: get key 'nqeG7Pl6cZpxc9oqvh61rD' -> miss 
+2022-04-13 10:21:27.732 INFO region_analysis - global_spectrum_store: Computing spectra now
+2022-04-13 10:21:27.732 INFO region_analysis - global_spectrum_store: Start computing path
+2022-04-13 10:21:27.732 INFO region_analysis - global_spectrum_store: Computing path finished
+2022-04-13 10:21:27.777 INFO region_analysis - global_spectrum_store: Start computing path
+2022-04-13 10:21:27.777 INFO region_analysis - global_spectrum_store: Computing path finished
+2022-04-13 10:21:27.803 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-13 10:21:27.803 DEBUG filesystemcache - set: set key 'nqeG7Pl6cZpxc9oqvh61rD'
+2022-04-13 10:21:27.804 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-13 10:21:27.804 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-04-13 10:21:27.804 INFO region_analysis - page_3_record_spectra: Spectra computed, returning it now
+2022-04-13 10:21:28.001 INFO region_analysis - page_3_plot_spectrum: Starting spectra plotting now
+2022-04-13 10:21:28.002 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-13 10:21:28.002 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Starting computing heatmap now
+2022-04-13 10:21:28.003 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-13 10:21:28.003 DEBUG filesystemcache - get: get key 'nqeG7Pl6cZpxc9oqvh61rD' -> hit 
+2022-04-13 10:21:28.003 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-13 10:21:28.003 DEBUG filesystemcache - get: get key 'nqeG7Pl6cZpxc9oqvh61rD' -> hit 
+2022-04-13 10:21:28.003 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-13 10:21:28.005 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-13 10:21:28.005 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-13 10:21:28.096 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Heatmap computed. Returning it now
+2022-04-13 10:21:28.360 INFO region_analysis - page_3_fill_dropdown_options: Starting computing lipid dropdown now.
+2022-04-13 10:21:28.422 INFO region_analysis - page_3_fill_dropdown_options: Dropdown values computed. Updating it with new lipids now.
+2022-04-13 10:21:28.505 INFO region_analysis - page_3_plot_spectrum: Spectra plotted. Returning it now
+2022-04-13 10:21:28.679 INFO region_analysis - draw_modal_graph: Modal graph function triggered with input page-3-open-modal
+2022-04-13 10:21:28.679 INFO region_analysis - draw_modal_graph: At least one lipid has been selected, starting computing modal graph now.
+2022-04-13 10:21:28.681 INFO figures - compute_rgb_image_per_lipid_selection: Started RGB image computation for slice 1	MemTotal: 2369.6015625
+2022-04-13 10:21:28.682 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-13 10:21:28.737 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-13 10:21:28.763 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-13 10:21:28.820 INFO figures - compute_rgb_image_per_lipid_selection: array_image acquired for slice 1	MemTotal: 2363.234375
+2022-04-13 10:21:28.820 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-13 10:21:28.837 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-13 10:21:28.870 INFO image - convert_image_to_base64: Empty pixels are now transparent
+2022-04-13 10:21:28.886 INFO image - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-04-13 10:21:28.901 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-13 10:21:28.901 INFO figures - compute_rgb_image_per_lipid_selection: Started building graph for slice 1	MemTotal: 2363.234375
+2022-04-13 10:21:28.919 INFO figures - compute_rgb_image_per_lipid_selection: Returning fig for slice 1	MemTotal: 2363.234375
+2022-04-13 10:21:28.919 INFO region_analysis - draw_modal_graph: Modal graph computed. Returning it now
+2022-04-13 10:21:34.133 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Starting computing heatmap now
+2022-04-13 10:21:34.133 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-13 10:21:34.133 DEBUG filesystemcache - get: get key 'nqeG7Pl6cZpxc9oqvh61rD' -> hit 
+2022-04-13 10:21:34.133 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-13 10:21:34.135 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-13 10:21:34.198 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Heatmap computed. Returning it now
+2022-04-13 10:21:34.329 INFO region_analysis - page_3_fill_dropdown_options: Starting computing lipid dropdown now.
+2022-04-13 10:21:34.362 INFO region_analysis - page_3_fill_dropdown_options: Dropdown values computed. Updating it with new lipids now.
+2022-04-13 10:21:34.502 INFO region_analysis - draw_modal_graph: Modal graph function triggered with input page-3-open-modal
+2022-04-13 10:21:34.502 INFO region_analysis - draw_modal_graph: At least one lipid has been selected, starting computing modal graph now.
+2022-04-13 10:21:34.503 INFO figures - compute_rgb_image_per_lipid_selection: Started RGB image computation for slice 1	MemTotal: 2341.1328125
+2022-04-13 10:21:34.504 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-13 10:21:34.579 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-13 10:21:34.607 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-13 10:21:34.655 INFO figures - compute_rgb_image_per_lipid_selection: array_image acquired for slice 1	MemTotal: 2341.1328125
+2022-04-13 10:21:34.656 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-13 10:21:34.672 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-13 10:21:34.703 INFO image - convert_image_to_base64: Empty pixels are now transparent
+2022-04-13 10:21:34.719 INFO image - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-04-13 10:21:34.732 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-13 10:21:34.733 INFO figures - compute_rgb_image_per_lipid_selection: Started building graph for slice 1	MemTotal: 2341.1328125
+2022-04-13 10:21:34.748 INFO figures - compute_rgb_image_per_lipid_selection: Returning fig for slice 1	MemTotal: 2341.1328125
+2022-04-13 10:21:34.748 INFO region_analysis - draw_modal_graph: Modal graph computed. Returning it now
+2022-04-13 10:21:35.283 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Starting computing heatmap now
+2022-04-13 10:21:35.284 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-13 10:21:35.284 DEBUG filesystemcache - get: get key 'nqeG7Pl6cZpxc9oqvh61rD' -> hit 
+2022-04-13 10:21:35.284 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-13 10:21:35.286 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-13 10:21:35.328 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Heatmap computed. Returning it now
+2022-04-13 10:21:35.461 INFO region_analysis - page_3_fill_dropdown_options: Starting computing lipid dropdown now.
+2022-04-13 10:21:35.476 INFO region_analysis - page_3_fill_dropdown_options: Dropdown values computed. Updating it with new lipids now.
+2022-04-13 10:21:35.610 INFO region_analysis - draw_modal_graph: Modal graph function triggered with input page-3-open-modal
+2022-04-13 10:21:35.610 INFO region_analysis - draw_modal_graph: At least one lipid has been selected, starting computing modal graph now.
+2022-04-13 10:21:35.611 INFO figures - compute_rgb_image_per_lipid_selection: Started RGB image computation for slice 1	MemTotal: 2363.234375
+2022-04-13 10:21:35.612 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-13 10:21:35.691 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-13 10:21:35.718 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-13 10:21:35.760 INFO figures - compute_rgb_image_per_lipid_selection: array_image acquired for slice 1	MemTotal: 2363.234375
+2022-04-13 10:21:35.760 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-13 10:21:35.776 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-13 10:21:35.807 INFO image - convert_image_to_base64: Empty pixels are now transparent
+2022-04-13 10:21:35.823 INFO image - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-04-13 10:21:35.837 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-13 10:21:35.837 INFO figures - compute_rgb_image_per_lipid_selection: Started building graph for slice 1	MemTotal: 2363.234375
+2022-04-13 10:21:35.854 INFO figures - compute_rgb_image_per_lipid_selection: Returning fig for slice 1	MemTotal: 2363.234375
+2022-04-13 10:21:35.854 INFO region_analysis - draw_modal_graph: Modal graph computed. Returning it now
+2022-04-13 10:21:36.231 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Starting computing heatmap now
+2022-04-13 10:21:36.231 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-13 10:21:36.232 DEBUG filesystemcache - get: get key 'nqeG7Pl6cZpxc9oqvh61rD' -> hit 
+2022-04-13 10:21:36.232 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-13 10:21:36.233 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-13 10:21:36.264 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Heatmap computed. Returning it now
+2022-04-13 10:21:36.402 INFO region_analysis - page_3_fill_dropdown_options: Starting computing lipid dropdown now.
+2022-04-13 10:21:36.406 INFO region_analysis - page_3_fill_dropdown_options: Dropdown values computed. Updating it with new lipids now.
+2022-04-13 10:21:36.514 INFO region_analysis - draw_modal_graph: Modal graph function triggered with input page-3-open-modal
+2022-04-13 10:21:36.514 INFO region_analysis - draw_modal_graph: At least one lipid has been selected, starting computing modal graph now.
+2022-04-13 10:21:36.515 INFO figures - compute_rgb_image_per_lipid_selection: Started RGB image computation for slice 1	MemTotal: 2363.234375
+2022-04-13 10:21:36.516 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-13 10:21:36.595 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-13 10:21:36.621 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-13 10:21:36.666 INFO figures - compute_rgb_image_per_lipid_selection: array_image acquired for slice 1	MemTotal: 2363.234375
+2022-04-13 10:21:36.666 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-13 10:21:36.682 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-13 10:21:36.713 INFO image - convert_image_to_base64: Empty pixels are now transparent
+2022-04-13 10:21:36.728 INFO image - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-04-13 10:21:36.743 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-13 10:21:36.743 INFO figures - compute_rgb_image_per_lipid_selection: Started building graph for slice 1	MemTotal: 2363.234375
+2022-04-13 10:21:36.760 INFO figures - compute_rgb_image_per_lipid_selection: Returning fig for slice 1	MemTotal: 2363.234375
+2022-04-13 10:21:36.760 INFO region_analysis - draw_modal_graph: Modal graph computed. Returning it now
+2022-04-13 10:21:37.234 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Starting computing heatmap now
+2022-04-13 10:21:37.235 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-13 10:21:37.235 DEBUG filesystemcache - get: get key 'nqeG7Pl6cZpxc9oqvh61rD' -> hit 
+2022-04-13 10:21:37.235 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-13 10:21:37.237 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-13 10:21:37.297 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Heatmap computed. Returning it now
+2022-04-13 10:21:37.464 INFO region_analysis - page_3_fill_dropdown_options: Starting computing lipid dropdown now.
+2022-04-13 10:21:37.493 INFO region_analysis - page_3_fill_dropdown_options: Dropdown values computed. Updating it with new lipids now.
+2022-04-13 10:21:37.625 INFO region_analysis - draw_modal_graph: Modal graph function triggered with input page-3-open-modal
+2022-04-13 10:21:37.625 INFO region_analysis - draw_modal_graph: At least one lipid has been selected, starting computing modal graph now.
+2022-04-13 10:21:37.626 INFO figures - compute_rgb_image_per_lipid_selection: Started RGB image computation for slice 1	MemTotal: 2341.1328125
+2022-04-13 10:21:37.627 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-13 10:21:37.704 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-13 10:21:37.734 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-13 10:21:37.789 INFO figures - compute_rgb_image_per_lipid_selection: array_image acquired for slice 1	MemTotal: 2341.1328125
+2022-04-13 10:21:37.789 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-13 10:21:37.806 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-13 10:21:37.838 INFO image - convert_image_to_base64: Empty pixels are now transparent
+2022-04-13 10:21:37.854 INFO image - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-04-13 10:21:37.867 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-13 10:21:37.868 INFO figures - compute_rgb_image_per_lipid_selection: Started building graph for slice 1	MemTotal: 2341.1328125
+2022-04-13 10:21:37.884 INFO figures - compute_rgb_image_per_lipid_selection: Returning fig for slice 1	MemTotal: 2341.1328125
+2022-04-13 10:21:37.884 INFO region_analysis - draw_modal_graph: Modal graph computed. Returning it now
+2022-04-13 10:21:38.434 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Starting computing heatmap now
+2022-04-13 10:21:38.435 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-13 10:21:38.435 DEBUG filesystemcache - get: get key 'nqeG7Pl6cZpxc9oqvh61rD' -> hit 
+2022-04-13 10:21:38.435 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-13 10:21:38.437 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-13 10:21:38.465 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Heatmap computed. Returning it now
+2022-04-13 10:21:38.590 INFO region_analysis - page_3_fill_dropdown_options: Starting computing lipid dropdown now.
+2022-04-13 10:21:38.593 INFO region_analysis - page_3_fill_dropdown_options: Dropdown values computed. Updating it with new lipids now.
+2022-04-13 10:21:38.708 INFO region_analysis - draw_modal_graph: Modal graph function triggered with input page-3-open-modal
+2022-04-13 10:21:38.708 INFO region_analysis - draw_modal_graph: At least one lipid has been selected, starting computing modal graph now.
+2022-04-13 10:21:38.709 INFO figures - compute_rgb_image_per_lipid_selection: Started RGB image computation for slice 1	MemTotal: 2341.1328125
+2022-04-13 10:21:38.710 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-13 10:21:38.788 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-13 10:21:38.814 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-13 10:21:38.858 INFO figures - compute_rgb_image_per_lipid_selection: array_image acquired for slice 1	MemTotal: 2341.1328125
+2022-04-13 10:21:38.859 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-13 10:21:38.875 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-13 10:21:38.906 INFO image - convert_image_to_base64: Empty pixels are now transparent
+2022-04-13 10:21:38.921 INFO image - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-04-13 10:21:38.937 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-13 10:21:38.937 INFO figures - compute_rgb_image_per_lipid_selection: Started building graph for slice 1	MemTotal: 2341.1328125
+2022-04-13 10:21:38.953 INFO figures - compute_rgb_image_per_lipid_selection: Returning fig for slice 1	MemTotal: 2341.1328125
+2022-04-13 10:21:38.953 INFO region_analysis - draw_modal_graph: Modal graph computed. Returning it now
+2022-04-13 10:21:39.790 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Starting computing heatmap now
+2022-04-13 10:21:39.790 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-13 10:21:39.791 DEBUG filesystemcache - get: get key 'nqeG7Pl6cZpxc9oqvh61rD' -> hit 
+2022-04-13 10:21:39.791 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-13 10:21:39.792 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-13 10:21:39.836 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Heatmap computed. Returning it now
+2022-04-13 10:21:39.996 INFO region_analysis - page_3_fill_dropdown_options: Starting computing lipid dropdown now.
+2022-04-13 10:21:40.014 INFO region_analysis - page_3_fill_dropdown_options: Dropdown values computed. Updating it with new lipids now.
+2022-04-13 10:21:40.128 INFO region_analysis - draw_modal_graph: Modal graph function triggered with input page-3-open-modal
+2022-04-13 10:21:40.128 INFO region_analysis - draw_modal_graph: At least one lipid has been selected, starting computing modal graph now.
+2022-04-13 10:21:40.129 INFO figures - compute_rgb_image_per_lipid_selection: Started RGB image computation for slice 1	MemTotal: 2363.234375
+2022-04-13 10:21:40.130 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-13 10:21:40.207 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-13 10:21:40.235 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-13 10:21:40.280 INFO figures - compute_rgb_image_per_lipid_selection: array_image acquired for slice 1	MemTotal: 2363.234375
+2022-04-13 10:21:40.280 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-13 10:21:40.296 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-13 10:21:40.327 INFO image - convert_image_to_base64: Empty pixels are now transparent
+2022-04-13 10:21:40.343 INFO image - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-04-13 10:21:40.356 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-13 10:21:40.357 INFO figures - compute_rgb_image_per_lipid_selection: Started building graph for slice 1	MemTotal: 2363.234375
+2022-04-13 10:21:40.373 INFO figures - compute_rgb_image_per_lipid_selection: Returning fig for slice 1	MemTotal: 2363.234375
+2022-04-13 10:21:40.373 INFO region_analysis - draw_modal_graph: Modal graph computed. Returning it now
+2022-04-13 10:21:40.935 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Starting computing heatmap now
+2022-04-13 10:21:40.935 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-13 10:21:40.936 DEBUG filesystemcache - get: get key 'nqeG7Pl6cZpxc9oqvh61rD' -> hit 
+2022-04-13 10:21:40.936 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-13 10:21:40.937 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-13 10:21:41.015 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Heatmap computed. Returning it now
+2022-04-13 10:21:41.176 INFO region_analysis - page_3_fill_dropdown_options: Starting computing lipid dropdown now.
+2022-04-13 10:21:41.227 INFO region_analysis - page_3_fill_dropdown_options: Dropdown values computed. Updating it with new lipids now.
+2022-04-13 10:21:41.430 INFO region_analysis - draw_modal_graph: Modal graph function triggered with input page-3-open-modal
+2022-04-13 10:21:41.430 INFO region_analysis - draw_modal_graph: At least one lipid has been selected, starting computing modal graph now.
+2022-04-13 10:21:41.431 INFO figures - compute_rgb_image_per_lipid_selection: Started RGB image computation for slice 1	MemTotal: 2363.234375
+2022-04-13 10:21:41.432 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-13 10:21:41.484 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-13 10:21:41.521 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-13 10:21:41.567 INFO figures - compute_rgb_image_per_lipid_selection: array_image acquired for slice 1	MemTotal: 2363.234375
+2022-04-13 10:21:41.567 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-13 10:21:41.583 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-13 10:21:41.614 INFO image - convert_image_to_base64: Empty pixels are now transparent
+2022-04-13 10:21:41.630 INFO image - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-04-13 10:21:41.646 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-13 10:21:41.647 INFO figures - compute_rgb_image_per_lipid_selection: Started building graph for slice 1	MemTotal: 2363.234375
+2022-04-13 10:21:41.663 INFO figures - compute_rgb_image_per_lipid_selection: Returning fig for slice 1	MemTotal: 2363.234375
+2022-04-13 10:21:41.663 INFO region_analysis - draw_modal_graph: Modal graph computed. Returning it now
+2022-04-13 10:21:42.200 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Starting computing heatmap now
+2022-04-13 10:21:42.200 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-13 10:21:42.200 DEBUG filesystemcache - get: get key 'nqeG7Pl6cZpxc9oqvh61rD' -> hit 
+2022-04-13 10:21:42.200 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-13 10:21:42.202 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-13 10:21:42.295 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Heatmap computed. Returning it now
+2022-04-13 10:21:42.455 INFO region_analysis - page_3_fill_dropdown_options: Starting computing lipid dropdown now.
+2022-04-13 10:21:42.523 INFO region_analysis - page_3_fill_dropdown_options: Dropdown values computed. Updating it with new lipids now.
+2022-04-13 10:21:42.658 INFO region_analysis - draw_modal_graph: Modal graph function triggered with input page-3-open-modal
+2022-04-13 10:21:42.658 INFO region_analysis - draw_modal_graph: At least one lipid has been selected, starting computing modal graph now.
+2022-04-13 10:21:42.659 INFO figures - compute_rgb_image_per_lipid_selection: Started RGB image computation for slice 1	MemTotal: 2363.234375
+2022-04-13 10:21:42.660 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-13 10:21:42.712 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-13 10:21:42.738 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-13 10:21:42.779 INFO figures - compute_rgb_image_per_lipid_selection: array_image acquired for slice 1	MemTotal: 2363.234375
+2022-04-13 10:21:42.779 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-13 10:21:42.795 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-13 10:21:42.826 INFO image - convert_image_to_base64: Empty pixels are now transparent
+2022-04-13 10:21:42.842 INFO image - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-04-13 10:21:42.852 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-13 10:21:42.852 INFO figures - compute_rgb_image_per_lipid_selection: Started building graph for slice 1	MemTotal: 2363.234375
+2022-04-13 10:21:42.869 INFO figures - compute_rgb_image_per_lipid_selection: Returning fig for slice 1	MemTotal: 2363.234375
+2022-04-13 10:21:42.869 INFO region_analysis - draw_modal_graph: Modal graph computed. Returning it now
+2022-04-13 10:21:42.927 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Starting computing heatmap now
+2022-04-13 10:21:42.927 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-13 10:21:42.927 DEBUG filesystemcache - get: get key 'nqeG7Pl6cZpxc9oqvh61rD' -> hit 
+2022-04-13 10:21:42.927 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-13 10:21:42.929 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-13 10:21:43.019 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Heatmap computed. Returning it now
+2022-04-13 10:21:43.178 INFO region_analysis - page_3_fill_dropdown_options: Starting computing lipid dropdown now.
+2022-04-13 10:21:43.244 INFO region_analysis - page_3_fill_dropdown_options: Dropdown values computed. Updating it with new lipids now.
+2022-04-13 10:21:43.393 INFO region_analysis - draw_modal_graph: Modal graph function triggered with input page-3-open-modal
+2022-04-13 10:21:43.393 INFO region_analysis - draw_modal_graph: At least one lipid has been selected, starting computing modal graph now.
+2022-04-13 10:21:43.394 INFO figures - compute_rgb_image_per_lipid_selection: Started RGB image computation for slice 1	MemTotal: 2341.1328125
+2022-04-13 10:21:43.397 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-13 10:21:43.453 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-13 10:21:43.482 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-13 10:21:43.526 INFO figures - compute_rgb_image_per_lipid_selection: array_image acquired for slice 1	MemTotal: 2341.1328125
+2022-04-13 10:21:43.526 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-13 10:21:43.543 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-13 10:21:43.575 INFO image - convert_image_to_base64: Empty pixels are now transparent
+2022-04-13 10:21:43.590 INFO image - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-04-13 10:21:43.601 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-13 10:21:43.602 INFO figures - compute_rgb_image_per_lipid_selection: Started building graph for slice 1	MemTotal: 2341.1328125
+2022-04-13 10:21:43.618 INFO figures - compute_rgb_image_per_lipid_selection: Returning fig for slice 1	MemTotal: 2341.1328125
+2022-04-13 10:21:43.618 INFO region_analysis - draw_modal_graph: Modal graph computed. Returning it now
+2022-04-13 10:21:43.770 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Starting computing heatmap now
+2022-04-13 10:21:43.771 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-13 10:21:43.771 DEBUG filesystemcache - get: get key 'nqeG7Pl6cZpxc9oqvh61rD' -> hit 
+2022-04-13 10:21:43.771 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-13 10:21:43.773 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-13 10:21:43.859 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Heatmap computed. Returning it now
+2022-04-13 10:21:44.015 INFO region_analysis - page_3_fill_dropdown_options: Starting computing lipid dropdown now.
+2022-04-13 10:21:44.074 INFO region_analysis - page_3_fill_dropdown_options: Dropdown values computed. Updating it with new lipids now.
+2022-04-13 10:21:44.206 INFO region_analysis - draw_modal_graph: Modal graph function triggered with input page-3-open-modal
+2022-04-13 10:21:44.206 INFO region_analysis - draw_modal_graph: At least one lipid has been selected, starting computing modal graph now.
+2022-04-13 10:21:44.207 INFO figures - compute_rgb_image_per_lipid_selection: Started RGB image computation for slice 1	MemTotal: 2341.1328125
+2022-04-13 10:21:44.208 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-13 10:21:44.262 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-13 10:21:44.288 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-13 10:21:44.340 INFO figures - compute_rgb_image_per_lipid_selection: array_image acquired for slice 1	MemTotal: 2341.1328125
+2022-04-13 10:21:44.340 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-13 10:21:44.357 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-13 10:21:44.389 INFO image - convert_image_to_base64: Empty pixels are now transparent
+2022-04-13 10:21:44.405 INFO image - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-04-13 10:21:44.420 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-13 10:21:44.421 INFO figures - compute_rgb_image_per_lipid_selection: Started building graph for slice 1	MemTotal: 2341.1328125
+2022-04-13 10:21:44.437 INFO figures - compute_rgb_image_per_lipid_selection: Returning fig for slice 1	MemTotal: 2341.1328125
+2022-04-13 10:21:44.437 INFO region_analysis - draw_modal_graph: Modal graph computed. Returning it now
+2022-04-13 10:21:51.003 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Starting computing heatmap now
+2022-04-13 10:21:51.004 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-13 10:21:51.004 DEBUG filesystemcache - get: get key 'oiHSJ+VD8F/M8GVbvh61rD' -> miss 
+2022-04-13 10:21:51.004 INFO region_analysis - global_spectrum_store: Computing spectra now
+2022-04-13 10:21:51.004 INFO region_analysis - global_spectrum_store: Start computing path
+page-3-graph-heatmap-per-sel relayoutData 1 None None /region-analysis [] False
+page-3-graph-heatmap-per-sel relayoutData 3 None None /region-analysis [] True
+page-3-graph-heatmap-per-sel relayoutData 3 None None /region-analysis [] False
+page-3-graph-heatmap-per-sel relayoutData 16 None None /region-analysis [] False
+page-3-graph-heatmap-per-sel relayoutData 16 None None /region-analysis [] False
+page-3-graph-heatmap-per-sel relayoutData 1 None None /region-analysis [] False
+page-3-graph-heatmap-per-sel relayoutData 1 None None /region-analysis [] False
+Exception on /_dash-update-component [POST]
+Traceback (most recent call last):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/dash.py", line 1344, in dispatch
+    response.set_data(func(*args, outputs_list=outputs_list))
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/_callback.py", line 151, in add_context
+    output_value = func(*func_args, **func_kwargs)  # %% callback invoked %%
+  File "/home/colas/lbae/lbae/pages/region_analysis.py", line 1613, in page_3_draw_heatmap_per_lipid_selection
+    ):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask_caching/__init__.py", line 952, in decorated_function
+    rv = f(*args, **kwargs)
+  File "/home/colas/lbae/lbae/pages/region_analysis.py", line 1213, in global_spectrum_store
+    l_paths = []
+KeyError: 'shapes'
+2022-04-13 10:21:51.004 ERROR app - log_exception: Exception on /_dash-update-component [POST]
+Traceback (most recent call last):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/dash.py", line 1344, in dispatch
+    response.set_data(func(*args, outputs_list=outputs_list))
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/_callback.py", line 151, in add_context
+    output_value = func(*func_args, **func_kwargs)  # %% callback invoked %%
+  File "/home/colas/lbae/lbae/pages/region_analysis.py", line 1613, in page_3_draw_heatmap_per_lipid_selection
+    ):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask_caching/__init__.py", line 952, in decorated_function
+    rv = f(*args, **kwargs)
+  File "/home/colas/lbae/lbae/pages/region_analysis.py", line 1213, in global_spectrum_store
+    l_paths = []
+KeyError: 'shapes'
+2022-04-13 10:21:52.771 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Starting computing heatmap now
+2022-04-13 10:21:52.772 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-13 10:21:52.772 DEBUG filesystemcache - get: get key 'oiHSJ+VD8F/M8GVbvh61rD' -> miss 
+2022-04-13 10:21:52.772 INFO region_analysis - global_spectrum_store: Computing spectra now
+2022-04-13 10:21:52.772 INFO region_analysis - global_spectrum_store: Start computing path
+Exception on /_dash-update-component [POST]
+Traceback (most recent call last):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/dash.py", line 1344, in dispatch
+    response.set_data(func(*args, outputs_list=outputs_list))
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/_callback.py", line 151, in add_context
+    output_value = func(*func_args, **func_kwargs)  # %% callback invoked %%
+  File "/home/colas/lbae/lbae/pages/region_analysis.py", line 1613, in page_3_draw_heatmap_per_lipid_selection
+    ):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask_caching/__init__.py", line 952, in decorated_function
+    rv = f(*args, **kwargs)
+  File "/home/colas/lbae/lbae/pages/region_analysis.py", line 1213, in global_spectrum_store
+    l_paths = []
+KeyError: 'shapes'
+2022-04-13 10:21:52.772 ERROR app - log_exception: Exception on /_dash-update-component [POST]
+Traceback (most recent call last):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/dash.py", line 1344, in dispatch
+    response.set_data(func(*args, outputs_list=outputs_list))
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/_callback.py", line 151, in add_context
+    output_value = func(*func_args, **func_kwargs)  # %% callback invoked %%
+  File "/home/colas/lbae/lbae/pages/region_analysis.py", line 1613, in page_3_draw_heatmap_per_lipid_selection
+    ):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask_caching/__init__.py", line 952, in decorated_function
+    rv = f(*args, **kwargs)
+  File "/home/colas/lbae/lbae/pages/region_analysis.py", line 1213, in global_spectrum_store
+    l_paths = []
+KeyError: 'shapes'
+2022-04-13 10:21:53.841 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Starting computing heatmap now
+2022-04-13 10:21:53.841 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-13 10:21:53.842 DEBUG filesystemcache - get: get key 'oiHSJ+VD8F/M8GVbvh61rD' -> miss 
+2022-04-13 10:21:53.842 INFO region_analysis - global_spectrum_store: Computing spectra now
+2022-04-13 10:21:53.842 INFO region_analysis - global_spectrum_store: Start computing path
+Exception on /_dash-update-component [POST]
+Traceback (most recent call last):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/dash.py", line 1344, in dispatch
+    response.set_data(func(*args, outputs_list=outputs_list))
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/_callback.py", line 151, in add_context
+    output_value = func(*func_args, **func_kwargs)  # %% callback invoked %%
+  File "/home/colas/lbae/lbae/pages/region_analysis.py", line 1613, in page_3_draw_heatmap_per_lipid_selection
+    ):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask_caching/__init__.py", line 952, in decorated_function
+    rv = f(*args, **kwargs)
+  File "/home/colas/lbae/lbae/pages/region_analysis.py", line 1213, in global_spectrum_store
+    l_paths = []
+KeyError: 'shapes'
+2022-04-13 10:21:53.842 ERROR app - log_exception: Exception on /_dash-update-component [POST]
+Traceback (most recent call last):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/dash.py", line 1344, in dispatch
+    response.set_data(func(*args, outputs_list=outputs_list))
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/_callback.py", line 151, in add_context
+    output_value = func(*func_args, **func_kwargs)  # %% callback invoked %%
+  File "/home/colas/lbae/lbae/pages/region_analysis.py", line 1613, in page_3_draw_heatmap_per_lipid_selection
+    ):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask_caching/__init__.py", line 952, in decorated_function
+    rv = f(*args, **kwargs)
+  File "/home/colas/lbae/lbae/pages/region_analysis.py", line 1213, in global_spectrum_store
+    l_paths = []
+KeyError: 'shapes'
+2022-04-13 10:21:54.777 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Starting computing heatmap now
+2022-04-13 10:21:54.777 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-13 10:21:54.778 DEBUG filesystemcache - get: get key 'oiHSJ+VD8F/M8GVbvh61rD' -> miss 
+2022-04-13 10:21:54.778 INFO region_analysis - global_spectrum_store: Computing spectra now
+2022-04-13 10:21:54.778 INFO region_analysis - global_spectrum_store: Start computing path
+Exception on /_dash-update-component [POST]
+Traceback (most recent call last):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/dash.py", line 1344, in dispatch
+    response.set_data(func(*args, outputs_list=outputs_list))
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/_callback.py", line 151, in add_context
+    output_value = func(*func_args, **func_kwargs)  # %% callback invoked %%
+  File "/home/colas/lbae/lbae/pages/region_analysis.py", line 1613, in page_3_draw_heatmap_per_lipid_selection
+    ):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask_caching/__init__.py", line 952, in decorated_function
+    rv = f(*args, **kwargs)
+  File "/home/colas/lbae/lbae/pages/region_analysis.py", line 1213, in global_spectrum_store
+    l_paths = []
+KeyError: 'shapes'
+2022-04-13 10:21:54.778 ERROR app - log_exception: Exception on /_dash-update-component [POST]
+Traceback (most recent call last):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/dash.py", line 1344, in dispatch
+    response.set_data(func(*args, outputs_list=outputs_list))
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/dash/_callback.py", line 151, in add_context
+    output_value = func(*func_args, **func_kwargs)  # %% callback invoked %%
+  File "/home/colas/lbae/lbae/pages/region_analysis.py", line 1613, in page_3_draw_heatmap_per_lipid_selection
+    ):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/flask_caching/__init__.py", line 952, in decorated_function
+    rv = f(*args, **kwargs)
+  File "/home/colas/lbae/lbae/pages/region_analysis.py", line 1213, in global_spectrum_store
+    l_paths = []
+KeyError: 'shapes'
+2022-04-13 10:22:23.972 INFO region_analysis - draw_modal_graph: Modal graph function triggered with input main-slider
+2022-04-13 10:22:23.972 INFO region_analysis - draw_modal_graph: Resetting modal graph
+2022-04-13 10:22:24.017 INFO storage - return_shelved_object: figure_basic_image could not be found or force_update is True. Computing the object and shelving it now.
+2022-04-13 10:22:24.122 INFO storage - return_shelved_object: Returning array_basic_images from shelve file.	MemTotal: 2285.26171875
+2022-04-13 10:22:24.209 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-13 10:22:24.223 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-13 10:22:24.262 INFO image - convert_image_to_base64: Empty pixels are now transparent
+2022-04-13 10:22:24.284 INFO image - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-04-13 10:22:24.408 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-13 10:22:24.534 INFO storage - return_shelved_object: figure_basic_image being returned now from computation.
+2022-04-13 10:22:38.823 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2285.26171875
+2022-04-13 10:22:38.832 INFO region_analysis - draw_modal_graph: Modal graph function triggered with input main-slider
+2022-04-13 10:22:38.832 INFO region_analysis - draw_modal_graph: Resetting modal graph
+2022-04-13 10:22:42.354 INFO region_analysis - draw_modal_graph: Modal graph function triggered with input main-slider
+2022-04-13 10:22:42.354 INFO region_analysis - draw_modal_graph: Resetting modal graph
+2022-04-13 10:22:42.396 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2363.25
+2022-04-13 10:22:47.225 INFO index - render_page_content: Page/3D-explorationhas been selected	MemTotal: 2363.25
+2022-04-13 10:22:47.325 INFO storage - return_shelved_object: treemaps could not be found or force_update is True. Computing the object and shelving it now.
+2022-04-13 10:22:47.400 INFO storage - return_shelved_object: Returning figure_basic_image from shelve file.	MemTotal: 2284.76171875
+2022-04-13 10:22:47.467 INFO storage - return_shelved_object: treemaps being returned now from computation.
+2022-04-13 10:22:47.496 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Starting computing heatmap now
+page-3-graph-heatmap-per-sel relayoutData 1 None None /region-analysis [] False
+page-3-graph-heatmap-per-sel relayoutData 1 None None /region-analysis [] False
+page-3-graph-heatmap-per-sel relayoutData 1 None None /region-analysis [] False
+main-slider value 2 None [] /region-analysis [] False
+main-slider value 10 None [] /region-analysis [] True
+url pathname 7 None [] /3D-exploration [] True
+2022-04-13 10:23:07.731 INFO threeD_exploration - page_4_plot_graph_volume: For the computation of 3D volume, decrease_resolution_factor is 7
+2022-04-13 10:23:07.840 INFO storage - return_shelved_object: volume_interpolated_3D_SM 34:1 na_name-lipid-2_name-lipid-3_root__ could not be found or force_update is True. Computing the object and shelving it now.
+2022-04-13 10:23:07.841 INFO figures - compute_3D_volume_figure: Starting 3D volume computation
+2022-04-13 10:23:07.899 INFO figures - compute_3D_volume_figure: Computed basic structure array
+2022-04-13 10:23:08.002 INFO storage - return_shelved_object: Returning arrays_3D_SM 34:1 na_name-lipid-2_name-lipid-3 from shelve file.	MemTotal: 2363.5390625
+2022-04-13 10:23:08.143 INFO figures - compute_3D_volume_figure: Computed array of expression in original space
+2022-04-13 10:23:08.533 INFO figures - compute_3D_volume_figure: Filled basic structure array with array of expression
+2022-04-13 10:23:08.645 INFO figures - compute_3D_volume_figure: Cropped the figure to only keep areas in which lipids are expressed
+2022-04-13 10:23:20.888 INFO storage - return_shelved_object: Returning volume_root from shelve file.	MemTotal: 2365.83984375
+2022-04-13 10:23:20.911 INFO figures - compute_3D_volume_figure: Building final figure
+2022-04-13 10:23:20.969 INFO figures - compute_3D_volume_figure: Done computing 3D volume figure
+2022-04-13 10:23:21.125 INFO storage - return_shelved_object: volume_interpolated_3D_SM 34:1 na_name-lipid-2_name-lipid-3_root__ being returned now from computation.

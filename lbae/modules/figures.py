@@ -50,7 +50,7 @@ class Figures:
             "dic_normalization_factors",
             force_update=False,
             compute_function=self.compute_normalization_factor_across_slices,
-            cache_flask=None,
+            cache_flask=None,  # No cache since launched at startup
         )
 
     ###### FUNCTIONS FOR FIGURE IN LOAD_SLICE PAGE ######
@@ -810,7 +810,7 @@ class Figures:
         # If boundaries are provided, get their index
         else:
             array_spectra_avg = self._data.get_array_avg_spectrum(
-                slice_index, standardization=standardization, cache=cache_flask
+                slice_index, standardization=standardization
             )
             index_lb, index_hb = compute_thread_safe_function(
                 compute_index_boundaries,
@@ -2098,5 +2098,5 @@ class Figures:
                             name_lipid_1=name_lipid_1,
                             name_lipid_2=name_lipid_2,
                             name_lipid_3=name_lipid_3,
-                            cache_flask=None,
+                            cache_flask=None,  # No cache needed since launched at startup
                         )
