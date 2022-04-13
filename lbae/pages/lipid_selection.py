@@ -1356,24 +1356,22 @@ clientside_callback(
 )
 
 
-# @app.app.callback(
-#     Output("page-2-download-image-button", "disabled"),
-#     Output("page-2-download-data-button", "disabled"),
-#     Output("page-2-rgb-button", "disabled"),
-#     Output("page-2-colormap-button", "disabled"),
-#     Input("page-2-selected-lipid-1", "data"),
-#     Input("page-2-selected-lipid-2", "data"),
-#     Input("page-2-selected-lipid-3", "data"),
-# )
-# def page_2_active_download(lipid_1_index, lipid_2_index, lipid_3_index):
-#     l_lipids_indexes = [
-#         x for x in [lipid_1_index, lipid_2_index, lipid_3_index] if x is not None and x != -1
-#     ]
-#     # If lipids has been selected from the dropdown, activate button
-#     if len(l_lipids_indexes) > 0:
-#         return False, False, False, False
-#     else:
-#         return True, True, True, True
+@app.app.callback(
+    Output("page-2-rgb-button", "disabled"),
+    Output("page-2-colormap-button", "disabled"),
+    Input("page-2-selected-lipid-1", "data"),
+    Input("page-2-selected-lipid-2", "data"),
+    Input("page-2-selected-lipid-3", "data"),
+)
+def page_2_active_download(lipid_1_index, lipid_2_index, lipid_3_index):
+    l_lipids_indexes = [
+        x for x in [lipid_1_index, lipid_2_index, lipid_3_index] if x is not None and x != -1
+    ]
+    # If lipids has been selected from the dropdown, activate button
+    if len(l_lipids_indexes) > 0:
+        return False, False
+    else:
+        return True, True
 
 
 @app.app.callback(
@@ -1432,3 +1430,4 @@ def toggle_offcanvas(n1, n2, is_open):
     if n1 or n2:
         return not is_open
     return is_open
+
