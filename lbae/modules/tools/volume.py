@@ -184,7 +184,10 @@ def fill_array_interpolation(array_annotation, array_slices, divider_radius=5):
         np.ndarray: A three-dimensional array containing the interpolated lipid intensity values.
     """
     array_interpolated = np.copy(array_slices)
-    for x in range(0, array_annotation.shape[0]):
+
+    # Start from 8 as we don't have data before and the structure disposition makes it look
+    # like a bug with the interpolation
+    for x in range(8, array_annotation.shape[0]):
         for y in range(0, array_annotation.shape[1]):
             for z in range(0, array_annotation.shape[2]):
                 # If we are in a unfilled region of the brain or just inside the brain

@@ -190,12 +190,12 @@ def return_layout(basic_config, slice_index):
                                             transitionDuration=200,
                                             label="Your selection can't exceed a range of "
                                             + "10m/z, and must be comprised in-between 400 "
-                                            + "and 1200.",
+                                            + "and 1600.",
                                             children=[
                                                 dmc.NumberInput(
                                                     id="page-2-lower-bound",
                                                     min=380,
-                                                    max=1220,
+                                                    max=1600,
                                                     precision=3,
                                                     radius="md",
                                                     size="xs",
@@ -220,12 +220,12 @@ def return_layout(basic_config, slice_index):
                                             transitionDuration=200,
                                             label="Your selection can't exceed a range of "
                                             + "10m/z, and must be comprised in-between"
-                                            + " 400 and 1200.",
+                                            + " 400 and 1600.",
                                             children=[
                                                 dmc.NumberInput(
                                                     id="page-2-upper-bound",
                                                     min=380,
-                                                    max=1220,
+                                                    max=1600,
                                                     precision=3,
                                                     radius="md",
                                                     size="xs",
@@ -493,7 +493,7 @@ def page_2_plot_graph_heatmap_mz_selection(
     ):
         if lb is not None and hb is not None:
             lb, hb = float(lb), float(hb)
-            if lb > 400 and hb < 1200 and hb - lb > 0 and hb - lb < 10:
+            if lb >= 400 and hb <= 1600 and hb - lb > 0 and hb - lb < 10:
                 return (
                     figures.compute_heatmap_per_mz(
                         slice_index, lb, hb, binary_string=False, cache_flask=cache_flask
@@ -741,7 +741,7 @@ def page_2_plot_graph_low_res_spectrum(
         id_input == "main-slider" and graph_input == "Current input: " + "m/z boundaries"
     ):
         lb, hb = float(lb), float(hb)
-        if lb > 400 and hb < 1200 and hb - lb > 0 and hb - lb < 10:
+        if lb >= 400 and hb <= 1600 and hb - lb > 0 and hb - lb < 10:
             l_lipid_bounds = [(lb, hb), None, None]
             return figures.compute_spectrum_low_res(slice_index, l_lipid_bounds)
 
@@ -874,7 +874,7 @@ def page_2_plot_graph_high_res_spectrum(
         id_input == "main-slider" and graph_input == "Current input: " + "m/z boundaries"
     ):
         lb, hb = float(lb), float(hb)
-        if lb > 400 and hb < 1200 and hb - lb > 0 and hb - lb < 10:
+        if lb >= 400 and hb <= 1600 and hb - lb > 0 and hb - lb < 10:
             # l_lipid_bounds = [(lb, hb), None, None]
             return figures.compute_spectrum_high_res(
                 slice_index,
@@ -1314,7 +1314,7 @@ def page_2_active_download(lipid_1_index, lipid_2_index, lipid_3_index):
 def page_2_button_window(lb, hb):
     if lb is not None and hb is not None:
         lb, hb = float(lb), float(hb)
-        if lb > 400 and hb < 1200 and hb - lb > 0 and hb - lb < 10:
+        if lb >= 400 and hb <= 1600 and hb - lb > 0 and hb - lb < 10:
             return False
     return True
 

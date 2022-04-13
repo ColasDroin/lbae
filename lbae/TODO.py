@@ -1,6 +1,7 @@
 #
-# TODO check for remaining cache flask
 # TODO wrong data downloaded when using bounds
+# TODO Add a button to download heatmap and the spectra figures in region selection
+# TODO Find out why clicking download button makes the app unresponsive
 # TODO fix layout for small screens
 # TODO Incorporate brain 2
 # TODO Do a round of debug
