@@ -43,39 +43,92 @@ class Launch:
         self.figures = figures
 
         # Objects to shelve in the Atlas class. Everything in this list is shelved at
-        # initialization of Atlas and Figures objects.
-        self.atlas_objects = [
-            # Computed in Atlas.__init__() as an argument of Atlas,
-            # calling Atlas.compute_dic_acronym_children_id()
+        # initialization of Atlas and Figures objects. The computations described are the ones done
+        # at startup.
+        self.atlas_objects_at_init = [
+            # Computed in Atlas.__init__() as an argument of Atlas. Corresponds to the object
+            # returned by Atlas.compute_dic_acronym_children_id()
             "atlas/atlas_objects/dic_acronym_children_id",
             #
-            # Computed in Atlas.__init__() as an argument of Atlas,
-            # calling Atlas.compute_hierarchy_list()
+            # Computed in Atlas.__init__() as an argument of Atlas. Corresponds to the object
+            # returned by Atlas.compute_hierarchy_list()
             "atlas/atlas_objects/hierarchy",
             #
-            # Computed in Atlas.__init__() as an argument of Atlas,
-            # calling Atlas.compute_array_projection()
+            # Computed in Atlas.__init__() as an argument of Atlas. Corresponds to the object
+            # returned by Atlas.compute_array_projection(True, True)
             "atlas/atlas_objects/arrays_projection_corrected_True_True",
             #
             # Computed in Atlas.__init__(), calling Atlas.compute_array_projection() when
-            # computing arrays_projection_corrected_True_True.
+            # computing arrays_projection_corrected_True_True. Corresponds to the object returned by
+            # Atlas.compute_projection_parameters()
             "atlas/atlas_objects/l_transform_parameters",
             #
-            # Computed in Atlas.__init__(), calling Atlas.save_all_projected_masks_and_spectra()
-            # This a very long computation.
+            # Computed in Atlas.__init__(), calling Atlas.save_all_projected_masks_and_spectra(),
+            # but it doesn't correpond to an object returned by a specific function.
+            # All the masks and spectra are also computed and saved in the shelve database with the
+            # following id:
+            # "atlas/atlas_objects/mask_and_spectrum_$slice_index$_$id_mask$",
+            # "atlas/atlas_objects/mask_and_spectrum_MAIA_corrected_$slice_index$_$id_mask$"
+            # (not explicitely in this list as there are too many, and they are necessarily computed
+            # along with dic_existing_masks).
+            #  * This a very long computation, the longest in the app. *
             "atlas/atlas_objects/dic_existing_masks",
             #
-            # Computed when needed, as a property of Atlas, calling
-            # Atlas.compute_list_projected_atlas_borders_figures(). In practice, this is computed
-            # at startup when calling Figures.compute_dic_fig_contours() in Figures.__init()__,
-            # through the computation of compute_figure_basic_image with plot_atlas_contours set
-            # to True.
+            # Computed when needed, as a property of Atlas. Corresponds to the object returned by
+            # Atlas.compute_list_projected_atlas_borders_figures(). In practice, this function is
+            # called at startup, when calling Figures.compute_dic_fig_contours() in
+            # Figures.__init()__, through the computation of compute_figure_basic_image (with
+            # plot_atlas_contours set to True).
             "atlas/atlas_objects/list_projected_atlas_borders_arrays",
             #
-            # Computed calling atlas.compute_array_images_atlas(). In practice, this is done at
-            # startup through calling Atlas.compute_list_projected_atlas_borders_figures()
-            # (see comment just above).
+            # Corresponds to the object returned by atlas.compute_array_images_atlas(). In practice,
+            # this is computed at startup through calling
+            # Atlas.compute_list_projected_atlas_borders_figures() (see comment just above).
             "atlas/atlas_objects/array_images_atlas",
+        ]
+
+        # Objects to shelve in the Figures class. Everything in this list is shelved at
+        # initialization of the Figure object. The computations described are the ones done at
+        # startup.
+        self.figures_objects_at_init = (
+            [
+                # Computed in Figures.__init__() as an argument of Figures. Corresponds to the
+                # object returned by Figures.compute_dic_fig_contours()
+                "figures/region_analysis/dic_fig_contours",
+            ]
+            + [
+                # Computed in compute_dic_fig_contours(), itself computed in Figures.__init__().
+                # Corresponds to the object returned by
+                # Figures.compute_figure_basic_image(type_figure=None, index_image=slice_index,
+                #                                   plot_atlas_contours=True, only_contours=True)
+                "figures/load_page/figure_basic_image_None_" + str(slice_index) + "_True_True"
+                for slice_index in range(self.data.get_slice_number())
+            ]
+            + [
+                # Computed in Figures.__init__() as an argument of Figures. Corresponds to the
+                # object returned by
+                # Figures.compute_normalization_factor_across_slices(cache_flask=None)
+                "figures/lipid_selection/dic_normalization_factors_None",
+                #
+                #
+            ]
+        )
+
+        # Objects to shelve in the Figures class. Objects in the list are not automatically shelved
+        # at startup.
+        self.figures_objects_to_compute = [
+            # Computed in compute_figure_basic_image() only, which is called in load_slice and
+            # region_analysis pages. Corresponds to the object returned by
+            # figures.compute_array_basic_images(type_figure), with type_figure having the following
+            # values: "original_data", "warped_data", "projection_corrected", "atlas"
+            "figures/load_page/array_basic_image_original_data",
+            "figures/load_page/array_basic_image_warped_data",
+            "figures/load_page/array_basic_image_projection_corrected",
+            "figures/load_page/array_basic_image_atlas",
+            #
+            # Computed in compute_3D_volume_figure() only, which is called in threeD_exploration
+            # page. Corresponds to the object returned by Figures.compute_3D_root_volume().
+            "figures/3D_page/volume_root",
         ]
 
     def check_missing_db_entries(l_db_entries):

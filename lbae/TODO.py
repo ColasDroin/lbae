@@ -1,6 +1,6 @@
 #
 # TODO Add a button to download heatmap and the spectra figures in region selection
-# TODO Find out why clicking download button makes the app unresponsive
+# TODO Check all functions and deprecate the ones that are not used anymore
 # TODO fix layout for small screens
 # TODO Incorporate brain 2
 # TODO Do a round of debug
@@ -14,6 +14,7 @@
 # TODO Correct the name of the files to download
 # TODO Write missing docstrings
 # TODO Write documentation
+# TODO Check that all force_update are set to False
 # TODO Add an icon for documentation in the left bar
 # TODO Make a tour with dash_tour_component?
 # TODO Redesign repo according to : https://dev.to/codemouse92/dead-simple-python-project-structure-and-imports-38c6
