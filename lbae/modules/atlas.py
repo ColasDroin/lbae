@@ -53,7 +53,7 @@ class Atlas:
         # Load our data
         self.data = maldi_data
 
-        # Load or download the atlas if it's the first time
+        # Load or download the atlas if it's the first time BrainGlobeAtlas is used
         brainglobe_dir = "data/atlas/"
         os.makedirs(brainglobe_dir, exist_ok=True)
         self.bg_atlas = BrainGlobeAtlas(
@@ -62,17 +62,21 @@ class Atlas:
             check_latest=False,
         )
 
-        # When computing an array of figures with a slider to explore the atlas, subsample in the longitudinal
-        # direction, otherwise it's too heavy
+        # When computing an array of figures with a slider to explore the atlas, subsample in the
+        # longitudinal direction, otherwise it's too heavy
         self.subsampling_block = 20
 
         # Load string annotation for contour plot, for each voxel.
-        # These objects are heavy as they force the loading of annotations from the core Atlas class. But they shouldn't
-        # be memory-mapped as they are called when hovering and require very fast response from the server
+        # These objects are heavy as they force the loading of annotations from the core Atlas
+        # class. But they shouldn't be memory-mapped as they are called when hovering and require
+        # very fast response from the server
         self.labels = Labels(self.bg_atlas, force_init=True)
         self._simplified_labels_int = None
 
-        # Compute a dictionnary that associates to each structure (acronym) the set of ids (int) of all of its children
+        # Compute a dictionnary that associates to each structure (acronym) the set of ids (int) of
+        # all of its children. Used only in page_4_plot_graph_volume, but it's very light so no
+        # problem using it as an attribute
+        # ! Update this comment when I find a better way of (pre?-)computing volume plot
         self.dic_acronym_children_id = return_shelved_object(
             "atlas/atlas_objects",
             "dic_acronym_children_id",
@@ -89,7 +93,10 @@ class Atlas:
         # Record shape of the warped data
         self.image_shape = list(self.array_coordinates_warped_data.shape[1:-1])
 
-        # Record dict that associate brain region (complete string) to specific id (short label), along with graph of structures
+        # Record dict that associate brain region (complete string) to specific id (short label),
+        # along with graph of structures. Although the treemap graph is precomputed, the two dics of
+        # name and acronyms are relatively lightweight and are used in many different place, so
+        # they shouldn't be used a properties
         (
             self.l_nodes,
             self.l_parents,
@@ -102,7 +109,8 @@ class Atlas:
             compute_function=self.compute_hierarchy_list,
         )
 
-        # Array_projection_corrected is used a lot
+        # Array_projection_corrected is used a lot, as it encodes the warping transformation of the
+        # data. Therefore it shouldn't be used a as a property
         self.array_projection_correspondence_corrected = return_shelved_object(
             "atlas/atlas_objects",
             "arrays_projection_corrected",
@@ -112,52 +120,62 @@ class Atlas:
             atlas_correction=True,
         )[1]
 
-        # Dictionnary of existing masks per slice, which associates slice index (key) to a set of masks acronyms
-        if check_shelved_object("data/atlas/atlas_objects", "dic_existing_masks"):
+        # Dictionnary of existing masks per slice, which associates slice index (key) to a set of
+        # masks acronyms
+        if check_shelved_object("atlas/atlas_objects", "dic_existing_masks"):
             self.dic_existing_masks = load_shelved_object(
-                "data/atlas/atlas_objects", "dic_existing_masks"
+                "atlas/atlas_objects", "dic_existing_masks"
             )
         else:
             logging.info(
                 "The dictionnary of available mask per slice has not been computed yet."
-                + "Doing it now, This will take several hours."
+                + "Doing it now, this may take several hours."
             )
             # Since this function is called at startup, no data locking is needed
             self.save_all_projected_masks_and_spectra(cache_flask=None)
 
-    # Load arrays of images using atlas projection
+    # Load arrays of images using atlas projection. It's a property to save memory as it is only
+    # used with objects that should also be precomputed.
     @property
     def array_projection_corrected(self):
-        (array_projection_corrected, _, _,) = return_shelved_object(
+        return return_shelved_object(
             "atlas/atlas_objects",
             "arrays_projection_corrected",
             force_update=False,
             compute_function=self.compute_array_projection,
             nearest_neighbour_correction=True,
             atlas_correction=True,
-        )
-        return array_projection_corrected
+        )[0]
 
+    # Load arrays of original images coordinates. It's a property to save memory as it is only used
+    # with objects that should also be precomputed.
+    # ! The 3D volume figures (whose computation use l_original_coor) should be all precomputed at
+    # ! some point, so it makes sense to keep this object as a property.
+    # ! Delete this comment when 3D volume figures are indeed precomputed.
     @property
     def l_original_coor(self):
-        (_, _, l_original_coor,) = return_shelved_object(
+        return return_shelved_object(
             "atlas/atlas_objects",
             "arrays_projection_corrected",
             force_update=False,
             compute_function=self.compute_array_projection,
             nearest_neighbour_correction=True,
             atlas_correction=True,
-        )
-        return l_original_coor
+        )[2]
 
     # Compute the dictionnary of unique identifiers for the label only if needed
+    # ! simplified_labels_int is now only used in compute_array_images_atlas, which is precomputed.
+    # ! Need to delete the associated class LabelContours and use an array instead, and numba-ize compute_array_images_atlas
+    # ! Maybe even delete this property, and build the complete array directly in a wrapper of the function compute_array_images_atlas
+    # ! to ensure that the memory is not used for nothing.
     @property
     def simplified_labels_int(self):
         if self._simplified_labels_int is None:
             self._simplified_labels_int = LabelContours(self.bg_atlas)
         return self._simplified_labels_int
 
-    # Load array of projected atlas borders
+    # Load array of projected atlas borders (i.e. image of atlas annotations). It's a property to
+    # save memory as it is only used with objects that should also be precomputed.
     @property
     def list_projected_atlas_borders_arrays(self):
         return return_shelved_object(
@@ -166,14 +184,6 @@ class Atlas:
             force_update=False,
             compute_function=self.compute_list_projected_atlas_borders_figures,
         )
-
-    # # Compute a dictionnary that associate a long label (key) to its default unique id (int value)
-    # def compute_dic_label_id(self):
-    #     dic_label_id = {
-    #         self.bg_atlas.structures[id]["name"]: id for id in set(self.bg_atlas.annotation.flatten()) if id != 0
-    #     }
-    #     dic_label_id["root"] = 0
-    #     return dic_label_id
 
     # Compute a dictionnary that associate to each structure (acronym) the set of ids (int) of all os its children
     def compute_dic_acronym_children_id(self):
@@ -450,7 +460,7 @@ class Atlas:
         dic_existing_masks = {}
 
         # Path atlas for shelving
-        path_atlas = "data/atlas/atlas_objects"
+        path_atlas = "atlas/atlas_objects"
 
         for slice_index in range(self.data.get_slice_number()):
             logging.info("Starting slice " + str(slice_index))
@@ -555,7 +565,7 @@ class Atlas:
             "Loading " + mask_name + " for slice " + str(slice_index) + " from shelve file."
         )
         try:
-            return load_shelved_object("data/atlas/atlas_objects", filename)
+            return load_shelved_object("atlas/atlas_objects", filename)
         except:
             logging.warning(
                 "The mask and spectrum data could not be found for "

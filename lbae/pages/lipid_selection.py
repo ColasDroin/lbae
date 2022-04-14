@@ -651,7 +651,6 @@ def page_2_plot_graph_heatmap_mz_selection(
                     bound_low_res[0],
                     bound_low_res[1],
                     binary_string=False,
-                    plot_contours=False,
                     cache_flask=cache_flask,
                 ),
                 "Current input: " + "Selection from low-res m/z graph",

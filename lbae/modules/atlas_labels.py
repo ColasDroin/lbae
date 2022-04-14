@@ -12,7 +12,7 @@ loading the full arrays of annotations in memory.
 import numpy as np
 
 # ! Investigate the usefulness of both these classes
-
+# ! Rewrite the comments with attributes methods in the header of the class, not in init
 # ==================================================================================================
 # --- Classes
 # ==================================================================================================

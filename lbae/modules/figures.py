@@ -222,111 +222,6 @@ class Figures:
             array_images = array_projected_images_atlas
         return array_images
 
-    # ? Drop this function as well? But this one works and may be kept in the future
-    def compute_figure_basic_images_with_slider(
-        self, type_figure="warped_data", plot_atlas_contours=False
-    ):
-        # Get array of images
-        array_images = return_shelved_object(
-            "figures/load_page",
-            "array_basic_images",
-            force_update=False,
-            compute_function=self.compute_array_basic_images,
-            type_figure=type_figure,
-        )
-
-        if plot_atlas_contours:
-            array_images_atlas = self._atlas.list_projected_atlas_borders_arrays
-
-        # Build plot with slider
-        fig = go.Figure(
-            frames=[
-                go.Frame(
-                    data=[
-                        go.Image(
-                            visible=True,
-                            source=convert_image_to_base64(
-                                array_images[i],
-                                overlay=array_images_atlas[i] if plot_atlas_contours else None,
-                                optimize=True,
-                                quality=40,
-                            ),
-                            hoverinfo="none",
-                        ),
-                        # array_images_atlas[i],
-                    ],
-                    name=str(i + 1),
-                )
-                for i in range(0, self._data.get_slice_number(), 1)
-            ]
-        )
-        fig.add_trace(
-            go.Image(
-                visible=True,
-                source=convert_image_to_base64(
-                    array_images[0],
-                    overlay=array_images_atlas[0] if plot_atlas_contours else None,
-                    optimize=True,
-                    quality=40,
-                ),
-                hoverinfo="none",
-            )
-        )
-
-        # fig.add_trace(array_images_atlas[0],)
-
-        def frame_args(duration):
-            return {
-                "frame": {"duration": duration},
-                "mode": "immediate",
-                "fromcurrent": True,
-                "transition": {"duration": duration, "easing": "linear"},
-            }
-
-        sliders = [
-            {
-                "pad": {"b": 10, "t": 60},
-                "len": 0.9,
-                "x": 0.1,
-                "y": 0,
-                "steps": [
-                    {"args": [[f.name], frame_args(0)], "label": str(k), "method": "update",}
-                    for k, f in enumerate(fig.frames)
-                ],
-            }
-        ]
-
-        # Layout
-        fig.update_layout(margin=dict(t=25, r=0, b=0, l=0),)
-
-        def frame_args(duration):
-            return {
-                "frame": {"duration": duration, "redraw": True},
-                "mode": "immediate",
-                "fromcurrent": True,
-                "transition": {"duration": duration, "easing": "linear"},
-            }
-
-        fig.layout.sliders = [
-            {
-                "active": 0,
-                "yanchor": "top",
-                "xanchor": "left",
-                "currentvalue": {"prefix": "Slice" + "="},
-                "pad": {"b": 10, "t": 60},
-                "len": 0.9,
-                "x": 0.1,
-                "y": 0,
-                "steps": [
-                    {"args": [[f.name], frame_args(0)], "label": f.name, "method": "animate",}
-                    for f in fig.frames
-                ],
-            }
-        ]
-
-        logging.info("Figure has been computed")
-        return fig
-
     ###### FUNCTIONS FOR FIGURE IN LIPID_SELECTION PAGE ######
 
     def compute_image_per_lipid(
@@ -464,7 +359,6 @@ class Figures:
         draw=False,
         binary_string=False,
         projected_image=True,
-        plot_contours=False,
         return_base64_string=False,
         cache_flask=None,
     ):
@@ -498,15 +392,10 @@ class Figures:
         self._data.clean_memory(slice_index=slice_index, cache=cache_flask)
         logging.info("Memory cleaned")
 
-        # Get image
-        if plot_contours:
-            array_image_atlas = self._atlas.list_projected_atlas_borders_arrays[slice_index - 1]
-        else:
-            array_image_atlas = None
         logging.info("Converting image to string")
         # Set optimize to False to gain computation time
         base64_string = convert_image_to_base64(
-            image, overlay=array_image_atlas, transparent_zeros=True, optimize=False
+            image, overlay=None, transparent_zeros=True, optimize=False
         )
 
         # Either return image directly
@@ -2100,3 +1989,106 @@ class Figures:
                             name_lipid_3=name_lipid_3,
                             cache_flask=None,  # No cache needed since launched at startup
                         )
+
+    ### DEPRECATED FUNCTIONS. SHOULD BE CHECKED FOR BUG BEFORE USAGE ###
+    def compute_figure_basic_images_with_slider_DEPRECATED(
+        self, type_figure="warped_data", plot_atlas_contours=False
+    ):
+        # Get array of images
+        array_images = return_shelved_object(
+            "figures/load_page",
+            "array_basic_images",
+            force_update=False,
+            compute_function=self.compute_array_basic_images,
+            type_figure=type_figure,
+        )
+
+        if plot_atlas_contours:
+            array_images_atlas = self._atlas.list_projected_atlas_borders_arrays
+
+        # Build plot with slider
+        fig = go.Figure(
+            frames=[
+                go.Frame(
+                    data=[
+                        go.Image(
+                            visible=True,
+                            source=convert_image_to_base64(
+                                array_images[i],
+                                overlay=array_images_atlas[i] if plot_atlas_contours else None,
+                                optimize=True,
+                                quality=40,
+                            ),
+                            hoverinfo="none",
+                        ),
+                        # array_images_atlas[i],
+                    ],
+                    name=str(i + 1),
+                )
+                for i in range(0, self._data.get_slice_number(), 1)
+            ]
+        )
+        fig.add_trace(
+            go.Image(
+                visible=True,
+                source=convert_image_to_base64(
+                    array_images[0],
+                    overlay=array_images_atlas[0] if plot_atlas_contours else None,
+                    optimize=True,
+                    quality=40,
+                ),
+                hoverinfo="none",
+            )
+        )
+
+        def frame_args(duration):
+            return {
+                "frame": {"duration": duration},
+                "mode": "immediate",
+                "fromcurrent": True,
+                "transition": {"duration": duration, "easing": "linear"},
+            }
+
+        sliders = [
+            {
+                "pad": {"b": 10, "t": 60},
+                "len": 0.9,
+                "x": 0.1,
+                "y": 0,
+                "steps": [
+                    {"args": [[f.name], frame_args(0)], "label": str(k), "method": "update",}
+                    for k, f in enumerate(fig.frames)
+                ],
+            }
+        ]
+
+        # Layout
+        fig.update_layout(margin=dict(t=25, r=0, b=0, l=0),)
+
+        def frame_args(duration):
+            return {
+                "frame": {"duration": duration, "redraw": True},
+                "mode": "immediate",
+                "fromcurrent": True,
+                "transition": {"duration": duration, "easing": "linear"},
+            }
+
+        fig.layout.sliders = [
+            {
+                "active": 0,
+                "yanchor": "top",
+                "xanchor": "left",
+                "currentvalue": {"prefix": "Slice" + "="},
+                "pad": {"b": 10, "t": 60},
+                "len": 0.9,
+                "x": 0.1,
+                "y": 0,
+                "steps": [
+                    {"args": [[f.name], frame_args(0)], "label": f.name, "method": "animate",}
+                    for f in fig.frames
+                ],
+            }
+        ]
+
+        logging.info("Figure has been computed")
+        return fig
