@@ -20,12 +20,12 @@ import dash_mantine_components as dmc
 
 # LBAE modules
 from app import app, data
+from lbae.pages import atlas_exploration_DEPRECATED
 from pages import (
     sidebar,
     home,
     load_slice,
     lipid_selection,
-    atlas_exploration,
     region_analysis,
     threeD_exploration,
 )
@@ -191,7 +191,7 @@ def return_validation_layout(main_content, initial_slice=1):
             lipid_selection.return_layout(basic_config, initial_slice),
             region_analysis.return_layout(basic_config, initial_slice),
             threeD_exploration.return_layout(basic_config, initial_slice),
-            atlas_exploration.return_layout(basic_config, initial_slice),
+            atlas_exploration_DEPRECATED.return_layout(basic_config, initial_slice),
         ]
     )
 
@@ -228,7 +228,7 @@ def render_page_content(pathname, slice_index):
     elif pathname == "/3D-exploration":
         page = threeD_exploration.return_layout(basic_config, slice_index)
     elif pathname == "/atlas-exploration":
-        page = atlas_exploration.return_layout(basic_config, slice_index)
+        page = atlas_exploration_DEPRECATED.return_layout(basic_config, slice_index)
 
     else:
         # If the user tries to reach a different page, return a 404 message
