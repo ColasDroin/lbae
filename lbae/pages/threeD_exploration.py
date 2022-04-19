@@ -106,7 +106,7 @@ def return_layout(basic_config, slice_index):
                                                         figure=return_shelved_object(
                                                             "figures/atlas_page/3D",
                                                             "treemaps",
-                                                            force_update=True,
+                                                            force_update=False,
                                                             compute_function=figures.compute_treemaps_figure,
                                                         ),
                                                     ),
@@ -608,14 +608,20 @@ def page_4_click(header_1, header_2, header_3, name, structure, cation):
     # Find out which input triggered the function
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
 
-    if cation is not None and cation != "":
-        # Get lipid name
-        lipid_string = name + " " + structure + " " + cation
+    # if all headers are free
+    if header_1 == "" and header_2 == "" and header_3 == "":
 
-        # Compare to existing headers
-        if lipid_string not in [header_1, header_2, header_3]:
+        if cation is not None and cation != "":
+            # Get lipid name
+            lipid_string = name + " " + structure + " " + cation
 
-            return "Add " + lipid_string + " to selection", False
+            # Compare to existing headers
+            if lipid_string not in [header_1, header_2, header_3]:
+
+                return "Add " + lipid_string + " to selection", False
+
+            else:
+                return "Please choose a lipid that hasn't been selected yet", True
 
     return "Please choose a lipid above", True
 
@@ -818,7 +824,7 @@ def page_4_plot_graph_volume(
             decrease_resolution_factor = 6
         else:
             decrease_resolution_factor = 7
-        # if no region was selected, put them all
+        # If no region was selected, put them all
         if len(set_id) == 0:
             set_id = None
             decrease_resolution_factor = 7
@@ -853,7 +859,6 @@ def page_4_plot_graph_volume(
                 )
             ]
 
-            # ! Set force_update to False when I'm done
             return return_shelved_object(
                 "figures/3D_page",
                 "volume_interpolated_3D_"
@@ -1031,6 +1036,8 @@ def page_2bis_add_toast_selection(
     header_3,
     l_selected_lipids,
 ):
+
+    # ! Make lipid selection more natural, when limited to one lipid
 
     # Find out which input triggered the function
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]

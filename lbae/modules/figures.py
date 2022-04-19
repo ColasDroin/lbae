@@ -14,7 +14,7 @@ import dash_bio as dashbio
 
 # Homemade functions
 from modules.tools.image import convert_image_to_base64
-from modules.tools.storage import return_shelved_object
+from modules.tools.storage import return_shelved_object, check_shelved_object, dump_shelved_object
 from modules.tools.atlas import project_image, slice_to_atlas_transform
 from modules.tools.misc import logmem
 from modules.tools.volume import filter_voxels, fill_array_borders, fill_array_interpolation
@@ -26,6 +26,7 @@ from modules.tools.spectra import (
     global_lipid_index_store,
     compute_thread_safe_function,
 )
+
 
 ###### DEFINE FIGURES CLASS ######
 class Figures:
@@ -52,6 +53,10 @@ class Figures:
             compute_function=self.compute_normalization_factor_across_slices,
             cache_flask=None,  # No cache since launched at startup
         )
+
+        # Check that the 3D lipid distributions have been computed, else compute them
+        if not check_shelved_object("figures/3D_page", "volume_interpolated_3D_computed"):
+            self.shelve_all_figure_3D(force_update=False)
 
     ###### FUNCTIONS FOR FIGURE IN LOAD_SLICE PAGE ######
 
@@ -1579,7 +1584,7 @@ class Figures:
                             for lipid_1_index in l_selected_lipids
                         ]
 
-                        # compute 3D figures
+                        # compute 3D figures, selection is limited to one lipid
                         name_lipid_1 = lipid_string
                         name_lipid_2 = ""
                         name_lipid_3 = ""
@@ -1601,6 +1606,9 @@ class Figures:
                             name_lipid_3=name_lipid_3,
                             cache_flask=None,  # No cache needed since launched at startup
                         )
+
+        # Variable to signal everything has been computed
+        dump_shelved_object("figures/3D_page", "volume_interpolated_3D_computed", True)
 
     ### DEPRECATED FUNCTIONS. SHOULD BE CHECKED FOR BUG BEFORE USAGE ###
     def compute_figure_basic_images_with_slider_DEPRECATED(

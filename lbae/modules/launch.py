@@ -35,6 +35,7 @@ class Launch:
             atlas (Atlas): Atlas object, used to manipulate the objects coming from the Allen Brain 
                 Atlas.
             figures (Figures): Figures object, used to build the figures of the app.
+            # ! Complete
         """
 
         # App main objects
@@ -66,7 +67,7 @@ class Launch:
             # Computed in Atlas.__init__(), calling Atlas.save_all_projected_masks_and_spectra(),
             # but it doesn't correpond to an object returned by a specific function.
             # All the masks and spectra are also computed and saved in the shelve database with the
-            # following id:
+            # following ids:
             # "atlas/atlas_objects/mask_and_spectrum_$slice_index$_$id_mask$",
             # "atlas/atlas_objects/mask_and_spectrum_MAIA_corrected_$slice_index$_$id_mask$"
             # (not explicitely in this list as there are too many, and they are necessarily computed
@@ -110,7 +111,20 @@ class Launch:
                 # Figures.compute_normalization_factor_across_slices(cache_flask=None)
                 "figures/lipid_selection/dic_normalization_factors_None",
                 #
+                # Computed in Figures.__init(), calling Figures.shelve_all_figure_3D(), but it
+                # doesn't correpond to an object returned by a specific function.
+                # All the 3D object are computed and saved in the shelve database with the
+                # following ids:
+                # "figures/3D_page/volume_interpolated_3D_$name_lipid$__",
+                # (not explicitely in this list as there are too many, and they are necessarily
+                # computed when volume_interpolated_3D_computed is in the database).
+                #  * This a very long computation.
+                "figures/3D_page/volume_interpolated_3D_computed",
                 #
+                # Computed in compute_3D_volume_figure() only, which is called at first startup in
+                # Figures.shelve_all_figure_3D() (cf. above comment). Corresponds to the object
+                # returned by Figures.compute_3D_root_volume().
+                "figures/3D_page/volume_root",
             ]
         )
 
@@ -126,9 +140,17 @@ class Launch:
             "figures/load_page/array_basic_image_projection_corrected",
             "figures/load_page/array_basic_image_atlas",
             #
-            # Computed in compute_3D_volume_figure() only, which is called in threeD_exploration
-            # page. Corresponds to the object returned by Figures.compute_3D_root_volume().
-            "figures/3D_page/volume_root",
+            # Computed when loading the threeD_exploration page. Corresponds to the object returned
+            # by Figures.compute_treemaps_figure().
+            "figures/atlas_page/3D/treemaps",
+        ]
+
+        # Objects to shelve not belonging to a specific class. Objects in the list are not
+        # automatically shelved at startup.
+        self.other_objects_to_compute = [
+            # Computed when loading the lipid_selection page. Corresponds to the object returned by
+            # return_lipid_options().
+            "annotations/lipid_options",
         ]
 
     def check_missing_db_entries(l_db_entries):
