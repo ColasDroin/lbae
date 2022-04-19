@@ -88,7 +88,7 @@ def return_layout(basic_config, slice_index):
                                         dmc.MultiSelect(
                                             id="page-2-dropdown-lipids",
                                             data=return_shelved_object(
-                                                "annotations/",
+                                                "annotations",
                                                 "lipid_options",
                                                 force_update=False,
                                                 compute_function=return_lipid_options,
