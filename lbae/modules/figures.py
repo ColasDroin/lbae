@@ -17,7 +17,12 @@ from modules.tools.image import convert_image_to_base64
 from modules.tools.storage import return_shelved_object, check_shelved_object, dump_shelved_object
 from modules.tools.atlas import project_image, slice_to_atlas_transform
 from modules.tools.misc import logmem
-from modules.tools.volume import filter_voxels, fill_array_borders, fill_array_interpolation
+from modules.tools.volume import (
+    filter_voxels,
+    fill_array_borders,
+    fill_array_interpolation,
+    fill_array_slices,
+)
 from config import dic_colors, l_colors, l_colors_progress
 from modules.tools.spectra import (
     compute_image_using_index_and_image_lookup,
@@ -57,6 +62,21 @@ class Figures:
         # Check that the 3D lipid distributions have been computed, else compute them
         if not check_shelved_object("figures/3D_page", "volume_interpolated_3D_computed"):
             self.shelve_all_figure_3D(force_update=False)
+
+        # Check that the arrays of annotations at different resolutions have been computed, else
+        # compute them
+        for decrease_dimensionality_factor in [3, 4, 5, 6, 7]:
+            if not check_shelved_object(
+                "figures/3D_page", "arrays_annotation_" + str(decrease_dimensionality_factor)
+            ):
+                return_shelved_object(
+                    "figures/3D_page",
+                    "arrays_annotation",
+                    force_update=False,
+                    compute_function=self.get_array_of_annotations,
+                    decrease_dimensionality_factor=decrease_dimensionality_factor,
+                    cache_flask=None,
+                )
 
     ###### FUNCTIONS FOR FIGURE IN LOAD_SLICE PAGE ######
 
@@ -1133,15 +1153,32 @@ class Figures:
             isomin=-0.21,
             isomax=2.55,
             opacity=0.1,  # max opacity
-            # opacityscale = "uniform",
             surface_count=2,
             colorscale="Blues",  # colorscale,
             flatshading=True,
             showscale=False,
         )
 
-        # Return figure
         return brain_root_data
+
+    def get_array_of_annotations(self, decrease_dimensionality_factor):
+
+        # Get subsampled array of annotations
+        array_annotation = np.array(
+            self._atlas.bg_atlas.annotation[
+                ::decrease_dimensionality_factor,
+                ::decrease_dimensionality_factor,
+                ::decrease_dimensionality_factor,
+            ],
+            dtype=np.int32,
+        )
+
+        # Bug correction for the last slice
+        array_annotation = np.concatenate(
+            (array_annotation, np.zeros((1, array_annotation.shape[1], array_annotation.shape[2])),)
+        )
+
+        return array_annotation
 
     def compute_3D_volume_figure(
         self,
@@ -1156,24 +1193,23 @@ class Figures:
         logging.info("Starting 3D volume computation")
 
         # Get subsampled array of annotations
-        array_annotation = np.array(
-            self._atlas.bg_atlas.annotation[
-                ::decrease_dimensionality_factor,
-                ::decrease_dimensionality_factor,
-                ::decrease_dimensionality_factor,
-            ],
-            dtype=np.int32,
+        array_annotation = return_shelved_object(
+            "figures/3D_page",
+            "arrays_annotation_",
+            force_update=False,
+            compute_function=self.get_array_of_annotations,
+            decrease_dimensionality_factor=decrease_dimensionality_factor,
+            cache_flask=cache_flask,
         )
 
-        # bug correction for the last slice
-        array_annotation = np.concatenate(
-            (array_annotation, np.zeros((1, array_annotation.shape[1], array_annotation.shape[2])))
-        )
+        # Get subsampled array of borders for each region
+        n_regions = len(set_id_regions)
+        for id_region in set_id_regions:
 
-        # Compute an array of boundaries
-        array_atlas_borders = fill_array_borders(
-            array_annotation, keep_structure_id=np.array(list(set_id_regions), dtype=np.int64)
-        )
+            # Compute an array of boundaries
+            array_atlas_borders = fill_array_borders(
+                array_annotation, keep_structure_id=np.array(list(set_id_regions), dtype=np.int64),
+            )
 
         logging.info("Computed basic structure array")
 
@@ -1198,27 +1234,6 @@ class Figures:
         array_y_scaled = array_y * 1000000 / self._atlas.resolution / decrease_dimensionality_factor
         array_z_scaled = array_z * 1000000 / self._atlas.resolution / decrease_dimensionality_factor
 
-        @njit
-        def fill_array_slices(
-            array_x_scaled, array_y_scaled, array_z_scaled, array_c, array_slices, array_for_avg
-        ):
-            for x, y, z, c in zip(array_x_scaled, array_y_scaled, array_z_scaled, array_c):
-                x_scaled = int(round(y))
-                y_scaled = int(round(z))
-                z_scaled = int(round(x))
-                # if inside the brain but not a border
-                if array_slices[x_scaled, y_scaled, z_scaled] > -0.05:
-                    # if inside the brain and not assigned before
-                    if abs(array_slices[x_scaled, y_scaled, z_scaled] - (-0.01)) < 10 ** -4:
-                        array_slices[x_scaled, y_scaled, z_scaled] = c / 100
-                    # inside the brain but already assigned, in which case average
-                    else:
-                        array_slices[x_scaled, y_scaled, z_scaled] += c / 100
-                        array_for_avg[x_scaled, y_scaled, z_scaled] += 1
-
-            array_slices = array_slices / array_for_avg
-            return array_slices
-
         array_slices = fill_array_slices(
             array_x_scaled,
             array_y_scaled,
@@ -1226,6 +1241,7 @@ class Figures:
             np.array(array_c),
             array_slices,
             array_for_avg,
+            limit_value_inside=-1.0,
         )
         logging.info("Filled basic structure array with array of expression")
 

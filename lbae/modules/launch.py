@@ -82,10 +82,11 @@ class Launch:
             # plot_atlas_contours set to True).
             "atlas/atlas_objects/list_projected_atlas_borders_arrays",
             #
-            # Corresponds to the object returned by atlas.compute_array_images_atlas(). In practice,
-            # this is computed at startup through calling
+            # Computed at startup through calling
             # Atlas.compute_list_projected_atlas_borders_figures() (see comment just above).
+            # Corresponds to the object returned by atlas.compute_array_images_atlas().
             "atlas/atlas_objects/array_images_atlas",
+            #
         ]
 
         # Objects to shelve in the Figures class. Everything in this list is shelved at
@@ -125,6 +126,14 @@ class Launch:
                 # Figures.shelve_all_figure_3D() (cf. above comment). Corresponds to the object
                 # returned by Figures.compute_3D_root_volume().
                 "figures/3D_page/volume_root",
+                #
+                # Computed in Figures.__init__(). Corresponds to the object
+                # returned by Figures.get_array_of_annotations(decrease_dimensionality_factor).
+                "figures/3D_page/arrays_annotation_3",
+                "figures/3D_page/arrays_annotation_4",
+                "figures/3D_page/arrays_annotation_5",
+                "figures/3D_page/arrays_annotation_6",
+                "figures/3D_page/arrays_annotation_7",
             ]
         )
 

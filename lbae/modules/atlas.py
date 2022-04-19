@@ -185,7 +185,8 @@ class Atlas:
             compute_function=self.compute_list_projected_atlas_borders_figures,
         )
 
-    # Compute a dictionnary that associate to each structure (acronym) the set of ids (int) of all os its children
+    # Compute a dictionnary that associate to each structure (acronym) the set of ids (int) of all
+    # of its children
     def compute_dic_acronym_children_id(self):
         def fill_dic_acronym_children_id(dic_acronym_children_id, l_id_leaves):
             older_leave_id = l_id_leaves[0]
