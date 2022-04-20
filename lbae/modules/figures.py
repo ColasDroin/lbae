@@ -12,7 +12,7 @@ from numba import njit
 import pandas as pd
 import dash_bio as dashbio
 
-# Homemade functions
+# LBAE functions
 from modules.tools.image import convert_image_to_base64
 from modules.tools.storage import return_shelved_object, check_shelved_object, dump_shelved_object
 from modules.tools.atlas import project_image, slice_to_atlas_transform
@@ -1679,7 +1679,7 @@ class Figures:
             return_shelved_object(
                 "figures/3D_page",
                 "arrays_borders_" + str(id_region) + "_" + str(decrease_dimensionality_factor),
-                force_update=False,
+                force_update=force_update,
                 ignore_argument_naming=True,
                 compute_function=fill_array_borders,
                 array_annotation=array_annotation,

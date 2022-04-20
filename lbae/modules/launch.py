@@ -11,10 +11,17 @@ app launch."""
 # Standard modules
 import logging
 import shelve
+import sys
+
+# LBAE functions
+from modules.tools.storage import check_shelved_object, dump_shelved_object
 
 # ==================================================================================================
 # --- Class
 # ==================================================================================================
+
+
+# ! Should I merge this class with the one in tools/storage.py ?
 
 
 class Launch:
@@ -27,16 +34,19 @@ class Launch:
     
     """
 
-    def __init__(self, data, atlas, figures):
+    def __init__(self, data, atlas, figures, path="data/app_data/data.db"):
         """Initialize the class Launch.
 
         Args:
+            path (str): Path to the shelve database.
             data (MaldiData): MaldiData object, used to manipulate the raw MALDI data.
             atlas (Atlas): Atlas object, used to manipulate the objects coming from the Allen Brain 
                 Atlas.
             figures (Figures): Figures object, used to build the figures of the app.
             # ! Complete
         """
+        # Database path
+        self.db_path = path
 
         # App main objects
         self.data = data
@@ -158,6 +168,10 @@ class Launch:
             # Computed in compute_3D_volume_figure(). Corresponds to the object returned by
             # Figures.compute_3D_root_volume().
             "figures/3D_page/volume_root",
+            #
+            # Computed when clicking the "Display 3D slices" graph in the load_slice page.
+            # Corresponds to the object returned by the function Figures.compute_figure_slices_3D().
+            "figures/3D_page/slices_3D",
         ]
 
         # Objects to shelve not belonging to a specific class. Objects in the list are not
@@ -168,19 +182,16 @@ class Launch:
             "annotations/lipid_options",
         ]
 
-    def check_missing_db_entries(l_db_entries):
-        """This function checks if all the entries in l_db_entries are in the shelve database. It then 
-        returns a list containing the missing entries.
+    def check_missing_db_entries(self, l_db_entries):
+        """This function checks if all the entries in l_db_entries are in the shelve database. It 
+        then returns a list containing the missing entries.
 
         Args:
             l_db_entries (list): List of entries in the shelve database to check.
         """
 
-        # Define database path
-        db_path = "data/app_data/data.db"
-
         # Get database
-        db = shelve.open(db_path)
+        db = shelve.open(self.db_path)
 
         # Build a set of missing entries
         l_missing_entries = list(set(l_db_entries) - set(db.keys()))
@@ -198,15 +209,13 @@ class Launch:
 
         return l_missing_entries
 
-    def compute_and_fill_entries(l_entries):
-        """This function precompute all the entries in l_entries and fill them in the shelve database.
+    def compute_and_fill_entries(self, l_entries):
+        """This function precompute all the entries in l_entries and fill them in the shelve 
+        database.
         """
 
-        # Define database path
-        db_path = "data/app_data/data.db"
-
         # Get database
-        db = shelve.open(db_path)
+        db = shelve.open(self.db_path)
 
         # Compute missing entries
         for entry in l_entries:
@@ -216,15 +225,12 @@ class Launch:
         # Close database
         db.close()
 
-    def erase_all_entries():
+    def erase_all_entries(self):
         """This function erases all entries in the shelve database.
         """
 
-        # Define database path
-        db_path = "data/app_data/data.db"
-
         # Get database
-        db = shelve.open(db_path)
+        db = shelve.open(self.db_path)
 
         # Completely empty database
         for key in db:
@@ -233,11 +239,21 @@ class Launch:
         # Close database
         db.close()
 
-    def first_launch(erase_db=False):
-        """This function must be used at the very first execution of the app. It will take care of 
-        cleaning the shelve database, run compiled functions once, and precompute all the figures that 
-        can be precomputed.
+    def launch(self, erase_db=False, force_exit_if_first_launch=True):
+        """This function is used at the execution of the app. It will take care of cleaning the 
+        shelve database, run compiled functions once, and precompute all the figures that can be 
+        precomputed. At the very first launch, this process can be greedy in memory, reason for 
+        which the user can choose to force the exit of the app, to start with a lighter process.
         """
-        pass
+
         # TODO
+
+        # Check if the app has been run before, and potentially force exit if not
+        if not check_shelved_object("launch", "first_launch"):
+            dump_shelved_object("launch", "first_launch", True)
+            if force_exit_if_first_launch:
+                sys.exit(
+                    "The app has been exited now that everything has been precomputed."
+                    + "Please launch the app again."
+                )
 
