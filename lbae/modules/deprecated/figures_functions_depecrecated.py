@@ -477,3 +477,93 @@ def compute_atlas_with_slider_DEPRECATED(self, view="frontal", contour=False):
     fig.update_yaxes(showticklabels=False)
 
     return fig
+
+
+def compute_array_3D_on_the_fly_DEPRECATED(
+    self, ll_t_bounds, normalize_independently=True, high_res=False, cache_flask=None
+):
+
+    logging.info("Starting computing 3D arrays" + logmem())
+
+    # get list of original coordinates for each slice
+    if not high_res:
+        l_coor = self._atlas.l_original_coor
+        estimate = 400 * 400
+    else:
+        estimate = 1311 * 918
+        l_coor = self._atlas.array_coordinates_warped_data
+
+    # Initialize empty arrays with a large estimate for the orginal acquisition size
+
+    max_size = estimate * self._data.get_slice_number()
+    array_x = np.empty(max_size, dtype=np.float32)
+    array_y = np.empty(max_size, dtype=np.float32)
+    array_z = np.empty(max_size, dtype=np.float32)
+    array_c = np.empty(max_size, dtype=np.int16)
+    total_index = 0
+    logging.debug(f"Size array_x: {array_x.nbytes / 1024 / 1024 :.2f}")
+    logging.info("Starting slice iteration" + logmem())
+
+    # get atlas shape and resolution
+    reference_shape = self._atlas.bg_atlas.reference.shape
+    resolution = self._atlas.resolution
+    array_annotations = np.array(self._atlas.bg_atlas.annotation, dtype=np.int32)
+
+    for slice_index in range(0, self._data.get_slice_number(), 1):
+        if ll_t_bounds[slice_index] != [None, None, None]:
+
+            # Get the data as an expression image per lipid
+            array_data = self.compute_rgb_array_per_lipid_selection(
+                slice_index + 1,
+                ll_t_bounds[slice_index],
+                normalize_independently=normalize_independently,
+                projected_image=high_res,
+                log=False,
+                enrichment=False,
+                apply_transform=True,
+                cache_flask=cache_flask,
+            )
+
+            # Sum array colors (i.e. lipids)
+            array_data = np.sum(array_data, axis=-1)
+            # Remove pixels for which lipid expression is zero
+            array_data_stripped = array_data[array_data != 0]
+            # array_data_stripped = array_data.flatten()
+
+            # Skip the current slice if expression is very sparse
+            if len(array_data_stripped) < 10 or np.sum(array_data_stripped) < 1:
+                continue
+
+            # Compute the percentile of expression to filter out lowly expressed pixels
+            # Set to 0 for now, as no filtering is done
+            percentile = 0  # np.percentile(array_data_stripped, 10)
+
+            # Get the coordinates of the pixels in the ccfv3
+            coordinates = l_coor[slice_index]
+            # coordinates_stripped = coordinates[array_data != 0]
+            coordinates_stripped = coordinates.reshape(-1, coordinates.shape[-1])
+
+            array_x, array_y, array_z, array_c, total_index = filter_voxels(
+                array_data_stripped,
+                coordinates_stripped,
+                array_annotations,
+                percentile,
+                array_x,
+                array_y,
+                array_z,
+                array_c,
+                total_index,
+                reference_shape,
+                resolution,
+            )
+            logging.info("Slice " + str(slice_index) + " done" + logmem())
+
+    # Strip the arrays from the zeros
+    array_x = array_x[:total_index]
+    array_y = array_y[:total_index]
+    array_z = array_z[:total_index]
+    # * Caution, array_c should be a list to work with Plotly
+    array_c = array_c[:total_index].to_list()
+
+    # Return the arrays for the 3D figure
+    return array_x, array_y, array_z, array_c

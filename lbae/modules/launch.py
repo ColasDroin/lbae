@@ -112,28 +112,30 @@ class Launch:
                 # Figures.compute_normalization_factor_across_slices(cache_flask=None)
                 "figures/lipid_selection/dic_normalization_factors_None",
                 #
-                # Computed in Figures.__init(), calling Figures.shelve_all_figure_3D(), but it
+                # Computed in Figures.__init(), calling Figures.shelve_all_l_array_2D(), but it
                 # doesn't correpond to an object returned by a specific function.
-                # All the 3D object are computed and saved in the shelve database with the
-                # following ids:
-                # "figures/3D_page/volume_interpolated_3D_$name_lipid$__",
-                # (not explicitely in this list as there are too many, and they are necessarily
-                # computed when volume_interpolated_3D_computed is in the database).
+                # All the list of 2D slices of expression object are computed and saved in the
+                # shelve database with the following ids:
+                # "figures/3D_page/arrays_expression_$name_lipid$__",
+                # (not explicitely in this list as there are too many).
                 #  * This a very long computation.
-                "figures/3D_page/volume_interpolated_3D_computed",
+                "figures/3D_page/arrays_expression_computed",
                 #
-                # Computed in compute_3D_volume_figure() only, which is called at first startup in
-                # Figures.shelve_all_figure_3D() (cf. above comment). Corresponds to the object
-                # returned by Figures.compute_3D_root_volume().
-                "figures/3D_page/volume_root",
+                # Computed in Figures.__init(), calling Figures.shelve_all_arrays_borders(), but it
+                # doesn't correpond to an object returned by a specific function.
+                # All the arrays of borders object are computed and saved in the
+                # shelve database with the following ids:
+                # "figures/3D_page/arrays_borders_$id_region$_$decrease_dimensionality_factor$",
+                # (not explicitely in this list as there are too many.
+                # decrease_dimensionality_factor is 6 by defaults).
+                #  * This a very long computation.
+                "figures/3D_page/arrays_borders_computed"
                 #
-                # Computed in Figures.__init__(). Corresponds to the object
-                # returned by Figures.get_array_of_annotations(decrease_dimensionality_factor).
-                "figures/3D_page/arrays_annotation_3",
-                "figures/3D_page/arrays_annotation_4",
-                "figures/3D_page/arrays_annotation_5",
+                # Computed in Figures.shelve_all_arrays_borders(), itself called in
+                # Figures.__init__(). Corresponds to the object returned by
+                # Figures.get_array_of_annotations(decrease_dimensionality_factor), with
+                # decrease_dimensionality_factor=6 by defaults.
                 "figures/3D_page/arrays_annotation_6",
-                "figures/3D_page/arrays_annotation_7",
             ]
         )
 
@@ -152,6 +154,10 @@ class Launch:
             # Computed when loading the threeD_exploration page. Corresponds to the object returned
             # by Figures.compute_treemaps_figure().
             "figures/atlas_page/3D/treemaps",
+            #
+            # Computed in compute_3D_volume_figure(). Corresponds to the object returned by
+            # Figures.compute_3D_root_volume().
+            "figures/3D_page/volume_root",
         ]
 
         # Objects to shelve not belonging to a specific class. Objects in the list are not

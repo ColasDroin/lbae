@@ -59,25 +59,15 @@ class Figures:
             cache_flask=None,  # No cache since launched at startup
         )
 
-        # Check that the 3D lipid distributions have been computed, else compute them
-        if not check_shelved_object("figures/3D_page", "volume_interpolated_3D_computed"):
-            self.shelve_all_figure_3D(force_update=False)
+        # Check that the lipid distributions for all slices have been computed, else compute them
+        if not check_shelved_object("figures/3D_page", "arrays_expression_computed"):
+            self.shelve_all_l_array_2D()
 
-        # Check that the arrays of annotations at different resolutions have been computed, else
-        # compute them
-        # ! Maybe I will end up keeping only one dimension, if yes, need to adapt this code
-        for decrease_dimensionality_factor in [3, 4, 5, 6, 7]:
-            if not check_shelved_object(
-                "figures/3D_page", "arrays_annotation_" + str(decrease_dimensionality_factor)
-            ):
-                return_shelved_object(
-                    "figures/3D_page",
-                    "arrays_annotation",
-                    force_update=False,
-                    compute_function=self.get_array_of_annotations,
-                    decrease_dimensionality_factor=decrease_dimensionality_factor,
-                    cache_flask=None,
-                )
+        # Check that the region annotations for 3D plots have been computed, else compute them
+        # Also compute the arrays of annotations for the current decrease_dimensionality_factor in
+        # the process
+        if not check_shelved_object("figures/3D_page", "arrays_borders_computed"):
+            self.shelve_all_arrays_borders(decrease_dimensionality_factor=6)
 
     ###### FUNCTIONS FOR FIGURE IN LOAD_SLICE PAGE ######
 
@@ -993,94 +983,6 @@ class Figures:
         )
         return surface
 
-    def compute_array_3D(
-        self, ll_t_bounds, normalize_independently=True, high_res=False, cache_flask=None
-    ):
-
-        logging.info("Starting computing 3D arrays" + logmem())
-
-        # get list of original coordinates for each slice
-        if not high_res:
-            l_coor = self._atlas.l_original_coor
-            estimate = 400 * 400
-        else:
-            estimate = 1311 * 918
-            l_coor = self._atlas.array_coordinates_warped_data
-
-        # Initialize empty arrays with a large estimate for the orginal acquisition size
-
-        max_size = estimate * self._data.get_slice_number()
-        array_x = np.empty(max_size, dtype=np.float32)
-        array_y = np.empty(max_size, dtype=np.float32)
-        array_z = np.empty(max_size, dtype=np.float32)
-        array_c = np.empty(max_size, dtype=np.int16)
-        total_index = 0
-        logging.debug(f"Size array_x: {array_x.nbytes / 1024 / 1024 :.2f}")
-        logging.info("Starting slice iteration" + logmem())
-
-        # get atlas shape and resolution
-        reference_shape = self._atlas.bg_atlas.reference.shape
-        resolution = self._atlas.resolution
-        array_annotations = np.array(self._atlas.bg_atlas.annotation, dtype=np.int32)
-
-        for slice_index in range(0, self._data.get_slice_number(), 1):
-            if ll_t_bounds[slice_index] != [None, None, None]:
-
-                # Get the data as an expression image per lipid
-                array_data = self.compute_rgb_array_per_lipid_selection(
-                    slice_index + 1,
-                    ll_t_bounds[slice_index],
-                    normalize_independently=normalize_independently,
-                    projected_image=high_res,
-                    log=False,
-                    enrichment=False,
-                    apply_transform=True,
-                    cache_flask=cache_flask,
-                )
-
-                # Sum array colors (i.e. lipids)
-                array_data = np.sum(array_data, axis=-1)
-                # Remove pixels for which lipid expression is zero
-                array_data_stripped = array_data[array_data != 0]
-                # array_data_stripped = array_data.flatten()
-
-                # Skip the current slice if expression is very sparse
-                if len(array_data_stripped) < 10 or np.sum(array_data_stripped) < 1:
-                    continue
-
-                # Compute the percentile of expression to filter out lowly expressed pixels
-                # Set to 0 for now, as no filtering is done
-                percentile = 0  # np.percentile(array_data_stripped, 10)
-
-                # Get the coordinates of the pixels in the ccfv3
-                coordinates = l_coor[slice_index]
-                coordinates_stripped = coordinates[array_data != 0]
-                # coordinates_stripped = coordinates.reshape(-1, coordinates.shape[-1])
-
-                array_x, array_y, array_z, array_c, total_index = filter_voxels(
-                    array_data_stripped,
-                    coordinates_stripped,
-                    array_annotations,
-                    percentile,
-                    array_x,
-                    array_y,
-                    array_z,
-                    array_c,
-                    total_index,
-                    reference_shape,
-                    resolution,
-                )
-                logging.info("Slice " + str(slice_index) + " done" + logmem())
-
-        # Strip the arrays from the zeros
-        array_x = array_x[:total_index]
-        array_y = array_y[:total_index]
-        array_z = array_z[:total_index]
-        array_c = array_c[:total_index].tolist()
-
-        # Return the arrays for the 3D figure
-        return array_x, array_y, array_z, array_c
-
     def compute_treemaps_figure(self, maxdepth=5):
         fig = px.treemap(
             names=self._atlas.l_nodes, parents=self._atlas.l_parents, maxdepth=maxdepth
@@ -1179,6 +1081,115 @@ class Figures:
 
         return array_annotation
 
+    # Function to get the list of expression per slice for all slices for the computation of 3D volume
+    def compute_l_array_2D(
+        self, ll_t_bounds, normalize_independently=True, high_res=False, cache_flask=None
+    ):
+        l_array_data = []
+        for slice_index in range(0, self._data.get_slice_number(), 1):
+            if ll_t_bounds[slice_index] != [None, None, None]:
+
+                # Get the data as an expression image per lipid
+                array_data = self.compute_rgb_array_per_lipid_selection(
+                    slice_index + 1,
+                    ll_t_bounds[slice_index],
+                    normalize_independently=normalize_independently,
+                    projected_image=high_res,
+                    log=False,
+                    enrichment=False,
+                    apply_transform=True,
+                    cache_flask=cache_flask,
+                )
+
+                # Sum array colors (i.e. lipids)
+                array_data = np.sum(array_data, axis=-1)
+            else:
+                array_data = None
+
+            # Append data to l_array_data
+            l_array_data.append(array_data)
+
+        return l_array_data
+
+    def compute_array_coordinates_3D(
+        self, l_array_data, high_res=False,
+    ):
+
+        logging.info("Starting computing 3D arrays" + logmem())
+
+        # get list of original coordinates for each slice
+        if not high_res:
+            l_coor = self._atlas.l_original_coor
+            estimate = 400 * 400
+        else:
+            estimate = 1311 * 918
+            l_coor = self._atlas.array_coordinates_warped_data
+
+        # Initialize empty arrays with a large estimate for the orginal acquisition size
+
+        max_size = estimate * self._data.get_slice_number()
+        array_x = np.empty(max_size, dtype=np.float32)
+        array_y = np.empty(max_size, dtype=np.float32)
+        array_z = np.empty(max_size, dtype=np.float32)
+        array_c = np.empty(max_size, dtype=np.int16)
+        total_index = 0
+        logging.debug(f"Size array_x: {array_x.nbytes / 1024 / 1024 :.2f}")
+        logging.info("Starting slice iteration" + logmem())
+
+        # get atlas shape and resolution
+        reference_shape = self._atlas.bg_atlas.reference.shape
+        resolution = self._atlas.resolution
+        array_annotations = np.array(self._atlas.bg_atlas.annotation, dtype=np.int32)
+
+        for slice_index in range(0, self._data.get_slice_number(), 1):
+
+            # Get the averaged expression data for the current slice
+            array_data = l_array_data[slice_index]
+
+            # Sum array colors (i.e. lipids)
+            array_data = np.sum(array_data, axis=-1)
+
+            # Remove pixels for which lipid expression is zero
+            array_data_stripped = array_data[array_data != 0]
+
+            # Skip the current slice if expression is very sparse
+            if len(array_data_stripped) < 10 or np.sum(array_data_stripped) < 1:
+                continue
+
+            # Compute the percentile of expression to filter out lowly expressed pixels
+            # Set to 0 for now, as no filtering is done
+            percentile = 0  # np.percentile(array_data_stripped, 10)
+
+            # Get the coordinates of the pixels in the ccfv3
+            coordinates = l_coor[slice_index]
+            coordinates_stripped = coordinates[array_data != 0]
+
+            # Get the data as 4 arrays (3 for coordinates and 1 for expression)
+            array_x, array_y, array_z, array_c, total_index = filter_voxels(
+                array_data_stripped,
+                coordinates_stripped,
+                array_annotations,
+                percentile,
+                array_x,
+                array_y,
+                array_z,
+                array_c,
+                total_index,
+                reference_shape,
+                resolution,
+            )
+            logging.info("Slice " + str(slice_index) + " done" + logmem())
+
+        # Strip the arrays from the zeros
+        array_x = array_x[:total_index]
+        array_y = array_y[:total_index]
+        array_z = array_z[:total_index]
+        # * Caution, array_c should be a list to work with Plotly
+        array_c = array_c[:total_index].to_list()
+
+        # Return the arrays for the 3D figure
+        return array_x, array_y, array_z, array_c
+
     def compute_3D_volume_figure(
         self,
         ll_t_bounds,
@@ -1194,7 +1205,7 @@ class Figures:
         # Get subsampled array of annotations
         array_annotation = return_shelved_object(
             "figures/3D_page",
-            "arrays_annotation_",
+            "arrays_annotation",
             force_update=False,
             compute_function=self.get_array_of_annotations,
             decrease_dimensionality_factor=decrease_dimensionality_factor,
@@ -1205,33 +1216,59 @@ class Figures:
         n_regions = len(set_id_regions)
         array_atlas_borders = np.zeros(array_annotation.shape, dtype=np.float32)
         for id_region in set_id_regions:
-            # Compute an array of boundaries with values outside of the annotated regions brain set to -1.1
-            # This way, any value >-1.1 is considered inside of the annotated regions
+            # Compute an array of boundaries
+            # Values outside of the annotated regions brain are set to -2 by default
+            # This way, any value >-2 is considered inside of the annotated regions
             array_atlas_borders += (
-                fill_array_borders(
-                    array_annotation,
+                return_shelved_object(
+                    "figures/3D_page",
+                    "arrays_borders_" + str(id_region) + "_" + str(decrease_dimensionality_factor),
+                    force_update=False,
+                    ignore_argument_naming=True,
+                    compute_function=fill_array_borders,
+                    array_annotation=array_annotation,
                     keep_structure_id=np.array([id_region], dtype=np.int64),
-                    annot_outside=-1.1,
+                    decrease_dimensionality_factor=decrease_dimensionality_factor,
                 )
                 / n_regions
             )
 
         logging.info("Computed basic structure array")
 
-        # Return the lipid expression in 3D
-        array_x, array_y, array_z, array_c = return_shelved_object(
-            "figures/3D_page",
-            "arrays_3D_" + name_lipid_1 + "_" + name_lipid_2 + "_" + name_lipid_3,
-            force_update=False,
-            compute_function=self.compute_array_3D,
-            ignore_arguments_naming=True,
-            ll_t_bounds=ll_t_bounds,
-            normalize_independently=True,
-            high_res=False,
-            cache_flask=cache_flask,
+        # Get array of expression for each lipid
+        ll_array_data = [
+            return_shelved_object(
+                "figures/3D_page",
+                "arrays_expression_" + str(name_lipid) + "__",
+                ignore_argument_naming=True,
+                force_update=False,
+                compute_function=self.compute_l_array_2D,
+                ll_t_bounds=[[l_t_bounds[i], None, None] for l_t_bounds in ll_t_bounds],
+            )
+            for i, name_lipid in enumerate[name_lipid_1, name_lipid_2, name_lipid_3]
+        ]
+
+        # Average array of expression over lipid
+        l_array_data_avg = []
+        for slice_index in range(0, self._data.get_slice_number(), 1):
+            n = 0
+            avg = 0
+            for i in range(3):  # * number of lipids is hardcoded
+                s = ll_array_data[i][slice_index]
+                if s is None:
+                    s = 0
+                else:
+                    n += 1
+                avg += s
+            l_array_data_avg.append(avg / n)
+
+        # Get the 3D array of expression and coordinates
+        array_x, array_y, array_z, array_c = self.compute_array_coordinates_3D(
+            l_array_data_avg, high_res=False
         )
 
         logging.info("Computed array of expression in original space")
+
         # Compute the rescaled array of expression for each slice averaged over projected lipids
         array_slices = np.copy(array_atlas_borders)
         array_for_avg = np.full_like(array_atlas_borders, 1)
@@ -1246,7 +1283,7 @@ class Figures:
             np.array(array_c),
             array_slices,
             array_for_avg,
-            limit_value_inside=-1.05,
+            limit_value_inside=-1.95,
         )
         logging.info("Filled basic structure array with array of expression")
 
@@ -1545,8 +1582,7 @@ class Figures:
         return fig_heatmap_lipids
 
     ###### PICKLING FUNCTIONS ######
-    def shelve_all_figure_3D(self, force_update=False):
-
+    def shelve_all_l_array_2D(self, force_update=False):
         # simulate a click on all lipid names
         for name in sorted(self._data.get_annotations().name.unique()):
             structures = self._data.get_annotations()[
@@ -1606,27 +1642,50 @@ class Figures:
                         ]
 
                         # compute 3D figures, selection is limited to one lipid
-                        name_lipid_1 = lipid_string
-                        name_lipid_2 = ""
-                        name_lipid_3 = ""
+                        name_lipid = lipid_string
 
                         return_shelved_object(
                             "figures/3D_page",
-                            "volume_interpolated_3D_"
-                            + name_lipid_1
-                            + "_"
-                            + name_lipid_2
-                            + "_"
-                            + name_lipid_3,
+                            "arrays_expression_" + name_lipid + "__",
                             force_update=force_update,
-                            compute_function=self.compute_3D_volume_figure,
+                            compute_function=self.compute_l_array_2D,
                             ignore_arguments_naming=True,
                             ll_t_bounds=lll_lipid_bounds,
-                            name_lipid_1=name_lipid_1,
-                            name_lipid_2=name_lipid_2,
-                            name_lipid_3=name_lipid_3,
                             cache_flask=None,  # No cache needed since launched at startup
                         )
 
         # Variable to signal everything has been computed
-        dump_shelved_object("figures/3D_page", "volume_interpolated_3D_computed", True)
+        dump_shelved_object("figures/3D_page", "arrays_expression_computed", True)
+
+    def shelve_all_arrays_borders(self, decrease_dimensionality_factor=6, force_update=False):
+
+        # Get subsampled array of annotations
+        array_annotation = return_shelved_object(
+            "figures/3D_page",
+            "arrays_annotation",
+            force_update=False,
+            compute_function=self.get_array_of_annotations,
+            decrease_dimensionality_factor=decrease_dimensionality_factor,
+            cache_flask=None,  # No cache needed since launched at startup
+        )
+
+        # Compute the set of all possible regions (leaves)
+        set_id = set([])
+        for acronym in self._atlas.dic_acronym_children_id:
+            set_id = set_id.union(self._atlas.dic_acronym_children_id[acronym])
+
+        for id_region in set_id:
+            # Get array of border for the current region
+            return_shelved_object(
+                "figures/3D_page",
+                "arrays_borders_" + str(id_region) + "_" + str(decrease_dimensionality_factor),
+                force_update=False,
+                ignore_argument_naming=True,
+                compute_function=fill_array_borders,
+                array_annotation=array_annotation,
+                keep_structure_id=np.array([id_region], dtype=np.int64),
+                decrease_dimensionality_factor=decrease_dimensionality_factor,
+            )
+
+        # Variable to signal everything has been computed
+        dump_shelved_object("figures/3D_page", "arrays_borders_computed", True)

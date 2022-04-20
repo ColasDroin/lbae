@@ -102,6 +102,7 @@ def fill_array_borders(
     annot_border=-0.1,
     annot_inside=-0.01,
     annot_near_border=0.2,
+    decrease_dimensionality_factor=None,
 ):
     """This function takes the Allen Brain atlas array of annotation and returns an array 
     representing the borders of the atlas, to be used later for the volume plot. Values in the array
@@ -130,6 +131,9 @@ def fill_array_borders(
             to -0.01.
         annot_near_border (float, optional): Value to be used for the color of the area near the 
             border of the brain. Defaults to 0.2.
+        decrease_dimensionality_factor (int, optional): Useless parameter, kept for ensuring that 
+            shelving is done properly, as array_annotation corresponds to a given 
+            decrease_dimensionality_factor. Defaults to None.
 
     Returns:
         np.ndarray: A numpy array representing the borders of the atlas.
