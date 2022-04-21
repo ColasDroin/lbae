@@ -70,7 +70,7 @@ class Figures:
 
         # Check that 3D slice figure has been computed already. If not, compute it and store it.
         if not check_shelved_object("figures/3D_page", "slices_3D"):
-            return return_shelved_object(
+            return_shelved_object(
                 "figures/3D_page",
                 "slices_3D",
                 force_update=False,
@@ -265,7 +265,7 @@ class Figures:
                 "atlas/atlas_objects",
                 "array_images_atlas",
                 force_update=False,
-                compute_function=self._atlas.compute_array_images_atlas,
+                compute_function=self._atlas.prepare_and_compute_array_images_atlas,
                 zero_out_of_annotation=True,
             )
             array_images = array_projected_images_atlas
