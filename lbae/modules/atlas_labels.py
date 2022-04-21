@@ -11,7 +11,7 @@ loading the full arrays of annotations in memory.
 # Standard modules
 import numpy as np
 
-# ! Investigate the usefulness of both these classes
+# ! Investigate the usefulness of this class
 # ! Rewrite the comments with attributes methods in the header of the class, not in init
 # ==================================================================================================
 # --- Classes
@@ -61,43 +61,3 @@ class Labels:
                 ],
                 x.shape,
             )
-
-
-class LabelContours:
-    """ Class used to map labels to increasing integers."""
-
-    def __init__(self, bg_atlas):
-        """Initialize the class LabelContours.
-
-        Args:
-            bg_atlas (BrainGlobeAtlas): BrainGlobeAtlas object, used to query the atlas.
-
-        Attributes:
-            bg_atlas (BrainGlobeAtlas): BrainGlobeAtlas object, used to query the atlas.
-            unique_id (list): List of unique identifiers (int) for labels.
-        """
-        self.bg_atlas = bg_atlas
-        self.unique_id = {
-            ni: indi for indi, ni in enumerate(set(self.bg_atlas.annotation.flatten()))
-        }
-
-    def __getitem__(self, key):
-        """Getter for the curent class. For every coordinate (key) passed as a parameter, a label 
-        id is returned. The labels ids do not correspond to the original ids, the list is simplified 
-        to increase linearly from zero with step 1. Arrays of keys are also compatible.
-        
-        Args:
-            key (tuple): Coordinates of the voxel to query.
-        
-        Returns:
-            int: Identifier of the voxel.
-            """
-
-        """ """
-        x = self.bg_atlas.annotation[key]
-        if isinstance(x, np.uint32):
-            return self.unique_id[x]
-        else:
-            array = np.reshape([self.unique_id[i] for i in x.flatten()], x.shape)
-            return array
-

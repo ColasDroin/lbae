@@ -478,20 +478,20 @@ def fill_array_projection(
 
     return array_projection, array_projection_correspondence
 
+
 @njit
 def compute_simplified_atlas_annotation(atlas_annotation):
     # Compute an array which map labels ids to increasing integers
-    unique_id_dic = {
-                ni: indi for indi, ni in enumerate(set(atlas_annotation.flatten()))
-            }   
+    unique_id_dic = {ni: indi for indi, ni in enumerate(set(atlas_annotation.flatten()))}
 
     simplified_atlas_annotation = np.zeros(atlas_annotation.shape, dtype=np.int32)
-    for x in atlas_annotation.shape[0]:
-        for y in atlas_annotation.shape[1]:
-            for z in atlas_annotation.shape[2]:
-                simplified_atlas_annotation[x,y,z] = unique_id_dic[atlas_annotation[x,y,z]]
+    for x in range(atlas_annotation.shape[0]):
+        for y in range(atlas_annotation.shape[1]):
+            for z in range(atlas_annotation.shape[2]):
+                simplified_atlas_annotation[x, y, z] = unique_id_dic[atlas_annotation[x, y, z]]
 
     return simplified_atlas_annotation
+
 
 @njit
 def compute_array_images_atlas(
@@ -506,9 +506,8 @@ def compute_array_images_atlas(
         array_images.shape, simplified_atlas_annotation[0, 0, 0], dtype=np.int32
     )
 
-    array_coor_rescaled = ((array_coordinates_warped_data * 1000 / resolution).round(0)).astype(
-        np.int16
-    )
+    array_coor_rescaled = np.empty_like(array_coordinates_warped_data, dtype=np.int16)
+    np.round_(array_coordinates_warped_data * 1000 / resolution, 0, array_coor_rescaled)
     for x in range(array_images.shape[0]):
         for y in range(array_images.shape[1]):
             for z in range(array_images.shape[2]):
