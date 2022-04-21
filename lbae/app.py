@@ -24,18 +24,25 @@ import os
 from modules.maldi_data import MaldiData
 from modules.figures import Figures
 from modules.atlas import Atlas
+from modules.launch import Launch
 from modules.tools.misc import logmem
 
 # ==================================================================================================
 # --- App pre-computations
 # ==================================================================================================
 
-# Load data and Figures object
 logging.info("Memory use before any global variable declaration" + logmem())
 
+# Load data
 data = MaldiData()
+
+# Load Atlas and Figures objects. At first launch, many objects will be precomputed and shelved in
+# the classes Atlas and Figures.
 atlas = Atlas(data, resolution=25)
 figures = Figures(data, atlas)
+
+# Compute ans shelve potentially missing objects
+launch = Launch(data, atlas, figures)
 
 logging.info("Memory use after three main object have been instantiated" + logmem())
 

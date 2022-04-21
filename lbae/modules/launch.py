@@ -28,8 +28,17 @@ class Launch:
     """ Class used to precompute and shelve objects at app launch.
     
     Attributes:
-    # ! TODO
-    
+        path (str): Path to the shelve database.
+        data (MaldiData): MaldiData object, used to manipulate the raw MALDI data.
+        atlas (Atlas): Atlas object, used to manipulate the objects coming from the Allen Brain 
+            Atlas.
+        figures (Figures): Figures object, used to build the figures of the app.
+        l_atlas_objects_at_init (list): List of atlas objects normally computed at app startup 
+            if not already in shelve database.
+        l_figures_objects_at_init (list): List of figures objects normally computed at app 
+            startup if not already in shelve database.
+        l_other_objects_to_compute (list): List of other objects which must be computed to 
+            prevent slowing down the app during normal use.    
     Methods:
     
     """
@@ -37,14 +46,9 @@ class Launch:
     def __init__(self, data, atlas, figures, path="data/app_data/data.db"):
         """Initialize the class Launch.
 
-        Args:
-            path (str): Path to the shelve database.
-            data (MaldiData): MaldiData object, used to manipulate the raw MALDI data.
-            atlas (Atlas): Atlas object, used to manipulate the objects coming from the Allen Brain 
-                Atlas.
-            figures (Figures): Figures object, used to build the figures of the app.
-            # ! Complete
+        Args: Please refer to class Attributes.
         """
+
         # Database path
         self.db_path = path
 
@@ -235,12 +239,15 @@ class Launch:
     def compute_and_fill_entries(self, l_missing_entries):
         """This function precompute all the entries in l_entries and fill them in the shelve 
         database.
+
+        Args:
+            l_missing_entries (list): list of entries to compute and insert in the shelve database.
         """
 
         # Get database
         db = shelve.open(self.db_path)
 
-        # Compute missing entries
+        # Compute missing entries if possible
         for entry in l_missing_entries:
 
             if entry in self.l_atlas_objects_at_init:
@@ -272,13 +279,21 @@ class Launch:
         db.close()
 
     def launch(self, force_exit_if_first_launch=True):
-        """This function is used at the execution of the app. It will take care of cleaning the 
-        shelve database, run compiled functions once, and precompute all the figures that can be 
-        precomputed. At the very first launch, this process can be greedy in memory, reason for 
+        """This function is used at the execution of the app. It will take care of checking/cleaning
+        the database entries, run compiled functions once, and precompute all the objects that can 
+        be precomputed. At the very first launch, the app can be greedy in memory, reason for 
         which the user can choose to force the exit of the app, to start with a lighter process.
+
+        Args:
+            force_exit_if_first_launch (bool): if True, the app will force exit if it is the first 
+                launch.
         """
 
-        # TODO
+        # Check for missing entries
+        l_missing_entries = self.check_missing_db_entries()
+
+        # Compute missing entries
+        self.compute_and_fill_entries(l_missing_entries)
 
         # Check if the app has been run before, and potentially force exit if not
         if not check_shelved_object("launch", "first_launch"):

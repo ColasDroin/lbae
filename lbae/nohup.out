@@ -15401,3 +15401,827 @@ From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.
 2022-04-21 15:44:59.440 INFO storage - return_shelved_object: Returning arrays_projection_corrected from shelve file.	MemTotal: 1824.890625
 2022-04-21 15:44:59.950 INFO atlas - __init__: The dictionnary of available mask per slice has not been computed yet.Doing it now, this may take several hours.
 2022-04-21 15:44:59.950 INFO atlas - save_all_projected_masks_and_spectra: Starting slice 0
+[2022-04-21 15:45:25 +0200] [446859] [CRITICAL] WORKER TIMEOUT (pid:78930)
+[2022-04-21 15:45:25 +0200] [78930] [INFO] Worker exiting (pid: 78930)
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+[2022-04-21 15:45:25 +0200] [79125] [INFO] Booting worker with pid: 79125
+2022-04-21 15:45:26.124 INFO main - <module>: Starting import chain	MemTotal: 30.37109375
+2022-04-21 15:45:28.184 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 243.93359375
+2022-04-21 15:45:28.184 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 243.93359375
+2022-04-21 15:45:28.762 INFO atlas - __init__: Initializing Atlas object	MemTotal: 1084.56640625
+2022-04-21 15:45:29.222 INFO storage - return_shelved_object: Returning dic_acronym_children_id from shelve file.	MemTotal: 1383.39453125
+2022-04-21 15:45:30.096 INFO storage - return_shelved_object: Returning hierarchy from shelve file.	MemTotal: 1824.609375
+2022-04-21 15:45:30.200 INFO storage - return_shelved_object: Returning arrays_projection_corrected from shelve file.	MemTotal: 1824.875
+2022-04-21 15:45:30.725 INFO atlas - __init__: The dictionnary of available mask per slice has not been computed yet.Doing it now, this may take several hours.
+2022-04-21 15:45:30.725 INFO atlas - save_all_projected_masks_and_spectra: Starting slice 0
+[2022-04-21 15:45:56 +0200] [446859] [CRITICAL] WORKER TIMEOUT (pid:79125)
+[2022-04-21 15:45:56 +0200] [79125] [INFO] Worker exiting (pid: 79125)
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+[2022-04-21 15:45:56 +0200] [79186] [INFO] Booting worker with pid: 79186
+2022-04-21 15:45:56.907 INFO main - <module>: Starting import chain	MemTotal: 30.37109375
+2022-04-21 15:45:58.977 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 244.09375
+2022-04-21 15:45:58.977 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 244.09375
+2022-04-21 15:45:59.534 INFO atlas - __init__: Initializing Atlas object	MemTotal: 1084.56640625
+2022-04-21 15:45:59.994 INFO storage - return_shelved_object: Returning dic_acronym_children_id from shelve file.	MemTotal: 1383.39453125
+2022-04-21 15:46:00.882 INFO storage - return_shelved_object: Returning hierarchy from shelve file.	MemTotal: 1824.609375
+2022-04-21 15:46:00.984 INFO storage - return_shelved_object: Returning arrays_projection_corrected from shelve file.	MemTotal: 1824.875
+2022-04-21 15:46:01.513 INFO atlas - __init__: The dictionnary of available mask per slice has not been computed yet.Doing it now, this may take several hours.
+2022-04-21 15:46:01.513 INFO atlas - save_all_projected_masks_and_spectra: Starting slice 0
+[2022-04-21 15:46:26 +0200] [446859] [CRITICAL] WORKER TIMEOUT (pid:79186)
+[2022-04-21 15:46:26 +0200] [79186] [INFO] Worker exiting (pid: 79186)
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+[2022-04-21 15:46:27 +0200] [79278] [INFO] Booting worker with pid: 79278
+2022-04-21 15:46:27.616 INFO main - <module>: Starting import chain	MemTotal: 30.3671875
+2022-04-21 15:46:29.688 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 243.91015625
+2022-04-21 15:46:29.688 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 244.12890625
+2022-04-21 15:46:30.239 INFO atlas - __init__: Initializing Atlas object	MemTotal: 1084.56640625
+2022-04-21 15:46:30.694 INFO storage - return_shelved_object: Returning dic_acronym_children_id from shelve file.	MemTotal: 1383.39453125
+2022-04-21 15:46:31.587 INFO storage - return_shelved_object: Returning hierarchy from shelve file.	MemTotal: 1824.609375
+2022-04-21 15:46:31.693 INFO storage - return_shelved_object: Returning arrays_projection_corrected from shelve file.	MemTotal: 1824.87109375
+2022-04-21 15:46:32.217 INFO atlas - __init__: The dictionnary of available mask per slice has not been computed yet.Doing it now, this may take several hours.
+2022-04-21 15:46:32.217 INFO atlas - save_all_projected_masks_and_spectra: Starting slice 0
+[2022-04-21 15:46:57 +0200] [446859] [CRITICAL] WORKER TIMEOUT (pid:79278)
+[2022-04-21 15:46:57 +0200] [79278] [INFO] Worker exiting (pid: 79278)
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+[2022-04-21 15:46:58 +0200] [79337] [INFO] Booting worker with pid: 79337
+2022-04-21 15:46:58.298 INFO main - <module>: Starting import chain	MemTotal: 30.3671875
+2022-04-21 15:47:00.362 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 244.12890625
+2022-04-21 15:47:00.362 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 244.12890625
+2022-04-21 15:47:00.915 INFO atlas - __init__: Initializing Atlas object	MemTotal: 1084.5703125
+2022-04-21 15:47:01.370 INFO storage - return_shelved_object: Returning dic_acronym_children_id from shelve file.	MemTotal: 1383.3984375
+2022-04-21 15:47:02.258 INFO storage - return_shelved_object: Returning hierarchy from shelve file.	MemTotal: 1824.61328125
+2022-04-21 15:47:02.363 INFO storage - return_shelved_object: Returning arrays_projection_corrected from shelve file.	MemTotal: 1824.8515625
+2022-04-21 15:47:02.887 INFO atlas - __init__: The dictionnary of available mask per slice has not been computed yet.Doing it now, this may take several hours.
+2022-04-21 15:47:02.887 INFO atlas - save_all_projected_masks_and_spectra: Starting slice 0
+[2022-04-21 15:47:28 +0200] [446859] [CRITICAL] WORKER TIMEOUT (pid:79337)
+[2022-04-21 15:47:28 +0200] [79337] [INFO] Worker exiting (pid: 79337)
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+[2022-04-21 15:47:29 +0200] [79400] [INFO] Booting worker with pid: 79400
+2022-04-21 15:47:29.204 INFO main - <module>: Starting import chain	MemTotal: 30.3671875
+2022-04-21 15:47:31.276 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 244.12890625
+2022-04-21 15:47:31.276 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 244.12890625
+2022-04-21 15:47:31.843 INFO atlas - __init__: Initializing Atlas object	MemTotal: 1084.56640625
+2022-04-21 15:47:32.299 INFO storage - return_shelved_object: Returning dic_acronym_children_id from shelve file.	MemTotal: 1383.39453125
+2022-04-21 15:47:33.165 INFO storage - return_shelved_object: Returning hierarchy from shelve file.	MemTotal: 1824.609375
+2022-04-21 15:47:33.269 INFO storage - return_shelved_object: Returning arrays_projection_corrected from shelve file.	MemTotal: 1824.87109375
+2022-04-21 15:47:33.793 INFO atlas - __init__: The dictionnary of available mask per slice has not been computed yet.Doing it now, this may take several hours.
+2022-04-21 15:47:33.793 INFO atlas - save_all_projected_masks_and_spectra: Starting slice 0
+[2022-04-21 15:47:59 +0200] [446859] [CRITICAL] WORKER TIMEOUT (pid:79400)
+[2022-04-21 15:47:59 +0200] [79400] [INFO] Worker exiting (pid: 79400)
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+[2022-04-21 15:47:59 +0200] [79496] [INFO] Booting worker with pid: 79496
+2022-04-21 15:47:59.914 INFO main - <module>: Starting import chain	MemTotal: 30.3671875
+2022-04-21 15:48:01.979 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 244.01953125
+2022-04-21 15:48:01.979 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 244.01953125
+2022-04-21 15:48:02.537 INFO atlas - __init__: Initializing Atlas object	MemTotal: 1084.578125
+2022-04-21 15:48:02.995 INFO storage - return_shelved_object: Returning dic_acronym_children_id from shelve file.	MemTotal: 1383.40625
+2022-04-21 15:48:03.883 INFO storage - return_shelved_object: Returning hierarchy from shelve file.	MemTotal: 1824.62109375
+2022-04-21 15:48:03.987 INFO storage - return_shelved_object: Returning arrays_projection_corrected from shelve file.	MemTotal: 1824.859375
+2022-04-21 15:48:04.508 INFO atlas - __init__: The dictionnary of available mask per slice has not been computed yet.Doing it now, this may take several hours.
+2022-04-21 15:48:04.508 INFO atlas - save_all_projected_masks_and_spectra: Starting slice 0
+[2022-04-21 15:48:29 +0200] [446859] [CRITICAL] WORKER TIMEOUT (pid:79496)
+[2022-04-21 15:48:29 +0200] [79496] [INFO] Worker exiting (pid: 79496)
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+[2022-04-21 15:48:30 +0200] [79594] [INFO] Booting worker with pid: 79594
+2022-04-21 15:48:30.896 INFO main - <module>: Starting import chain	MemTotal: 30.3671875
+2022-04-21 15:48:32.965 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 243.91796875
+2022-04-21 15:48:32.966 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 244.140625
+2022-04-21 15:48:33.533 INFO atlas - __init__: Initializing Atlas object	MemTotal: 1084.58203125
+2022-04-21 15:48:33.990 INFO storage - return_shelved_object: Returning dic_acronym_children_id from shelve file.	MemTotal: 1383.41015625
+2022-04-21 15:48:34.856 INFO storage - return_shelved_object: Returning hierarchy from shelve file.	MemTotal: 1824.625
+2022-04-21 15:48:34.958 INFO storage - return_shelved_object: Returning arrays_projection_corrected from shelve file.	MemTotal: 1824.88671875
+2022-04-21 15:48:35.482 INFO atlas - __init__: The dictionnary of available mask per slice has not been computed yet.Doing it now, this may take several hours.
+2022-04-21 15:48:35.482 INFO atlas - save_all_projected_masks_and_spectra: Starting slice 0
+[2022-04-21 15:49:00 +0200] [446859] [CRITICAL] WORKER TIMEOUT (pid:79594)
+[2022-04-21 15:49:00 +0200] [79594] [INFO] Worker exiting (pid: 79594)
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+[2022-04-21 15:49:01 +0200] [79645] [INFO] Booting worker with pid: 79645
+2022-04-21 15:49:01.879 INFO main - <module>: Starting import chain	MemTotal: 30.3671875
+2022-04-21 15:49:03.954 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 243.98828125
+2022-04-21 15:49:03.954 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 243.98828125
+2022-04-21 15:49:04.524 INFO atlas - __init__: Initializing Atlas object	MemTotal: 1084.54296875
+2022-04-21 15:49:04.979 INFO storage - return_shelved_object: Returning dic_acronym_children_id from shelve file.	MemTotal: 1383.37109375
+2022-04-21 15:49:05.841 INFO storage - return_shelved_object: Returning hierarchy from shelve file.	MemTotal: 1824.5859375
+2022-04-21 15:49:05.944 INFO storage - return_shelved_object: Returning arrays_projection_corrected from shelve file.	MemTotal: 1824.84765625
+2022-04-21 15:49:06.468 INFO atlas - __init__: The dictionnary of available mask per slice has not been computed yet.Doing it now, this may take several hours.
+2022-04-21 15:49:06.468 INFO atlas - save_all_projected_masks_and_spectra: Starting slice 0
+[2022-04-21 15:49:31 +0200] [446859] [CRITICAL] WORKER TIMEOUT (pid:79645)
+[2022-04-21 15:49:31 +0200] [79645] [INFO] Worker exiting (pid: 79645)
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+[2022-04-21 15:49:32 +0200] [79702] [INFO] Booting worker with pid: 79702
+2022-04-21 15:49:32.545 INFO main - <module>: Starting import chain	MemTotal: 30.3671875
+2022-04-21 15:49:34.604 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 244.0390625
+2022-04-21 15:49:34.604 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 244.0390625
+2022-04-21 15:49:35.160 INFO atlas - __init__: Initializing Atlas object	MemTotal: 1084.57421875
+2022-04-21 15:49:35.616 INFO storage - return_shelved_object: Returning dic_acronym_children_id from shelve file.	MemTotal: 1383.40234375
+2022-04-21 15:49:36.502 INFO storage - return_shelved_object: Returning hierarchy from shelve file.	MemTotal: 1824.6171875
+2022-04-21 15:49:36.604 INFO storage - return_shelved_object: Returning arrays_projection_corrected from shelve file.	MemTotal: 1824.87890625
+2022-04-21 15:49:37.124 INFO atlas - __init__: The dictionnary of available mask per slice has not been computed yet.Doing it now, this may take several hours.
+2022-04-21 15:49:37.125 INFO atlas - save_all_projected_masks_and_spectra: Starting slice 0
+[2022-04-21 15:50:02 +0200] [446859] [CRITICAL] WORKER TIMEOUT (pid:79702)
+[2022-04-21 15:50:02 +0200] [79702] [INFO] Worker exiting (pid: 79702)
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+[2022-04-21 15:50:03 +0200] [79761] [INFO] Booting worker with pid: 79761
+2022-04-21 15:50:03.504 INFO main - <module>: Starting import chain	MemTotal: 30.3671875
+2022-04-21 15:50:05.567 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 244.0546875
+2022-04-21 15:50:05.567 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 244.0546875
+2022-04-21 15:50:06.234 INFO atlas - __init__: Initializing Atlas object	MemTotal: 1084.54296875
+2022-04-21 15:50:06.685 INFO storage - return_shelved_object: Returning dic_acronym_children_id from shelve file.	MemTotal: 1383.37109375
+2022-04-21 15:50:07.551 INFO storage - return_shelved_object: Returning hierarchy from shelve file.	MemTotal: 1824.5859375
+2022-04-21 15:50:07.654 INFO storage - return_shelved_object: Returning arrays_projection_corrected from shelve file.	MemTotal: 1824.84765625
+2022-04-21 15:50:08.175 INFO atlas - __init__: The dictionnary of available mask per slice has not been computed yet.Doing it now, this may take several hours.
+2022-04-21 15:50:08.175 INFO atlas - save_all_projected_masks_and_spectra: Starting slice 0
+[2022-04-21 15:50:33 +0200] [446859] [CRITICAL] WORKER TIMEOUT (pid:79761)
+[2022-04-21 15:50:33 +0200] [79761] [INFO] Worker exiting (pid: 79761)
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+[2022-04-21 15:50:34 +0200] [79814] [INFO] Booting worker with pid: 79814
+2022-04-21 15:50:34.264 INFO main - <module>: Starting import chain	MemTotal: 30.3671875
+2022-04-21 15:50:36.324 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 243.9296875
+2022-04-21 15:50:36.325 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 243.9296875
+2022-04-21 15:50:36.947 INFO atlas - __init__: Initializing Atlas object	MemTotal: 1084.54296875
+2022-04-21 15:50:37.403 INFO storage - return_shelved_object: Returning dic_acronym_children_id from shelve file.	MemTotal: 1383.37109375
+2022-04-21 15:50:38.272 INFO storage - return_shelved_object: Returning hierarchy from shelve file.	MemTotal: 1824.5859375
+2022-04-21 15:50:38.376 INFO storage - return_shelved_object: Returning arrays_projection_corrected from shelve file.	MemTotal: 1824.84765625
+2022-04-21 15:50:38.899 INFO atlas - __init__: The dictionnary of available mask per slice has not been computed yet.Doing it now, this may take several hours.
+2022-04-21 15:50:38.899 INFO atlas - save_all_projected_masks_and_spectra: Starting slice 0
+[2022-04-21 15:51:04 +0200] [446859] [CRITICAL] WORKER TIMEOUT (pid:79814)
+[2022-04-21 15:51:04 +0200] [79814] [INFO] Worker exiting (pid: 79814)
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+[2022-04-21 15:51:04 +0200] [79892] [INFO] Booting worker with pid: 79892
+2022-04-21 15:51:05.082 INFO main - <module>: Starting import chain	MemTotal: 30.3671875
+2022-04-21 15:51:07.144 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 243.9453125
+2022-04-21 15:51:07.144 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 243.9453125
+2022-04-21 15:51:07.703 INFO atlas - __init__: Initializing Atlas object	MemTotal: 1084.56640625
+2022-04-21 15:51:08.162 INFO storage - return_shelved_object: Returning dic_acronym_children_id from shelve file.	MemTotal: 1383.39453125
+2022-04-21 15:51:09.048 INFO storage - return_shelved_object: Returning hierarchy from shelve file.	MemTotal: 1824.609375
+2022-04-21 15:51:09.153 INFO storage - return_shelved_object: Returning arrays_projection_corrected from shelve file.	MemTotal: 1824.875
+2022-04-21 15:51:09.676 INFO atlas - __init__: The dictionnary of available mask per slice has not been computed yet.Doing it now, this may take several hours.
+2022-04-21 15:51:09.676 INFO atlas - save_all_projected_masks_and_spectra: Starting slice 0
+[2022-04-21 15:51:35 +0200] [446859] [CRITICAL] WORKER TIMEOUT (pid:79892)
+[2022-04-21 15:51:35 +0200] [79892] [INFO] Worker exiting (pid: 79892)
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+[2022-04-21 15:51:35 +0200] [79957] [INFO] Booting worker with pid: 79957
+2022-04-21 15:51:35.817 INFO main - <module>: Starting import chain	MemTotal: 30.3671875
+2022-04-21 15:51:37.738 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 244.12890625
+2022-04-21 15:51:37.738 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 244.12890625
+2022-04-21 15:51:38.308 INFO atlas - __init__: Initializing Atlas object	MemTotal: 1084.5703125
+2022-04-21 15:51:38.763 INFO storage - return_shelved_object: Returning dic_acronym_children_id from shelve file.	MemTotal: 1383.3984375
+2022-04-21 15:51:39.652 INFO storage - return_shelved_object: Returning hierarchy from shelve file.	MemTotal: 1824.61328125
+2022-04-21 15:51:39.752 INFO storage - return_shelved_object: Returning arrays_projection_corrected from shelve file.	MemTotal: 1824.7421875
+2022-04-21 15:51:40.277 INFO atlas - __init__: The dictionnary of available mask per slice has not been computed yet.Doing it now, this may take several hours.
+2022-04-21 15:51:40.277 INFO atlas - save_all_projected_masks_and_spectra: Starting slice 0
+[2022-04-21 15:52:05 +0200] [446859] [CRITICAL] WORKER TIMEOUT (pid:79957)
+[2022-04-21 15:52:05 +0200] [79957] [INFO] Worker exiting (pid: 79957)
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+[2022-04-21 15:52:06 +0200] [80010] [INFO] Booting worker with pid: 80010
+2022-04-21 15:52:06.864 INFO main - <module>: Starting import chain	MemTotal: 30.3671875
+2022-04-21 15:52:08.926 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 243.9296875
+2022-04-21 15:52:08.926 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 243.9296875
+2022-04-21 15:52:09.512 INFO atlas - __init__: Initializing Atlas object	MemTotal: 1084.56640625
+2022-04-21 15:52:09.971 INFO storage - return_shelved_object: Returning dic_acronym_children_id from shelve file.	MemTotal: 1383.39453125
+2022-04-21 15:52:10.838 INFO storage - return_shelved_object: Returning hierarchy from shelve file.	MemTotal: 1824.609375
+2022-04-21 15:52:10.943 INFO storage - return_shelved_object: Returning arrays_projection_corrected from shelve file.	MemTotal: 1824.87109375
+2022-04-21 15:52:11.467 INFO atlas - __init__: The dictionnary of available mask per slice has not been computed yet.Doing it now, this may take several hours.
+2022-04-21 15:52:11.467 INFO atlas - save_all_projected_masks_and_spectra: Starting slice 0
+[2022-04-21 15:52:36 +0200] [446859] [CRITICAL] WORKER TIMEOUT (pid:80010)
+[2022-04-21 15:52:36 +0200] [80010] [INFO] Worker exiting (pid: 80010)
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+[2022-04-21 15:52:37 +0200] [80064] [INFO] Booting worker with pid: 80064
+2022-04-21 15:52:37.793 INFO main - <module>: Starting import chain	MemTotal: 30.3671875
+2022-04-21 15:52:39.865 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 243.9140625
+2022-04-21 15:52:39.865 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 244.13671875
+2022-04-21 15:52:40.428 INFO atlas - __init__: Initializing Atlas object	MemTotal: 1084.578125
+2022-04-21 15:52:40.886 INFO storage - return_shelved_object: Returning dic_acronym_children_id from shelve file.	MemTotal: 1383.40625
+2022-04-21 15:52:41.753 INFO storage - return_shelved_object: Returning hierarchy from shelve file.	MemTotal: 1824.62109375
+2022-04-21 15:52:41.857 INFO storage - return_shelved_object: Returning arrays_projection_corrected from shelve file.	MemTotal: 1824.8828125
+2022-04-21 15:52:42.382 INFO atlas - __init__: The dictionnary of available mask per slice has not been computed yet.Doing it now, this may take several hours.
+2022-04-21 15:52:42.383 INFO atlas - save_all_projected_masks_and_spectra: Starting slice 0
+[2022-04-21 15:53:07 +0200] [446859] [CRITICAL] WORKER TIMEOUT (pid:80064)
+[2022-04-21 15:53:07 +0200] [80064] [INFO] Worker exiting (pid: 80064)
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+[2022-04-21 15:53:08 +0200] [80114] [INFO] Booting worker with pid: 80114
+2022-04-21 15:53:08.526 INFO main - <module>: Starting import chain	MemTotal: 30.3671875
+2022-04-21 15:53:10.594 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 243.94921875
+2022-04-21 15:53:10.594 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 243.94921875
+2022-04-21 15:53:11.172 INFO atlas - __init__: Initializing Atlas object	MemTotal: 1084.54296875
+2022-04-21 15:53:11.633 INFO storage - return_shelved_object: Returning dic_acronym_children_id from shelve file.	MemTotal: 1383.37109375
+2022-04-21 15:53:12.526 INFO storage - return_shelved_object: Returning hierarchy from shelve file.	MemTotal: 1824.5859375
+2022-04-21 15:53:12.630 INFO storage - return_shelved_object: Returning arrays_projection_corrected from shelve file.	MemTotal: 1824.84765625
+2022-04-21 15:53:13.152 INFO atlas - __init__: The dictionnary of available mask per slice has not been computed yet.Doing it now, this may take several hours.
+2022-04-21 15:53:13.152 INFO atlas - save_all_projected_masks_and_spectra: Starting slice 0
+[2022-04-21 15:53:38 +0200] [446859] [CRITICAL] WORKER TIMEOUT (pid:80114)
+[2022-04-21 15:53:38 +0200] [80114] [INFO] Worker exiting (pid: 80114)
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+[2022-04-21 15:53:39 +0200] [80169] [INFO] Booting worker with pid: 80169
+2022-04-21 15:53:39.233 INFO main - <module>: Starting import chain	MemTotal: 30.3671875
+2022-04-21 15:53:41.296 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 244.125
+2022-04-21 15:53:41.296 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 244.125
+2022-04-21 15:53:41.895 INFO atlas - __init__: Initializing Atlas object	MemTotal: 1084.56640625
+2022-04-21 15:53:42.353 INFO storage - return_shelved_object: Returning dic_acronym_children_id from shelve file.	MemTotal: 1383.39453125
+2022-04-21 15:53:43.257 INFO storage - return_shelved_object: Returning hierarchy from shelve file.	MemTotal: 1824.66796875
+2022-04-21 15:53:43.360 INFO storage - return_shelved_object: Returning arrays_projection_corrected from shelve file.	MemTotal: 1824.85546875
+2022-04-21 15:53:43.885 INFO atlas - __init__: The dictionnary of available mask per slice has not been computed yet.Doing it now, this may take several hours.
+2022-04-21 15:53:43.886 INFO atlas - save_all_projected_masks_and_spectra: Starting slice 0
+[2022-04-21 15:54:09 +0200] [446859] [CRITICAL] WORKER TIMEOUT (pid:80169)
+[2022-04-21 15:54:09 +0200] [80169] [INFO] Worker exiting (pid: 80169)
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+[2022-04-21 15:54:10 +0200] [80260] [INFO] Booting worker with pid: 80260
+2022-04-21 15:54:10.311 INFO main - <module>: Starting import chain	MemTotal: 30.3671875
+2022-04-21 15:54:12.260 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 244.12890625
+2022-04-21 15:54:12.260 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 244.12890625
+2022-04-21 15:54:12.879 INFO atlas - __init__: Initializing Atlas object	MemTotal: 1084.54296875
+2022-04-21 15:54:13.340 INFO storage - return_shelved_object: Returning dic_acronym_children_id from shelve file.	MemTotal: 1383.37109375
+2022-04-21 15:54:14.253 INFO storage - return_shelved_object: Returning hierarchy from shelve file.	MemTotal: 1824.5859375
+2022-04-21 15:54:14.357 INFO storage - return_shelved_object: Returning arrays_projection_corrected from shelve file.	MemTotal: 1824.84765625
+2022-04-21 15:54:14.892 INFO atlas - __init__: The dictionnary of available mask per slice has not been computed yet.Doing it now, this may take several hours.
+2022-04-21 15:54:14.892 INFO atlas - save_all_projected_masks_and_spectra: Starting slice 0
+[2022-04-21 15:54:40 +0200] [446859] [CRITICAL] WORKER TIMEOUT (pid:80260)
+[2022-04-21 15:54:40 +0200] [80260] [INFO] Worker exiting (pid: 80260)
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+[2022-04-21 15:54:40 +0200] [80312] [INFO] Booting worker with pid: 80312
+2022-04-21 15:54:41.008 INFO main - <module>: Starting import chain	MemTotal: 30.3671875
+2022-04-21 15:54:43.091 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 244.08203125
+2022-04-21 15:54:43.091 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 244.08203125
+2022-04-21 15:54:43.668 INFO atlas - __init__: Initializing Atlas object	MemTotal: 1084.57421875
+2022-04-21 15:54:44.129 INFO storage - return_shelved_object: Returning dic_acronym_children_id from shelve file.	MemTotal: 1383.40234375
+2022-04-21 15:54:45.022 INFO storage - return_shelved_object: Returning hierarchy from shelve file.	MemTotal: 1824.67578125
+2022-04-21 15:54:45.125 INFO storage - return_shelved_object: Returning arrays_projection_corrected from shelve file.	MemTotal: 1824.84375
+2022-04-21 15:54:45.650 INFO atlas - __init__: The dictionnary of available mask per slice has not been computed yet.Doing it now, this may take several hours.
+2022-04-21 15:54:45.650 INFO atlas - save_all_projected_masks_and_spectra: Starting slice 0
+[2022-04-21 15:55:10 +0200] [446859] [CRITICAL] WORKER TIMEOUT (pid:80312)
+[2022-04-21 15:55:10 +0200] [80312] [INFO] Worker exiting (pid: 80312)
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+[2022-04-21 15:55:11 +0200] [80371] [INFO] Booting worker with pid: 80371
+2022-04-21 15:55:11.751 INFO main - <module>: Starting import chain	MemTotal: 30.3671875
+2022-04-21 15:55:13.935 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 244.01171875
+2022-04-21 15:55:13.935 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 244.01171875
+2022-04-21 15:55:14.568 INFO atlas - __init__: Initializing Atlas object	MemTotal: 1084.56640625
+2022-04-21 15:55:15.019 INFO storage - return_shelved_object: Returning dic_acronym_children_id from shelve file.	MemTotal: 1383.39453125
+2022-04-21 15:55:15.866 INFO storage - return_shelved_object: Returning hierarchy from shelve file.	MemTotal: 1824.66796875
+2022-04-21 15:55:15.966 INFO storage - return_shelved_object: Returning arrays_projection_corrected from shelve file.	MemTotal: 1824.78515625
+2022-04-21 15:55:16.501 INFO atlas - __init__: The dictionnary of available mask per slice has not been computed yet.Doing it now, this may take several hours.
+2022-04-21 15:55:16.501 INFO atlas - save_all_projected_masks_and_spectra: Starting slice 0
+[2022-04-21 15:55:41 +0200] [446859] [CRITICAL] WORKER TIMEOUT (pid:80371)
+[2022-04-21 15:55:41 +0200] [80371] [INFO] Worker exiting (pid: 80371)
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+[2022-04-21 15:55:42 +0200] [80425] [INFO] Booting worker with pid: 80425
+2022-04-21 15:55:42.704 INFO main - <module>: Starting import chain	MemTotal: 30.3671875
+2022-04-21 15:55:44.790 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 244.08984375
+2022-04-21 15:55:44.790 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 244.08984375
+2022-04-21 15:55:45.456 INFO atlas - __init__: Initializing Atlas object	MemTotal: 1084.5703125
+2022-04-21 15:55:45.920 INFO storage - return_shelved_object: Returning dic_acronym_children_id from shelve file.	MemTotal: 1383.3984375
+2022-04-21 15:55:46.821 INFO storage - return_shelved_object: Returning hierarchy from shelve file.	MemTotal: 1824.671875
+2022-04-21 15:55:46.922 INFO storage - return_shelved_object: Returning arrays_projection_corrected from shelve file.	MemTotal: 1824.765625
+2022-04-21 15:55:47.448 INFO atlas - __init__: The dictionnary of available mask per slice has not been computed yet.Doing it now, this may take several hours.
+2022-04-21 15:55:47.448 INFO atlas - save_all_projected_masks_and_spectra: Starting slice 0
+[2022-04-21 15:56:12 +0200] [446859] [CRITICAL] WORKER TIMEOUT (pid:80425)
+[2022-04-21 15:56:12 +0200] [80425] [INFO] Worker exiting (pid: 80425)
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+[2022-04-21 15:56:13 +0200] [80535] [INFO] Booting worker with pid: 80535
+2022-04-21 15:56:13.511 INFO main - <module>: Starting import chain	MemTotal: 30.37109375
+2022-04-21 15:56:15.611 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 244.0234375
+2022-04-21 15:56:15.611 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 244.0234375
+2022-04-21 15:56:16.183 INFO atlas - __init__: Initializing Atlas object	MemTotal: 1084.59765625
+2022-04-21 15:56:16.651 INFO storage - return_shelved_object: Returning dic_acronym_children_id from shelve file.	MemTotal: 1383.42578125
+2022-04-21 15:56:17.526 INFO storage - return_shelved_object: Returning hierarchy from shelve file.	MemTotal: 1824.69921875
+2022-04-21 15:56:17.627 INFO storage - return_shelved_object: Returning arrays_projection_corrected from shelve file.	MemTotal: 1824.87109375
+2022-04-21 15:56:18.150 INFO atlas - __init__: The dictionnary of available mask per slice has not been computed yet.Doing it now, this may take several hours.
+2022-04-21 15:56:18.150 INFO atlas - save_all_projected_masks_and_spectra: Starting slice 0
+[2022-04-21 15:56:43 +0200] [446859] [CRITICAL] WORKER TIMEOUT (pid:80535)
+[2022-04-21 15:56:43 +0200] [80535] [INFO] Worker exiting (pid: 80535)
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+[2022-04-21 15:56:44 +0200] [80614] [INFO] Booting worker with pid: 80614
+2022-04-21 15:56:44.243 INFO main - <module>: Starting import chain	MemTotal: 30.37109375
+2022-04-21 15:56:46.167 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 244.1484375
+2022-04-21 15:56:46.167 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 244.1484375
+2022-04-21 15:56:46.744 INFO atlas - __init__: Initializing Atlas object	MemTotal: 1084.56640625
+2022-04-21 15:56:47.199 INFO storage - return_shelved_object: Returning dic_acronym_children_id from shelve file.	MemTotal: 1383.39453125
+2022-04-21 15:56:48.053 INFO storage - return_shelved_object: Returning hierarchy from shelve file.	MemTotal: 1824.609375
+2022-04-21 15:56:48.150 INFO storage - return_shelved_object: Returning arrays_projection_corrected from shelve file.	MemTotal: 1824.7265625
+2022-04-21 15:56:48.654 INFO atlas - __init__: The dictionnary of available mask per slice has not been computed yet.Doing it now, this may take several hours.
+2022-04-21 15:56:48.654 INFO atlas - save_all_projected_masks_and_spectra: Starting slice 0
+[2022-04-21 15:57:14 +0200] [446859] [CRITICAL] WORKER TIMEOUT (pid:80614)
+[2022-04-21 15:57:14 +0200] [80614] [INFO] Worker exiting (pid: 80614)
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+[2022-04-21 15:57:14 +0200] [80780] [INFO] Booting worker with pid: 80780
+2022-04-21 15:57:14.961 INFO main - <module>: Starting import chain	MemTotal: 30.37109375
+2022-04-21 15:57:17.024 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 244.0625
+2022-04-21 15:57:17.024 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 244.0625
+2022-04-21 15:57:17.688 INFO atlas - __init__: Initializing Atlas object	MemTotal: 1084.578125
+2022-04-21 15:57:18.163 INFO storage - return_shelved_object: Returning dic_acronym_children_id from shelve file.	MemTotal: 1383.40625
+2022-04-21 15:57:18.998 INFO storage - return_shelved_object: Returning hierarchy from shelve file.	MemTotal: 1824.62109375
+2022-04-21 15:57:19.101 INFO storage - return_shelved_object: Returning arrays_projection_corrected from shelve file.	MemTotal: 1824.88671875
+2022-04-21 15:57:19.604 INFO atlas - __init__: The dictionnary of available mask per slice has not been computed yet.Doing it now, this may take several hours.
+2022-04-21 15:57:19.604 INFO atlas - save_all_projected_masks_and_spectra: Starting slice 0
+[2022-04-21 15:57:44 +0200] [446859] [CRITICAL] WORKER TIMEOUT (pid:80780)
+[2022-04-21 15:57:44 +0200] [80780] [INFO] Worker exiting (pid: 80780)
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+[2022-04-21 15:57:45 +0200] [80835] [INFO] Booting worker with pid: 80835
+2022-04-21 15:57:45.676 INFO main - <module>: Starting import chain	MemTotal: 30.37109375
+2022-04-21 15:57:47.748 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 244.09765625
+2022-04-21 15:57:47.748 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 244.09765625
+2022-04-21 15:57:48.332 INFO atlas - __init__: Initializing Atlas object	MemTotal: 1084.5859375
+2022-04-21 15:57:48.772 INFO storage - return_shelved_object: Returning dic_acronym_children_id from shelve file.	MemTotal: 1383.4140625
+2022-04-21 15:57:49.624 INFO storage - return_shelved_object: Returning hierarchy from shelve file.	MemTotal: 1824.62890625
+2022-04-21 15:57:49.723 INFO storage - return_shelved_object: Returning arrays_projection_corrected from shelve file.	MemTotal: 1824.890625
+2022-04-21 15:57:50.234 INFO atlas - __init__: The dictionnary of available mask per slice has not been computed yet.Doing it now, this may take several hours.
+2022-04-21 15:57:50.234 INFO atlas - save_all_projected_masks_and_spectra: Starting slice 0
+[2022-04-21 15:58:15 +0200] [446859] [CRITICAL] WORKER TIMEOUT (pid:80835)
+[2022-04-21 15:58:15 +0200] [80835] [INFO] Worker exiting (pid: 80835)
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+[2022-04-21 15:58:16 +0200] [80887] [INFO] Booting worker with pid: 80887
+2022-04-21 15:58:16.317 INFO main - <module>: Starting import chain	MemTotal: 30.37109375
+2022-04-21 15:58:18.382 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 243.9140625
+2022-04-21 15:58:18.382 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 244.15234375
+2022-04-21 15:58:18.966 INFO atlas - __init__: Initializing Atlas object	MemTotal: 1084.59375
+2022-04-21 15:58:19.438 INFO storage - return_shelved_object: Returning dic_acronym_children_id from shelve file.	MemTotal: 1383.421875
+2022-04-21 15:58:20.294 INFO storage - return_shelved_object: Returning hierarchy from shelve file.	MemTotal: 1824.63671875
+2022-04-21 15:58:20.398 INFO storage - return_shelved_object: Returning arrays_projection_corrected from shelve file.	MemTotal: 1824.8984375
+2022-04-21 15:58:20.902 INFO atlas - __init__: The dictionnary of available mask per slice has not been computed yet.Doing it now, this may take several hours.
+2022-04-21 15:58:20.902 INFO atlas - save_all_projected_masks_and_spectra: Starting slice 0
+[2022-04-21 15:58:46 +0200] [446859] [CRITICAL] WORKER TIMEOUT (pid:80887)
+[2022-04-21 15:58:46 +0200] [80887] [INFO] Worker exiting (pid: 80887)
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+[2022-04-21 15:58:47 +0200] [80942] [INFO] Booting worker with pid: 80942
+2022-04-21 15:58:47.264 INFO main - <module>: Starting import chain	MemTotal: 30.37109375
+2022-04-21 15:58:49.330 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 243.92578125
+2022-04-21 15:58:49.330 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 243.92578125
+2022-04-21 15:58:49.908 INFO atlas - __init__: Initializing Atlas object	MemTotal: 1084.5859375
+2022-04-21 15:58:50.385 INFO storage - return_shelved_object: Returning dic_acronym_children_id from shelve file.	MemTotal: 1383.4140625
+2022-04-21 15:58:51.225 INFO storage - return_shelved_object: Returning hierarchy from shelve file.	MemTotal: 1824.62890625
+2022-04-21 15:58:51.329 INFO storage - return_shelved_object: Returning arrays_projection_corrected from shelve file.	MemTotal: 1824.890625
+2022-04-21 15:58:51.834 INFO atlas - __init__: The dictionnary of available mask per slice has not been computed yet.Doing it now, this may take several hours.
+2022-04-21 15:58:51.834 INFO atlas - save_all_projected_masks_and_spectra: Starting slice 0
+[2022-04-21 15:59:17 +0200] [446859] [CRITICAL] WORKER TIMEOUT (pid:80942)
+[2022-04-21 15:59:17 +0200] [80942] [INFO] Worker exiting (pid: 80942)
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+[2022-04-21 15:59:18 +0200] [80995] [INFO] Booting worker with pid: 80995
+2022-04-21 15:59:18.215 INFO main - <module>: Starting import chain	MemTotal: 30.37109375
+2022-04-21 15:59:20.278 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 244.02734375
+2022-04-21 15:59:20.278 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 244.02734375
+2022-04-21 15:59:21.030 INFO atlas - __init__: Initializing Atlas object	MemTotal: 1084.56640625
+2022-04-21 15:59:21.502 INFO storage - return_shelved_object: Returning dic_acronym_children_id from shelve file.	MemTotal: 1383.39453125
+2022-04-21 15:59:22.340 INFO storage - return_shelved_object: Returning hierarchy from shelve file.	MemTotal: 1824.609375
+2022-04-21 15:59:22.443 INFO storage - return_shelved_object: Returning arrays_projection_corrected from shelve file.	MemTotal: 1824.87109375
+2022-04-21 15:59:22.949 INFO atlas - __init__: The dictionnary of available mask per slice has not been computed yet.Doing it now, this may take several hours.
+2022-04-21 15:59:22.949 INFO atlas - save_all_projected_masks_and_spectra: Starting slice 0
+[2022-04-21 15:59:48 +0200] [446859] [CRITICAL] WORKER TIMEOUT (pid:80995)
+[2022-04-21 15:59:48 +0200] [80995] [INFO] Worker exiting (pid: 80995)
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+[2022-04-21 15:59:49 +0200] [81205] [INFO] Booting worker with pid: 81205
+2022-04-21 15:59:49.235 INFO main - <module>: Starting import chain	MemTotal: 30.37109375
+2022-04-21 15:59:51.392 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 244.1328125
+2022-04-21 15:59:51.392 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 244.1328125
+2022-04-21 15:59:51.987 INFO atlas - __init__: Initializing Atlas object	MemTotal: 1084.56640625
+2022-04-21 15:59:52.462 INFO storage - return_shelved_object: Returning dic_acronym_children_id from shelve file.	MemTotal: 1383.39453125
+2022-04-21 15:59:53.311 INFO storage - return_shelved_object: Returning hierarchy from shelve file.	MemTotal: 1824.66796875
+2022-04-21 15:59:53.411 INFO storage - return_shelved_object: Returning arrays_projection_corrected from shelve file.	MemTotal: 1824.87109375
+2022-04-21 15:59:53.921 INFO atlas - __init__: The dictionnary of available mask per slice has not been computed yet.Doing it now, this may take several hours.
+2022-04-21 15:59:53.921 INFO atlas - save_all_projected_masks_and_spectra: Starting slice 0
+[2022-04-21 16:00:19 +0200] [446859] [CRITICAL] WORKER TIMEOUT (pid:81205)
+[2022-04-21 16:00:19 +0200] [81205] [INFO] Worker exiting (pid: 81205)
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+[2022-04-21 16:00:19 +0200] [81280] [INFO] Booting worker with pid: 81280
+2022-04-21 16:00:19.881 INFO main - <module>: Starting import chain	MemTotal: 30.37109375
+2022-04-21 16:00:22.060 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 244.09765625
+2022-04-21 16:00:22.061 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 244.09765625
+2022-04-21 16:00:22.700 INFO atlas - __init__: Initializing Atlas object	MemTotal: 1084.59375
+2022-04-21 16:00:23.163 INFO storage - return_shelved_object: Returning dic_acronym_children_id from shelve file.	MemTotal: 1383.421875
+2022-04-21 16:00:24.028 INFO storage - return_shelved_object: Returning hierarchy from shelve file.	MemTotal: 1824.6953125
+2022-04-21 16:00:24.126 INFO storage - return_shelved_object: Returning arrays_projection_corrected from shelve file.	MemTotal: 1824.8671875
+2022-04-21 16:00:24.670 INFO atlas - __init__: The dictionnary of available mask per slice has not been computed yet.Doing it now, this may take several hours.
+2022-04-21 16:00:24.671 INFO atlas - save_all_projected_masks_and_spectra: Starting slice 0
+[2022-04-21 16:00:49 +0200] [446859] [CRITICAL] WORKER TIMEOUT (pid:81280)
+[2022-04-21 16:00:49 +0200] [81280] [INFO] Worker exiting (pid: 81280)
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+[2022-04-21 16:00:50 +0200] [446859] [WARNING] Worker with pid 81280 was terminated due to signal 9
+[2022-04-21 16:00:50 +0200] [82269] [INFO] Booting worker with pid: 82269
+2022-04-21 16:00:51.107 INFO main - <module>: Starting import chain	MemTotal: 30.3671875
+2022-04-21 16:00:53.330 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 243.921875
+2022-04-21 16:00:53.331 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 243.921875
+2022-04-21 16:00:54.052 INFO atlas - __init__: Initializing Atlas object	MemTotal: 1084.57421875
+2022-04-21 16:00:54.509 INFO storage - return_shelved_object: Returning dic_acronym_children_id from shelve file.	MemTotal: 1383.40234375
+2022-04-21 16:00:55.408 INFO storage - return_shelved_object: Returning hierarchy from shelve file.	MemTotal: 1824.67578125
+2022-04-21 16:00:55.518 INFO storage - return_shelved_object: Returning arrays_projection_corrected from shelve file.	MemTotal: 1824.8359375
+2022-04-21 16:00:56.062 INFO atlas - __init__: The dictionnary of available mask per slice has not been computed yet.Doing it now, this may take several hours.
+2022-04-21 16:00:56.063 INFO atlas - save_all_projected_masks_and_spectra: Starting slice 0
+[2022-04-21 16:01:21 +0200] [446859] [CRITICAL] WORKER TIMEOUT (pid:82269)
+[2022-04-21 16:01:21 +0200] [82269] [INFO] Worker exiting (pid: 82269)
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+[2022-04-21 16:01:22 +0200] [446859] [WARNING] Worker with pid 82269 was terminated due to signal 9
+[2022-04-21 16:01:22 +0200] [82341] [INFO] Booting worker with pid: 82341
+2022-04-21 16:01:22.377 INFO main - <module>: Starting import chain	MemTotal: 30.3671875
+2022-04-21 16:01:24.903 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 244.06640625
+2022-04-21 16:01:24.904 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 244.06640625
+2022-04-21 16:01:25.650 INFO atlas - __init__: Initializing Atlas object	MemTotal: 1084.578125
+2022-04-21 16:01:26.118 INFO storage - return_shelved_object: Returning dic_acronym_children_id from shelve file.	MemTotal: 1383.40625
+2022-04-21 16:01:27.042 INFO storage - return_shelved_object: Returning hierarchy from shelve file.	MemTotal: 1824.6796875
+2022-04-21 16:01:27.151 INFO storage - return_shelved_object: Returning arrays_projection_corrected from shelve file.	MemTotal: 1824.81640625
+2022-04-21 16:01:27.704 INFO atlas - __init__: The dictionnary of available mask per slice has not been computed yet.Doing it now, this may take several hours.
+2022-04-21 16:01:27.704 INFO atlas - save_all_projected_masks_and_spectra: Starting slice 0
+[2022-04-21 16:01:52 +0200] [446859] [CRITICAL] WORKER TIMEOUT (pid:82341)
+[2022-04-21 16:01:52 +0200] [82341] [INFO] Worker exiting (pid: 82341)
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+[2022-04-21 16:01:53 +0200] [82604] [INFO] Booting worker with pid: 82604
+2022-04-21 16:01:53.424 INFO main - <module>: Starting import chain	MemTotal: 30.3671875
+2022-04-21 16:01:55.962 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 244.01171875
+2022-04-21 16:01:55.963 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 244.01171875
+2022-04-21 16:01:56.836 INFO atlas - __init__: Initializing Atlas object	MemTotal: 1084.57421875
+2022-04-21 16:01:57.320 INFO storage - return_shelved_object: Returning dic_acronym_children_id from shelve file.	MemTotal: 1383.40234375
+2022-04-21 16:01:58.322 INFO storage - return_shelved_object: Returning hierarchy from shelve file.	MemTotal: 1824.67578125
+2022-04-21 16:01:58.429 INFO storage - return_shelved_object: Returning arrays_projection_corrected from shelve file.	MemTotal: 1824.8203125
+2022-04-21 16:01:59.022 INFO atlas - __init__: The dictionnary of available mask per slice has not been computed yet.Doing it now, this may take several hours.
+2022-04-21 16:01:59.023 INFO atlas - save_all_projected_masks_and_spectra: Starting slice 0
+[2022-04-21 16:02:23 +0200] [446859] [CRITICAL] WORKER TIMEOUT (pid:82604)
+[2022-04-21 16:02:23 +0200] [82604] [INFO] Worker exiting (pid: 82604)
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+[2022-04-21 16:02:24 +0200] [82831] [INFO] Booting worker with pid: 82831
+2022-04-21 16:02:24.420 INFO main - <module>: Starting import chain	MemTotal: 30.3671875
+2022-04-21 16:02:26.674 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 243.90234375
+2022-04-21 16:02:26.674 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 244.140625
+2022-04-21 16:02:27.332 INFO atlas - __init__: Initializing Atlas object	MemTotal: 1084.58203125
+2022-04-21 16:02:27.787 INFO storage - return_shelved_object: Returning dic_acronym_children_id from shelve file.	MemTotal: 1383.41015625
+2022-04-21 16:02:28.634 INFO storage - return_shelved_object: Returning hierarchy from shelve file.	MemTotal: 1824.68359375
+2022-04-21 16:02:28.735 INFO storage - return_shelved_object: Returning arrays_projection_corrected from shelve file.	MemTotal: 1824.8203125
+2022-04-21 16:02:29.244 INFO atlas - __init__: The dictionnary of available mask per slice has not been computed yet.Doing it now, this may take several hours.
+2022-04-21 16:02:29.244 INFO atlas - save_all_projected_masks_and_spectra: Starting slice 0
+[2022-04-21 16:02:54 +0200] [446859] [CRITICAL] WORKER TIMEOUT (pid:82831)
+[2022-04-21 16:02:54 +0200] [82831] [INFO] Worker exiting (pid: 82831)
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+[2022-04-21 16:02:55 +0200] [82910] [INFO] Booting worker with pid: 82910
+2022-04-21 16:02:55.167 INFO main - <module>: Starting import chain	MemTotal: 30.3671875
+2022-04-21 16:02:57.373 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 243.9296875
+2022-04-21 16:02:57.373 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 243.9296875
+2022-04-21 16:02:58.062 INFO atlas - __init__: Initializing Atlas object	MemTotal: 1084.56640625
+2022-04-21 16:02:58.526 INFO storage - return_shelved_object: Returning dic_acronym_children_id from shelve file.	MemTotal: 1383.39453125
+2022-04-21 16:02:59.381 INFO storage - return_shelved_object: Returning hierarchy from shelve file.	MemTotal: 1824.66796875
+2022-04-21 16:02:59.494 INFO storage - return_shelved_object: Returning arrays_projection_corrected from shelve file.	MemTotal: 1824.83203125
+2022-04-21 16:03:00.008 INFO atlas - __init__: The dictionnary of available mask per slice has not been computed yet.Doing it now, this may take several hours.
+2022-04-21 16:03:00.008 INFO atlas - save_all_projected_masks_and_spectra: Starting slice 0
+[2022-04-21 16:03:25 +0200] [446859] [CRITICAL] WORKER TIMEOUT (pid:82910)
+[2022-04-21 16:03:25 +0200] [82910] [INFO] Worker exiting (pid: 82910)
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+[2022-04-21 16:03:25 +0200] [82970] [INFO] Booting worker with pid: 82970
+2022-04-21 16:03:26.109 INFO main - <module>: Starting import chain	MemTotal: 30.3671875
+2022-04-21 16:03:28.343 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 244.015625
+2022-04-21 16:03:28.343 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 244.015625
+2022-04-21 16:03:29.028 INFO atlas - __init__: Initializing Atlas object	MemTotal: 1084.55078125
+2022-04-21 16:03:29.514 INFO storage - return_shelved_object: Returning dic_acronym_children_id from shelve file.	MemTotal: 1383.37890625
+2022-04-21 16:03:30.378 INFO storage - return_shelved_object: Returning hierarchy from shelve file.	MemTotal: 1824.65234375
+2022-04-21 16:03:30.491 INFO storage - return_shelved_object: Returning arrays_projection_corrected from shelve file.	MemTotal: 1824.83203125
+2022-04-21 16:03:31.028 INFO atlas - __init__: The dictionnary of available mask per slice has not been computed yet.Doing it now, this may take several hours.
+2022-04-21 16:03:31.028 INFO atlas - save_all_projected_masks_and_spectra: Starting slice 0
+[2022-04-21 16:03:56 +0200] [446859] [CRITICAL] WORKER TIMEOUT (pid:82970)
+[2022-04-21 16:03:56 +0200] [82970] [INFO] Worker exiting (pid: 82970)
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+[2022-04-21 16:03:56 +0200] [83022] [INFO] Booting worker with pid: 83022
+2022-04-21 16:03:56.828 INFO main - <module>: Starting import chain	MemTotal: 30.3671875
+2022-04-21 16:03:59.126 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 244.0234375
+2022-04-21 16:03:59.126 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 244.0234375
+2022-04-21 16:03:59.816 INFO atlas - __init__: Initializing Atlas object	MemTotal: 1084.54296875
+2022-04-21 16:04:00.277 INFO storage - return_shelved_object: Returning dic_acronym_children_id from shelve file.	MemTotal: 1383.37109375
+2022-04-21 16:04:01.144 INFO storage - return_shelved_object: Returning hierarchy from shelve file.	MemTotal: 1824.64453125
+2022-04-21 16:04:01.249 INFO storage - return_shelved_object: Returning arrays_projection_corrected from shelve file.	MemTotal: 1824.82421875
+2022-04-21 16:04:01.742 INFO atlas - __init__: The dictionnary of available mask per slice has not been computed yet.Doing it now, this may take several hours.
+2022-04-21 16:04:01.743 INFO atlas - save_all_projected_masks_and_spectra: Starting slice 0
+[2022-04-21 16:04:26 +0200] [446859] [CRITICAL] WORKER TIMEOUT (pid:83022)
+[2022-04-21 16:04:26 +0200] [83022] [INFO] Worker exiting (pid: 83022)
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+[2022-04-21 16:04:27 +0200] [83077] [INFO] Booting worker with pid: 83077
+2022-04-21 16:04:27.533 INFO main - <module>: Starting import chain	MemTotal: 30.3671875
+2022-04-21 16:04:29.762 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 244.0390625
+2022-04-21 16:04:29.762 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 244.0390625
+2022-04-21 16:04:30.477 INFO atlas - __init__: Initializing Atlas object	MemTotal: 1084.58203125
+2022-04-21 16:04:30.944 INFO storage - return_shelved_object: Returning dic_acronym_children_id from shelve file.	MemTotal: 1383.41015625
+2022-04-21 16:04:31.810 INFO storage - return_shelved_object: Returning hierarchy from shelve file.	MemTotal: 1824.68359375
+2022-04-21 16:04:31.912 INFO storage - return_shelved_object: Returning arrays_projection_corrected from shelve file.	MemTotal: 1824.8203125
+2022-04-21 16:04:32.396 INFO atlas - __init__: The dictionnary of available mask per slice has not been computed yet.Doing it now, this may take several hours.
+2022-04-21 16:04:32.396 INFO atlas - save_all_projected_masks_and_spectra: Starting slice 0
+[2022-04-21 16:04:57 +0200] [446859] [CRITICAL] WORKER TIMEOUT (pid:83077)
+[2022-04-21 16:04:57 +0200] [83077] [INFO] Worker exiting (pid: 83077)
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+[2022-04-21 16:04:58 +0200] [83127] [INFO] Booting worker with pid: 83127
+2022-04-21 16:04:58.527 INFO main - <module>: Starting import chain	MemTotal: 30.3671875
+2022-04-21 16:05:00.708 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 244.01953125
+2022-04-21 16:05:00.708 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 244.01953125
+2022-04-21 16:05:01.393 INFO atlas - __init__: Initializing Atlas object	MemTotal: 1084.56640625
+2022-04-21 16:05:01.842 INFO storage - return_shelved_object: Returning dic_acronym_children_id from shelve file.	MemTotal: 1383.39453125
+2022-04-21 16:05:02.681 INFO storage - return_shelved_object: Returning hierarchy from shelve file.	MemTotal: 1824.66796875
+2022-04-21 16:05:02.782 INFO storage - return_shelved_object: Returning arrays_projection_corrected from shelve file.	MemTotal: 1824.83203125
+2022-04-21 16:05:03.306 INFO atlas - __init__: The dictionnary of available mask per slice has not been computed yet.Doing it now, this may take several hours.
+2022-04-21 16:05:03.307 INFO atlas - save_all_projected_masks_and_spectra: Starting slice 0
+[2022-04-21 16:05:28 +0200] [446859] [CRITICAL] WORKER TIMEOUT (pid:83127)
+[2022-04-21 16:05:28 +0200] [83127] [INFO] Worker exiting (pid: 83127)
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+[2022-04-21 16:05:29 +0200] [83184] [INFO] Booting worker with pid: 83184
+2022-04-21 16:05:29.226 INFO main - <module>: Starting import chain	MemTotal: 30.3671875
+2022-04-21 16:05:31.376 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 243.93359375
+2022-04-21 16:05:31.376 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 243.93359375
+2022-04-21 16:05:32.081 INFO atlas - __init__: Initializing Atlas object	MemTotal: 1084.5703125
+2022-04-21 16:05:32.553 INFO storage - return_shelved_object: Returning dic_acronym_children_id from shelve file.	MemTotal: 1383.3984375
+2022-04-21 16:05:33.429 INFO storage - return_shelved_object: Returning hierarchy from shelve file.	MemTotal: 1824.671875
+2022-04-21 16:05:33.537 INFO storage - return_shelved_object: Returning arrays_projection_corrected from shelve file.	MemTotal: 1824.8046875
+2022-04-21 16:05:34.078 INFO atlas - __init__: The dictionnary of available mask per slice has not been computed yet.Doing it now, this may take several hours.
+2022-04-21 16:05:34.079 INFO atlas - save_all_projected_masks_and_spectra: Starting slice 0
+[2022-04-21 16:05:59 +0200] [446859] [CRITICAL] WORKER TIMEOUT (pid:83184)
+[2022-04-21 16:05:59 +0200] [83184] [INFO] Worker exiting (pid: 83184)
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+[2022-04-21 16:05:59 +0200] [83262] [INFO] Booting worker with pid: 83262
+2022-04-21 16:05:59.949 INFO main - <module>: Starting import chain	MemTotal: 30.3671875
+2022-04-21 16:06:02.200 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 243.95703125
+2022-04-21 16:06:02.201 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 243.95703125
+2022-04-21 16:06:02.890 INFO atlas - __init__: Initializing Atlas object	MemTotal: 1084.578125
+2022-04-21 16:06:03.339 INFO storage - return_shelved_object: Returning dic_acronym_children_id from shelve file.	MemTotal: 1383.40625
+2022-04-21 16:06:04.202 INFO storage - return_shelved_object: Returning hierarchy from shelve file.	MemTotal: 1824.6796875
+2022-04-21 16:06:04.309 INFO storage - return_shelved_object: Returning arrays_projection_corrected from shelve file.	MemTotal: 1824.8125
+2022-04-21 16:06:04.847 INFO atlas - __init__: The dictionnary of available mask per slice has not been computed yet.Doing it now, this may take several hours.
+2022-04-21 16:06:04.847 INFO atlas - save_all_projected_masks_and_spectra: Starting slice 0
+[2022-04-21 16:06:29 +0200] [446859] [CRITICAL] WORKER TIMEOUT (pid:83262)
+[2022-04-21 16:06:29 +0200] [83262] [INFO] Worker exiting (pid: 83262)
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+[2022-04-21 16:06:30 +0200] [83329] [INFO] Booting worker with pid: 83329
+2022-04-21 16:06:30.613 INFO main - <module>: Starting import chain	MemTotal: 30.3671875
+2022-04-21 16:06:32.794 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 244.04296875
+2022-04-21 16:06:32.794 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 244.04296875
+2022-04-21 16:06:33.499 INFO atlas - __init__: Initializing Atlas object	MemTotal: 1084.5703125
+2022-04-21 16:06:33.967 INFO storage - return_shelved_object: Returning dic_acronym_children_id from shelve file.	MemTotal: 1383.3984375
+2022-04-21 16:06:34.835 INFO storage - return_shelved_object: Returning hierarchy from shelve file.	MemTotal: 1824.671875
+2022-04-21 16:06:34.945 INFO storage - return_shelved_object: Returning arrays_projection_corrected from shelve file.	MemTotal: 1824.8046875
+2022-04-21 16:06:35.491 INFO atlas - __init__: The dictionnary of available mask per slice has not been computed yet.Doing it now, this may take several hours.
+2022-04-21 16:06:35.491 INFO atlas - save_all_projected_masks_and_spectra: Starting slice 0
+[2022-04-21 16:07:00 +0200] [446859] [CRITICAL] WORKER TIMEOUT (pid:83329)
+[2022-04-21 16:07:00 +0200] [83329] [INFO] Worker exiting (pid: 83329)
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+[2022-04-21 16:07:01 +0200] [83478] [INFO] Booting worker with pid: 83478
+2022-04-21 16:07:01.481 INFO main - <module>: Starting import chain	MemTotal: 30.3671875
+2022-04-21 16:07:03.601 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 244.125
+2022-04-21 16:07:03.601 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 244.125
+2022-04-21 16:07:04.300 INFO atlas - __init__: Initializing Atlas object	MemTotal: 1084.54296875
+2022-04-21 16:07:04.738 INFO storage - return_shelved_object: Returning dic_acronym_children_id from shelve file.	MemTotal: 1383.37109375
+2022-04-21 16:07:05.617 INFO storage - return_shelved_object: Returning hierarchy from shelve file.	MemTotal: 1824.64453125
+2022-04-21 16:07:05.732 INFO storage - return_shelved_object: Returning arrays_projection_corrected from shelve file.	MemTotal: 1824.78515625
+2022-04-21 16:07:06.258 INFO atlas - __init__: The dictionnary of available mask per slice has not been computed yet.Doing it now, this may take several hours.
+2022-04-21 16:07:06.258 INFO atlas - save_all_projected_masks_and_spectra: Starting slice 0
+[2022-04-21 16:07:31 +0200] [446859] [CRITICAL] WORKER TIMEOUT (pid:83478)
+[2022-04-21 16:07:31 +0200] [83478] [INFO] Worker exiting (pid: 83478)
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+[2022-04-21 16:07:32 +0200] [83660] [INFO] Booting worker with pid: 83660
+2022-04-21 16:07:32.215 INFO main - <module>: Starting import chain	MemTotal: 30.3671875
+2022-04-21 16:07:34.478 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 243.93359375
+2022-04-21 16:07:34.478 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 243.93359375
+2022-04-21 16:07:35.160 INFO atlas - __init__: Initializing Atlas object	MemTotal: 1084.57421875
+2022-04-21 16:07:35.612 INFO storage - return_shelved_object: Returning dic_acronym_children_id from shelve file.	MemTotal: 1383.40234375
+2022-04-21 16:07:36.446 INFO storage - return_shelved_object: Returning hierarchy from shelve file.	MemTotal: 1824.67578125
+2022-04-21 16:07:36.545 INFO storage - return_shelved_object: Returning arrays_projection_corrected from shelve file.	MemTotal: 1824.87109375
+2022-04-21 16:07:37.045 INFO atlas - __init__: The dictionnary of available mask per slice has not been computed yet.Doing it now, this may take several hours.
+2022-04-21 16:07:37.045 INFO atlas - save_all_projected_masks_and_spectra: Starting slice 0
+[2022-04-21 16:08:02 +0200] [446859] [CRITICAL] WORKER TIMEOUT (pid:83660)
+[2022-04-21 16:08:02 +0200] [83660] [INFO] Worker exiting (pid: 83660)
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+[2022-04-21 16:08:02 +0200] [83911] [INFO] Booting worker with pid: 83911
+2022-04-21 16:08:02.958 INFO main - <module>: Starting import chain	MemTotal: 30.3671875
+2022-04-21 16:08:05.236 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 243.9765625
+2022-04-21 16:08:05.236 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 243.9765625
+2022-04-21 16:08:06.030 INFO atlas - __init__: Initializing Atlas object	MemTotal: 1084.57421875
+2022-04-21 16:08:06.508 INFO storage - return_shelved_object: Returning dic_acronym_children_id from shelve file.	MemTotal: 1383.40234375
+2022-04-21 16:08:07.445 INFO storage - return_shelved_object: Returning hierarchy from shelve file.	MemTotal: 1824.67578125
+2022-04-21 16:08:07.561 INFO storage - return_shelved_object: Returning arrays_projection_corrected from shelve file.	MemTotal: 1824.83984375
+2022-04-21 16:08:08.090 INFO atlas - __init__: The dictionnary of available mask per slice has not been computed yet.Doing it now, this may take several hours.
+2022-04-21 16:08:08.090 INFO atlas - save_all_projected_masks_and_spectra: Starting slice 0
+[2022-04-21 16:08:32 +0200] [446859] [CRITICAL] WORKER TIMEOUT (pid:83911)
+[2022-04-21 16:08:32 +0200] [83911] [INFO] Worker exiting (pid: 83911)
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+[2022-04-21 16:08:33 +0200] [84208] [INFO] Booting worker with pid: 84208
+2022-04-21 16:08:33.775 INFO main - <module>: Starting import chain	MemTotal: 30.3671875
+2022-04-21 16:08:36.133 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 243.94921875
+2022-04-21 16:08:36.133 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 243.94921875
+2022-04-21 16:08:36.852 INFO atlas - __init__: Initializing Atlas object	MemTotal: 1084.578125
+2022-04-21 16:08:37.334 INFO storage - return_shelved_object: Returning dic_acronym_children_id from shelve file.	MemTotal: 1383.40625
+2022-04-21 16:08:38.213 INFO storage - return_shelved_object: Returning hierarchy from shelve file.	MemTotal: 1824.6796875
+2022-04-21 16:08:38.330 INFO storage - return_shelved_object: Returning arrays_projection_corrected from shelve file.	MemTotal: 1824.8125
+2022-04-21 16:08:38.864 INFO atlas - __init__: The dictionnary of available mask per slice has not been computed yet.Doing it now, this may take several hours.
+2022-04-21 16:08:38.865 INFO atlas - save_all_projected_masks_and_spectra: Starting slice 0
+[2022-04-21 16:09:03 +0200] [446859] [CRITICAL] WORKER TIMEOUT (pid:84208)
+[2022-04-21 16:09:03 +0200] [84208] [INFO] Worker exiting (pid: 84208)
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+[2022-04-21 16:09:04 +0200] [84527] [INFO] Booting worker with pid: 84527
+2022-04-21 16:09:04.683 INFO main - <module>: Starting import chain	MemTotal: 30.3671875
+2022-04-21 16:09:07.265 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 244.00390625
+2022-04-21 16:09:07.265 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 244.00390625
+2022-04-21 16:09:07.988 INFO atlas - __init__: Initializing Atlas object	MemTotal: 1084.578125
+2022-04-21 16:09:08.450 INFO storage - return_shelved_object: Returning dic_acronym_children_id from shelve file.	MemTotal: 1383.40625
+2022-04-21 16:09:09.347 INFO storage - return_shelved_object: Returning hierarchy from shelve file.	MemTotal: 1824.6796875
+2022-04-21 16:09:09.454 INFO storage - return_shelved_object: Returning arrays_projection_corrected from shelve file.	MemTotal: 1824.81640625
+2022-04-21 16:09:09.984 INFO atlas - __init__: The dictionnary of available mask per slice has not been computed yet.Doing it now, this may take several hours.
+2022-04-21 16:09:09.985 INFO atlas - save_all_projected_masks_and_spectra: Starting slice 0
+[2022-04-21 16:09:34 +0200] [446859] [CRITICAL] WORKER TIMEOUT (pid:84527)
+[2022-04-21 16:09:34 +0200] [84527] [INFO] Worker exiting (pid: 84527)
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+[2022-04-21 16:09:35 +0200] [84738] [INFO] Booting worker with pid: 84738
+2022-04-21 16:09:35.753 INFO main - <module>: Starting import chain	MemTotal: 30.3671875
+2022-04-21 16:09:38.075 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 243.9453125
+2022-04-21 16:09:38.075 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 243.9453125
+2022-04-21 16:09:38.754 INFO atlas - __init__: Initializing Atlas object	MemTotal: 1084.5703125
+2022-04-21 16:09:39.226 INFO storage - return_shelved_object: Returning dic_acronym_children_id from shelve file.	MemTotal: 1383.3984375
+2022-04-21 16:09:40.081 INFO storage - return_shelved_object: Returning hierarchy from shelve file.	MemTotal: 1824.671875
+2022-04-21 16:09:40.190 INFO storage - return_shelved_object: Returning arrays_projection_corrected from shelve file.	MemTotal: 1824.8125
+2022-04-21 16:09:40.732 INFO atlas - __init__: The dictionnary of available mask per slice has not been computed yet.Doing it now, this may take several hours.
+2022-04-21 16:09:40.732 INFO atlas - save_all_projected_masks_and_spectra: Starting slice 0
+[2022-04-21 16:10:05 +0200] [446859] [CRITICAL] WORKER TIMEOUT (pid:84738)
+[2022-04-21 16:10:05 +0200] [84738] [INFO] Worker exiting (pid: 84738)
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+[2022-04-21 16:10:06 +0200] [84841] [INFO] Booting worker with pid: 84841
+2022-04-21 16:10:06.750 INFO main - <module>: Starting import chain	MemTotal: 30.37109375
+2022-04-21 16:10:09.028 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 244.0078125
+2022-04-21 16:10:09.028 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 244.0078125
+2022-04-21 16:10:09.694 INFO atlas - __init__: Initializing Atlas object	MemTotal: 1084.5859375
+2022-04-21 16:10:10.145 INFO storage - return_shelved_object: Returning dic_acronym_children_id from shelve file.	MemTotal: 1383.4140625
+2022-04-21 16:10:10.961 INFO storage - return_shelved_object: Returning hierarchy from shelve file.	MemTotal: 1824.6875
+2022-04-21 16:10:11.064 INFO storage - return_shelved_object: Returning arrays_projection_corrected from shelve file.	MemTotal: 1824.859375
+2022-04-21 16:10:11.559 INFO atlas - __init__: The dictionnary of available mask per slice has not been computed yet.Doing it now, this may take several hours.
+2022-04-21 16:10:11.559 INFO atlas - save_all_projected_masks_and_spectra: Starting slice 0
+[2022-04-21 16:10:36 +0200] [446859] [CRITICAL] WORKER TIMEOUT (pid:84841)
+[2022-04-21 16:10:36 +0200] [84841] [INFO] Worker exiting (pid: 84841)
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+[2022-04-21 16:10:37 +0200] [85022] [INFO] Booting worker with pid: 85022
+2022-04-21 16:10:37.564 INFO main - <module>: Starting import chain	MemTotal: 30.37109375
+2022-04-21 16:10:39.749 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 243.9375
+2022-04-21 16:10:39.750 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 243.9375
+2022-04-21 16:10:40.393 INFO atlas - __init__: Initializing Atlas object	MemTotal: 1084.56640625
+2022-04-21 16:10:40.842 INFO storage - return_shelved_object: Returning dic_acronym_children_id from shelve file.	MemTotal: 1383.39453125
+2022-04-21 16:10:41.657 INFO storage - return_shelved_object: Returning hierarchy from shelve file.	MemTotal: 1824.66796875
+2022-04-21 16:10:41.767 INFO storage - return_shelved_object: Returning arrays_projection_corrected from shelve file.	MemTotal: 1824.87109375
+2022-04-21 16:10:42.277 INFO atlas - __init__: The dictionnary of available mask per slice has not been computed yet.Doing it now, this may take several hours.
+2022-04-21 16:10:42.277 INFO atlas - save_all_projected_masks_and_spectra: Starting slice 0
+[2022-04-21 16:11:07 +0200] [446859] [CRITICAL] WORKER TIMEOUT (pid:85022)
+[2022-04-21 16:11:07 +0200] [85022] [INFO] Worker exiting (pid: 85022)
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+[2022-04-21 16:11:08 +0200] [85094] [INFO] Booting worker with pid: 85094
+2022-04-21 16:11:08.270 INFO main - <module>: Starting import chain	MemTotal: 30.37109375
+2022-04-21 16:11:10.463 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 244.0703125
+2022-04-21 16:11:10.463 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 244.0703125
+2022-04-21 16:11:11.154 INFO atlas - __init__: Initializing Atlas object	MemTotal: 1084.58984375
+2022-04-21 16:11:11.506 INFO storage - return_shelved_object: dic_acronym_children_id could not be found or force_update is True. Computing the object and shelving it now.
+2022-04-21 16:11:15.753 INFO storage - return_shelved_object: dic_acronym_children_id being returned now from computation.
+2022-04-21 16:11:16.491 INFO storage - return_shelved_object: hierarchy could not be found or force_update is True. Computing the object and shelving it now.
+2022-04-21 16:11:16.506 INFO storage - return_shelved_object: hierarchy being returned now from computation.
+2022-04-21 16:11:16.506 INFO storage - return_shelved_object: arrays_projection_corrected could not be found or force_update is True. Computing the object and shelving it now.
+2022-04-21 16:11:16.583 INFO storage - return_shelved_object: l_transform_parameters could not be found or force_update is True. Computing the object and shelving it now.
+2022-04-21 16:11:18.218 INFO storage - return_shelved_object: l_transform_parameters being returned now from computation.
+[2022-04-21 16:11:38 +0200] [446859] [CRITICAL] WORKER TIMEOUT (pid:85094)
+[2022-04-21 16:11:38 +0200] [85094] [INFO] Worker exiting (pid: 85094)
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+[2022-04-21 16:11:39 +0200] [85192] [INFO] Booting worker with pid: 85192
+2022-04-21 16:11:39.309 INFO main - <module>: Starting import chain	MemTotal: 30.37109375
+2022-04-21 16:11:41.481 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 244.09375
+2022-04-21 16:11:41.481 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 244.09375
+2022-04-21 16:11:42.198 INFO atlas - __init__: Initializing Atlas object	MemTotal: 1084.59765625
+2022-04-21 16:11:42.554 INFO storage - return_shelved_object: Returning dic_acronym_children_id from shelve file.	MemTotal: 1380.78515625
+2022-04-21 16:11:43.306 INFO storage - return_shelved_object: Returning hierarchy from shelve file.	MemTotal: 1822.02734375
+2022-04-21 16:11:43.308 INFO storage - return_shelved_object: arrays_projection_corrected could not be found or force_update is True. Computing the object and shelving it now.
+2022-04-21 16:11:43.388 INFO storage - return_shelved_object: Returning l_transform_parameters from shelve file.	MemTotal: 1969.0078125
+2022-04-21 16:12:04.104 INFO storage - return_shelved_object: arrays_projection_corrected being returned now from computation.
+2022-04-21 16:12:04.115 INFO atlas - __init__: The dictionnary of available mask per slice has not been computed yet.Doing it now, this may take several hours.
+2022-04-21 16:12:04.115 INFO atlas - save_all_projected_masks_and_spectra: Starting slice 0
+[2022-04-21 16:12:09 +0200] [446859] [CRITICAL] WORKER TIMEOUT (pid:85192)
+[2022-04-21 16:12:09 +0200] [85192] [INFO] Worker exiting (pid: 85192)
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+[2022-04-21 16:12:10 +0200] [85284] [INFO] Booting worker with pid: 85284
+2022-04-21 16:12:10.221 INFO main - <module>: Starting import chain	MemTotal: 30.37109375
+2022-04-21 16:12:12.605 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 243.96875
+2022-04-21 16:12:12.605 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 243.96875
+2022-04-21 16:12:13.326 INFO atlas - __init__: Initializing Atlas object	MemTotal: 1084.59375
+2022-04-21 16:12:13.680 INFO storage - return_shelved_object: Returning dic_acronym_children_id from shelve file.	MemTotal: 1380.78515625
+2022-04-21 16:12:14.423 INFO storage - return_shelved_object: Returning hierarchy from shelve file.	MemTotal: 1822.0234375
+2022-04-21 16:12:14.424 INFO storage - return_shelved_object: Returning arrays_projection_corrected from shelve file.	MemTotal: 1822.08203125
+2022-04-21 16:12:14.817 INFO atlas - __init__: The dictionnary of available mask per slice has not been computed yet.Doing it now, this may take several hours.
+2022-04-21 16:12:14.817 INFO atlas - save_all_projected_masks_and_spectra: Starting slice 0
+[2022-04-21 16:12:40 +0200] [446859] [CRITICAL] WORKER TIMEOUT (pid:85284)
+[2022-04-21 16:12:40 +0200] [85284] [INFO] Worker exiting (pid: 85284)
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+[2022-04-21 16:12:41 +0200] [85355] [INFO] Booting worker with pid: 85355
+2022-04-21 16:12:41.233 INFO main - <module>: Starting import chain	MemTotal: 30.37109375
+2022-04-21 16:12:43.467 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 244.1171875
+2022-04-21 16:12:43.468 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 244.1171875
+2022-04-21 16:12:44.180 INFO atlas - __init__: Initializing Atlas object	MemTotal: 1084.5859375
+2022-04-21 16:12:44.533 INFO storage - return_shelved_object: dic_acronym_children_id could not be found or force_update is True. Computing the object and shelving it now.
+2022-04-21 16:12:48.852 INFO storage - return_shelved_object: dic_acronym_children_id being returned now from computation.
+2022-04-21 16:12:49.617 INFO storage - return_shelved_object: hierarchy could not be found or force_update is True. Computing the object and shelving it now.
+2022-04-21 16:12:49.632 INFO storage - return_shelved_object: hierarchy being returned now from computation.
+2022-04-21 16:12:49.632 INFO storage - return_shelved_object: arrays_projection_corrected could not be found or force_update is True. Computing the object and shelving it now.
+2022-04-21 16:12:49.710 INFO storage - return_shelved_object: l_transform_parameters could not be found or force_update is True. Computing the object and shelving it now.
+2022-04-21 16:12:51.463 INFO storage - return_shelved_object: l_transform_parameters being returned now from computation.
+[2022-04-21 16:13:11 +0200] [446859] [CRITICAL] WORKER TIMEOUT (pid:85355)
+[2022-04-21 16:13:11 +0200] [85355] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/numba/core/serialize.py", line 29, in _numba_unpickle
+    def _numba_unpickle(address, bytedata, hashed):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/gunicorn/workers/base.py", line 203, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+
+The above exception was the direct cause of the following exception:
+
+SystemError: _PyEval_EvalFrameDefault returned a result with an error set
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/gunicorn/arbiter.py", line 589, in spawn_worker
+    worker.init_process()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/gunicorn/workers/base.py", line 134, in init_process
+    self.load_wsgi()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/gunicorn/workers/base.py", line 146, in load_wsgi
+    self.wsgi = self.app.wsgi()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/gunicorn/app/base.py", line 67, in wsgi
+    self.callable = self.load()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/gunicorn/app/wsgiapp.py", line 58, in load
+    return self.load_wsgiapp()
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/gunicorn/app/wsgiapp.py", line 48, in load_wsgiapp
+    return util.import_app(self.app_uri)
+  File "/home/colas/miniconda3/lib/python3.9/site-packages/gunicorn/util.py", line 359, in import_app
+    mod = importlib.import_module(module)
+  File "/home/colas/miniconda3/lib/python3.9/importlib/__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1030, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1007, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 986, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 680, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 850, in exec_module
+  File "<frozen importlib._bootstrap>", line 228, in _call_with_frames_removed
+  File "/home/colas/lbae/lbae/main.py", line 47, in <module>
+    from app import app
+  File "/home/colas/lbae/lbae/app.py", line 37, in <module>
+    atlas = Atlas(data, resolution=25)
+  File "/home/colas/lbae/lbae/modules/atlas.py", line 114, in __init__
+    self.array_projection_correspondence_corrected = return_shelved_object(
+  File "/home/colas/lbae/lbae/modules/tools/storage.py", line 131, in return_shelved_object
+    object = compute_function(**compute_function_args)
+  File "/home/colas/lbae/lbae/modules/atlas.py", line 285, in compute_array_projection
+    array_projection, array_projection_correspondence = fill_array_projection(
+SystemError: CPUDispatcher(<function fill_array_projection at 0x7f8d03b7eaf0>) returned a result with an error set
+[2022-04-21 16:13:11 +0200] [85355] [INFO] Worker exiting (pid: 85355)
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+[2022-04-21 16:13:12 +0200] [6988] [INFO] Worker exiting (pid: 6988)
+page-3-graph-heatmap-per-sel relayoutData 32 None None /region-analysis [] True
+page-3-dropdown-brain-regions value 32 None ['Cerebral cortex'] /region-analysis [] True
+main-slider value 7 None [] /region-analysis [[80, 189, 218, 200], [95, 169, 112, 200]] False
+page-3-dropdown-brain-regions value 10 None ['Cerebral cortex', 'Hippocampal formation'] /region-analysis [[80, 189, 218, 200]] False
+page-3-dropdown-brain-regions value 10 None ['Dentate gyrus'] /region-analysis [[80, 189, 218, 200], [95, 169, 112, 200]] False
+[2022-04-21 16:13:13 +0200] [446859] [INFO] Shutting down: Master
+[2022-04-21 16:13:13 +0200] [446859] [INFO] Reason: Worker failed to boot.
