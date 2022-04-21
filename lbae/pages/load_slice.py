@@ -278,7 +278,7 @@ def page_1_plot_graph_modal(n1):
         return return_shelved_object(
             "figures/3D_page",
             "slices_3D",
-            force_update=True,
+            force_update=False,
             compute_function=figures.compute_figure_slices_3D,
         )
     return dash.no_update

@@ -59,11 +59,43 @@ class Figures:
             cache_flask=None,  # No cache since launched at startup
         )
 
-        # Check that the lipid distributions for all slices have been computed, else compute them
+        # Check that treemaps has been computed already. If not, compute it and store it.
+        if not check_shelved_object("figures/atlas_page/3D", "treemaps"):
+            return_shelved_object(
+                "figures/atlas_page/3D",
+                "treemaps",
+                force_update=False,
+                compute_function=self.compute_treemaps_figure,
+            ),
+
+        # Check that 3D slice figure has been computed already. If not, compute it and store it.
+        if not check_shelved_object("figures/3D_page", "slices_3D"):
+            return return_shelved_object(
+                "figures/3D_page",
+                "slices_3D",
+                force_update=False,
+                compute_function=self.compute_figure_slices_3D,
+            )
+
+        # Check that the 3D root volume figure has been computed already. If not, compute it and
+        # store it.
+        if not check_shelved_object("figures/3D_page", "volume_root"):
+            return_shelved_object(
+                "figures/3D_page",
+                "volume_root",
+                force_update=False,
+                compute_function=self.compute_3D_root_volume,
+            )
+
+        # Check that all basic figures in the load_slice page are present, if not, compute them
+        if not check_shelved_object("figures/3D_page", "arrays_basic_figures_computed"):
+            self.shelve_arrays_basic_figures()
+
+        # Check that the lipid distributions for all slices have been computed, if not, compute them
         if not check_shelved_object("figures/3D_page", "arrays_expression_computed"):
             self.shelve_all_l_array_2D()
 
-        # Check that the region annotations for 3D plots have been computed, else compute them
+        # Check that the region annotations for 3D plots have been computed, if not, compute them
         # Also compute the arrays of annotations for the current decrease_dimensionality_factor in
         # the process
         if not check_shelved_object("figures/3D_page", "arrays_borders_computed"):
@@ -1197,7 +1229,7 @@ class Figures:
         name_lipid_2="",
         name_lipid_3="",
         set_id_regions=None,
-        decrease_dimensionality_factor=7,
+        decrease_dimensionality_factor=6,
         cache_flask=None,
     ):
         logging.info("Starting 3D volume computation")
@@ -1581,7 +1613,27 @@ class Figures:
         logging.info("Returning figure")
         return fig_heatmap_lipids
 
-    ###### PICKLING FUNCTIONS ######
+    ###### SHELVING FUNCTIONS ######
+
+    def shelve_arrays_basic_figures(self, force_update=False):
+        for idx_slice in range(self._data.get_slices_number()):
+            for type_figure in ["original_data", "warped_data", "projection_corrected", "atlas"]:
+                for display_annotations in [True, False]:
+                    # Force no annotation for the original data
+                    return return_shelved_object(
+                        "figures/load_page",
+                        "figure_basic_image",
+                        force_update=False,
+                        compute_function=self.compute_figure_basic_image,
+                        type_figure=type_figure,
+                        index_image=idx_slice,
+                        plot_atlas_contours=display_annotations
+                        if type_figure != "original_data"
+                        else False,
+                    )
+
+        dump_shelved_object("figures/3D_page", "arrays_basic_figures_computed", True)
+
     def shelve_all_l_array_2D(self, force_update=False):
         # simulate a click on all lipid names
         for name in sorted(self._data.get_annotations().name.unique()):

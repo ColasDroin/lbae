@@ -91,7 +91,7 @@ def return_layout(basic_config, slice_index):
                                                 "annotations",
                                                 "lipid_options",
                                                 force_update=False,
-                                                compute_function=return_lipid_options,
+                                                compute_function=data.return_lipid_options,
                                             ),
                                             searchable=True,
                                             nothingFound="No lipid found",
@@ -1384,27 +1384,6 @@ def page_2_button_window(lb, hb):
         if lb >= 400 and hb <= 1600 and hb - lb > 0 and hb - lb < 10:
             return False
     return True
-
-
-### Not a callback but still needed
-def return_lipid_options():
-    return [
-        {
-            "label": name + " " + structure + " " + cation,
-            "value": name + " " + structure + " " + cation,
-            "group": name,
-        }
-        for name in sorted(data.get_annotations().name.unique())
-        for structure in sorted(
-            data.get_annotations()[(data.get_annotations()["name"] == name)].structure.unique()
-        )
-        for cation in sorted(
-            data.get_annotations()[
-                (data.get_annotations()["name"] == name)
-                & (data.get_annotations()["structure"] == structure)
-            ].cation.unique()
-        )
-    ]
 
 
 @app.app.callback(

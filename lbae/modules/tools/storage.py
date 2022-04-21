@@ -141,3 +141,14 @@ def return_shelved_object(
     db.close()
     return object
 
+
+def empty_shelve():
+    """This function erases all entries in the shelve database.
+    """
+    # Load from in db
+    with shelve.open("data/app_data/data.db") as db:
+
+        # Completely empty database
+        for key in db:
+            del db[key]
+

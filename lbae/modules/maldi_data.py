@@ -436,3 +436,22 @@ class MaldiData:
             + self._df_annotations["cation"]
         ).to_list()
         return l_labels
+
+    def return_lipid_options(self):
+        return [
+            {
+                "label": name + " " + structure + " " + cation,
+                "value": name + " " + structure + " " + cation,
+                "group": name,
+            }
+            for name in sorted(self.get_annotations().name.unique())
+            for structure in sorted(
+                self.get_annotations()[(self.get_annotations()["name"] == name)].structure.unique()
+            )
+            for cation in sorted(
+                self.get_annotations()[
+                    (self.get_annotations()["name"] == name)
+                    & (self.get_annotations()["structure"] == structure)
+                ].cation.unique()
+            )
+        ]

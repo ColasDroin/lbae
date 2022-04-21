@@ -56,7 +56,7 @@ class Launch:
         # Objects to shelve in the Atlas class. Everything in this list is shelved at
         # initialization of Atlas and Figures objects. The computations described are the ones done
         # at startup.
-        self.atlas_objects_at_init = [
+        self.l_atlas_objects_at_init = [
             # Computed in Atlas.__init__() as an argument of Atlas. Corresponds to the object
             # returned by Atlas.compute_dic_acronym_children_id()
             "atlas/atlas_objects/dic_acronym_children_id",
@@ -102,7 +102,7 @@ class Launch:
         # Objects to shelve in the Figures class. Everything in this list is shelved at
         # initialization of the Figure object. The computations described are the ones done at
         # startup.
-        self.figures_objects_at_init = (
+        self.l_figures_objects_at_init = (
             [
                 # Computed in Figures.__init__() as an argument of Figures. Corresponds to the
                 # object returned by Figures.compute_dic_fig_contours()
@@ -121,6 +121,36 @@ class Launch:
                 # object returned by
                 # Figures.compute_normalization_factor_across_slices(cache_flask=None)
                 "figures/lipid_selection/dic_normalization_factors_None",
+                #
+                # Computed in Figures.__init__(). Corresponds to the object returned
+                # by Figures.compute_treemaps_figure().
+                "figures/atlas_page/3D/treemaps",
+                #
+                # Computed in Figures.__init__(). Corresponds to the object returned by
+                # Figures.compute_figure_slices_3D().
+                "figures/3D_page/slices_3D",
+                #
+                # Computed in Figures.__init__(). Corresponds to the object returned by
+                # Figures.compute_3D_root_volume().
+                "figures/3D_page/volume_root",
+                #
+                # Computed in Figures.__init(), calling Figures.shelve_arrays_basic_figures(), but
+                # it doesn't correpond to an object returned by a specific function.
+                # All figures are computed and saved in the shelve database with the following ids:
+                # "figures/load_page/figure_basic_image_$type_figure$_$idx_slice$_$display_annotations",
+                # (not explicitely in this list as there are too many).
+                #  * This a long computation.
+                "figures/3D_page/arrays_basic_figures_computed",
+                #
+                # Computed in compute_figure_basic_image() only, which is called in
+                # Figures.shelve_arrays_basic_figures(), itself called in Figures.__init__().
+                # Corresponds to the object returned by
+                # figures.compute_array_basic_images(type_figure), with type_figure having the
+                # following values: "original_data", "warped_data", "projection_corrected", "atlas"
+                "figures/load_page/array_basic_image_original_data",
+                "figures/load_page/array_basic_image_warped_data",
+                "figures/load_page/array_basic_image_projection_corrected",
+                "figures/load_page/array_basic_image_atlas",
                 #
                 # Computed in Figures.__init(), calling Figures.shelve_all_l_array_2D(), but it
                 # doesn't correpond to an object returned by a specific function.
@@ -149,59 +179,52 @@ class Launch:
             ]
         )
 
-        # Objects to shelve in the Figures class. Objects in the list are not automatically shelved
-        # at startup.
-        self.figures_objects_to_compute = [
-            # Computed in compute_figure_basic_image() only, which is called in load_slice and
-            # region_analysis pages. Corresponds to the object returned by
-            # figures.compute_array_basic_images(type_figure), with type_figure having the following
-            # values: "original_data", "warped_data", "projection_corrected", "atlas"
-            "figures/load_page/array_basic_image_original_data",
-            "figures/load_page/array_basic_image_warped_data",
-            "figures/load_page/array_basic_image_projection_corrected",
-            "figures/load_page/array_basic_image_atlas",
-            #
-            # Computed when loading the threeD_exploration page. Corresponds to the object returned
-            # by Figures.compute_treemaps_figure().
-            "figures/atlas_page/3D/treemaps",
-            #
-            # Computed in compute_3D_volume_figure(). Corresponds to the object returned by
-            # Figures.compute_3D_root_volume().
-            "figures/3D_page/volume_root",
-            #
-            # Computed when clicking the "Display 3D slices" graph in the load_slice page.
-            # Corresponds to the object returned by the function Figures.compute_figure_slices_3D().
-            "figures/3D_page/slices_3D",
-        ]
-
         # Objects to shelve not belonging to a specific class. Objects in the list are not
         # automatically shelved at startup.
-        self.other_objects_to_compute = [
+        self.l_other_objects_to_compute = [
             # Computed when loading the lipid_selection page. Corresponds to the object returned by
             # return_lipid_options().
             "annotations/lipid_options",
         ]
 
-    def check_missing_db_entries(self, l_db_entries):
-        """This function checks if all the entries in l_db_entries are in the shelve database. It 
-        then returns a list containing the missing entries.
+        # List of all db entries
+        self.l_db_entries = (
+            self.l_atlas_objects_at_init
+            + self.l_figures_objects_at_init
+            + self.l_other_objects_to_compute
+        )
 
-        Args:
-            l_db_entries (list): List of entries in the shelve database to check.
+    def check_missing_db_entries(self):
+        """This function checks if all the entries in self.l_db_entries are in the shelve database. 
+        It then returns a list containing the missing entries.
         """
 
         # Get database
         db = shelve.open(self.db_path)
 
         # Build a set of missing entries
-        l_missing_entries = list(set(l_db_entries) - set(db.keys()))
+        l_missing_entries = list(set(self.l_db_entries) - set(db.keys()))
+
+        if len(l_missing_entries) > 0:
+            logging.info("Missing entries found in the shelve database:" + str(l_missing_entries))
 
         # Find out if there are entries in the databse and not in the list of entries to check
-        l_unexpected_entries = list(set(db.keys()) - set(l_db_entries))
+        l_unexpected_entries = list(set(db.keys()) - set(self.l_db_entries))
+
+        # Remove entries that are not in the initial list but are in the database, i.e all 2D lipid
+        # slices, all brain regions, and all figures in the load_slice page
+        l_unexpected_entries = [
+            x
+            for x in l_unexpected_entries
+            if "figures/3D_page/arrays_expression_" not in x
+            and "figures/3D_page/arrays_borders_" not in x
+            and "figures/load_page/figure_basic_image_" not in x
+        ]
 
         if len(l_unexpected_entries) > 0:
             logging.warning(
-                "WARNING: unexpected entries in shelve database: " + str(l_unexpected_entries)
+                "WARNING: unexpected entries found in the shelve database: "
+                + str(l_unexpected_entries)
             )
 
         # Close database
@@ -209,7 +232,7 @@ class Launch:
 
         return l_missing_entries
 
-    def compute_and_fill_entries(self, l_entries):
+    def compute_and_fill_entries(self, l_missing_entries):
         """This function precompute all the entries in l_entries and fill them in the shelve 
         database.
         """
@@ -218,28 +241,37 @@ class Launch:
         db = shelve.open(self.db_path)
 
         # Compute missing entries
-        for entry in l_entries:
-            pass
-            # TODO
+        for entry in l_missing_entries:
+
+            if entry in self.l_atlas_objects_at_init:
+                logging.warning(
+                    "This entry should not be missing,"
+                    + " as it is computed during Atlas initialization: "
+                    + entry
+                    + " . Please rebuild the atlas variable"
+                )
+
+            elif entry in self.l_figures_objects_at_init:
+                logging.warning(
+                    "This entry should not be missing,"
+                    + " as it is computed during Figures initialization: "
+                    + entry
+                    + " . Please rebuild the figures variable"
+                )
+
+            elif entry in self.l_other_objects_to_compute:
+                logging.info("Entry: " + entry + " is missing. Computing now.")
+                if entry == "annotations/lipid_options":
+                    db[entry] = self.data.return_lipid_options()
+                else:
+                    logging.warning(
+                        "Entry " + entry + " not found in the list of entries to compute."
+                    )
 
         # Close database
         db.close()
 
-    def erase_all_entries(self):
-        """This function erases all entries in the shelve database.
-        """
-
-        # Get database
-        db = shelve.open(self.db_path)
-
-        # Completely empty database
-        for key in db:
-            del db[key]
-
-        # Close database
-        db.close()
-
-    def launch(self, erase_db=False, force_exit_if_first_launch=True):
+    def launch(self, force_exit_if_first_launch=True):
         """This function is used at the execution of the app. It will take care of cleaning the 
         shelve database, run compiled functions once, and precompute all the figures that can be 
         precomputed. At the very first launch, this process can be greedy in memory, reason for 
