@@ -478,3 +478,57 @@ def fill_array_projection(
 
     return array_projection, array_projection_correspondence
 
+@njit
+def compute_simplified_atlas_annotation(atlas_annotation):
+    # Compute an array which map labels ids to increasing integers
+    unique_id_dic = {
+                ni: indi for indi, ni in enumerate(set(atlas_annotation.flatten()))
+            }   
+
+    simplified_atlas_annotation = np.zeros(atlas_annotation.shape, dtype=np.int32)
+    for x in atlas_annotation.shape[0]:
+        for y in atlas_annotation.shape[1]:
+            for z in atlas_annotation.shape[2]:
+                simplified_atlas_annotation[x,y,z] = unique_id_dic[atlas_annotation[x,y,z]]
+
+    return simplified_atlas_annotation
+
+@njit
+def compute_array_images_atlas(
+    array_coordinates_warped_data,
+    simplified_atlas_annotation,
+    atlas_reference,
+    resolution,
+    zero_out_of_annotation=False,
+):
+    array_images = np.empty(array_coordinates_warped_data.shape[:-1], dtype=np.uint8)
+    array_projected_simplified_id = np.full(
+        array_images.shape, simplified_atlas_annotation[0, 0, 0], dtype=np.int32
+    )
+
+    array_coor_rescaled = ((array_coordinates_warped_data * 1000 / resolution).round(0)).astype(
+        np.int16
+    )
+    for x in range(array_images.shape[0]):
+        for y in range(array_images.shape[1]):
+            for z in range(array_images.shape[2]):
+                if (
+                    min(array_coor_rescaled[x, y, z]) >= 0
+                    and array_coor_rescaled[x, y, z][0] < atlas_reference.shape[0]
+                    and array_coor_rescaled[x, y, z][1] < atlas_reference.shape[1]
+                    and array_coor_rescaled[x, y, z][2] < atlas_reference.shape[2]
+                ):
+                    array_projected_simplified_id[x, y, z] = simplified_atlas_annotation[
+                        tuple(array_coor_rescaled[x, y, z])
+                    ]
+                    if array_projected_simplified_id[x, y, z] == 0 and zero_out_of_annotation:
+                        continue
+                    else:
+                        array_images[x, y, z] = atlas_reference[tuple(array_coor_rescaled[x, y, z])]
+                else:
+                    array_images[x, y, z] = 0
+
+    # Correct for bug on inferior right margin
+    array_images[:, :, :10] = 0
+
+    return array_images, array_projected_simplified_id

@@ -1357,7 +1357,8 @@ def compute_thread_safe_function(
     """
 
     logging.info(
-        "Computing the thread-safe version of" + str(compute_function).split("<")[1].split("at")[0]
+        "Trying to compute the thread-safe version of "
+        + str(compute_function).split("<")[1].split("at")[0]
     )
 
     if cache is not None:

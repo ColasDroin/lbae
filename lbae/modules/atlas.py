@@ -23,6 +23,8 @@ from modules.tools.atlas import (
     get_array_rows_from_atlas_mask,
     fill_array_projection,
     solve_plane_equation,
+    compute_simplified_atlas_annotation,
+    compute_array_images_atlas,
 )
 from modules.tools.spectra import compute_spectrum_per_row_selection, compute_thread_safe_function
 from modules.atlas_labels import Labels, LabelContours
@@ -76,7 +78,6 @@ class Atlas:
         # Compute a dictionnary that associates to each structure (acronym) the set of ids (int) of
         # all of its children. Used only in page_4_plot_graph_volume, but it's very light so no
         # problem using it as an attribute
-        # ! Update this comment when I find a better way of (pre?-)computing volume plot
         self.dic_acronym_children_id = return_shelved_object(
             "atlas/atlas_objects",
             "dic_acronym_children_id",
@@ -128,11 +129,11 @@ class Atlas:
             )
         else:
             logging.info(
-                "The dictionnary of available mask per slice has not been computed yet."
+                "The dictionnary of available mask per slice has not been computed yet. "
                 + "Doing it now, this may take several hours."
             )
             # Since this function is called at startup, no data locking is needed
-            self.save_all_projected_masks_and_spectra(cache_flask=None)
+            self.save_all_projected_masks_and_spectra(cache_flask=None, sample=True)
 
     # Load arrays of images using atlas projection. It's a property to save memory as it is only
     # used with objects that should also be precomputed.
@@ -149,9 +150,6 @@ class Atlas:
 
     # Load arrays of original images coordinates. It's a property to save memory as it is only used
     # with objects that should also be precomputed.
-    # ! The 3D volume figures (whose computation use l_original_coor) should be all precomputed at
-    # ! some point, so it makes sense to keep this object as a property.
-    # ! Delete this comment when 3D volume figures are indeed precomputed.
     @property
     def l_original_coor(self):
         return return_shelved_object(
@@ -162,17 +160,6 @@ class Atlas:
             nearest_neighbour_correction=True,
             atlas_correction=True,
         )[2]
-
-    # Compute the dictionnary of unique identifiers for the label only if needed
-    # ! simplified_labels_int is now only used in compute_array_images_atlas, which is precomputed.
-    # ! Need to delete the associated class LabelContours and use an array instead, and numba-ize compute_array_images_atlas
-    # ! Maybe even delete this property, and build the complete array directly in a wrapper of the function compute_array_images_atlas
-    # ! to ensure that the memory is not used for nothing.
-    @property
-    def simplified_labels_int(self):
-        if self._simplified_labels_int is None:
-            self._simplified_labels_int = LabelContours(self.bg_atlas)
-        return self._simplified_labels_int
 
     # Load array of projected atlas borders (i.e. image of atlas annotations). It's a property to
     # save memory as it is only used with objects that should also be precomputed.
@@ -317,7 +304,8 @@ class Atlas:
             "atlas/atlas_objects",
             "array_images_atlas",
             force_update=False,
-            compute_function=self.compute_array_images_atlas,
+            compute_function=self.prepare_and_compute_array_images_atlas,
+            zero_out_of_annotation=True,
         )
 
         for slice_index in range(array_projected_simplified_id.shape[0]):
@@ -349,55 +337,43 @@ class Atlas:
 
         return l_array_images
 
-    # ! See if I can numba-ize that
     # * This is quite long to execute (~10mn)
-    def compute_array_images_atlas(self, zero_out_of_annotation=False):
-        array_images = np.empty(self.array_coordinates_warped_data.shape[:-1], dtype=np.uint8)
-        array_projected_simplified_id = np.full(
-            array_images.shape, self.simplified_labels_int[0, 0, 0], dtype=np.int32
+    # ! Delete this comment if it's not long anymore
+    def prepare_and_compute_array_images_atlas(self, zero_out_of_annotation=False):
+
+        # Compute an array of simplified structures ids
+        simplified_atlas_annotation = compute_simplified_atlas_annotation(self.bg_atlas.annotation)
+
+        return compute_array_images_atlas(
+            self.array_coordinates_warped_data,
+            simplified_atlas_annotation,
+            self.bg_atlas.reference,
+            self.resolution,
+            zero_out_of_annotation=zero_out_of_annotation,
         )
-
-        array_coor_rescaled = (
-            (self.array_coordinates_warped_data * 1000 / self.resolution).round(0)
-        ).astype(np.int16)
-        for x in range(array_images.shape[0]):
-            for y in range(array_images.shape[1]):
-                for z in range(array_images.shape[2]):
-                    if (
-                        min(array_coor_rescaled[x, y, z]) >= 0
-                        and array_coor_rescaled[x, y, z][0] < self.bg_atlas.reference.shape[0]
-                        and array_coor_rescaled[x, y, z][1] < self.bg_atlas.reference.shape[1]
-                        and array_coor_rescaled[x, y, z][2] < self.bg_atlas.reference.shape[2]
-                    ):
-                        array_projected_simplified_id[x, y, z] = self.simplified_labels_int[
-                            tuple(array_coor_rescaled[x, y, z])
-                        ]
-                        if array_projected_simplified_id[x, y, z] == 0 and zero_out_of_annotation:
-                            continue
-                        else:
-                            array_images[x, y, z] = self.bg_atlas.reference[
-                                tuple(array_coor_rescaled[x, y, z])
-                            ]
-                    else:
-                        array_images[x, y, z] = 0
-
-        # Correct for bug on inferior right margin
-        array_images[:, :, :10] = 0
-
-        return array_images, array_projected_simplified_id
 
     def get_atlas_mask(self, structure):
 
+        logging.info('Getting mask for structure "{}"'.format(structure))
+
+        # Get id of the parent structure
         structure_id = self.bg_atlas.structures[structure]["id"]
+
+        # Get list of descendants
         descendants = self.bg_atlas.get_structure_descendants(structure)
 
+        # Build empty mask for 3D array of atlas annotations
         mask_stack = np.zeros(self.bg_atlas.shape, self.bg_atlas.annotation.dtype)
-        mask_stack[self.bg_atlas.annotation == structure_id] = structure_id
 
-        for descendant in descendants:
-            descendant_id = self.bg_atlas.structures[descendant]["id"]
-            mask_stack[self.bg_atlas.annotation == descendant_id] = structure_id
+        # Compute a list of ids (parents + children) we want to keep in the final annotation
+        l_id = [self.bg_atlas.structures[descendant]["id"] for descendant in descendants] + [
+            structure_id
+        ]
 
+        # Do the masking
+        mask_stack[np.isin(self.bg_atlas.annotation, l_id)] = structure_id
+
+        logging.info('Mask computed for structure "{}"'.format(structure))
         return mask_stack
 
     def compute_spectrum_data(
@@ -455,7 +431,11 @@ class Atlas:
             )
         return grah_scattergl_data
 
-    def save_all_projected_masks_and_spectra(self, force_update=False, cache_flask=None):
+    def save_all_projected_masks_and_spectra(
+        self, force_update=False, cache_flask=None, sample=False
+    ):
+        if sample:
+            logging.warning("Only a sample of the masks and spectra will be computed!")
 
         # Define a dictionnary that contains all the masks that exist for every slice
         dic_existing_masks = {}
@@ -474,7 +454,8 @@ class Atlas:
 
             dic_existing_masks[slice_index] = set([])
 
-            # Get hierarchical tree of brain structures -
+            # Get hierarchical tree of brain structures
+            n_computed = 0
             for mask_name, id_mask in self.dic_name_acronym.items():
                 if (
                     not (
@@ -497,6 +478,8 @@ class Atlas:
                 ):
                     # get the array corresponding to the projected mask
                     stack_mask = self.get_atlas_mask(id_mask)
+
+                    # Project the mask onto high resolution data
                     projected_mask = project_atlas_mask(
                         stack_mask, slice_coor_rescaled, self.bg_atlas.reference.shape
                     )
@@ -539,13 +522,21 @@ class Atlas:
                         + str(id_mask).replace("/", ""),
                         (projected_mask, grah_scattergl_data),
                     )
+                    n_computed += 1
                 else:
                     dic_existing_masks[slice_index].add(id_mask)
 
-        # Dump the dictionnary of existing masks with shelve
-        dump_shelved_object(
-            path_atlas, "dic_existing_masks", dic_existing_masks,
-        )
+                if sample and n_computed > 3:
+                    break
+
+            if sample and slice_index > 1:
+                break
+
+        if not sample:
+            # Dump the dictionnary of existing masks with shelve
+            dump_shelved_object(
+                path_atlas, "dic_existing_masks", dic_existing_masks,
+            )
 
         logging.info("Projected masks and spectra have all been computed.")
         self.dic_existing_masks = dic_existing_masks

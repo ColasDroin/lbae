@@ -15,7 +15,6 @@ pkill -P1 gunicorn
 # ==================================================================================================
 
 import logging
-import os
 from modules.tools.misc import logmem  # To track memory usage
 import dash_mantine_components as dmc
 

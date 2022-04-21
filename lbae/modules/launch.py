@@ -76,6 +76,7 @@ class Launch:
             # Computed in Atlas.__init__(), calling Atlas.compute_array_projection() when
             # computing arrays_projection_corrected_True_True. Corresponds to the object returned by
             # Atlas.compute_projection_parameters()
+            # * This computation takes ~20s
             "atlas/atlas_objects/l_transform_parameters",
             #
             # Computed in Atlas.__init__(), calling Atlas.save_all_projected_masks_and_spectra(),
