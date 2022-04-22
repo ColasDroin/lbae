@@ -341,7 +341,8 @@ def return_layout(basic_config, slice_index):
                                                     ),
                                                     dbc.Toast(
                                                         id="page-4-toast-lipid-1",
-                                                        header="name-lipid-1",
+                                                        # header="name-lipid-1",
+                                                        header="",
                                                         # icon="primary",
                                                         dismissable=True,
                                                         is_open=False,
@@ -352,7 +353,8 @@ def return_layout(basic_config, slice_index):
                                                     ),
                                                     dbc.Toast(
                                                         id="page-4-toast-lipid-2",
-                                                        header="name-lipid-2",
+                                                        # header="name-lipid-2",
+                                                        header="",
                                                         # icon="primary",
                                                         dismissable=True,
                                                         is_open=False,
@@ -363,7 +365,8 @@ def return_layout(basic_config, slice_index):
                                                     ),
                                                     dbc.Toast(
                                                         id="page-4-toast-lipid-3",
-                                                        header="name-lipid-3",
+                                                        # header="name-lipid-3",
+                                                        header="",
                                                         # icon="primary",
                                                         dismissable=True,
                                                         header_class_name="d-flex justify-content-center ml-2",
@@ -608,8 +611,8 @@ def page_4_click(header_1, header_2, header_3, name, structure, cation):
     # Find out which input triggered the function
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
 
-    # if all headers are free
-    if header_1 == "" and header_2 == "" and header_3 == "":
+    # if at least one headers is free
+    if header_1 == "" or header_2 == "" or header_3 == "":
 
         if cation is not None and cation != "":
             # Get lipid name
@@ -871,32 +874,6 @@ def page_4_plot_graph_volume(
                 decrease_dimensionality_factor=decrease_resolution_factor,
                 cache_flask=cache_flask,
             )
-
-            # return return_shelved_object(
-            #     "figures/3D_page",
-            #     "volume_interpolated_3D_"
-            #     + name_lipid_1
-            #     + "_"
-            #     + name_lipid_2
-            #     + "_"
-            #     + name_lipid_3
-            #     + "_"
-            #     + name_region_1
-            #     + "_"
-            #     + name_region_2
-            #     + "_"
-            #     + name_region_3,
-            #     force_update=False,
-            #     compute_function=figures.compute_3D_volume_figure,
-            #     ignore_arguments_naming=True,
-            #     ll_t_bounds=lll_lipid_bounds,
-            #     name_lipid_1=name_lipid_1,
-            #     name_lipid_2=name_lipid_2,
-            #     name_lipid_3=name_lipid_3,
-            #     set_id_regions=set_id,
-            #     decrease_dimensionality_factor=decrease_resolution_factor,
-            #     cache_flask=cache_flask,
-            # )
 
         else:
             # probably the page has just been loaded, so do nothing

@@ -455,6 +455,11 @@ class Atlas:
         path_atlas = "atlas/atlas_objects"
 
         for slice_index in range(self.data.get_slice_number()):
+
+            # Break the loop after the first slice if sample is True
+            if sample and slice_index > 1:
+                break
+
             logging.info("Starting slice " + str(slice_index))
             slice_coor_rescaled = np.asarray(
                 (
@@ -475,6 +480,11 @@ class Atlas:
             n_computed = 0
             for mask_name, id_mask in self.dic_name_acronym.items():
                 if id_mask not in dic_processed_temp[slice_index]:
+
+                    # Break the loop after a few computations if sample is True
+                    if sample and n_computed > 1:
+                        break
+
                     if (
                         not (
                             check_shelved_object(
@@ -556,13 +566,10 @@ class Atlas:
                         dic_processed_temp[slice_index].add(id_mask)
 
                     n_computed += 1
-                    if sample and n_computed > 1:
-                        break
+
                 else:
                     n_computed += 1
                     logging.info('Mask "' + mask_name + '" already processed')
-            if sample and slice_index > 1:
-                break
 
         if not sample:
             # Dump the dictionnary of existing masks with shelve
