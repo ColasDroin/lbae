@@ -45,8 +45,9 @@ sample = True
 atlas = Atlas(data, resolution=25, sample=sample)
 figures = Figures(data, atlas, sample=sample)
 
-# Compute ans shelve potentially missing objects
+# Compute and shelve potentially missing objects
 launch = Launch(data, atlas, figures)
+launch.launch()
 
 logging.info("Memory use after three main object have been instantiated" + logmem())
 

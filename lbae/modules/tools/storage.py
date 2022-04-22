@@ -115,11 +115,11 @@ def return_shelved_object(
     db = shelve.open(db_path)
     # Check if the object is in the folder already and return it
     if complete_file_name in db and not force_update:
-        logging.info("Returning " + file_name + " from shelve file." + logmem())
+        logging.info("Returning " + complete_file_name + " from shelve file." + logmem())
         object = db[complete_file_name]
     else:
         logging.info(
-            file_name
+            complete_file_name
             + " could not be found or force_update is True. "
             + "Computing the object and shelving it now."
         )
@@ -135,7 +135,7 @@ def return_shelved_object(
 
         # Save the result in a pickle file
         db[complete_file_name] = object
-        logging.info(file_name + " being returned now from computation.")
+        logging.info(complete_file_name + " being returned now from computation.")
 
     # Close shelve for good this time
     db.close()

@@ -88,7 +88,7 @@ class Figures:
             )
 
         # Check that all basic figures in the load_slice page are present, if not, compute them
-        if not check_shelved_object("figures/load_slice_page", "arrays_basic_figures_computed"):
+        if not check_shelved_object("figures/load_page", "arrays_basic_figures_computed"):
             self.shelve_arrays_basic_figures()
 
         # Check that the lipid distributions for all slices have been computed, if not, compute them
@@ -1631,7 +1631,7 @@ class Figures:
                         else False,
                     )
 
-        dump_shelved_object("figures/load_slice", "arrays_basic_figures_computed", True)
+        dump_shelved_object("figures/load_page", "arrays_basic_figures_computed", True)
 
     def shelve_all_l_array_2D(self, force_update=False, sample=False):
 

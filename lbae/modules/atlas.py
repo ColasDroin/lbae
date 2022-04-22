@@ -550,14 +550,16 @@ class Atlas:
                             + str(id_mask).replace("/", ""),
                             (projected_mask, grah_scattergl_data),
                         )
-                        n_computed += 1
+
                     else:
                         dic_existing_masks[slice_index].add(id_mask)
                         dic_processed_temp[slice_index].add(id_mask)
 
+                    n_computed += 1
                     if sample and n_computed > 1:
                         break
                 else:
+                    n_computed += 1
                     logging.info('Mask "' + mask_name + '" already processed')
             if sample and slice_index > 1:
                 break

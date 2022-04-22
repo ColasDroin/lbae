@@ -31,6 +31,8 @@ from modules.tools.spectra import (
     compute_thread_safe_function,
 )
 
+from config import l_colors
+
 HEIGHT_PLOTS = 300
 N_LINES = int(np.ceil(HEIGHT_PLOTS / 30))
 
@@ -82,7 +84,14 @@ def return_layout(basic_config, slice_index=1):
                             type_figure="projection_corrected",
                             index_image=slice_index - 1,
                             plot_atlas_contours=False,
-                            draw=True,
+                        ).update_layout(
+                            dragmode="drawclosedpath",
+                            newshape=dict(
+                                fillcolor=l_colors[0],
+                                opacity=0.7,
+                                line=dict(color="white", width=1),
+                            ),
+                            autosize=True,
                         ),
                     ),
                     dmc.Text(
@@ -821,7 +830,6 @@ def page_3_plot_heatmap(
             type_figure="projection_corrected",
             index_image=slice_index - 1,
             plot_atlas_contours=False,
-            draw=True,
         )
         fig.update_layout(
             dragmode="drawclosedpath",
@@ -1511,7 +1519,9 @@ def page_3_plot_spectrum(
                 )
 
                 # Pad not annotated traces peaks with zeros
-                grah_scattergl_data_padded, array_index_padding = compute_thread_safe_function(add_zeros_to_spectrum, cache_flask,
+                grah_scattergl_data_padded, array_index_padding = compute_thread_safe_function(
+                    add_zeros_to_spectrum,
+                    cache_flask,
                     grah_scattergl_data[:, l_idx_unkept],
                     pad_individual_peaks=True,
                     padding=10 ** -4,

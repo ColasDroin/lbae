@@ -38,9 +38,11 @@ class Launch:
         l_figures_objects_at_init (list): List of figures objects normally computed at app 
             startup if not already in shelve database.
         l_other_objects_to_compute (list): List of other objects which must be computed to 
-            prevent slowing down the app during normal use.    
+            prevent slowing down the app during normal use. 
+        l_entries_to_ignore (list): List of entries to ignore when checking if they are in the 
+            shelve database.
     Methods:
-    
+        #TODO
     """
 
     def __init__(self, data, atlas, figures, path="data/app_data/data.db"):
@@ -99,8 +101,8 @@ class Launch:
             #
             # Computed at startup through calling
             # Atlas.compute_list_projected_atlas_borders_figures() (see comment just above).
-            # Corresponds to the object returned by atlas.compute_array_images_atlas().
-            "atlas/atlas_objects/array_images_atlas",
+            # Corresponds to the object returned by atlas.prepare_and_compute_array_images_atlas().
+            "atlas/atlas_objects/array_images_atlas_True",
             #
         ]
 
@@ -145,17 +147,17 @@ class Launch:
                 # "figures/load_page/figure_basic_image_$type_figure$_$idx_slice$_$display_annotations",
                 # (not explicitely in this list as there are too many).
                 #  * This a long computation.
-                "figures/3D_page/arrays_basic_figures_computed",
+                "figures/load_page/arrays_basic_figures_computed",
                 #
                 # Computed in compute_figure_basic_image() only, which is called in
                 # Figures.shelve_arrays_basic_figures(), itself called in Figures.__init__().
                 # Corresponds to the object returned by
                 # figures.compute_array_basic_images(type_figure), with type_figure having the
                 # following values: "original_data", "warped_data", "projection_corrected", "atlas"
-                "figures/load_page/array_basic_image_original_data",
-                "figures/load_page/array_basic_image_warped_data",
-                "figures/load_page/array_basic_image_projection_corrected",
-                "figures/load_page/array_basic_image_atlas",
+                "figures/load_page/array_basic_images_original_data",
+                "figures/load_page/array_basic_images_warped_data",
+                "figures/load_page/array_basic_images_projection_corrected",
+                "figures/load_page/array_basic_images_atlas",
                 #
                 # Computed in Figures.__init(), calling Figures.shelve_all_l_array_2D(), but it
                 # doesn't correpond to an object returned by a specific function.
@@ -174,7 +176,7 @@ class Launch:
                 # (not explicitely in this list as there are too many.
                 # decrease_dimensionality_factor is 6 by defaults).
                 #  * This a very long computation.
-                "figures/3D_page/arrays_borders_computed"
+                "figures/3D_page/arrays_borders_computed",
                 #
                 # Computed in Figures.shelve_all_arrays_borders(), itself called in
                 # Figures.__init__(). Corresponds to the object returned by
@@ -199,6 +201,15 @@ class Launch:
             + self.l_other_objects_to_compute
         )
 
+        self.l_entries_to_ignore = [
+            "figures/3D_page/arrays_expression_",
+            "figures/3D_page/arrays_borders_",
+            "figures/load_page/figure_basic_image_",
+            "atlas/atlas_objects/mask_and_spectrum_",
+            "atlas/atlas_objects/dic_processed_temp",
+            "launch/first_launch",
+        ]
+
     def check_missing_db_entries(self):
         """This function checks if all the entries in self.l_db_entries are in the shelve database. 
         It then returns a list containing the missing entries.
@@ -217,13 +228,11 @@ class Launch:
         l_unexpected_entries = list(set(db.keys()) - set(self.l_db_entries))
 
         # Remove entries that are not in the initial list but are in the database, i.e all 2D lipid
-        # slices, all brain regions, and all figures in the load_slice page
+        # slices, all brain regions, all figures in the load_slice page, and all atlas masks.
         l_unexpected_entries = [
             x
             for x in l_unexpected_entries
-            if "figures/3D_page/arrays_expression_" not in x
-            and "figures/3D_page/arrays_borders_" not in x
-            and "figures/load_page/figure_basic_image_" not in x
+            if [entry not in x for entry in self.l_entries_to_ignore].count(True) == 0
         ]
 
         if len(l_unexpected_entries) > 0:
