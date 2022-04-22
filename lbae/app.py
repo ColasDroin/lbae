@@ -36,10 +36,14 @@ logging.info("Memory use before any global variable declaration" + logmem())
 # Load data
 data = MaldiData()
 
+# If True, only a small portions of the figures are precomputed (if precomputation has not already
+# been done)
+sample = True
+
 # Load Atlas and Figures objects. At first launch, many objects will be precomputed and shelved in
 # the classes Atlas and Figures.
-atlas = Atlas(data, resolution=25)
-figures = Figures(data, atlas)
+atlas = Atlas(data, resolution=25, sample=sample)
+figures = Figures(data, atlas, sample=sample)
 
 # Compute ans shelve potentially missing objects
 launch = Launch(data, atlas, figures)

@@ -27,7 +27,7 @@ from modules.tools.atlas import (
     compute_array_images_atlas,
 )
 from modules.tools.spectra import compute_spectrum_per_row_selection, compute_thread_safe_function
-from modules.atlas_labels import Labels, LabelContours
+from modules.atlas_labels import Labels
 from modules.tools.storage import (
     return_shelved_object,
     dump_shelved_object,
@@ -41,7 +41,7 @@ from modules.tools.misc import logmem
 
 ###### Atlas Class ######
 class Atlas:
-    def __init__(self, maldi_data, resolution=25):
+    def __init__(self, maldi_data, resolution=25, sample=False):
 
         logging.info("Initializing Atlas object" + logmem())
 
@@ -73,7 +73,6 @@ class Atlas:
         # class. But they shouldn't be memory-mapped as they are called when hovering and require
         # very fast response from the server
         self.labels = Labels(self.bg_atlas, force_init=True)
-        self._simplified_labels_int = None
 
         # Compute a dictionnary that associates to each structure (acronym) the set of ids (int) of
         # all of its children. Used only in page_4_plot_graph_volume, but it's very light so no
@@ -133,44 +132,55 @@ class Atlas:
                 + "Doing it now, this may take several hours."
             )
             # Since this function is called at startup, no data locking is needed
-            self.save_all_projected_masks_and_spectra(cache_flask=None, sample=True)
+            self.save_all_projected_masks_and_spectra(cache_flask=None, sample=sample)
+
+            # Properties
+            self._array_projection_corrected = None
+            self._l_original_coor = None
+            self._list_projected_atlas_borders_arrays = None
 
     # Load arrays of images using atlas projection. It's a property to save memory as it is only
     # used with objects that should also be precomputed.
     @property
     def array_projection_corrected(self):
-        return return_shelved_object(
-            "atlas/atlas_objects",
-            "arrays_projection_corrected",
-            force_update=False,
-            compute_function=self.compute_array_projection,
-            nearest_neighbour_correction=True,
-            atlas_correction=True,
-        )[0]
+        if self._array_projection_corrected is None:
+            self._array_projection_corrected = return_shelved_object(
+                "atlas/atlas_objects",
+                "arrays_projection_corrected",
+                force_update=False,
+                compute_function=self.compute_array_projection,
+                nearest_neighbour_correction=True,
+                atlas_correction=True,
+            )[0]
+        return self._array_projection_corrected
 
     # Load arrays of original images coordinates. It's a property to save memory as it is only used
     # with objects that should also be precomputed.
     @property
     def l_original_coor(self):
-        return return_shelved_object(
-            "atlas/atlas_objects",
-            "arrays_projection_corrected",
-            force_update=False,
-            compute_function=self.compute_array_projection,
-            nearest_neighbour_correction=True,
-            atlas_correction=True,
-        )[2]
+        if self._l_original_coor:
+            self._l_original_coor = return_shelved_object(
+                "atlas/atlas_objects",
+                "arrays_projection_corrected",
+                force_update=False,
+                compute_function=self.compute_array_projection,
+                nearest_neighbour_correction=True,
+                atlas_correction=True,
+            )[2]
+        return self._l_original_coor
 
     # Load array of projected atlas borders (i.e. image of atlas annotations). It's a property to
     # save memory as it is only used with objects that should also be precomputed.
     @property
     def list_projected_atlas_borders_arrays(self):
-        return return_shelved_object(
-            "atlas/atlas_objects",
-            "list_projected_atlas_borders_arrays",
-            force_update=False,
-            compute_function=self.compute_list_projected_atlas_borders_figures,
-        )
+        if self._list_projected_atlas_borders_arrays is None:
+            self._list_projected_atlas_borders_arrays = return_shelved_object(
+                "atlas/atlas_objects",
+                "list_projected_atlas_borders_arrays",
+                force_update=False,
+                compute_function=self.compute_list_projected_atlas_borders_figures,
+            )
+        return self._list_projected_atlas_borders_arrays
 
     # Compute a dictionnary that associate to each structure (acronym) the set of ids (int) of all
     # of its children
@@ -439,6 +449,7 @@ class Atlas:
 
         # Define a dictionnary that contains all the masks that exist for every slice
         dic_existing_masks = {}
+        dic_processed_temp = {}
 
         # Path atlas for shelving
         path_atlas = "atlas/atlas_objects"
@@ -454,81 +465,100 @@ class Atlas:
 
             dic_existing_masks[slice_index] = set([])
 
+            # Check if there's already a dic of temporary processed masks, and load id if it exists
+            if check_shelved_object(path_atlas, "dic_processed_temp"):
+                dic_processed_temp = load_shelved_object(path_atlas, "dic_processed_temp",)
+            else:
+                dic_processed_temp[slice_index] = set([])
+
             # Get hierarchical tree of brain structures
             n_computed = 0
             for mask_name, id_mask in self.dic_name_acronym.items():
-                if (
-                    not (
-                        check_shelved_object(
+                if id_mask not in dic_processed_temp[slice_index]:
+                    if (
+                        not (
+                            check_shelved_object(
+                                path_atlas,
+                                "mask_and_spectrum_"
+                                + str(slice_index)
+                                + "_"
+                                + str(id_mask).replace("/", ""),
+                            )
+                            and check_shelved_object(
+                                path_atlas,
+                                "mask_and_spectrum_MAIA_corrected_"
+                                + str(slice_index)
+                                + "_"
+                                + str(id_mask).replace("/", ""),
+                            )
+                        )
+                        or force_update
+                    ):
+                        # get the array corresponding to the projected mask
+                        stack_mask = self.get_atlas_mask(id_mask)
+
+                        # Project the mask onto high resolution data
+                        projected_mask = project_atlas_mask(
+                            stack_mask, slice_coor_rescaled, self.bg_atlas.reference.shape
+                        )
+                        if np.sum(projected_mask) == 0:
+                            logging.info(
+                                "The structure "
+                                + mask_name
+                                + " is not present in slice "
+                                + str(slice_index)
+                            )
+                            # Mask doesn't exist, so it considered processed
+                            dic_processed_temp[slice_index].add(id_mask)
+                            continue
+
+                        # Compute average spectrum in the mask
+                        grah_scattergl_data = self.compute_spectrum_data(
+                            slice_index,
+                            projected_mask,
+                            MAIA_correction=False,
+                            cache_flask=cache_flask,
+                        )
+
+                        # Add mask to the list of existing masks
+                        dic_existing_masks[slice_index].add(id_mask)
+                        dic_processed_temp[slice_index].add(id_mask)
+
+                        # Dump the mask and data with shelve
+                        dump_shelved_object(
                             path_atlas,
                             "mask_and_spectrum_"
                             + str(slice_index)
                             + "_"
                             + str(id_mask).replace("/", ""),
+                            (projected_mask, grah_scattergl_data),
                         )
-                        and check_shelved_object(
+
+                        # Same with MAIA corrected data
+                        grah_scattergl_data = self.compute_spectrum_data(
+                            slice_index,
+                            projected_mask,
+                            MAIA_correction=True,
+                            cache_flask=cache_flask,
+                        )
+
+                        dump_shelved_object(
                             path_atlas,
                             "mask_and_spectrum_MAIA_corrected_"
                             + str(slice_index)
                             + "_"
                             + str(id_mask).replace("/", ""),
+                            (projected_mask, grah_scattergl_data),
                         )
-                    )
-                    or force_update
-                ):
-                    # get the array corresponding to the projected mask
-                    stack_mask = self.get_atlas_mask(id_mask)
-
-                    # Project the mask onto high resolution data
-                    projected_mask = project_atlas_mask(
-                        stack_mask, slice_coor_rescaled, self.bg_atlas.reference.shape
-                    )
-                    if np.sum(projected_mask) == 0:
-                        logging.info(
-                            "The structure "
-                            + mask_name
-                            + " is not present in slice "
-                            + str(slice_index)
-                        )
-                        continue
+                        n_computed += 1
                     else:
                         dic_existing_masks[slice_index].add(id_mask)
+                        dic_processed_temp[slice_index].add(id_mask)
 
-                    # Compute average spectrum in the mask
-                    grah_scattergl_data = self.compute_spectrum_data(
-                        slice_index, projected_mask, MAIA_correction=False, cache_flask=cache_flask
-                    )
-
-                    # Dump the mask and data with shelve
-                    dump_shelved_object(
-                        path_atlas,
-                        "mask_and_spectrum_"
-                        + str(slice_index)
-                        + "_"
-                        + str(id_mask).replace("/", ""),
-                        (projected_mask, grah_scattergl_data),
-                    )
-
-                    # Same with MAIA corrected data
-                    grah_scattergl_data = self.compute_spectrum_data(
-                        slice_index, projected_mask, MAIA_correction=True, cache_flask=cache_flask
-                    )
-
-                    dump_shelved_object(
-                        path_atlas,
-                        "mask_and_spectrum_MAIA_corrected_"
-                        + str(slice_index)
-                        + "_"
-                        + str(id_mask).replace("/", ""),
-                        (projected_mask, grah_scattergl_data),
-                    )
-                    n_computed += 1
+                    if sample and n_computed > 1:
+                        break
                 else:
-                    dic_existing_masks[slice_index].add(id_mask)
-
-                if sample and n_computed > 3:
-                    break
-
+                    logging.info('Mask "' + mask_name + '" already processed')
             if sample and slice_index > 1:
                 break
 
@@ -537,6 +567,11 @@ class Atlas:
             dump_shelved_object(
                 path_atlas, "dic_existing_masks", dic_existing_masks,
             )
+
+        # Dump the dictionnary of processed masks with shelve
+        dump_shelved_object(
+            path_atlas, "dic_processed_temp", dic_processed_temp,
+        )
 
         logging.info("Projected masks and spectra have all been computed.")
         self.dic_existing_masks = dic_existing_masks

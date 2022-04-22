@@ -37,7 +37,7 @@ from modules.tools.spectra import (
 class Figures:
     __slots__ = ["_data", "_atlas", "dic_fig_contours", "dic_normalization_factors"]
 
-    def __init__(self, maldi_data, atlas):
+    def __init__(self, maldi_data, atlas, sample=False):
         logging.info("Initializing Figures object" + logmem())
         self._data = maldi_data
         self._atlas = atlas
@@ -88,18 +88,18 @@ class Figures:
             )
 
         # Check that all basic figures in the load_slice page are present, if not, compute them
-        if not check_shelved_object("figures/3D_page", "arrays_basic_figures_computed"):
+        if not check_shelved_object("figures/load_slice_page", "arrays_basic_figures_computed"):
             self.shelve_arrays_basic_figures()
 
         # Check that the lipid distributions for all slices have been computed, if not, compute them
         if not check_shelved_object("figures/3D_page", "arrays_expression_computed"):
-            self.shelve_all_l_array_2D()
+            self.shelve_all_l_array_2D(sample=sample)
 
         # Check that the region annotations for 3D plots have been computed, if not, compute them
         # Also compute the arrays of annotations for the current decrease_dimensionality_factor in
         # the process
         if not check_shelved_object("figures/3D_page", "arrays_borders_computed"):
-            self.shelve_all_arrays_borders(decrease_dimensionality_factor=6)
+            self.shelve_all_arrays_borders(decrease_dimensionality_factor=6, sample=sample)
 
     ###### FUNCTIONS FOR FIGURE IN LOAD_SLICE PAGE ######
 
@@ -1241,7 +1241,6 @@ class Figures:
             force_update=False,
             compute_function=self.get_array_of_annotations,
             decrease_dimensionality_factor=decrease_dimensionality_factor,
-            cache_flask=cache_flask,
         )
 
         # Get subsampled array of borders for each region
@@ -1616,11 +1615,11 @@ class Figures:
     ###### SHELVING FUNCTIONS ######
 
     def shelve_arrays_basic_figures(self, force_update=False):
-        for idx_slice in range(self._data.get_slices_number()):
+        for idx_slice in range(self._data.get_slice_number()):
             for type_figure in ["original_data", "warped_data", "projection_corrected", "atlas"]:
                 for display_annotations in [True, False]:
                     # Force no annotation for the original data
-                    return return_shelved_object(
+                    return_shelved_object(
                         "figures/load_page",
                         "figure_basic_image",
                         force_update=False,
@@ -1632,9 +1631,15 @@ class Figures:
                         else False,
                     )
 
-        dump_shelved_object("figures/3D_page", "arrays_basic_figures_computed", True)
+        dump_shelved_object("figures/load_slice", "arrays_basic_figures_computed", True)
 
-    def shelve_all_l_array_2D(self, force_update=False):
+    def shelve_all_l_array_2D(self, force_update=False, sample=False):
+
+        # Count number of lipids processed for sampling
+        n_processed = 0
+        if sample:
+            logging.warning("Only a sample of the lipid arrays will be computed!")
+
         # simulate a click on all lipid names
         for name in sorted(self._data.get_annotations().name.unique()):
             structures = self._data.get_annotations()[
@@ -1706,10 +1711,16 @@ class Figures:
                             cache_flask=None,  # No cache needed since launched at startup
                         )
 
+                        n_processed += 1
+                        if n_processed >= 10 and sample:
+                            return None
+
         # Variable to signal everything has been computed
         dump_shelved_object("figures/3D_page", "arrays_expression_computed", True)
 
-    def shelve_all_arrays_borders(self, decrease_dimensionality_factor=6, force_update=False):
+    def shelve_all_arrays_borders(
+        self, decrease_dimensionality_factor=6, force_update=False, sample=False
+    ):
 
         # Get subsampled array of annotations
         array_annotation = return_shelved_object(
@@ -1718,7 +1729,6 @@ class Figures:
             force_update=False,
             compute_function=self.get_array_of_annotations,
             decrease_dimensionality_factor=decrease_dimensionality_factor,
-            cache_flask=None,  # No cache needed since launched at startup
         )
 
         # Compute the set of all possible regions (leaves)
@@ -1726,18 +1736,22 @@ class Figures:
         for acronym in self._atlas.dic_acronym_children_id:
             set_id = set_id.union(self._atlas.dic_acronym_children_id[acronym])
 
+        n_processed = 0
         for id_region in set_id:
             # Get array of border for the current region
             return_shelved_object(
                 "figures/3D_page",
                 "arrays_borders_" + str(id_region) + "_" + str(decrease_dimensionality_factor),
-                force_update=force_update,
-                ignore_argument_naming=True,
+                force_update=False,
                 compute_function=fill_array_borders,
+                ignore_arguments_naming=True,
                 array_annotation=array_annotation,
                 keep_structure_id=np.array([id_region], dtype=np.int64),
                 decrease_dimensionality_factor=decrease_dimensionality_factor,
             )
+            n_processed += 1
+            if n_processed >= 10 and sample:
+                return None
 
         # Variable to signal everything has been computed
         dump_shelved_object("figures/3D_page", "arrays_borders_computed", True)

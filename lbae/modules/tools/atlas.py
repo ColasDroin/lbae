@@ -511,19 +511,19 @@ def compute_array_images_atlas(
     for x in range(array_images.shape[0]):
         for y in range(array_images.shape[1]):
             for z in range(array_images.shape[2]):
+
                 if (
                     min(array_coor_rescaled[x, y, z]) >= 0
                     and array_coor_rescaled[x, y, z][0] < atlas_reference.shape[0]
                     and array_coor_rescaled[x, y, z][1] < atlas_reference.shape[1]
                     and array_coor_rescaled[x, y, z][2] < atlas_reference.shape[2]
                 ):
-                    array_projected_simplified_id[x, y, z] = simplified_atlas_annotation[
-                        tuple(array_coor_rescaled[x, y, z])
-                    ]
+                    l, m, n = array_coor_rescaled[x, y, z]
+                    array_projected_simplified_id[x, y, z] = simplified_atlas_annotation[l, m, n]
                     if array_projected_simplified_id[x, y, z] == 0 and zero_out_of_annotation:
                         continue
                     else:
-                        array_images[x, y, z] = atlas_reference[tuple(array_coor_rescaled[x, y, z])]
+                        array_images[x, y, z] = atlas_reference[l, m, n]
                 else:
                     array_images[x, y, z] = 0
 
