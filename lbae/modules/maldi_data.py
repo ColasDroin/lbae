@@ -47,6 +47,8 @@ class MaldiData:
             - array_corrective_factors: three-dimensional, it contains the MAIA corrective factor 
                 used for lipid (first dimension) and each pixel (second and third dimension).
             In addition, it contains the shape of all the arrays stored in the numpy memory maps.
+        _n_slices (int): number of slices present in the dataset.
+        _l_slices (list): list of the slices indices in the dataset.
         _dic_memmap (dictionnary): a dictionnary containing numpy memory maps allowing to access the 
             heavyweights arrays of the datasets, without saturating the disk. The arrays in the 
             dictionnary are:
@@ -62,7 +64,7 @@ class MaldiData:
                 each pixel.
             - array_cumulated_lookup_mz_image: bidimensional, it maps m/z values to the cumulated 
                 spectrum until the corresponding m/z value for each pixel.
-        _n_slices (int): number of slices present in the dataset.
+        _path_data (str): path were the data files are stored.
         _df_annotations (pd.dataframe): a dataframe containing for each slice and each annotated 
             peak the name of the lipid in between the two annotated peak boundaries. Columns are 
             'slice', 'name', 'structure', 'cation', 'theoretical m/z', 'min', 'max', 'num_pixels', 
@@ -72,37 +74,70 @@ class MaldiData:
             'cation', 'estimated_mz', for brain 1.
         _df_annotations_MAIA_transformed_lipids_brain_2 (pd.dataframe): Same as 
             _df_annotations_MAIA_transformed_lipids_brain_1 for brain 2.
-        _path_data (str): path were the data files are stored.
-
+       
     Methods:
-        get_annotations(): getter for the lipid annotation of each slice, contained in a pandas 
+        __init__(path_data="data/whole_dataset/", path_annotations="data/annotations/"): Initialize 
+            the class MaldiData.
+        get_annotations(): Getter for the lipid annotation of each slice, contained in a pandas 
             dataframe.
-        get_annotations_MAIA_transformed_lipids(): getter for the MAIA transformed lipid annotation, 
-            contained in a pandas dataframe.
-        get_slice_number(): getter for the number of slice present in the dataset.
-        get_slice_list(): getter for the list of slice indexes in the dataset.
-        get_image_shape(slice_index): getter for image_shape, which indicates the shape of the image 
+        get_annotations_MAIA_transformed_lipids(brain_1=True): Getter for the MAIA transformed 
+            lipid annotation, contained in a pandas dataframe.
+        get_slice_number(): Getter for the number of slice present in the dataset.
+        get_slice_list(indices="all"): Getter for the list of slice indices in the dataset.
+        get_image_shape(slice_index): Getter for image_shape, which indicates the shape of the image 
             corresponding to the acquisition indexed by slice_index.
-        get_divider_lookup(slice_index): getter for divider_lookup, which sets the resolution of the 
+        get_divider_lookup(slice_index): Getter for divider_lookup, which sets the resolution of the 
             lookup of the acquisition indexed by slice_index.
-        get_array_avg_spectrum_downsampled(slice_index): getter for array_avg_spectrum_downsampled, 
-            which is a lookup table for the low-resolution average spectrum of the acquisition 
-            indexed by slice_index.
-        # ! Finish docstring here
-        get_array_lookup_pixels(slice_index):
-        get_array_lookup_mz_avg(slice_index):
-        get_array_spectra(slice_index):
-        get_array_mz(slice_index):
-        get_array_intensity(slice_index):
-        get_array_avg_spectrum(slice_index, standardization=True):
-        get_array_lookup_mz(slice_index):
-        get_array_cumulated_lookup_mz_image(slice_index):
-        get_partial_array_spectra(slice_index, lb=None, hb=None, index=None):
-        get_partial_array_mz(slice_index, lb=None, hb=None, index=None):
-        get_partial_array_intensity(slice_index, lb=None, hb=None, index=None):
-        get_partial_array_avg_spectrum(slice_index, lb=None, hb=None, standardization=True):
-        get_lookup_mz(slice_index, index):
-        get_cumulated_lookup_mz_image(slice_index, index):
+        get_array_avg_spectrum_downsampled(slice_index): Getter for array_avg_spectrum_downsampled, 
+            which is a low resolution version of average spectrum of the acquisition indexed by 
+            slice_index.
+        get_array_lookup_pixels(slice_index): Getter for array_lookup_pixels, which is a lookup 
+            table that maps pixel value to the corresponding spectrum indices in the corresponding 
+            spectrum data.
+        get_array_lookup_mz_avg(slice_index): Getter for array_lookup_mz_avg, which is a lookup 
+            table that maps m/z values to the corresponding indices in the averaged sectral data.
+        get_array_peaks_transformed_lipids(slice_index): Getter for array_peaks_transformed_lipids,
+            which is a lookup table for the indices of the peaks of the transformed lipids in the
+            spectral data.
+        get_array_corrective_factors(slice_index): Getter for array_corrective_factors, which is a
+            numpy array containing the MAIA corrective factors for each pixel of the requested
+            acquired slice.
+        get_array_spectra(slice_index): Getter for array_spectra, which is a (memmaped) numpy array 
+            containing the spectral data of slice indexed by slice_index.
+        get_array_mz(slice_index): Getter for array_mz, which corresponds to the first row of 
+            array_spectra, i.e. the m/z values of the spectral data.
+        get_array_intensity(slice_index): Getter for array_intensity, which corresponds to the 
+            second row of array_spectra, i.e. the intensity values of the spectral data.
+        get_array_avg_spectrum(slice_index, standardization=True): Getter for array_avg_spectrum,
+            which is a (memmaped) numpy array containing the (high resolution) averaged spectral 
+            data of slice indexed by slice_index.
+        get_array_lookup_mz(slice_index): Getter for array_lookup_mz, which is a lookup table
+            that maps m/z values to the corresponding indices in the spectral data.
+        get_array_cumulated_lookup_mz_image(slice_index): Getter for 
+            array_cumulated_lookup_mz_image, which is a lookup table that maps m/z values to the 
+            cumulated spectrum until the corresponding m/z value for each pixel.
+        get_partial_array_spectra(slice_index, lb=None, hb=None, index=None): Getter for
+            partial_array_spectra, which is a (memmaped) numpy array containing the spectral data
+            of slice indexed by slice_index, between lb and hb m/z values.
+        get_partial_array_mz(slice_index, lb=None, hb=None, index=None): Getter for
+            partial_array_mz, which corresponds to the first row of partial_array_spectra, i.e.
+            the m/z values of the spectral data, between lb and hb.
+        get_partial_array_intensity(slice_index, lb=None, hb=None, index=None): Getter for
+            partial_array_intensity, which corresponds to the second row of partial_array_spectra,
+            i.e. the intensity values of the spectral data, between lb and hb.
+        get_partial_array_avg_spectrum(slice_index, lb=None, hb=None, standardization=True): Getter
+            for partial_array_avg_spectrum, which is a (memmaped) numpy array containing the
+            (high resolution) averaged spectral data of slice indexed by slice_index, between lb
+            and hb m/z values.
+        get_lookup_mz(slice_index, index): Returns the m/z value corresponding to the index in the
+            spectral data of slice indexed by slice_index.
+        get_cumulated_lookup_mz_image(slice_index, index): Returns the cumulated spectrum until
+            the corresponding m/z value for the pixel corresponding to the index in the spectral
+            data of slice indexed by slice_index.
+        clean_memory(slice_index=None, array=None, cache=None): Cleans the memory (reset the 
+            memory-mapped arrays) of the app.
+        compute_l_labels(): Computes and returns the labels of the lipids in the dataset.
+        return_lipid_options(): Computes and returns the list of lipid names, structures and cation.
     """
 
     __slots__ = [
@@ -117,6 +152,12 @@ class MaldiData:
     ]
 
     def __init__(self, path_data="data/whole_dataset/", path_annotations="data/annotations/"):
+        """Initialize the class MaldiData.
+
+        Args:
+            path_data (str): Path used to load the files containing the MALDI data.
+            path_annotations (str): Path used to load the files containing the annotations.
+        """
 
         logging.info("Initializing MaldiData object" + logmem())
 
@@ -153,25 +194,62 @@ class MaldiData:
         self._df_annotations = pd.read_csv(path_annotations + "lipid_annotation.csv")
         # self._df_annotations["name"] = self._df_annotations["name"].map(lambda x: x.split("_")[1])
 
-        # Load lipid annotations of MAIA-transformed lipids for brain 1 and 2
+        # Load lipid annotations of MAIA-transformed lipids for brain 1
         self._df_annotations_MAIA_transformed_lipids_brain_1 = pd.read_csv(
             path_annotations + "transformed_lipids_brain_1.csv"
         )
 
+        # Load lipid annotations of MAIA-transformed lipids for brain 2
         self._df_annotations_MAIA_transformed_lipids_brain_2 = pd.read_csv(
             path_annotations + "transformed_lipids_brain_2.csv"
         )
 
     def get_annotations(self):
+        """Getter for the lipid annotation of each slice, contained in a pandas 
+            dataframe.
+
+        Returns:
+            pd.DataFrame: A dataframe of annotations.
+        """
         return self._df_annotations
 
     def get_annotations_MAIA_transformed_lipids(self, brain_1=True):
+        """Getter for the MAIA transformed lipid annotation, contained in a pandas dataframe.
+
+        Args:
+            brain_1 (bool, optional): If True, return the lipid annotions for brain 1. Else for 
+                brain 2. Defaults to True.
+
+        Returns:
+            pd.DataFrame: A dataframe of lipid annotations for the MAIA transformed lipids.
+        """
         if brain_1:
             return self._df_annotations_MAIA_transformed_lipids_brain_1
         else:
             return self._df_annotations_MAIA_transformed_lipids_brain_2
 
+    def get_slice_number(self):
+        """Getter for the number of slice present in the dataset.
+
+        Returns:
+            int: The number of slices in the dataset.
+        """
+        # ! CHANGE THAT
+        return 32
+        return self._n_slices
+
     def get_slice_list(self, indices="all"):
+        """Getter for the list of slice indices.
+
+        Args:
+            indices (str, optional): If "all", return the list of all slice indices. If "brain_1",
+                return the list of slice indices for brain 1. If "brain_2", return the list of
+                slice indices for brain 2. Defaults to "all".
+
+        Returns:
+            list: The list of requested slice indices.
+        """
+
         if indices == "all":
             return self._l_slices
         elif indices == "brain_1":
@@ -181,51 +259,148 @@ class MaldiData:
         else:
             raise ValueError("Invalid string for indices")
 
-    def get_slice_number(self):
-        # ! CHANGE THAT
-        return 32
-        return self._n_slices
-
     def get_image_shape(self, slice_index):
+        """Getter for image_shape, which indicates the shape of the image corresponding to the 
+        acquisition indexed by slice_index.
+
+        Args:
+            slice_index (int): Index of the slice whose shape is requested.
+
+        Returns:
+            np.ndarray: The shape of the requested slice image.
+        """
         return self._dic_lightweight[slice_index]["image_shape"]
 
     def get_divider_lookup(self, slice_index):
+        """Getter for divider_lookup, which sets the resolution of the lookup of the acquisition 
+        indexed by slice_index.
+
+        Args:
+            slice_index (int): Index of the slice whose divider lookup value is requested.
+
+        Returns:
+            int: The divider lookup value for the requested slice.
+        """
         return self._dic_lightweight[slice_index]["divider_lookup"]
 
     def get_array_avg_spectrum_downsampled(self, slice_index):
+        """Getter for array_avg_spectrum_downsampled, which is a low-resolution version of the
+        average spectrum of the acquisition indexed by slice_index.
+
+        Args:
+            slice_index (int): Index of the slice whose spectrum data is requested.
+
+        Returns:
+            np.ndarray: A low-resolution version of the average spectrum of the acquisition indexed 
+                by slice_index.
+        """
         # Previously called array_averaged_mz_intensity_low_res
         return self._dic_lightweight[slice_index]["array_avg_spectrum_downsampled"]
 
     def get_array_lookup_pixels(self, slice_index):
+        """Getter for array_lookup_pixels, which is a lookup table that maps pixel value to the 
+        corresponding spectrum indices in the corresponding spectrum data.
+
+        Args:
+            slice_index (int): Index of the slice whose pixel lookup table is requested.
+
+        Returns:
+            np.ndarray: The requested lookup table.
+        """
         # Previously called array_pixel_indexes_high_res
         return self._dic_lightweight[slice_index]["array_lookup_pixels"]
 
     def get_array_lookup_mz_avg(self, slice_index):
+        """Getter for array_lookup_mz_avg, which is a lookup table that maps m/z values to the 
+        corresponding indices in the averaged sectral data.
+
+        Args:
+            slice_index (int): Index of the slice for which the lookup table is requested.
+
+        Returns:
+            np.ndarray: The requested lookup table.
+        """
         # Previously called lookup_table_averaged_spectrum_high_res
         return self._dic_lightweight[slice_index]["array_lookup_mz_avg"]
 
     def get_array_peaks_transformed_lipids(self, slice_index):
+        """Getter for array_peaks_transformed_lipids, which is a lookup table for the indices of the 
+        peaks of the transformed lipids in the spectral data.
+
+        Args:
+            slice_index (int): Index of the slice for which the peaks lookup table is requested.
+
+        Returns:
+            np.ndarray: Bidimensional array of peak annotations for the requested slice.
+        """
         return self._dic_lightweight[slice_index]["array_peaks_transformed_lipids"]
 
     def get_array_corrective_factors(self, slice_index):
+        """Getter for array_corrective_factors, which is a numpy array containing the MAIA 
+        corrective factors for each pixel of the requested acquired slice.
+
+        Args:
+            slice_index (int): Index of the slice for which the corrective factors are requested.
+
+        Returns:
+            np.ndarray: Three-dimensional array containing the MAIA corrective factor used for lipid 
+            and each pixel.
+        """
         return self._dic_lightweight[slice_index]["array_corrective_factors"]
 
     def get_array_spectra(self, slice_index):
+        """Getter for array_spectra, which is a (memmaped) numpy array containing the spectral data 
+        of slice indexed by slice_index.
+
+        Args:
+            slice_index (int): Index of the slice for which the spectral data is requested.
+
+        Returns:
+            np.ndarray (mmaped): Spectral data of the requested slice.
+        """
 
         # Previously called array_spectra_high_res.
         return self._dic_memmap[slice_index]["array_spectra"]
 
     def get_array_mz(self, slice_index):
+        """Getter for array_mz, which corresponds to the first row of array_spectra, i.e. the m/z 
+        values of the spectral data.
+
+        Args:
+            slice_index (int): Index of the slice for which the m/z values are requested.
+
+        Returns:
+            np.ndarray (mmaped): m/z values of the spectral data of the requested slice.
+        """
 
         # Previously called array_spectra_high_res
         return self._dic_memmap[slice_index]["array_spectra"][0, :]
 
     def get_array_intensity(self, slice_index):
+        """Getter for array_intensity, which corresponds to the second row of array_spectra, i.e. 
+        the intensity values of the spectral data.
+
+        Args:
+            slice_index (int): Index of the slice for which the intensity values are requested.
+
+        Returns:
+            np.ndarray (mmaped): Intensity values of the spectral data of the requested slice.
+        """
 
         # Previously called array_spectra_high_res
         return self._dic_memmap[slice_index]["array_spectra"][1, :]
 
     def get_array_avg_spectrum(self, slice_index, standardization=True):
+        """Getter for array_avg_spectrum, which is a (memmaped) numpy array containing the (high 
+        resolution) averaged spectral data of slice indexed by slice_index.
+
+        Args:
+            slice_index (int): Index of the slice for which the average spectrum is requested.
+            standardization (bool): If True, the average spectrum is standardized.
+
+        Returns:
+            np.ndarray (mmaped): The requested average spectrum.
+        """
 
         if not standardization:
             # Previously called array_averaged_mz_intensity_high_res
@@ -234,16 +409,54 @@ class MaldiData:
             return self._dic_memmap[slice_index]["array_avg_spectrum_after_standardization"]
 
     def get_array_lookup_mz(self, slice_index):
+        """Getter for array_lookup_mz, which is a lookup table that maps m/z values to the 
+        corresponding indices in the spectral data.
+
+        Args:
+            slice_index (int): Index of the slice for which the lookup table is requested.
+
+        Returns:
+            np.ndarray (mmaped): The requested lookup table.
+        """
 
         # Previously called lookup_table_spectra_high_res
         return self._dic_memmap[slice_index]["array_lookup_mz"]
 
     def get_array_cumulated_lookup_mz_image(self, slice_index):
+        """Getter for array_cumulated_lookup_mz_image, which is a lookup table that maps m/z values 
+        to the corresponding indices in the spectral data.
+
+        Args:
+            slice_index (int): Index of the slice for which the lookup table is requested.
+
+        Returns:
+            np.ndarray (mmaped): The requested lookup table.
+        """
 
         # Previously called cumulated_image_lookup_table_high_res
         return self._dic_memmap[slice_index]["array_cumulated_lookup_mz_image"]
 
     def get_partial_array_spectra(self, slice_index, lb=None, hb=None, index=None):
+        """Getter for partial_array_spectra, which is a (memmaped) numpy array containing the
+        spectral data of slice indexed by slice_index.
+
+        Args:
+            slice_index (int): Index of the slice for which the spectral data is requested.
+            lb (int): Lower bound of the requested spectrum.
+            hb (int): Upper bound of the requested spectrum.
+            index (int): Index of the requested spectrum.
+
+        Returns:
+            np.ndarray (mmaped): Spectral data of the requested slice.
+        """
+
+        if lb is None and hb is None and index is None:
+            # Previously called array_spectra_high_res.
+            return self._dic_memmap[slice_index]["array_spectra"]
+        elif lb is not None and hb is not None:
+            return self._dic_memmap[slice_index]["array_spectra"][:, lb:hb]
+        elif index is not None:
+            return self._dic_memmap[slice_index]["array_spectra"][:, index]
 
         # If not specific index has been provided, it returns a range
         if index is None:
@@ -266,12 +479,34 @@ class MaldiData:
         else:
             if lb is not None or hb is not None:
                 logging.warning(
-                    "Both one or several boundaries and one index have been specified when calling array_spectra. "
+                    "Both one or several boundaries and one index have been specified"
+                    + " when calling array_spectra. "
                     + "Only the index request will be satisfied."
                 )
             return self._dic_memmap[slice_index]["array_spectra"][:, index]
 
     def get_partial_array_mz(self, slice_index, lb=None, hb=None, index=None):
+        """Getter for partial_array_mz, which corresponds to the first row of partial_array_spectra,
+        i.e. the m/z values of the spectral data, between lb and hb.
+
+        Args:
+            slice_index (int): Index of the slice for which the m/z values are requested.
+            lb (int): Lower bound of the requested spectrum.
+            hb (int): Upper bound of the requested spectrum.
+            index (int): Index of the slice of the requested spectrum.
+
+        Returns:
+            np.ndarray (mmaped): m/z values of the spectral data of the requested slice between lb 
+                and hb.
+        """
+
+        if lb is None and hb is None and index is None:
+            # Previously called array_spectra_high_res
+            return self._dic_memmap[slice_index]["array_spectra"][0, :]
+        elif lb is not None and hb is not None:
+            return self._dic_memmap[slice_index]["array_spectra"][0, lb:hb]
+        elif index is not None:
+            return self._dic_memmap[slice_index]["array_spectra"][0, index]
 
         # If not specific index has been provided, it returns a range
         if index is None:
@@ -295,12 +530,34 @@ class MaldiData:
         else:
             if lb is not None or hb is not None:
                 logging.warning(
-                    "Both one or several boundaries and one index have been specified when calling array_spectra. "
+                    "Both one or several boundaries and one index have been specified"
+                    + " when calling array_spectra. "
                     + "Only the index request will be satisfied."
                 )
             return self._dic_memmap[slice_index]["array_spectra"][0, index]
 
     def get_partial_array_intensity(self, slice_index, lb=None, hb=None, index=None):
+        """Getter for partial_array_intensity, which corresponds to the second row of 
+        partial_array_spectra, i.e. the intensity values of the spectral data, between lb and hb.
+
+        Args:
+            slice_index (int): Index of the slice for which the intensity values are requested.
+            lb (int): Lower bound of the requested spectrum.
+            hb (int): Upper bound of the requested spectrum.
+            index (int): Index of the slice of the requested spectrum.
+
+        Returns:
+            np.ndarray (mmaped): Intensity values of the spectral data of the requested slice 
+            between lb and hb.
+        """
+
+        if lb is None and hb is None and index is None:
+            # Previously called array_spectra_high_res
+            return self._dic_memmap[slice_index]["array_spectra"][1, :]
+        elif lb is not None and hb is not None:
+            return self._dic_memmap[slice_index]["array_spectra"][1, lb:hb]
+        elif index is not None:
+            return self._dic_memmap[slice_index]["array_spectra"][1, index]
 
         # If not specific index has been provided, it returns a range
         if index is None:
@@ -324,12 +581,26 @@ class MaldiData:
         else:
             if lb is not None or hb is not None:
                 logging.warning(
-                    "Both one or several boundaries and one index have been specified when calling array_spectra. "
+                    "Both one or several boundaries and one index have been specified"
+                    + " when calling array_spectra. "
                     + "Only the index request will be satisfied."
                 )
             return self._dic_memmap[slice_index]["array_spectra"][1, index]
 
     def get_partial_array_avg_spectrum(self, slice_index, lb=None, hb=None, standardization=True):
+        """Getter for partial_array_avg_spectrum, which corresponds to the average spectrum of the 
+        spectral data, between lb and hb.
+
+        Args:
+            slice_index (int): Index of the slice for which the average spectrum is requested.
+            lb (int): Lower bound of the requested spectrum.
+            hb (int): Upper bound of the requested spectrum.
+            standardization (bool): If True, the average spectrum is normalized.
+
+        Returns:
+            np.ndarray (mmaped): Average spectrum of the spectral data of the requested slice 
+            between lb and hb.
+        """
 
         # Start with most likely case
         if hb is not None and lb is not None:
@@ -361,18 +632,50 @@ class MaldiData:
                 ]
 
     def get_lookup_mz(self, slice_index, index):
+        """Returns the m/z value corresponding to the index in the spectral data of the slice 
+        indexed by slice_index.
+
+        Args:
+            slice_index (int): Index of the slice for which the m/z value is requested.
+            index (int): Index of the slice of the requested spectrum.
+
+        Returns:
+            np.ndarray (mmaped): m/z value of the spectral data of the requested slice and requested 
+                lookup.
+        """
 
         # Just return the (one) required lookup to go faster
         return self._dic_memmap[slice_index]["array_lookup_mz"][index]
 
     def get_cumulated_lookup_mz_image(self, slice_index, index):
+        """Returns the cumulated spectrum until the corresponding m/z value for the pixel 
+        corresponding to the index in the spectral data of slice indexed by slice_index.
+
+        Args:
+            slice_index (int): Index of the slice for which the m/z value is requested.
+            index (int): Index of the slice of the requested spectrum.
+
+        Returns:
+            np.ndarray (mmaped): Cumulated m/z value of the spectral data of the requested slice 
+                and requested lookup.
+        """
 
         # Just return the (one) required lookup to go faster
         return self._dic_memmap[slice_index]["array_cumulated_lookup_mz_image"][index]
 
-    # ? For the docstring : this function takes only about 5ms to run on all memmaps, and 1ms on a given slice
-    # ! Does the GIL handle this properly? Must try with several users at once
     def clean_memory(self, slice_index=None, array=None, cache=None):
+        """Cleans the memory (reset the memory-mapped arrays) of the app. slice_index and array
+        allow for a more fine-grained cleaning. If "cache" is provided, it will be used to lock the
+        dataset while cleaning. Overall, this function takes about 5ms to run on all memmaps, and 
+        1ms on a given slice.
+
+        Args:
+            slice_index (int, optional): Index of the slice whose corresponding mmap must be 
+                cleaned. Defaults to None.
+            array (str, optional): Name of the array whose corresponding mmap must be cleaned. 
+                Defaults to None.
+            cache (flask_caching.Cache, optional): Cache of the database. Defaults to None.
+        """
 
         # Wait for memory to be released before taking action
         if cache is not None:
@@ -438,6 +741,12 @@ class MaldiData:
             cache.set("locked-cleaning", False)
 
     def compute_l_labels(self):
+        """Computes the list of labels of the dataset.
+
+        Returns:
+            list: List of labels of the dataset.
+        """
+
         l_labels = (
             self._df_annotations["name"]
             + "_"
@@ -448,6 +757,12 @@ class MaldiData:
         return l_labels
 
     def return_lipid_options(self):
+        """Computes and returns the list of lipid names, structures and cation.
+
+        Returns:
+            list: List of lipid names, structures and cations.
+        """
+
         return [
             {
                 "label": name + " " + structure + " " + cation,
