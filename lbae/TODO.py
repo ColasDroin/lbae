@@ -8,7 +8,6 @@
 # TODO Remove refs to HDF5/Pytables
 # TODO Adress all # ! and # ? comments in the code
 # TODO Find out what must be precomputed and do a function to precompute it
-# TODO When everything is stable, create a function that shelve everything
 # TODO Update notebooks with up-to-date classes
 # TODO Do quality control, especially when several users are on the app in parallel
 # TODO Correct the name of the files to download

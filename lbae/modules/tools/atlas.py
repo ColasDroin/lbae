@@ -481,6 +481,16 @@ def fill_array_projection(
 
 @njit
 def compute_simplified_atlas_annotation(atlas_annotation):
+    """This function is used to map the array of annotations (which can initially be very large
+    integers) to an array of annotations of similar size, but with annotations ranging from 0 to the
+    number of structures in the atlas.
+
+    Args:
+        atlas_annotation (np.ndarray): Initial 3D array of annotations.
+
+    Returns:
+        np.ndarray: Simplified 3D array of annotations.
+    """
     # Compute an array which map labels ids to increasing integers
     unique_id_dic = {ni: indi for indi, ni in enumerate(set(atlas_annotation.flatten()))}
 
@@ -501,6 +511,23 @@ def compute_array_images_atlas(
     resolution,
     zero_out_of_annotation=False,
 ):
+    """This function is used to build a list of atlas images corresponding to the slices acquired
+    during the MALDI acquisition.
+
+    Args:
+        array_coordinates_warped_data (np.ndarray): Array of coordinates of the warped, 
+            high-resolution slices. 
+        simplified_atlas_annotation (np.ndarray): Simplified 3D array of annotations.
+        atlas_reference (np.ndarray): 3D array of the atlas data.
+        resolution (int): Resolution of the atlas.
+        zero_out_of_annotation (bool, optional): If True, the produced set of images is such that 
+            all the data that doesn't belong to a given structure is zeroed-out. Defaults to False.
+
+    Returns:
+        np.ndarray, np.ndarray: The first array is basically a list of atlas images corresponding 
+            to the slices acquired during the MALDI acquisition. The second array is the 
+            corresponding set of annotations.
+    """
     array_images = np.empty(array_coordinates_warped_data.shape[:-1], dtype=np.uint8)
     array_projected_simplified_id = np.full(
         array_images.shape, simplified_atlas_annotation[0, 0, 0], dtype=np.int32

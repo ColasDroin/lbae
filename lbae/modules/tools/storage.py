@@ -1,8 +1,8 @@
 # Copyright (c) 2022, Colas Droin. All rights reserved.
 # Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
 
-""" This file contains the functions used to handle the loading/dumping of the data used in the app 
-(memmaps excluded), e.g. figures or masks. The storage relies on a shelve database."""
+""" In this module, functions used to handle the loading/dumping of the data used in the app 
+(memmaps excluded), e.g. figures or masks, are defined. The storage relies on a shelve database."""
 
 # ==================================================================================================
 # --- Imports

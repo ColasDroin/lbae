@@ -38,7 +38,7 @@ data = MaldiData()
 
 # If True, only a small portions of the figures are precomputed (if precomputation has not already
 # been done)
-sample = True
+sample = False
 
 # Load Atlas and Figures objects. At first launch, many objects will be precomputed and shelved in
 # the classes Atlas and Figures.

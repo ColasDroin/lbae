@@ -1,8 +1,8 @@
 # Copyright (c) 2022, Colas Droin. All rights reserved.
 # Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
 
-""" This file contains a class with functions used to do check and run all precomputation at first 
-app launch."""
+""" This class contains functions used to do check and run all precomputation at first app 
+launch."""
 
 # ==================================================================================================
 # --- Imports
@@ -21,43 +21,53 @@ from modules.tools.storage import check_shelved_object, dump_shelved_object
 # ==================================================================================================
 
 
-# ! Should I merge this class with the one in tools/storage.py ?
-
-
 class Launch:
     """ Class used to precompute and shelve objects at app launch.
     
     Attributes:
-        path (str): Path to the shelve database.
         data (MaldiData): MaldiData object, used to manipulate the raw MALDI data.
         atlas (Atlas): Atlas object, used to manipulate the objects coming from the Allen Brain 
             Atlas.
         figures (Figures): Figures object, used to build the figures of the app.
+        path (str): Path to the shelve database.
         l_atlas_objects_at_init (list): List of atlas objects normally computed at app startup 
             if not already in shelve database.
         l_figures_objects_at_init (list): List of figures objects normally computed at app 
             startup if not already in shelve database.
         l_other_objects_to_compute (list): List of other objects which must be computed to 
-            prevent slowing down the app during normal use. 
+            prevent slowing down the app during normal use.
+        l_db_entries (list): List of all entries in the shelve database (i.e. concatenation of the 
+            3 previous lists).
         l_entries_to_ignore (list): List of entries to ignore when checking if they are in the 
             shelve database.
+            
     Methods:
-        #TODO
+        __init__(data, atlas, figures, path): Initialize the Launch class.
+        check_missing_db_entries(): Check if all the entries in l_db_entries are in the shelve db.
+        compute_and_fill_entries(l_missing_entries): Precompute all the entries in l_missing_entries 
+            and fill them in the shelve database.
+        launch(force_exit_if_first_launch=True): Launch the checks and precomputations at app 
+            startup.
     """
 
     def __init__(self, data, atlas, figures, path="data/app_data/data.db"):
         """Initialize the class Launch.
 
-        Args: Please refer to class Attributes.
+        Args:
+            data (MaldiData): MaldiData object, used to manipulate the raw MALDI data.
+            atlas (Atlas): Atlas object, used to manipulate the objects coming from the Allen Brain 
+                Atlas.
+            figures (Figures): Figures object, used to build the figures of the app.
+            path (str): Path to the shelve database. Defaults to "data/app_data/data.db".
         """
-
-        # Database path
-        self.db_path = path
 
         # App main objects
         self.data = data
         self.atlas = atlas
         self.figures = figures
+
+        # Database path
+        self.db_path = path
 
         # Objects to shelve in the Atlas class. Everything in this list is shelved at
         # initialization of Atlas and Figures objects. The computations described are the ones done
@@ -247,7 +257,7 @@ class Launch:
         return l_missing_entries
 
     def compute_and_fill_entries(self, l_missing_entries):
-        """This function precompute all the entries in l_entries and fill them in the shelve 
+        """This function precompute all the entries in l_missing_entries and fill them in the shelve 
         database.
 
         Args:
@@ -313,4 +323,3 @@ class Launch:
                     "The app has been exited now that everything has been precomputed."
                     + "Please launch the app again."
                 )
-

@@ -1,8 +1,7 @@
 # Copyright (c) 2022, Colas Droin. All rights reserved.
 # Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
 
-""" In this module, two classes are implemented to handle the Allen Brain Atlas annotations without
-loading the full arrays of annotations in memory.
+""" This module is used to access the Allen Brain Atlas annotations more easily.
 """
 
 # ==================================================================================================
@@ -11,13 +10,19 @@ loading the full arrays of annotations in memory.
 # Standard modules
 import numpy as np
 
-# ! Investigate the usefulness of this class
-# ! Rewrite the comments with attributes methods in the header of the class, not in init
 # ==================================================================================================
 # --- Classes
 # ==================================================================================================
 class Labels:
-    """ Class used to access labels data without having to create new arrays."""
+    """ Class used to access labels data without having to create new arrays.
+
+    Attributes:
+        bg_atlas (BrainGlobeAtlas): BrainGlobeAtlas object, used to query the atlas.
+       
+    Methods:
+        __init__(bg_atlas, force_init=True): Initialize the Labels class.
+        __getitem__(key): Getter for the curent class. 
+    """
 
     def __init__(self, bg_atlas, force_init=True):
         """Initialize the class Labels.
@@ -27,9 +32,8 @@ class Labels:
             force_init (bool, optional): If True, the arrays of annotations and structures in 
                 BrainGlobeAtlas are loaded in memory (this avoids to have them during the first 
                 query, but rather when the app is initialized). Defaults to True.
-        Attributes:
-            bg_atlas (BrainGlobeAtlas): BrainGlobeAtlas object, used to query the atlas.
         """
+
         self.bg_atlas = bg_atlas
         if force_init:
             _ = self.bg_atlas.annotation

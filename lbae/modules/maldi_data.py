@@ -1,4 +1,12 @@
-###### IMPORT MODULES ######
+# Copyright (c) 2022, Colas Droin. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+
+""" This class is used to access the data coming from acquisitions (MALDI), essentially in the form 
+of memory maps, and annotations."""
+
+# ==================================================================================================
+# --- Imports
+# ==================================================================================================
 
 # Standard modules
 import pickle
@@ -8,7 +16,9 @@ import pandas as pd
 from modules.tools.misc import logmem
 import logging
 
-###### DEFINE MaldiData CLASS ######
+# ==================================================================================================
+# --- Class
+# ==================================================================================================
 
 
 class MaldiData:
@@ -84,13 +94,13 @@ class MaldiData:
         get_array_spectra(slice_index):
         get_array_mz(slice_index):
         get_array_intensity(slice_index):
-        get_array_avg_spectrum(slice_index, standardization = True):
+        get_array_avg_spectrum(slice_index, standardization=True):
         get_array_lookup_mz(slice_index):
         get_array_cumulated_lookup_mz_image(slice_index):
         get_partial_array_spectra(slice_index, lb=None, hb=None, index=None):
         get_partial_array_mz(slice_index, lb=None, hb=None, index=None):
         get_partial_array_intensity(slice_index, lb=None, hb=None, index=None):
-        get_partial_array_avg_spectrum(slice_index, lb=None, hb=None, standardization = True):
+        get_partial_array_avg_spectrum(slice_index, lb=None, hb=None, standardization=True):
         get_lookup_mz(slice_index, index):
         get_cumulated_lookup_mz_image(slice_index, index):
     """

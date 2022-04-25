@@ -444,15 +444,21 @@ class Atlas:
     def save_all_projected_masks_and_spectra(
         self, force_update=False, cache_flask=None, sample=False
     ):
+
+        # Path atlas for shelving
+        path_atlas = "atlas/atlas_objects"
+
         if sample:
             logging.warning("Only a sample of the masks and spectra will be computed!")
 
         # Define a dictionnary that contains all the masks that exist for every slice
         dic_existing_masks = {}
-        dic_processed_temp = {}
 
-        # Path atlas for shelving
-        path_atlas = "atlas/atlas_objects"
+        # Define a dictionnary to save the result of the function slice by slice
+        if check_shelved_object(path_atlas, "dic_processed_temp"):
+            dic_processed_temp = load_shelved_object(path_atlas, "dic_processed_temp",)
+        else:
+            dic_processed_temp = {}
 
         for slice_index in range(self.data.get_slice_number()):
 
@@ -470,10 +476,8 @@ class Atlas:
 
             dic_existing_masks[slice_index] = set([])
 
-            # Check if there's already a dic of temporary processed masks, and load id if it exists
-            if check_shelved_object(path_atlas, "dic_processed_temp"):
-                dic_processed_temp = load_shelved_object(path_atlas, "dic_processed_temp",)
-            else:
+            # Check if the slice has already been processed
+            if slice_index not in dic_processed_temp:
                 dic_processed_temp[slice_index] = set([])
 
             # Get hierarchical tree of brain structures
@@ -571,16 +575,16 @@ class Atlas:
                     n_computed += 1
                     logging.info('Mask "' + mask_name + '" already processed')
 
+            # Dump the dictionnary of processed masks with shelve after every slice
+            dump_shelved_object(
+                path_atlas, "dic_processed_temp", dic_processed_temp,
+            )
+
         if not sample:
             # Dump the dictionnary of existing masks with shelve
             dump_shelved_object(
                 path_atlas, "dic_existing_masks", dic_existing_masks,
             )
-
-        # Dump the dictionnary of processed masks with shelve
-        dump_shelved_object(
-            path_atlas, "dic_processed_temp", dic_processed_temp,
-        )
 
         logging.info("Projected masks and spectra have all been computed.")
         self.dic_existing_masks = dic_existing_masks
