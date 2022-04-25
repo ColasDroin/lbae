@@ -1096,7 +1096,7 @@ def page_2bis_add_toast_selection(
                 .index[
                     (app.data.get_annotations()["name"] == name)
                     & (app.data.get_annotations()["structure"] == structure)
-                    & (app.data.get_annotations()["slice"] == slice_index)
+                    & (app.data.get_annotations()["slice"] == slice_index + 1)
                     & (app.data.get_annotations()["cation"] == cation)
                 ]
                 .tolist()

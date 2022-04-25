@@ -1182,7 +1182,7 @@ class Figures:
             array_data = np.sum(array_data, axis=-1)
 
             # Remove pixels for which lipid expression is zero
-            array_data_stripped = array_data[array_data != 0]
+            array_data_stripped = array_data.flatten()  # array_data[array_data != 0].flatten()
 
             # Skip the current slice if expression is very sparse
             if len(array_data_stripped) < 10 or np.sum(array_data_stripped) < 1:
@@ -1194,7 +1194,8 @@ class Figures:
 
             # Get the coordinates of the pixels in the ccfv3
             coordinates = l_coor[slice_index]
-            coordinates_stripped = coordinates[array_data != 0]
+            # coordinates_stripped = coordinates[array_data != 0]
+            coordinates_stripped = coordinates.reshape(-1, coordinates.shape[-1])
 
             # Get the data as 4 arrays (3 for coordinates and 1 for expression)
             array_x, array_y, array_z, array_c, total_index = filter_voxels(
@@ -1217,7 +1218,7 @@ class Figures:
         array_y = array_y[:total_index]
         array_z = array_z[:total_index]
         # * Caution, array_c should be a list to work with Plotly
-        array_c = array_c[:total_index].to_list()
+        array_c = array_c[:total_index].tolist()
 
         # Return the arrays for the 3D figure
         return array_x, array_y, array_z, array_c
@@ -1255,8 +1256,8 @@ class Figures:
                     "figures/3D_page",
                     "arrays_borders_" + str(id_region) + "_" + str(decrease_dimensionality_factor),
                     force_update=False,
-                    ignore_argument_naming=True,
                     compute_function=fill_array_borders,
+                    ignore_arguments_naming=True,
                     array_annotation=array_annotation,
                     keep_structure_id=np.array([id_region], dtype=np.int64),
                     decrease_dimensionality_factor=decrease_dimensionality_factor,
@@ -1264,20 +1265,33 @@ class Figures:
                 / n_regions
             )
 
+        print(np.max(array_atlas_borders), np.min(array_atlas_borders))
+
         logging.info("Computed basic structure array")
+
+        print("ICIOCO", ll_t_bounds)
 
         # Get array of expression for each lipid
         ll_array_data = [
             return_shelved_object(
                 "figures/3D_page",
                 "arrays_expression_" + str(name_lipid) + "__",
-                ignore_argument_naming=True,
                 force_update=False,
+                ignore_arguments_naming=True,
                 compute_function=self.compute_l_array_2D,
                 ll_t_bounds=[[l_t_bounds[i], None, None] for l_t_bounds in ll_t_bounds],
             )
-            for i, name_lipid in enumerate[name_lipid_1, name_lipid_2, name_lipid_3]
+            for i, name_lipid in enumerate([name_lipid_1, name_lipid_2, name_lipid_3])
         ]
+
+# ! Find bug
+#[[[(726.5855, 726.5894000000001)], None, None], [[(726.5856, 726.5897)], None, None], [[(726.5854, 726.5896)], None, None],...]
+
+
+
+
+
+
 
         # Average array of expression over lipid
         l_array_data_avg = []
@@ -1291,12 +1305,20 @@ class Figures:
                 else:
                     n += 1
                 avg += s
+
+            # In case there's no data for the current slice, set the average to 0
+            if n == 0:
+                n = 1
             l_array_data_avg.append(avg / n)
 
         # Get the 3D array of expression and coordinates
         array_x, array_y, array_z, array_c = self.compute_array_coordinates_3D(
             l_array_data_avg, high_res=False
         )
+
+        import plotille
+
+        print(plotille.hist(array_c, bins=100))
 
         logging.info("Computed array of expression in original space")
 
@@ -1314,7 +1336,7 @@ class Figures:
             np.array(array_c),
             array_slices,
             array_for_avg,
-            limit_value_inside=-1.95,
+            limit_value_inside=-1.99999,
         )
         logging.info("Filled basic structure array with array of expression")
 

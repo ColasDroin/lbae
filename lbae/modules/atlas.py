@@ -134,10 +134,10 @@ class Atlas:
             # Since this function is called at startup, no data locking is needed
             self.save_all_projected_masks_and_spectra(cache_flask=None, sample=sample)
 
-            # Properties
-            self._array_projection_corrected = None
-            self._l_original_coor = None
-            self._list_projected_atlas_borders_arrays = None
+        # Properties
+        self._array_projection_corrected = None
+        self._l_original_coor = None
+        self._list_projected_atlas_borders_arrays = None
 
     # Load arrays of images using atlas projection. It's a property to save memory as it is only
     # used with objects that should also be precomputed.
@@ -158,7 +158,7 @@ class Atlas:
     # with objects that should also be precomputed.
     @property
     def l_original_coor(self):
-        if self._l_original_coor:
+        if self._l_original_coor is None:
             self._l_original_coor = return_shelved_object(
                 "atlas/atlas_objects",
                 "arrays_projection_corrected",

@@ -39,8 +39,8 @@ def filter_voxels(
     Args:
         array_data_stripped (np.ndarray): A 2-dimensional array of voxel intensity for the current 
             slice, stripped of zero values.
-        coordinates_stripped (np.ndarray): A 2-dimensional array of voxel coordinates for the current 
-            slice, stripped of zero values.
+        coordinates_stripped (np.ndarray): A 2-dimensional array of voxel coordinates for the 
+            current slice, stripped of zero values.
         array_annotations (np.ndarray): The 3-dimensional array of annotation coming from the Allen 
             Brain Atlas.
         percentile (float): The value above which the voxels are considered for the graphing.
@@ -217,6 +217,7 @@ def fill_array_slices(
         z_scaled = int(round(x))
         # If inside the brain
         if array_slices[x_scaled, y_scaled, z_scaled] > limit_value_inside:
+            print("ici", array_slices[x_scaled, y_scaled, z_scaled], c)
             # If inside the brain and not assigned before
             if array_slices[x_scaled, y_scaled, z_scaled] < 0:
                 array_slices[x_scaled, y_scaled, z_scaled] = c / 100
