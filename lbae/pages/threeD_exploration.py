@@ -582,7 +582,6 @@ def page_4_click(clickData, region_1_id, region_2_id, region_3_id):
             if "points" in clickData:
                 label = clickData["points"][0]["label"]
                 # acronym = atlas.dic_name_acronym[label]
-                # print("New 3d figure loading: ", label, acronym)
                 return "Add " + label + " to selection", False
         return "Please choose a structure above", True
 
@@ -721,7 +720,7 @@ def page_4_add_toast_region_selection(
             l_selected_regions.remove(region_3_id)
             l_region_3_index = ""
         else:
-            print("BUG in page_2_add_dropdown_selection")
+            logging.warning("BUG in page_2_add_dropdown_selection")
 
         return (
             header_1,
@@ -758,7 +757,7 @@ def page_4_add_toast_region_selection(
                     region_3_id = region_id
                     bool_toast_3 = True
                 else:
-                    print("BUG, more than 3 regions have been selected")
+                    logging.warning("BUG, more than 3 regions have been selected")
                     return dash.no_update
 
                 return (
@@ -1070,7 +1069,7 @@ def page_2bis_add_toast_selection(
             l_selected_lipids.remove(l_lipid_3_index[0])
             l_lipid_3_index = empty_lipid_list
         else:
-            print("BUG in page_2_add_dropdown_selection")
+            logging.warning("BUG in page_2_add_dropdown_selection")
 
         return (
             header_1,
@@ -1130,7 +1129,7 @@ def page_2bis_add_toast_selection(
                 if slice_index == app.data.get_slice_number() - 1:
                     bool_toast_3 = True
             else:
-                print("BUG, more than 3 lipids have been selected")
+                logging.warning("BUG, more than 3 lipids have been selected")
                 return dash.no_update
 
         return (

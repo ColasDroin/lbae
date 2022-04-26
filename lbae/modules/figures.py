@@ -502,6 +502,7 @@ class Figures:
         image = np.zeros(self._atlas.image_shape, dtype=np.int32)
         if ll_lipid_names is None:
             ll_lipid_names = [["" for y in l_t_bounds] for l_t_bounds in ll_t_bounds]
+
         for l_t_bounds, l_lipid_names in zip(ll_t_bounds, ll_lipid_names):
             if l_t_bounds is not None:
                 for boundaries, lipid_name in zip(l_t_bounds, l_lipid_names):
@@ -1119,6 +1120,7 @@ class Figures:
     ):
         l_array_data = []
         for slice_index in range(0, self._data.get_slice_number(), 1):
+
             if ll_t_bounds[slice_index] != [None, None, None]:
 
                 # Get the data as an expression image per lipid
@@ -1177,6 +1179,10 @@ class Figures:
 
             # Get the averaged expression data for the current slice
             array_data = l_array_data[slice_index]
+
+            # If array_data is not an array but a 0 float, skip it
+            if type(array_data) == float:
+                continue
 
             # Remove pixels for which lipid expression is zero
             array_data_stripped = array_data.flatten()  # array_data[array_data != 0].flatten()
@@ -1244,23 +1250,30 @@ class Figures:
         # Get subsampled array of borders for each region
         n_regions = len(set_id_regions)
         array_atlas_borders = np.zeros(array_annotation.shape, dtype=np.float32)
-        for id_region in set_id_regions:
-            # Compute an array of boundaries
-            # Values outside of the annotated regions brain are set to -2 by default
-            # This way, any value >-2 is considered inside of the annotated regions
-            array_atlas_borders += (
-                return_shelved_object(
-                    "figures/3D_page",
-                    "arrays_borders_" + str(id_region) + "_" + str(decrease_dimensionality_factor),
-                    force_update=False,
-                    compute_function=fill_array_borders,
-                    ignore_arguments_naming=True,
-                    array_annotation=array_annotation,
-                    keep_structure_id=np.array([id_region], dtype=np.int64),
-                    decrease_dimensionality_factor=decrease_dimensionality_factor,
-                )
-                / n_regions
-            )
+        # for id_region in set_id_regions:
+        #     # Compute an array of boundaries
+        #     # Values outside of the annotated regions brain are set to -2 by default
+        #     # This way, any value >-2 is considered inside of the annotated regions
+        #     array_atlas_borders += (
+        #         return_shelved_object(
+        #             "figures/3D_page",
+        #             "arrays_borders_" + str(id_region) + "_" + str(decrease_dimensionality_factor),
+        #             force_update=False,
+        #             compute_function=fill_array_borders,
+        #             ignore_arguments_naming=True,
+        #             array_annotation=array_annotation,
+        #             keep_structure_id=np.array([id_region], dtype=np.int64),
+        #             decrease_dimensionality_factor=decrease_dimensionality_factor,
+        #         )
+        #         / n_regions
+        #     )
+
+        # Shelving this function is useless as it takes less than 0.1s to compute after first compilation
+        array_atlas_borders = fill_array_borders(
+            array_annotation,
+            keep_structure_id=np.array(list(set_id_regions), dtype=np.int64),
+            decrease_dimensionality_factor=decrease_dimensionality_factor,
+        )
 
         logging.info("Computed basic structure array")
 
@@ -1269,7 +1282,7 @@ class Figures:
             return_shelved_object(
                 "figures/3D_page",
                 "arrays_expression_" + str(name_lipid) + "__",
-                force_update=True,
+                force_update=False,
                 ignore_arguments_naming=True,
                 compute_function=self.compute_l_array_2D,
                 ll_t_bounds=[[l_t_bounds[i], None, None] for l_t_bounds in ll_t_bounds],
@@ -1294,12 +1307,6 @@ class Figures:
             if n == 0:
                 n = 1
             l_array_data_avg.append(avg / n)
-
-        with np.printoptions(threshold=np.inf):
-
-            print(len(l_array_data_avg[13]))
-            print(len(l_array_data_avg[14]))
-            print(len(l_array_data_avg[15]))
 
         # Get the 3D array of expression and coordinates
         array_x, array_y, array_z, array_c = self.compute_array_coordinates_3D(
@@ -1412,7 +1419,7 @@ class Figures:
                     break
 
             if x_min is None:
-                print("Bug, no voxel value has been assigned")
+                logging.warning("Bug, no voxel value has been assigned")
             else:
                 array_annotation = array_annotation[
                     x_min : x_max + 1, y_min : y_max + 1, z_min : z_max + 1
@@ -1425,9 +1432,9 @@ class Figures:
             logging.info("Cropped the figure to only keep areas in which lipids are expressed")
         # Compute an array containing the lipid expression interpolated for every voxel
         array_interpolated = fill_array_interpolation(
-            array_annotation, array_slices, divider_radius=4
+            array_annotation, array_slices, divider_radius=16, limit_value_inside=-1.99999,
         )
-
+        logging.info("Finished interpolation betwee slices")
         # Get root figure
         root_data = return_shelved_object(
             "figures/3D_page",

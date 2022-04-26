@@ -12,6 +12,7 @@ are defined.
 # Standard modules
 import numpy as np
 from numba import njit
+from regex import E
 
 # ==================================================================================================
 # --- Functions
@@ -230,7 +231,9 @@ def fill_array_slices(
 
 
 @njit
-def fill_array_interpolation(array_annotation, array_slices, divider_radius=5):
+def fill_array_interpolation(
+    array_annotation, array_slices, divider_radius=5, annot_inside=-0.01, limit_value_inside=-2
+):
     """This function is used to fill the empty space (unassigned voxels) between the slices with 
     interpolated values.
 
@@ -241,6 +244,10 @@ def fill_array_interpolation(array_annotation, array_slices, divider_radius=5):
             from the MALDI experiments (with many unassigned voxels).
         divider_radius (int, optional): Divides the radius of the region used for interpolation 
             (the bigger, the lower the number of voxels used). Defaults to 5.
+        annot_inside (float, optional): Value used to denotate the inside of the brain. Defaults 
+            to -0.01.
+        limit_value_inside (float, optional): Alternative to annot_inside. Values above 
+            limit_value_inside are considered inside the brain. Defaults to -2.
 
     Returns:
         np.ndarray: A three-dimensional array containing the interpolated lipid intensity values.
@@ -253,9 +260,17 @@ def fill_array_interpolation(array_annotation, array_slices, divider_radius=5):
         for y in range(0, array_annotation.shape[1]):
             for z in range(0, array_annotation.shape[2]):
                 # If we are in a unfilled region of the brain or just inside the brain
-                if (np.abs(array_slices[x, y, z] - (-0.01)) < 10 ** -4) or array_slices[
-                    x, y, z
-                ] >= 0:
+                condition_fulfilled = False
+                if array_slices[x, y, z] >= 0:
+                    condition_fulfilled = True
+                elif limit_value_inside is not None and not condition_fulfilled:
+                    if array_annotation[x, y, z] > limit_value_inside:
+                        condition_fulfilled = True
+                elif (
+                    np.abs(array_slices[x, y, z] - annot_inside) < 10 ** -4
+                ) and not condition_fulfilled:
+                    condition_fulfilled = True
+                if condition_fulfilled:
                     # Check all datapoints in the same structure, and do a distance-weighted average
                     value_voxel = 0
                     sum_weights = 0
