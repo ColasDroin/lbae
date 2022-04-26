@@ -567,3 +567,42 @@ def compute_array_3D_on_the_fly_DEPRECATED(
 
     # Return the arrays for the 3D figure
     return array_x, array_y, array_z, array_c
+
+
+def shelve_all_arrays_borders_DEPRECATED(
+    self, decrease_dimensionality_factor=6, force_update=False, sample=False
+):
+
+    # Get subsampled array of annotations
+    array_annotation = return_shelved_object(
+        "figures/3D_page",
+        "arrays_annotation",
+        force_update=False,
+        compute_function=self.get_array_of_annotations,
+        decrease_dimensionality_factor=decrease_dimensionality_factor,
+    )
+
+    # Compute the set of all possible regions (leaves)
+    set_id = set([])
+    for acronym in self._atlas.dic_acronym_children_id:
+        set_id = set_id.union(self._atlas.dic_acronym_children_id[acronym])
+
+    n_processed = 0
+    for id_region in set_id:
+        # Get array of border for the current region
+        return_shelved_object(
+            "figures/3D_page",
+            "arrays_borders_" + str(id_region) + "_" + str(decrease_dimensionality_factor),
+            force_update=False,
+            compute_function=fill_array_borders,
+            ignore_arguments_naming=True,
+            array_annotation=array_annotation,
+            keep_structure_id=np.array([id_region], dtype=np.int64),
+            decrease_dimensionality_factor=decrease_dimensionality_factor,
+        )
+        n_processed += 1
+        if n_processed >= 10 and sample:
+            return None
+
+    # Variable to signal everything has been computed
+    dump_shelved_object("figures/3D_page", "arrays_borders_computed", True)

@@ -315,3 +315,78 @@ def fill_array_interpolation(
                         array_interpolated[x, y, z] = value_voxel
 
     return array_interpolated
+
+@njit
+def crop_array(array_annotation, list_id_regions):
+    # Crop the figure to shorten interpolation time
+    x_min, x_max, y_min, y_max, z_min, z_max = (
+        0,
+        array_annotation.shape[0],
+        0,
+        array_annotation.shape[1],
+        0,
+        array_annotation.shape[2],
+    )
+
+    # Crop unfilled parts to save space
+    found = False
+    for x in range(0, array_annotation.shape[0]):
+        for id_structure in list_id_regions:
+            if id_structure in array_annotation[x, :, :]:
+                x_min = max(x_min, x - 1)
+                found = True
+        if found:
+            break
+
+    found = False
+    for x in range(array_annotation.shape[0] - 1, -1, -1):
+        for id_structure in list_id_regions:
+            if id_structure in array_annotation[x, :, :]:
+                x_max = min(x + 1, x_max)
+                found = True
+        if found:
+            break
+
+    found = False
+    for y in range(0, array_annotation.shape[1]):
+        for id_structure in list_id_regions:
+            if id_structure in array_annotation[:, y, :]:
+                y_min = max(y - 1, y_min)
+                found = True
+        if found:
+            break
+
+    found = False
+    for y in range(array_annotation.shape[1] - 1, -1, -1):
+        for id_structure in list_id_regions:
+            if id_structure in array_annotation[:, y, :]:
+                y_max = min(y + 1, y_max)
+                found = True
+        if found:
+            break
+
+    found = False
+    for z in range(0, array_annotation.shape[2]):
+        for id_structure in list_id_regions:
+            if id_structure in array_annotation[:, :, z]:
+                z_min = max(z - 1, z_min)
+                found = True
+        if found:
+            break
+
+    found = False
+    for z in range(array_annotation.shape[2] - 1, -1, -1):
+        for id_structure in list_id_regions:
+            if id_structure in array_annotation[:, :, z]:
+                z_max = min(z + 1, z_max)
+                found = True
+        if found:
+            break
+
+    if x_min is None:
+        pass
+        # logging.warning("Bug, no voxel value has been assigned")
+    else:
+        return x_min, x_max, y_min, y_max, z_min, z_max
+
+

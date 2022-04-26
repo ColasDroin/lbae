@@ -170,29 +170,27 @@ class Launch:
                 "figures/load_page/array_basic_images_atlas",
                 #
                 # Computed in Figures.__init(), calling Figures.shelve_all_l_array_2D(), but it
-                # doesn't correpond to an object returned by a specific function.
-                # All the list of 2D slices of expression object are computed and saved in the
+                # doesn't correspond to an object returned by a specific function.
+                # All the list of 2D slices of expression objects are computed and saved in the
                 # shelve database with the following ids:
                 # "figures/3D_page/arrays_expression_$name_lipid$__",
                 # (not explicitely in this list as there are too many).
                 #  * This a very long computation.
                 "figures/3D_page/arrays_expression_computed",
                 #
-                # Computed in Figures.__init(), calling Figures.shelve_all_arrays_borders(), but it
-                # doesn't correpond to an object returned by a specific function.
-                # All the arrays of borders object are computed and saved in the
-                # shelve database with the following ids:
-                # "figures/3D_page/arrays_borders_$id_region$_$decrease_dimensionality_factor$",
-                # (not explicitely in this list as there are too many.
-                # decrease_dimensionality_factor is 6 by defaults).
-                #  * This a very long computation.
-                "figures/3D_page/arrays_borders_computed",
-                #
-                # Computed in Figures.shelve_all_arrays_borders(), itself called in
-                # Figures.__init__(). Corresponds to the object returned by
+                # Computed in in Figures.__init(), calling Figures.shelve_all_arrays_annotation(),
+                # but it doesn't correspond to an object returned by a specific function. The
+                # corresponding objects saved in Figures.shelve_all_arrays_annotation() are in the
+                # comment below.
+                "figures/3D_page/arrays_annotation_computed",
+            ]
+            + [
+                # Computed in in Figures.__init(), calling Figures.shelve_all_arrays_annotation().
+                # Corresponds to the object returned by
                 # Figures.get_array_of_annotations(decrease_dimensionality_factor), with
-                # decrease_dimensionality_factor=6 by defaults.
-                "figures/3D_page/arrays_annotation_6",
+                # decrease_dimensionality_factor ranging from 2 to 11.
+                "figures/3D_page/arrays_annotation_" + str(decrease_dimensionality_factor)
+                for decrease_dimensionality_factor in range(2, 13)
             ]
         )
 
@@ -213,7 +211,6 @@ class Launch:
 
         self.l_entries_to_ignore = [
             "figures/3D_page/arrays_expression_",
-            "figures/3D_page/arrays_borders_",
             "figures/load_page/figure_basic_image_",
             "atlas/atlas_objects/mask_and_spectrum_",
             "atlas/atlas_objects/dic_processed_temp",

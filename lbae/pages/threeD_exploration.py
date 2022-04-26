@@ -816,23 +816,23 @@ def page_4_plot_graph_volume(
         set_id = set([])
         for acronym in l_selected_regions:
             set_id = set_id.union(atlas.dic_acronym_children_id[acronym])
-        # if len(set_id) < 5:
-        #     decrease_resolution_factor = 3
-        # elif len(set_id) < 10:
-        #     decrease_resolution_factor = 4
-        # elif len(set_id) < 50:
-        #     decrease_resolution_factor = 5
-        # elif len(set_id) < 100:
-        #     decrease_resolution_factor = 6
-        # else:
-        #     decrease_resolution_factor = 7
+        if len(set_id) < 5:
+            decrease_resolution_factor = 3
+        elif len(set_id) < 10:
+            decrease_resolution_factor = 5
+        elif len(set_id) < 50:
+            decrease_resolution_factor = 7
+        elif len(set_id) < 100:
+            decrease_resolution_factor = 10
+        else:
+            decrease_resolution_factor = 12
         # # If no region was selected, put them all
         if len(set_id) == 0:
             set_id = None
-            # decrease_resolution_factor = 7
+            decrease_resolution_factor = 12
 
-        # Set the default decrease_resolution_factor to 6, regardless of the number of regions
-        decrease_resolution_factor = 6
+        # Set the default decrease_resolution_factor to 10, regardless of the number of regions
+        # decrease_resolution_factor = 10
         logging.info(
             "For the computation of 3D volume, decrease_resolution_factor is "
             + str(decrease_resolution_factor)

@@ -1,4 +1,5 @@
 #
+# TODO Run compiled function in Launch once (at least 3d and lipid region selection)
 # TODO Add a button to download heatmap and the spectra figures in region selection
 # TODO Check all functions and deprecate the ones that are not used anymore
 # TODO fix layout for small screens

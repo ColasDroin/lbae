@@ -22,6 +22,7 @@ from modules.tools.volume import (
     fill_array_borders,
     fill_array_interpolation,
     fill_array_slices,
+    crop_array,
 )
 from config import dic_colors, l_colors, l_colors_progress
 from modules.tools.spectra import (
@@ -95,11 +96,9 @@ class Figures:
         if not check_shelved_object("figures/3D_page", "arrays_expression_computed"):
             self.shelve_all_l_array_2D(sample=sample)
 
-        # Check that the region annotations for 3D plots have been computed, if not, compute them
-        # Also compute the arrays of annotations for the current decrease_dimensionality_factor in
-        # the process
-        if not check_shelved_object("figures/3D_page", "arrays_borders_computed"):
-            self.shelve_all_arrays_borders(decrease_dimensionality_factor=6, sample=sample)
+        # Check that all arrays of annotations have been computed, if not, compute them
+        if not check_shelved_object("figures/3D_page", "arrays_annotation_computed"):
+            self.shelve_all_arrays_annotation()
 
     ###### FUNCTIONS FOR FIGURE IN LOAD_SLICE PAGE ######
 
@@ -1248,30 +1247,12 @@ class Figures:
         )
 
         # Get subsampled array of borders for each region
-        n_regions = len(set_id_regions)
         array_atlas_borders = np.zeros(array_annotation.shape, dtype=np.float32)
-        # for id_region in set_id_regions:
-        #     # Compute an array of boundaries
-        #     # Values outside of the annotated regions brain are set to -2 by default
-        #     # This way, any value >-2 is considered inside of the annotated regions
-        #     array_atlas_borders += (
-        #         return_shelved_object(
-        #             "figures/3D_page",
-        #             "arrays_borders_" + str(id_region) + "_" + str(decrease_dimensionality_factor),
-        #             force_update=False,
-        #             compute_function=fill_array_borders,
-        #             ignore_arguments_naming=True,
-        #             array_annotation=array_annotation,
-        #             keep_structure_id=np.array([id_region], dtype=np.int64),
-        #             decrease_dimensionality_factor=decrease_dimensionality_factor,
-        #         )
-        #         / n_regions
-        #     )
-
+        list_id_regions = np.array(list(set_id_regions), dtype=np.int64)
         # Shelving this function is useless as it takes less than 0.1s to compute after first compilation
         array_atlas_borders = fill_array_borders(
             array_annotation,
-            keep_structure_id=np.array(list(set_id_regions), dtype=np.int64),
+            keep_structure_id=list_id_regions,
             decrease_dimensionality_factor=decrease_dimensionality_factor,
         )
 
@@ -1307,6 +1288,7 @@ class Figures:
             if n == 0:
                 n = 1
             l_array_data_avg.append(avg / n)
+        logging.info("Averaged expression over all lipids")
 
         # Get the 3D array of expression and coordinates
         array_x, array_y, array_z, array_c = self.compute_array_coordinates_3D(
@@ -1351,85 +1333,18 @@ class Figures:
             * decrease_dimensionality_factor : array_atlas_borders.shape[2]
             * 1j,
         ]
-
+        logging.info("Built arrays of coordinates")
         if set_id_regions is not None:
-            # Crop the figure to shorten interpolation time
-            x_min, x_max, y_min, y_max, z_min, z_max = (
-                0,
-                array_annotation.shape[0],
-                0,
-                array_annotation.shape[1],
-                0,
-                array_annotation.shape[2],
-            )
-
-            # Crop unfilled parts to save space
-            found = False
-            for x in range(0, array_annotation.shape[0]):
-                for id_structure in set_id_regions:
-                    if id_structure in array_annotation[x, :, :]:
-                        x_min = max(x_min, x - 1)
-                        found = True
-                if found:
-                    break
-
-            found = False
-            for x in range(array_annotation.shape[0] - 1, -1, -1):
-                for id_structure in set_id_regions:
-                    if id_structure in array_annotation[x, :, :]:
-                        x_max = min(x + 1, x_max)
-                        found = True
-                if found:
-                    break
-
-            found = False
-            for y in range(0, array_annotation.shape[1]):
-                for id_structure in set_id_regions:
-                    if id_structure in array_annotation[:, y, :]:
-                        y_min = max(y - 1, y_min)
-                        found = True
-                if found:
-                    break
-
-            found = False
-            for y in range(array_annotation.shape[1] - 1, -1, -1):
-                for id_structure in set_id_regions:
-                    if id_structure in array_annotation[:, y, :]:
-                        y_max = min(y + 1, y_max)
-                        found = True
-                if found:
-                    break
-
-            found = False
-            for z in range(0, array_annotation.shape[2]):
-                for id_structure in set_id_regions:
-                    if id_structure in array_annotation[:, :, z]:
-                        z_min = max(z - 1, z_min)
-                        found = True
-                if found:
-                    break
-
-            found = False
-            for z in range(array_annotation.shape[2] - 1, -1, -1):
-                for id_structure in set_id_regions:
-                    if id_structure in array_annotation[:, :, z]:
-                        z_max = min(z + 1, z_max)
-                        found = True
-                if found:
-                    break
-
-            if x_min is None:
-                logging.warning("Bug, no voxel value has been assigned")
-            else:
-                array_annotation = array_annotation[
-                    x_min : x_max + 1, y_min : y_max + 1, z_min : z_max + 1
-                ]
-                array_slices = array_slices[x_min : x_max + 1, y_min : y_max + 1, z_min : z_max + 1]
-                X = X[x_min : x_max + 1, y_min : y_max + 1, z_min : z_max + 1]
-                Y = Y[x_min : x_max + 1, y_min : y_max + 1, z_min : z_max + 1]
-                Z = Z[x_min : x_max + 1, y_min : y_max + 1, z_min : z_max + 1]
-
+            x_min, x_max, y_min, y_max, z_min, z_max = crop_array(array_annotation, list_id_regions)
+            array_annotation = array_annotation[
+                x_min : x_max + 1, y_min : y_max + 1, z_min : z_max + 1
+            ]
+            array_slices = array_slices[x_min : x_max + 1, y_min : y_max + 1, z_min : z_max + 1]
+            X = X[x_min : x_max + 1, y_min : y_max + 1, z_min : z_max + 1]
+            Y = Y[x_min : x_max + 1, y_min : y_max + 1, z_min : z_max + 1]
+            Z = Z[x_min : x_max + 1, y_min : y_max + 1, z_min : z_max + 1]
             logging.info("Cropped the figure to only keep areas in which lipids are expressed")
+
         # Compute an array containing the lipid expression interpolated for every voxel
         array_interpolated = fill_array_interpolation(
             array_annotation, array_slices, divider_radius=16, limit_value_inside=-1.99999,
@@ -1733,40 +1648,14 @@ class Figures:
         # Variable to signal everything has been computed
         dump_shelved_object("figures/3D_page", "arrays_expression_computed", True)
 
-    def shelve_all_arrays_borders(
-        self, decrease_dimensionality_factor=6, force_update=False, sample=False
-    ):
-
-        # Get subsampled array of annotations
-        array_annotation = return_shelved_object(
-            "figures/3D_page",
-            "arrays_annotation",
-            force_update=False,
-            compute_function=self.get_array_of_annotations,
-            decrease_dimensionality_factor=decrease_dimensionality_factor,
-        )
-
-        # Compute the set of all possible regions (leaves)
-        set_id = set([])
-        for acronym in self._atlas.dic_acronym_children_id:
-            set_id = set_id.union(self._atlas.dic_acronym_children_id[acronym])
-
-        n_processed = 0
-        for id_region in set_id:
-            # Get array of border for the current region
+    def shelve_all_arrays_annotation(self):
+        for decrease_dimensionality_factor in range(2, 13):
             return_shelved_object(
                 "figures/3D_page",
-                "arrays_borders_" + str(id_region) + "_" + str(decrease_dimensionality_factor),
+                "arrays_annotation",
                 force_update=False,
-                compute_function=fill_array_borders,
-                ignore_arguments_naming=True,
-                array_annotation=array_annotation,
-                keep_structure_id=np.array([id_region], dtype=np.int64),
+                compute_function=self.get_array_of_annotations,
                 decrease_dimensionality_factor=decrease_dimensionality_factor,
             )
-            n_processed += 1
-            if n_processed >= 10 and sample:
-                return None
-
         # Variable to signal everything has been computed
-        dump_shelved_object("figures/3D_page", "arrays_borders_computed", True)
+        dump_shelved_object("figures/3D_page", "arrays_annotation_computed", True)
