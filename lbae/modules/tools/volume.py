@@ -217,7 +217,6 @@ def fill_array_slices(
         z_scaled = int(round(x))
         # If inside the brain
         if array_slices[x_scaled, y_scaled, z_scaled] > limit_value_inside:
-            print("ici", array_slices[x_scaled, y_scaled, z_scaled], c)
             # If inside the brain and not assigned before
             if array_slices[x_scaled, y_scaled, z_scaled] < 0:
                 array_slices[x_scaled, y_scaled, z_scaled] = c / 100

@@ -1178,9 +1178,6 @@ class Figures:
             # Get the averaged expression data for the current slice
             array_data = l_array_data[slice_index]
 
-            # Sum array colors (i.e. lipids)
-            array_data = np.sum(array_data, axis=-1)
-
             # Remove pixels for which lipid expression is zero
             array_data_stripped = array_data.flatten()  # array_data[array_data != 0].flatten()
 
@@ -1265,33 +1262,20 @@ class Figures:
                 / n_regions
             )
 
-        print(np.max(array_atlas_borders), np.min(array_atlas_borders))
-
         logging.info("Computed basic structure array")
-
-        print("ICIOCO", ll_t_bounds)
 
         # Get array of expression for each lipid
         ll_array_data = [
             return_shelved_object(
                 "figures/3D_page",
                 "arrays_expression_" + str(name_lipid) + "__",
-                force_update=False,
+                force_update=True,
                 ignore_arguments_naming=True,
                 compute_function=self.compute_l_array_2D,
                 ll_t_bounds=[[l_t_bounds[i], None, None] for l_t_bounds in ll_t_bounds],
             )
             for i, name_lipid in enumerate([name_lipid_1, name_lipid_2, name_lipid_3])
         ]
-
-# ! Find bug
-#[[[(726.5855, 726.5894000000001)], None, None], [[(726.5856, 726.5897)], None, None], [[(726.5854, 726.5896)], None, None],...]
-
-
-
-
-
-
 
         # Average array of expression over lipid
         l_array_data_avg = []
@@ -1311,14 +1295,16 @@ class Figures:
                 n = 1
             l_array_data_avg.append(avg / n)
 
+        with np.printoptions(threshold=np.inf):
+
+            print(len(l_array_data_avg[13]))
+            print(len(l_array_data_avg[14]))
+            print(len(l_array_data_avg[15]))
+
         # Get the 3D array of expression and coordinates
         array_x, array_y, array_z, array_c = self.compute_array_coordinates_3D(
             l_array_data_avg, high_res=False
         )
-
-        import plotille
-
-        print(plotille.hist(array_c, bins=100))
 
         logging.info("Computed array of expression in original space")
 
