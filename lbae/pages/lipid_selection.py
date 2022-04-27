@@ -8,8 +8,6 @@ import dash
 import json
 import pandas as pd
 from dash.dependencies import Input, Output, State, ALL
-import dash_draggable
-import numpy as np
 import dash_mantine_components as dmc
 
 # LBAE modules

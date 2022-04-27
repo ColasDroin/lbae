@@ -366,10 +366,15 @@ class Launch:
             )
 
         def select_lipid_and_region_and_plot_volume():
-            pass
+            ll_t_bounds = [[None, None, None] * self.data.get_slice_number()] 
+            ll_t_bounds[0] = [[(726.5855, 726.5894000000001)], None, None]
+            set_id_regions = {1006}
+            self.figures.compute_3D_volume_figure(ll_t_bounds, set_id_regions= set_id_regions)
 
         logging.info("Please wait while compiled functions are executed...")
         draw_region_and_compute_spectral_data()
+        select_lipid_and_region_and_plot_volume()
+        logging.info("Compiled functions executed.")
 
     def launch(self, force_exit_if_first_launch=True):
         """This function is used at the execution of the app. It will take care of checking/cleaning

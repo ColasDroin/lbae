@@ -110,7 +110,8 @@ class Figures:
         n_slices = len([x for x in os.listdir(path) if "slice_" in x])
         if n_slices != self._data.get_slice_number():
             logging.warning(
-                "The number of slices computed from the original tiff files is different from the number of slice "
+                "The number of slices computed from the original tiff files is different from"
+                + " the number of slice "
                 + "recorded in the MaldiData object."
             )
 

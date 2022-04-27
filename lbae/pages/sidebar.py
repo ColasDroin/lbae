@@ -1,8 +1,14 @@
 ###### IMPORT MODULES ######
 
+# Standard modules
 import dash_bootstrap_components as dbc
 from dash import html
 import dash_mantine_components as dmc
+from dash.dependencies import Input, Output, State
+
+# LBAE modules
+import app
+from pages.documentation import return_documentation
 
 ###### DEFFINE PAGE LAYOUT ######
 
@@ -114,15 +120,41 @@ layout = html.Div(
                         # ),
                         # dbc.Tooltip(children="Explore Allen brain atlas data", target="sidebar-page-5", placement="right",),
                         # Copyright
-                        html.H4(
-                            id="sidebar-copyright",
-                            className="sidebar-copyright icon-cc ml-1 mb-3 fs-1",
-                            style={"color": "#dee2e6"},
-                        ),
-                        dbc.Tooltip(
-                            children="Copyright EPFL 2022",
-                            target="sidebar-copyright",
-                            placement="right",
+                        # Link to page 4
+                        html.Div(
+                            className="sidebar-bottom",
+                            children=[
+                                dbc.NavLink(
+                                    id="sidebar-documentation",
+                                    n_clicks=0,
+                                    active="exact",
+                                    children=[html.I(className="icon-library mb-5 fs-2",)],
+                                ),
+                                dbc.Tooltip(
+                                    children="Open documentation",
+                                    target="sidebar-documentation",
+                                    placement="right",
+                                ),
+                                dmc.Drawer(
+                                    children=return_documentation(),
+                                    id="documentation-offcanvas",
+                                    title="LBAE documentation",
+                                    opened=False,
+                                    padding="md",
+                                    size="80%",
+                                    position="bottom",
+                                ),
+                                html.H4(
+                                    id="sidebar-copyright",
+                                    className="icon-cc mb-3 mt-5 fs-1",
+                                    style={"color": "#dee2e6"},
+                                ),
+                                dbc.Tooltip(
+                                    children="Copyright EPFL 2022",
+                                    target="sidebar-copyright",
+                                    placement="right",
+                                ),
+                            ],
                         ),
                     ],
                 ),
@@ -131,3 +163,13 @@ layout = html.Div(
     ],
 )
 
+# Callback for documentation
+@app.app.callback(
+    Output("documentation-offcanvas", "opened"),
+    [Input("sidebar-documentation", "n_clicks")],
+    [State("documentation-offcanvas", "opened")],
+)
+def toggle_collapse(n, is_open):
+    if n:
+        return not is_open
+    return is_open

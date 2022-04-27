@@ -22,11 +22,13 @@ Font license info
 
 Sidebar info
 
-## Brain by Sergey Patutin from the Noun Project
+## Brain by Sergey Patutin from the NounProject.com
 
-## Mass Spectrum by Léa Lortal from the Noun Project
+## Mass Spectrum by Léa Lortal from the NounProject.com
 
-## 3D by Jamison Wieser from the Noun Project
+## Cholesterol Molecule by supalerk laipawat from NounProject.com
+
+## 3D by Jamison Wieser from the NounProject.com
 
 ## Stylesheet
 Many thanks to the wonderful developpers of Dash UI - Bootstrap 5 Theme: https://github.com/codescandy/Dash-UI

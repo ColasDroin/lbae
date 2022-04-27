@@ -773,6 +773,10 @@ def page_4_add_toast_region_selection(
                     l_selected_regions,
                 )
 
+        # It shouldn't be possible to click, so delete all
+        else:
+            return "", "", "", "", "", "", False, False, False, []
+
     return dash.no_update
 
 

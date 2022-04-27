@@ -90,8 +90,9 @@ html {
 /* container for the sidebar footbar. make sure the contents don't wrap when
  * the sidebar is collapsed. Keep bar at the lowest position.
  */
-.sidebar-copyright {
+.sidebar-bottom {
   display: flex;
+  flex-direction: column;
   justify-content: left;
   align-items: center;
   overflow: hidden;
@@ -99,7 +100,7 @@ html {
 
   position: fixed;
   bottom: 0;
-  padding-left: 0.2rem;
+  padding-left: 0rem;
 }
 
 /* default settings for content */
@@ -112,6 +113,7 @@ html {
   height: 100%;
   overflow: hidden;
 }
+
 
 /* min/max size for graphs */
 /*.dash-graph {
