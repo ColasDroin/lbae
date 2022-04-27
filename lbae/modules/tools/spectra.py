@@ -2,7 +2,7 @@
 # Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
 
 """ In this module, functions used to handle the MALDI data (e.g. get all pixels values for a given 
-lipid annoation, for of a given slice) are defined.
+lipid annotation, for of a given slice) are defined.
 """
 
 # ==================================================================================================
@@ -68,7 +68,7 @@ def compute_normalized_spectra(array_spectra, array_pixel_indexes):
     across pixels, leading to a noise amplification after normalization.
 
     Args:
-        array_spectra (np.ndarray or pytables.array): An array of shape (2,n) containing spectrum 
+        array_spectra (np.ndarray): An array of shape (2,n) containing spectrum 
             data (m/z and intensity) for each pixel.
         array_pixel_indexes (np.ndarray): An array of shape (m,2) containing the boundary indices of 
             each pixel in array_spectra. 
@@ -139,7 +139,7 @@ def convert_array_to_fine_grained(array, resolution, lb=350, hb=1250):
     image, it adds the spectra of all pixels. 
 
     Args:
-        array (np.ndarray or pytables.array): An array of shape (2,n) containing spectrum data (m/z 
+        array (np.ndarray): An array of shape (2,n) containing spectrum data (m/z 
             and intensity).
         resolution (float): The resolution used for finer-graining.
         lb (int, optional): Lower bound for the fine-grained array. Defaults to 350.
@@ -166,7 +166,7 @@ def strip_zeros(array):
     convert_array_to_fine_grained) from its columns having intensity zero. 
 
     Args:
-        array (np.ndarray or pytables.array): An array of shape (2,n) containing spectrum data (m/z 
+        array (np.ndarray): An array of shape (2,n) containing spectrum data (m/z 
             and intensity).
 
     Returns:
@@ -208,15 +208,15 @@ def compute_image_using_index_lookup(
     Args:
         low_bound (float): Lower m/z value for the annotation.
         high_bound (float): Higher m/z value for the annotation.
-        array_spectra (np.ndarray or pytables.array): An array of shape (2,n) containing spectrum 
-            data (m/z and intensity) for each pixel.
+        array_spectra (np.ndarray): An array of shape (2,n) containing spectrum data (m/z and 
+            intensity) for each pixel.
         array_pixel_indexes (np.ndarray): An array of shape (m,2) containing the boundary indices of 
             each pixel in array_spectra.
         img_shape (tuple(int)): A tuple with the two integer values corresponding to height and 
             width of the current slice acquisition.
-        lookup_table_spectra (np.ndarray or pytables.array): An array of shape (k,m) representing a 
-            lookup table with the following mapping: lookup_table_spectra[i,j] contains the first 
-            m/z index of pixel j such that m/z >= i * divider_lookup.
+        lookup_table_spectra (np.ndarray): An array of shape (k,m) representing a lookup table with 
+            the following mapping: lookup_table_spectra[i,j] contains the first m/z index of pixel 
+            j such that m/z >= i * divider_lookup.
         divider_lookup (int): Integer used to set the resolution when building the lookup table.
         array_peaks_transformed_lipids (np.ndarray): A two-dimensional numpy array, which contains 
             the peak annotations (min peak, max peak, average value of the peak), sorted by min_mz, 
@@ -335,21 +335,21 @@ def compute_image_using_index_and_image_lookup(
     compute_image_using_index_lookup() as the optimization is not worth it. It wraps the internal 
     functions _compute_image_using_index_and_image_lookup_full() and 
     _compute_image_using_index_and_image_lookup_partial() to ensure that the proper array type is 
-    used with numba depending if the data is coming from a HDF5 storage or not.
+    used with numba.
 
     Args:
         low_bound (float): Lower m/z value for the annotation.
         high_bound (float): Higher m/z value for the annotation.
-        array_spectra (np.ndarray or pytables.array): An array of shape (2,n) containing spectrum 
+        array_spectra (np.ndarray): An array of shape (2,n) containing spectrum 
             data (m/z and intensity) for each pixel.
         array_pixel_indexes (np.ndarray): An array of shape (m,2) containing the boundary indices of 
             each pixel in array_spectra.
         img_shape (tuple(int)): A tuple with the two integer values corresponding to height and 
         width of the current slice acquisition.
-        lookup_table_spectra (np.ndarray or pytables.array): An array of shape (k,m) representing a 
+        lookup_table_spectra (np.ndarray): An array of shape (k,m) representing a 
             lookup table with the following mapping: lookup_table_spectra[i,j] contains the first 
             m/z index of pixel j such that m/z >= i * divider_lookup.
-        lookup_table_image (np.ndarray or pytables.array): An array of shape (k,m) representing a 
+        lookup_table_image (np.ndarray): An array of shape (k,m) representing a 
             lookup table with the following mapping: lookup_table_image[i,j] contains, for the pixel
             of index j, the cumulated intensities from the lowest possible m/z until the first m/z 
             such that m/z >= i * divider_lookup.
@@ -410,7 +410,7 @@ def _compute_image_using_index_and_image_lookup_partial(
 ):
     """This internal function is wrapped by compute_image_using_index_and_image_lookup(). It is used 
     as a slower, memory-optimized, option, when the slice data must be manually extracted from a 
-    pytables dataset. Please consult the documentation of 
+    memory-mapped array. Please consult the documentation of 
     compute_image_using_index_and_image_lookup() for more information.
     """
     # Get a first approximate of the requested lipid image
@@ -525,16 +525,16 @@ def compute_normalized_image_per_lipid(
     Args:
         low_bound (float): Lower m/z value for the annotation.
         high_bound (float): Higher m/z value for the annotation.
-        array_spectra (np.ndarray or pytables.array): An array of shape (2,n) containing spectrum 
+        array_spectra (np.ndarray): An array of shape (2,n) containing spectrum 
             data (m/z and intensity) for each pixel.
         array_pixel_indexes (np.ndarray): An array of shape (m,2) containing the boundary indices of
             each pixel in array_spectra.
         img_shape (tuple(int)): A tuple with the two integer values corresponding to height and 
             width of the current slice acquisition.
-        lookup_table_spectra (np.ndarray or pytables.array): An array of shape (k,m) representing a 
+        lookup_table_spectra (np.ndarray): An array of shape (k,m) representing a 
             lookup table with the following mapping: lookup_table_spectra[i,j] contains the first 
             m/z index of pixel j such that m/z >= i * divider_lookup.
-        lookup_table_image (np.ndarray or pytables.array): An array of shape (k,m) representing a 
+        lookup_table_image (np.ndarray): An array of shape (k,m) representing a 
             lookup table with the following mapping: lookup_table_image[i,j] contains, for the pixel
             of index j, the cumulated intensities from the lowest possible m/z until the first m/z 
             such that m/z >= i * divider_lookup.
@@ -598,7 +598,7 @@ def compute_index_boundaries_nolookup(low_bound, high_bound, array_spectra_avg):
     Args:
         low_bound (float): Lower m/z value for the annotation.
         high_bound (float): Higher m/z value for the annotation.
-        array_spectra_avg (np.ndarray or pytables.array): An array of shape (2,n) containing 
+        array_spectra_avg (np.ndarray): An array of shape (2,n) containing 
             spectrum data (m/z and intensity).
 
     Returns:
@@ -639,14 +639,13 @@ def compute_index_boundaries(low_bound, high_bound, array_spectra_avg, lookup_ta
     not subdivided in pixels. Also note that there are no partial full versions of this function 
     depending if the dataset is stored in RAM or HDF5, since the two versions would have been almost
     identical (there's no loop over pixels, contrarily to e.g. compute_image_using_index_lookup(), 
-    and a view/copy of the partial spectra in the selection is made as a first step, turning any 
-    pytables.array in a np.ndarray). It wraps the internal numba-ized function 
-    _compute_index_boundaries_nolookup().
+    and a view/copy of the partial spectra in the selection is made as a first step, turning an in 
+    a np.ndarray). It wraps the internal numba-ized function _compute_index_boundaries_nolookup().
 
     Args:
         low_bound (float): Lower m/z value for the annotation.
         high_bound (float): Higher m/z value for the annotation.
-        array_spectra_avg (np.ndarray or pytables.array): An array of shape (2,n) containing 
+        array_spectra_avg (np.ndarray): An array of shape (2,n) containing 
             spectrum data (m/z and intensity).
         lookup_table (np.ndarray): A 1-dimensional array of length m providing, for each index (i.e. 
             lookup), the index of the first m/z value in the averaged array_spectra superior or 
@@ -708,7 +707,7 @@ def return_spectrum_per_pixel(idx_pix, array_spectra, array_pixel_indexes):
 
     Args:
         idx_pix (int): Index of the pixel to return.
-        array_spectra (np.ndarray or pytables.array): An array of shape (2,n) containing spectrum 
+        array_spectra (np.ndarray): An array of shape (2,n) containing spectrum 
             data (m/z and intensity) for each pixel.
         array_pixel_indexes (np.ndarray): An array of shape (m,2) containing the boundary indices of
             each pixel in array_spectra.
@@ -815,7 +814,7 @@ def compute_zeros_extended_spectrum_per_pixel(idx_pix, array_spectra, array_pixe
 
     Args:
         idx_pix (int): Index of the pixel to return.
-        array_spectra (np.ndarray or pytables.array): An array of shape (2,n) containing spectrum 
+        array_spectra (np.ndarray): An array of shape (2,n) containing spectrum 
             data (m/z and intensity) for each pixel.
         array_pixel_indexes (np.ndarray): An array of shape (m,2) containing the boundary indices of 
             each pixel in array_spectra.
@@ -836,7 +835,7 @@ def reduce_resolution_sorted_array_spectra(array_spectra, resolution=10 ** -3):
         allowed by float32.
 
     Args:
-        array_spectra (np.ndarray or pytables.array): An array of shape (2,n) containing spectrum 
+        array_spectra (np.ndarray): An array of shape (2,n) containing spectrum 
             data (m/z and intensity) for each pixel.
         resolution (float, optional): The size of the bin used to merge intensities. Defaults 
             to 10**-3.
@@ -948,7 +947,7 @@ def compute_spectrum_per_row_selection(
             of rows belonging to the current selection.
         list_index_bound_column_per_row (list(list)): For each row (outer list), provides the index 
             of the columns delimiting the current selection (inner list). 
-        array_spectra (np.ndarray or pytables.array): An array of shape (2,n) containing spectrum 
+        array_spectra (np.ndarray): An array of shape (2,n) containing spectrum 
             data (m/z and intensity) for each pixel.
         array_pixel_indexes (np.ndarray): An array of shape (m,2) containing the boundary indices of 
             each pixel in array_spectra.
@@ -1253,6 +1252,32 @@ def return_index_labels(l_min, l_max, l_mz, zero_padding_extra=5 * 10 ** -5):
             idx_lipid += 1
 
     return array_indexes
+
+
+@njit
+def return_idx_sup(l_idx_labels):
+    """Returns the indices of the lipids that have an annotation
+    
+    Args:
+        l_idx_labels (np.ndarray): A 1-dimensional array containing the indices of the lipid labels.
+    
+    Returns:
+        np.ndarray: A list containing the indices of the lipids that have an annotation.
+    """
+    return [i for i, x in enumerate(l_idx_labels) if x >= 0]
+
+
+@njit
+def return_idx_inf(l_idx_labels):
+    """Returns the indices of the lipids that do not have an annotation
+    
+    Args:
+        l_idx_labels (np.ndarray): A 1-dimensional array containing the indices of the lipid labels.
+    
+    Returns:
+        np.ndarray: A list containing the indices of the lipids that do not have an annotation.
+    """
+    return [i for i, x in enumerate(l_idx_labels) if x < 0]
 
 
 @njit

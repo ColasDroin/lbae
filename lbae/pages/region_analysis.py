@@ -29,6 +29,8 @@ from modules.tools.spectra import (
     compute_avg_intensity_per_lipid,
     global_lipid_index_store,
     compute_thread_safe_function,
+    return_idx_sup,
+    return_idx_inf,
 )
 
 from config import l_colors
@@ -1196,8 +1198,6 @@ def global_spectrum_store(
     idx_path = -1
 
     logging.info("Computing spectra now")
-    # print("ICI1", l_shapes_and_masks)
-    # print("ICI2", l_mask_name)
 
     for shape in l_shapes_and_masks:
         grah_scattergl_data = None
@@ -1384,7 +1384,8 @@ def page_3_record_spectra(
         if l_spectra is not None:
             if l_spectra != []:
                 logging.info("Spectra computed, returning it now")
-                # return a dummy variable to indicate that the spectrum has been computed and trigger the callback
+                # return a dummy variable to indicate that the spectrum has been computed and trigger
+                # the callback
                 return "ok"
         logging.warning("A bug appeared during spectrum computation")
 
@@ -1455,16 +1456,7 @@ def page_3_plot_spectrum(
                 # Compute (again) the numpy array of the spectrum
                 grah_scattergl_data = np.array(spectrum, dtype=np.float32)
 
-                # almost no gain with numba :'(
                 # two different functions so that's there's a unique output for each numba function
-                @njit
-                def return_idx_sup(l_idx_labels):
-                    return [i for i, x in enumerate(l_idx_labels) if x >= 0]
-
-                @njit
-                def return_idx_inf(l_idx_labels):
-                    return [i for i, x in enumerate(l_idx_labels) if x < 0]
-
                 l_idx_kept = return_idx_sup(l_idx_labels)
                 l_idx_unkept = return_idx_inf(l_idx_labels)
 
@@ -1483,12 +1475,14 @@ def page_3_plot_spectrum(
                 l_intensity_with_lipids = grah_scattergl_data_padded_annotated[1, :]
                 l_idx_labels_kept = l_idx_labels[l_idx_kept]
 
-                # @njit #we need to wait for the support of np.insert
+                # @njit #we need to wait for the support of np.insert, still relatively fast anyway
                 def pad_l_idx_labels(l_idx_labels_kept, array_index_padding):
                     pad = 0
-                    # The initial condition in the loop is only evaluated once so no problem with insertion afterwards
+                    # The initial condition in the loop is only evaluated once so no problem with
+                    # insertion afterwards
                     for i in range(len(l_idx_labels_kept)):
-                        # Array_index_padding[i] will be 0 or 2 (peaks are padded with 2 zeros, one on each side)
+                        # Array_index_padding[i] will be 0 or 2 (peaks are padded with 2 zeros, one
+                        # on each side)
                         for j in range(array_index_padding[i]):
                             # i+1 instead of i plus insert on the right of the element i
                             l_idx_labels_kept = np.insert(l_idx_labels_kept, i + 1 + pad, -1)
@@ -1663,6 +1657,7 @@ def page_3_draw_heatmap_per_lipid_selection(
 
                     array_intensity_with_lipids = np.array(spectrum, dtype=np.float32)[1, :]
                     array_idx_labels = np.array(l_idx_labels, dtype=np.int32)
+
                     l_lipids_idx, l_avg_intensity = compute_avg_intensity_per_lipid(
                         array_intensity_with_lipids, array_idx_labels
                     )

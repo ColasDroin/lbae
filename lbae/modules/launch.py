@@ -12,9 +12,21 @@ launch."""
 import logging
 import shelve
 import sys
+import numpy as np
 
 # LBAE functions
 from modules.tools.storage import check_shelved_object, dump_shelved_object
+from modules.tools.spectra import (
+    add_zeros_to_spectrum,
+    compute_avg_intensity_per_lipid,
+    compute_image_using_index_and_image_lookup,
+    return_idx_inf,
+    return_idx_sup,
+    sample_rows_from_path,
+    compute_spectrum_per_row_selection,
+    convert_array_to_fine_grained,
+    strip_zeros,
+)
 
 # ==================================================================================================
 # --- Class
@@ -295,6 +307,70 @@ class Launch:
         # Close database
         db.close()
 
+    def run_compiled_functions(self):
+        """This function runs once the slowest numba functions, whose compilation can take a little 
+        bit of time, so that the app is as fast as it can be after startup. Basically, it simulates 
+        the user doing various actions in the app.
+        """
+
+        # Simulate the user drawing one region (here on slice 1), and compute the corresponding
+        # spectral data
+        def draw_region_and_compute_spectral_data():
+            # Define function parameters
+            slice_index = 1
+            path = np.array(
+                [(53, 108), (54, 102), (59, 101), (58, 103), (56, 105), (53, 108)], dtype=np.int32
+            )
+
+            # Force compile numba functions executing them
+            list_index_bound_rows, list_index_bound_column_per_row = sample_rows_from_path(path)
+            grah_scattergl_data = compute_spectrum_per_row_selection(
+                list_index_bound_rows,
+                list_index_bound_column_per_row,
+                self.data.get_array_spectra(slice_index),
+                self.data.get_array_lookup_pixels(slice_index),
+                self.data.get_image_shape(slice_index),
+                self.data.get_array_peaks_transformed_lipids(slice_index),
+                self.data.get_array_corrective_factors(slice_index),
+                zeros_extend=False,
+                apply_correction=False,
+            )
+            grah_scattergl_data = convert_array_to_fine_grained(
+                grah_scattergl_data, 10 ** -3, lb=350, hb=1250,
+            )
+            grah_scattergl_data = strip_zeros(grah_scattergl_data)
+            l_idx_labels = np.array([-1, 2, -1], dtype=np.int32)
+            return_idx_sup(l_idx_labels)
+            return_idx_inf(l_idx_labels)
+            add_zeros_to_spectrum(
+                grah_scattergl_data, pad_individual_peaks=True, padding=10 ** -4,
+            )
+
+            array_intensity_with_lipids = np.array(
+                [1.21864345e-04, 9.33317497e-05, 6.23099259e-05], dtype=np.float32
+            )
+            array_idx_labels = np.array([-1 - 1 - 1], dtype=np.int32)
+            compute_avg_intensity_per_lipid(array_intensity_with_lipids, array_idx_labels)
+            compute_image_using_index_and_image_lookup(
+                500.1,
+                500.2,
+                self.data.get_array_spectra(slice_index),
+                self.data.get_array_lookup_pixels(slice_index),
+                self.data.get_image_shape(slice_index),
+                self.data.get_array_lookup_mz(slice_index),
+                self.data.get_array_cumulated_lookup_mz_image(slice_index),
+                self.data.get_divider_lookup(slice_index),
+                self.data.get_array_peaks_transformed_lipids(slice_index),
+                self.data.get_array_corrective_factors(slice_index),
+                apply_transform=False,
+            )
+
+        def select_lipid_and_region_and_plot_volume():
+            pass
+
+        logging.info("Please wait while compiled functions are executed...")
+        draw_region_and_compute_spectral_data()
+
     def launch(self, force_exit_if_first_launch=True):
         """This function is used at the execution of the app. It will take care of checking/cleaning
         the database entries, run compiled functions once, and precompute all the objects that can 
@@ -311,6 +387,9 @@ class Launch:
 
         # Compute missing entries
         self.compute_and_fill_entries(l_missing_entries)
+
+        # Run compiled functions
+        self.run_compiled_functions()
 
         # Check if the app has been run before, and potentially force exit if not
         if not check_shelved_object("launch", "first_launch"):
