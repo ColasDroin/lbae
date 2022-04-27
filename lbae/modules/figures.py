@@ -1446,6 +1446,7 @@ class Figures:
                     if spectrum is not None:
                         array_intensity_with_lipids = np.array(spectrum, dtype=np.float32)[1, :]
                         array_idx_labels = np.array(l_idx_labels, dtype=np.int32)
+
                         l_lipids_idx, l_avg_intensity = compute_avg_intensity_per_lipid(
                             array_intensity_with_lipids, array_idx_labels
                         )
