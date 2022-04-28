@@ -21,6 +21,29 @@ TODO
 TODO
 
 ### Dataset overview
+
+TODO
+
 ### Lipid selection
+
+TODO
+
 ### Region analysis
+
+TODO
+
 ### Three-dimensional analysis
+
+TODO
+
+# Demo version
+
+A demo version of the app using a small sample of the dataset is available at: [TODO.heroku.com](TODO.heroku.com) 
+
+# Acknowledgments
+
+TODO
+
+# To go further
+
+For more information about the technical details of this project (slice registration, data handling, app design and implementation), please refer to [TODO.bioarxiv.com](TODO.bioarxiv.com). 

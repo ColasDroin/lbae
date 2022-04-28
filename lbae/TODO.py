@@ -1,4 +1,6 @@
 #
+# TODO Finish doc on https://stackedit.io/app
+# TODO Write a function that convert readme markdown to dash text (replace title with "documentation", remove section about sample version)
 # TODO Deactivate slider for annotation in page 1 when tab 1 is on original data
 # TODO Add a button to download heatmap and the spectra figures in region selection
 # TODO Check all functions and deprecate the ones that are not used anymore
