@@ -7,22 +7,22 @@ import dash_mantine_components as dmc
 
 
 def return_documentation():
-    layout = html.Div(
-        children=[
-            html.H1(children="LBAE Documentation"),
-            dmc.Text(
-                "Please start exploring our data by using the navigation bar on the right",
-                size="xl",
-                align="center",
-                color="dimmed",
-                class_name="mt-4",
-            ),
-            html.Hr(className="my-2"),
-            html.P(
-                className="mb-5",
-                children="Press the button below to get to the documentation/paper/etc",
-            ),
-        ],
+    layout = dmc.Center(
+        class_name="w-75 ml-auto mr-auto",
+        children=html.Div(
+            children=[
+                dmc.Title("Lipid Brain Atlas Explorer Documentation", order=1, align="center"),
+                dmc.Title("Overview", order=2, align="left", class_name="mt-5"),
+                dmc.Text(
+                    children="The Lipid Brain Atlas Explorer is a web-application developped as part of the "
+                    + "Lipid Brain Atlas project, led by the Lipid Cell Biology lab (EPFL) and the "
+                    + "Neurodevelopmental Systems Biology (EPFL). It is thought as a graphical user"
+                    + " interface to assist the inspection and the analysis of a multidimensional "
+                    + "atlas of the brain lipidome.",
+                    class_name="mt-4",
+                ),
+            ],
+        ),
     )
 
     return layout

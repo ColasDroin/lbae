@@ -14,6 +14,7 @@ layout = (
             "right": "0px",
             "bottom": "0px",
             "left": "6rem",
+            "height": "100vh",
             "background-color": "#1d1c1f",
         },
         children=[

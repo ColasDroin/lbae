@@ -138,7 +138,7 @@ layout = html.Div(
                                 dmc.Drawer(
                                     children=return_documentation(),
                                     id="documentation-offcanvas",
-                                    title="LBAE documentation",
+                                    # title="LBAE documentation",
                                     opened=False,
                                     padding="md",
                                     size="80%",
