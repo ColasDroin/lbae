@@ -28,6 +28,7 @@ from pages import (
     region_analysis,
     threeD_exploration,
 )
+from pages.documentation import return_documentation
 from config import basic_config
 from modules.tools.misc import logmem
 
@@ -37,7 +38,7 @@ from modules.tools.misc import logmem
 
 
 def return_main_content():
-    """This function compute the elements of the app that are shared across pages, including all the 
+    """This function compute the elements of the app that are shared across pages, including all the
     dcc.store.
 
     Returns:
@@ -108,7 +109,10 @@ def return_main_content():
                             max=data.get_slice_number(),
                             step=1,
                             marks=[
-                                {"value": slice_index, "label": str(slice_index),}
+                                {
+                                    "value": slice_index,
+                                    "label": str(slice_index),
+                                }
                                 for slice_index in range(1, data.get_slice_number() + 1, 3)
                             ],
                             # tooltip={"placement": "right", "always_visible": True,},
@@ -118,41 +122,51 @@ def return_main_content():
                             class_name="mt-2 mx-5",
                         ),
                     ),
-                    # Documentation in a lateral drawer
+                    # Documentation in a bottom drawer
                     dmc.Drawer(
-                        id="drawer",
+                        children=return_documentation(),
+                        id="documentation-offcanvas",
+                        # title="LBAE documentation",
+                        opened=False,
                         padding="md",
-                        position="right",
-                        size=500,
-                        title="Page documentation",
-                        children=[
-                            dmc.Accordion(
-                                children=[
-                                    dmc.AccordionItem(
-                                        children="""On any graph (heatmap or m/z plot), you can 
-                                            draw a square with your mouse to zoom in, and double 
-                                            click to reset zoom level.""",
-                                        label="Zoom",
-                                    ),
-                                    dmc.AccordionItem(
-                                        children="""You can interact more with the figures (zoom, 
-                                            pan, reset axes, download) using the modebard above 
-                                            them.""",
-                                        label="Modebar",
-                                    ),
-                                    dmc.AccordionItem(
-                                        children="""Most of the items in the app are embedded with 
-                                        advice. Just position your mouse over an item to get a tip 
-                                        on how to use it.""",
-                                        label="Tooltips",
-                                    ),
-                                ],
-                                iconPosition="right",
-                                multiple=True,
-                                id="acc",
-                            ),
-                        ],
+                        size="90vh",
+                        position="bottom",
                     ),
+                    # # Documentation in a lateral drawer
+                    # dmc.Drawer(
+                    #     id="drawer",
+                    #     padding="md",
+                    #     position="right",
+                    #     size=500,
+                    #     title="Page documentation",
+                    #     children=[
+                    #         dmc.Accordion(
+                    #             children=[
+                    #                 dmc.AccordionItem(
+                    #                     children="""On any graph (heatmap or m/z plot), you can
+                    #                         draw a square with your mouse to zoom in, and double
+                    #                         click to reset zoom level.""",
+                    #                     label="Zoom",
+                    #                 ),
+                    #                 dmc.AccordionItem(
+                    #                     children="""You can interact more with the figures (zoom,
+                    #                         pan, reset axes, download) using the modebard above
+                    #                         them.""",
+                    #                     label="Modebar",
+                    #                 ),
+                    #                 dmc.AccordionItem(
+                    #                     children="""Most of the items in the app are embedded with
+                    #                     advice. Just position your mouse over an item to get a tip
+                    #                     on how to use it.""",
+                    #                     label="Tooltips",
+                    #                 ),
+                    #             ],
+                    #             iconPosition="right",
+                    #             multiple=True,
+                    #             id="acc",
+                    #         ),
+                    #     ],
+                    # ),
                     # Spinner when switching pages
                     dbc.Spinner(
                         id="main-spinner",
@@ -171,11 +185,11 @@ def return_main_content():
 
 
 def return_validation_layout(main_content, initial_slice=1):
-    """This function compute the layout of the app, including the main container, the sidebar and 
+    """This function compute the layout of the app, including the main container, the sidebar and
     the different pages.
 
     Args:
-        main_content (html.Div): A div containing the elements of the app that are shared across 
+        main_content (html.Div): A div containing the elements of the app that are shared across
             pages.
         initial_slice (int): Index of the slice to be displayed at launch.
 
@@ -190,7 +204,6 @@ def return_validation_layout(main_content, initial_slice=1):
             lipid_selection.return_layout(basic_config, initial_slice),
             region_analysis.return_layout(basic_config, initial_slice),
             threeD_exploration.return_layout(basic_config, initial_slice),
-            # atlas_exploration_DEPRECATED.return_layout(basic_config, initial_slice),
         ]
     )
 
@@ -247,6 +260,17 @@ def render_page_content(pathname, slice_index):
 # )
 # def drawer(n_clicks):
 #     return True
+
+# Callback for documentation
+@app.callback(
+    Output("documentation-offcanvas", "opened"),
+    [Input("sidebar-documentation", "n_clicks"), Input("page-0-collapse-doc-button", "n_clicks")],
+    [State("documentation-offcanvas", "opened")],
+)
+def toggle_collapse(n1, n2, is_open):
+    if n1 or n2:
+        return not is_open
+    return is_open
 
 
 @app.callback(

@@ -1,22 +1,16 @@
 #
-# TODO Run compiled function in Launch once (at least 3d and lipid region selection)
+# TODO Deactivate slider for annotation in page 1 when tab 1 is on original data
 # TODO Add a button to download heatmap and the spectra figures in region selection
 # TODO Check all functions and deprecate the ones that are not used anymore
-# TODO fix layout for small screens
 # TODO Incorporate brain 2
-# TODO Do a round of debug
 # TODO Make a careful memory analysis to free more memory
-# TODO Remove refs to HDF5/Pytables
 # TODO Adress all # ! and # ? comments in the code
-# TODO Find out what must be precomputed and do a function to precompute it
 # TODO Update notebooks with up-to-date classes
-# TODO Do quality control, especially when several users are on the app in parallel
+# TODO Do quality control and debug, especially when several users are on the app in parallel
 # TODO Correct the name of the files to download
 # TODO Write missing docstrings
-# TODO Write documentation
-# TODO Check that all force_update are set to False
-# TODO Add an icon for documentation in the left bar
 # TODO Make a tour with dash_tour_component?
+# TODO Check that all force_update are set to False
 # TODO Redesign repo according to : https://dev.to/codemouse92/dead-simple-python-project-structure-and-imports-38c6
 # TODO Make a sample version of the app and host on heroku
 # TODO Make a docker container for the very final version of the app
@@ -24,4 +18,3 @@
 # ? Implement the app as a multipage app when the feature is available on Dash
 
 # http://cajal.epfl.ch:8050/
-

@@ -10,32 +10,87 @@ def return_documentation():
     layout = dmc.Center(
         class_name="mx-auto",
         style={"width": "60%"},
-        children=html.Div(
+        children=dmc.ScrollArea(
+            type="scroll",
+            style={"height": "90vh"},
             children=[
-                dmc.Title("Lipid Brain Atlas Explorer Documentation", order=1, align="center"),
-                dmc.Title("Overview", order=2, align="left", class_name="mt-5"),
                 dmc.Text(
-                    children=(
-                        "The Lipid Brain Atlas Explorer is a web-application developped as part of"
-                        " Lipid Brain Atlas project, led by the Lipid Cell Biology lab (EPFL) and"
-                        " the Neurodevelopmental Systems Biology (EPFL). It is thought as a"
-                        " graphical user interface to assist the inspection and the analysis of a a"
-                        " large mass-spectrometry dataset of lipids distribution at micrometric"
-                        " resolution across the entire mouse brain."
-                    ),
+                    "Lipid Brain Atlas Explorer Documentation",
+                    style={"fontSize": 40, "color": "#1fafc8"},
+                    align="center",
+                ),
+                dmc.Title(
+                    "Overview",
+                    order=2,
+                    align="left",
+                    class_name="mt-5",
+                    style={"color": "white"},
+                ),
+                dmc.Text(
+                    children=[
+                        html.Span(
+                            "The Lipid Brain Atlas Explorer is a web-application developped as part"
+                            " of the"
+                        ),
+                        html.Em(" Lipid Brain Atlas project"),
+                        html.Span(", led by the "),
+                        html.A(
+                            "Lipid Cell Biology lab (EPFL)",
+                            href="https://www.epfl.ch/labs/dangelo-lab/",
+                        ),
+                        html.Span(" and the "),
+                        html.A(
+                            "Neurodevelopmental Systems Biology (EPFL)",
+                            href="https://www.epfl.ch/labs/nsbl/",
+                        ),
+                        html.Span(
+                            ". It is thought as a graphical user interface"
+                            " to assist the inspection and the analysis of a large"
+                            " mass-spectrometry dataset of lipids distribution at micrometric"
+                            " resolution across the entire mouse brain. All of the brain slices"
+                            " aquired have prealably been registered to the Mouse Brain Common"
+                            " Coordinate Framework v3.0 (CCFv3), allowing for a hierarchically"
+                            " structured annotation of our data. This registration can be used to"
+                            " perform analyses comparing neuroanatomical regions, e.g. averaging"
+                            " and comparing lipid abundance in each region and make an enrichment"
+                            " analysis ("
+                        ),
+                        html.Em("region analysis"),
+                        html.Span(
+                            "page, in the app). It was also used to"
+                            " combine the 2D slice acquisitions into a browsable 3d model ("
+                        ),
+                        html.Em("three dimensional analysis "),
+                        html.Span("page, in the app)."),
+                    ],
                     class_name="mt-4",
-                    size="lg",
+                    size="xl",
                 ),
                 dmc.Text(
                     children=(
                         "We hope that this application will be of great help to query the Lipid"
-                        " Brain Atlas to guide your hypotheses and experiments, to achieve a better"
-                        " understanding of the cellular mechanisms involving lipids that are"
-                        " fundamental for nervous system development and function."
+                        " Brain Atlas to guide your hypotheses and experiments, and more generally"
+                        " to achieve a better understanding of the cellular mechanisms involving"
+                        " lipids that are fundamental for nervous system development and function."
                     ),
-                    size="lg",
+                    size="xl",
                 ),
-                dmc.Title("Data", order=2, align="left", class_name="mt-5"),
+                dmc.Text(
+                    children=(
+                        "We hope that this application will be of great help to query the Lipid"
+                        " Brain Atlas to guide your hypotheses and experiments, and more generally"
+                        " to achieve a better understanding of the cellular mechanisms involving"
+                        " lipids that are fundamental for nervous system development and function."
+                    ),
+                    size="xl",
+                ),
+                dmc.Title(
+                    "Data",
+                    order=2,
+                    align="left",
+                    class_name="mt-5",
+                    style={"color": "white"},
+                ),
                 dmc.Text(
                     children=(
                         " The multidimensional atlas of the mouse brain lipidome that you can"
@@ -43,26 +98,42 @@ def return_documentation():
                         " Spectrometry Imaging (MALDI-MSI) experiments."
                     ),
                     class_name="mt-4",
-                    size="lg",
+                    size="xl",
                 ),
                 dmc.Title(
-                    "Alignment to the Allen Brain Atlas", order=2, align="left", class_name="mt-5"
+                    "Alignment to the Allen Brain Atlas",
+                    order=2,
+                    align="left",
+                    class_name="mt-5",
+                    style={"color": "white"},
+                ),
+                dmc.Text(
+                    children="TODO",
+                    size="xl",
+                    class_name="mt-4",
+                ),
+                dmc.Title(
+                    "How to use the app",
+                    order=2,
+                    align="left",
+                    class_name="mt-5",
+                    style={"color": "white"},
+                ),
+                dmc.Text(
+                    children="TODO",
+                    size="xl",
+                    class_name="mt-4",
+                ),
+                dmc.Title(
+                    "Lipid selection page",
+                    order=3,
+                    align="left",
+                    class_name="mt-5",
+                    style={"color": "white"},
                 ),
                 dmc.Text(
                     children="TODO",
                     size="lg",
-                    class_name="mt-4",
-                ),
-                dmc.Title("How to use the app", order=2, align="left", class_name="mt-5"),
-                dmc.Text(
-                    children="TODO",
-                    size="lg",
-                    class_name="mt-4",
-                ),
-                dmc.Title("Lipid selection page", order=3, align="left", class_name="mt-5"),
-                dmc.Text(
-                    children="TODO",
-                    size="md",
                     class_name="mt-4 pl-2",
                 ),
             ],

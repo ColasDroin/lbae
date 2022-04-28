@@ -8,7 +8,6 @@ from dash.dependencies import Input, Output, State
 
 # LBAE modules
 import app
-from pages.documentation import return_documentation
 
 ###### DEFFINE PAGE LAYOUT ######
 
@@ -74,7 +73,9 @@ layout = html.Div(
                             className="my-4",
                         ),
                         dbc.Tooltip(
-                            children="Analyse spectrum and brain composition by custom lipid selection",
+                            children=(
+                                "Analyse spectrum and brain composition by custom lipid selection"
+                            ),
                             target="sidebar-page-2",
                             placement="right",
                         ),
@@ -128,21 +129,16 @@ layout = html.Div(
                                     id="sidebar-documentation",
                                     n_clicks=0,
                                     active="exact",
-                                    children=[html.I(className="icon-library mb-5 fs-2",)],
+                                    children=[
+                                        html.I(
+                                            className="icon-library mb-5 fs-2",
+                                        )
+                                    ],
                                 ),
                                 dbc.Tooltip(
                                     children="Open documentation",
                                     target="sidebar-documentation",
                                     placement="right",
-                                ),
-                                dmc.Drawer(
-                                    children=return_documentation(),
-                                    id="documentation-offcanvas",
-                                    # title="LBAE documentation",
-                                    opened=False,
-                                    padding="md",
-                                    size="80%",
-                                    position="bottom",
                                 ),
                                 html.H4(
                                     id="sidebar-copyright",
@@ -162,14 +158,3 @@ layout = html.Div(
         ),
     ],
 )
-
-# Callback for documentation
-@app.app.callback(
-    Output("documentation-offcanvas", "opened"),
-    [Input("sidebar-documentation", "n_clicks")],
-    [State("documentation-offcanvas", "opened")],
-)
-def toggle_collapse(n, is_open):
-    if n:
-        return not is_open
-    return is_open

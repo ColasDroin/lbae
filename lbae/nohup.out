@@ -16282,3 +16282,456 @@ page-3-dropdown-brain-regions value 10 None ['Dentate gyrus'] /region-analysis [
 2022-04-28 11:59:51.491 INFO figures - compute_3D_volume_figure: Built arrays of coordinates
 2022-04-28 11:59:52.090 INFO figures - compute_3D_volume_figure: Cropped the figure to only keep areas in which lipids are expressed
 2022-04-28 11:59:52.309 INFO figures - compute_3D_volume_figure: Cropped the figure to only keep areas in which lipids are expressed
+2022-04-28 11:59:52.665 INFO figures - compute_3D_volume_figure: Finished interpolation betwee slices
+2022-04-28 11:59:52.773 INFO storage - return_shelved_object: Returning figures/3D_page/volume_root from shelve file.	MemTotal: 2329.1328125
+2022-04-28 11:59:52.794 INFO figures - compute_3D_volume_figure: Building final figure
+2022-04-28 11:59:52.824 INFO figures - compute_3D_volume_figure: Done computing 3D volume figure
+2022-04-28 11:59:52.824 INFO launch - run_compiled_functions: Compiled functions executed.
+2022-04-28 11:59:52.874 INFO figures - compute_3D_volume_figure: Finished interpolation betwee slices
+2022-04-28 11:59:52.936 INFO app - <module>: Memory use after three main object have been instantiated	MemTotal: 2350.41796875
+2022-04-28 11:59:52.958 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-04-28 11:59:52.958 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-28 11:59:52.959 DEBUG filesystemcache - set: set key 'locked-cleaning'
+2022-04-28 11:59:52.959 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-28 11:59:52.960 DEBUG filesystemcache - set: set key 'locked-reading'
+2022-04-28 11:59:52.983 INFO storage - return_shelved_object: Returning figures/3D_page/volume_root from shelve file.	MemTotal: 2329.13671875
+2022-04-28 11:59:53.003 INFO figures - compute_3D_volume_figure: Building final figure
+2022-04-28 11:59:53.033 INFO figures - compute_3D_volume_figure: Done computing 3D volume figure
+2022-04-28 11:59:53.033 INFO launch - run_compiled_functions: Compiled functions executed.
+2022-04-28 11:59:53.078 INFO storage - return_shelved_object: Returning figures/load_page/figure_basic_image_projection_corrected_0_False from shelve file.	MemTotal: 2351.26953125
+2022-04-28 11:59:53.092 INFO figures - compute_heatmap_per_mz: Starting figure computation, from mz boundaries
+2022-04-28 11:59:53.092 INFO figures - compute_heatmap_per_mz: Getting image array
+2022-04-28 11:59:53.092 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-28 11:59:53.092 INFO spectra - compute_thread_safe_function: Trying to compute the thread-safe version of function compute_image_using_index_and_image_lookup 
+2022-04-28 11:59:53.092 DEBUG filesystemcache - get: get key 'locked-cleaning' -> hit 
+2022-04-28 11:59:53.092 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-28 11:59:53.093 DEBUG filesystemcache - set: set key 'locked-reading'
+2022-04-28 11:59:53.147 INFO app - <module>: Memory use after three main object have been instantiated	MemTotal: 2350.421875
+2022-04-28 11:59:53.167 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-04-28 11:59:53.167 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-28 11:59:53.168 DEBUG filesystemcache - set: set key 'locked-cleaning'
+2022-04-28 11:59:53.168 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-28 11:59:53.169 DEBUG filesystemcache - set: set key 'locked-reading'
+2022-04-28 11:59:53.290 INFO storage - return_shelved_object: Returning figures/load_page/figure_basic_image_projection_corrected_0_False from shelve file.	MemTotal: 2351.25
+2022-04-28 11:59:53.305 INFO figures - compute_heatmap_per_mz: Starting figure computation, from mz boundaries
+2022-04-28 11:59:53.305 INFO figures - compute_heatmap_per_mz: Getting image array
+2022-04-28 11:59:53.305 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-28 11:59:53.306 INFO spectra - compute_thread_safe_function: Trying to compute the thread-safe version of function compute_image_using_index_and_image_lookup 
+2022-04-28 11:59:53.306 DEBUG filesystemcache - get: get key 'locked-cleaning' -> hit 
+2022-04-28 11:59:53.306 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-28 11:59:53.306 DEBUG filesystemcache - set: set key 'locked-reading'
+2022-04-28 11:59:53.645 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-28 11:59:53.646 DEBUG filesystemcache - set: set key 'locked-reading'
+2022-04-28 11:59:53.824 INFO figures - compute_heatmap_per_mz: Done getting image array. Cleaning memory
+2022-04-28 11:59:53.824 DEBUG filesystemcache - get: get key 'locked-reading' -> hit 
+2022-04-28 11:59:53.824 DEBUG filesystemcache - get: get key 'locked-cleaning' -> hit 
+2022-04-28 11:59:53.824 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-28 11:59:53.825 DEBUG filesystemcache - set: set key 'locked-cleaning'
+2022-04-28 11:59:53.828 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-28 11:59:53.829 DEBUG filesystemcache - set: set key 'locked-cleaning'
+2022-04-28 11:59:53.829 INFO figures - compute_heatmap_per_mz: Memory cleaned
+2022-04-28 11:59:53.829 INFO figures - compute_heatmap_per_mz: Converting image to string
+2022-04-28 11:59:53.829 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-28 11:59:53.873 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-28 11:59:53.874 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-28 11:59:53.875 DEBUG filesystemcache - set: set key 'locked-reading'
+2022-04-28 11:59:53.908 INFO image - convert_image_to_base64: Empty pixels are now transparent
+2022-04-28 11:59:53.923 INFO image - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-04-28 11:59:53.946 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-28 11:59:53.947 INFO figures - compute_heatmap_per_mz: Adding image to figure
+2022-04-28 11:59:53.967 INFO figures - compute_heatmap_per_mz: Returning figure
+2022-04-28 11:59:54.059 INFO figures - compute_heatmap_per_mz: Done getting image array. Cleaning memory
+2022-04-28 11:59:54.059 DEBUG filesystemcache - get: get key 'locked-reading' -> hit 
+2022-04-28 11:59:54.059 DEBUG filesystemcache - get: get key 'locked-cleaning' -> hit 
+2022-04-28 11:59:54.060 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-28 11:59:54.060 DEBUG filesystemcache - set: set key 'locked-cleaning'
+2022-04-28 11:59:54.065 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-28 11:59:54.066 DEBUG filesystemcache - set: set key 'locked-cleaning'
+2022-04-28 11:59:54.066 INFO figures - compute_heatmap_per_mz: Memory cleaned
+2022-04-28 11:59:54.066 INFO figures - compute_heatmap_per_mz: Converting image to string
+2022-04-28 11:59:54.066 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-28 11:59:54.074 INFO storage - return_shelved_object: Returning annotations/lipid_options from shelve file.	MemTotal: 2286.94140625
+2022-04-28 11:59:54.106 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-28 11:59:54.142 INFO image - convert_image_to_base64: Empty pixels are now transparent
+2022-04-28 11:59:54.158 INFO image - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-04-28 11:59:54.182 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-28 11:59:54.183 INFO figures - compute_heatmap_per_mz: Adding image to figure
+2022-04-28 11:59:54.205 INFO figures - compute_heatmap_per_mz: Returning figure
+2022-04-28 11:59:54.212 INFO storage - return_shelved_object: Returning figures/load_page/figure_basic_image_projection_corrected_0_False from shelve file.	MemTotal: 2287.21875
+2022-04-28 11:59:54.317 INFO storage - return_shelved_object: Returning annotations/lipid_options from shelve file.	MemTotal: 2286.95703125
+2022-04-28 11:59:54.456 INFO storage - return_shelved_object: Returning figures/load_page/figure_basic_image_projection_corrected_0_False from shelve file.	MemTotal: 2287.296875
+2022-04-28 11:59:54.570 INFO storage - return_shelved_object: Returning figures/atlas_page/3D/treemaps from shelve file.	MemTotal: 2247.15625
+2022-04-28 11:59:54.868 INFO storage - return_shelved_object: Returning figures/atlas_page/3D/treemaps from shelve file.	MemTotal: 2246.921875
+2022-04-28 12:00:06.852 INFO index - render_page_content: Page/load-slicehas been selected	MemTotal: 2247.09375
+2022-04-28 12:00:06.965 INFO storage - return_shelved_object: Returning figures/load_page/figure_basic_image_projection_corrected_0_False from shelve file.	MemTotal: 2247.09765625
+2022-04-28 12:00:07.209 INFO load_slice - tab_1_load_image: Slider changed to value 1
+2022-04-28 12:00:07.920 INFO index - render_page_content: Page/region-analysishas been selected	MemTotal: 2251.53125
+2022-04-28 12:00:08.036 INFO storage - return_shelved_object: Returning figures/load_page/figure_basic_image_projection_corrected_0_False from shelve file.	MemTotal: 2251.53125
+2022-04-28 12:00:08.321 INFO region_analysis - page_3_record_spectra: Starting to compute spectrum
+2022-04-28 12:00:08.321 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-28 12:00:08.321 DEBUG filesystemcache - get: get key 'qcrHrJ51w4U4ztl9ESDC/8' -> hit 
+2022-04-28 12:00:08.321 WARNING region_analysis - page_3_record_spectra: A bug appeared during spectrum computation
+2022-04-28 12:00:08.399 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Starting computing heatmap now
+2022-04-28 12:00:08.429 INFO storage - return_shelved_object: Returning figures/load_page/figure_basic_image_projection_corrected_0_False from shelve file.	MemTotal: 2251.53515625
+2022-04-28 12:00:08.779 INFO index - render_page_content: Page/lipid-selectionhas been selected	MemTotal: 2247.5859375
+2022-04-28 12:00:08.779 INFO figures - compute_heatmap_per_mz: Starting figure computation, from mz boundaries
+2022-04-28 12:00:08.779 INFO figures - compute_heatmap_per_mz: Getting image array
+2022-04-28 12:00:08.779 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-28 12:00:08.780 INFO spectra - compute_thread_safe_function: Trying to compute the thread-safe version of function compute_image_using_index_and_image_lookup 
+2022-04-28 12:00:08.780 DEBUG filesystemcache - get: get key 'locked-cleaning' -> hit 
+2022-04-28 12:00:08.780 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-28 12:00:08.781 DEBUG filesystemcache - set: set key 'locked-reading'
+2022-04-28 12:00:08.824 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-28 12:00:08.825 DEBUG filesystemcache - set: set key 'locked-reading'
+2022-04-28 12:00:08.830 INFO figures - compute_heatmap_per_mz: Done getting image array. Cleaning memory
+2022-04-28 12:00:08.830 DEBUG filesystemcache - get: get key 'locked-reading' -> hit 
+2022-04-28 12:00:08.830 DEBUG filesystemcache - get: get key 'locked-cleaning' -> hit 
+2022-04-28 12:00:08.830 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-28 12:00:08.831 DEBUG filesystemcache - set: set key 'locked-cleaning'
+2022-04-28 12:00:08.837 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-28 12:00:08.838 DEBUG filesystemcache - set: set key 'locked-cleaning'
+2022-04-28 12:00:08.838 INFO figures - compute_heatmap_per_mz: Memory cleaned
+2022-04-28 12:00:08.838 INFO figures - compute_heatmap_per_mz: Converting image to string
+2022-04-28 12:00:08.838 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-28 12:00:08.882 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-28 12:00:08.927 INFO image - convert_image_to_base64: Empty pixels are now transparent
+2022-04-28 12:00:08.930 INFO storage - return_shelved_object: Returning figures/load_page/figure_basic_image_projection_corrected_0_False from shelve file.	MemTotal: 2251.53515625
+2022-04-28 12:00:08.944 INFO image - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-04-28 12:00:08.963 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-28 12:00:08.965 INFO figures - compute_heatmap_per_mz: Adding image to figure
+2022-04-28 12:00:08.975 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Starting computing heatmap now
+2022-04-28 12:00:08.987 INFO figures - compute_heatmap_per_mz: Returning figure
+2022-04-28 12:00:09.109 INFO storage - return_shelved_object: Returning annotations/lipid_options from shelve file.	MemTotal: 2274.60546875
+2022-04-28 12:00:09.369 INFO lipid_selection - page_2_add_toast_selection: Entering function to update lipid data
+2022-04-28 12:00:09.516 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-04-28 13:52:24.497 INFO index - render_page_content: Page/has been selected	MemTotal: 2274.60546875
+2022-04-28 13:52:27.126 INFO index - render_page_content: Page/load-slicehas been selected	MemTotal: 2251.54296875
+2022-04-28 13:52:27.235 INFO storage - return_shelved_object: Returning figures/load_page/figure_basic_image_projection_corrected_0_False from shelve file.	MemTotal: 2251.54296875
+2022-04-28 13:52:27.358 INFO load_slice - tab_1_load_image: Slider changed to value 1
+2022-04-28 13:52:29.559 INFO load_slice - tab_1_load_image: Slider changed to value 13
+2022-04-28 13:52:29.671 INFO storage - return_shelved_object: Returning figures/load_page/figure_basic_image_projection_corrected_12_False from shelve file.	MemTotal: 2251.54296875
+2022-04-28 13:52:30.219 INFO load_slice - tab_1_load_image: Slider changed to value 16
+2022-04-28 13:52:30.331 INFO storage - return_shelved_object: Returning figures/load_page/figure_basic_image_projection_corrected_15_False from shelve file.	MemTotal: 2251.54296875
+2022-04-28 13:52:31.284 INFO load_slice - tab_1_load_image: Slider changed to value 19
+2022-04-28 13:52:31.402 INFO storage - return_shelved_object: Returning figures/load_page/figure_basic_image_projection_corrected_18_False from shelve file.	MemTotal: 2251.54296875
+2022-04-28 13:52:31.947 INFO load_slice - tab_1_load_image: Slider changed to value 22
+2022-04-28 13:52:32.058 INFO storage - return_shelved_object: Returning figures/load_page/figure_basic_image_projection_corrected_21_False from shelve file.	MemTotal: 2251.54296875
+2022-04-28 13:52:33.172 INFO load_slice - tab_1_load_image: Slider changed to value 22
+2022-04-28 13:52:33.286 INFO storage - return_shelved_object: Returning figures/load_page/figure_basic_image_atlas_21_False from shelve file.	MemTotal: 2251.54296875
+2022-04-28 13:52:34.012 INFO load_slice - tab_1_load_image: Slider changed to value 22
+2022-04-28 13:52:34.118 INFO storage - return_shelved_object: Returning figures/load_page/figure_basic_image_projection_corrected_21_False from shelve file.	MemTotal: 2251.54296875
+2022-04-28 13:52:34.577 INFO load_slice - tab_1_load_image: Slider changed to value 22
+2022-04-28 13:52:34.694 INFO storage - return_shelved_object: Returning figures/load_page/figure_basic_image_original_data_21_False from shelve file.	MemTotal: 2251.54296875
+2022-04-28 13:52:36.696 INFO storage - return_shelved_object: Returning figures/3D_page/slices_3D from shelve file.	MemTotal: 2274.61328125
+2022-04-28 13:52:44.239 INFO load_slice - tab_1_load_image: Slider changed to value 22
+2022-04-28 13:52:44.360 INFO storage - return_shelved_object: Returning figures/load_page/figure_basic_image_original_data_21_False from shelve file.	MemTotal: 2251.54296875
+2022-04-28 13:52:46.335 INFO index - render_page_content: Page/lipid-selectionhas been selected	MemTotal: 2274.61328125
+2022-04-28 13:52:46.336 INFO figures - compute_heatmap_per_mz: Starting figure computation, from mz boundaries
+2022-04-28 13:52:46.336 INFO figures - compute_heatmap_per_mz: Getting image array
+2022-04-28 13:52:46.336 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-28 13:52:46.336 INFO spectra - compute_thread_safe_function: Trying to compute the thread-safe version of function compute_image_using_index_and_image_lookup 
+2022-04-28 13:52:46.336 DEBUG filesystemcache - delete: deleted key 'locked-cleaning'
+2022-04-28 13:52:46.336 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-28 13:52:46.337 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-04-28 13:52:46.337 DEBUG filesystemcache - get: get key 'locked-cleaning' -> miss (expired)
+2022-04-28 13:52:46.337 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-28 13:52:46.337 DEBUG filesystemcache - set: set key 'locked-reading'
+2022-04-28 13:52:46.374 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-28 13:52:46.374 DEBUG filesystemcache - set: set key 'locked-reading'
+2022-04-28 13:52:46.383 INFO figures - compute_heatmap_per_mz: Done getting image array. Cleaning memory
+2022-04-28 13:52:46.383 DEBUG filesystemcache - get: get key 'locked-reading' -> hit 
+2022-04-28 13:52:46.383 DEBUG filesystemcache - get: get key 'locked-cleaning' -> miss 
+2022-04-28 13:52:46.383 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-28 13:52:46.383 DEBUG filesystemcache - set: set key 'locked-cleaning'
+2022-04-28 13:52:46.384 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-28 13:52:46.384 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-04-28 13:52:46.386 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-28 13:52:46.386 DEBUG filesystemcache - set: set key 'locked-cleaning'
+2022-04-28 13:52:46.386 INFO figures - compute_heatmap_per_mz: Memory cleaned
+2022-04-28 13:52:46.386 INFO figures - compute_heatmap_per_mz: Converting image to string
+2022-04-28 13:52:46.386 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-28 13:52:46.424 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-28 13:52:46.472 INFO image - convert_image_to_base64: Empty pixels are now transparent
+2022-04-28 13:52:46.489 INFO image - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-04-28 13:52:46.521 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-28 13:52:46.522 INFO figures - compute_heatmap_per_mz: Adding image to figure
+2022-04-28 13:52:46.544 INFO figures - compute_heatmap_per_mz: Returning figure
+2022-04-28 13:52:46.652 INFO storage - return_shelved_object: Returning annotations/lipid_options from shelve file.	MemTotal: 2276.30859375
+2022-04-28 13:52:46.993 INFO lipid_selection - page_2_add_toast_selection: Entering function to update lipid data
+2022-04-28 13:52:47.133 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-04-28 13:52:49.090 INFO lipid_selection - page_2_add_toast_selection: Entering function to update lipid data
+2022-04-28 13:52:49.091 INFO lipid_selection - page_2_add_toast_selection: Returning updated lipid data
+2022-04-28 13:52:49.159 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-04-28 13:52:49.159 INFO figures - compute_heatmap_per_mz: Starting figure computation, from mz boundaries
+2022-04-28 13:52:49.159 INFO spectra - compute_thread_safe_function: Trying to compute the thread-safe version of function compute_index_boundaries 
+2022-04-28 13:52:49.159 INFO figures - compute_heatmap_per_mz: Getting image array
+2022-04-28 13:52:49.159 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-28 13:52:49.159 INFO spectra - compute_thread_safe_function: Trying to compute the thread-safe version of function compute_image_using_index_and_image_lookup 
+2022-04-28 13:52:49.159 DEBUG filesystemcache - get: get key 'locked-cleaning' -> hit 
+2022-04-28 13:52:49.159 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-28 13:52:49.159 DEBUG filesystemcache - get: get key 'locked-cleaning' -> hit 
+2022-04-28 13:52:49.159 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-28 13:52:49.159 DEBUG filesystemcache - set: set key 'locked-reading'
+2022-04-28 13:52:49.160 DEBUG filesystemcache - set: set key 'locked-reading'
+2022-04-28 13:52:49.225 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-28 13:52:49.225 DEBUG filesystemcache - set: set key 'locked-reading'
+2022-04-28 13:52:49.234 INFO figures - compute_heatmap_per_mz: Done getting image array. Cleaning memory
+2022-04-28 13:52:49.234 DEBUG filesystemcache - get: get key 'locked-reading' -> hit 
+2022-04-28 13:52:49.234 DEBUG filesystemcache - get: get key 'locked-cleaning' -> hit 
+2022-04-28 13:52:49.235 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-28 13:52:49.235 DEBUG filesystemcache - set: set key 'locked-cleaning'
+2022-04-28 13:52:49.240 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-28 13:52:49.240 DEBUG filesystemcache - set: set key 'locked-cleaning'
+2022-04-28 13:52:49.240 INFO figures - compute_heatmap_per_mz: Memory cleaned
+2022-04-28 13:52:49.240 INFO figures - compute_heatmap_per_mz: Converting image to string
+2022-04-28 13:52:49.241 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-28 13:52:49.282 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-28 13:52:49.325 INFO image - convert_image_to_base64: Empty pixels are now transparent
+2022-04-28 13:52:49.342 INFO image - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-04-28 13:52:49.355 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-28 13:52:49.357 INFO figures - compute_heatmap_per_mz: Adding image to figure
+2022-04-28 13:52:49.378 INFO figures - compute_heatmap_per_mz: Returning figure
+2022-04-28 13:52:49.412 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-28 13:52:49.412 DEBUG filesystemcache - set: set key 'locked-reading'
+2022-04-28 13:52:50.646 INFO lipid_selection - page_2_add_toast_selection: Entering function to update lipid data
+2022-04-28 13:52:50.646 INFO lipid_selection - page_2_add_toast_selection: Returning updated lipid data
+2022-04-28 13:52:50.752 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-04-28 13:52:50.752 INFO figures - compute_heatmap_per_mz: Starting figure computation, from mz boundaries
+2022-04-28 13:52:50.752 INFO figures - compute_heatmap_per_mz: Getting image array
+2022-04-28 13:52:50.752 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-28 13:52:50.752 INFO spectra - compute_thread_safe_function: Trying to compute the thread-safe version of function compute_image_using_index_and_image_lookup 
+2022-04-28 13:52:50.753 DEBUG filesystemcache - get: get key 'locked-cleaning' -> hit 
+2022-04-28 13:52:50.753 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-28 13:52:50.753 DEBUG filesystemcache - set: set key 'locked-reading'
+2022-04-28 13:52:50.779 INFO spectra - compute_thread_safe_function: Trying to compute the thread-safe version of function compute_index_boundaries 
+2022-04-28 13:52:50.779 DEBUG filesystemcache - get: get key 'locked-cleaning' -> hit 
+2022-04-28 13:52:50.779 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-28 13:52:50.780 DEBUG filesystemcache - set: set key 'locked-reading'
+2022-04-28 13:52:50.840 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-28 13:52:50.840 DEBUG filesystemcache - set: set key 'locked-reading'
+2022-04-28 13:52:50.846 INFO figures - compute_heatmap_per_mz: Done getting image array. Cleaning memory
+2022-04-28 13:52:50.846 DEBUG filesystemcache - get: get key 'locked-reading' -> hit 
+2022-04-28 13:52:50.846 DEBUG filesystemcache - get: get key 'locked-cleaning' -> hit 
+2022-04-28 13:52:50.846 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-28 13:52:50.847 DEBUG filesystemcache - set: set key 'locked-cleaning'
+2022-04-28 13:52:50.853 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-28 13:52:50.854 DEBUG filesystemcache - set: set key 'locked-cleaning'
+2022-04-28 13:52:50.854 INFO figures - compute_heatmap_per_mz: Memory cleaned
+2022-04-28 13:52:50.854 INFO figures - compute_heatmap_per_mz: Converting image to string
+2022-04-28 13:52:50.854 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-28 13:52:50.895 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-28 13:52:50.933 INFO image - convert_image_to_base64: Empty pixels are now transparent
+2022-04-28 13:52:50.951 INFO image - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-04-28 13:52:50.969 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-28 13:52:50.970 INFO figures - compute_heatmap_per_mz: Adding image to figure
+2022-04-28 13:52:50.990 INFO figures - compute_heatmap_per_mz: Returning figure
+2022-04-28 13:52:51.050 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-28 13:52:51.051 DEBUG filesystemcache - set: set key 'locked-reading'
+2022-04-28 13:53:21.198 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
+2022-04-28 13:53:24.481 INFO index - render_page_content: Page/region-analysishas been selected	MemTotal: 2273.87109375
+2022-04-28 13:53:24.592 INFO storage - return_shelved_object: Returning figures/load_page/figure_basic_image_projection_corrected_12_False from shelve file.	MemTotal: 2273.87109375
+2022-04-28 13:53:24.877 INFO region_analysis - page_3_record_spectra: Starting to compute spectrum
+2022-04-28 13:53:24.877 DEBUG filesystemcache - delete: deleted key 'pages.region_analysis.global_spectrum_store_memver'
+2022-04-28 13:53:24.878 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-28 13:53:24.878 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-04-28 13:53:24.878 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> miss (expired)
+2022-04-28 13:53:24.878 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-28 13:53:24.878 DEBUG filesystemcache - set: set key 'pages.region_analysis.global_spectrum_store_memver'
+2022-04-28 13:53:24.878 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-28 13:53:24.879 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-04-28 13:53:24.879 DEBUG filesystemcache - get: get key 'bo6GRtxPUDq5v08Wywfutc' -> miss 
+2022-04-28 13:53:24.879 INFO region_analysis - global_spectrum_store: Computing spectra now
+2022-04-28 13:53:24.879 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-28 13:53:24.879 DEBUG filesystemcache - set: set key 'bo6GRtxPUDq5v08Wywfutc'
+2022-04-28 13:53:24.879 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-28 13:53:24.879 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-04-28 13:53:24.879 WARNING region_analysis - page_3_record_spectra: A bug appeared during spectrum computation
+2022-04-28 13:53:24.961 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Starting computing heatmap now
+2022-04-28 13:53:24.993 INFO storage - return_shelved_object: Returning figures/load_page/figure_basic_image_projection_corrected_12_False from shelve file.	MemTotal: 2276.359375
+2022-04-28 13:53:31.355 INFO storage - return_shelved_object: Returning figures/load_page/figure_basic_image_projection_corrected_12_False from shelve file.	MemTotal: 2273.87109375
+2022-04-28 13:53:33.388 INFO storage - return_shelved_object: Returning figures/load_page/figure_basic_image_projection_corrected_12_False from shelve file.	MemTotal: 2273.87109375
+2022-04-28 13:53:33.404 INFO atlas - get_projected_mask_and_spectrum: Loading Primary auditory area, layer 4 for slice 12 from shelve file.
+2022-04-28 13:53:33.577 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-28 13:53:33.599 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-28 13:53:33.619 INFO image - convert_image_to_base64: gif mode selected, quality argument is not supported
+2022-04-28 13:53:33.625 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-28 13:53:35.189 INFO region_analysis - page_3_display_high_res_mz_plot: Compute spectra button has been clicked
+2022-04-28 13:53:35.189 INFO region_analysis - page_3_display_high_res_mz_plot: One or several masks have been selected, displaying graphs
+2022-04-28 13:53:35.191 INFO region_analysis - page_3_record_spectra: Starting to compute spectrum
+2022-04-28 13:53:35.191 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-28 13:53:35.191 DEBUG filesystemcache - get: get key 'L0AHGoIksSlbYf6Gywfutc' -> miss 
+2022-04-28 13:53:35.191 INFO region_analysis - global_spectrum_store: Computing spectra now
+2022-04-28 13:53:35.191 INFO region_analysis - global_spectrum_store: Start computing path
+2022-04-28 13:53:35.192 INFO region_analysis - global_spectrum_store: Computing path finished
+2022-04-28 13:53:35.192 INFO spectra - compute_thread_safe_function: Trying to compute the thread-safe version of function compute_spectrum_per_row_selection 
+2022-04-28 13:53:35.192 DEBUG filesystemcache - get: get key 'locked-cleaning' -> hit 
+2022-04-28 13:53:35.192 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-28 13:53:35.192 DEBUG filesystemcache - set: set key 'locked-reading'
+2022-04-28 13:53:35.203 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-28 13:53:35.203 DEBUG filesystemcache - set: set key 'locked-reading'
+2022-04-28 13:53:35.203 INFO atlas - get_projected_mask_and_spectrum: Loading Primary auditory area, layer 4 for slice 12 from shelve file.
+2022-04-28 13:53:35.327 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-28 13:53:35.328 DEBUG filesystemcache - set: set key 'L0AHGoIksSlbYf6Gywfutc'
+2022-04-28 13:53:35.328 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-28 13:53:35.328 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-04-28 13:53:35.328 INFO region_analysis - page_3_record_spectra: Spectra computed, returning it now
+2022-04-28 13:53:35.382 INFO region_analysis - page_3_plot_spectrum: Starting spectra plotting now
+2022-04-28 13:53:35.383 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Starting computing heatmap now
+2022-04-28 13:53:35.383 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-28 13:53:35.383 DEBUG filesystemcache - get: get key 'L0AHGoIksSlbYf6Gywfutc' -> hit 
+2022-04-28 13:53:35.384 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-28 13:53:35.385 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> hit 
+2022-04-28 13:53:35.385 DEBUG filesystemcache - get: get key 'L0AHGoIksSlbYf6Gywfutc' -> hit 
+2022-04-28 13:53:35.385 INFO spectra - global_lipid_index_store: Starting computing ll_idx_labels
+2022-04-28 13:53:35.648 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-28 13:53:35.648 INFO spectra - global_lipid_index_store: Returning ll_idx_labels
+2022-04-28 13:53:35.650 INFO spectra - compute_thread_safe_function: Trying to compute the thread-safe version of function add_zeros_to_spectrum 
+2022-04-28 13:53:35.650 DEBUG filesystemcache - get: get key 'locked-cleaning' -> hit 
+2022-04-28 13:53:35.650 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-28 13:53:35.651 DEBUG filesystemcache - set: set key 'locked-reading'
+2022-04-28 13:53:35.746 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Heatmap computed. Returning it now
+2022-04-28 13:53:35.879 INFO region_analysis - page_3_fill_dropdown_options: Starting computing lipid dropdown now.
+2022-04-28 13:53:35.948 INFO region_analysis - page_3_fill_dropdown_options: Dropdown values computed. Updating it with new lipids now.
+2022-04-28 13:53:36.014 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-28 13:53:36.014 DEBUG filesystemcache - set: set key 'locked-reading'
+2022-04-28 13:53:36.039 INFO region_analysis - draw_modal_graph: Modal graph function triggered with input page-3-open-modal
+2022-04-28 13:53:36.039 INFO region_analysis - draw_modal_graph: At least one lipid has been selected, starting computing modal graph now.
+2022-04-28 13:53:36.041 INFO figures - compute_rgb_image_per_lipid_selection: Started RGB image computation for slice 13	MemTotal: 2275.34375
+2022-04-28 13:53:36.045 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-28 13:53:36.045 INFO spectra - compute_thread_safe_function: Trying to compute the thread-safe version of function compute_image_using_index_and_image_lookup 
+2022-04-28 13:53:36.046 DEBUG filesystemcache - get: get key 'locked-cleaning' -> hit 
+2022-04-28 13:53:36.046 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-28 13:53:36.046 DEBUG filesystemcache - set: set key 'locked-reading'
+2022-04-28 13:53:36.100 INFO spectra - compute_thread_safe_function: Trying to compute the thread-safe version of function add_zeros_to_spectrum 
+2022-04-28 13:53:36.100 DEBUG filesystemcache - get: get key 'locked-cleaning' -> hit 
+2022-04-28 13:53:36.100 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-28 13:53:36.100 DEBUG filesystemcache - set: set key 'locked-reading'
+2022-04-28 13:53:36.101 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-28 13:53:36.101 DEBUG filesystemcache - set: set key 'locked-reading'
+2022-04-28 13:53:36.104 INFO spectra - compute_thread_safe_function: Trying to compute the thread-safe version of function add_zeros_to_spectrum 
+2022-04-28 13:53:36.104 DEBUG filesystemcache - get: get key 'locked-cleaning' -> hit 
+2022-04-28 13:53:36.104 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-28 13:53:36.104 DEBUG filesystemcache - set: set key 'locked-reading'
+2022-04-28 13:53:36.104 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-28 13:53:36.105 DEBUG filesystemcache - set: set key 'locked-reading'
+2022-04-28 13:53:36.142 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-28 13:53:36.142 DEBUG filesystemcache - set: set key 'locked-reading'
+2022-04-28 13:53:36.157 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-28 13:53:36.157 INFO spectra - compute_thread_safe_function: Trying to compute the thread-safe version of function compute_image_using_index_and_image_lookup 
+2022-04-28 13:53:36.157 DEBUG filesystemcache - get: get key 'locked-cleaning' -> hit 
+2022-04-28 13:53:36.157 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-28 13:53:36.157 DEBUG filesystemcache - set: set key 'locked-reading'
+2022-04-28 13:53:36.167 INFO spectra - compute_thread_safe_function: Trying to compute the thread-safe version of function add_zeros_to_spectrum 
+2022-04-28 13:53:36.167 DEBUG filesystemcache - get: get key 'locked-cleaning' -> hit 
+2022-04-28 13:53:36.167 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-28 13:53:36.167 DEBUG filesystemcache - set: set key 'locked-reading'
+2022-04-28 13:53:36.168 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-28 13:53:36.168 DEBUG filesystemcache - set: set key 'locked-reading'
+2022-04-28 13:53:36.191 INFO region_analysis - page_3_plot_spectrum: Spectra plotted. Returning it now
+2022-04-28 13:53:36.195 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-28 13:53:36.195 DEBUG filesystemcache - set: set key 'locked-reading'
+2022-04-28 13:53:36.206 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-04-28 13:53:36.206 INFO spectra - compute_thread_safe_function: Trying to compute the thread-safe version of function compute_image_using_index_and_image_lookup 
+2022-04-28 13:53:36.206 DEBUG filesystemcache - get: get key 'locked-cleaning' -> hit 
+2022-04-28 13:53:36.206 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-28 13:53:36.206 DEBUG filesystemcache - set: set key 'locked-reading'
+2022-04-28 13:53:36.246 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-28 13:53:36.246 DEBUG filesystemcache - set: set key 'locked-reading'
+2022-04-28 13:53:36.279 DEBUG filesystemcache - get: get key 'locked-reading' -> hit 
+2022-04-28 13:53:36.279 DEBUG filesystemcache - get: get key 'locked-cleaning' -> hit 
+2022-04-28 13:53:36.279 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-28 13:53:36.279 DEBUG filesystemcache - set: set key 'locked-cleaning'
+2022-04-28 13:53:36.287 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-28 13:53:36.288 DEBUG filesystemcache - set: set key 'locked-cleaning'
+2022-04-28 13:53:36.296 INFO figures - compute_rgb_image_per_lipid_selection: array_image acquired for slice 13	MemTotal: 2280.84375
+2022-04-28 13:53:36.297 INFO image - convert_image_to_base64: Entering string conversion function
+2022-04-28 13:53:36.315 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-04-28 13:53:36.359 INFO image - convert_image_to_base64: Empty pixels are now transparent
+2022-04-28 13:53:36.377 INFO image - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-04-28 13:53:36.405 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-04-28 13:53:36.406 INFO figures - compute_rgb_image_per_lipid_selection: Started building graph for slice 13	MemTotal: 2280.859375
+2022-04-28 13:53:36.426 INFO figures - compute_rgb_image_per_lipid_selection: Returning fig for slice 13	MemTotal: 2280.859375
+2022-04-28 13:53:36.426 INFO region_analysis - draw_modal_graph: Modal graph computed. Returning it now
+2022-04-28 13:53:43.106 INFO index - render_page_content: Page/3D-explorationhas been selected	MemTotal: 2277.8203125
+2022-04-28 13:53:43.233 INFO storage - return_shelved_object: Returning figures/atlas_page/3D/treemaps from shelve file.	MemTotal: 2277.8203125
+2022-04-28 13:53:43.257 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Starting computing heatmap now
+2022-04-28 13:53:43.305 INFO storage - return_shelved_object: Returning figures/load_page/figure_basic_image_projection_corrected_12_False from shelve file.	MemTotal: 2280.859375
+allen mouse atlas (res. 25um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+page-3-graph-heatmap-per-sel relayoutData 13 None None /region-analysis [] False
+2022-04-28 13:53:58.733 WARNING threeD_exploration - page_2bis_add_toast_selection: More than one lipid corresponds to the selection
+2022-04-28 13:53:58.809 WARNING threeD_exploration - page_2bis_add_toast_selection: More than one lipid corresponds to the selection
+2022-04-28 13:53:59.478 INFO threeD_exploration - page_4_plot_graph_volume: For the computation of 3D volume, decrease_resolution_factor is 10
+2022-04-28 13:53:59.484 INFO figures - compute_3D_volume_figure: Starting 3D volume computation
+2022-04-28 13:53:59.605 INFO storage - return_shelved_object: Returning figures/3D_page/arrays_annotation_10 from shelve file.	MemTotal: 2277.9375
+2022-04-28 13:53:59.612 INFO figures - compute_3D_volume_figure: Computed basic structure array
+2022-04-28 13:53:59.734 INFO storage - return_shelved_object: Returning figures/3D_page/arrays_expression_HexCer 36:2;2 H1__ from shelve file.	MemTotal: 2277.9375
+2022-04-28 13:53:59.896 INFO storage - return_shelved_object: Returning figures/3D_page/arrays_expression___ from shelve file.	MemTotal: 2298.58203125
+2022-04-28 13:54:00.026 INFO storage - return_shelved_object: Returning figures/3D_page/arrays_expression___ from shelve file.	MemTotal: 2298.58203125
+2022-04-28 13:54:00.041 INFO figures - compute_3D_volume_figure: Averaged expression over all lipids
+2022-04-28 13:54:00.041 INFO figures - compute_array_coordinates_3D: Starting computing 3D arrays	MemTotal: 2300.609375
+2022-04-28 13:54:00.041 DEBUG figures - compute_array_coordinates_3D: Size array_x: 19.53
+2022-04-28 13:54:00.042 INFO figures - compute_array_coordinates_3D: Starting slice iteration	MemTotal: 2300.71484375
+2022-04-28 13:54:00.630 INFO figures - compute_array_coordinates_3D: Slice 1 done	MemTotal: 2595.2578125
+2022-04-28 13:54:00.641 INFO figures - compute_array_coordinates_3D: Slice 2 done	MemTotal: 2596.41015625
+2022-04-28 13:54:00.660 INFO figures - compute_array_coordinates_3D: Slice 3 done	MemTotal: 2597.09375
+2022-04-28 13:54:00.676 INFO figures - compute_array_coordinates_3D: Slice 4 done	MemTotal: 2598.14453125
+2022-04-28 13:54:00.694 INFO figures - compute_array_coordinates_3D: Slice 6 done	MemTotal: 2600.83984375
+2022-04-28 13:54:00.711 INFO figures - compute_array_coordinates_3D: Slice 7 done	MemTotal: 2601.75390625
+2022-04-28 13:54:00.736 INFO figures - compute_array_coordinates_3D: Slice 8 done	MemTotal: 2602.8359375
+2022-04-28 13:54:00.754 INFO figures - compute_array_coordinates_3D: Slice 9 done	MemTotal: 2603.90234375
+2022-04-28 13:54:00.773 INFO figures - compute_array_coordinates_3D: Slice 10 done	MemTotal: 2605.10546875
+2022-04-28 13:54:00.786 INFO figures - compute_array_coordinates_3D: Slice 11 done	MemTotal: 2606.2421875
+2022-04-28 13:54:00.802 INFO figures - compute_array_coordinates_3D: Slice 12 done	MemTotal: 2607.33203125
+2022-04-28 13:54:00.817 INFO figures - compute_array_coordinates_3D: Slice 13 done	MemTotal: 2608.55859375
+2022-04-28 13:54:00.834 INFO figures - compute_array_coordinates_3D: Slice 14 done	MemTotal: 2609.625
+2022-04-28 13:54:00.852 INFO figures - compute_array_coordinates_3D: Slice 16 done	MemTotal: 2610.65234375
+2022-04-28 13:54:00.870 INFO figures - compute_array_coordinates_3D: Slice 17 done	MemTotal: 2611.98828125
+2022-04-28 13:54:00.884 INFO figures - compute_array_coordinates_3D: Slice 18 done	MemTotal: 2612.765625
+2022-04-28 13:54:00.897 INFO figures - compute_array_coordinates_3D: Slice 19 done	MemTotal: 2613.50390625
+2022-04-28 13:54:00.908 INFO figures - compute_array_coordinates_3D: Slice 20 done	MemTotal: 2614.203125
+2022-04-28 13:54:00.919 INFO figures - compute_array_coordinates_3D: Slice 21 done	MemTotal: 2614.76171875
+2022-04-28 13:54:00.930 INFO figures - compute_array_coordinates_3D: Slice 22 done	MemTotal: 2615.40625
+2022-04-28 13:54:00.948 INFO figures - compute_array_coordinates_3D: Slice 23 done	MemTotal: 2616.12890625
+2022-04-28 13:54:00.960 INFO figures - compute_array_coordinates_3D: Slice 24 done	MemTotal: 2616.8671875
+2022-04-28 13:54:00.974 INFO figures - compute_array_coordinates_3D: Slice 25 done	MemTotal: 2617.578125
+2022-04-28 13:54:00.993 INFO figures - compute_array_coordinates_3D: Slice 26 done	MemTotal: 2618.3046875
+2022-04-28 13:54:01.005 INFO figures - compute_array_coordinates_3D: Slice 27 done	MemTotal: 2619.015625
+2022-04-28 13:54:01.019 INFO figures - compute_array_coordinates_3D: Slice 28 done	MemTotal: 2619.69921875
+2022-04-28 13:54:01.033 INFO figures - compute_array_coordinates_3D: Slice 29 done	MemTotal: 2620.328125
+2022-04-28 13:54:01.046 INFO figures - compute_array_coordinates_3D: Slice 30 done	MemTotal: 2620.875
+2022-04-28 13:54:01.057 INFO figures - compute_array_coordinates_3D: Slice 31 done	MemTotal: 2621.296875
+2022-04-28 13:54:01.102 INFO figures - compute_3D_volume_figure: Computed array of expression in original space
+2022-04-28 13:54:01.545 INFO figures - compute_3D_volume_figure: Filled basic structure array with array of expression
+2022-04-28 13:54:01.547 INFO figures - compute_3D_volume_figure: Built arrays of coordinates
+2022-04-28 13:54:01.570 INFO figures - compute_3D_volume_figure: Cropped the figure to only keep areas in which lipids are expressed
+2022-04-28 13:54:01.571 INFO figures - compute_3D_volume_figure: Finished interpolation betwee slices
+2022-04-28 13:54:01.699 INFO storage - return_shelved_object: Returning figures/3D_page/volume_root from shelve file.	MemTotal: 2391.9296875
+2022-04-28 13:54:01.713 INFO figures - compute_3D_volume_figure: Building final figure
+2022-04-28 13:54:01.744 INFO figures - compute_3D_volume_figure: Done computing 3D volume figure
+2022-04-28 13:58:14.836 INFO index - render_page_content: Page/3D-explorationhas been selected	MemTotal: 2402.75390625
+2022-04-28 13:58:14.974 INFO storage - return_shelved_object: Returning figures/atlas_page/3D/treemaps from shelve file.	MemTotal: 2276.05859375
+2022-04-28 13:59:50.832 INFO index - render_page_content: Page/region-analysishas been selected	MemTotal: 2276.2734375
+2022-04-28 13:59:50.946 INFO storage - return_shelved_object: Returning figures/load_page/figure_basic_image_projection_corrected_0_False from shelve file.	MemTotal: 2276.30859375
+2022-04-28 13:59:51.245 INFO region_analysis - page_3_record_spectra: Starting to compute spectrum
+2022-04-28 13:59:51.246 DEBUG filesystemcache - delete: deleted key 'pages.region_analysis.global_spectrum_store_memver'
+2022-04-28 13:59:51.246 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-28 13:59:51.247 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-04-28 13:59:51.247 DEBUG filesystemcache - get: get key 'pages.region_analysis.global_spectrum_store_memver' -> miss (expired)
+2022-04-28 13:59:51.247 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-28 13:59:51.247 DEBUG filesystemcache - set: set key 'pages.region_analysis.global_spectrum_store_memver'
+2022-04-28 13:59:51.247 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-28 13:59:51.247 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-04-28 13:59:51.248 DEBUG filesystemcache - get: get key 'qcrHrJ51w4U4ztl9O25oYz' -> miss 
+2022-04-28 13:59:51.248 INFO region_analysis - global_spectrum_store: Computing spectra now
+2022-04-28 13:59:51.248 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-28 13:59:51.248 DEBUG filesystemcache - set: set key 'qcrHrJ51w4U4ztl9O25oYz'
+2022-04-28 13:59:51.248 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-04-28 13:59:51.248 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-04-28 13:59:51.248 WARNING region_analysis - page_3_record_spectra: A bug appeared during spectrum computation
+2022-04-28 13:59:51.285 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Starting computing heatmap now
+2022-04-28 13:59:51.368 INFO storage - return_shelved_object: Returning figures/load_page/figure_basic_image_projection_corrected_0_False from shelve file.	MemTotal: 2276.30859375
+2022-04-28 13:59:51.887 INFO index - render_page_content: Page/3D-explorationhas been selected	MemTotal: 2276.30859375
+2022-04-28 13:59:52.002 INFO storage - return_shelved_object: Returning figures/atlas_page/3D/treemaps from shelve file.	MemTotal: 2276.30859375
+2022-04-28 13:59:52.027 INFO storage - return_shelved_object: Returning figures/load_page/figure_basic_image_projection_corrected_0_False from shelve file.	MemTotal: 2280.90625
+2022-04-28 13:59:52.050 INFO region_analysis - page_3_draw_heatmap_per_lipid_selection: Starting computing heatmap now

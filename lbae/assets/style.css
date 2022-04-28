@@ -25,16 +25,42 @@ html {
 /* change color of selected pills */
 .nav-pills .nav-link.active,
 .nav-pills .show > .nav-link {
-  background-color: #0b8599 !important ;
+  background-color: #1fafc8 !important ;
 }
 
 .nav-link:hover {
-  color: #0b8599 !important ;
+  color: #1fafc8 !important ;
 }
+
+
 
 .nav-link:focus {
   color: #dee2e6 !important;
 }
+
+em{
+  color: white ;
+  font-style: normal;   
+}
+
+/* unvisited link */
+a:link {
+  color: #1fafc8  ;
+  font-style: italic;   
+}
+
+/* visited link */
+a:visited {
+  color: #1fafc8  ;
+  font-style: italic;   
+}
+
+/* hover link link */
+a:hover {
+  color: #1fafc8  !important;
+  font-style: italic;
+  text-decoration: underline !important;    
+} 
 
 /* fix the width of the icons 
 .sidebar .nav-link i {
@@ -212,17 +238,17 @@ body > div.fade.offcanvas-backdrop.show {
 
 /* nicer slider */
 /* .rc-slider-track {
-  background-color: #0b8599;
+  background-color: #1fafc8;
 }
 
 .rc-slider-dot-active {
-  border-color: #0b8599;
-  border: solid 2px #0b8599;
+  border-color: #1fafc8;
+  border: solid 2px #1fafc8;
 }
 
 .rc-slider-handle {
-  background-color: #0b8599;
-  border-color: #0b8599;
+  background-color: #1fafc8;
+  border-color: #1fafc8;
   border: solid 2px #74bedb;
 }
 
@@ -231,11 +257,11 @@ body > div.fade.offcanvas-backdrop.show {
 }
 
 .rc-slider-handle:hover {
-  border-color: #0b8599;
+  border-color: #1fafc8;
 }
 
 .rc-slider-handle-active:active {
-  border-color: #0b8599;
+  border-color: #1fafc8;
 }
 
 #page-1-slider-slice-selection {
