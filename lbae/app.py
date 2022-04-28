@@ -47,7 +47,7 @@ figures = Figures(data, atlas, sample=sample)
 
 # Compute and shelve potentially missing objects
 launch = Launch(data, atlas, figures)
-# launch.launch()
+launch.launch()
 
 logging.info("Memory use after three main object have been instantiated" + logmem())
 
@@ -62,7 +62,9 @@ server = flask.Flask(__name__)
 launch_uid = uuid4()
 cache_long_callback = diskcache.Cache("data/cache/")
 long_callback_manager = DiskcacheLongCallbackManager(
-    cache_long_callback, cache_by=[lambda: launch_uid], expire=500,
+    cache_long_callback,
+    cache_by=[lambda: launch_uid],
+    expire=500,
 )
 
 # Instantiate app

@@ -16225,3 +16225,60 @@ page-3-dropdown-brain-regions value 10 None ['Cerebral cortex', 'Hippocampal for
 page-3-dropdown-brain-regions value 10 None ['Dentate gyrus'] /region-analysis [[80, 189, 218, 200], [95, 169, 112, 200]] False
 [2022-04-21 16:13:13 +0200] [446859] [INFO] Shutting down: Master
 [2022-04-21 16:13:13 +0200] [446859] [INFO] Reason: Worker failed to boot.
+[2022-04-28 11:59:31 +0200] [70222] [INFO] Starting gunicorn 20.1.0
+[2022-04-28 11:59:31 +0200] [70222] [INFO] Listening at: http://0.0.0.0:8050 (70222)
+[2022-04-28 11:59:31 +0200] [70222] [INFO] Using worker: sync
+[2022-04-28 11:59:31 +0200] [70224] [INFO] Booting worker with pid: 70224
+[2022-04-28 11:59:31 +0200] [70225] [INFO] Booting worker with pid: 70225
+2022-04-28 11:59:31.503 INFO main - <module>: Starting import chain	MemTotal: 30.33203125
+2022-04-28 11:59:31.513 INFO main - <module>: Starting import chain	MemTotal: 30.33203125
+2022-04-28 11:59:33.713 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 244.1875
+2022-04-28 11:59:33.713 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 244.19140625
+2022-04-28 11:59:33.734 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 244.19140625
+2022-04-28 11:59:33.734 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 244.19140625
+2022-04-28 11:59:34.728 INFO atlas - __init__: Initializing Atlas object	MemTotal: 1084.6171875
+2022-04-28 11:59:34.739 INFO atlas - __init__: Initializing Atlas object	MemTotal: 1084.6171875
+2022-04-28 11:59:35.203 INFO storage - return_shelved_object: Returning atlas/atlas_objects/dic_acronym_children_id from shelve file.	MemTotal: 1383.4140625
+2022-04-28 11:59:35.234 INFO storage - return_shelved_object: Returning atlas/atlas_objects/dic_acronym_children_id from shelve file.	MemTotal: 1383.41015625
+2022-04-28 11:59:36.169 INFO storage - return_shelved_object: Returning atlas/atlas_objects/hierarchy from shelve file.	MemTotal: 1824.6953125
+2022-04-28 11:59:36.201 INFO storage - return_shelved_object: Returning atlas/atlas_objects/hierarchy from shelve file.	MemTotal: 1824.6953125
+2022-04-28 11:59:36.274 INFO storage - return_shelved_object: Returning atlas/atlas_objects/arrays_projection_corrected_True_True from shelve file.	MemTotal: 1824.8359375
+2022-04-28 11:59:36.319 INFO storage - return_shelved_object: Returning atlas/atlas_objects/arrays_projection_corrected_True_True from shelve file.	MemTotal: 1824.84375
+2022-04-28 11:59:36.900 INFO figures - __init__: Initializing Figures object	MemTotal: 1975.83984375
+2022-04-28 11:59:36.947 INFO figures - __init__: Initializing Figures object	MemTotal: 1975.83984375
+2022-04-28 11:59:37.005 INFO storage - return_shelved_object: Returning figures/region_analysis/dic_fig_contours from shelve file.	MemTotal: 1975.96484375
+2022-04-28 11:59:37.065 INFO storage - return_shelved_object: Returning figures/region_analysis/dic_fig_contours from shelve file.	MemTotal: 1975.96484375
+2022-04-28 11:59:37.542 INFO storage - return_shelved_object: Returning figures/lipid_selection/dic_normalization_factors_None from shelve file.	MemTotal: 1988.11328125
+2022-04-28 11:59:37.625 INFO storage - return_shelved_object: Returning figures/lipid_selection/dic_normalization_factors_None from shelve file.	MemTotal: 1988.08203125
+2022-04-28 11:59:38.406 INFO launch - run_compiled_functions: Please wait while compiled functions are executed...
+2022-04-28 11:59:38.533 INFO launch - run_compiled_functions: Please wait while compiled functions are executed...
+2022-04-28 11:59:49.035 INFO figures - compute_3D_volume_figure: Starting 3D volume computation
+2022-04-28 11:59:49.139 INFO storage - return_shelved_object: Returning figures/3D_page/arrays_annotation_6 from shelve file.	MemTotal: 2123.328125
+2022-04-28 11:59:49.236 INFO figures - compute_3D_volume_figure: Starting 3D volume computation
+2022-04-28 11:59:49.353 INFO storage - return_shelved_object: Returning figures/3D_page/arrays_annotation_6 from shelve file.	MemTotal: 2123.33203125
+2022-04-28 11:59:49.699 INFO figures - compute_3D_volume_figure: Computed basic structure array
+2022-04-28 11:59:49.804 INFO storage - return_shelved_object: Returning figures/3D_page/arrays_expression___ from shelve file.	MemTotal: 2128.9375
+2022-04-28 11:59:49.908 INFO storage - return_shelved_object: Returning figures/3D_page/arrays_expression___ from shelve file.	MemTotal: 2128.9375
+2022-04-28 11:59:49.927 INFO figures - compute_3D_volume_figure: Computed basic structure array
+2022-04-28 11:59:50.018 INFO storage - return_shelved_object: Returning figures/3D_page/arrays_expression___ from shelve file.	MemTotal: 2128.9375
+2022-04-28 11:59:50.018 INFO figures - compute_3D_volume_figure: Averaged expression over all lipids
+2022-04-28 11:59:50.018 INFO figures - compute_array_coordinates_3D: Starting computing 3D arrays	MemTotal: 2128.9375
+2022-04-28 11:59:50.037 INFO storage - return_shelved_object: Returning figures/3D_page/arrays_expression___ from shelve file.	MemTotal: 2128.94140625
+2022-04-28 11:59:50.121 INFO storage - return_shelved_object: Returning atlas/atlas_objects/arrays_projection_corrected_True_True from shelve file.	MemTotal: 2128.9375
+2022-04-28 11:59:50.145 INFO storage - return_shelved_object: Returning figures/3D_page/arrays_expression___ from shelve file.	MemTotal: 2128.94140625
+2022-04-28 11:59:50.259 INFO storage - return_shelved_object: Returning figures/3D_page/arrays_expression___ from shelve file.	MemTotal: 2128.94140625
+2022-04-28 11:59:50.259 INFO figures - compute_3D_volume_figure: Averaged expression over all lipids
+2022-04-28 11:59:50.259 INFO figures - compute_array_coordinates_3D: Starting computing 3D arrays	MemTotal: 2128.94140625
+2022-04-28 11:59:50.367 INFO storage - return_shelved_object: Returning atlas/atlas_objects/arrays_projection_corrected_True_True from shelve file.	MemTotal: 2128.94140625
+2022-04-28 11:59:50.520 DEBUG figures - compute_array_coordinates_3D: Size array_x: 19.53
+2022-04-28 11:59:50.521 INFO figures - compute_array_coordinates_3D: Starting slice iteration	MemTotal: 2165.83203125
+2022-04-28 11:59:50.786 DEBUG figures - compute_array_coordinates_3D: Size array_x: 19.53
+2022-04-28 11:59:50.786 INFO figures - compute_array_coordinates_3D: Starting slice iteration	MemTotal: 2165.83984375
+2022-04-28 11:59:50.925 INFO figures - compute_3D_volume_figure: Computed array of expression in original space
+2022-04-28 11:59:51.175 INFO figures - compute_3D_volume_figure: Computed array of expression in original space
+2022-04-28 11:59:51.235 INFO figures - compute_3D_volume_figure: Filled basic structure array with array of expression
+2022-04-28 11:59:51.245 INFO figures - compute_3D_volume_figure: Built arrays of coordinates
+2022-04-28 11:59:51.480 INFO figures - compute_3D_volume_figure: Filled basic structure array with array of expression
+2022-04-28 11:59:51.491 INFO figures - compute_3D_volume_figure: Built arrays of coordinates
+2022-04-28 11:59:52.090 INFO figures - compute_3D_volume_figure: Cropped the figure to only keep areas in which lipids are expressed
+2022-04-28 11:59:52.309 INFO figures - compute_3D_volume_figure: Cropped the figure to only keep areas in which lipids are expressed
