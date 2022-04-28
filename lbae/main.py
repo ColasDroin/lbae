@@ -4,6 +4,8 @@
 """ This script is used to run the app and setup logging settings. 
 To run the app with gunicorn, use the following command in the (child) lbae folder: 
 gunicorn main:server -b:8050 --workers=2
+Or, to run the app ignoring hangup signals, i.e. not stopping when disconnecting from the server:
+nohup gunicorn main:server -b:8050 --workers=2 &
 
 To kill gunicorn from a linux server (if it doesn't want to die, and respawn automatically), use the
 following command: 
@@ -70,4 +72,3 @@ if __name__ == "__main__":
         app.run_server(port=8073, debug=False)
     except Exception as e:
         print(e)
-
