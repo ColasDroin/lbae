@@ -38,9 +38,25 @@ def return_layout(basic_config, slice_index):
                 isDraggable=False,
                 isResizable=False,
                 containerPadding=[2, 2],
-                breakpoints={"xxl": 1600, "lg": 1200, "md": 996, "sm": 768, "xs": 480, "xxs": 0,},
-                gridCols={"xxl": 12, "lg": 12, "md": 10, "sm": 6, "xs": 4, "xxs": 2,},
-                style={"background-color": "#1d1c1f",},
+                breakpoints={
+                    "xxl": 1600,
+                    "lg": 1200,
+                    "md": 996,
+                    "sm": 768,
+                    "xs": 480,
+                    "xxs": 0,
+                },
+                gridCols={
+                    "xxl": 12,
+                    "lg": 12,
+                    "md": 10,
+                    "sm": 6,
+                    "xs": 4,
+                    "xxs": 2,
+                },
+                style={
+                    "background-color": "#1d1c1f",
+                },
                 layouts={
                     # x sets the lateral position, y the vertical one, w is in columns (whose size depends on the dimension), h is in rows (30px)
                     # nb columns go 12->12->10->6->4->2
@@ -92,7 +108,7 @@ def return_layout(basic_config, slice_index):
                                                         dmc.Text(
                                                             "Select brain structure(s)",
                                                             size="xl",
-                                                            color="white",
+                                                            # color="white",
                                                         )
                                                     ),
                                                     dcc.Graph(
@@ -123,7 +139,6 @@ def return_layout(basic_config, slice_index):
                                                             "Select lipid(s)",
                                                             size="xl",
                                                             class_name="mb-5 pb-5 ",
-                                                            color="white",
                                                         )
                                                     ),
                                                     # dbc.Tooltip(
@@ -200,7 +215,10 @@ def return_layout(basic_config, slice_index):
                                                         class_name="mr-5",
                                                     ),
                                                     dmc.Button(
-                                                        children="Display lipid expression in the selected structure(s)",
+                                                        children=(
+                                                            "Display lipid expression in the"
+                                                            " selected structure(s)"
+                                                        ),
                                                         id="page-4-display-button",
                                                         disabled=True,
                                                         variant="filled",
@@ -234,7 +252,10 @@ def return_layout(basic_config, slice_index):
                                                         class_name="ml-5",
                                                     ),
                                                     dmc.Button(
-                                                        children="Compare lipid expression in the selected structures",
+                                                        children=(
+                                                            "Compare lipid expression in the"
+                                                            " selected structures"
+                                                        ),
                                                         id="page-4-compare-structure-button",
                                                         disabled=True,
                                                         variant="filled",
@@ -286,7 +307,6 @@ def return_layout(basic_config, slice_index):
                                                         children=dmc.Text(
                                                             "Brain structure selection",
                                                             size="xl",
-                                                            color="white",
                                                         ),
                                                     ),
                                                     dbc.Toast(
@@ -296,7 +316,9 @@ def return_layout(basic_config, slice_index):
                                                         dismissable=True,
                                                         is_open=False,
                                                         bodyClassName="p-0",
-                                                        header_class_name="d-flex justify-content-center ml-2",
+                                                        header_class_name=(
+                                                            "d-flex justify-content-center ml-2"
+                                                        ),
                                                         # className="mt-1",
                                                         style={"margin": "auto"},
                                                     ),
@@ -307,7 +329,9 @@ def return_layout(basic_config, slice_index):
                                                         dismissable=True,
                                                         is_open=False,
                                                         bodyClassName="p-0",
-                                                        header_class_name="d-flex justify-content-center ml-2",
+                                                        header_class_name=(
+                                                            "d-flex justify-content-center ml-2"
+                                                        ),
                                                         # className="mt-1",
                                                         style={"margin": "auto"},
                                                     ),
@@ -317,7 +341,9 @@ def return_layout(basic_config, slice_index):
                                                         # icon="primary",
                                                         dismissable=True,
                                                         is_open=False,
-                                                        header_class_name="d-flex justify-content-center ml-2",
+                                                        header_class_name=(
+                                                            "d-flex justify-content-center ml-2"
+                                                        ),
                                                         bodyClassName="p-0",
                                                         # className="mt-1",
                                                         style={"margin": "auto"},
@@ -336,7 +362,6 @@ def return_layout(basic_config, slice_index):
                                                         children=dmc.Text(
                                                             "Lipid selection",
                                                             size="xl",
-                                                            color="white",
                                                         ),
                                                     ),
                                                     dbc.Toast(
@@ -347,7 +372,9 @@ def return_layout(basic_config, slice_index):
                                                         dismissable=True,
                                                         is_open=False,
                                                         bodyClassName="p-0",
-                                                        header_class_name="d-flex justify-content-center ml-2",
+                                                        header_class_name=(
+                                                            "d-flex justify-content-center ml-2"
+                                                        ),
                                                         # className="mt-1",
                                                         style={"margin": "auto"},
                                                     ),
@@ -359,7 +386,9 @@ def return_layout(basic_config, slice_index):
                                                         dismissable=True,
                                                         is_open=False,
                                                         bodyClassName="p-0",
-                                                        header_class_name="d-flex justify-content-center ml-2",
+                                                        header_class_name=(
+                                                            "d-flex justify-content-center ml-2"
+                                                        ),
                                                         # className="mt-1",
                                                         style={"margin": "auto"},
                                                     ),
@@ -369,11 +398,15 @@ def return_layout(basic_config, slice_index):
                                                         header="",
                                                         # icon="primary",
                                                         dismissable=True,
-                                                        header_class_name="d-flex justify-content-center ml-2",
+                                                        header_class_name=(
+                                                            "d-flex justify-content-center ml-2"
+                                                        ),
                                                         is_open=False,
                                                         bodyClassName="p-0",
                                                         # className="mt-1",
-                                                        style={"margin": "auto",},
+                                                        style={
+                                                            "margin": "auto",
+                                                        },
                                                     ),
                                                     # html.Div(
                                                     #     id="page-4-warning-lipids-number",
@@ -395,14 +428,18 @@ def return_layout(basic_config, slice_index):
                                 size="xl",
                                 children=[
                                     dbc.ModalHeader(
-                                        style={"background-color": "#1d1c1f",},
+                                        style={
+                                            "background-color": "#1d1c1f",
+                                        },
                                         children=dbc.ModalTitle(
                                             "Lipid selection interpolated in 3D",
                                             style={"color": "white"},
                                         ),
                                     ),
                                     dbc.ModalBody(
-                                        style={"background-color": "#1d1c1f",},
+                                        style={
+                                            "background-color": "#1d1c1f",
+                                        },
                                         children=[
                                             dbc.Spinner(
                                                 color="light",
@@ -415,7 +452,10 @@ def return_layout(basic_config, slice_index):
                                                                 id="page-4-alert",
                                                                 className="text-center my-2",
                                                                 children=html.Strong(
-                                                                    children="Please select at least one lipid.",
+                                                                    children=(
+                                                                        "Please select at least one"
+                                                                        " lipid."
+                                                                    ),
                                                                     style={"color": "#df5034"},
                                                                 ),
                                                             ),
@@ -425,7 +465,9 @@ def return_layout(basic_config, slice_index):
                                                                 | {
                                                                     "toImageButtonOptions": {
                                                                         "format": "png",
-                                                                        "filename": "brain_lipid_selection",
+                                                                        "filename": (
+                                                                            "brain_lipid_selection"
+                                                                        ),
                                                                         "scale": 2,
                                                                     }
                                                                 },
@@ -457,14 +499,19 @@ def return_layout(basic_config, slice_index):
                                 },
                                 children=[
                                     dbc.ModalHeader(
-                                        style={"background-color": "#1d1c1f",},
+                                        style={
+                                            "background-color": "#1d1c1f",
+                                        },
                                         children=dbc.ModalTitle(
-                                            "Lipid expression comparison", style={"color": "white"},
+                                            "Lipid expression comparison",
+                                            style={"color": "white"},
                                         ),
                                     ),
                                     dbc.ModalBody(
                                         className="d-flex justify-content-center flex-column",
-                                        style={"background-color": "#1d1c1f",},
+                                        style={
+                                            "background-color": "#1d1c1f",
+                                        },
                                         children=[
                                             # dbc.CardHeader(className="d-flex", children="Lipid expression comparison",),
                                             # dbc.CardBody(
@@ -557,7 +604,12 @@ def page_4_display_alert(clicked_compute, l_lipids):
     if len(l_lipids) > 0:
         return (
             {"display": "none"},
-            {"width": "100%", "height": "100%", "position": "absolute", "left": "0",},
+            {
+                "width": "100%",
+                "height": "100%",
+                "position": "absolute",
+                "left": "0",
+            },
         )
 
     else:
@@ -898,7 +950,11 @@ def page_4_plot_graph_volume(
     ],
     running=[
         # (Output("page-4-compare-structure-button", "disabled"), True, False),
-        (Output("page-4-progress-bar-structure", "className"), "", "d-none",),
+        (
+            Output("page-4-progress-bar-structure", "className"),
+            "",
+            "d-none",
+        ),
         (Output("page-4-graph-heatmap", "className"), "d-none", ""),
         (Output("page-4-slider-percentile", "className"), "d-none", ""),
     ],
@@ -1240,4 +1296,3 @@ def toggle_modal(n1, is_open):
     if n1:
         return not is_open
     return is_open
-

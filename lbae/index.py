@@ -264,11 +264,13 @@ def render_page_content(pathname, slice_index):
 # Callback for documentation
 @app.callback(
     Output("documentation-offcanvas", "opened"),
-    [Input("sidebar-documentation", "n_clicks"), Input("page-0-collapse-doc-button", "n_clicks")],
+    [
+        Input("sidebar-documentation", "n_clicks"),
+    ],  # Input("page-0-collapse-doc-button", "n_clicks")],
     [State("documentation-offcanvas", "opened")],
 )
-def toggle_collapse(n1, n2, is_open):
-    if n1 or n2:
+def toggle_collapse(n1, is_open):
+    if n1:
         return not is_open
     return is_open
 

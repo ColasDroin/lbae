@@ -57,13 +57,13 @@ def return_documentation():
                         ),
                         html.Em("region analysis"),
                         html.Span(
-                            "page, in the app). It was also used to"
+                            " page, in the app). It was also used to"
                             " combine the 2D slice acquisitions into a browsable 3d model ("
                         ),
                         html.Em("three dimensional analysis "),
                         html.Span("page, in the app)."),
                     ],
-                    class_name="mt-4",
+                    class_name="mt-4 text-justify",
                     size="xl",
                 ),
                 dmc.Text(

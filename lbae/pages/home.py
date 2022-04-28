@@ -2,6 +2,9 @@
 
 from dash import html
 import dash_mantine_components as dmc
+from dash.dependencies import Input, Output, State
+from pages.documentation import return_documentation
+import app
 
 ###### DEFFINE PAGE LAYOUT ######
 
@@ -20,7 +23,8 @@ layout = (
         children=[
             dmc.Center(
                 dmc.Alert(
-                    "A connection of at least 10Mbps is recommended to comfortably use the application.",
+                    "A connection of at least 10Mbps is recommended to comfortably use the"
+                    " application.",
                     title="Information",
                     color="cyan",
                     class_name="my-5 py-5",
@@ -48,11 +52,16 @@ layout = (
                             ),
                             html.H1(
                                 className="icon-brain my-5 mr-5",
-                                style={"font-size": "12rem", "color": "#50bdda", "opacity": "0.9",},
+                                style={
+                                    "font-size": "12rem",
+                                    "color": "#50bdda",
+                                    "opacity": "0.9",
+                                },
                             ),
                             # Below logo text
                             dmc.Text(
-                                "Please start exploring our data by using the navigation bar on the right",
+                                "Please start exploring our data by using the navigation bar on the"
+                                " right",
                                 size="xl",
                                 align="center",
                                 color="dimmed",
@@ -71,6 +80,16 @@ layout = (
                                     class_name="mt-4",
                                     color="cyan",
                                 ),
+                            ),
+                            # Documentation in a bottom drawer
+                            dmc.Drawer(
+                                children=return_documentation(),
+                                id="documentation-offcanvas-home",
+                                # title="LBAE documentation",
+                                opened=False,
+                                padding="md",
+                                size="90vh",
+                                position="bottom",
                             ),
                             # html.P(
                             #     className="lead d-flex justify-content-center mt-3 mb-5",
@@ -127,12 +146,12 @@ layout = (
 # ),
 
 
-# @app.app.callback(
-#     Output("page-0-collapse-doc", "is_open"),
-#     [Input("page-0-collapse-doc-button", "n_clicks")],
-#     [State("page-0-collapse-doc", "is_open")],
-# )
-# def toggle_collapse(n, is_open):
-#     if n:
-#         return not is_open
-#     return is_open
+@app.app.callback(
+    Output("documentation-offcanvas-home", "opened"),
+    [Input("page-0-collapse-doc-button", "n_clicks")],
+    [State("documentation-offcanvas-home", "opened")],
+)
+def toggle_collapse(n, is_open):
+    if n:
+        return not is_open
+    return is_open
