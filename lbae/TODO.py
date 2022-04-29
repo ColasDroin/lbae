@@ -1,6 +1,5 @@
 #
-# TODO Finish doc on https://stackedit.io/app
-# TODO Write a function that convert readme markdown to dash text (replace title with "documentation", remove section about sample version)
+# TODO Write a function that convert readme markdown to dash text (build from separate markdown files and then convert)
 # TODO Deactivate slider for annotation in page 1 when tab 1 is on original data
 # TODO Add a button to download heatmap and the spectra figures in region selection, change the slider at the bottom of the heatmap
 # TODO Incorporate brain 2
@@ -14,6 +13,7 @@
 # TODO Write missing docstrings
 # TODO Make a tour with dash_tour_component?
 # TODO Check that all force_update are set to False
+# TODO Build basic technical documentation for the app?
 # TODO Redesign repo according to : https://dev.to/codemouse92/dead-simple-python-project-structure-and-imports-38c6
 # TODO Make a sample version of the app and host on heroku
 # TODO Make a docker container for the very final version of the app
