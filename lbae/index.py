@@ -132,41 +132,6 @@ def return_main_content():
                         size="90vh",
                         position="bottom",
                     ),
-                    # # Documentation in a lateral drawer
-                    # dmc.Drawer(
-                    #     id="drawer",
-                    #     padding="md",
-                    #     position="right",
-                    #     size=500,
-                    #     title="Page documentation",
-                    #     children=[
-                    #         dmc.Accordion(
-                    #             children=[
-                    #                 dmc.AccordionItem(
-                    #                     children="""On any graph (heatmap or m/z plot), you can
-                    #                         draw a square with your mouse to zoom in, and double
-                    #                         click to reset zoom level.""",
-                    #                     label="Zoom",
-                    #                 ),
-                    #                 dmc.AccordionItem(
-                    #                     children="""You can interact more with the figures (zoom,
-                    #                         pan, reset axes, download) using the modebard above
-                    #                         them.""",
-                    #                     label="Modebar",
-                    #                 ),
-                    #                 dmc.AccordionItem(
-                    #                     children="""Most of the items in the app are embedded with
-                    #                     advice. Just position your mouse over an item to get a tip
-                    #                     on how to use it.""",
-                    #                     label="Tooltips",
-                    #                 ),
-                    #             ],
-                    #             iconPosition="right",
-                    #             multiple=True,
-                    #             id="acc",
-                    #         ),
-                    #     ],
-                    # ),
                     # Spinner when switching pages
                     dbc.Spinner(
                         id="main-spinner",
