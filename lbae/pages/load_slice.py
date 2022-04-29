@@ -58,13 +58,6 @@ def return_layout(basic_config, slice_index):
                                     radius="sm",
                                     color="cyan",
                                 ),
-                                dmc.Button(
-                                    "Display 3D slice distribution",
-                                    id="page-1-modal-button",
-                                    n_clicks=0,
-                                    class_name="ml-5",
-                                    color="cyan",
-                                ),
                                 dmc.Switch(
                                     id="page-1-toggle-annotations",
                                     label="Annotations",
@@ -72,6 +65,14 @@ def return_layout(basic_config, slice_index):
                                     color="cyan",
                                     radius="xl",
                                     size="sm",
+                                    class_name="ml-1",
+                                ),
+                                dmc.Button(
+                                    "Display 3D slice distribution",
+                                    id="page-1-modal-button",
+                                    n_clicks=0,
+                                    class_name="ml-5",
+                                    color="cyan",
                                 ),
                             ],
                         ),
@@ -129,13 +130,18 @@ def return_layout(basic_config, slice_index):
                 # style={"background-color": "#1d1c1f",},
                 children=[
                     dbc.ModalHeader(
-                        style={"background-color": "#1d1c1f",},
+                        style={
+                            "background-color": "#1d1c1f",
+                        },
                         children=dbc.ModalTitle(
-                            children="3D slice distribution", style={"color": "white"},
+                            children="3D slice distribution",
+                            style={"color": "white"},
                         ),
                     ),
                     dbc.ModalBody(
-                        style={"background-color": "#1d1c1f",},
+                        style={
+                            "background-color": "#1d1c1f",
+                        },
                         children=dbc.Spinner(
                             color="dark",
                             show_initially=False,
@@ -213,7 +219,8 @@ def tab_1_load_image(value_slider, active_tab, display_annotations):
 
 
 @app.app.callback(
-    Output("page-1-graph-hover-text", "class_name"), Input("page-1-card-tabs", "value"),
+    Output("page-1-graph-hover-text", "class_name"),
+    Input("page-1-card-tabs", "value"),
 )
 def page_1_visibilty_hover(active_tab):
 
@@ -282,4 +289,3 @@ def page_1_plot_graph_modal(n1):
             compute_function=figures.compute_figure_slices_3D,
         )
     return dash.no_update
-
