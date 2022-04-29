@@ -28,7 +28,7 @@ from pages import (
     region_analysis,
     threeD_exploration,
 )
-from pages.documentation import return_documentation
+from documentation.documentation import return_documentation
 from config import basic_config
 from modules.tools.misc import logmem
 

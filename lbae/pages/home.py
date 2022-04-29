@@ -3,7 +3,7 @@
 from dash import html
 import dash_mantine_components as dmc
 from dash.dependencies import Input, Output, State
-from pages.documentation import return_documentation
+from documentation.documentation import return_documentation
 import app
 
 ###### DEFFINE PAGE LAYOUT ######
