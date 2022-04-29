@@ -2,9 +2,10 @@
 # TODO Finish doc on https://stackedit.io/app
 # TODO Write a function that convert readme markdown to dash text (replace title with "documentation", remove section about sample version)
 # TODO Deactivate slider for annotation in page 1 when tab 1 is on original data
-# TODO Add a button to download heatmap and the spectra figures in region selection
-# TODO Check all functions and deprecate the ones that are not used anymore
+# TODO Add a button to download heatmap and the spectra figures in region selection, change the slider at the bottom of the heatmap
 # TODO Incorporate brain 2
+# TODO Check that in page 3, only MAIA transformed lipids are available
+# TODO Check all functions and deprecate the ones that are not used anymore
 # TODO Make a careful memory analysis to free more memory
 # TODO Adress all # ! and # ? comments in the code
 # TODO Update notebooks with up-to-date classes

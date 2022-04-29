@@ -59,7 +59,9 @@ def return_layout(basic_config, slice_index=1):
         children=[
             html.Div(
                 className="page-1-fixed-aspect-ratio",
-                style={"background-color": "#1d1c1f",},
+                style={
+                    "background-color": "#1d1c1f",
+                },
                 children=[
                     dcc.Graph(
                         id="page-3-graph-heatmap-per-sel",
@@ -115,10 +117,16 @@ def return_layout(basic_config, slice_index=1):
                     dmc.Group(
                         direction="column",
                         spacing=0,
-                        style={"left": "1%", "top": "1em",},
+                        style={
+                            "left": "1%",
+                            "top": "1em",
+                        },
                         class_name="position-absolute",
                         children=[
-                            html.Div(children=" Structure selection", className="fs-5 text-light",),
+                            html.Div(
+                                children=" Structure selection",
+                                className="fs-5 text-light",
+                            ),
                             dmc.Group(
                                 spacing="xs",
                                 align="flex-start",
@@ -143,10 +151,12 @@ def return_layout(basic_config, slice_index=1):
                                         transitionDuration=150,
                                         transition="pop-top-left",
                                         transitionTimingFunction="ease",
-                                        style={"width": "20em",},
+                                        style={
+                                            "width": "20em",
+                                        },
                                     ),
                                     dmc.Button(
-                                        children="Compute spectra",
+                                        children="Compute spectral data",
                                         id="page-3-button-compute-spectra",
                                         variant="filled",
                                         color="gray",
@@ -368,7 +378,9 @@ def return_layout(basic_config, slice_index=1):
                                             ),
                                             dbc.CardBody(
                                                 className="loading-wrapper py-0 my-0",
-                                                style={"background-color": "#1d1c1f",},
+                                                style={
+                                                    "background-color": "#1d1c1f",
+                                                },
                                                 children=[
                                                     html.Div(
                                                         children=[
@@ -380,9 +392,24 @@ def return_layout(basic_config, slice_index=1):
                                                                         children=[
                                                                             html.Div(
                                                                                 id="page-3-alert",
-                                                                                className="text-center my-5",
+                                                                                className=(
+                                                                                    "text-center"
+                                                                                    " my-5"
+                                                                                ),
                                                                                 children=html.Strong(
-                                                                                    children="Please draw at least one region on the heatmap and clicked on 'compute spectra'.. and clicked on 'compute spectra'.",
+                                                                                    children=(
+                                                                                        "Please"
+                                                                                        " draw at"
+                                                                                        " least one"
+                                                                                        " region on"
+                                                                                        " the heatmap"
+                                                                                        " and clicked"
+                                                                                        " on 'compute"
+                                                                                        " spectra'.."
+                                                                                        " and clicked"
+                                                                                        " on 'compute"
+                                                                                        " spectra'."
+                                                                                    ),
                                                                                     style={
                                                                                         "color": "#df5034"
                                                                                     },
@@ -390,13 +417,25 @@ def return_layout(basic_config, slice_index=1):
                                                                             ),
                                                                             html.Div(
                                                                                 id="page-3-alert-2",
-                                                                                className="text-center my-2",
+                                                                                className=(
+                                                                                    "text-center"
+                                                                                    " my-2"
+                                                                                ),
                                                                                 style={
-                                                                                    "display": "none"
+                                                                                    "display": (
+                                                                                        "none"
+                                                                                    )
                                                                                 },
                                                                                 children=[
                                                                                     html.Strong(
-                                                                                        children="Too many regions selected, please reset the annotations.",
+                                                                                        children=(
+                                                                                            "Too many"
+                                                                                            " regions"
+                                                                                            " selected,"
+                                                                                            " please"
+                                                                                            " reset"
+                                                                                            " the annotations."
+                                                                                        ),
                                                                                         style={
                                                                                             "color": "#df5034"
                                                                                         },
@@ -424,7 +463,9 @@ def return_layout(basic_config, slice_index=1):
                                                                         },
                                                                     ),
                                                                     dmc.Button(
-                                                                        children="Download spectrum data",
+                                                                        children=(
+                                                                            "Download spectrum data"
+                                                                        ),
                                                                         id="page-3-download-data-button",
                                                                         disabled=False,
                                                                         variant="filled",
@@ -465,13 +506,19 @@ def return_layout(basic_config, slice_index=1):
                                             ),
                                             dbc.CardBody(
                                                 className="loading-wrapper mb-0 pb-0",
-                                                style={"background-color": "#1d1c1f",},
+                                                style={
+                                                    "background-color": "#1d1c1f",
+                                                },
                                                 children=[
                                                     html.Div(
                                                         id="page-3-alert-3",
                                                         className="text-center my-5",
                                                         children=html.Strong(
-                                                            children="Please draw at least one region on the heatmap and clicked on 'compute spectra'.",
+                                                            children=(
+                                                                "Please draw at least one region on"
+                                                                " the heatmap and clicked on"
+                                                                " 'compute spectra'."
+                                                            ),
                                                             style={"color": "#df5034"},
                                                         ),
                                                     ),
@@ -517,7 +564,9 @@ def return_layout(basic_config, slice_index=1):
                                                                         style={
                                                                             "height": 2
                                                                             * HEIGHT_PLOTS,
-                                                                            "background-color": "#1d1c1f",
+                                                                            "background-color": (
+                                                                                "#1d1c1f"
+                                                                            ),
                                                                         },
                                                                         # | {"display": "none"},
                                                                         config=basic_config
@@ -536,7 +585,10 @@ def return_layout(basic_config, slice_index=1):
                                                                             dbc.Checklist(
                                                                                 options=[
                                                                                     {
-                                                                                        "label": "Sort by relative std",
+                                                                                        "label": (
+                                                                                            "Sort by"
+                                                                                            " relative std"
+                                                                                        ),
                                                                                         "value": True,
                                                                                     }
                                                                                 ],
@@ -578,7 +630,7 @@ def return_layout(basic_config, slice_index=1):
                                                     ),
                                                     dmc.Switch(
                                                         id="page-3-toggle-mask",
-                                                        label="Toggle masks and shape display",
+                                                        label="Toggle masks and shapes display",
                                                         checked=False,
                                                         color="cyan",
                                                         radius="xl",
@@ -589,14 +641,20 @@ def return_layout(basic_config, slice_index=1):
                                             ),
                                             dbc.CardBody(
                                                 id="page-3-graph-lipid-comparison",
-                                                style={"background-color": "#1d1c1f",},
+                                                style={
+                                                    "background-color": "#1d1c1f",
+                                                },
                                                 # className="loading-wrapper pt-0 mt-0 pb-0 mb-1 px-0 mx-0",
                                                 children=[
                                                     html.Div(
                                                         id="page-3-alert-5",
                                                         className="text-center my-5",
                                                         children=html.Strong(
-                                                            children="Please draw at least one region on the heatmap and clicked on 'compute spectra'..",
+                                                            children=(
+                                                                "Please draw at least one region on"
+                                                                " the heatmap and clicked on"
+                                                                " 'compute spectra'.."
+                                                            ),
                                                             style={"color": "#df5034"},
                                                         ),
                                                     ),
@@ -607,7 +665,9 @@ def return_layout(basic_config, slice_index=1):
                                                                 id="page-3-graph-lipid--comparison-wait"
                                                             ),
                                                             html.Div(
-                                                                className="page-1-fixed-aspect-ratio",
+                                                                className=(
+                                                                    "page-1-fixed-aspect-ratio"
+                                                                ),
                                                                 id="page-3-div-graph-lipid-comparison",
                                                                 style={"display": "none"},
                                                                 children=[
@@ -639,7 +699,10 @@ def return_layout(basic_config, slice_index=1):
                                                                                 value=[],
                                                                                 searchable=True,
                                                                                 multi=True,
-                                                                                placeholder="Choose up to 3 lipids",
+                                                                                placeholder=(
+                                                                                    "Choose up to 3"
+                                                                                    " lipids"
+                                                                                ),
                                                                                 clearable=False,
                                                                                 style={
                                                                                     "width": "15em",
@@ -651,7 +714,10 @@ def return_layout(basic_config, slice_index=1):
                                                                                 value=[],
                                                                                 searchable=True,
                                                                                 multi=True,
-                                                                                placeholder="Choose up to 3 lipids",
+                                                                                placeholder=(
+                                                                                    "Choose up to 3"
+                                                                                    " lipids"
+                                                                                ),
                                                                                 clearable=False,
                                                                                 style={
                                                                                     "width": "15em",
@@ -663,7 +729,10 @@ def return_layout(basic_config, slice_index=1):
                                                                                 value=[],
                                                                                 searchable=True,
                                                                                 multi=True,
-                                                                                placeholder="Choose up to 3 lipids",
+                                                                                placeholder=(
+                                                                                    "Choose up to 3"
+                                                                                    " lipids"
+                                                                                ),
                                                                                 clearable=False,
                                                                                 style={
                                                                                     "width": "15em",
@@ -689,9 +758,14 @@ def return_layout(basic_config, slice_index=1):
                                                                             # ),
                                                                             dmc.Center(
                                                                                 dmc.Button(
-                                                                                    children="Visualize and compare",
+                                                                                    children=(
+                                                                                        "Visualize"
+                                                                                        " and compare"
+                                                                                    ),
                                                                                     id="page-3-open-modal",
-                                                                                    variant="filled",
+                                                                                    variant=(
+                                                                                        "filled"
+                                                                                    ),
                                                                                     color="gray",
                                                                                     radius="md",
                                                                                     size="xs",
@@ -931,7 +1005,9 @@ def page_3_plot_heatmap(
                         array_image, optimize=True, format="gif", type="RGBA"
                     )
                     fig.add_trace(go.Image(visible=True, source=base64_string, hoverinfo="skip"))
-                    fig.update_layout(dragmode="drawclosedpath",)
+                    fig.update_layout(
+                        dragmode="drawclosedpath",
+                    )
 
                     if id_input == "page-3-dropdown-brain-regions" and color_idx is not None:
                         # save in l_shapes_and_masks
@@ -971,7 +1047,11 @@ def page_3_plot_heatmap(
             col_next = config.l_colors[0]
         fig.update_layout(
             dragmode="drawclosedpath",
-            newshape=dict(fillcolor=col_next, opacity=0.7, line=dict(color="white", width=1),),
+            newshape=dict(
+                fillcolor=col_next,
+                opacity=0.7,
+                line=dict(color="white", width=1),
+            ),
         )
 
         if relayoutData is not None:
@@ -989,7 +1069,8 @@ def page_3_plot_heatmap(
 
 # Function that update dropdown options
 @app.app.callback(
-    Output("page-3-dropdown-brain-regions", "data"), Input("main-slider", "value"),
+    Output("page-3-dropdown-brain-regions", "data"),
+    Input("main-slider", "value"),
 )
 def page_3_update_dropdown_option(slice_index):
 
@@ -1092,7 +1173,10 @@ def page_3_display_high_res_mz_plot(clicked_reset, clicked_compute, mask, relayo
                 return (
                     {"height": HEIGHT_PLOTS},
                     {"display": "none"},
-                    {"height": 2 * HEIGHT_PLOTS, "background-color": "#1d1c1f",},
+                    {
+                        "height": 2 * HEIGHT_PLOTS,
+                        "background-color": "#1d1c1f",
+                    },
                 )
 
         if relayoutData is not None:
@@ -1103,7 +1187,10 @@ def page_3_display_high_res_mz_plot(clicked_reset, clicked_compute, mask, relayo
                         return (
                             {"height": HEIGHT_PLOTS},
                             {"display": "none"},
-                            {"height": 2 * HEIGHT_PLOTS, "background-color": "#1d1c1f",},
+                            {
+                                "height": 2 * HEIGHT_PLOTS,
+                                "background-color": "#1d1c1f",
+                            },
                         )
                     else:
                         return {"display": "none"}, {}, {"display": "none"}
@@ -1291,7 +1378,7 @@ def global_spectrum_store(
                     convert_array_to_fine_grained,
                     cache_flask,
                     grah_scattergl_data,
-                    10 ** -3,
+                    10**-3,
                     lb=350,
                     hb=1250,
                 )
@@ -1302,7 +1389,7 @@ def global_spectrum_store(
                         convert_array_to_fine_grained,
                         cache_flask,
                         data.get_array_spectra(slice_index - 1),
-                        10 ** -3,
+                        10**-3,
                         lb=350,
                         hb=1250,
                     )[1, :]
@@ -1469,7 +1556,7 @@ def page_3_plot_spectrum(
                     cache_flask,
                     grah_scattergl_data[:, l_idx_kept],
                     pad_individual_peaks=True,
-                    padding=10 ** -4,
+                    padding=10**-4,
                 )
                 l_mz_with_lipids = grah_scattergl_data_padded_annotated[0, :]
                 l_intensity_with_lipids = grah_scattergl_data_padded_annotated[1, :]
@@ -1518,7 +1605,7 @@ def page_3_plot_spectrum(
                     cache_flask,
                     grah_scattergl_data[:, l_idx_unkept],
                     pad_individual_peaks=True,
-                    padding=10 ** -4,
+                    padding=10**-4,
                 )
                 l_mz_without_lipids = grah_scattergl_data_padded[0, :]
                 l_intensity_without_lipids = grah_scattergl_data_padded[1, :]
@@ -1644,7 +1731,8 @@ def page_3_draw_heatmap_per_lipid_selection(
             if len(l_spectra) > 0:
                 if len(ll_idx_labels) != len(l_spectra):
                     print(
-                        "BUG: the number of received spectra is different from the number of received annotations"
+                        "BUG: the number of received spectra is different from the number of"
+                        " received annotations"
                     )
                     return dash.no_update
 
@@ -1758,7 +1846,11 @@ def page_3_download(n_clicks, fig_mz):
                 for i, data in enumerate(fig_mz.data):
                     if i % 2 == 0:
                         df = pd.DataFrame.from_dict(
-                            {"m/z": data["x"], "Intensity": data["y"], "Lipid": data["text"],}
+                            {
+                                "m/z": data["x"],
+                                "Intensity": data["y"],
+                                "Lipid": data["text"],
+                            }
                         )
                         df.to_excel(
                             xlsx_writer,
@@ -1954,7 +2046,10 @@ def draw_modal_graph(
         # Build the list of mz boundaries for each peak
         l_lipid_bounds = [
             [
-                (float(df_names.iloc[int(index)]["min"]), float(df_names.iloc[int(index)]["max"]),)
+                (
+                    float(df_names.iloc[int(index)]["min"]),
+                    float(df_names.iloc[int(index)]["max"]),
+                )
                 if int(index) != -1
                 else None
                 for index in l_lipids
@@ -2003,4 +2098,3 @@ def toggle_offcanvas(n1, n2, is_open):
     if n1 or n2:
         return not is_open
     return is_open
-
