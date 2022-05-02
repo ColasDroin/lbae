@@ -11,11 +11,13 @@
 # TODO Correct the name of the files to download
 # TODO Write missing docstrings
 # TODO Check that all force_update are set to False
+# TODO clean and comment style.css, remove all !important that are useless
 # TODO Redesign repo according to : https://dev.to/codemouse92/dead-simple-python-project-structure-and-imports-38c6
 # TODO Check that readme and documentations are correct and up to date
 # TODO Make a sample version of the app and host on heroku
 # TODO Make a docker container for the very final version of the app
 
+# ? Make the brain icon myself?
 # ? Build basic technical documentation for the app?
 # ? Implement the app as a multipage app when the feature is available on Dash
 

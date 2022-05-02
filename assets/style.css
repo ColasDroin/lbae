@@ -124,6 +124,17 @@ p, li {
   padding-left: 0rem;
 }
 
+
+/* Fix white border on all cards */
+.card {
+  background-color: transparent;
+}
+
+/* Fix white border on page 2 for spectra */
+.offcanvas-end {
+  border-left-color: transparent;
+}
+
 /* default settings for content */
 #content {
   margin-left: auto;
@@ -256,9 +267,9 @@ div.toast-header > strong {
   margin-right: 3rem;
 }
 
-.btn-close {
+/* .btn-close {
   background: #ced4da;
-}
+} */
 
 /* shift modebar on graph */
 #page-1-graph-slice-selection .js-plotly-plot .plotly .modebar {
