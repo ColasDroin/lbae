@@ -1,7 +1,0 @@
-{
-    "python.formatting.blackArgs": [
-        "--line-length=100",
-        "--preview"
-    ],
-    "python.formatting.provider": "black"
-}
