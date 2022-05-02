@@ -26,7 +26,7 @@ layout = html.Div(
                     active="exact",
                     className="d-flex justify-content-center align-items-center",
                     children=[
-                        html.I(className="icon-brain fs-2 m-auto"),
+                        html.I(className="icon-brain fs-3 m-auto pl-1"),
                         # html.H5(children="Lipid Brain Explorer", className="ml-3 mb-2"),
                     ],
                 ),
@@ -52,7 +52,7 @@ layout = html.Div(
                             href="/load-slice",
                             active="exact",
                             children=[
-                                html.I(className="icon-upload fs-4", style={"margin-left": "0.2em"})
+                                html.I(className="icon-upload fs-5", style={"margin-left": "0.2em"})
                             ],
                             className="mt-3 mb-2",
                         ),
@@ -68,7 +68,7 @@ layout = html.Div(
                             href="/lipid-selection",
                             active="exact",
                             children=[
-                                html.I(className="icon-lipid fs-4", style={"margin-left": "0.2em"})
+                                html.I(className="icon-lipid fs-5", style={"margin-left": "0.2em"})
                             ],  # html.Span("Per-lipid analysis"),],
                             className="my-4",
                         ),
@@ -86,7 +86,7 @@ layout = html.Div(
                             active="exact",
                             children=[
                                 html.I(
-                                    className="icon-chart-bar fs-4", style={"margin-left": "0.2em"}
+                                    className="icon-chart-bar fs-5", style={"margin-left": "0.2em"}
                                 )
                             ],  # html.Span("Per-region analysis"),],
                             className="my-4",
@@ -103,7 +103,7 @@ layout = html.Div(
                             active="exact",
                             # disabled=True,
                             children=[
-                                html.I(className="icon-3d fs-4", style={"margin-left": "0.2em"})
+                                html.I(className="icon-3d fs-5", style={"margin-left": "0.2em"})
                             ],
                             className="my-4",
                         ),
@@ -131,7 +131,7 @@ layout = html.Div(
                                     active="exact",
                                     children=[
                                         html.I(
-                                            className="icon-library mb-5 fs-2",
+                                            className="icon-library mb-5 fs-3",
                                         )
                                     ],
                                 ),
@@ -142,7 +142,7 @@ layout = html.Div(
                                 ),
                                 html.H4(
                                     id="sidebar-copyright",
-                                    className="icon-cc mb-3 mt-5 fs-1",
+                                    className="icon-cc mb-3 mt-5 fs-2",
                                     style={"color": "#dee2e6"},
                                 ),
                                 dbc.Tooltip(

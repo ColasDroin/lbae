@@ -1,11 +1,7 @@
 ###### IMPORT MODULES ######
-
-from dash import html
 import dash_mantine_components as dmc
 import os
-import re
 from dash import dcc
-import base64
 
 ###### DEFFINE PAGE DOCUMENTATION ######
 

@@ -27,7 +27,7 @@ layout = (
                     " application.",
                     title="Information",
                     color="cyan",
-                    class_name="my-5 py-5",
+                    class_name="mt-5",
                 )
             ),
             dmc.Center(
