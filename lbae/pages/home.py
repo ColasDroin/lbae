@@ -83,7 +83,7 @@ layout = (
                             ),
                             # Documentation in a bottom drawer
                             dmc.Drawer(
-                                children=return_documentation(),
+                                children=return_documentation(app.app),
                                 id="documentation-offcanvas-home",
                                 # title="LBAE documentation",
                                 opened=False,

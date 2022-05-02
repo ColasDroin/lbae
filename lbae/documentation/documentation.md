@@ -10,7 +10,7 @@ We hope that this application will be of great help to query the Lipid Brain Atl
 
 ## Data
 
-![](../ressources/data_collection.png)
+![](ressources/data_acquisition.png)
 
 The multidimensional atlas of the mouse brain lipidome that you can explore through LBAE has been entirely acquired from MALDI Mass Spectrometry Imaging (MALDI-MSI) experiments. We have collected about 6 millions mass spectra, corresponding to 18’000 lipid images of 64 serial sections of two individual adult mouse brains (8 weeks old males BL6). Each pixel captures a region of $5μm$, with a spatial resolution of $25μm$ along a given slice and about $200μm$ across slices. The spectral resolution is of the order of $10^{-5} m/z$.
 
@@ -20,7 +20,7 @@ The 64 slices were aligned to the [adult mouse brain reference](http://atlas.bra
 
 Each slice image was built from three different channels, each corresponding to a different set of lipids highlighting different types of structures in the brain. Image were then manually warped and aligned using landmark points. A higher resolution version of the warped slices was exported, along with the corresponding deformation field and the original and warped coordinates in the CCFv3 reference.
 
-IMAGE OF A NICE SLICE BEFORE AND AFTER WARPING + HOLES 
+![](ressources/slice_cleaning.png)
 
 This procedure allows to track the displacement of every single slice pixel, each of which is linked to a MALDI-MSI spectrum. Due to the warping and upscaling, some pixels are duplicated to fill the empty regions in the final slice image.
 
@@ -86,3 +86,20 @@ The app (frontend and backend) was developed by Colas Droin under the supervisio
 
 For more information about the technical details of this project (especially data handling, app design and implementation), please refer to [TODO.bioarxiv.com](TODO.bioarxiv.com). You can install your own version of the app and check the source code at [TODO.github.com](TODO.github.com).
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Test

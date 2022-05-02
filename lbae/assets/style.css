@@ -70,6 +70,14 @@ h1 {
 h2, h3 {
   color: #1fafc8  !important;
 }
+
+
+p, li {
+  color: rgb(221, 221, 221) !important;
+  text-align: justify !important;
+  font-size: larger !important;
+} 
+
 /* fix the width of the icons 
 .sidebar .nav-link i {
   width: 1rem;

@@ -124,7 +124,7 @@ def return_main_content():
                     ),
                     # Documentation in a bottom drawer
                     dmc.Drawer(
-                        children=return_documentation(),
+                        children=return_documentation(app),
                         id="documentation-offcanvas",
                         # title="LBAE documentation",
                         opened=False,

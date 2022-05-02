@@ -4,6 +4,6 @@ The 64 slices were aligned to the [adult mouse brain reference](http://atlas.bra
 
 Each slice image was built from three different channels, each corresponding to a different set of lipids highlighting different types of structures in the brain. Image were then manually warped and aligned using landmark points. A higher resolution version of the warped slices was exported, along with the corresponding deformation field and the original and warped coordinates in the CCFv3 reference.
 
-IMAGE OF A NICE SLICE BEFORE AND AFTER WARPING + HOLES 
+![](ressources/slice_cleaning.png)
 
 This procedure allows to track the displacement of every single slice pixel, each of which is linked to a MALDI-MSI spectrum. Due to the warping and upscaling, some pixels are duplicated to fill the empty regions in the final slice image.
