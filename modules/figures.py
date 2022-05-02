@@ -1565,6 +1565,8 @@ class Figures:
 
         dump_shelved_object("figures/load_page", "arrays_basic_figures_computed", True)
 
+    # ! Need to update for brain 2 as well
+
     def shelve_all_l_array_2D(self, force_update=False, sample=False):
 
         # Count number of lipids processed for sampling
@@ -1573,14 +1575,14 @@ class Figures:
             logging.warning("Only a sample of the lipid arrays will be computed!")
 
         # simulate a click on all lipid names
-        for name in sorted(self._data.get_annotations().name.unique()):
-            structures = self._data.get_annotations()[
-                self._data.get_annotations()["name"] == name
+        for name in sorted(self._data.get_annotations_MAIA_transformed_lipids(brain_1=True).name.unique()):
+            structures = self._data.get_annotations_MAIA_transformed_lipids(brain_1=True)[
+                self._data.get_annotations_MAIA_transformed_lipids(brain_1=True)["name"] == name
             ].structure.unique()
             for structure in sorted(structures):
-                cations = self._data.get_annotations()[
-                    (self._data.get_annotations()["name"] == name)
-                    & (self._data.get_annotations()["structure"] == structure)
+                cations = self._data.get_annotations_MAIA_transformed_lipids(brain_1=True)[
+                    (self._data.get_annotations_MAIA_transformed_lipids(brain_1=True)["name"] == name)
+                    & (self._data.get_annotations_MAIA_transformed_lipids(brain_1=True)["structure"] == structure)
                 ].cation.unique()
                 for cation in sorted(cations):
                     l_selected_lipids = []

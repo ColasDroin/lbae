@@ -1,7 +1,5 @@
 #
-# TODO Deactivate slider for annotation in page 1 when tab 1 is on original data
 # TODO Add a button to download heatmap and the spectra figures in region selection, change the slider at the bottom of the heatmap
-# TODO Check that in page 3, only MAIA transformed lipids are available
 # TODO Incorporate brain 2
 # TODO Check all functions and deprecate the ones that are not used anymore
 # TODO Make a careful memory analysis to free more memory
@@ -16,6 +14,7 @@
 # TODO Check that readme and documentations are correct and up to date
 # TODO Make a sample version of the app and host on heroku
 # TODO Make a docker container for the very final version of the app
+# TODO Clean all notebooks output before last commit
 
 # ? Make the brain icon myself?
 # ? Build basic technical documentation for the app?

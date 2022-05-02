@@ -1016,14 +1016,17 @@ def page_2bis_handle_dropdowns(name, structure, options_names, options_structure
     if len(id_input) == 0 or id_input == "dcc-store-slice-index":
         options_names = [
             {"label": name, "value": name}
-            for name in sorted(app.data.get_annotations().name.unique())
+            for name in sorted(
+                app.data.get_annotations_MAIA_transformed_lipids(brain_1=True).name.unique()
+            )
         ]
+
         return options_names, [], [], None, None, None
 
     elif name is not None:
         if id_input == "page-4-dropdown-lipid-names":
-            structures = app.data.get_annotations()[
-                app.data.get_annotations()["name"] == name
+            structures = app.data.get_annotations_MAIA_transformed_lipids(brain_1=True)[
+                app.data.get_annotations_MAIA_transformed_lipids(brain_1=True)["name"] == name
             ].structure.unique()
             options_structures = [
                 {"label": structure, "value": structure} for structure in sorted(structures)
@@ -1032,9 +1035,12 @@ def page_2bis_handle_dropdowns(name, structure, options_names, options_structure
 
         elif structure is not None:
             if id_input == "page-4-dropdown-lipid-structures":
-                cations = app.data.get_annotations()[
-                    (app.data.get_annotations()["name"] == name)
-                    & (app.data.get_annotations()["structure"] == structure)
+                cations = app.data.get_annotations_MAIA_transformed_lipids(brain_1=True)[
+                    (app.data.get_annotations_MAIA_transformed_lipids(brain_1=True)["name"] == name)
+                    & (
+                        app.data.get_annotations_MAIA_transformed_lipids(brain_1=True)["structure"]
+                        == structure
+                    )
                 ].cation.unique()
                 options_cations = [{"label": cation, "value": cation} for cation in sorted(cations)]
                 return options_names, options_structures, options_cations, name, structure, None

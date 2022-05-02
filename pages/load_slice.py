@@ -30,10 +30,6 @@ def return_layout(basic_config, slice_index):
             "background-color": "#1d1c1f",
         },
         children=[
-            # dmc.Center(
-            #    class_name="w-100",
-            #    style={"height": "100%"},
-            #    children=
             html.Div(
                 className="page-1-fixed-aspect-ratio",
                 style={"background-color": "#1d1c1f"},
@@ -43,7 +39,6 @@ def return_layout(basic_config, slice_index):
                         children=dmc.Group(
                             class_name="mt-1",
                             children=[
-                                # dbc.Tabs(
                                 dmc.SegmentedControl(
                                     data=[
                                         dict(label="Original slices", value="0"),
@@ -52,8 +47,6 @@ def return_layout(basic_config, slice_index):
                                         dict(label="Atlas slices", value="3"),
                                     ],
                                     id="page-1-card-tabs",
-                                    # card=True,
-                                    # active_tab="page-1-tab-1",
                                     value="2",
                                     radius="sm",
                                     color="cyan",
@@ -185,6 +178,7 @@ def return_layout(basic_config, slice_index):
 # Function to update the image from the slider
 @app.app.callback(
     Output("page-1-graph-slice-selection", "figure"),
+    Output("page-1-toggle-annotations", "disabled"),
     Input("main-slider", "value"),
     Input("page-1-card-tabs", "value"),
     Input("page-1-toggle-annotations", "checked"),
@@ -193,6 +187,11 @@ def tab_1_load_image(value_slider, active_tab, display_annotations):
     logging.info("Slider changed to value " + str(value_slider))
     # Find out which input triggered the function
     id_input, value_input = dash.callback_context.triggered[0]["prop_id"].split(".")
+
+    if active_tab == "0":
+        disabled = True
+    else:
+        disabled = False
 
     if len(id_input) > 0:
 
@@ -205,14 +204,17 @@ def tab_1_load_image(value_slider, active_tab, display_annotations):
         }
 
         # Force no annotation for the original data
-        return return_shelved_object(
-            "figures/load_page",
-            "figure_basic_image",
-            force_update=False,
-            compute_function=figures.compute_figure_basic_image,
-            type_figure=dic_mapping_tab_indices[active_tab],
-            index_image=value_slider - 1,
-            plot_atlas_contours=display_annotations if active_tab != "0" else False,
+        return (
+            return_shelved_object(
+                "figures/load_page",
+                "figure_basic_image",
+                force_update=False,
+                compute_function=figures.compute_figure_basic_image,
+                type_figure=dic_mapping_tab_indices[active_tab],
+                index_image=value_slider - 1,
+                plot_atlas_contours=display_annotations if active_tab != "0" else False,
+            ),
+            disabled,
         )
 
     return dash.no_update
