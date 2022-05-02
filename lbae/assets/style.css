@@ -62,6 +62,14 @@ a:hover {
   text-decoration: underline !important;    
 } 
 
+h1 {
+  color: white !important;
+  text-align: center !important;
+}
+
+h2, h3 {
+  color: #1fafc8  !important;
+}
 /* fix the width of the icons 
 .sidebar .nav-link i {
   width: 1rem;
