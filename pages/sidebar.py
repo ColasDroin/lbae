@@ -37,7 +37,7 @@ layout = html.Div(
             target="sidebar-title",
             placement="right",
         ),
-        html.Hr(),
+        # html.Hr(),
         # Navebar to different pages
         dmc.Center(
             style={"height": "60%"},

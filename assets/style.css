@@ -90,6 +90,13 @@ p, li {
   padding-left: 0.1rem;
 }
 
+
+/* For better centering icons on the sidebar */
+#sidebar-page-3{
+  padding-right: 1.2rem;
+}
+
+
 /* position the header relative to the logo and hide by default */
 .sidebar-header .nav-link h5 {
   opacity: 0;
