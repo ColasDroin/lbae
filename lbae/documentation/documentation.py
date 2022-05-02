@@ -2,8 +2,26 @@
 
 from dash import html
 import dash_mantine_components as dmc
+import os
+import re
 
 ###### DEFFINE PAGE DOCUMENTATION ######
+
+# This function is not optimal but it works and has no requirement for performance
+def merge_md():
+    order_final_md = ["_overview", "_data", "_alignment", "_usage", "_about", "_further"]
+    final_md = "# Lipid Brain Atlas Explorer documentation \n\n"
+    for filename in order_final_md:
+        for file in os.listdir(os.path.join(os.getcwd(), ".")):
+            if file.endswith(".md") and filename in file:
+                with open(os.path.join(os.getcwd(), ".", file), "r") as f:
+                    final_md += f.read() + "\n"
+                break
+
+    with open(os.path.join(os.getcwd(), ".", "documentation.md"), "w") as f:
+        f.write(final_md)
+
+    return final_md
 
 
 def return_documentation():
@@ -141,3 +159,7 @@ def return_documentation():
     )
 
     return layout
+
+
+if __name__ == "__main__":
+    print(merge_md())
