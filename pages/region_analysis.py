@@ -2,7 +2,7 @@
 
 # Standard modules
 import dash_bootstrap_components as dbc
-from dash import dcc, html
+from dash import dcc, html, clientside_callback
 from dash.dependencies import Input, Output, State
 import dash
 import plotly.graph_objects as go
@@ -477,8 +477,26 @@ def return_layout(basic_config, slice_index=1):
                                                                         # lass_name="mr-5",
                                                                         style={
                                                                             "position": "absolute",
-                                                                            "top": "3rem",
+                                                                            "top": "0.7rem",
+                                                                            "left": "27rem",
                                                                         },
+                                                                    ),
+                                                                    dmc.Button(
+                                                                        children="Close panel",
+                                                                        id="page-4-close-drawer-region-selection",
+                                                                        variant="filled",
+                                                                        disabled=False,
+                                                                        color="red",
+                                                                        radius="md",
+                                                                        size="xs",
+                                                                        compact=False,
+                                                                        loading=False,
+                                                                        style={
+                                                                            "position": "absolute",
+                                                                            "top": "0.7rem",
+                                                                            "right": "1rem",
+                                                                        },
+                                                                        class_name="w-25",
                                                                     ),
                                                                 ],
                                                             ),
@@ -578,24 +596,45 @@ def return_layout(basic_config, slice_index=1):
                                                                             }
                                                                         },
                                                                     ),
+                                                                    dmc.Button(
+                                                                        children="Download heatmap",
+                                                                        id="page-3-download-heatmap-button",
+                                                                        disabled=False,
+                                                                        variant="filled",
+                                                                        radius="md",
+                                                                        size="xs",
+                                                                        color="cyan",
+                                                                        compact=False,
+                                                                        loading=False,
+                                                                        # lass_name="mr-5",
+                                                                        style={
+                                                                            "position": "absolute",
+                                                                            "top": "0.7rem",
+                                                                            "left": "22rem",
+                                                                        },
+                                                                    ),
                                                                     html.Div(
                                                                         id="page-3-switches",
                                                                         className="d-none",
                                                                         children=[
-                                                                            dbc.Checklist(
-                                                                                options=[
-                                                                                    {
-                                                                                        "label": (
-                                                                                            "Sort by"
-                                                                                            " relative std"
-                                                                                        ),
-                                                                                        "value": True,
-                                                                                    }
-                                                                                ],
+                                                                            dmc.Switch(
                                                                                 id="page-3-sort-by-diff-switch",
-                                                                                switch=True,
-                                                                                value=[True],
-                                                                                className="ml-5",
+                                                                                label=(
+                                                                                    "Sort by"
+                                                                                    " relative std"
+                                                                                ),
+                                                                                checked=True,
+                                                                                color="cyan",
+                                                                                radius="xl",
+                                                                                size="sm",
+                                                                                style={
+                                                                                    "position": (
+                                                                                        "absolute"
+                                                                                    ),
+                                                                                    "bottom": (
+                                                                                        "1rem"
+                                                                                    ),
+                                                                                },
                                                                             ),
                                                                         ],
                                                                     ),
@@ -627,15 +666,6 @@ def return_layout(basic_config, slice_index=1):
                                                     html.Div(
                                                         "Lipid intensity comparison",
                                                         className="mr-5",
-                                                    ),
-                                                    dmc.Switch(
-                                                        id="page-3-toggle-mask",
-                                                        label="Toggle masks and shapes display",
-                                                        checked=False,
-                                                        color="cyan",
-                                                        radius="xl",
-                                                        size="sm",
-                                                        class_name="ml-5",
                                                     ),
                                                 ],
                                             ),
@@ -774,11 +804,48 @@ def return_layout(basic_config, slice_index=1):
                                                                                     loading=False,
                                                                                 ),
                                                                             ),
+                                                                            dmc.Switch(
+                                                                                id="page-3-toggle-mask",
+                                                                                label=(
+                                                                                    "Toggle masks"
+                                                                                    " and shapes"
+                                                                                    " display"
+                                                                                ),
+                                                                                checked=False,
+                                                                                color="cyan",
+                                                                                radius="xl",
+                                                                                size="sm",
+                                                                                style={
+                                                                                    "position": (
+                                                                                        "absolute"
+                                                                                    ),
+                                                                                    "bottom": (
+                                                                                        "0rem"
+                                                                                    ),
+                                                                                },
+                                                                            ),
                                                                         ],
                                                                     ),
                                                                 ],
                                                             ),
                                                         ],
+                                                    ),
+                                                    dmc.Button(
+                                                        children="Download plot",
+                                                        id="page-3-download-plot-button",
+                                                        disabled=False,
+                                                        variant="filled",
+                                                        radius="md",
+                                                        size="xs",
+                                                        color="cyan",
+                                                        compact=False,
+                                                        loading=False,
+                                                        # lass_name="mr-5",
+                                                        style={
+                                                            "position": "absolute",
+                                                            "top": "0.7rem",
+                                                            "left": "15rem",
+                                                        },
                                                     ),
                                                 ],
                                             ),
@@ -790,19 +857,6 @@ def return_layout(basic_config, slice_index=1):
                                 class_name="w-100",
                                 children=[
                                     dcc.Download(id="page-3-download-data"),
-                                    dmc.Button(
-                                        children="Close panel",
-                                        id="page-4-close-drawer-region-selection",
-                                        variant="filled",
-                                        disabled=False,
-                                        color="red",
-                                        radius="md",
-                                        size="xs",
-                                        compact=False,
-                                        loading=False,
-                                        style={"position": "fixed", "top": "0.5rem"},
-                                        class_name="w-50",
-                                    ),
                                 ],
                             ),
                         ],
@@ -1275,6 +1329,39 @@ def page_3_display_alert(clicked_compute, clicked_reset, relayoutData, mask):
     return dash.no_update
 
 
+clientside_callback(
+    """
+    function(n_clicks){
+        if(n_clicks > 0){
+            domtoimage.toBlob(document.getElementById('page-3-graph-heatmap-per-lipid'))
+                .then(function (blob) {
+                    window.saveAs(blob, 'heatmap_comparison.png');
+                }
+            );
+        }
+    }
+    """,
+    Output("page-3-download-heatmap-button", "n_clicks"),
+    Input("page-3-download-heatmap-button", "n_clicks"),
+)
+
+clientside_callback(
+    """
+    function(n_clicks){
+        if(n_clicks > 0){
+            domtoimage.toBlob(document.getElementById('page-3-div-graph-lipid-comparison'))
+                .then(function (blob) {
+                    window.saveAs(blob, 'region_selection.png');
+                }
+            );
+        }
+    }
+    """,
+    Output("page-3-download-plot-button", "n_clicks"),
+    Input("page-3-download-plot-button", "n_clicks"),
+)
+
+
 # Global function to memoize/compute spectrum
 @cache_flask.memoize()
 def global_spectrum_store(
@@ -1651,7 +1738,7 @@ def page_3_plot_spectrum(
     Output("page-3-dcc-store-lipids-region", "data"),
     # Input("dcc-store-list-idx-lipids", "data"),
     Input("page-3-reset-button", "n_clicks"),
-    Input("page-3-sort-by-diff-switch", "value"),
+    Input("page-3-sort-by-diff-switch", "checked"),
     Input("page-4-slider", "value"),
     Input("main-slider", "value"),
     Input("dcc-store-list-mz-spectra", "data"),
@@ -1704,12 +1791,6 @@ def page_3_draw_heatmap_per_lipid_selection(
     ):
 
         logging.info("Starting computing heatmap now")
-
-        # Correct for selector values
-        if len(sort_switch) > 0:
-            sort_switch = sort_switch[0]
-        else:
-            sort_switch = False
 
         # if len(scale_switch) > 0:
         #    scale_switch = scale_switch[0]

@@ -2,7 +2,7 @@
 
 # Standard modules
 import dash_bootstrap_components as dbc
-from dash import dcc, html
+from dash import dcc, html, clientside_callback
 import logging
 import dash_draggable
 from dash.dependencies import Input, Output, State
@@ -431,10 +431,12 @@ def return_layout(basic_config, slice_index):
                                         style={
                                             "background-color": "#1d1c1f",
                                         },
-                                        children=dbc.ModalTitle(
-                                            "Lipid selection interpolated in 3D",
-                                            style={"color": "white"},
-                                        ),
+                                        children=[
+                                            dbc.ModalTitle(
+                                                "Lipid selection interpolated in 3D",
+                                                style={"color": "white"},
+                                            ),
+                                        ],
                                     ),
                                     dbc.ModalBody(
                                         style={
@@ -445,6 +447,23 @@ def return_layout(basic_config, slice_index):
                                                 color="light",
                                                 show_initially=False,
                                                 children=[
+                                                    dmc.Button(
+                                                        children="Download plot",
+                                                        id="page-4-download-volume-button",
+                                                        disabled=False,
+                                                        variant="filled",
+                                                        radius="md",
+                                                        size="xs",
+                                                        color="cyan",
+                                                        compact=False,
+                                                        loading=False,
+                                                        # lass_name="mr-5",
+                                                        style={
+                                                            "position": "absolute",
+                                                            "right": "5rem",
+                                                            "top": "-3rem",
+                                                        },
+                                                    ),
                                                     html.Div(
                                                         className="page-1-fixed-aspect-ratio",
                                                         children=[
@@ -502,10 +521,28 @@ def return_layout(basic_config, slice_index):
                                         style={
                                             "background-color": "#1d1c1f",
                                         },
-                                        children=dbc.ModalTitle(
-                                            "Lipid expression comparison",
-                                            style={"color": "white"},
-                                        ),
+                                        children=[
+                                            dbc.ModalTitle(
+                                                "Lipid expression comparison",
+                                                style={"color": "white"},
+                                            ),
+                                            dmc.Button(
+                                                children="Download plot",
+                                                id="page-4-download-clustergram-button",
+                                                disabled=True,
+                                                variant="filled",
+                                                radius="md",
+                                                size="xs",
+                                                color="cyan",
+                                                compact=False,
+                                                loading=False,
+                                                # lass_name="mr-5",
+                                                style={
+                                                    "position": "absolute",
+                                                    "right": "5rem",
+                                                },
+                                            ),
+                                        ],
                                     ),
                                     dbc.ModalBody(
                                         className="d-flex justify-content-center flex-column",
@@ -527,7 +564,7 @@ def return_layout(basic_config, slice_index):
                                             dbc.Progress(
                                                 id="page-4-progress-bar-structure",
                                                 style={"width ": "100%"},
-                                                color="#ced4da",
+                                                color="#338297",
                                             ),
                                             dcc.Slider(
                                                 id="page-4-slider-percentile",
@@ -545,10 +582,6 @@ def return_layout(basic_config, slice_index):
                                                     },
                                                 },
                                             ),
-                                            # dbc.Spinner(
-                                            #     color="dark",
-                                            #     show_initially=False,
-                                            #     children=[
                                             html.Div(
                                                 # className="page-1-fixed-aspect-ratio",
                                                 className="d-flex justify-content-center",
@@ -565,12 +598,7 @@ def return_layout(basic_config, slice_index):
                                                             }
                                                         },
                                                         style={
-                                                            # "width": "100%",
                                                             "height": "100%",
-                                                            "zIndex": "0",
-                                                            # "margin": "auto",
-                                                            #    "position": "absolute",
-                                                            #    "left": "0",
                                                         },
                                                     ),
                                                 ],
@@ -833,8 +861,6 @@ def page_4_add_toast_region_selection(
     return dash.no_update
 
 
-# ! Need to have lipids that have been MAIA transformed only in page-4-toast-lipid-1, page-4-toast-lipid-2 etc
-# ! Maybe remove the possibility to have more than 1 lipid?
 # Function to plot page-4-graph-volume when its state get updated
 @app.app.callback(
     Output("page-4-graph-volume", "figure"),
@@ -958,6 +984,7 @@ def page_4_plot_graph_volume(
         ),
         (Output("page-4-graph-heatmap", "className"), "d-none", ""),
         (Output("page-4-slider-percentile", "className"), "d-none", ""),
+        (Output("page-4-download-clustergram-button", "disabled"), True, False),
     ],
     progress=[
         Output("page-4-progress-bar-structure", "value"),
@@ -1303,3 +1330,39 @@ def toggle_modal(n1, is_open):
     if n1:
         return not is_open
     return is_open
+
+
+# download clustergram plot
+clientside_callback(
+    """
+    function(n_clicks){
+        if(n_clicks > 0){
+            domtoimage.toBlob(document.getElementById('page-4-graph-heatmap'))
+                .then(function (blob) {
+                    window.saveAs(blob, 'clustergram.png');
+                }
+            );
+        }
+    }
+    """,
+    Output("page-4-download-clustergram-button", "n_clicks"),
+    Input("page-4-download-clustergram-button", "n_clicks"),
+)
+
+
+# download volume plot
+clientside_callback(
+    """
+    function(n_clicks){
+        if(n_clicks > 0){
+            domtoimage.toBlob(document.getElementById('page-4-graph-volume'))
+                .then(function (blob) {
+                    window.saveAs(blob, 'volume.png');
+                }
+            );
+        }
+    }
+    """,
+    Output("page-4-download-volume-button", "n_clicks"),
+    Input("page-4-download-volume-button", "n_clicks"),
+)
