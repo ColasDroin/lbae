@@ -825,7 +825,7 @@ def return_layout(basic_config, slice_index=1):
                                                                                         "absolute"
                                                                                     ),
                                                                                     "bottom": (
-                                                                                        "0rem"
+                                                                                        "-2rem"
                                                                                     ),
                                                                                 },
                                                                             ),

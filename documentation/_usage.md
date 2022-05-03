@@ -8,7 +8,7 @@ The use of the app should be relatively intuitive. It is composed of 4 different
  
 Each of this tabs allows for a different type of exploration/analysis of the MALDI-MSI data, through the use of various widgets. Apart from the *three-dimensional analysis*, all the pages can only display one slice at most. In this case, slices can be browsed using the slider at the bottom of the page. 
 
-On most graphs (in particular, heatmap and m/z plot), you can draw a square with your mouse to zoom in, and double click to reset zoom level. As a rule, almost all of the items in the app are embedded with advice. Just hover an item with your mouse to get a tip on how to use it.
+On most graphs (in particular, heatmap and m/z plot), you can draw a square with your mouse to zoom in, and double click to reset zoom level. Many items in the app are embedded with advice. Just hover such an item with your mouse to get a tip on how to use it.
 
 The documentation is always available using the corresponding icon at the bottom left of the screen.
 
