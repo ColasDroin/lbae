@@ -1361,7 +1361,7 @@ clientside_callback(
         if(n_clicks > 0){
             domtoimage.toBlob(document.getElementById('page-2-graph-heatmap-mz-selection'))
                 .then(function (blob) {
-                    window.saveAs(blob, 'lipid_selection.png');
+                    window.saveAs(blob, 'lipid_selection_plot.png');
                 }
             );
         }

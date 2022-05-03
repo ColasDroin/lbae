@@ -447,25 +447,26 @@ def return_layout(basic_config, slice_index):
                                                 color="light",
                                                 show_initially=False,
                                                 children=[
-                                                    dmc.Button(
-                                                        children="Download plot",
-                                                        id="page-4-download-volume-button",
-                                                        disabled=False,
-                                                        variant="filled",
-                                                        radius="md",
-                                                        size="xs",
-                                                        color="cyan",
-                                                        compact=False,
-                                                        loading=False,
-                                                        # lass_name="mr-5",
-                                                        style={
-                                                            "position": "absolute",
-                                                            "right": "5rem",
-                                                            "top": "-3rem",
-                                                        },
-                                                    ),
+                                                    # dmc.Button(
+                                                    #     children="Download plot",
+                                                    #     id="page-4-download-volume-button",
+                                                    #     disabled=False,
+                                                    #     variant="filled",
+                                                    #     radius="md",
+                                                    #     size="xs",
+                                                    #     color="cyan",
+                                                    #     compact=False,
+                                                    #     loading=False,
+                                                    #     # lass_name="mr-5",
+                                                    #     style={
+                                                    #         "position": "absolute",
+                                                    #         "right": "5rem",
+                                                    #         "top": "-3rem",
+                                                    #     },
+                                                    # ),
                                                     html.Div(
                                                         className="page-1-fixed-aspect-ratio",
+                                                        id="page-4-graph-volume-parent",
                                                         children=[
                                                             html.Div(
                                                                 id="page-4-alert",
@@ -484,9 +485,7 @@ def return_layout(basic_config, slice_index):
                                                                 | {
                                                                     "toImageButtonOptions": {
                                                                         "format": "png",
-                                                                        "filename": (
-                                                                            "brain_lipid_selection"
-                                                                        ),
+                                                                        "filename": "brain_volume",
                                                                         "scale": 2,
                                                                     }
                                                                 },
@@ -1350,19 +1349,19 @@ clientside_callback(
 )
 
 
-# download volume plot
-clientside_callback(
-    """
-    function(n_clicks){
-        if(n_clicks > 0){
-            domtoimage.toBlob(document.getElementById('page-4-graph-volume'))
-                .then(function (blob) {
-                    window.saveAs(blob, 'volume.png');
-                }
-            );
-        }
-    }
-    """,
-    Output("page-4-download-volume-button", "n_clicks"),
-    Input("page-4-download-volume-button", "n_clicks"),
-)
+# # download volume plot
+# clientside_callback(
+#     """
+#     function(n_clicks){
+#         if(n_clicks > 0){
+#             domtoimage.toBlob(document.getElementById('page-4-graph-volume-parent'))
+#                 .then(function (blob) {
+#                     window.saveAs(blob, 'volume.png');
+#                 }
+#             );
+#         }
+#     }
+#     """,
+#     Output("page-4-download-volume-button", "n_clicks"),
+#     Input("page-4-download-volume-button", "n_clicks"),
+# )

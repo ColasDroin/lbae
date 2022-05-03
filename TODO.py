@@ -6,10 +6,10 @@
 # TODO Adress all # ! and # ? comments in the code
 # TODO Update notebooks with up-to-date classes
 # TODO Do quality control and debug, especially when several users are on the app in parallel
-# TODO Correct the name of the files to download
 # TODO Write missing docstrings
 # TODO Check that all force_update are set to False
 # TODO clean and comment style.css, remove all !important that are useless
+# TODO Find what to do with bug 3D volume
 # TODO Redesign repo according to : https://dev.to/codemouse92/dead-simple-python-project-structure-and-imports-38c6
 # TODO Check that readme and documentations are correct and up to date
 # TODO Complete License file

@@ -1356,7 +1356,7 @@ clientside_callback(
         if(n_clicks > 0){
             domtoimage.toBlob(document.getElementById('page-3-div-graph-lipid-comparison'))
                 .then(function (blob) {
-                    window.saveAs(blob, 'region_selection.png');
+                    window.saveAs(blob, 'plot_region_selection.png');
                 }
             );
         }
@@ -1952,7 +1952,7 @@ def page_3_download(n_clicks, fig_mz):
                         )
                 xlsx_writer.save()
 
-            return dcc.send_data_frame(to_excel, "my_region_selection.xlsx")
+            return dcc.send_data_frame(to_excel, "my_region_selection_data.xlsx")
 
     return dash.no_update
 
@@ -1960,14 +1960,16 @@ def page_3_download(n_clicks, fig_mz):
 # Function that deactivate the download button if not region drawn
 @app.app.callback(
     Output("page-3-download-data-button", "disabled"),
+    Output("page-3-download-plot-button", "disabled"),
+    Output("page-3-download-heatmap-button", "disabled"),
     Input("page-3-graph-spectrum-per-pixel", "figure"),
 )
 def page_3_reset_download(fig_mz):
     if fig_mz is not None:
         fig_mz = go.Figure(data=fig_mz)
         if len(fig_mz.data) > 1:
-            return False
-    return True
+            return False, False, False
+    return True, True, True
 
 
 # Function that create the dropdown lipids selections
