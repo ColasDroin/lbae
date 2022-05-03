@@ -39,11 +39,17 @@ def return_layout(basic_config, slice_index):
                 #    children=
                 html.Div(
                     className="page-1-fixed-aspect-ratio",
-                    style={"background-color": "#1d1c1f",},
+                    style={
+                        "background-color": "#1d1c1f",
+                    },
                     children=[
                         dbc.Spinner(
                             color="info",
-                            spinner_style={"margin-top": "40%", "width": "3rem", "height": "3rem",},
+                            spinner_style={
+                                "margin-top": "40%",
+                                "width": "3rem",
+                                "height": "3rem",
+                            },
                             children=dcc.Graph(
                                 id="page-2-graph-heatmap-mz-selection",
                                 config=basic_config
@@ -75,7 +81,10 @@ def return_layout(basic_config, slice_index):
                         dmc.Group(
                             direction="column",
                             spacing=0,
-                            style={"left": "1%", "top": "1em",},
+                            style={
+                                "left": "1%",
+                                "top": "1em",
+                            },
                             class_name="position-absolute",
                             children=[
                                 # html.Div(children=" Lipid selection", className="fs-5 text-light",),
@@ -102,14 +111,16 @@ def return_layout(basic_config, slice_index):
                                             transitionDuration=150,
                                             transition="pop-top-left",
                                             transitionTimingFunction="ease",
-                                            style={"width": "20em",},
+                                            style={
+                                                "width": "20em",
+                                            },
                                             # label="Lipid selection",
                                         ),
                                         dmc.Button(
                                             children="Display as RGB",
                                             id="page-2-rgb-button",
                                             variant="filled",
-                                            color="gray",
+                                            color="cyan",
                                             radius="md",
                                             size="xs",
                                             disabled=True,
@@ -120,7 +131,7 @@ def return_layout(basic_config, slice_index):
                                             children="Display as colormap",
                                             id="page-2-colormap-button",
                                             variant="filled",
-                                            color="gray",
+                                            color="cyan",
                                             radius="md",
                                             size="xs",
                                             disabled=True,
@@ -239,20 +250,27 @@ def return_layout(basic_config, slice_index):
                                     children="Display as colormap",
                                     id="page-2-button-bounds",
                                     variant="filled",
-                                    color="gray",
+                                    color="cyan",
                                     radius="md",
                                     size="xs",
                                     compact=False,
                                     loading=False,
                                 ),
                             ],
-                            style={"width": "35em", "left": "1%", "bottom": "3.5rem",},
+                            style={
+                                "width": "35em",
+                                "left": "1%",
+                                "bottom": "3.5rem",
+                            },
                             class_name="position-absolute",
                         ),
                         dmc.Group(
                             position="right",
                             direction="column",
-                            style={"right": "1%", "bottom": "3.5rem",},
+                            style={
+                                "right": "1%",
+                                "bottom": "3.5rem",
+                            },
                             class_name="position-absolute",
                             spacing=0,
                             children=[
@@ -261,7 +279,7 @@ def return_layout(basic_config, slice_index):
                                     id="page-2-show-high-res-spectrum-button",
                                     variant="filled",
                                     disabled=False,
-                                    color="gray",
+                                    color="cyan",
                                     radius="md",
                                     size="xs",
                                     compact=False,
@@ -272,7 +290,7 @@ def return_layout(basic_config, slice_index):
                                     id="page-2-show-low-res-spectrum-button",
                                     variant="filled",
                                     disabled=False,
-                                    color="gray",
+                                    color="cyan",
                                     radius="md",
                                     size="xs",
                                     compact=False,
@@ -284,7 +302,7 @@ def return_layout(basic_config, slice_index):
                                     id="page-2-download-data-button",
                                     variant="filled",
                                     disabled=False,
-                                    color="gray",
+                                    color="cyan",
                                     radius="md",
                                     size="xs",
                                     compact=False,
@@ -296,7 +314,7 @@ def return_layout(basic_config, slice_index):
                                     id="page-2-download-image-button",
                                     variant="filled",
                                     disabled=False,
-                                    color="gray",
+                                    color="cyan",
                                     radius="md",
                                     size="xs",
                                     compact=False,
@@ -341,7 +359,7 @@ def return_layout(basic_config, slice_index):
                                                     id="page-2-close-low-res-spectrum-button",
                                                     variant="filled",
                                                     disabled=False,
-                                                    color="orange",
+                                                    color="red",
                                                     radius="md",
                                                     size="xs",
                                                     compact=False,
@@ -408,7 +426,7 @@ def return_layout(basic_config, slice_index):
                                             id="page-2-close-high-res-spectrum-button",
                                             variant="filled",
                                             disabled=False,
-                                            color="orange",
+                                            color="red",
                                             radius="md",
                                             size="xs",
                                             compact=False,
@@ -853,8 +871,8 @@ def page_2_plot_graph_high_res_spectrum(
                 current_lipid_index = 0
             return figures.compute_spectrum_high_res(
                 slice_index,
-                l_lipid_bounds[current_lipid_index][0] - 10 ** -2,
-                l_lipid_bounds[current_lipid_index][1] + 10 ** -2,
+                l_lipid_bounds[current_lipid_index][0] - 10**-2,
+                l_lipid_bounds[current_lipid_index][1] + 10**-2,
                 annotations=l_lipid_bounds,
                 force_xlim=True,
                 standardization=apply_transform,
@@ -869,8 +887,8 @@ def page_2_plot_graph_high_res_spectrum(
             # l_lipid_bounds = [(lb, hb), None, None]
             return figures.compute_spectrum_high_res(
                 slice_index,
-                lb - 10 ** -2,
-                hb + 10 ** -2,
+                lb - 10**-2,
+                hb + 10**-2,
                 force_xlim=True,  # annotations=l_lipid_bounds,
                 standardization=apply_transform,
                 cache_flask=cache_flask,
@@ -1196,7 +1214,8 @@ def page_2_display_high_res_mz_plot(figure):
 
 # Function to make visible the alert regarding the high-res m/z plot in page 2
 @app.app.callback(
-    Output("page-2-alert", "style"), Input("page-2-graph-high-resolution-spectrum", "figure"),
+    Output("page-2-alert", "style"),
+    Input("page-2-graph-high-resolution-spectrum", "figure"),
 )
 def page_2_display_alert(figure):
     if figure is not None:
@@ -1260,8 +1279,8 @@ def page_2_download(
 
                     # Need to clean name to use it as a sheet name
                     name = name.replace(":", "").replace("/", "")
-                    lb = float(data.get_annotations().iloc[index]["min"]) - 10 ** -2
-                    hb = float(data.get_annotations().iloc[index]["max"]) + 10 ** -2
+                    lb = float(data.get_annotations().iloc[index]["min"]) - 10**-2
+                    hb = float(data.get_annotations().iloc[index]["max"]) + 10**-2
                     x, y = figures.compute_spectrum_high_res(
                         slice_index,
                         lb,
@@ -1286,8 +1305,8 @@ def page_2_download(
                 # Get spectral data
                 mz, intensity = figures.compute_spectrum_high_res(
                     slice_index,
-                    lb - 10 ** -2,
-                    hb + 10 ** -2,
+                    lb - 10**-2,
+                    hb + 10**-2,
                     force_xlim=True,
                     standardization=apply_transform,
                     cache_flask=cache_flask,
@@ -1406,4 +1425,3 @@ def toggle_offcanvas(n1, n2, is_open):
     if n1 or n2:
         return not is_open
     return is_open
-

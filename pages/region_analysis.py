@@ -114,6 +114,22 @@ def return_layout(basic_config, slice_index=1):
                             "top": "7%",
                         },
                     ),
+                    dmc.Button(
+                        children="Compute spectral data",
+                        id="page-3-button-compute-spectra",
+                        variant="filled",
+                        color="cyan",
+                        radius="md",
+                        size="xs",
+                        disabled=True,
+                        compact=False,
+                        loading=False,
+                        style={
+                            "right": "1%",
+                            "top": "3em",
+                        },
+                        class_name="position-absolute",
+                    ),
                     dmc.Group(
                         direction="column",
                         spacing=0,
@@ -124,7 +140,7 @@ def return_layout(basic_config, slice_index=1):
                         class_name="position-absolute",
                         children=[
                             html.Div(
-                                children=" Structure selection",
+                                children=" Draw a region or choose a structure below",
                                 className="fs-5 text-light",
                             ),
                             dmc.Group(
@@ -156,21 +172,10 @@ def return_layout(basic_config, slice_index=1):
                                         },
                                     ),
                                     dmc.Button(
-                                        children="Compute spectral data",
-                                        id="page-3-button-compute-spectra",
-                                        variant="filled",
-                                        color="gray",
-                                        radius="md",
-                                        size="xs",
-                                        disabled=True,
-                                        compact=False,
-                                        loading=False,
-                                    ),
-                                    dmc.Button(
                                         children="Reset",
                                         id="page-3-reset-button",
                                         variant="filled",
-                                        color="gray",
+                                        color="cyan",
                                         radius="md",
                                         size="xs",
                                         disabled=False,
@@ -796,7 +801,7 @@ def return_layout(basic_config, slice_index=1):
                                                                                     variant=(
                                                                                         "filled"
                                                                                     ),
-                                                                                    color="gray",
+                                                                                    color="cyan",
                                                                                     radius="md",
                                                                                     size="xs",
                                                                                     disabled=True,
