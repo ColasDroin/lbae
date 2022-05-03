@@ -16,7 +16,6 @@ layout = html.Div(
     children=[
         # Header with logo
         dbc.Nav(
-            id="sidebar-title",
             className="sidebar-header",
             vertical=True,
             pills=True,
@@ -26,7 +25,7 @@ layout = html.Div(
                     active="exact",
                     className="d-flex justify-content-center align-items-center",
                     children=[
-                        html.I(className="icon-brain fs-3 m-auto pl-1"),
+                        html.I(id="sidebar-title", className="icon-brain fs-3 m-auto pl-1"),
                         # html.H5(children="Lipid Brain Explorer", className="ml-3 mb-2"),
                     ],
                 ),
@@ -48,11 +47,14 @@ layout = html.Div(
                     children=[
                         # Link to page 1
                         dbc.NavLink(
-                            id="sidebar-page-1",
                             href="/load-slice",
                             active="exact",
                             children=[
-                                html.I(className="icon-upload fs-5", style={"margin-left": "0.2em"})
+                                html.I(
+                                    id="sidebar-page-1",
+                                    className="icon-upload fs-5",
+                                    style={"margin-left": "0.7em"},
+                                )
                             ],
                             className="mt-3 mb-2",
                         ),
@@ -64,11 +66,14 @@ layout = html.Div(
                         ),
                         # Link to page 2
                         dbc.NavLink(
-                            id="sidebar-page-2",
                             href="/lipid-selection",
                             active="exact",
                             children=[
-                                html.I(className="icon-lipid fs-5", style={"margin-left": "0.2em"})
+                                html.I(
+                                    id="sidebar-page-2",
+                                    className="icon-lipid fs-5",
+                                    style={"margin-left": "0.7em"},
+                                )
                             ],  # html.Span("Per-lipid analysis"),],
                             className="my-4",
                         ),
@@ -81,12 +86,13 @@ layout = html.Div(
                         ),
                         # Link to page 3
                         dbc.NavLink(
-                            id="sidebar-page-3",
                             href="/region-analysis",
                             active="exact",
                             children=[
                                 html.I(
-                                    className="icon-chart-bar fs-5", style={"margin-left": "0.2em"}
+                                    id="sidebar-page-3",
+                                    className="icon-chart-bar fs-5",
+                                    style={"margin-left": "0.7em"},
                                 )
                             ],  # html.Span("Per-region analysis"),],
                             className="my-4",
@@ -98,12 +104,15 @@ layout = html.Div(
                         ),
                         # Link to page 4
                         dbc.NavLink(
-                            id="sidebar-page-4",
                             href="/3D-exploration",
                             active="exact",
                             # disabled=True,
                             children=[
-                                html.I(className="icon-3d fs-5", style={"margin-left": "0.2em"})
+                                html.I(
+                                    id="sidebar-page-4",
+                                    className="icon-3d fs-5",
+                                    style={"margin-left": "0.7em"},
+                                )
                             ],
                             className="my-4",
                         ),
@@ -131,19 +140,21 @@ layout = html.Div(
                                     active="exact",
                                     children=[
                                         html.I(
+                                            id="sidebar-documentation-inside",
                                             className="icon-library mb-5 fs-3",
+                                            style={"margin-left": "0.5rem"},
                                         )
                                     ],
                                 ),
                                 dbc.Tooltip(
                                     children="Open documentation",
-                                    target="sidebar-documentation",
+                                    target="sidebar-documentation-inside",
                                     placement="right",
                                 ),
                                 html.H4(
                                     id="sidebar-copyright",
                                     className="icon-cc mb-3 mt-5 fs-2",
-                                    style={"color": "#dee2e6"},
+                                    style={"color": "#dee2e6", "margin-left": "0.5rem"},
                                 ),
                                 dbc.Tooltip(
                                     children="Copyright EPFL 2022",
