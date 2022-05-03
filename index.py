@@ -129,7 +129,7 @@ def return_main_content():
                         # title="LBAE documentation",
                         opened=False,
                         padding="md",
-                        size="90vh",
+                        size="85vh",
                         position="bottom",
                     ),
                     # Spinner when switching pages
@@ -231,7 +231,7 @@ def render_page_content(pathname, slice_index):
     Output("documentation-offcanvas", "opened"),
     [
         Input("sidebar-documentation", "n_clicks"),
-    ],  # Input("page-0-collapse-doc-button", "n_clicks")],
+    ],
     [State("documentation-offcanvas", "opened")],
 )
 def toggle_collapse(n1, is_open):

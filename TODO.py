@@ -1,5 +1,4 @@
 #
-# TODO Add a button to download heatmap and the spectra figures in region selection, change the slider at the bottom of the heatmap
 # TODO Incorporate brain 2
 # TODO Check all functions and deprecate the ones that are not used anymore
 # TODO Make a careful memory analysis to free more memory
