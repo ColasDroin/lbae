@@ -456,6 +456,13 @@ div.item:focus:active {
   color: white;
 }
 
+
+
+/* Fix bug slider above clustergram */
+#page-4-slider-percentile {
+  z-index: 10;
+}
+
 /* Initial spinner at startup */
 
 ._dash-loading {
