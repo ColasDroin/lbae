@@ -64,6 +64,7 @@ class Atlas:
         # Load or download the atlas if it's the first time BrainGlobeAtlas is used
         brainglobe_dir = "data/atlas/"
         os.makedirs(brainglobe_dir, exist_ok=True)
+
         self.bg_atlas = BrainGlobeAtlas(
             "allen_mouse_" + str(resolution) + "um",
             brainglobe_dir=brainglobe_dir,
@@ -75,14 +76,14 @@ class Atlas:
         self.subsampling_block = 20
 
         # Load string annotation for contour plot, for each voxel.
-        # These objects are heavy as they force the loading of annotations from the core Atlas
-        # class. But they shouldn't be memory-mapped as they are called when hovering and require
-        # very fast response from the server
+        # These objects are heavy (~300mb) as they force the loading of annotations from the core
+        # Atlas class. But they shouldn't be memory-mapped as they are called when hovering and
+        # require very fast response from the server
         self.labels = Labels(self.bg_atlas, force_init=True)
 
         # Compute a dictionnary that associates to each structure (acronym) the set of ids (int) of
-        # all of its children. Used only in page_4_plot_graph_volume, but it's very light so no
-        # problem using it as an attribute
+        # all of its children. Used only in page_4_plot_graph_volume, but it's very light (~3mb) so
+        # no problem using it as an attribute
         self.dic_acronym_children_id = return_shelved_object(
             "atlas/atlas_objects",
             "dic_acronym_children_id",
@@ -90,10 +91,11 @@ class Atlas:
             compute_function=self.compute_dic_acronym_children_id,
         )
 
-        # Load array of coordinates for warped data (can't be load on the fly from shelve as used
-        # with hovering)
+        # Load array of coordinates for warped data (can't be loaded on the fly from shelve as used
+        # with hovering). Weights ~225mb
+        # * Type turned into np.float16 but maybe this may lead to a loss of precision
         self.array_coordinates_warped_data = np.array(
-            skimage.io.imread("data/tiff_files/coordinates_warped_data.tif"), dtype=np.float32
+            skimage.io.imread("data/tiff_files/coordinates_warped_data.tif"), dtype=np.float16
         )
 
         # Record shape of the warped data
@@ -115,8 +117,10 @@ class Atlas:
             compute_function=self.compute_hierarchy_list,
         )
 
-        # Array_projection_corrected is used a lot, as it encodes the warping transformation of the
-        # data. Therefore it shouldn't be used a as a property
+        # Array_projection_corrected is used a lot for lipid expression plots, as it encodes the
+        # warping transformation of the data. Therefore it shouldn't be used a as a property.
+        # Weights ~150mb
+        # * The type is np.int16, and can't be reduced anymore as values are sometimes above 400
         self.array_projection_correspondence_corrected = return_shelved_object(
             "atlas/atlas_objects",
             "arrays_projection_corrected",
@@ -125,6 +129,17 @@ class Atlas:
             nearest_neighbour_correction=True,
             atlas_correction=True,
         )[1]
+
+        # Load arrays of original images coordinates. It is used everytime a 3D object is computed.
+        # Weights ~50mb
+        self.l_original_coor = return_shelved_object(
+            "atlas/atlas_objects",
+            "arrays_projection_corrected",
+            force_update=False,
+            compute_function=self.compute_array_projection,
+            nearest_neighbour_correction=True,
+            atlas_correction=True,
+        )[2]
 
         # Dictionnary of existing masks per slice, which associates slice index (key) to a set of
         # masks acronyms
@@ -142,7 +157,6 @@ class Atlas:
 
         # Properties
         self._array_projection_corrected = None
-        self._l_original_coor = None
         self._list_projected_atlas_borders_arrays = None
 
         logging.info("Atlas object instantiated" + logmem())
@@ -161,21 +175,6 @@ class Atlas:
                 atlas_correction=True,
             )[0]
         return self._array_projection_corrected
-
-    # Load arrays of original images coordinates. It's a property to save memory as it is only used
-    # with objects that should also be precomputed.
-    @property
-    def l_original_coor(self):
-        if self._l_original_coor is None:
-            self._l_original_coor = return_shelved_object(
-                "atlas/atlas_objects",
-                "arrays_projection_corrected",
-                force_update=False,
-                compute_function=self.compute_array_projection,
-                nearest_neighbour_correction=True,
-                atlas_correction=True,
-            )[2]
-        return self._l_original_coor
 
     # Load array of projected atlas borders (i.e. image of atlas annotations). It's a property to
     # save memory as it is only used with objects that should also be precomputed.
@@ -272,7 +271,9 @@ class Atlas:
                     if str(i + 1) == x.split("slice_")[1].split(".tiff")[0]
                 ][0]
             )
-            original_coor = np.array(skimage.io.imread(filename), dtype=np.float32)
+
+            # * Float 16 may lead to a loss of precision, caution
+            original_coor = np.array(skimage.io.imread(filename), dtype=np.float16)
             l_original_coor.append(original_coor)
 
             path = "data/tiff_files/original_data/"

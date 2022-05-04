@@ -345,8 +345,8 @@ class MaldiData:
             slice_index (int): Index of the slice for which the corrective factors are requested.
 
         Returns:
-            np.ndarray (mmaped): Three-dimensional array containing the MAIA corrective factor used for lipid
-            and each pixel.
+            np.ndarray (mmaped): Three-dimensional array containing the MAIA corrective factor used
+            for lipids and each pixel.
         """
         return self._dic_memmap[slice_index]["array_corrective_factors"]
 
