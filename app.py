@@ -45,11 +45,14 @@ sample = False
 atlas = Atlas(data, resolution=25, sample=sample)
 figures = Figures(data, atlas, sample=sample)
 
+logging.info("Memory use after three main object have been instantiated" + logmem())
+
+
 # Compute and shelve potentially missing objects
 launch = Launch(data, atlas, figures)
-# launch.launch()
+launch.launch()
 
-logging.info("Memory use after three main object have been instantiated" + logmem())
+logging.info("Memory use after main functions have been compiled" + logmem())
 
 # ==================================================================================================
 # --- Instantiate app and caching

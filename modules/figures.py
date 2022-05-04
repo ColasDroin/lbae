@@ -100,6 +100,8 @@ class Figures:
         if not check_shelved_object("figures/3D_page", "arrays_annotation_computed"):
             self.shelve_all_arrays_annotation()
 
+        logging.info("Figures object instantiated" + logmem())
+
     ###### FUNCTIONS FOR FIGURE IN LOAD_SLICE PAGE ######
 
     # ? Move into another class? Doesn't really need self
@@ -648,13 +650,19 @@ class Figures:
         if use_pil:
             # Set optimize to False to gain computation time
             base64_string_exp = convert_image_to_base64(
-                array_image, type="RGB", transparent_zeros=True, optimize=False,
+                array_image,
+                type="RGB",
+                transparent_zeros=True,
+                optimize=False,
             )
             # Return image directly if needed
             if return_base64_string:
                 return base64_string_exp
 
-            final_image = go.Image(visible=True, source=base64_string_exp,)
+            final_image = go.Image(
+                visible=True,
+                source=base64_string_exp,
+            )
         else:
             final_image = go.Image(z=array_image)
 
@@ -707,7 +715,9 @@ class Figures:
                 "x": 0.5,
                 "xanchor": "center",
                 "yanchor": "top",
-                "font": dict(size=14,),
+                "font": dict(
+                    size=14,
+                ),
             },
             paper_bgcolor="rgba(0,0,0,0.3)",
             plot_bgcolor="rgba(0,0,0,0.3)",
@@ -782,7 +792,9 @@ class Figures:
                 "x": 0.5,
                 "xanchor": "center",
                 "yanchor": "top",
-                "font": dict(size=14,),
+                "font": dict(
+                    size=14,
+                ),
             },
             paper_bgcolor="rgba(0,0,0,0.3)",
             plot_bgcolor="rgba(0,0,0,0.3)",
@@ -834,7 +846,9 @@ class Figures:
 
         # Improve figure layout
         fig.update_layout(
-            margin=dict(t=25, r=0, b=10, l=0), template="plotly_dark", font_size=8,
+            margin=dict(t=25, r=0, b=10, l=0),
+            template="plotly_dark",
+            font_size=8,
         )
 
         # Transparent background
@@ -913,10 +927,16 @@ class Figures:
                 "x": 0.05,
                 "y": 0,
                 "steps": [
-                    {"args": [[f.name], frame_args(0)], "label": str(k), "method": "animate",}
+                    {
+                        "args": [[f.name], frame_args(0)],
+                        "label": str(k),
+                        "method": "animate",
+                    }
                     for k, f in enumerate(fig.frames)
                 ],
-                "currentvalue": {"visible": False,},
+                "currentvalue": {
+                    "visible": False,
+                },
             }
         ]
 
@@ -1021,7 +1041,8 @@ class Figures:
             names=self._atlas.l_nodes, parents=self._atlas.l_parents, maxdepth=maxdepth
         )
         fig.update_layout(
-            uniformtext=dict(minsize=15), margin=dict(t=30, r=0, b=10, l=0),
+            uniformtext=dict(minsize=15),
+            margin=dict(t=30, r=0, b=10, l=0),
         )
         fig.update_traces(root_color="#1d3d5c")
 
@@ -1109,7 +1130,10 @@ class Figures:
 
         # Bug correction for the last slice
         array_annotation = np.concatenate(
-            (array_annotation, np.zeros((1, array_annotation.shape[1], array_annotation.shape[2])),)
+            (
+                array_annotation,
+                np.zeros((1, array_annotation.shape[1], array_annotation.shape[2])),
+            )
         )
 
         return array_annotation
@@ -1146,7 +1170,9 @@ class Figures:
         return l_array_data
 
     def compute_array_coordinates_3D(
-        self, l_array_data, high_res=False,
+        self,
+        l_array_data,
+        high_res=False,
     ):
 
         logging.info("Starting computing 3D arrays" + logmem())
@@ -1348,7 +1374,10 @@ class Figures:
 
         # Compute an array containing the lipid expression interpolated for every voxel
         array_interpolated = fill_array_interpolation(
-            array_annotation, array_slices, divider_radius=16, limit_value_inside=-1.99999,
+            array_annotation,
+            array_slices,
+            divider_radius=16,
+            limit_value_inside=-1.99999,
         )
         logging.info("Finished interpolation betwee slices")
         # Get root figure
@@ -1575,14 +1604,24 @@ class Figures:
             logging.warning("Only a sample of the lipid arrays will be computed!")
 
         # simulate a click on all lipid names
-        for name in sorted(self._data.get_annotations_MAIA_transformed_lipids(brain_1=True).name.unique()):
+        for name in sorted(
+            self._data.get_annotations_MAIA_transformed_lipids(brain_1=True).name.unique()
+        ):
             structures = self._data.get_annotations_MAIA_transformed_lipids(brain_1=True)[
                 self._data.get_annotations_MAIA_transformed_lipids(brain_1=True)["name"] == name
             ].structure.unique()
             for structure in sorted(structures):
                 cations = self._data.get_annotations_MAIA_transformed_lipids(brain_1=True)[
-                    (self._data.get_annotations_MAIA_transformed_lipids(brain_1=True)["name"] == name)
-                    & (self._data.get_annotations_MAIA_transformed_lipids(brain_1=True)["structure"] == structure)
+                    (
+                        self._data.get_annotations_MAIA_transformed_lipids(brain_1=True)["name"]
+                        == name
+                    )
+                    & (
+                        self._data.get_annotations_MAIA_transformed_lipids(brain_1=True)[
+                            "structure"
+                        ]
+                        == structure
+                    )
                 ].cation.unique()
                 for cation in sorted(cations):
                     l_selected_lipids = []

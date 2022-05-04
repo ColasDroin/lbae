@@ -11,17 +11,17 @@
 import numpy as np
 
 # ==================================================================================================
-# --- Classes
+# --- Class
 # ==================================================================================================
 class Labels:
-    """ Class used to access labels data without having to create new arrays.
+    """Class used to access labels data without having to create new arrays.
 
     Attributes:
         bg_atlas (BrainGlobeAtlas): BrainGlobeAtlas object, used to query the atlas.
-       
+
     Methods:
         __init__(bg_atlas, force_init=True): Initialize the Labels class.
-        __getitem__(key): Getter for the curent class. 
+        __getitem__(key): Getter for the curent class.
     """
 
     def __init__(self, bg_atlas, force_init=True):
@@ -29,8 +29,8 @@ class Labels:
 
         Args:
             bg_atlas (BrainGlobeAtlas): BrainGlobeAtlas object, used to query the atlas.
-            force_init (bool, optional): If True, the arrays of annotations and structures in 
-                BrainGlobeAtlas are loaded in memory (this avoids to have them during the first 
+            force_init (bool, optional): If True, the arrays of annotations and structures in
+                BrainGlobeAtlas are loaded in memory (this avoids to have them during the first
                 query, but rather when the app is initialized). Defaults to True.
         """
 
@@ -40,15 +40,15 @@ class Labels:
             _ = self.bg_atlas.structures
 
     def __getitem__(self, key):
-        """Getter for the curent class. For every coordinate (key) passed as a parameter, the 
+        """Getter for the curent class. For every coordinate (key) passed as a parameter, the
         corresponding label is returned. Arrays of keys are also compatible.
-        
+
         Args:
             key (tuple): Coordinates of the voxel to query.
-        
+
         Returns:
-            str: Label of the voxel in the Allen Brain Atlas. 
-            """
+            str: Label of the voxel in the Allen Brain Atlas.
+        """
         x = self.bg_atlas.annotation[key]
         if isinstance(x, np.uint32):
             if x != 0:

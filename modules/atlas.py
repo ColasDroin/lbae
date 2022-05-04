@@ -1,18 +1,20 @@
-###### IMPORT MODULES ######
+# Copyright (c) 2022, Colas Droin. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+
+""" This class is used to do the interface between the data coming from acquisitions (MALDI), and 
+the Allen Brain Atlas, including the mapping with the Common Coordinate Framework v3 (CCFv3)."""
+
+# ==================================================================================================
+# --- Imports
+# ==================================================================================================
 
 # Standard modules
 import numpy as np
 import os
 import matplotlib.pyplot as plt
-import plotly.graph_objects as go
 from bg_atlasapi import BrainGlobeAtlas
-from PIL import Image
-import base64
 from io import BytesIO
-from matplotlib import cm
-import plotly.express as px
 import skimage
-import warnings
 import logging
 import io
 from imageio import imread
@@ -36,6 +38,10 @@ from modules.tools.storage import (
 )
 from modules.tools.misc import logmem
 
+
+# ==================================================================================================
+# --- Class
+# ==================================================================================================
 
 #! Overall, see if I can memmap all the objects in this class
 
@@ -138,6 +144,8 @@ class Atlas:
         self._array_projection_corrected = None
         self._l_original_coor = None
         self._list_projected_atlas_borders_arrays = None
+
+        logging.info("Atlas object instantiated" + logmem())
 
     # Load arrays of images using atlas projection. It's a property to save memory as it is only
     # used with objects that should also be precomputed.
@@ -324,7 +332,7 @@ class Atlas:
                 array_projected_simplified_id[slice_index, 1:, 1:]
                 - array_projected_simplified_id[slice_index, :-1, :-1]
             )
-            contours = np.clip(contours ** 2, 0, 1)
+            contours = np.clip(contours**2, 0, 1)
             contours = np.pad(contours, ((1, 0), (1, 0)))
             # do some cleaning on the sides
             contours[:, :10] = 0
@@ -456,7 +464,10 @@ class Atlas:
 
         # Define a dictionnary to save the result of the function slice by slice
         if check_shelved_object(path_atlas, "dic_processed_temp"):
-            dic_processed_temp = load_shelved_object(path_atlas, "dic_processed_temp",)
+            dic_processed_temp = load_shelved_object(
+                path_atlas,
+                "dic_processed_temp",
+            )
         else:
             dic_processed_temp = {}
 
@@ -577,13 +588,17 @@ class Atlas:
 
             # Dump the dictionnary of processed masks with shelve after every slice
             dump_shelved_object(
-                path_atlas, "dic_processed_temp", dic_processed_temp,
+                path_atlas,
+                "dic_processed_temp",
+                dic_processed_temp,
             )
 
         if not sample:
             # Dump the dictionnary of existing masks with shelve
             dump_shelved_object(
-                path_atlas, "dic_existing_masks", dic_existing_masks,
+                path_atlas,
+                "dic_existing_masks",
+                dic_existing_masks,
             )
 
         logging.info("Projected masks and spectra have all been computed.")
@@ -616,4 +631,3 @@ class Atlas:
                 + " was present in self.dic_existing_masks"
             )
             return None
-
