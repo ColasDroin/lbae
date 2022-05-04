@@ -1440,6 +1440,8 @@ def global_spectrum_store(
                     grah_scattergl_data = compute_thread_safe_function(
                         compute_spectrum_per_row_selection,
                         cache_flask,
+                        data,
+                        slice_index,
                         list_index_bound_rows,
                         list_index_bound_column_per_row,
                         data.get_array_spectra(slice_index),
@@ -1466,9 +1468,7 @@ def global_spectrum_store(
                 grah_scattergl_data[1, :] /= np.sum(grah_scattergl_data[1, :])
 
                 # then convert to uncompressed version
-                grah_scattergl_data = compute_thread_safe_function(
-                    convert_array_to_fine_grained,
-                    cache_flask,
+                grah_scattergl_data = convert_array_to_fine_grained(
                     grah_scattergl_data,
                     10**-3,
                     lb=350,
@@ -1480,6 +1480,8 @@ def global_spectrum_store(
                     compute_thread_safe_function(
                         convert_array_to_fine_grained,
                         cache_flask,
+                        data,
+                        slice_index - 1,
                         data.get_array_spectra(slice_index - 1),
                         10**-3,
                         lb=350,
@@ -1489,9 +1491,7 @@ def global_spectrum_store(
                 )
 
                 # go back to compressed
-                grah_scattergl_data = compute_thread_safe_function(
-                    strip_zeros, cache_flask, grah_scattergl_data
-                )
+                grah_scattergl_data = strip_zeros(cache_flask, grah_scattergl_data)
 
                 # re-normalize with respect to the number of values in the spectrum
                 # so that pixels with more lipids do no have lower peaks
@@ -1643,9 +1643,7 @@ def page_3_plot_spectrum(
                 (
                     grah_scattergl_data_padded_annotated,
                     array_index_padding,
-                ) = compute_thread_safe_function(
-                    add_zeros_to_spectrum,
-                    cache_flask,
+                ) = add_zeros_to_spectrum(
                     grah_scattergl_data[:, l_idx_kept],
                     pad_individual_peaks=True,
                     padding=10**-4,
@@ -1692,9 +1690,7 @@ def page_3_plot_spectrum(
                 )
 
                 # Pad not annotated traces peaks with zeros
-                grah_scattergl_data_padded, array_index_padding = compute_thread_safe_function(
-                    add_zeros_to_spectrum,
-                    cache_flask,
+                grah_scattergl_data_padded, array_index_padding = add_zeros_to_spectrum(
                     grah_scattergl_data[:, l_idx_unkept],
                     pad_individual_peaks=True,
                     padding=10**-4,

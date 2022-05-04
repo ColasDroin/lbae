@@ -34,31 +34,31 @@ from modules.tools.spectra import (
 
 
 class Launch:
-    """ Class used to precompute and shelve objects at app launch.
-    
+    """Class used to precompute and shelve objects at app launch.
+
     Attributes:
         data (MaldiData): MaldiData object, used to manipulate the raw MALDI data.
-        atlas (Atlas): Atlas object, used to manipulate the objects coming from the Allen Brain 
+        atlas (Atlas): Atlas object, used to manipulate the objects coming from the Allen Brain
             Atlas.
         figures (Figures): Figures object, used to build the figures of the app.
         path (str): Path to the shelve database.
-        l_atlas_objects_at_init (list): List of atlas objects normally computed at app startup 
+        l_atlas_objects_at_init (list): List of atlas objects normally computed at app startup
             if not already in shelve database.
-        l_figures_objects_at_init (list): List of figures objects normally computed at app 
+        l_figures_objects_at_init (list): List of figures objects normally computed at app
             startup if not already in shelve database.
-        l_other_objects_to_compute (list): List of other objects which must be computed to 
+        l_other_objects_to_compute (list): List of other objects which must be computed to
             prevent slowing down the app during normal use.
-        l_db_entries (list): List of all entries in the shelve database (i.e. concatenation of the 
+        l_db_entries (list): List of all entries in the shelve database (i.e. concatenation of the
             3 previous lists).
-        l_entries_to_ignore (list): List of entries to ignore when checking if they are in the 
+        l_entries_to_ignore (list): List of entries to ignore when checking if they are in the
             shelve database.
-            
+
     Methods:
         __init__(data, atlas, figures, path): Initialize the Launch class.
         check_missing_db_entries(): Check if all the entries in l_db_entries are in the shelve db.
-        compute_and_fill_entries(l_missing_entries): Precompute all the entries in l_missing_entries 
+        compute_and_fill_entries(l_missing_entries): Precompute all the entries in l_missing_entries
             and fill them in the shelve database.
-        launch(force_exit_if_first_launch=True): Launch the checks and precomputations at app 
+        launch(force_exit_if_first_launch=True): Launch the checks and precomputations at app
             startup.
     """
 
@@ -67,7 +67,7 @@ class Launch:
 
         Args:
             data (MaldiData): MaldiData object, used to manipulate the raw MALDI data.
-            atlas (Atlas): Atlas object, used to manipulate the objects coming from the Allen Brain 
+            atlas (Atlas): Atlas object, used to manipulate the objects coming from the Allen Brain
                 Atlas.
             figures (Figures): Figures object, used to build the figures of the app.
             path (str): Path to the shelve database. Defaults to "data/app_data/data.db".
@@ -230,7 +230,7 @@ class Launch:
         ]
 
     def check_missing_db_entries(self):
-        """This function checks if all the entries in self.l_db_entries are in the shelve database. 
+        """This function checks if all the entries in self.l_db_entries are in the shelve database.
         It then returns a list containing the missing entries.
         """
 
@@ -266,7 +266,7 @@ class Launch:
         return l_missing_entries
 
     def compute_and_fill_entries(self, l_missing_entries):
-        """This function precompute all the entries in l_missing_entries and fill them in the shelve 
+        """This function precompute all the entries in l_missing_entries and fill them in the shelve
         database.
 
         Args:
@@ -308,8 +308,8 @@ class Launch:
         db.close()
 
     def run_compiled_functions(self):
-        """This function runs once the slowest numba functions, whose compilation can take a little 
-        bit of time, so that the app is as fast as it can be after startup. Basically, it simulates 
+        """This function runs once the slowest numba functions, whose compilation can take a little
+        bit of time, so that the app is as fast as it can be after startup. Basically, it simulates
         the user doing various actions in the app.
         """
 
@@ -336,14 +336,19 @@ class Launch:
                 apply_correction=False,
             )
             grah_scattergl_data = convert_array_to_fine_grained(
-                grah_scattergl_data, 10 ** -3, lb=350, hb=1250,
+                grah_scattergl_data,
+                10**-3,
+                lb=350,
+                hb=1250,
             )
             grah_scattergl_data = strip_zeros(grah_scattergl_data)
             l_idx_labels = np.array([-1, 2, -1], dtype=np.int32)
             return_idx_sup(l_idx_labels)
             return_idx_inf(l_idx_labels)
             add_zeros_to_spectrum(
-                grah_scattergl_data, pad_individual_peaks=True, padding=10 ** -4,
+                grah_scattergl_data,
+                pad_individual_peaks=True,
+                padding=10**-4,
             )
 
             array_intensity_with_lipids = np.array(
@@ -366,24 +371,26 @@ class Launch:
             )
 
         def select_lipid_and_region_and_plot_volume():
-            ll_t_bounds = [[None, None, None] * self.data.get_slice_number()] 
+            ll_t_bounds = [[None, None, None] * self.data.get_slice_number()]
             ll_t_bounds[0] = [[(726.5855, 726.5894000000001)], None, None]
             set_id_regions = {1006}
-            self.figures.compute_3D_volume_figure(ll_t_bounds, set_id_regions= set_id_regions)
+            self.figures.compute_3D_volume_figure(ll_t_bounds, set_id_regions=set_id_regions)
 
         logging.info("Please wait while compiled functions are executed...")
         draw_region_and_compute_spectral_data()
         select_lipid_and_region_and_plot_volume()
+        # Clean memory as it has not been done since compute_thread_safe function wasn't used
+        self.data.clean_memory(slice_index=1)
         logging.info("Compiled functions executed.")
 
     def launch(self, force_exit_if_first_launch=True):
         """This function is used at the execution of the app. It will take care of checking/cleaning
-        the database entries, run compiled functions once, and precompute all the objects that can 
-        be precomputed. At the very first launch, the app can be greedy in memory, reason for 
+        the database entries, run compiled functions once, and precompute all the objects that can
+        be precomputed. At the very first launch, the app can be greedy in memory, reason for
         which the user can choose to force the exit of the app, to start with a lighter process.
 
         Args:
-            force_exit_if_first_launch (bool): if True, the app will force exit if it is the first 
+            force_exit_if_first_launch (bool): if True, the app will force exit if it is the first
                 launch.
         """
 

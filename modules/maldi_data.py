@@ -695,6 +695,7 @@ class MaldiData:
                 "array_avg_spectrum_after_standardization",
                 "array_lookup_mz",
                 "array_cumulated_lookup_mz_image",
+                "array_corrective_factors",
             ]
 
             # Clean all memmaps if no slice index have been given
@@ -741,6 +742,8 @@ class MaldiData:
         # Release memory
         if cache is not None:
             cache.set("locked-cleaning", False)
+
+        logging.info("Memory cleaned")
 
     def compute_l_labels(self):
         """Computes the list of labels of the dataset.

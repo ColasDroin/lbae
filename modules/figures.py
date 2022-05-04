@@ -104,7 +104,6 @@ class Figures:
 
     ###### FUNCTIONS FOR FIGURE IN LOAD_SLICE PAGE ######
 
-    # ? Move into another class? Doesn't really need self
     def compute_padded_original_images(self):
 
         # Compute number of slices from the original acquisition are present in the folder
@@ -293,6 +292,8 @@ class Figures:
         image = compute_thread_safe_function(
             compute_image_using_index_and_image_lookup,
             cache_flask,
+            self._data,
+            slice_index,
             lb_mz,
             hb_mz,
             self._data.get_array_spectra(slice_index),
@@ -377,6 +378,8 @@ class Figures:
                     image = compute_thread_safe_function(
                         compute_image_using_index_and_image_lookup,
                         cache_flask,
+                        self._data,
+                        slice_index,
                         lb_mz,
                         hb_mz,
                         self._data.get_array_spectra(slice_index),
@@ -437,11 +440,6 @@ class Figures:
             projected_image=projected_image,
             cache_flask=cache_flask,
         )
-
-        logging.info("Done getting image array. Cleaning memory")
-        # Clean memmap memory
-        self._data.clean_memory(slice_index=slice_index, cache=cache_flask)
-        logging.info("Memory cleaned")
 
         logging.info("Converting image to string")
         # Set optimize to False to gain computation time
@@ -523,9 +521,6 @@ class Figures:
                         )
                         image += image_temp
 
-        # Clean memmap memory
-        self._data.clean_memory(slice_index=slice_index, cache=cache_flask)
-
         # Set optimize to False to gain computation time
         base64_string = convert_image_to_base64(image, transparent_zeros=True, optimize=False)
 
@@ -606,9 +601,6 @@ class Figures:
 
         # Reoder axis to match plotly go.image requirements
         array_image = np.moveaxis(np.array(l_images), 0, 2)
-
-        # Clean memmap memory
-        self._data.clean_memory(slice_index=slice_index, cache=cache_flask)
 
         return np.asarray(array_image, dtype=np.uint8)
 
@@ -758,19 +750,31 @@ class Figures:
 
         # If boundaries are provided, get their index
         else:
-            array_spectra_avg = self._data.get_array_avg_spectrum(
-                slice_index, standardization=standardization
-            )
             index_lb, index_hb = compute_thread_safe_function(
                 compute_index_boundaries,
                 cache_flask,
+                self._data,
+                slice_index,
                 lb,
                 hb,
-                array_spectra_avg=array_spectra_avg,
+                array_spectra_avg=self._data.get_array_avg_spectrum(
+                    slice_index, standardization=standardization
+                ),
                 lookup_table=self._data.get_array_lookup_mz_avg(slice_index),
             )
-            x = array_spectra_avg[0, index_lb:index_hb]
-            y = array_spectra_avg[1, index_lb:index_hb]
+
+            def return_x_y(array):
+                x = np.copy(array[0, index_lb:index_hb])
+                y = np.copy(array[1, index_lb:index_hb])
+                return x, y
+
+            # Get x, y in a thread safe fashion
+            # No need to clean memory as it's really small
+            x, y = compute_thread_safe_function(
+                return_x_y,
+                cache_flask,
+                self._data.get_array_avg_spectrum(slice_index, standardization=standardization),
+            )
 
         # In case download without plotting
         if not plot:

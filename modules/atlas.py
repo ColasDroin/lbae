@@ -43,8 +43,6 @@ from modules.tools.misc import logmem
 # --- Class
 # ==================================================================================================
 
-#! Overall, see if I can memmap all the objects in this class
-
 ###### Atlas Class ######
 class Atlas:
     def __init__(self, maldi_data, resolution=25, sample=False):
@@ -166,6 +164,11 @@ class Atlas:
     @property
     def array_projection_corrected(self):
         if self._array_projection_corrected is None:
+            logging.info(
+                "array_projection_corrected is being loaded. This should only happen during"
+                " precomputations."
+                + logmem()
+            )
             self._array_projection_corrected = return_shelved_object(
                 "atlas/atlas_objects",
                 "arrays_projection_corrected",
@@ -181,6 +184,11 @@ class Atlas:
     @property
     def list_projected_atlas_borders_arrays(self):
         if self._list_projected_atlas_borders_arrays is None:
+            logging.info(
+                "list_projected_atlas_borders_arrays is being loaded. This should only happen"
+                " during precomputations."
+                + logmem()
+            )
             self._list_projected_atlas_borders_arrays = return_shelved_object(
                 "atlas/atlas_objects",
                 "list_projected_atlas_borders_arrays",
@@ -438,6 +446,8 @@ class Atlas:
             grah_scattergl_data = compute_thread_safe_function(
                 compute_spectrum_per_row_selection,
                 cache_flask,
+                self.data,
+                slice_index + 1,
                 list_index_bound_rows,
                 list_index_bound_column_per_row,
                 self.data.get_array_spectra(slice_index + 1),
