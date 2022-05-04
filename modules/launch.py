@@ -14,7 +14,7 @@ import shelve
 import sys
 import numpy as np
 
-# LBAE functions
+# LBAE imports
 from modules.tools.storage import check_shelved_object, dump_shelved_object
 from modules.tools.spectra import (
     add_zeros_to_spectrum,

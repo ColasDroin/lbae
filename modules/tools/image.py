@@ -15,7 +15,7 @@ import base64
 from io import BytesIO
 from PIL import Image
 
-# LBAE modules
+# LBAE imports
 from config import black_viridis
 
 # ==================================================================================================
@@ -51,29 +51,29 @@ def convert_image_to_base64(
     binary=False,
     transparent_zeros=False,
 ):
-    """This functions allows for the conversion of a numpy array into a bytestring image using PIL. 
+    """This functions allows for the conversion of a numpy array into a bytestring image using PIL.
     All images are paletted so save space.
 
     Args:
-        image_array (np.ndarray): The array containing the image. May be 1D of 3D or 4D. The type 
+        image_array (np.ndarray): The array containing the image. May be 1D of 3D or 4D. The type
             argument must match with the dimensionality.
-        optimize (bool, optional): If True, PIL will try to optimize the image size, at the expense 
-            of a longer computation time. This is not available with all image formats (check PIL 
+        optimize (bool, optional): If True, PIL will try to optimize the image size, at the expense
+            of a longer computation time. This is not available with all image formats (check PIL
             documentation). Defaults to True.
-        quality (int, optional): Image quality, from 0 to 100, used by PIL for compression. Defaults 
+        quality (int, optional): Image quality, from 0 to 100, used by PIL for compression. Defaults
             to 85.
-        colormap (cm colormap, optional): The colormap used to map 1D uint8 image to colors. 
+        colormap (cm colormap, optional): The colormap used to map 1D uint8 image to colors.
             Defaults to cm.viridis.
-        type (str, optional): The type of the image. If image_array is in 3D, type must be RGB. If 
+        type (str, optional): The type of the image. If image_array is in 3D, type must be RGB. If
             4D, type must be RGBA. Defaults to None.
-        format (str, optional): The output format for the bytestring image. Defaults to "png". 
+        format (str, optional): The output format for the bytestring image. Defaults to "png".
             "webp", "gif", "jpeg" also available.
-        overlay (np.ndarray, optional): Another image array to overlay with image_array. Defaults to 
+        overlay (np.ndarray, optional): Another image array to overlay with image_array. Defaults to
             None.
-        decrease_resolution_factor (int, optional): Used to divide the resolution of the initial 
+        decrease_resolution_factor (int, optional): Used to divide the resolution of the initial
             array, to output a smaller image. Defaults to 1.
-        binary (bool, optional): Used to convert the output image to binary format ("LA", in PIL), 
-            to save a lot of space for greyscales images. 
+        binary (bool, optional): Used to convert the output image to binary format ("LA", in PIL),
+            to save a lot of space for greyscales images.
             Defaults to False.
 
     Returns:

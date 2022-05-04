@@ -12,7 +12,6 @@ are defined.
 # Standard modules
 import numpy as np
 from numba import njit
-from regex import E
 
 # ==================================================================================================
 # --- Functions
@@ -38,24 +37,24 @@ def filter_voxels(
     'array_x', 'array_y', 'array_z' to be used for the 3D graphing. Else, it's filtered out.
 
     Args:
-        array_data_stripped (np.ndarray): A 2-dimensional array of voxel intensity for the current 
+        array_data_stripped (np.ndarray): A 2-dimensional array of voxel intensity for the current
             slice, stripped of zero values.
-        coordinates_stripped (np.ndarray): A 2-dimensional array of voxel coordinates for the 
+        coordinates_stripped (np.ndarray): A 2-dimensional array of voxel coordinates for the
             current slice, stripped of zero values.
-        array_annotations (np.ndarray): The 3-dimensional array of annotation coming from the Allen 
+        array_annotations (np.ndarray): The 3-dimensional array of annotation coming from the Allen
             Brain Atlas.
         percentile (float): The value above which the voxels are considered for the graphing.
         array_x (np.ndarray): A flat array of x coordinates for the 3D graphing.
         array_y (np.ndarray): A flat array of y coordinates for the 3D graphing.
         array_z (np.ndarray): A flat array of z coordinates for the 3D graphing.
         array_c (np.ndarray): A flat array of color (expression) values (float) for the 3D graphing.
-        total_index (int): An integer used to keep track of the array indexing outside of this 
+        total_index (int): An integer used to keep track of the array indexing outside of this
             function.
         reference_shape (np.ndarray): Array containing the reference atlas shape.
         resolution (int): Integer representing the resolution of the atlas.
 
     Returns:
-        (np.ndarray, np.ndarray, np.ndarray, np.ndarray, int): The filled arrays of coordinates or 
+        (np.ndarray, np.ndarray, np.ndarray, np.ndarray, int): The filled arrays of coordinates or
             color for the current slice, and the updated total_index.
     """
     # Keep track of the array indexing even outside of this function
@@ -105,35 +104,35 @@ def fill_array_borders(
     annot_near_border=0.2,
     decrease_dimensionality_factor=None,
 ):
-    """This function takes the Allen Brain atlas array of annotation and returns an array 
+    """This function takes the Allen Brain atlas array of annotation and returns an array
     representing the borders of the atlas, to be used later for the volume plot. Values in the array
     are as follows by default:
     -2 is outside brain or selected structures
     -0.1 is border if differentiate_borders is True
     -0.01 is inside brain/structure
     -0.2 is near border is color_near_borders is True
-    NB: the -0.01 values get changed after assignment to lipid expression, later on in 
+    NB: the -0.01 values get changed after assignment to lipid expression, later on in
     fill_array_interpolation.
 
     Args:
-        array_annotation (np.ndarray): Three-dimensional array of annotation coming from the Allen 
+        array_annotation (np.ndarray): Three-dimensional array of annotation coming from the Allen
             Brain Atlas.
-        differentiate_borders (bool, optional): If True, represent the brain border with a different 
+        differentiate_borders (bool, optional): If True, represent the brain border with a different
             value. Defaults to False.
-        color_near_borders (bool, optional): If True, the region surrounding the brain border is 
+        color_near_borders (bool, optional): If True, the region surrounding the brain border is
             also filled. Defaults to False.
-        keep_structure_id (np.ndarray, optional): Array containing the id of the brain regions whose 
+        keep_structure_id (np.ndarray, optional): Array containing the id of the brain regions whose
             border must be annotated. Defaults to None.
-        annot_outside (float, optional): Value to be used for the areas outside of the brain. 
+        annot_outside (float, optional): Value to be used for the areas outside of the brain.
             Defaults to -2.
-        annot_border (float, optional): Value to be used for the border of the brain. Defaults 
+        annot_border (float, optional): Value to be used for the border of the brain. Defaults
             to -0.1.
-        annot_inside (float, optional): Value to be used for the inside of the brain. Defaults 
+        annot_inside (float, optional): Value to be used for the inside of the brain. Defaults
             to -0.01.
-        annot_near_border (float, optional): Value to be used for the color of the area near the 
+        annot_near_border (float, optional): Value to be used for the color of the area near the
             border of the brain. Defaults to 0.2.
-        decrease_dimensionality_factor (int, optional): Useless parameter, kept for ensuring that 
-            shelving is done properly, as array_annotation corresponds to a given 
+        decrease_dimensionality_factor (int, optional): Useless parameter, kept for ensuring that
+            shelving is done properly, as array_annotation corresponds to a given
             decrease_dimensionality_factor. Defaults to None.
 
     Returns:
@@ -176,12 +175,12 @@ def fill_array_borders(
         for x in range(1, array_annotation.shape[0] - 1):
             for y in range(1, array_annotation.shape[1] - 1):
                 for z in range(1, array_annotation.shape[2] - 1):
-                    if np.abs(array_atlas_borders[x, y, z] - (-0.1)) < 10 ** -4:
+                    if np.abs(array_atlas_borders[x, y, z] - (-0.1)) < 10**-4:
                         for xt in range(x - 1, x + 2):
                             for yt in range(y - 1, y + 2):
                                 for zt in range(z - 1, z + 2):
                                     # not on the border
-                                    if np.abs(array_atlas_borders[xt, yt, zt] - (-0.1)) > 10 ** -4:
+                                    if np.abs(array_atlas_borders[xt, yt, zt] - (-0.1)) > 10**-4:
                                         array_atlas_borders[xt, yt, zt] = annot_near_border
 
     return array_atlas_borders
@@ -190,10 +189,16 @@ def fill_array_borders(
 # Fill the 3D array of expression with the value from the slices
 @njit
 def fill_array_slices(
-    array_x, array_y, array_z, array_c, array_slices, array_for_avg, limit_value_inside=-0.05,
+    array_x,
+    array_y,
+    array_z,
+    array_c,
+    array_slices,
+    array_for_avg,
+    limit_value_inside=-0.05,
 ):
-    """This function takes the arrays of expression in the slices and fills the 3D array of 
-    expression with them, inside of the regions annotated in the provided array_slices (which is 
+    """This function takes the arrays of expression in the slices and fills the 3D array of
+    expression with them, inside of the regions annotated in the provided array_slices (which is
     initially a simple copy of array_atlas_borders).
 
     Args:
@@ -201,15 +206,15 @@ def fill_array_slices(
         array_y (np.ndarray): A flat array of y coordinates for the 3D graphing.
         array_z (np.ndarray): A flat array of z coordinates for the 3D graphing.
         array_c (np.ndarray): A flat array of expression values (float) for the 3D graphing.
-        array_slices (np.ndarray): Initially, a 3D numpy array representing the borders of the atlas. 
+        array_slices (np.ndarray): Initially, a 3D numpy array representing the borders of the atlas.
             It is then filled with lipid expression values (from array_c) in the slices.
-        array_for_avg (np.ndarray): A 3D numpy array used for keeping count of the number of times 
+        array_for_avg (np.ndarray): A 3D numpy array used for keeping count of the number of times
             a cell has been assigned, for averaging the expression values later on.
-        limit_value_inside (float, optional): The value above which the array must be filled, i.e. 
+        limit_value_inside (float, optional): The value above which the array must be filled, i.e.
             corresponds to an annotated region of the brain. Defaults to -0.05.
 
     Returns:
-        np.ndarray: A 3D numpy array representing the expression of the lipids preliminarily stored 
+        np.ndarray: A 3D numpy array representing the expression of the lipids preliminarily stored
             in array_c, in the regions preliminarily annotated in array_slices.
     """
     for x, y, z, c in zip(array_x, array_y, array_z, array_c):
@@ -234,19 +239,19 @@ def fill_array_slices(
 def fill_array_interpolation(
     array_annotation, array_slices, divider_radius=5, annot_inside=-0.01, limit_value_inside=-2
 ):
-    """This function is used to fill the empty space (unassigned voxels) between the slices with 
+    """This function is used to fill the empty space (unassigned voxels) between the slices with
     interpolated values.
 
     Args:
-        array_annotation (np.ndarray): Three-dimensional array of annotation coming from the Allen 
+        array_annotation (np.ndarray): Three-dimensional array of annotation coming from the Allen
             Brain Atlas.
-        array_slices (np.ndarray): Three-dimensional array containing the lipid intensity values 
+        array_slices (np.ndarray): Three-dimensional array containing the lipid intensity values
             from the MALDI experiments (with many unassigned voxels).
-        divider_radius (int, optional): Divides the radius of the region used for interpolation 
+        divider_radius (int, optional): Divides the radius of the region used for interpolation
             (the bigger, the lower the number of voxels used). Defaults to 5.
-        annot_inside (float, optional): Value used to denotate the inside of the brain. Defaults 
+        annot_inside (float, optional): Value used to denotate the inside of the brain. Defaults
             to -0.01.
-        limit_value_inside (float, optional): Alternative to annot_inside. Values above 
+        limit_value_inside (float, optional): Alternative to annot_inside. Values above
             limit_value_inside are considered inside the brain. Defaults to -2.
 
     Returns:
@@ -267,7 +272,7 @@ def fill_array_interpolation(
                     if array_annotation[x, y, z] > limit_value_inside:
                         condition_fulfilled = True
                 elif (
-                    np.abs(array_slices[x, y, z] - annot_inside) < 10 ** -4
+                    np.abs(array_slices[x, y, z] - annot_inside) < 10**-4
                 ) and not condition_fulfilled:
                     condition_fulfilled = True
                 if condition_fulfilled:
@@ -299,7 +304,7 @@ def fill_array_interpolation(
                                                 array_annotation[x, y, z]
                                                 - array_annotation[xt, yt, zt]
                                             )
-                                            < 10 ** -4
+                                            < 10**-4
                                         ):
                                             d = np.sqrt(
                                                 (x - xt) ** 2 + (y - yt) ** 2 + (z - zt) ** 2
@@ -316,8 +321,21 @@ def fill_array_interpolation(
 
     return array_interpolated
 
+
 @njit
 def crop_array(array_annotation, list_id_regions):
+    """Given an array of annotations containing regions as ids, and a list of ids, this functions
+    crops the parts of the array that do not contain the regions inside of the list.
+
+    Args:
+        array_annotation (np.ndarray): A 3D numpy array containing the annotations of the brain as
+            integers.
+        list_id_regions (np.ndarray): A flat array of integers containing the ids of the regions to
+            keep.
+
+    Returns:
+        int, int, int, int, int, int: The min and max indices to keep for each dimension.
+    """
     # Crop the figure to shorten interpolation time
     x_min, x_max, y_min, y_max, z_min, z_max = (
         0,
@@ -383,10 +401,8 @@ def crop_array(array_annotation, list_id_regions):
         if found:
             break
 
+    # If the cropping went properly, return the extrema indices, else return None
     if x_min is None:
-        pass
-        # logging.warning("Bug, no voxel value has been assigned")
+        return None
     else:
         return x_min, x_max, y_min, y_max, z_min, z_max
-
-

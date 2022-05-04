@@ -19,7 +19,7 @@ import logging
 import io
 from imageio import imread
 
-# Homemade functions
+# LBAE imports
 from modules.tools.atlas import (
     project_atlas_mask,
     get_array_rows_from_atlas_mask,
@@ -43,9 +43,17 @@ from modules.tools.misc import logmem
 # --- Class
 # ==================================================================================================
 
-###### Atlas Class ######
+
 class Atlas:
     def __init__(self, maldi_data, resolution=25, sample=False):
+        """Initialize the class Atlas.
+
+        Args:
+            data (MaldiData): MaldiData object, used to manipulate the raw MALDI data.
+            resolution (int): Resolution of the atlas. Default to 25.
+            sample (bool): If True, only a fraction of the precomputations are made (for debug).
+                Default to False.
+        """
 
         logging.info("Initializing Atlas object" + logmem())
 
@@ -56,13 +64,12 @@ class Atlas:
             logging.warning("The resolution you chose is not available, using the default of 25um")
             self.resolution = 25
 
-        # Load our data
+        # Attribute to easily access the data
         self.data = maldi_data
 
         # Load or download the atlas if it's the first time BrainGlobeAtlas is used
         brainglobe_dir = "data/atlas/"
         os.makedirs(brainglobe_dir, exist_ok=True)
-
         self.bg_atlas = BrainGlobeAtlas(
             "allen_mouse_" + str(resolution) + "um",
             brainglobe_dir=brainglobe_dir,
@@ -91,7 +98,7 @@ class Atlas:
 
         # Load array of coordinates for warped data (can't be loaded on the fly from shelve as used
         # with hovering). Weights ~225mb
-        # * Type turned into np.float16 but maybe this may lead to a loss of precision
+        # * Type turned into np.float16 to gain ram but maybe this may lead to a loss of precision
         self.array_coordinates_warped_data = np.array(
             skimage.io.imread("data/tiff_files/coordinates_warped_data.tif"), dtype=np.float16
         )
@@ -153,16 +160,22 @@ class Atlas:
             # Since this function is called at startup, no data locking is needed
             self.save_all_projected_masks_and_spectra(cache_flask=None, sample=sample)
 
-        # Properties
+        # These attributes are defined later as properties as they are only used during
+        # precomputations
         self._array_projection_corrected = None
         self._list_projected_atlas_borders_arrays = None
 
         logging.info("Atlas object instantiated" + logmem())
 
-    # Load arrays of images using atlas projection. It's a property to save memory as it is only
-    # used with objects that should also be precomputed.
     @property
     def array_projection_corrected(self):
+        """Load arrays of images using atlas projection. It's a property to save memory as it is
+        only used with objects that should also be precomputed.
+
+        Returns:
+            np.ndarray: A three-dimensional array which contains the data (one integer per
+            coordinate, corresponding to a pixel intensity) from our original acquisition.
+        """
         if self._array_projection_corrected is None:
             logging.info(
                 "array_projection_corrected is being loaded. This should only happen during"
@@ -179,10 +192,15 @@ class Atlas:
             )[0]
         return self._array_projection_corrected
 
-    # Load array of projected atlas borders (i.e. image of atlas annotations). It's a property to
-    # save memory as it is only used with objects that should also be precomputed.
     @property
     def list_projected_atlas_borders_arrays(self):
+        """Load array of projected atlas borders (i.e. image of atlas annotations). It's a property
+        to save memory as it is only used with objects that should also be precomputed.
+
+        Returns:
+            list(np.ndarray): A list of arrays, one per slice, which contains the atlas
+            borders projected on our data.
+        """
         if self._list_projected_atlas_borders_arrays is None:
             logging.info(
                 "list_projected_atlas_borders_arrays is being loaded. This should only happen"
@@ -200,6 +218,14 @@ class Atlas:
     # Compute a dictionnary that associate to each structure (acronym) the set of ids (int) of all
     # of its children
     def compute_dic_acronym_children_id(self):
+        """Recursively compute a dictionnary that associate structure to the set of its children.
+
+        Returns:
+            dict: A dictionnary that associate to each structure (acronym) the set of ids (int) of
+                all of its children.
+        """
+
+        # Recursive function to compute the parent of each structure
         def fill_dic_acronym_children_id(dic_acronym_children_id, l_id_leaves):
             older_leave_id = l_id_leaves[0]
             acronym = self.bg_atlas.structures[older_leave_id]["acronym"]
@@ -217,15 +243,29 @@ class Atlas:
                 )
             return dic_acronym_children_id
 
+        # Initialize dictionnary as empty
         dic_acronym_children_id = {}
+
+        # Loop over each structure
         for id in set(self.bg_atlas.annotation.flatten()):
             if id != 0:
+                # Fill the dictionnary by climbing up the hierarchy structure
                 dic_acronym_children_id = fill_dic_acronym_children_id(
                     dic_acronym_children_id, [id]
                 )
         return dic_acronym_children_id
 
     def compute_hierarchy_list(self):
+        """Compute, for each children (node), the corresponding parent, to build a list associating
+        child/parent for all structures, and also compute dictionnaries that associate structure
+        acronyms to their complete name in the process.
+
+        Returns:
+            list(str): List of children (node) names.
+            list(str): List of parent names.
+            dict: A dictionnary that associate structure name to its acronym.
+            dict: A dictionnary that associate structure acronym to its name.
+        """
 
         # Create a list of parents for all ancestors
         l_nodes = []
@@ -233,6 +273,8 @@ class Atlas:
         dic_name_acronym = {}
         dic_acronym_name = {}
         idx = 0
+
+        # Loop over each structure
         for x, v in self.bg_atlas.structures.items():
             if len(self.bg_atlas.get_structure_ancestors(v["acronym"])) > 0:
                 ancestor_acronym = self.bg_atlas.get_structure_ancestors(v["acronym"])[-1]
@@ -243,13 +285,31 @@ class Atlas:
 
             l_nodes.append(current_name)
             l_parents.append(ancestor_name)
+
+            # Register the name/acronym association for each structure
             dic_name_acronym[current_name] = v["acronym"]
             dic_acronym_name[v["acronym"]] = current_name
 
         return l_nodes, l_parents, dic_name_acronym, dic_acronym_name
 
     def compute_array_projection(self, nearest_neighbour_correction=False, atlas_correction=False):
+        """Compute three arrays relating the original coordinates of our data to their projection in
+        the CCFv3.
 
+        Args:
+            nearest_neighbour_correction (bool, optional): If True, the gaps due to the warping and
+                upscaling of the projection are filled with a heuristic method. Defaults to False.
+            atlas_correction (bool, optional): If True, the pixels that are outside of any annotated
+                region are zeroed out. Defaults to False.
+
+        Returns:
+            np.ndarray, np.ndarray, list(np.ndarray): The first array is a high-resolution version
+                of our initial data, in which each individual pixel has been mapped according to the
+                second array, which acts as a mapping table. The list contains the arrays of
+                original coordinates, for each slice.
+        """
+
+        # Start with empty array
         array_projection = np.zeros(self.array_coordinates_warped_data.shape[:-1], dtype=np.int16)
         array_projection_filling = np.zeros(array_projection.shape, dtype=np.int16)
 
@@ -266,7 +326,8 @@ class Atlas:
             compute_function=self.compute_projection_parameters,
         )
         for i in range(array_projection.shape[0]):
-            # print("slice " + str(i) + " getting processed")
+
+            # Get transform parameters
             a, u, v = l_transform_parameters[i]
 
             # load corresponding slice and coor
@@ -365,7 +426,6 @@ class Atlas:
         return l_array_images
 
     # * This is quite long to execute (~10mn)
-    # ! Delete this comment if it's not long anymore
     def prepare_and_compute_array_images_atlas(self, zero_out_of_annotation=False):
 
         # Compute an array of simplified structures ids
