@@ -1,6 +1,7 @@
 #
 # TODO Incorporate new brain 1 and brain 2
 # TODO Check all functions and deprecate the ones that are not used anymore
+# TODO clean the config file
 # TODO Adress all # ! and # ? comments in the code
 # TODO Write missing docstrings
 # TODO Check that all force_update are set to False

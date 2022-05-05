@@ -61,6 +61,10 @@ class Launch:
             startup.
     """
 
+    # ==============================================================================================
+    # --- Constructor
+    # ==============================================================================================
+
     def __init__(self, data, atlas, figures, path="data/app_data/data.db"):
         """Initialize the class Launch.
 
@@ -227,6 +231,10 @@ class Launch:
             "atlas/atlas_objects/dic_processed_temp",
             "launch/first_launch",
         ]
+
+    # ==============================================================================================
+    # --- Methods
+    # ==============================================================================================
 
     def check_missing_db_entries(self):
         """This function checks if all the entries in self.l_db_entries are in the shelve database.

@@ -15,6 +15,8 @@ import numpy as np
 import pandas as pd
 from modules.tools.misc import logmem
 import logging
+import os
+from skimage import io
 
 # ==================================================================================================
 # --- Class
@@ -22,10 +24,9 @@ import logging
 
 
 class MaldiData:
-    """
-    A class to access the various arrays in the dataset from two dictionnaries, lightweight (always
-    kept in ram), and memmap (remains on disk). It uses the special attribute __slots__ for faster
-    access to the attributes.
+    """A class to access the various arrays in the dataset from two dictionnaries, lightweight
+    (always kept in ram), and memmap (remains on disk). It uses the special attribute __slots__ for
+    faster access to the attributes.
 
     Attributes:
         _dic_lightweight (dictionnary): a dictionnary containing the following lightweights arrays
@@ -138,6 +139,8 @@ class MaldiData:
             memory-mapped arrays) of the app.
         compute_l_labels(): Computes and returns the labels of the lipids in the dataset.
         return_lipid_options(): Computes and returns the list of lipid names, structures and cation.
+        compute_padded_original_images(): Pads the original slice images of the dataset so that they
+            all have the same size.
     """
 
     __slots__ = [
@@ -150,6 +153,10 @@ class MaldiData:
         "_df_annotations_MAIA_transformed_lipids_brain_2",
         "_path_data",
     ]
+
+    # ==============================================================================================
+    # --- Constructor
+    # ==============================================================================================
 
     def __init__(self, path_data="data/whole_dataset/", path_annotations="data/annotations/"):
         """Initialize the class MaldiData.
@@ -205,6 +212,10 @@ class MaldiData:
         )
 
         logging.info("MaldiData object instantiated" + logmem())
+
+    # ==============================================================================================
+    # --- Methods
+    # ==============================================================================================
 
     def get_annotations(self):
         """Getter for the lipid annotation of each slice, contained in a pandas
@@ -785,3 +796,52 @@ class MaldiData:
                 ].cation.unique()
             )
         ]
+
+    def compute_padded_original_images(self):
+        """Pads the original images of the dataset so that they are all the same size.
+
+        Returns:
+            np.ndarray: A 3D numpy array, where the first dimension corresponds to the slice index,
+                and the second and third dimensions correspond to the padded images.
+        """
+        # Compute number of slices from the original acquisition are present in the folder
+        path = "data/tiff_files/original_data/"
+        n_slices = len([x for x in os.listdir(path) if "slice_" in x])
+        if n_slices != self.get_slice_number():
+            logging.warning(
+                "The number of slices computed from the original tiff files is different from"
+                + " the number of slice "
+                + "recorded in the MaldiData object."
+            )
+
+        # Store them as arrays in a list
+        l_array_slices = []
+        for i in range(n_slices):
+            filename = path + "slice_" + str(i + 1) + ".tiff"
+            l_array_slices.append(np.array(io.imread(filename), dtype=np.int16)[:, :, 2])
+
+        # Find the size of the biggest image
+        max_size = (
+            np.max([array_slice.shape[0] for array_slice in l_array_slices]),
+            np.max([array_slice.shape[1] for array_slice in l_array_slices]),
+        )
+
+        # Pad the images with zeros (we add +-0.1 in case we need to round above or below 0.5 if odd dimension)
+        l_array_slices = [
+            np.pad(
+                array_slice,
+                (
+                    (
+                        int(round(max_size[0] - array_slice.shape[0] / 2 - 0.1)),
+                        int(round(max_size[0] - array_slice.shape[0] / 2 + 0.1)),
+                    ),
+                    (
+                        int(round(max_size[1] - array_slice.shape[1] / 2 - 0.1)),
+                        int(round(max_size[1] - array_slice.shape[1] / 2 + 0.1)),
+                    ),
+                ),
+            )
+            for array_slice in l_array_slices
+        ]
+
+        return np.array(l_array_slices)

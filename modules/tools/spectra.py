@@ -21,6 +21,8 @@ from modules.tools.external_lib.mspec import reduce_resolution_sorted
 # ==================================================================================================
 # --- Functions for coordinates indices manipulation
 # ==================================================================================================
+
+
 @njit
 def convert_spectrum_idx_to_coor(index, shape):
     """This function takes a pixel index and converts it into a tuple of integers representing the
@@ -586,6 +588,8 @@ def compute_normalized_image_per_lipid(
 # ==================================================================================================
 # --- Functions to compute m/z boundaries for averaged arrays (1-D lookup table)
 # ==================================================================================================
+
+
 @njit
 def compute_index_boundaries_nolookup(low_bound, high_bound, array_spectra_avg):
     """This function computes, from array_spectra_avg, the first existing indices corresponding to

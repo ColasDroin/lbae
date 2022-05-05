@@ -1,10 +1,17 @@
-###### IMPORT MODULES ######
+# Copyright (c) 2022, Colas Droin. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+
+""" This class is used to produce the figures and widgets used in the app, themselves requiring data
+from the MALDI imaging, and the Allen Brain Atlas, as well as the mapping between the two."""
+
+# ==================================================================================================
+# --- Imports
+# ==================================================================================================
 
 # Standard modules
 import numpy as np
 import plotly.graph_objects as go
 import plotly.express as px
-import os
 from skimage import io
 from scipy.ndimage.interpolation import map_coordinates
 import logging
@@ -23,7 +30,7 @@ from modules.tools.volume import (
     fill_array_slices,
     crop_array,
 )
-from config import dic_colors, l_colors, l_colors_progress
+from config import dic_colors, l_colors
 from modules.tools.spectra import (
     compute_image_using_index_and_image_lookup,
     compute_index_boundaries,
@@ -33,12 +40,30 @@ from modules.tools.spectra import (
 )
 
 
-###### DEFINE FIGURES CLASS ######
+# ==================================================================================================
+# --- Class
+# ==================================================================================================
+
+
 class Figures:
     __slots__ = ["_data", "_atlas", "dic_fig_contours", "dic_normalization_factors"]
 
+    # ==============================================================================================
+    # --- Constructor
+    # ==============================================================================================
+
     def __init__(self, maldi_data, atlas, sample=False):
+        """Initialize the Figures class.
+
+        Args:
+            maldi_data (MaldiData): MaldiData object, used to manipulate the raw MALDI data.
+            atlas (Atlas): Used to manipulate the objects coming from the Allen Brain Atlas.
+            sample (bool, optional): If True, only a fraction of the precomputations are made (for
+                debug). Default to False.
+        """
         logging.info("Initializing Figures object" + logmem())
+
+        # Attribute to easily access the maldi and allen brain atlas data
         self._data = maldi_data
         self._atlas = atlas
 
@@ -101,51 +126,9 @@ class Figures:
 
         logging.info("Figures object instantiated" + logmem())
 
-    ###### FUNCTIONS FOR FIGURE IN LOAD_SLICE PAGE ######
-
-    def compute_padded_original_images(self):
-
-        # Compute number of slices from the original acquisition are present in the folder
-        path = "data/tiff_files/original_data/"
-        n_slices = len([x for x in os.listdir(path) if "slice_" in x])
-        if n_slices != self._data.get_slice_number():
-            logging.warning(
-                "The number of slices computed from the original tiff files is different from"
-                + " the number of slice "
-                + "recorded in the MaldiData object."
-            )
-
-        # Store them as arrays in a list
-        l_array_slices = []
-        for i in range(n_slices):
-            filename = path + "slice_" + str(i + 1) + ".tiff"
-            l_array_slices.append(np.array(io.imread(filename), dtype=np.int16)[:, :, 2])
-
-        # Find the size of the biggest image
-        max_size = (
-            np.max([array_slice.shape[0] for array_slice in l_array_slices]),
-            np.max([array_slice.shape[1] for array_slice in l_array_slices]),
-        )
-
-        # Pad the images with zeros (we add +-0.1 in case we need to round above or below 0.5 if odd dimension)
-        l_array_slices = [
-            np.pad(
-                array_slice,
-                (
-                    (
-                        int(round(max_size[0] - array_slice.shape[0] / 2 - 0.1)),
-                        int(round(max_size[0] - array_slice.shape[0] / 2 + 0.1)),
-                    ),
-                    (
-                        int(round(max_size[1] - array_slice.shape[1] / 2 - 0.1)),
-                        int(round(max_size[1] - array_slice.shape[1] / 2 + 0.1)),
-                    ),
-                ),
-            )
-            for array_slice in l_array_slices
-        ]
-
-        return np.array(l_array_slices)
+    # ==============================================================================================
+    # --- Methods used mainly in load_slice
+    # ==============================================================================================
 
     # For docstring: if only_contours is True, all other arguments (but index_image) are ignored
     def compute_figure_basic_image(
@@ -255,7 +238,7 @@ class Figures:
     def compute_array_basic_images(self, type_figure="warped_data"):
         array_images = None
         if type_figure == "original_data":
-            array_images = self.compute_padded_original_images()
+            array_images = self._data.compute_padded_original_images()
         elif type_figure == "warped_data":
             array_images = np.array(io.imread("data/tiff_files/warped_data.tif"))
         elif type_figure == "projection_corrected":
@@ -271,7 +254,182 @@ class Figures:
             array_images = array_projected_images_atlas
         return array_images
 
-    ###### FUNCTIONS FOR FIGURE IN LIPID_SELECTION PAGE ######
+    def compute_figure_slices_3D(self, reduce_resolution_factor=20):
+
+        # get transform parameters (a,u,v) for each slice
+        l_transform_parameters = return_shelved_object(
+            "atlas/atlas_objects",
+            "l_transform_parameters",
+            force_update=False,
+            compute_function=self._atlas.compute_projection_parameters,
+        )
+
+        # reduce resolution of the slices
+        new_dims = []
+        n_slices = self._atlas.array_coordinates_warped_data.shape[0]
+        d1 = self._atlas.array_coordinates_warped_data.shape[1]
+        d2 = self._atlas.array_coordinates_warped_data.shape[2]
+        for original_length, new_length in zip(
+            self._atlas.array_projection_corrected.shape,
+            (
+                n_slices,
+                int(round(d1 / reduce_resolution_factor)),
+                int(round(d2 / reduce_resolution_factor)),
+            ),
+        ):
+            new_dims.append(np.linspace(0, original_length - 1, new_length))
+
+        coords = np.meshgrid(*new_dims, indexing="ij")
+        array_projection_small = map_coordinates(self._atlas.array_projection_corrected, coords)
+
+        fig = go.Figure(
+            frames=[
+                go.Frame(
+                    data=self.get_surface(
+                        i, l_transform_parameters, array_projection_small, reduce_resolution_factor
+                    ),
+                    name=str(i + 1),
+                )
+                if i != 12 and i != 8
+                else go.Frame(
+                    data=self.get_surface(
+                        i - 1,
+                        l_transform_parameters,
+                        array_projection_small,
+                        reduce_resolution_factor,
+                    ),
+                    name=str(i + 1),
+                )
+                for i in range(0, self._data.get_slice_number(), 1)
+            ]
+        )
+        fig.add_trace(
+            self.get_surface(
+                0, l_transform_parameters, array_projection_small, reduce_resolution_factor
+            )
+        )
+
+        def frame_args(duration):
+            return {
+                "frame": {"duration": duration},
+                "mode": "immediate",
+                "fromcurrent": True,
+                "transition": {"duration": duration, "easing": "linear"},
+            }
+
+        sliders = [
+            {
+                "pad": {"b": 5, "t": 10},
+                "len": 0.9,
+                "x": 0.05,
+                "y": 0,
+                "steps": [
+                    {
+                        "args": [[f.name], frame_args(0)],
+                        "label": str(k),
+                        "method": "animate",
+                    }
+                    for k, f in enumerate(fig.frames)
+                ],
+                "currentvalue": {
+                    "visible": False,
+                },
+            }
+        ]
+
+        # Layout
+        fig.update_layout(
+            scene=dict(
+                aspectratio=dict(x=1.5, y=1, z=1),
+                yaxis=dict(
+                    range=[0.0, 0.35],
+                    autorange=False,
+                    backgroundcolor="rgba(0,0,0,0)",
+                    color="grey",
+                    gridcolor="grey",
+                ),
+                zaxis=dict(
+                    range=[0.2, -0.02],
+                    autorange=False,
+                    backgroundcolor="rgba(0,0,0,0)",
+                    color="grey",
+                    gridcolor="grey",
+                ),
+                xaxis=dict(
+                    range=[0.0, 0.35],
+                    autorange=False,
+                    backgroundcolor="rgba(0,0,0,0)",
+                    color="grey",
+                    gridcolor="grey",
+                ),
+            ),
+            margin=dict(t=5, r=0, b=0, l=0),
+            template="plotly_dark",
+            sliders=sliders,
+        )
+
+        # No display of tick labels as they're wrong anyway
+        fig.update_layout(
+            scene=dict(
+                xaxis=dict(showticklabels=False),
+                yaxis=dict(showticklabels=False),
+                zaxis=dict(showticklabels=False),
+            ),
+            paper_bgcolor="rgba(0,0,0,0.)",
+            plot_bgcolor="rgba(0,0,0,0.)",
+        )
+        return fig
+
+    # ! I can probably numbaize that
+    def get_surface(
+        self, slice_index, l_transform_parameters, array_projection, reduce_resolution_factor
+    ):
+
+        a, u, v = l_transform_parameters[slice_index]
+
+        ll_x = []
+        ll_y = []
+        ll_z = []
+
+        for i, lambd in enumerate(range(array_projection[slice_index].shape[0])):
+            l_x = []
+            l_y = []
+            l_z = []
+            for j, mu in enumerate(range(array_projection[slice_index].shape[1])):
+                x_atlas, y_atlas, z_atlas = (
+                    np.array(
+                        slice_to_atlas_transform(
+                            a, u, v, lambd * reduce_resolution_factor, mu * reduce_resolution_factor
+                        )
+                    )
+                    * self._atlas.resolution
+                    / 1000
+                )
+                l_x.append(z_atlas)
+                l_y.append(x_atlas)
+                l_z.append(y_atlas)
+
+            if l_x != []:
+                ll_x.append(l_x)
+                ll_y.append(l_y)
+                ll_z.append(l_z)
+
+        surface = go.Surface(
+            z=np.array(ll_z),
+            x=np.array(ll_x),
+            y=np.array(ll_y),
+            surfacecolor=array_projection[slice_index].astype(np.int32),
+            cmin=0,
+            cmax=255,
+            colorscale="viridis",
+            opacityscale=[[0, 0], [0.1, 1], [1, 1]],
+            showscale=False,
+        )
+        return surface
+
+    # ==============================================================================================
+    # --- Methods used mainly in lipid_selection
+    # ==============================================================================================
 
     def compute_image_per_lipid(
         self,
@@ -841,6 +999,10 @@ class Figures:
         fig.layout.paper_bgcolor = "rgba(0,0,0,0)"
         return fig
 
+    # ==============================================================================================
+    # --- Methods used mainly in region_analysis
+    # ==============================================================================================
+
     def return_heatmap_lipid(self, fig=None):
 
         # Build empty figure if not provided
@@ -860,184 +1022,9 @@ class Figures:
 
         return fig
 
-    def compute_figure_slices_3D(self, reduce_resolution_factor=20):
-
-        # get transform parameters (a,u,v) for each slice
-        l_transform_parameters = return_shelved_object(
-            "atlas/atlas_objects",
-            "l_transform_parameters",
-            force_update=False,
-            compute_function=self._atlas.compute_projection_parameters,
-        )
-
-        # reduce resolution of the slices
-        new_dims = []
-        n_slices = self._atlas.array_coordinates_warped_data.shape[0]
-        d1 = self._atlas.array_coordinates_warped_data.shape[1]
-        d2 = self._atlas.array_coordinates_warped_data.shape[2]
-        for original_length, new_length in zip(
-            self._atlas.array_projection_corrected.shape,
-            (
-                n_slices,
-                int(round(d1 / reduce_resolution_factor)),
-                int(round(d2 / reduce_resolution_factor)),
-            ),
-        ):
-            new_dims.append(np.linspace(0, original_length - 1, new_length))
-
-        coords = np.meshgrid(*new_dims, indexing="ij")
-        array_projection_small = map_coordinates(self._atlas.array_projection_corrected, coords)
-
-        fig = go.Figure(
-            frames=[
-                go.Frame(
-                    data=self.get_surface(
-                        i, l_transform_parameters, array_projection_small, reduce_resolution_factor
-                    ),
-                    name=str(i + 1),
-                )
-                if i != 12 and i != 8
-                else go.Frame(
-                    data=self.get_surface(
-                        i - 1,
-                        l_transform_parameters,
-                        array_projection_small,
-                        reduce_resolution_factor,
-                    ),
-                    name=str(i + 1),
-                )
-                for i in range(0, self._data.get_slice_number(), 1)
-            ]
-        )
-        fig.add_trace(
-            self.get_surface(
-                0, l_transform_parameters, array_projection_small, reduce_resolution_factor
-            )
-        )
-
-        def frame_args(duration):
-            return {
-                "frame": {"duration": duration},
-                "mode": "immediate",
-                "fromcurrent": True,
-                "transition": {"duration": duration, "easing": "linear"},
-            }
-
-        sliders = [
-            {
-                "pad": {"b": 5, "t": 10},
-                "len": 0.9,
-                "x": 0.05,
-                "y": 0,
-                "steps": [
-                    {
-                        "args": [[f.name], frame_args(0)],
-                        "label": str(k),
-                        "method": "animate",
-                    }
-                    for k, f in enumerate(fig.frames)
-                ],
-                "currentvalue": {
-                    "visible": False,
-                },
-            }
-        ]
-
-        # Layout
-        fig.update_layout(
-            # title="Experimental slices in volumetric data",
-            # width=600,
-            # height=600,
-            scene=dict(
-                # zaxis=dict(autorange=False),
-                aspectratio=dict(x=1.5, y=1, z=1),
-                # zaxis_autorange="reversed",
-                # aspectmode = "data",
-                yaxis=dict(
-                    range=[0.0, 0.35],
-                    autorange=False,
-                    backgroundcolor="rgba(0,0,0,0)",
-                    color="grey",
-                    gridcolor="grey",
-                ),
-                zaxis=dict(
-                    range=[0.2, -0.02],
-                    autorange=False,
-                    backgroundcolor="rgba(0,0,0,0)",
-                    color="grey",
-                    gridcolor="grey",
-                ),
-                xaxis=dict(
-                    range=[0.0, 0.35],
-                    autorange=False,
-                    backgroundcolor="rgba(0,0,0,0)",
-                    color="grey",
-                    gridcolor="grey",
-                ),
-            ),
-            margin=dict(t=5, r=0, b=0, l=0),
-            template="plotly_dark",
-            sliders=sliders,
-        )
-
-        # No display of tick labels as they're wrong anyway
-        fig.update_layout(
-            scene=dict(
-                xaxis=dict(showticklabels=False),
-                yaxis=dict(showticklabels=False),
-                zaxis=dict(showticklabels=False),
-            ),
-            paper_bgcolor="rgba(0,0,0,0.)",
-            plot_bgcolor="rgba(0,0,0,0.)",
-        )
-        return fig
-
-    # ! I can probably numbaize that
-    def get_surface(
-        self, slice_index, l_transform_parameters, array_projection, reduce_resolution_factor
-    ):
-
-        a, u, v = l_transform_parameters[slice_index]
-
-        ll_x = []
-        ll_y = []
-        ll_z = []
-
-        for i, lambd in enumerate(range(array_projection[slice_index].shape[0])):
-            l_x = []
-            l_y = []
-            l_z = []
-            for j, mu in enumerate(range(array_projection[slice_index].shape[1])):
-                x_atlas, y_atlas, z_atlas = (
-                    np.array(
-                        slice_to_atlas_transform(
-                            a, u, v, lambd * reduce_resolution_factor, mu * reduce_resolution_factor
-                        )
-                    )
-                    * self._atlas.resolution
-                    / 1000
-                )
-                l_x.append(z_atlas)
-                l_y.append(x_atlas)
-                l_z.append(y_atlas)
-
-            if l_x != []:
-                ll_x.append(l_x)
-                ll_y.append(l_y)
-                ll_z.append(l_z)
-
-        surface = go.Surface(
-            z=np.array(ll_z),
-            x=np.array(ll_x),
-            y=np.array(ll_y),
-            surfacecolor=array_projection[slice_index].astype(np.int32),
-            cmin=0,
-            cmax=255,
-            colorscale="viridis",
-            opacityscale=[[0, 0], [0.1, 1], [1, 1]],
-            showscale=False,
-        )
-        return surface
+    # ==============================================================================================
+    # --- Methods used mainly in threeD_exploration
+    # ==============================================================================================
 
     def compute_treemaps_figure(self, maxdepth=5):
         fig = px.treemap(
@@ -1576,8 +1563,9 @@ class Figures:
         logging.info("Returning figure")
         return fig_heatmap_lipids
 
-    ###### SHELVING FUNCTIONS ######
-
+    # ==============================================================================================
+    # --- Methods used for shelving results
+    # ==============================================================================================
     def shelve_arrays_basic_figures(self, force_update=False):
         for idx_slice in range(self._data.get_slice_number()):
             for type_figure in ["original_data", "warped_data", "projection_corrected", "atlas"]:
