@@ -37,10 +37,9 @@ class Launch:
     """Class used to precompute and shelve objects at app launch.
 
     Attributes:
-        data (MaldiData): MaldiData object, used to manipulate the raw MALDI data.
-        atlas (Atlas): Atlas object, used to manipulate the objects coming from the Allen Brain
-            Atlas.
-        figures (Figures): Figures object, used to build the figures of the app.
+        data (MaldiData): Used to manipulate the raw MALDI data.
+        atlas (Atlas): Used to manipulate the objects coming from the Allen Brain Atlas.
+        figures (Figures): FUsed to build the figures of the app.
         path (str): Path to the shelve database.
         l_atlas_objects_at_init (list): List of atlas objects normally computed at app startup
             if not already in shelve database.

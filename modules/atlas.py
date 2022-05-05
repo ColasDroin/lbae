@@ -45,6 +45,72 @@ from modules.tools.misc import logmem
 
 
 class Atlas:
+    """Class used to do the interface between the data coming from acquisitions (MALDI), and
+    the Allen Brain Atlas.
+
+    Attributes:
+        resolution (int): Resolution of the atlas.
+        data (MaldiData): Used to manipulate the raw MALDI data.
+        bg_atlas (BrainGlobeAtlas): Used to query the Allen Brain Atlas.
+        subsampling_block (int): Set the subsampling of the atlas in the longitudinal direction, to
+            decrease the memory usage.
+        labels (Labels): Used to load string annotation for contour plot, for each voxel.
+        dic_acronym_children_id (dict): Dictionnary that associates, to each structure (acronym),
+            the set of ids (int) of all of its children.
+        array_coordinates_warped_data (np.ndarray): An array that contains, for each slice and each
+            pixel coordinate, the corresponding coordinates in the CCFv3.
+        image_shape (np.ndarray): An array that contains two integer values: the height and width of
+            the slice images after warping/upscaling (these values are identical for all slices).
+        l_nodes (list): Along with l_parents (below), this list of nodes can be used to rebuild the
+            complete hierarchy of structures of the Allen Brain atlas.
+        l_parents (list): See l_nodes above.
+        dic_name_acronym (dict): A dictionnary that associates, to each brain region/structure name,
+            a specific id (acronym, i.e. short label).
+        dic_acronym_name (dict): A dictionnary that associates, to each brain region/structure
+            acronym, a specific name.
+        array_projection_correspondence_corrected (np.ndarray): An array that contains encodes the
+            warping/upscaling transformation of the data.
+        l_original_coor (list(np.ndarray)): A list of arrays that contains the coordinates of the
+            original data in the CCFv3.
+        dic_existing_masks (dict): A dictionnary of existing masks per slice, which associates slice
+            index (key) to a set of masks acronyms.
+
+        Private attributes (starting with an underscore) are described as properties below.
+
+    Properties:
+        array_projection_corrected (np.ndarray): A three-dimensional array which contains the data
+            (one integer per coordinate, corresponding to a pixel intensity) from our original
+            acquisition.
+        list_projected_atlas_borders_arrays (list(np.ndarray)): A list of arrays, one per slice,
+            which contains the atlas borders projected on our data.
+
+
+    Methods:
+        __init__(maldi_data, resolution=25, sample=False): Initialize the Atlas class.
+        compute_dic_acronym_children_id(): Recursively compute a dictionnary that associates brain
+            structures to the set of their children.
+        compute_hierarchy_list(): Compute, for each children (node) structure, the corresponding
+            parent, to build a list associating child/parent for all structures, and also compute
+            dictionnaries that associate structure acronyms to their complete name in the process.
+        compute_array_projection(nearest_neighbour_correction=False, atlas_correction=False):
+            Compute three arrays relating the original coordinates of our data to their projection
+            in the CCFv3.
+        compute_projection_parameters(): Compute the parameters used to map the 3D coordinates of
+            the CCFv3 to the the 2D (tiled) slices.
+        compute_list_projected_atlas_borders_figures(): Compute an array of projected atlas borders.
+        prepare_and_compute_array_images_atlas(zero_out_of_annotation=False): Wrapper for
+            compute_array_images_atlas.
+        get_atlas_mask(structure): Compute a mask for the structure given as argument.
+        compute_spectrum_data(slice_index, projected_mask=None, mask_name=None,
+            slice_coor_rescaled=None, MAIA_correction=False, cache_flask=None): Compute the averaged
+            spectral data for a given slice and a given mask.
+        save_all_projected_masks_and_spectra(force_update=False, cache_flask=None, sample=False):
+            Save all the (2D) masks and corresponding averaged spectral data, for all the slices.
+        get_projected_mask_and_spectrum(slice_index, mask_name, MAIA_correction=False): Get the
+            projected mask and corresponding averaged spectral data for a given mask and slice.
+
+    """
+
     def __init__(self, maldi_data, resolution=25, sample=False):
         """Initialize the class Atlas.
 
@@ -107,9 +173,9 @@ class Atlas:
         self.image_shape = list(self.array_coordinates_warped_data.shape[1:-1])
 
         # Record dict that associate brain region (complete string) to specific id (short label),
-        # along with graph of structures. Although the treemap graph is precomputed, the two dics of
-        # name and acronyms are relatively lightweight and are used in many different place, so
-        # they shouldn't be used a properties
+        # along with graph of structures (l_nodes and l_parents). Although the treemap graph is
+        # precomputed, the two dics of name and acronyms are relatively lightweight and are used in
+        # many different place, so they shouldn't be used a properties
         (
             self.l_nodes,
             self.l_parents,
@@ -216,7 +282,8 @@ class Atlas:
         return self._list_projected_atlas_borders_arrays
 
     def compute_dic_acronym_children_id(self):
-        """Recursively compute a dictionnary that associate structure to the set of its children.
+        """Recursively compute a dictionnary that associates brain structures to the set of their
+            children.
 
         Returns:
             dict: A dictionnary that associate to each structure (acronym) the set of ids (int) of
@@ -459,6 +526,7 @@ class Atlas:
         # Compute an array of simplified structures ids
         simplified_atlas_annotation = compute_simplified_atlas_annotation(self.bg_atlas.annotation)
 
+        # Compute the actual array of atlas images
         return compute_array_images_atlas(
             self.array_coordinates_warped_data,
             simplified_atlas_annotation,
@@ -468,6 +536,17 @@ class Atlas:
         )
 
     def get_atlas_mask(self, structure):
+        """Compute a mask for the structure given as argument. The brain regions corresponding to
+        the structure id or any of its descendants are set to the id of the structure. The rest is
+        set to 0.
+
+        Args:
+            structure (str): Structure (brain region) acronym.
+
+        Returns:
+            np.ndarray: A 3D mask with the same shape as the array of annotations from the atlas,
+                where all elements are zeros except for the requested structure.
+        """
 
         logging.info('Getting mask for structure "{}"'.format(structure))
 
@@ -480,7 +559,7 @@ class Atlas:
         # Build empty mask for 3D array of atlas annotations
         mask_stack = np.zeros(self.bg_atlas.shape, self.bg_atlas.annotation.dtype)
 
-        # Compute a list of ids (parents + children) we want to keep in the final annotation
+        # Compute a list of ids (parent + children) we want to keep in the final annotation
         l_id = [self.bg_atlas.structures[descendant]["id"] for descendant in descendants] + [
             structure_id
         ]
@@ -500,9 +579,36 @@ class Atlas:
         MAIA_correction=False,
         cache_flask=None,
     ):
+        """This function computes the averaged spectral data for a given slice and a given mask, the
+        latter being provided either as a mask name, either as an array (at least one of the two
+        must not be None). If the mask is provided as an array, the corresponding array of slice
+        coordinates (slice_coor_rescaled) must be provided.
+
+        Args:
+            slice_index (int): Index of the requested slice.
+            projected_mask (np.ndarray, optional):  A two-dimensional array representing the
+                projected mask on the requested slice. Defaults to None.
+            mask_name (str, optional): Acronym of the requestes mask. Defaults to None.
+            slice_coor_rescaled (np.ndarray, optional): The array of coordinates in the CCFv3 for
+                the current slice. Defaults to None.
+            MAIA_correction (bool, optional): If True, the MAIA corrected version of the MALDI data
+                is used for computation (if it exists). Defaults to False.
+            cache_flask (flask_caching.Cache, optional): Cache of the Flask database. If set to
+                None, the reading of memory-mapped data will not be multithreads-safe. Defaults to
+                None.
+
+        Returns:
+            np.ndarray: A 2D numpy array containing the averaged spectral data of the pixels in the
+                requested mask of the requested slice. First row contains m/z values, second row
+                contains the averaged intensities.
+        """
+
+        # Control that a mask can be provided one way or the other
         if projected_mask is None and mask_name is None:
             print("Either a mask or a mask name must be provided")
             return None
+
+        # if a mask name has been provided, get the corresponding mask array
         elif mask_name is not None:
             if slice_coor_rescaled is None:
                 slice_coor_rescaled = np.asarray(
@@ -551,10 +657,23 @@ class Atlas:
     def save_all_projected_masks_and_spectra(
         self, force_update=False, cache_flask=None, sample=False
     ):
+        """This function saves all the (2D) masks and corresponding averaged spectral data, for all
+        the slices.
+
+        Args:
+            force_update (bool, optional): If True, the function will not overwrite existing files.
+                Defaults to False.
+            cache_flask (flask_caching.Cache, optional): Cache of the Flask database. If set to
+                None, the reading of memory-mapped data will not be multithreads-safe. Defaults to
+                None.
+            sample (bool, optional): If True, only a tiny sample of the masks will be processed (for
+                debug). Defaults to False.
+        """
 
         # Path atlas for shelving
         path_atlas = "atlas/atlas_objects"
 
+        # Sample for debug
         if sample:
             logging.warning("Only a sample of the masks and spectra will be computed!")
 
@@ -676,6 +795,7 @@ class Atlas:
                         )
 
                     else:
+                        # Add computed masks to the dics of computed masks
                         dic_existing_masks[slice_index].add(id_mask)
                         dic_processed_temp[slice_index].add(id_mask)
 
@@ -704,6 +824,19 @@ class Atlas:
         self.dic_existing_masks = dic_existing_masks
 
     def get_projected_mask_and_spectrum(self, slice_index, mask_name, MAIA_correction=False):
+        """This function is used to get the projected mask and corresponding averaged spectral data
+        for a given mask and a given slice.
+
+        Args:
+            slice_index (int): Index of the requested slice.
+            mask_name (str): Acronym of the requested mask.
+            MAIA_correction (bool, optional):  If True, the MAIA corrected version of the MALDI data
+                is used for computation (if it exists). Defaults to False.
+        Returns:
+            np.ndarray, np.ndarray: The first array is represents the projected 2D mask on the
+                requested slice. The second array corresponds to the corresponding averaged spectral
+                data (first row is m/z values, second row is averaged intensities).
+        """
         id_mask = self.dic_name_acronym[mask_name]
         if MAIA_correction:
             filename = (
