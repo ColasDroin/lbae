@@ -111,6 +111,10 @@ class Atlas:
 
     """
 
+    # ==============================================================================================
+    # --- Constructor
+    # ==============================================================================================
+
     def __init__(self, maldi_data, resolution=25, sample=False):
         """Initialize the class Atlas.
 
@@ -233,6 +237,10 @@ class Atlas:
 
         logging.info("Atlas object instantiated" + logmem())
 
+    # ==============================================================================================
+    # --- Properties
+    # ==============================================================================================
+
     @property
     def array_projection_corrected(self):
         """Load arrays of images using atlas projection. It's a property to save memory as it is
@@ -280,6 +288,10 @@ class Atlas:
                 compute_function=self.compute_list_projected_atlas_borders_figures,
             )
         return self._list_projected_atlas_borders_arrays
+
+    # ==============================================================================================
+    # --- Methods
+    # ==============================================================================================
 
     def compute_dic_acronym_children_id(self):
         """Recursively compute a dictionnary that associates brain structures to the set of their
