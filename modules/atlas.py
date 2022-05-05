@@ -215,8 +215,6 @@ class Atlas:
             )
         return self._list_projected_atlas_borders_arrays
 
-    # Compute a dictionnary that associate to each structure (acronym) the set of ids (int) of all
-    # of its children
     def compute_dic_acronym_children_id(self):
         """Recursively compute a dictionnary that associate structure to the set of its children.
 
@@ -377,6 +375,14 @@ class Atlas:
         return array_projection, array_projection_correspondence, l_original_coor
 
     def compute_projection_parameters(self):
+        """Compute the parameters used to map the 3D coordinates of the CCFv3 to the the 2D (tiled)
+        slices.
+
+        Returns:
+            list((float,float,float)): A list of tuples, each with three parameters, that allow to
+                map the 3D coordinates of the CCFv3 to the tiled planes representing the slices. One
+                per slice.
+        """
         l_transform_parameters = []
         for slice_index in range(self.array_coordinates_warped_data.shape[0]):
             a_atlas, u_atlas, v_atlas = solve_plane_equation(
@@ -386,6 +392,13 @@ class Atlas:
         return l_transform_parameters
 
     def compute_list_projected_atlas_borders_figures(self):
+        """Compute an array of projected atlas borders (i.e. image of atlas annotations).
+
+        Returns:
+            list(np.ndarray): A list of arrays, one per slice, which contains the atlas
+            borders projected on our data.
+        """
+
         l_array_images = []
         # Load array of atlas images corresponding to our data and how it is projected
         array_projected_images_atlas, array_projected_simplified_id = return_shelved_object(
@@ -396,6 +409,7 @@ class Atlas:
             zero_out_of_annotation=True,
         )
 
+        # Loop over slice, compute image every time
         for slice_index in range(array_projected_simplified_id.shape[0]):
 
             contours = (
@@ -404,12 +418,14 @@ class Atlas:
             )
             contours = np.clip(contours**2, 0, 1)
             contours = np.pad(contours, ((1, 0), (1, 0)))
-            # do some cleaning on the sides
+
+            # Do some cleaning on the sides
             contours[:, :10] = 0
             contours[:, -10:] = 0
             contours[:10, :] = 0
             contours[-10:, :] = 0
 
+            # Compute a matplolib figure and export it as image (it's a hack but it does the job)
             fig = plt.figure(frameon=False)
             dpi = 100
             fig.set_size_inches(contours.shape[1] / dpi, contours.shape[0] / dpi)
@@ -427,6 +443,18 @@ class Atlas:
 
     # * This is quite long to execute (~10mn)
     def prepare_and_compute_array_images_atlas(self, zero_out_of_annotation=False):
+        """This function is mainly a wrapper for compute_array_images_atlas. It is needed as the
+        computation of an array of simplified structures ids can't be compiled with numba.
+
+        Args:
+            zero_out_of_annotation (bool, optional): If True, the pixels outside of the atlas
+            annotations are zero-ed out. Defaults to False.
+
+        Returns:
+            np.ndarray, np.ndarray: The first array is basically a list of atlas images
+                corresponding to the slices acquired during the MALDI acquisition. The second array
+                is the corresponding set of annotations.
+        """
 
         # Compute an array of simplified structures ids
         simplified_atlas_annotation = compute_simplified_atlas_annotation(self.bg_atlas.annotation)
