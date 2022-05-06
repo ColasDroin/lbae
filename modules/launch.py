@@ -137,19 +137,6 @@ class Launch:
         self.l_figures_objects_at_init = (
             [
                 # Computed in Figures.__init__() as an argument of Figures. Corresponds to the
-                # object returned by Figures.compute_dic_fig_contours()
-                "figures/region_analysis/dic_fig_contours",
-            ]
-            + [
-                # Computed in compute_dic_fig_contours(), itself computed in Figures.__init__().
-                # Corresponds to the object returned by
-                # Figures.compute_figure_basic_image(type_figure=None, index_image=slice_index,
-                #                                   plot_atlas_contours=True, only_contours=True)
-                "figures/load_page/figure_basic_image_None_" + str(slice_index) + "_True_True"
-                for slice_index in range(self.data.get_slice_number())
-            ]
-            + [
-                # Computed in Figures.__init__() as an argument of Figures. Corresponds to the
                 # object returned by
                 # Figures.compute_normalization_factor_across_slices(cache_flask=None)
                 "figures/lipid_selection/dic_normalization_factors_None",

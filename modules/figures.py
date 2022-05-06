@@ -67,14 +67,6 @@ class Figures:
         self._data = maldi_data
         self._atlas = atlas
 
-        # Dic of basic contours figure (must be ultra fast because used with hovering)
-        self.dic_fig_contours = return_shelved_object(
-            "figures/region_analysis",
-            "dic_fig_contours",
-            force_update=False,
-            compute_function=self.compute_dic_fig_contours,
-        )
-
         # Dic of normalization factors across slices for MAIA normalized lipids
         self.dic_normalization_factors = return_shelved_object(
             "figures/lipid_selection",
@@ -130,10 +122,75 @@ class Figures:
     # --- Methods used mainly in load_slice
     # ==============================================================================================
 
-    # For docstring: if only_contours is True, all other arguments (but index_image) are ignored
+    def compute_array_basic_images(self, type_figure="warped_data"):
+        """This function computes and returns a three-dimensional array representing all slices from
+        the maldi_data acquisition (TIC) or the corresponding image from the atlas. No spectral data
+        is read in the process, as the arrays corresponding to the images are directly stored as
+        tiff files in the dataset.
+
+        Args:
+            type_figure (str, optional): To be chosen among "original_data", "warped_data",
+                "projection_corrected", "atlas". Depending on the chosen type, the final array will
+                correspond to either the original images ("original_data"), the warped and upscaled
+                images ("warped_data"), the warped and upscaled images, whose pixels outside of
+                annotations regions have been zero-ed out ("projection_corrected"), or the images
+                from the Allen Brain atlas projected onto the same plane as the corresponding slice
+                from the MALDI data ("atlas"). Default to "warped_data".
+
+        Returns:
+            np.ndarray: A three-dimensional array representing all slices from the maldi_data
+                acquisition (TIC) or the corresponding image from the atlas. The first dimension
+                corresponds to the slices, the second and third to the images themselves.
+        """
+
+        # Check for all array types
+        if type_figure == "original_data":
+            array_images = self._data.compute_padded_original_images()
+        elif type_figure == "warped_data":
+            array_images = np.array(io.imread("data/tiff_files/warped_data.tif"))
+        elif type_figure == "projection_corrected":
+            array_images = self._atlas.array_projection_corrected
+        elif type_figure == "atlas":
+            array_projected_images_atlas, array_projected_simplified_id = return_shelved_object(
+                "atlas/atlas_objects",
+                "array_images_atlas",
+                force_update=False,
+                compute_function=self._atlas.prepare_and_compute_array_images_atlas,
+                zero_out_of_annotation=True,
+            )
+            array_images = array_projected_images_atlas
+        else:
+            logging.warning('The type of requested array "{}" does not exist.'.format(type_figure))
+            return None
+        return array_images
+
     def compute_figure_basic_image(
         self, type_figure, index_image, plot_atlas_contours=True, only_contours=False, draw=False
     ):
+        """This function computes and returns a figure representing slices from the maldi_data
+        acquisition (TIC) or the corresponding image from the atlas. The data is read directly from
+        the array computed in self.compute_array_basic_images().
+
+        Args:
+            type_figure (str): To be chosen among "original_data", "warped_data",
+                "projection_corrected", "atlas". Depending on the chosen type, the final figure will
+                correspond to either the original images ("original_data"), the warped and upscaled
+                images ("warped_data"), the warped and upscaled images, whose pixels outside of
+                annotations regions have been zero-ed out ("projection_corrected"), or the images
+                from the Allen Brain atlas projected onto the same plane as the corresponding slice
+                from the MALDI data ("atlas").
+            index_image (int): Index of the requested slice image.
+            plot_atlas_contours (bool, optional): If True, the atlas contours annotation is
+                superimposed with the slice image. Defaults to True.
+            only_contours (bool, optional): If True, only output the atlas contours annotation. All
+                the other arugments but plot_atlas_contours (which must be True) get ignored.
+                Defaults to False.
+            draw (bool, optional): If True, the figure can be drawed on (used for region selection,
+                in page region_analysis). Defaults to False.
+
+        Returns:
+            go.Figure: A Plotly figure representing the requested slice image of the requested type.
+        """
 
         # If only boundaries is requested, force the computation of atlas contours
         if only_contours:
@@ -152,6 +209,7 @@ class Figures:
             # Get image at specified index
             array_image = array_images[index_image]
 
+        # Add the contours if requested
         if plot_atlas_contours:
             array_image_atlas = self._atlas.list_projected_atlas_borders_arrays[index_image]
         else:
@@ -218,44 +276,17 @@ class Figures:
 
         return fig
 
-    # This function is needed to hover fast when manually selecting regions
-    def compute_dic_fig_contours(self):
-        dic = {}
-        for slice_index in range(self._data.get_slice_number()):
-            fig = return_shelved_object(
-                "figures/load_page",
-                "figure_basic_image",
-                force_update=False,
-                compute_function=self.compute_figure_basic_image,
-                type_figure=None,
-                index_image=slice_index,
-                plot_atlas_contours=True,
-                only_contours=True,
-            )
-            dic[slice_index] = fig
-        return dic
-
-    def compute_array_basic_images(self, type_figure="warped_data"):
-        array_images = None
-        if type_figure == "original_data":
-            array_images = self._data.compute_padded_original_images()
-        elif type_figure == "warped_data":
-            array_images = np.array(io.imread("data/tiff_files/warped_data.tif"))
-        elif type_figure == "projection_corrected":
-            array_images = self._atlas.array_projection_corrected
-        elif type_figure == "atlas":
-            array_projected_images_atlas, array_projected_simplified_id = return_shelved_object(
-                "atlas/atlas_objects",
-                "array_images_atlas",
-                force_update=False,
-                compute_function=self._atlas.prepare_and_compute_array_images_atlas,
-                zero_out_of_annotation=True,
-            )
-            array_images = array_projected_images_atlas
-        return array_images
-
     def compute_figure_slices_3D(self, reduce_resolution_factor=20):
+        """This function computes and returns a figure representing the slices from the maldi data
+        in 3D.
 
+        Args:
+            reduce_resolution_factor (int, optional): Divides (reduce) the initial resolution of the
+                data. Needed as the resulting figure can be very heavy. Defaults to 20.
+
+        Returns:
+            go.Figure: A Plotly figure representing the slices from the MALDI acquisitions in 3D.
+        """
         # get transform parameters (a,u,v) for each slice
         l_transform_parameters = return_shelved_object(
             "atlas/atlas_objects",
@@ -282,6 +313,7 @@ class Figures:
         coords = np.meshgrid(*new_dims, indexing="ij")
         array_projection_small = map_coordinates(self._atlas.array_projection_corrected, coords)
 
+        # Build Figure, with several frames as it will be slidable
         fig = go.Figure(
             frames=[
                 go.Frame(
@@ -309,6 +341,7 @@ class Figures:
             )
         )
 
+        # Add a slider
         def frame_args(duration):
             return {
                 "frame": {"duration": duration},
@@ -380,22 +413,42 @@ class Figures:
         )
         return fig
 
-    # ! I can probably numbaize that
+    # Part of this function could probably be compiled with numba with some effort, but there's no
+    # need as it's precomupted in a reasonable time anyway.
     def get_surface(
         self, slice_index, l_transform_parameters, array_projection, reduce_resolution_factor
     ):
+        """This function returns a Plotly Surface representing the requested slice in 3D.
 
+        Args:
+            slice_index (int): Index of the requested slice.
+            l_transform_parameters (list(np.ndarray)): A list of tuples containing the parameters
+                for the transformation of the slice coordinates from 2D to 3D and conversely.
+            array_projection (np.ndarray): The coordinates of the requested slice in 2D.
+            reduce_resolution_factor (int, optional): Divides (reduce) the initial resolution of the
+                data. Needed as the resulting figure can be very heavy. Defaults to 20.
+        Returns:
+            go.Surface: A Plotly Surface representing the requested slice in 3D.
+        """
+
+        #  Get the parameters for the transformation of the coordinats from 2D to 3D
         a, u, v = l_transform_parameters[slice_index]
 
+        # Build 3 empty lists, which will contain the 3D coordinates of the requested slice
         ll_x = []
         ll_y = []
         ll_z = []
 
+        # Loop over the first 2D coordinate of the slice
         for i, lambd in enumerate(range(array_projection[slice_index].shape[0])):
             l_x = []
             l_y = []
             l_z = []
+
+            # Loop over the second 2D coordinate of the slice
             for j, mu in enumerate(range(array_projection[slice_index].shape[1])):
+
+                # Get rescaled 3D coordinates
                 x_atlas, y_atlas, z_atlas = (
                     np.array(
                         slice_to_atlas_transform(
@@ -409,11 +462,13 @@ class Figures:
                 l_y.append(x_atlas)
                 l_z.append(y_atlas)
 
+            # In case the 3D coordinate was not acquired, skip the current coordinate
             if l_x != []:
                 ll_x.append(l_x)
                 ll_y.append(l_y)
                 ll_z.append(l_z)
 
+        # Build a 3D surface from the 3D coordinates for the current slice
         surface = go.Surface(
             z=np.array(ll_z),
             x=np.array(ll_x),
@@ -444,7 +499,44 @@ class Figures:
         lipid_name="",
         cache_flask=None,
     ):
+        """This function allows to query the MALDI data to extract an image in the form of a Numpy
+        array representing the intensity of the lipid peaking between the values lb_mz and hb_mz in
+        the spectral data, for the slice slice_index.
+
+        Args:
+            slice_index (int): Index of the requested slice.
+            lb_mz (float): Lower boundary for the spectral data to query.
+            hb_mz (float): Higher boundary for the spectral data to query.
+            RGB_format (bool, optional): If True, the values in the array are between 0 and 255,
+                given that the data has been normalized beforehand. Else, between 0 and 1. This
+                parameter only makes sense if the data has been normalized beforehand. Defaults to
+                True.
+            normalize (bool, optional): If True, and the lipid has been MAIA transformed (and is
+                provided with the parameter lipid_name) and apply_transform is True, the resulting
+                array is normalized according to a factor computed across all slice. If MAIA has not
+                been applied to the current selection or apply_transform is False, it is normalized
+                according to the 99th percentile. Else, it is not normalized. Defaults to True.
+            log (bool, optional): If True, the resulting array is log-transformed. This is useful in
+                case of low expression. Defaults to False.
+            projected_image (bool, optional): If True, the pixels of the original acquisition get
+                matched to a higher-resolution, warped space. The gaps are filled by duplicating the
+                most appropriate pixels (see dosctring of Atlas.project_image() for more
+                information). Defaults to True.
+            apply_transform (bool, optional): If True, applies the MAIA transform (if possible) to
+                the current selection, given that the parameter normalize is also True, and that
+                lipid_name corresponds to an existing lipid. Defaults to False.
+            lipid_name (str, optional): Name of the lipid that must be MAIA-transformed, if
+                apply_transform and normalize are True. Defaults to "".
+            cache_flask (flask_caching.Cache, optional): Cache of the Flask database. If set to
+                None, the reading of memory-mapped data will not be multithreads-safe. Defaults to
+                None.
+        Returns:
+            np.ndarray: An image (in the form of a numpy array) representing the intensity of the
+                lipid peaking between the values lb_mz and hb_mz in the spectral data, for the slice
+                slice_index.
+        """
         logging.info("Entering compute_image_per_lipid")
+
         # Get image from raw mass spec data
         image = compute_thread_safe_function(
             compute_image_using_index_and_image_lookup,
@@ -464,12 +556,14 @@ class Figures:
             apply_transform=apply_transform,
         )
 
+        # Log-transform the image if requested
         if log:
             image = np.log(image + 1)
 
+        # Normalize the image if requested
         if normalize:
-            # Normalize across slice if the lipid has been MAIA transformed
 
+            # Normalize across slice if the lipid has been MAIA transformed
             if lipid_name in self.dic_normalization_factors and apply_transform:
 
                 perc = self.dic_normalization_factors[lipid_name]
@@ -483,12 +577,16 @@ class Figures:
                 perc = 1
             image = image / perc
             image = np.clip(0, 1, image)
+
+        # Turn to RGB format if requested
         if RGB_format:
             image *= 255
+
+        # Change dtype if normalized and RGB to save space
         if normalize and RGB_format:
             image = np.round(image).astype(np.uint8)
 
-        # project image into cleaned and higher resolution version
+        # Project image into cleaned and higher resolution version
         if projected_image:
             image = project_image(
                 slice_index, image, self._atlas.array_projection_correspondence_corrected
@@ -496,6 +594,17 @@ class Figures:
         return image
 
     def compute_normalization_factor_across_slices(self, cache_flask=None):
+        """This function computes a dictionnary of normalization factors (used for MAIA-transformed
+        lipids) across all slices (99th percentile of expression).
+
+        Args:
+            cache_flask (flask_caching.Cache, optional): Cache of the Flask database. If set to
+                None, the reading of memory-mapped data will not be multithreads-safe. Defaults to
+                None.
+        Returns:
+            dict: A dictionnary associating, for each MAIA-transformed lipid name, the 99th
+                percentile of the intensity across all slices.
+        """
         logging.info(
             "Compute normalization factor across slices for MAIA transformed lipids..."
             + " It may takes a while"
@@ -568,18 +677,12 @@ class Figures:
         lb_mz=None,
         hb_mz=None,
         draw=False,
-        binary_string=False,
         projected_image=True,
         return_base64_string=False,
         cache_flask=None,
     ):
 
         logging.info("Starting figure computation, from mz boundaries")
-        if binary_string:
-            logging.info(
-                "binary_string is set to True, therefore the plot will be made as a heatmap"
-            )
-            heatmap = True
 
         # Upper bound lower than the lowest m/z value and higher that the highest m/z value
         if lb_mz is None:

@@ -73,7 +73,6 @@ def return_layout(basic_config, slice_index):
                                     slice_index,
                                     600,
                                     605,
-                                    binary_string=False,
                                     cache_flask=cache_flask,
                                 ),
                             ),
@@ -512,7 +511,7 @@ def page_2_plot_graph_heatmap_mz_selection(
             if lb >= 400 and hb <= 1600 and hb - lb > 0 and hb - lb < 10:
                 return (
                     figures.compute_heatmap_per_mz(
-                        slice_index, lb, hb, binary_string=False, cache_flask=cache_flask
+                        slice_index, lb, hb,  cache_flask=cache_flask
                     ),
                     "Current input: " + "m/z boundaries",
                 )
@@ -648,7 +647,6 @@ def page_2_plot_graph_heatmap_mz_selection(
                     slice_index,
                     bound_high_res[0],
                     bound_high_res[1],
-                    binary_string=False,
                     cache_flask=cache_flask,
                 ),
                 "Current input: " + "Selection from high-res m/z graph",
@@ -666,7 +664,6 @@ def page_2_plot_graph_heatmap_mz_selection(
                     slice_index,
                     bound_low_res[0],
                     bound_low_res[1],
-                    binary_string=False,
                     cache_flask=cache_flask,
                 ),
                 "Current input: " + "Selection from low-res m/z graph",
