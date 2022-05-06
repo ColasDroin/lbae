@@ -1,4 +1,5 @@
 #
+# TODO finish docstrings figures. Disentangle the usage of all the plot image functions.
 # TODO Incorporate new brain 1 and brain 2
 # TODO Check all functions and deprecate the ones that are not used anymore
 # TODO clean the config file

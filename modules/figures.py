@@ -1669,7 +1669,18 @@ class Figures:
     # ==============================================================================================
     # --- Methods used for shelving results
     # ==============================================================================================
+
     def shelve_arrays_basic_figures(self, force_update=False):
+        """This function shelves in the database all the arrays of basic images computed in
+        self.compute_figure_basic_image(), across all slices and all types of arrays. This forces
+        the precomputations of these arrays, and allows to access them faster. Once everything has
+        been shelved, a boolean value is stored in the shelve database, to indicate that the arrays
+        do not need to be recomputed at next app startup.
+
+        Args:
+            force_update (bool, optional): If True, the function will not overwrite existing files.
+                Defaults to False.
+        """
         for idx_slice in range(self._data.get_slice_number()):
             for type_figure in ["original_data", "warped_data", "projection_corrected", "atlas"]:
                 for display_annotations in [True, False]:
@@ -1677,7 +1688,7 @@ class Figures:
                     return_shelved_object(
                         "figures/load_page",
                         "figure_basic_image",
-                        force_update=False,
+                        force_update=force_update,
                         compute_function=self.compute_figure_basic_image,
                         type_figure=type_figure,
                         index_image=idx_slice,
@@ -1691,6 +1702,17 @@ class Figures:
     # ! Need to update for brain 2 as well
 
     def shelve_all_l_array_2D(self, force_update=False, sample=False):
+        """This functions precomputes and shelves all the arrays of lipid expression used in a 3D
+        representation of the brain (through self.compute_3D_volume_figure()). Once everything has
+        been shelved, a boolean value is stored in the shelve database, to indicate that the arrays
+        do not need to be recomputed at next app startup.
+
+        Args:
+            force_update (bool, optional): If True, the function will not overwrite existing files.
+                Defaults to False.
+            sample (bool, optional): If True, only a fraction of the precomputations are made (for
+                debug). Default to False.
+        """
 
         # Count number of lipids processed for sampling
         n_processed = 0
@@ -1786,6 +1808,11 @@ class Figures:
         dump_shelved_object("figures/3D_page", "arrays_expression_computed", True)
 
     def shelve_all_arrays_annotation(self):
+        """This functions precomputes and shelves the array of structure annotation used in a
+        3D representation of the brain (through self.compute_3D_volume_figure()), at different
+        resolutions. Once everything has been shelved, a boolean value is stored in the shelve
+        database, to indicate that the arrays do not need to be recomputed at next app startup.
+        """
         for decrease_dimensionality_factor in range(2, 13):
             return_shelved_object(
                 "figures/3D_page",
