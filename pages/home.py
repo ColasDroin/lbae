@@ -1,12 +1,22 @@
-###### IMPORT MODULES ######
+# Copyright (c) 2022, Colas Droin. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
 
+""" This file contains the home page of the app. """
+
+# ==================================================================================================
+# --- Imports
+# ==================================================================================================
+
+# Standard modules
 from dash import html
 import dash_mantine_components as dmc
 from dash.dependencies import Input, Output, State
 from documentation.documentation import return_documentation
 import app
 
-###### DEFFINE PAGE LAYOUT ######
+# ==================================================================================================
+# --- Layout
+# ==================================================================================================
 
 layout = (
     html.Div(
@@ -33,10 +43,6 @@ layout = (
             dmc.Center(
                 class_name="w-100",
                 children=[
-                    # html.H1(
-                    #     "Welcome to the Lipid Brain Atlas Explorer",
-                    #     className="card-title",
-                    # ),
                     dmc.Group(
                         class_name="my-5 py-5",
                         direction="column",
@@ -45,9 +51,7 @@ layout = (
                         children=[
                             dmc.Text(
                                 "Welcome to the Lipid Brain Atlas Explorer",
-                                # size="xl",
                                 style={"fontSize": 40, "color": "#dee2e6"},
-                                # color="dimmed",
                                 align="center",
                             ),
                             html.H1(
@@ -67,12 +71,6 @@ layout = (
                                 color="dimmed",
                                 class_name="mt-4",
                             ),
-                            # Separation and button to documentation
-                            # html.Hr(className="my-2"),
-                            # html.P(
-                            #    className="mb-5",
-                            #    children="Press the button below to get to the documentation/paper/etc",
-                            # ),
                             dmc.Center(
                                 dmc.Button(
                                     "Read documentation",
@@ -85,24 +83,11 @@ layout = (
                             dmc.Drawer(
                                 children=return_documentation(app.app),
                                 id="documentation-offcanvas-home",
-                                # title="LBAE documentation",
                                 opened=False,
                                 padding="md",
                                 size="90vh",
                                 position="bottom",
                             ),
-                            # html.P(
-                            #     className="lead d-flex justify-content-center mt-3 mb-5",
-                            #     children=[
-                            #         dbc.Button(
-                            #             "Learn more",
-                            #             id="page-0-collapse-doc-button",
-                            #             color="primary",
-                            #             href="#home-doc",
-                            #             external_link=True,
-                            #         ),
-                            #     ],
-                            # ),
                         ],
                     ),
                 ],
@@ -111,39 +96,9 @@ layout = (
     ),
 )
 
-
-# dbc.Row(
-#     justify="center",
-#     children=[
-#         dbc.Col(
-#             md=9,
-#             children=[
-#                 dbc.Collapse(
-#                     children=[
-#                         dbc.Card(
-#                             className="mt-1 pt-1",
-#                             children=[
-#                                 dbc.CardHeader("Documentation"),
-#                                 dbc.CardBody(
-#                                     className="mx-5",
-#                                     children=[
-#                                         html.H1("Introduction", id="home-doc"),
-#                                         html.H2("What is this app about?"),
-#                                         html.P("TODO"),
-#                                         html.H2("The data"),
-#                                         html.P("TODO"),
-#                                     ],
-#                                 ),
-#                             ],
-#                         ),
-#                     ],
-#                     id="page-0-collapse-doc",
-#                     is_open=False,
-#                 ),
-#             ],
-#         )
-#     ],
-# ),
+# ==================================================================================================
+# --- Callbacks
+# ==================================================================================================
 
 
 @app.app.callback(
@@ -152,6 +107,7 @@ layout = (
     [State("documentation-offcanvas-home", "opened")],
 )
 def toggle_collapse(n, is_open):
+    """This callback will trigger the drawer displaying the app documentation"""
     if n:
         return not is_open
     return is_open

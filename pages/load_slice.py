@@ -1,4 +1,11 @@
-###### IMPORT MODULES ######
+# Copyright (c) 2022, Colas Droin. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+
+""" This file contains the page used to explore the images of the MALDI acquisition in the app."""
+
+# ==================================================================================================
+# --- Imports
+# ==================================================================================================
 
 # Standard modules
 import dash_bootstrap_components as dbc
@@ -9,14 +16,19 @@ import numpy as np
 import logging
 import dash_mantine_components as dmc
 
-# LBAE modules
+# LBAE imports
 import app
 from app import figures
 from modules.tools.storage import return_shelved_object
 
-###### DEFFINE PAGE LAYOUT ######
+# ==================================================================================================
+# --- Layout
+# ==================================================================================================
+
 # ! It seems that some things (useless?) are loaded at startup and take time
 #! Put basic config in config in all page file
+
+
 def return_layout(basic_config, slice_index):
 
     page = html.Div(
@@ -89,7 +101,6 @@ def return_layout(basic_config, slice_index):
                                 "scale": 2,
                             }
                         },
-                        # | {"staticPlot": True},
                         figure=return_shelved_object(
                             "figures/load_page",
                             "figure_basic_image",
@@ -108,10 +119,8 @@ def return_layout(basic_config, slice_index):
                         color="cyan",
                         class_name="mt-5",
                         weight=500,
-                        # className="text-warning font-weight-bold position-absolute",
                         style={
                             "width": "100%",
-                            # "height": "86%",
                             "position": "absolute",
                             "top": "7%",
                         },
@@ -120,7 +129,6 @@ def return_layout(basic_config, slice_index):
                 # ),
             ),
             dbc.Modal(
-                # style={"background-color": "#1d1c1f",},
                 children=[
                     dbc.ModalHeader(
                         style={
@@ -174,7 +182,10 @@ def return_layout(basic_config, slice_index):
     return page
 
 
-###### CALLBACKS ######
+# ==================================================================================================
+# --- Callbacks
+# ==================================================================================================
+
 # Function to update the image from the slider
 @app.app.callback(
     Output("page-1-graph-slice-selection", "figure"),
