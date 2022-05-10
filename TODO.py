@@ -1,5 +1,5 @@
 #
-# TODO finish docstrings figures. Disentangle the usage of all the plot image functions.
+# TODO Check that all code (including callbacks) is properly commented
 # TODO Incorporate new brain 1 and brain 2
 # TODO Check all functions and deprecate the ones that are not used anymore
 # TODO clean the config file
@@ -18,6 +18,7 @@
 # TODO Clean all notebooks output before last commit
 # TODO Delete TODO file
 
+# ? Comment the layout?
 # ? Build basic technical documentation for the app?
 # ? Implement the app as a multipage app when the feature is available on Dash
 

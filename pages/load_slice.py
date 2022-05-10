@@ -186,7 +186,7 @@ def return_layout(basic_config, slice_index):
 # --- Callbacks
 # ==================================================================================================
 
-# Function to update the image from the slider
+
 @app.app.callback(
     Output("page-1-graph-slice-selection", "figure"),
     Output("page-1-toggle-annotations", "disabled"),
@@ -195,7 +195,10 @@ def return_layout(basic_config, slice_index):
     Input("page-1-toggle-annotations", "checked"),
 )
 def tab_1_load_image(value_slider, active_tab, display_annotations):
+    """This callback is used to update the image in page-1-graph-slice-selection from the slider."""
+
     logging.info("Slider changed to value " + str(value_slider))
+
     # Find out which input triggered the function
     id_input, value_input = dash.callback_context.triggered[0]["prop_id"].split(".")
 
@@ -236,6 +239,8 @@ def tab_1_load_image(value_slider, active_tab, display_annotations):
     Input("page-1-card-tabs", "value"),
 )
 def page_1_visibilty_hover(active_tab):
+    """This callback is used to update the visibility of the text displayed when hovering over the
+    slice image."""
 
     # Find out which input triggered the function
     id_input, value_input = dash.callback_context.triggered[0]["prop_id"].split(".")
@@ -255,8 +260,10 @@ def page_1_visibilty_hover(active_tab):
     State("main-slider", "value"),
 )
 def page_1_hover(hoverData, slice_index):
+    """This callback is used to update the text displayed when hovering over the slice image."""
     if hoverData is not None:
         if len(hoverData["points"]) > 0:
+            # If there is a region hovered, find out the region name with the current coordinates
             x = int(slice_index) - 1
             z = hoverData["points"][0]["x"]
             y = hoverData["points"][0]["y"]
@@ -282,6 +289,7 @@ def page_1_hover(hoverData, slice_index):
     State("page-1-modal", "is_open"),
 )
 def toggle_modal(n1, is_open):
+    """This callback is used to open the modal displaying the slices in 3D."""
     if n1:
         return not is_open
     return is_open
@@ -294,6 +302,7 @@ def toggle_modal(n1, is_open):
     prevent_initial_call=True,
 )
 def page_1_plot_graph_modal(n1):
+    """This callback is used to plot the figure representing the slices in 3D in the modal."""
     if n1:
         return return_shelved_object(
             "figures/3D_page",
