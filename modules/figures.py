@@ -46,7 +46,50 @@ from modules.tools.spectra import (
 
 
 class Figures:
-    __slots__ = ["_data", "_atlas", "dic_fig_contours", "dic_normalization_factors"]
+    """This class is used to produce the figures and widgets used in the app. It uses the special
+    attribute __slots__ for faster access to the attributes.
+
+    Attributes:
+        _data (MaldiData): MaldiData object, used to manipulate the raw MALDI data.
+        _atlas (Atlas): Used to manipulate the objects coming from the Allen Brain Atlas.
+        dic_normalization_factors (dict): Dictionnary of normalization factors across slices for
+            MAIA.
+
+
+    Methods (parameters are ignored in the docstring below to save space. Please consult the
+        docstring of the corresponding methods for more information):
+
+        __init__(): Initialize the Figures class.
+        compute_array_basic_images(): Computes a three-dimensional array representing all slices
+            from the maldi_data acquisition (TIC) or the corresponding image from the atlas.
+        compute_figure_basic_image(): Computes a figure representing slices from the TIC or the
+            corresponding image from the atlas.
+        compute_figure_slices_3D(): Computes a figure representing all slices from the maldi data in
+            3D.
+        get_surface(): Computes a Plotly Surface representing the requested slice in 3D.
+        compute_image_per_lipid(): Allows to query the MALDI data to extract an image representing
+            the intensity of each lipid in the requested slice.
+        compute_normalization_factor_across_slices(): Computes a dictionnary of normalization
+            factors across all slices.
+        build_lipid_heatmap_from_image(): Converts a numpy array into a base64 string, a go.Image,
+            or a Plotly Figure.
+        compute_heatmap_per_mz(): Computes a heatmap of the lipid expressed in the requested slice
+            whose m/z is between the two provided boundaries.
+        compute_heatmap_per_lipid_selection(): Computes a heatmap of the sum of expression of the
+            requested lipids in the requested slice.
+        compute_rgb_array_per_lipid_selection(): Computes a numpy RGB array of expression of the
+            requested lipids in the requested slice.
+        compute_rgb_image_per_lipid_selection(): Similar to compute_heatmap_per_lipid_selection, but
+            computes a RGB image instead of a heatmap.
+        compute_spectrum_low_res(): Returns the full (low-resolution) spectrum of the requested
+            slice.
+        compute_spectrum_high_res(): Returns the full (high-resolution) spectrum of the requested
+            slice between the two provided m/z boundaries.
+        return_empty_spectrum(): Returns an empty spectrum.
+
+    """
+
+    __slots__ = ["_data", "_atlas", "dic_normalization_factors"]
 
     # ==============================================================================================
     # --- Constructor
@@ -732,7 +775,7 @@ class Figures:
             ),
             xaxis=dict(showgrid=False, zeroline=False),
             yaxis=dict(showgrid=False, zeroline=False),
-            # Do not specify height for now as plotly is buggued and resets it to 450px if switching pages
+            # Do not specify height for now as plotly is buggued and resets if switching pages
             # height=500,
         )
         fig.update_xaxes(showticklabels=False)
@@ -767,7 +810,7 @@ class Figures:
         Args:
             slice_index (int): The index of the requested slice.
             lb_mz (float, optional): The lower m/z boundary. Defaults to None.
-            hb_mz (_type_, optional): The higher m/z boundary. Defaults to None.
+            hb_mz (float, optional): The higher m/z boundary. Defaults to None.
             draw (bool, optional): If True, the user will have the possibility to draw on the
                 resulting Plotly Figure. Defaults to False.
             projected_image (bool, optional): If True, the pixels of the original acquisition get
@@ -842,8 +885,9 @@ class Figures:
             apply_transform (bool, optional): If True, applies the MAIA transform (if possible) to
                 the current selection, given that the parameter normalize is also True, and that
                 lipid_name corresponds to an existing lipid. Defaults to False.
-            ll_lipid_names (_type_, optional): List of lipid names that must be MAIA-transformed, if
-                apply_transform and normalize are True. Defaults to None.
+            ll_lipid_names (list(list(int)), optional): List of list of lipid names that must be
+                MAIA-transformed, if apply_transform and normalize are True. The first list is used
+                to separate channels, when applicable. Defaults to None.
             return_base64_string (bool, optional): If True, the base64 string of the image is
                 returned directly, before any figure building. Defaults to False.
             cache_flask (flask_caching.Cache, optional): Cache of the Flask database. If set to
@@ -923,8 +967,9 @@ class Figures:
             apply_transform (bool, optional): If True, applies the MAIA transform (if possible) to
                 the current selection, given that the parameter normalize is also True, and that
                 lipid_name corresponds to an existing lipid. Defaults to False.
-            ll_lipid_names (_type_, optional): List of lipid names that must be MAIA-transformed, if
-                apply_transform and normalize are True. Defaults to None.
+            ll_lipid_names (list(list(int)), optional): List of list of lipid names that must be
+                MAIA-transformed, if apply_transform and normalize are True. The first list is used
+                to separate channels, when applicable. Defaults to None.
             cache_flask (flask_caching.Cache, optional): Cache of the Flask database. If set to
                 None, the reading of memory-mapped data will not be multithreads-safe. Defaults to
                 None.
@@ -1016,8 +1061,9 @@ class Figures:
             apply_transform (bool, optional): If True, applies the MAIA transform (if possible) to
                 the current selection, given that the parameter normalize is also True, and that
                 lipid_name corresponds to an existing lipid. Defaults to False.
-            ll_lipid_names (_type_, optional): List of lipid names that must be MAIA-transformed, if
-                apply_transform and normalize are True. Defaults to None.
+            ll_lipid_names (list(list(int)), optional): List of list of lipid names that must be
+                MAIA-transformed, if apply_transform and normalize are True. The first list is used
+                to separate channels, when applicable. Defaults to None.
             return_base64_string (bool, optional): If True, the base64 string of the image is
                 returned directly, before any figure building. Defaults to False.
             cache_flask (flask_caching.Cache, optional): Cache of the Flask database. If set to
@@ -1264,16 +1310,17 @@ class Figures:
     # ==============================================================================================
 
     def return_heatmap_lipid(self, fig=None):
-        """This function is used to either generate a Plotly Figure containing an empty go.Heatmap, or
-        complete the figure passed as argument with a proper layout that matches the theme of the app.
+        """This function is used to either generate a Plotly Figure containing an empty go.Heatmap,
+        or complete the figure passed as argument with a proper layout that matches the theme of the
+        app.
 
         Args:
-            fig (Plotly Figure, optional): A Plotly Figure whose layout must be completed. If None, a
-                new figure will be generated. Defaults to None.
+            fig (Plotly Figure, optional): A Plotly Figure whose layout must be completed. If None,
+                a new figure will be generated. Defaults to None.
 
         Returns:
-            Plotly Figure: A Plotly Figure containing an empty go.Heatmap, or complete the figure passed
-                as argument with a proper layout that matches the theme of the app.
+            Plotly Figure: A Plotly Figure containing an empty go.Heatmap, or complete the figure
+                passed as argument with a proper layout that matches the theme of the app.
         """
 
         # Build empty figure if not provided
@@ -1405,7 +1452,16 @@ class Figures:
         return brain_root_data
 
     def get_array_of_annotations(self, decrease_dimensionality_factor):
+        """This function returns the array of annotations from the Allen Brain Atlas, subsampled to
+        decrease the size of the output.
+        Args:
+            decrease_dimensionality_factor (int): An integer used for subsampling the array. The
+            higher, the higher the subsampling.
 
+        Returns:
+            np.ndarray: A 3D array of annotation, in which structures are annotated with specific
+                identifiers.
+        """
         # Get subsampled array of annotations
         array_annotation = np.array(
             self._atlas.bg_atlas.annotation[
@@ -1426,10 +1482,27 @@ class Figures:
 
         return array_annotation
 
-    # Function to get the list of expression per slice for all slices for the computation of 3D volume
     def compute_l_array_2D(
         self, ll_t_bounds, normalize_independently=True, high_res=False, cache_flask=None
     ):
+        """This function is used to  get the list of expression per slice for all slices for the
+        computation of the 3D brain volume.
+
+        Args:
+            ll_t_bounds (list(list(tuple))): A list of lists of lipid boundaries (tuples). The first
+                list is used to separate image channels. The second list is used to separate lipid.
+            normalize_independently (bool, optional): If True, each lipid intensity array is
+                normalized independently, regardless of other lipids or channel used. Defaults to
+                True.
+            high_res (bool, optional): If True, the returned list of arrays correspond to the
+                warped/upscaled data. Defaults to False as this is a very heavy plot.
+            cache_flask (flask_caching.Cache, optional): Cache of the Flask database. If set to
+                None, the reading of memory-mapped data will not be multithreads-safe. Defaults to
+                None.
+        Returns:
+            list(np.ndarray): A list of numpy arrays representing the expression of the requested
+                lipids (through ll_t_bounds) for each slice.
+        """
         l_array_data = []
         for slice_index in range(0, self._data.get_slice_number(), 1):
 
@@ -1461,6 +1534,18 @@ class Figures:
         l_array_data,
         high_res=False,
     ):
+        """This functions computes the list of coordinates and expression values for the voxels used
+        in the 3D representation of the brain.
+
+        Args:
+            l_array_data (list(np.ndarray)): A list of numpy arrays representing lipid expression
+                for each slice of the dataset.
+            high_res (bool, optional): If True, the computations made correspond to the
+                warped/upscaled data. Defaults to False as this is a very heavy plot.
+        Returns:
+            np.ndarray, np.ndarray, np.ndarray, np.ndarray: 4 flat numpy arrays (3 for coordinates
+                and 1 for expression).
+        """
 
         logging.info("Starting computing 3D arrays" + logmem())
 
@@ -1549,6 +1634,29 @@ class Figures:
         decrease_dimensionality_factor=6,
         cache_flask=None,
     ):
+        """This figure computes a Plotly Figure containing a go.Volume object representing the
+        expression of the requested lipids in the selected regions, interpolated between the slices.
+        Lipid names are used to retrieve the expression data from the Shelve database.
+
+        Args:
+            ll_t_bounds (list(list(tuple))): A list of lists of lipid boundaries (tuples). The first
+                list is used to separate image channels. The second list is used to separate lipid.
+            name_lipid_1 (str, optional): Name of the first selected lipid. Defaults to "".
+            name_lipid_2 (str, optional): Name of the second selected lipid. Defaults to "".
+            name_lipid_3 (str, optional): Name of the third selected lipid. Defaults to "".
+            set_id_regions (set(int), optional): A set containing the identifiers of the brain
+                regions (at the very bottom of the hierarchy) whose border must be annotated.
+                Defaults to None, corresponding to the whole brain.
+            decrease_dimensionality_factor (int): An integer used for subsampling the array of
+                annotation, and therefore the resulting figure. The higher, the higher the
+                subsampling. Needed as this is a very heavy plot. Defaults to 6.
+            cache_flask (flask_caching.Cache, optional): Cache of the Flask database. If set to
+                None, the reading of memory-mapped data will not be multithreads-safe. Defaults to
+                None.
+        Returns:
+            go.Figure: A Plotly Figure containing a go.Volume object representing the expression of
+                the requested lipids in the selected regions, interpolated between the slices.
+        """
         logging.info("Starting 3D volume computation")
 
         # Get subsampled array of annotations
@@ -1563,7 +1671,8 @@ class Figures:
         # Get subsampled array of borders for each region
         array_atlas_borders = np.zeros(array_annotation.shape, dtype=np.float32)
         list_id_regions = np.array(list(set_id_regions), dtype=np.int64)
-        # Shelving this function is useless as it takes less than 0.1s to compute after first compilation
+        # Shelving this function is useless as it takes less than 0.1s to compute after
+        # first compilation
         array_atlas_borders = fill_array_borders(
             array_annotation,
             keep_structure_id=list_id_regions,
@@ -1581,6 +1690,7 @@ class Figures:
                 ignore_arguments_naming=True,
                 compute_function=self.compute_l_array_2D,
                 ll_t_bounds=[[l_t_bounds[i], None, None] for l_t_bounds in ll_t_bounds],
+                cache_flask=cache_flask,
             )
             for i, name_lipid in enumerate([name_lipid_1, name_lipid_2, name_lipid_3])
         ]
@@ -1723,6 +1833,24 @@ class Figures:
     def compute_clustergram_figure(
         self, set_progress, cache_flask, l_selected_regions, percentile=90
     ):
+        """This function computes a Plotly Clustergram figure, allowing to cluster and compare the
+        expression of all the MAIA-transformed lipids in the dataset in the selected regions.
+
+        Args:
+            set_progress: Used as part of the Plotly long callbacks, to indicate the progress of the
+                computation in the corresponding progress bar.
+            cache_flask (flask_caching.Cache, optional): Cache of the Flask database. If set to
+                None, the reading of memory-mapped data will not be multithreads-safe. Defaults to
+                None.
+            l_selected_regions (list(int), optional): A list containing the identifiers of the brain
+                regions (at the very bottom of the hierarchy) whose border must be annotated.
+            percentile (int, optional): The percentile of average expression below which the lipids
+                must be discarded (to get rid of low expression noise). Defaults to 90.
+
+        Returns:
+            go.Figure: a Plotly Clustergram figure clustering and comparing the expression of all the
+                MAIA-transformed lipids in the dataset in the selected regions.
+        """
         logging.info("Starting computing clustergram figure")
 
         # Memoize result as it's called everytime a filtering is done
