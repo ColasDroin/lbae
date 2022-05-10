@@ -670,52 +670,59 @@ class Figures:
 
         return dic_max_percentile
 
-    # ! Check in the end if this function is redundant with compute_heatmap_per_lipid_selection
-    def compute_heatmap_per_mz(
+    def build_lipid_heatmap_from_image(
         self,
-        slice_index,
-        lb_mz=None,
-        hb_mz=None,
-        draw=False,
-        projected_image=True,
+        image,
         return_base64_string=False,
-        cache_flask=None,
+        draw=False,
+        type_image=None,
+        return_go_image=False,
     ):
+        """This function converts a numpy array into a base64 string, which can be returned
+        directly, or itself be turned into a go.Image, which can be returned directly, or be
+        turned into a Plotly Figure, which will be returned.
 
-        logging.info("Starting figure computation, from mz boundaries")
+        Args:
+            image (np.ndarray): A numpy array representing the image to be converted. Possibly with
+                several channels.
+            return_base64_string (bool, optional): If True, the base64 string of the image is
+                returned directly, before any figure building. Defaults to False.
+            draw (bool, optional): If True, the user will have the possibility to draw on the
+                resulting Plotly Figure. Defaults to False.
+            type_image (string, optional): The type of the image to be converted to a base64 string.
+                If image_array is in 3D, type must be RGB. If 4D, type must be RGBA. Else, no
+                requirement (None). Defaults to None.
+            return_go_image (bool, optional): If True, the go.Image is returned directly, before
+                being integrated to a Plotly Figure. Defaults to False.
 
-        # Upper bound lower than the lowest m/z value and higher that the highest m/z value
-        if lb_mz is None:
-            lb_mz = 200
-        if hb_mz is None:
-            hb_mz = 1800
-
-        logging.info("Getting image array")
-        # Compute image with given bounds
-        image = self.compute_image_per_lipid(
-            slice_index,
-            lb_mz,
-            hb_mz,
-            RGB_format=True,
-            projected_image=projected_image,
-            cache_flask=cache_flask,
-        )
+        Returns:
+            Depending on the inputted arguments, may either return a base64 string, a go.Image, or
+            a Plotly Figure.
+        """
 
         logging.info("Converting image to string")
         # Set optimize to False to gain computation time
         base64_string = convert_image_to_base64(
-            image, overlay=None, transparent_zeros=True, optimize=False
+            image, type=type_image, overlay=None, transparent_zeros=True, optimize=False
         )
 
         # Either return image directly
         if return_base64_string:
             return base64_string
 
-        # Or build graph
-        fig = go.Figure()
+        # Or compute heatmap as go image if needed
+        logging.info("Converting image to go image")
+        final_image = go.Image(
+            visible=True,
+            source=base64_string,
+        )
 
-        logging.info("Adding image to figure")
-        fig.add_trace(go.Image(visible=True, source=base64_string))
+        # Potentially return the go image directly
+        if return_go_image:
+            return final_image
+
+        # Or build ploty graph
+        fig = go.Figure(final_image)
 
         # Improve graph layout
         fig.update_layout(
@@ -741,39 +748,139 @@ class Figures:
         fig.layout.plot_bgcolor = "rgba(0,0,0,0)"
         fig.layout.paper_bgcolor = "rgba(0,0,0,0)"
         logging.info("Returning figure")
+
+        return fig
+
+    def compute_heatmap_per_mz(
+        self,
+        slice_index,
+        lb_mz=None,
+        hb_mz=None,
+        draw=False,
+        projected_image=True,
+        return_base64_string=False,
+        cache_flask=None,
+    ):
+        """This function takes two boundaries and a slice index, and returns a heatmap of the lipid
+        expressed in the slice whose m/z is between the two boundaries.
+
+        Args:
+            slice_index (int): The index of the requested slice.
+            lb_mz (float, optional): The lower m/z boundary. Defaults to None.
+            hb_mz (_type_, optional): The higher m/z boundary. Defaults to None.
+            draw (bool, optional): If True, the user will have the possibility to draw on the
+                resulting Plotly Figure. Defaults to False.
+            projected_image (bool, optional): If True, the pixels of the original acquisition get
+                matched to a higher-resolution, warped space. The gaps are filled by duplicating the
+                most appropriate pixels (see dosctring of Atlas.project_image() for more
+                information). Defaults to True.
+            return_base64_string (bool, optional): If True, the base64 string of the image is
+                returned directly, before any figure building. Defaults to False.
+            cache_flask (flask_caching.Cache, optional): Cache of the Flask database. If set to
+                None, the reading of memory-mapped data will not be multithreads-safe. Defaults to
+                None.
+        Returns:
+            Depending on the value return_base64_string, may either return a base64 string, or
+            a Plotly Figure.
+        """
+
+        logging.info("Starting figure computation, from mz boundaries")
+
+        # Upper bound lower than the lowest m/z value and higher that the highest m/z value
+        if lb_mz is None:
+            lb_mz = 200
+        if hb_mz is None:
+            hb_mz = 1800
+
+        logging.info("Getting image array")
+        # Compute image with given bounds
+        image = self.compute_image_per_lipid(
+            slice_index,
+            lb_mz,
+            hb_mz,
+            RGB_format=True,
+            projected_image=projected_image,
+            cache_flask=cache_flask,
+        )
+
+        # Compute corresponding figure
+        fig = self.build_lipid_heatmap_from_image(
+            image, return_base64_string=return_base64_string, draw=draw
+        )
+
         return fig
 
     def compute_heatmap_per_lipid_selection(
         self,
         slice_index,
         ll_t_bounds,
-        normalize_independently=True,
+        normalize=True,
         projected_image=True,
         apply_transform=False,
         ll_lipid_names=None,
         return_base64_string=False,
         cache_flask=None,
     ):
+        """This function is very similar to compute_heatmap_per_mz, but it takes a list of lipid
+        boundaries, possibly along with lipid names, instead of just two boundaries. It returns a
+        heatmap of the sum of expression of the requested lipids in the slice.
+
+        Args:
+            slice_index (int): The index of the requested slice.
+            ll_t_bounds (list(list(tuple))): A list of lists of lipid boundaries (tuples). The first
+                list is used to separate image channels (although this is not used in the function).
+                The second list is used to separate lipid.
+            normalize (bool, optional): If True, and the lipid has been MAIA transformed (and is
+                provided with the parameter lipid_name) and apply_transform is True, the resulting
+                array is normalized according to a factor computed across all slice. If MAIA has not
+                been applied to the current selection or apply_transform is False, it is normalized
+                according to the 99th percentile. Else, it is not normalized. Defaults to True.
+            projected_image (bool, optional): If True, the pixels of the original acquisition get
+                matched to a higher-resolution, warped space. The gaps are filled by duplicating the
+                most appropriate pixels (see dosctring of Atlas.project_image() for more
+                information). Defaults to True.
+            apply_transform (bool, optional): If True, applies the MAIA transform (if possible) to
+                the current selection, given that the parameter normalize is also True, and that
+                lipid_name corresponds to an existing lipid. Defaults to False.
+            ll_lipid_names (_type_, optional): List of lipid names that must be MAIA-transformed, if
+                apply_transform and normalize are True. Defaults to None.
+            return_base64_string (bool, optional): If True, the base64 string of the image is
+                returned directly, before any figure building. Defaults to False.
+            cache_flask (flask_caching.Cache, optional): Cache of the Flask database. If set to
+                None, the reading of memory-mapped data will not be multithreads-safe. Defaults to
+                None.
+
+        Returns:
+            Depending on the value return_base64_string, may either return a base64 string, or
+            a Plotly Figure.
+        """
 
         logging.info("Compute heatmap per lipid selection" + str(ll_t_bounds))
 
         # Start from empty image and add selected lipids
         # * Caution: array must be int, float gets badly converted afterwards
         image = np.zeros(self._atlas.image_shape, dtype=np.int32)
+
+        # Build empty lipid names if not provided
         if ll_lipid_names is None:
             ll_lipid_names = [["" for y in l_t_bounds] for l_t_bounds in ll_t_bounds]
 
+        # Loop over channels
         for l_t_bounds, l_lipid_names in zip(ll_t_bounds, ll_lipid_names):
             if l_t_bounds is not None:
+
+                # Loop over lipids
                 for boundaries, lipid_name in zip(l_t_bounds, l_lipid_names):
                     if boundaries is not None:
                         (lb_mz, hb_mz) = boundaries
+
+                        # Cmpute expression image per lipid
                         image_temp = self.compute_image_per_lipid(
                             slice_index,
                             lb_mz,
                             hb_mz,
                             RGB_format=True,
-                            normalize=normalize_independently,
+                            normalize=normalize,
                             projected_image=projected_image,
                             apply_transform=apply_transform,
                             lipid_name=lipid_name,
@@ -781,31 +888,8 @@ class Figures:
                         )
                         image += image_temp
 
-        # Set optimize to False to gain computation time
-        base64_string = convert_image_to_base64(image, transparent_zeros=True, optimize=False)
-
-        # Either return image directly
-        if return_base64_string:
-            return base64_string
-
-        # Or build graph
-        fig = go.Figure()
-        fig.add_trace(go.Image(visible=True, source=base64_string))
-
-        # Improve graph layout
-        fig.update_layout(
-            xaxis=dict(showgrid=False, zeroline=False),
-            yaxis=dict(showgrid=False, zeroline=False),
-            margin=dict(t=0, r=0, b=0, l=0),
-        )
-        fig.update_xaxes(showticklabels=False)
-        fig.update_yaxes(showticklabels=False)
-        fig.update(layout_coloraxis_showscale=False)
-
-        # Set background color to zero
-        fig.layout.template = "plotly_dark"
-        fig.layout.plot_bgcolor = "rgba(0,0,0,0)"
-        fig.layout.paper_bgcolor = "rgba(0,0,0,0)"
+        # Compute corresponding figure
+        fig = self.build_lipid_heatmap_from_image(image, return_base64_string=return_base64_string)
 
         return fig
 
@@ -816,11 +900,40 @@ class Figures:
         normalize_independently=True,
         projected_image=True,
         log=False,
-        enrichment=False,
         apply_transform=False,
         ll_lipid_names=None,
         cache_flask=None,
     ):
+        """This function computes a numpy RGB array (each pixel has 3 intensity values) of
+        expression of the requested lipids (those whose m/z values are in ll_t_bounds) in the slice.
+
+        Args:
+            slice_index (int): The index of the requested slice.
+            ll_t_bounds (list(list(tuple))): A list of lists of lipid boundaries (tuples). The first
+                list is used to separate image channels. The second list is used to separate lipid.
+            normalize_independently (bool, optional): If True, each lipid intensity array is
+                normalized independently, regardless of other lipids or channel used. Defaults to
+                True.
+            projected_image (bool, optional): If True, the pixels of the original acquisition get
+                matched to a higher-resolution, warped space. The gaps are filled by duplicating the
+                most appropriate pixels (see dosctring of Atlas.project_image() for more
+                information). Defaults to True.
+            log (bool, optional): If True, the resulting array corresponds to log-transformed
+                expression, for each lipid. Defaults to False.
+            apply_transform (bool, optional): If True, applies the MAIA transform (if possible) to
+                the current selection, given that the parameter normalize is also True, and that
+                lipid_name corresponds to an existing lipid. Defaults to False.
+            ll_lipid_names (_type_, optional): List of lipid names that must be MAIA-transformed, if
+                apply_transform and normalize are True. Defaults to None.
+            cache_flask (flask_caching.Cache, optional): Cache of the Flask database. If set to
+                None, the reading of memory-mapped data will not be multithreads-safe. Defaults to
+                None.
+
+        Returns:
+            np.ndarray: A three-dimensional RGB numpy array (of uint8 dtype). The first two
+            dimensions correspond to the acquisition image shape, and the third dimension
+            corresponds to the channels.
+        """
 
         # Empty lipid names if no names provided
         if ll_lipid_names is None:
@@ -831,6 +944,8 @@ class Figures:
 
         # Build a list of empty images and add selected lipids for each channel
         l_images = []
+
+        # Loop over channels
         for l_boundaries, l_names in zip(ll_t_bounds, ll_lipid_names):
             image = np.zeros(
                 self._atlas.image_shape
@@ -838,10 +953,13 @@ class Figures:
                 else self._data.get_image_shape(slice_index)
             )
             if l_boundaries is not None:
+
+                # Loop over lipids
                 for boundaries, lipid_name in zip(l_boundaries, l_names):
                     if boundaries is not None:
                         (lb_mz, hb_mz) = boundaries
 
+                        # Cmpute expression image per lipid
                         image_temp = self.compute_image_per_lipid(
                             slice_index,
                             lb_mz,
@@ -870,21 +988,54 @@ class Figures:
         ll_t_bounds,
         normalize_independently=True,
         projected_image=True,
-        enrichment=False,
         log=False,
         return_image=False,
-        use_pil=True,
         apply_transform=False,
         ll_lipid_names=None,
         return_base64_string=False,
         cache_flask=None,
     ):
+        """This function is very similar to compute_heatmap_per_lipid_selection, but it returns a
+        RGB image instead of a heatmap.
+
+        Args:
+            slice_index (int): The index of the requested slice.
+            ll_t_bounds (list(list(tuple))): A list of lists of lipid boundaries (tuples). The first
+                list is used to separate image channels. The second list is used to separate lipid.
+            normalize_independently (bool, optional): If True, each lipid intensity array is
+                normalized independently, regardless of other lipids or channel used. Defaults to
+                True.
+            projected_image (bool, optional): If True, the pixels of the original acquisition get
+                matched to a higher-resolution, warped space. The gaps are filled by duplicating the
+                most appropriate pixels (see dosctring of Atlas.project_image() for more
+                information). Defaults to True.
+            log (bool, optional): If True, the resulting array corresponds to log-transformed
+                expression, for each lipid. Defaults to False.
+            return_image (bool, optional): If True, a go.Image is returned directly, instead of a
+                Plotly Figure. Defaults to False.
+            apply_transform (bool, optional): If True, applies the MAIA transform (if possible) to
+                the current selection, given that the parameter normalize is also True, and that
+                lipid_name corresponds to an existing lipid. Defaults to False.
+            ll_lipid_names (_type_, optional): List of lipid names that must be MAIA-transformed, if
+                apply_transform and normalize are True. Defaults to None.
+            return_base64_string (bool, optional): If True, the base64 string of the image is
+                returned directly, before any figure building. Defaults to False.
+            cache_flask (flask_caching.Cache, optional): Cache of the Flask database. If set to
+                None, the reading of memory-mapped data will not be multithreads-safe. Defaults to
+                None.
+
+        Returns:
+            Depending on the inputted arguments, may either return a base64 string, a go.Image, or
+            a Plotly Figure.
+        """
+
         logging.info("Started RGB image computation for slice " + str(slice_index) + logmem())
 
         # Empty lipid names if no names provided
         if ll_lipid_names is None:
             ll_lipid_names = [["" for y in l_t_bounds] for l_t_bounds in ll_t_bounds]
 
+        logging.info("Acquiring array_image for slice " + str(slice_index) + logmem())
         # Get RGB array for the current lipid selection
         array_image = self.compute_rgb_array_per_lipid_selection(
             slice_index,
@@ -892,58 +1043,33 @@ class Figures:
             normalize_independently=normalize_independently,
             projected_image=projected_image,
             log=log,
-            enrichment=enrichment,
             apply_transform=apply_transform,
             ll_lipid_names=ll_lipid_names,
             cache_flask=cache_flask,
         )
-        logging.info("array_image acquired for slice " + str(slice_index) + logmem())
 
-        if use_pil:
-            # Set optimize to False to gain computation time
-            base64_string_exp = convert_image_to_base64(
-                array_image,
-                type="RGB",
-                transparent_zeros=True,
-                optimize=False,
-            )
-            # Return image directly if needed
-            if return_base64_string:
-                return base64_string_exp
-
-            final_image = go.Image(
-                visible=True,
-                source=base64_string_exp,
-            )
-        else:
-            final_image = go.Image(z=array_image)
-
-        if return_image:
-            return final_image
-
-        else:
-            logging.info("Started building graph for slice " + str(slice_index) + logmem())
-            # Build graph from image
-            fig = go.Figure(final_image)
-
-            # Improve graph layout
-            fig.update_layout(
-                xaxis=dict(showgrid=False, zeroline=False),
-                yaxis=dict(showgrid=False, zeroline=False),
-                margin=dict(t=0, r=0, b=0, l=0),
-            )
-            fig.update_xaxes(showticklabels=False)
-            fig.update_yaxes(showticklabels=False)
-
-            # Set background color to zero
-            fig.layout.template = "plotly_dark"
-            fig.layout.plot_bgcolor = "rgba(0,0,0,0)"
-            fig.layout.paper_bgcolor = "rgba(0,0,0,0)"
-
-            logging.info("Returning fig for slice " + str(slice_index) + logmem())
-            return fig
+        logging.info("Returning fig for slice " + str(slice_index) + logmem())
+        # Build the correspondig figure
+        return self.build_lipid_heatmap_from_image(
+            self,
+            array_image,
+            return_base64_string=return_base64_string,
+            draw=False,
+            type_image="RGB",
+            return_go_image=return_image,
+        )
 
     def compute_spectrum_low_res(self, slice_index, annotations=None):
+        """This function returns the full (low-resolution) spectrum of the requested slice.
+
+        Args:
+            slice_index (int): The slice index of the requested slice.
+            annotations (list(tuple), optional): A list of m/z boundaries (one for each lipid to
+                annotate), corresponding to the position of colored box superimposed on the spectra.
+                Defaults to None.
+        Returns:
+            go.Figure: A Plotly Figure representing the low-resolution spectrum.
+        """
 
         # Define figure data
         data = go.Scattergl(
@@ -1002,6 +1128,33 @@ class Figures:
         standardization=False,
         cache_flask=None,
     ):
+        """This function returns the high-resolution spectrum of the requested slice between the two
+        provided m/z boundaries lb and hb. If boundaries are not provided, it returns an empty
+        spectrum.
+
+        Args:
+            slice_index (int): The slice index of the requested slice.
+            lb (float, optional): The lower m/z boundary below which the spectrum to display must
+                be cropped. Defaults to None.
+            hb (float, optional): The higher m/z boundary below which the spectrum to display must
+                be cropped. Defaults to None.
+            annotations (list(tuple), optional): A list of m/z boundaries (one for each lipid to
+                annotate), corresponding to the position of colored box superimposed on the spectra.
+                Defaults to None.
+            force_xlim (bool, optional): If Truen the zoom level will be set to enclose lb and hb,
+                although that may not be the tightest region to enclose the data. Defaults to False.
+            plot (bool, optional): If False, only the plotting data (m/z and intensities arrays)
+                will be returned. Defaults to True.
+            standardization (bool, optional): If True, the displayed spectrum is standardized with
+                MAIA when possible.
+            cache_flask (flask_caching.Cache, optional): Cache of the Flask database. If set to
+                None, the reading of memory-mapped data will not be multithreads-safe. Defaults to
+                None.
+        Returns:
+            Depending on the value of the boundaries, and the plot parameter, it may return a Plotly
+            Figure containing an empty spectrum, or a spectrum between the two provided boundaries,
+            or the corresponding data of such a spectrum.
+        """
 
         # Define default values for graph (empty)
         if lb is None and hb is None:
@@ -1081,6 +1234,10 @@ class Figures:
         return fig
 
     def return_empty_spectrum(self):
+        """This function returns an empty spectrum, used to display when no spectrum is available.
+
+        Returns:
+            Plotly Figure: A Plotly Figure representing an empty spectrum."""
 
         # Define empty figure data
         data = (go.Scattergl(x=[], y=[], visible=True),)
@@ -1107,6 +1264,17 @@ class Figures:
     # ==============================================================================================
 
     def return_heatmap_lipid(self, fig=None):
+        """This function is used to either generate a Plotly Figure containing an empty go.Heatmap, or
+        complete the figure passed as argument with a proper layout that matches the theme of the app.
+
+        Args:
+            fig (Plotly Figure, optional): A Plotly Figure whose layout must be completed. If None, a
+                new figure will be generated. Defaults to None.
+
+        Returns:
+            Plotly Figure: A Plotly Figure containing an empty go.Heatmap, or complete the figure passed
+                as argument with a proper layout that matches the theme of the app.
+        """
 
         # Build empty figure if not provided
         if fig is None:
@@ -1123,6 +1291,9 @@ class Figures:
         fig.layout.plot_bgcolor = "rgba(0,0,0,0)"
         fig.layout.paper_bgcolor = "rgba(0,0,0,0)"
 
+        # Dark Template
+        fig.layout.template = "plotly_dark"
+
         return fig
 
     # ==============================================================================================
@@ -1130,9 +1301,22 @@ class Figures:
     # ==============================================================================================
 
     def compute_treemaps_figure(self, maxdepth=5):
+        """This function is used to generate a Plotly Figure containing a treemap of the Allen Brain
+        Atlas hierarchy.
+
+        Args:
+            maxdepth (int, optional): The depth of the treemap to generate. Defaults to 5.
+
+        Returns:
+            Plotly.Figure: A Plotly Figure containing a treemap of the Allen Brain Atlas hierarchy.
+        """
+
+        # Build treemaps from list of children and parents
         fig = px.treemap(
             names=self._atlas.l_nodes, parents=self._atlas.l_parents, maxdepth=maxdepth
         )
+
+        # Improve layout
         fig.update_layout(
             uniformtext=dict(minsize=15),
             margin=dict(t=30, r=0, b=10, l=0),
@@ -1147,6 +1331,17 @@ class Figures:
         return fig
 
     def compute_3D_root_volume(self, decrease_dimensionality_factor=7):
+        """This function is used to generate a go.Isosurface of the Allen Brain root structure,
+        which will be used to enclose the display of lipid expression of other structures in the
+        brain.
+
+        Args:
+            decrease_dimensionality_factor (int, optional): Decrease the dimensionnality of the
+                brain to display, to get a lighter output. Defaults to 7.
+
+        Returns:
+            go.Isosurface: A semi-transparent go.Isosurface of the Allen Brain root structure.
+        """
         # Get array of annotations, which associate coordinate to id
         array_annotation_root = np.array(self._atlas.bg_atlas.annotation, dtype=np.int32)
 
@@ -1247,7 +1442,6 @@ class Figures:
                     normalize_independently=normalize_independently,
                     projected_image=high_res,
                     log=False,
-                    enrichment=False,
                     apply_transform=True,
                     cache_flask=cache_flask,
                 )

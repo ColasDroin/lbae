@@ -1900,9 +1900,6 @@ def page_3_draw_heatmap_per_lipid_selection(
                     )
                 )
                 fig_heatmap_lipids = figures.return_heatmap_lipid(fig_heatmap_lipids)
-                fig_heatmap_lipids.layout.template = "plotly_dark"
-                fig_heatmap_lipids.layout.plot_bgcolor = "rgba(0,0,0,0)"
-                fig_heatmap_lipids.layout.paper_bgcolor = "rgba(0,0,0,0)"
                 logging.info("Heatmap computed. Returning it now")
 
                 return fig_heatmap_lipids, l_idx_lipids
