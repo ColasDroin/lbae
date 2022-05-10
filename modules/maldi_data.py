@@ -409,7 +409,7 @@ class MaldiData:
 
         Args:
             slice_index (int): Index of the slice for which the average spectrum is requested.
-            standardization (bool): If True, the average spectrum is standardized.
+            standardization (bool): If True, the average spectrum is standardized with MAIA.
 
         Returns:
             np.ndarray (mmaped): The requested average spectrum.
