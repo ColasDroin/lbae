@@ -86,7 +86,31 @@ class Figures:
         compute_spectrum_high_res(): Returns the full (high-resolution) spectrum of the requested
             slice between the two provided m/z boundaries.
         return_empty_spectrum(): Returns an empty spectrum.
-
+        return_heatmap_lipid(): Either generate a Plotly Figure containing an empty go.Heatmap,
+            or complete the figure passed as argument with a proper layout that matches the theme of
+            the app.
+        compute_treemaps_figure(): Generates a Plotly Figure containing a treemap of the Allen Brain
+            Atlas hierarchy.
+        compute_3D_root_volume(): Generate a go.Isosurface of the Allen Brain root structure,
+            which will be used to enclose the display of lipid expression of other structures in the
+            brain.
+        get_array_of_annotations(): Returns the array of annotations from the Allen Brain Atlas,
+            subsampled to decrease the size of the output.
+        compute_l_array_2D(): Gets the list of expression per slice for all slices for the
+            computation of the 3D brain volume.
+        compute_array_coordinates_3D(): Computes the list of coordinates and expression values for
+            the voxels used in the 3D representation of the brain.
+        compute_3D_volume_figure(): Computes a Plotly Figure containing a go.Volume object
+            representing the expression of the requested lipids in the selected regions.
+        compute_clustergram_figure(): Computes a Plotly Clustergram figure, allowing to cluster and
+            compare the expression of all the MAIA-transformed lipids in the dataset in the selected
+            regions.
+        shelve_arrays_basic_figures(): Shelves in the database all the arrays of basic images
+            computed in compute_figure_basic_image(), across all slices and all types of arrays.
+        shelve_all_l_array_2D(): Precomputes and shelves all the arrays of lipid expression used in
+            a 3D representation of the brain.
+        shelve_all_arrays_annotation(): Precomputes and shelves the array of structure annotation
+            used in a 3D representation of the brain.
     """
 
     __slots__ = ["_data", "_atlas", "dic_normalization_factors"]
@@ -1485,7 +1509,7 @@ class Figures:
     def compute_l_array_2D(
         self, ll_t_bounds, normalize_independently=True, high_res=False, cache_flask=None
     ):
-        """This function is used to  get the list of expression per slice for all slices for the
+        """This function is used to get the list of expression per slice for all slices for the
         computation of the 3D brain volume.
 
         Args:
