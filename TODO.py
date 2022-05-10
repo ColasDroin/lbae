@@ -18,7 +18,7 @@
 # TODO Clean all notebooks output before last commit
 # TODO Delete TODO file
 
-# ? Comment the layout?
+# ? Split and comment the layouts?
 # ? Build basic technical documentation for the app?
 # ? Implement the app as a multipage app when the feature is available on Dash
 

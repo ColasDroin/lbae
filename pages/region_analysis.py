@@ -1,4 +1,12 @@
-###### IMPORT MODULES ######
+# Copyright (c) 2022, Colas Droin. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+
+""" This file contains the page used to explore the lipid data from either pre-existing annotated 
+structures or human-selected in the app."""
+
+# ==================================================================================================
+# --- Imports
+# ==================================================================================================
 
 # Standard modules
 import dash_bootstrap_components as dbc
@@ -13,13 +21,12 @@ import dash_draggable
 from numba import njit
 import dash_mantine_components as dmc
 
-# LBAE modules
+# LBAE imports
 import app
 from app import figures, data, atlas, cache_flask
 import config
 from modules.tools.storage import return_shelved_object
 from modules.tools.image import convert_image_to_base64
-
 from modules.tools.spectra import (
     sample_rows_from_path,
     compute_spectrum_per_row_selection,
@@ -32,16 +39,20 @@ from modules.tools.spectra import (
     return_idx_sup,
     return_idx_inf,
 )
-
 from config import l_colors
 
+# ! Harcode this?
 HEIGHT_PLOTS = 300
 N_LINES = int(np.ceil(HEIGHT_PLOTS / 30))
 
 ###### DEFFINE PAGE LAYOUT ######
 
-# ! This page is very slow even at first loading, so probably so automatic callbacks are triggered... Investigate that
-# ! With throttling tool from Chrome
+# ! This page is very slow even at first loading, so mabye so automatic callbacks are triggered...
+# ! Investigate that with throttling tool from Chrome
+
+# ==================================================================================================
+# --- Layout
+# ==================================================================================================
 
 
 def return_layout(basic_config, slice_index=1):
@@ -78,7 +89,6 @@ def return_layout(basic_config, slice_index=1):
                             "height": "95%",
                             "position": "absolute",
                             "left": "2.5%",
-                            # "max-height": "40vh",
                         },
                         figure=return_shelved_object(
                             "figures/load_page",
@@ -106,10 +116,8 @@ def return_layout(basic_config, slice_index=1):
                         color="cyan",
                         class_name="mt-5",
                         weight=500,
-                        # className="text-warning font-weight-bold position-absolute",
                         style={
                             "width": "100%",
-                            # "height": "86%",
                             "position": "absolute",
                             "top": "7%",
                         },
@@ -160,7 +168,6 @@ def return_layout(basic_config, slice_index=1):
                                         nothingFound="No structure found",
                                         radius="md",
                                         size="xs",
-                                        # variant="filled",
                                         placeholder="Choose brain structure",
                                         clearable=False,
                                         maxSelectedValues=3,
@@ -223,7 +230,9 @@ def return_layout(basic_config, slice_index=1):
                                     "xxs": 2,
                                 },
                                 layouts={
-                                    # x sets the lateral position, y the vertical one, w is in columns (whose size depends on the dimension), h is in rows (30px)
+                                    # x sets the lateral position, y the vertical one,
+                                    # w is in columns (whose size depends on the dimension),
+                                    # h is in rows (30px)
                                     # nb columns go 12->12->10->6->4->2
                                     "xxl": [
                                         {
@@ -564,17 +573,6 @@ def return_layout(basic_config, slice_index=1):
                                                                     },
                                                                 },
                                                             ),
-                                                            # dmc.Slider(
-                                                            #     id="page-4-slider",
-                                                            #     class_name="mt-2",
-                                                            #     color="cyan",
-                                                            #     min=0,
-                                                            #     max=99,
-                                                            #     step=3,
-                                                            #     value=10,
-                                                            #     size="xs",
-                                                            #     # label="Filter lipid by percentile",
-                                                            # ),
                                                             dbc.Spinner(
                                                                 color="sucess",
                                                                 children=[
@@ -591,7 +589,6 @@ def return_layout(basic_config, slice_index=1):
                                                                                 "#1d1c1f"
                                                                             ),
                                                                         },
-                                                                        # | {"display": "none"},
                                                                         config=basic_config
                                                                         | {
                                                                             "toImageButtonOptions": {
@@ -611,7 +608,6 @@ def return_layout(basic_config, slice_index=1):
                                                                         color="cyan",
                                                                         compact=False,
                                                                         loading=False,
-                                                                        # lass_name="mr-5",
                                                                         style={
                                                                             "position": "absolute",
                                                                             "top": "0.7rem",
@@ -679,7 +675,6 @@ def return_layout(basic_config, slice_index=1):
                                                 style={
                                                     "background-color": "#1d1c1f",
                                                 },
-                                                # className="loading-wrapper pt-0 mt-0 pb-0 mb-1 px-0 mx-0",
                                                 children=[
                                                     html.Div(
                                                         id="page-3-alert-5",
@@ -773,24 +768,6 @@ def return_layout(basic_config, slice_index=1):
                                                                                     "width": "15em",
                                                                                 },
                                                                             ),
-                                                                            # dmc.MultiSelect(
-                                                                            #     id="page-3-dropdown-blue",
-                                                                            #     data=[],
-                                                                            #     value=[],
-                                                                            #     searchable=True,
-                                                                            #     nothingFound="No lipid found",
-                                                                            #     radius="md",
-                                                                            #     size="xs",
-                                                                            #     placeholder="Choose up to 3 lipids",
-                                                                            #     clearable=False,
-                                                                            #     maxSelectedValues=3,
-                                                                            #     transitionDuration=150,
-                                                                            #     transition="pop-top-left",
-                                                                            #     transitionTimingFunction="ease",
-                                                                            #     style={
-                                                                            #         "width": "20em",
-                                                                            #     },
-                                                                            # ),
                                                                             dmc.Center(
                                                                                 dmc.Button(
                                                                                     children=(
@@ -845,7 +822,6 @@ def return_layout(basic_config, slice_index=1):
                                                         color="cyan",
                                                         compact=False,
                                                         loading=False,
-                                                        # lass_name="mr-5",
                                                         style={
                                                             "position": "absolute",
                                                             "top": "0.7rem",
@@ -874,15 +850,20 @@ def return_layout(basic_config, slice_index=1):
     return page
 
 
-###### APP CALLBACKS ######
+# ==================================================================================================
+# --- Callbacks
+# ==================================================================================================
 
-# Function to display the hovered region
+
 @app.app.callback(
     Output("page-3-graph-hover-text", "children"),
     Input("page-3-graph-heatmap-per-sel", "hoverData"),
     Input("main-slider", "value"),
 )
 def page_3_hover(hoverData, slice_index):
+    """This callback is used to update the text displayed when hovering over the slice image."""
+
+    # If there is a region hovered, find out the region name with the current coordinates
     if hoverData is not None:
         if len(hoverData["points"]) > 0:
             x = int(slice_index) - 1
@@ -902,7 +883,6 @@ def page_3_hover(hoverData, slice_index):
     return dash.no_update
 
 
-# Function to reset the layout of the heatmap
 @app.app.callback(
     Output("page-3-graph-heatmap-per-sel", "relayoutData"),
     Input("page-3-reset-button", "n_clicks"),
@@ -910,10 +890,10 @@ def page_3_hover(hoverData, slice_index):
     prevent_initial_call=True,
 )
 def page_3_reset_layout(cliked_reset, url):
+    """This callback is used to reset the layout of the heatmap."""
     return {}
 
 
-# Function to plot the initial heatmap
 @app.app.callback(
     Output("page-3-graph-heatmap-per-sel", "figure"),
     Output("dcc-store-color-mask", "data"),
@@ -939,18 +919,15 @@ def page_3_plot_heatmap(
     reset,
     l_shapes_and_masks,
 ):
+    """This callback is used to plot the main heatmap of the page."""
 
     # Find out which input triggered the function
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
     value_input = dash.callback_context.triggered[0]["prop_id"].split(".")[1]
 
-    if value_input != "hoverData":
-        print(
-            id_input, value_input, slice_index, cliked_reset, l_mask_name, url, l_color_mask, reset
-        )
-
     # If a new slice is loaded or the page just got loaded
-    # do nothing because of automatic relayout of the heatmap which is automatically triggered when the page is loaded
+    # do nothing because of automatic relayout of the heatmap which is automatically triggered when 
+    # the page is loaded
     if (
         id_input == "main-slider"
         or len(id_input) == 0
@@ -975,11 +952,11 @@ def page_3_plot_heatmap(
         )
         return fig, [], True, []
 
-    # fix bug
+    # Fix bug with automatic relayout
     if value_input == "relayoutData" and relayoutData == {"autosize": True}:
         return dash.no_update
 
-    # fig other bug
+    # Fix other bug with automatic dropdown selection
     if (
         id_input == "page-3-dropdown-brain-regions "
         and relayoutData is None
@@ -1005,6 +982,7 @@ def page_3_plot_heatmap(
         )
         return fig, [], True, []
 
+    # If the user selected a new mask or drew on the plot
     if id_input == "page-3-graph-heatmap-per-sel" or id_input == "page-3-dropdown-brain-regions":
         # Rebuild figure
         fig = return_shelved_object(
@@ -1018,18 +996,10 @@ def page_3_plot_heatmap(
         )
         color_idx = None
         col_next = None
-        # l_shapes_and_masks = []
         if l_mask_name is not None:
 
+            # If a mask has been selected
             if len(l_mask_name) > 0:
-                # dic_masks = return_shelved_object(
-                #     "atlas/atlas_objects",
-                #     "dic_masks_and_spectra",
-                #     force_update=False,
-                #     compute_function=atlas.compute_dic_projected_masks_and_spectra,
-                #     slice_index=slice_index - 1,
-                # )
-
                 for idx_mask, mask_name in enumerate(l_mask_name):
                     id_name = atlas.dic_name_acronym[mask_name]
                     if id_name in atlas.dic_existing_masks[slice_index - 1]:
@@ -1059,7 +1029,8 @@ def page_3_plot_heatmap(
                     # Reoder axis to match plotly go.image requirements
                     array_image = np.moveaxis(np.array(l_images, dtype=np.uint8), 0, 2)
 
-                    # convert image to string to save space (new image as each mask must have a different color)
+                    # Convert image to string to save space (new image as each mask must have a 
+                    # different color)
                     base64_string = convert_image_to_base64(
                         array_image, optimize=True, format="gif", type="RGBA"
                     )
@@ -1069,18 +1040,16 @@ def page_3_plot_heatmap(
                     )
 
                     if id_input == "page-3-dropdown-brain-regions" and color_idx is not None:
-                        # save in l_shapes_and_masks
+                        # Save in l_shapes_and_masks
                         l_shapes_and_masks.append(["mask", mask_name, base64_string, color_idx])
 
+        # If a region has been drawn by the user
         if relayoutData is not None:
             if "shapes" in relayoutData:
                 if len(relayoutData["shapes"]) > 0:
                     if not reset or value_input == "relayoutData":
                         if "path" in relayoutData["shapes"][-1]:
                             fig["layout"]["shapes"] = relayoutData["shapes"]  #
-                            # if color_idx is not None:
-                            #    col_next = config.l_colors[(color_idx + 1) % 4]
-                            # else:
                             col_next = config.l_colors[
                                 (len(relayoutData["shapes"]) + len(l_color_mask)) % 4
                             ]
@@ -1099,7 +1068,7 @@ def page_3_plot_heatmap(
                                         color_idx_for_registration - 1,
                                     ]
                                 )
-
+        # Update col_next
         if color_idx is not None and col_next is None:
             col_next = config.l_colors[(color_idx + 1) % 4]
         elif col_next is None:
@@ -1113,6 +1082,7 @@ def page_3_plot_heatmap(
             ),
         )
 
+        # Update drag mode
         if relayoutData is not None:
             if "shapes" in relayoutData:
                 if len(relayoutData["shapes"]) + len(l_color_mask) > 3:
@@ -1120,18 +1090,19 @@ def page_3_plot_heatmap(
         if len(l_color_mask) > 3:
             fig.update_layout(dragmode=False)
 
+        # Return figure and corresponding data
         return fig, l_color_mask, False, l_shapes_and_masks
 
     # either graph is already here
     return dash.no_update
 
 
-# Function that update dropdown options
 @app.app.callback(
     Output("page-3-dropdown-brain-regions", "data"),
     Input("main-slider", "value"),
 )
 def page_3_update_dropdown_option(slice_index):
+    """This callback updates the dropdown options for the brain regions."""
 
     if slice_index is not None:
         return [
@@ -1142,7 +1113,6 @@ def page_3_update_dropdown_option(slice_index):
         return dash.no_update
 
 
-# Function that limits dropdown selection to 4
 @app.app.callback(
     Output("page-3-dropdown-brain-regions", "disabled"),
     Input("page-3-dropdown-brain-regions", "value"),
@@ -1150,6 +1120,8 @@ def page_3_update_dropdown_option(slice_index):
     prevent_intial_call=True,
 )
 def page_3_disable_dropdown(l_selection, clicked_reset):
+    """This callback disables the dropdown options for the brain regions if more than four regions
+    have already been selected."""
 
     # Find out which input triggered the function
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
@@ -1165,7 +1137,6 @@ def page_3_disable_dropdown(l_selection, clicked_reset):
     return dash.no_update
 
 
-# Function that empties dropdown selection
 @app.app.callback(
     Output("page-3-dropdown-brain-regions", "value"),
     Input("page-3-reset-button", "n_clicks"),
@@ -1173,10 +1144,11 @@ def page_3_disable_dropdown(l_selection, clicked_reset):
     prevent_initial_call=True,
 )
 def page_3_empty_dropdown(clicked_reset, slice_index):
+    """This callback empties the dropdown options for the brain regions when clicking reset or
+    changing slice."""
     return []
 
 
-# Function that activate the button to compute spectra
 @app.app.callback(
     Output("page-3-button-compute-spectra", "disabled"),
     Input("page-3-graph-heatmap-per-sel", "relayoutData"),
@@ -1185,17 +1157,22 @@ def page_3_empty_dropdown(clicked_reset, slice_index):
     prevent_intial_call=True,
 )
 def page_3_button_compute_spectra(relayoutData, clicked_reset, mask):
+    """This callback disables the button to compute spectra if no region has been selected or
+    drawn."""
 
     # Find out which input triggered the function
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
 
+    # In case of reset, disable button
     if id_input == "page-3-reset-button":
         return True
 
+    # If at least one mask, activate button
     if mask is not None:
         if mask != []:
             return False
 
+    # If at least one drawn shape, activate button
     if relayoutData is not None:
         if "shapes" in relayoutData:
             if len(relayoutData["shapes"]) > 0:
@@ -1204,7 +1181,6 @@ def page_3_button_compute_spectra(relayoutData, clicked_reset, mask):
     return True
 
 
-# Function to make visible the m/z plot in page 3
 @app.app.callback(
     Output("page-3-graph-spectrum-per-pixel", "style"),
     Output("page-3-alert-2", "style"),
@@ -1216,16 +1192,21 @@ def page_3_button_compute_spectra(relayoutData, clicked_reset, mask):
     prevent_initial_call=True,
 )
 def page_3_display_high_res_mz_plot(clicked_reset, clicked_compute, mask, relayoutData):
+    """This callback displays the m/z plot and heatmap when clicking on the compute spectra
+    button (and hide the corresponding alert)."""
 
     # Find out which input triggered the function
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
 
+    # If reset button has been clicked, hide all plot
     if id_input == "page-3-reset-button":
         return {"display": "none"}, {"display": "none"}, {"display": "none"}
 
+    # If the button to compute spectra has been clicked, display the plots
     elif id_input == "page-3-button-compute-spectra":
         logging.info("Compute spectra button has been clicked")
 
+        # If at least one mask, display the plots
         if mask is not None:
             if mask != []:
                 logging.info("One or several masks have been selected, displaying graphs")
@@ -1238,6 +1219,7 @@ def page_3_display_high_res_mz_plot(clicked_reset, clicked_compute, mask, relayo
                     },
                 )
 
+        # If at least one drawn region, display the plots
         if relayoutData is not None:
             if "shapes" in relayoutData:
                 if len(relayoutData["shapes"]) > 0:
@@ -1257,24 +1239,23 @@ def page_3_display_high_res_mz_plot(clicked_reset, clicked_compute, mask, relayo
     return dash.no_update
 
 
-# Function to make visible the sorting switch for the lipid heatmap
 @app.app.callback(
     Output("page-3-switches", "className"),
-    # Input({"type":"page-3-button-compute-spectra", "index":ALL}, "n_clicks"),
     Input("page-3-reset-button", "n_clicks"),
     Input("page-3-graph-heatmap-per-lipid", "figure"),
     State("page-3-graph-heatmap-per-sel", "relayoutData"),
     prevent_initial_call=True,
 )
 def page_3_display_switch(clicked_reset, fig_heatmap, relayoutData):
+    """This callback displays the sorting switch for the lipid heatmap when the corresponding
+    heatmap shows data."""
 
     # Find out which input triggered the function
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
 
+    # If reset button has been clicked, hide switch
     if id_input == "page-3-reset-button":
         return "d-none"
-
-    # elif id_input == "page-3-button-compute-spectra":
 
     # If limit number of selection is done, just hide it
     if relayoutData is not None:
@@ -1283,6 +1264,7 @@ def page_3_display_switch(clicked_reset, fig_heatmap, relayoutData):
                 if len(relayoutData["shapes"]) > 4:
                     return "d-none"
 
+    # Else, display it if more than 1 selection recorded
     if fig_heatmap is not None:
         if len(fig_heatmap["data"]) > 0:
 
@@ -1307,14 +1289,20 @@ def page_3_display_switch(clicked_reset, fig_heatmap, relayoutData):
     prevent_initial_call=True,
 )
 def page_3_display_alert(clicked_compute, clicked_reset, relayoutData, mask):
+    """This callback hides or displays the alerts of the plots linked to lipid analytics, depending
+    if the latters show data or not."""
 
     # Find out which input triggered the function
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
 
+    # If reset button has been clicked, leave all alert
     if id_input == "page-3-reset-button":
         return {}, {}, {}
 
+    # If the button to compute spectra has been clicked, hide the alerts
     elif id_input == "page-3-button-compute-spectra":
+
+        # If at least one mask selected
         if mask is not None:
             if mask != []:
                 return (
@@ -1323,6 +1311,7 @@ def page_3_display_alert(clicked_compute, clicked_reset, relayoutData, mask):
                     {"display": "none"},
                 )
 
+        # Or at least one drawn region
         if relayoutData is not None:
             if "shapes" in relayoutData:
                 if len(relayoutData["shapes"]) > 0:
@@ -1349,6 +1338,7 @@ clientside_callback(
     Output("page-3-download-heatmap-button", "n_clicks"),
     Input("page-3-download-heatmap-button", "n_clicks"),
 )
+"""This clientside callback allows to download the main heatmap as a png file."""
 
 clientside_callback(
     """
@@ -1365,6 +1355,8 @@ clientside_callback(
     Output("page-3-download-plot-button", "n_clicks"),
     Input("page-3-download-plot-button", "n_clicks"),
 )
+"""This clientside callback allows to download the heatmap used to show differential lipid 
+expression in the selected regions as a png file."""
 
 
 # Global function to memoize/compute spectrum
@@ -1372,12 +1364,34 @@ clientside_callback(
 def global_spectrum_store(
     slice_index, l_shapes_and_masks, l_mask_name, relayoutData, as_enrichment, log_transform
 ):
+    """This function computes and returns the average spectra for the selected regions.
+
+    Args:
+        slice_index (int): Index of the selected slice.
+        l_shapes_and_masks (list): A list of either user-draw regions, or pre-existing masks coming
+            from annotations (both custom objects).
+        l_mask_name (list(str)): If masks are present in l_shapes_and_masks, this list contains the
+            corresponding names of the masks.
+        relayoutData (_type_): If user-draw regions are present in l_shapes_and_masks, this list
+            contains the corresponding relayout data, which itself contains the path used to define
+            the drawn shapes.
+        as_enrichment (bool): If True, the average spectrum in the selected region is normalized
+            with respect to the average spectrum of the whole slice.
+        log_transform (bool): If True, the average spectrum is computed from log-transformed data.
+
+    Returns:
+        list(np.ndarray): A list of numpy arrays, each corresponding to the spectral data of a
+            user-draw region, or pre-existing mask.
+    """
+
+    # Empty variables before computing the average spectra
     l_spectra = []
     idx_mask = -1
     idx_path = -1
 
     logging.info("Computing spectra now")
 
+    # Loop over all user-draw regions and pre-existing masks
     for shape in l_shapes_and_masks:
         grah_scattergl_data = None
         # Compute average spectrum from mask
@@ -1400,18 +1414,21 @@ def global_spectrum_store(
             l_paths = []
             for shape in relayoutData["shapes"]:
                 if "path" in shape:
-                    # get condensed path version of the annotation
+
+                    # Get condensed path version of the annotation
                     parsed_path = shape["path"][1:-1].replace("L", ",").split(",")
                     path = [round(float(x)) for x in parsed_path]
 
-                    # Work with image projection (check previous version if need to work with original image)
+                    # Work with image projection (check previous version if need to work with
+                    # original image)
                     path = [
                         (
                             int(
                                 atlas.array_projection_correspondence_corrected[
                                     slice_index - 1, y, x, 0
                                 ]
-                            ),  # must explicitely cast to int for serialization as numpy int are not accepted
+                            ),  # Must explicitely cast to int for serialization as numpy int are
+                            # not accepted
                             int(
                                 atlas.array_projection_correspondence_corrected[
                                     slice_index - 1, y, x, 1
@@ -1420,16 +1437,18 @@ def global_spectrum_store(
                         )
                         for x, y in zip(path[:-1:2], path[1::2])
                     ]
-                    # clean path from artefacts due to projection
+                    # Clean path from artefacts due to projection
                     path = [
                         t for t in list(dict.fromkeys(path)) if -1 not in t
-                    ]  # use dic key to remove duplicates created by the correction of the projection
+                    ]  # Use dic key to remove duplicates created by the correction of the
+                    # projection
 
                     if len(path) > 0:
                         path.append(path[0])  # to close the path
                     l_paths.append(path)
             logging.info("Computing path finished")
 
+            # Compute the average spectrum from the selected path
             try:
                 path = l_paths[idx_path]
                 if len(path) > 0:
@@ -1464,10 +1483,10 @@ def global_spectrum_store(
         # Do the selected transformations
         if grah_scattergl_data is not None:
             if as_enrichment:
-                # first normalize with respect to itself
+                # First normalize with respect to itself
                 grah_scattergl_data[1, :] /= np.sum(grah_scattergl_data[1, :])
 
-                # then convert to uncompressed version
+                # Then convert to uncompressed version
                 grah_scattergl_data = convert_array_to_fine_grained(
                     grah_scattergl_data,
                     10**-3,
@@ -1475,7 +1494,7 @@ def global_spectrum_store(
                     hb=1250,
                 )
 
-                # then normalize to the sum of all pixels
+                # Then normalize to the sum of all pixels
                 grah_scattergl_data[1, :] /= (
                     compute_thread_safe_function(
                         convert_array_to_fine_grained,
@@ -1490,14 +1509,14 @@ def global_spectrum_store(
                     + 1
                 )
 
-                # go back to compressed
+                # Go back to compressed
                 grah_scattergl_data = strip_zeros(cache_flask, grah_scattergl_data)
 
-                # re-normalize with respect to the number of values in the spectrum
+                # Re-normalize with respect to the number of values in the spectrum
                 # so that pixels with more lipids do no have lower peaks
                 grah_scattergl_data[1, :] *= len(grah_scattergl_data[1, :])
 
-            # log-transform
+            # Log-transform
             if log_transform:
                 grah_scattergl_data[1, :] = np.log(grah_scattergl_data[1, :] + 1)
             l_spectra.append(grah_scattergl_data)
@@ -1506,7 +1525,6 @@ def global_spectrum_store(
     return l_spectra
 
 
-# Function that takes path or mask and compute corresponding spectrum
 @app.app.callback(
     Output("dcc-store-list-mz-spectra", "data"),
     Input("page-3-button-compute-spectra", "n_clicks"),
@@ -1516,8 +1534,6 @@ def global_spectrum_store(
     Input("main-slider", "value"),
     State("page-3-dropdown-brain-regions", "value"),
     State("dcc-store-shapes-and-masks", "data"),
-    # Input("page-3-normalize", "checked"),
-    # Input("page-3-log", "checked"),
     State("page-3-graph-heatmap-per-sel", "relayoutData"),
     State("session-id", "data"),
     prevent_intial_call=True,
@@ -1530,11 +1546,11 @@ def page_3_record_spectra(
     slice_index,
     l_mask_name,
     l_shapes_and_masks,
-    # as_enrichment,
-    # log_transform,
     relayoutData,
     session_id,
 ):
+    """This callback is used to compute and record the average spectrum of the selected
+    region(s)."""
 
     # Deactivated switches
     as_enrichment = False
@@ -1563,26 +1579,21 @@ def page_3_record_spectra(
         if l_spectra is not None:
             if l_spectra != []:
                 logging.info("Spectra computed, returning it now")
-                # return a dummy variable to indicate that the spectrum has been computed and trigger
-                # the callback
+                # Return a dummy variable to indicate that the spectrum has been computed and 
+                # trigger the callback
                 return "ok"
         logging.warning("A bug appeared during spectrum computation")
 
     return []
 
 
-# Function that takes path and plot spectrum
 @app.app.callback(
     Output("page-3-graph-spectrum-per-pixel", "figure"),
-    # Output("dcc-store-list-idx-lipids", "data"),
-    # Output("page-3-empty-div-load", "children"),  # empty div to trigger spinner
     Input("page-3-reset-button", "n_clicks"),
     Input("dcc-store-list-mz-spectra", "data"),
     Input("main-slider", "value"),
     State("page-3-dropdown-brain-regions", "value"),
     State("dcc-store-shapes-and-masks", "data"),
-    # Input("page-3-normalize", "checked"),
-    # Input("page-3-log", "checked"),
     State("page-3-graph-heatmap-per-sel", "relayoutData"),
     prevent_intial_call=True,
 )
@@ -1592,10 +1603,9 @@ def page_3_plot_spectrum(
     slice_index,
     l_mask_name,
     l_shapes_and_masks,
-    # as_enrichment,
-    # log_transform,
     relayoutData,
 ):
+    """This callback is used to plot the spectra of the selected region(s)."""
 
     # Deactivated switches
     as_enrichment = False
@@ -1613,11 +1623,13 @@ def page_3_plot_spectrum(
     elif id_input == "page-3-reset-button" or l_spectra is None or l_spectra == []:
         return figures.return_empty_spectrum()
 
-    # do nothing if l_spectra is None or []
+    # Do nothing if l_spectra is None or []
     elif id_input == "dcc-store-list-mz-spectra":
         if len(l_spectra) > 0 or l_spectra == "ok":
             logging.info("Starting spectra plotting now")
             fig_mz = go.Figure()
+
+            # Compute the average spectra
             l_spectra = global_spectrum_store(
                 slice_index,
                 l_shapes_and_masks,
@@ -1635,7 +1647,7 @@ def page_3_plot_spectrum(
                 # Compute (again) the numpy array of the spectrum
                 grah_scattergl_data = np.array(spectrum, dtype=np.float32)
 
-                # two different functions so that's there's a unique output for each numba function
+                # Two different functions so that's there's a unique output for each numba function
                 l_idx_kept = return_idx_sup(l_idx_labels)
                 l_idx_unkept = return_idx_inf(l_idx_labels)
 
@@ -1652,7 +1664,7 @@ def page_3_plot_spectrum(
                 l_intensity_with_lipids = grah_scattergl_data_padded_annotated[1, :]
                 l_idx_labels_kept = l_idx_labels[l_idx_kept]
 
-                # @njit #we need to wait for the support of np.insert, still relatively fast anyway
+                # @njit # We need to wait for the support of np.insert, still relatively fast anyway
                 def pad_l_idx_labels(l_idx_labels_kept, array_index_padding):
                     pad = 0
                     # The initial condition in the loop is only evaluated once so no problem with
@@ -1727,17 +1739,16 @@ def page_3_plot_spectrum(
             fig_mz.layout.paper_bgcolor = "rgba(0,0,0,0)"
 
             logging.info("Spectra plotted. Returning it now")
+
             # Return dummy variable for ll_idx_labels to confirm that it has been computed
             return fig_mz
 
     return dash.no_update
 
 
-# Function that plots heatmap representing lipid intensity from the current selection
 @app.app.callback(
     Output("page-3-graph-heatmap-per-lipid", "figure"),
     Output("page-3-dcc-store-lipids-region", "data"),
-    # Input("dcc-store-list-idx-lipids", "data"),
     Input("page-3-reset-button", "n_clicks"),
     Input("page-3-sort-by-diff-switch", "checked"),
     Input("page-4-slider", "value"),
@@ -1745,14 +1756,11 @@ def page_3_plot_spectrum(
     Input("dcc-store-list-mz-spectra", "data"),
     State("page-3-dropdown-brain-regions", "value"),
     State("dcc-store-shapes-and-masks", "data"),
-    # Input("page-3-normalize", "checked"),
-    # Input("page-3-log", "checked"),
     State("page-3-graph-heatmap-per-sel", "relayoutData"),
     State("session-id", "data"),
     prevent_intial_call=True,
 )
 def page_3_draw_heatmap_per_lipid_selection(
-    # ll_idx_labels,
     cliked_reset,
     sort_switch,
     percentile,
@@ -1760,11 +1768,11 @@ def page_3_draw_heatmap_per_lipid_selection(
     l_spectra,
     l_mask_name,
     l_shapes_and_masks,
-    # as_enrichment,
-    # log_transform,
     relayoutData,
     session_id,
 ):
+    """This callback is used to plot the heatmap representing the differential lipid expression in
+    the different regions of the current selection."""
 
     # Deactivated switches
     as_enrichment = False
@@ -1793,14 +1801,10 @@ def page_3_draw_heatmap_per_lipid_selection(
 
         logging.info("Starting computing heatmap now")
 
-        # if len(scale_switch) > 0:
-        #    scale_switch = scale_switch[0]
-        # else:
-        #    scale_switch = False
         scale_switch = False
         # Load figure
-        if l_spectra == "ok":  # and ll_idx_labels == "ok":
-            # get the actual values for l_spectra and ll_idx_labels and not just the dummy fillings
+        if l_spectra == "ok":
+            # Get the actual values for l_spectra and ll_idx_labels and not just the dummy fillings
             l_spectra = global_spectrum_store(
                 slice_index,
                 l_shapes_and_masks,
@@ -1907,7 +1911,6 @@ def page_3_draw_heatmap_per_lipid_selection(
     return dash.no_update
 
 
-# Function that sends the spectra of the selected region for download
 @app.app.callback(
     Output("page-3-download-data", "data"),
     Input("page-3-download-data-button", "n_clicks"),
@@ -1915,6 +1918,10 @@ def page_3_draw_heatmap_per_lipid_selection(
     prevent_initial_call=True,
 )
 def page_3_download(n_clicks, fig_mz):
+    """This callback is used to download the spectra of the selected regions when clicking the
+    corresponding button."""
+
+    # Check that there's spectral data to download in the first place
     if fig_mz is not None:
         fig_mz = go.Figure(data=fig_mz)
         if len(fig_mz.data) > 1:
@@ -1950,7 +1957,6 @@ def page_3_download(n_clicks, fig_mz):
     return dash.no_update
 
 
-# Function that deactivate the download button if not region drawn
 @app.app.callback(
     Output("page-3-download-data-button", "disabled"),
     Output("page-3-download-plot-button", "disabled"),
@@ -1958,6 +1964,9 @@ def page_3_download(n_clicks, fig_mz):
     Input("page-3-graph-spectrum-per-pixel", "figure"),
 )
 def page_3_reset_download(fig_mz):
+    """This callback is used to deactivate the download buttons if no region has been drawn."""
+
+    # Check the presence of spectral data in the corresponding figure
     if fig_mz is not None:
         fig_mz = go.Figure(data=fig_mz)
         if len(fig_mz.data) > 1:
@@ -1965,7 +1974,6 @@ def page_3_reset_download(fig_mz):
     return True, True, True
 
 
-# Function that create the dropdown lipids selections
 @app.app.callback(
     Output("page-3-dropdown-red", "options"),
     Output("page-3-dropdown-green", "options"),
@@ -1981,6 +1989,8 @@ def page_3_reset_download(fig_mz):
     prevent_initial_call=True,
 )
 def page_3_fill_dropdown_options(l_idx_lipids, cliked_reset, slice_index, n_clicks):
+    """This callback is used to fill the dropdown options with the most differentially expressed
+    lipids in the corresponding heatmap."""
 
     # Find out which input triggered the function
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
@@ -2032,7 +2042,6 @@ def page_3_fill_dropdown_options(l_idx_lipids, cliked_reset, slice_index, n_clic
     return dash.no_update
 
 
-# Function that activate the button to plot the graph for lipid comparison
 @app.app.callback(
     Output("page-3-open-modal", "disabled"),
     Input("page-3-dropdown-red", "value"),
@@ -2040,6 +2049,8 @@ def page_3_fill_dropdown_options(l_idx_lipids, cliked_reset, slice_index, n_clic
     Input("page-3-dropdown-blue", "value"),
 )
 def toggle_button_modal(l_red_lipids, l_green_lipids, l_blue_lipids):
+    """This callback is used to activate the button to plot the graph for lipid comparison."""
+
     # Check that at least one lipid has been selected
     if len(l_red_lipids + l_green_lipids + l_blue_lipids) > 0:
         return False
@@ -2047,7 +2058,6 @@ def toggle_button_modal(l_red_lipids, l_green_lipids, l_blue_lipids):
         return True
 
 
-# Function that display the graph for lipid comparison
 @app.app.callback(
     Output("page-3-div-graph-lipid-comparison", "style"),
     Input("page-3-open-modal", "n_clicks"),
@@ -2058,6 +2068,8 @@ def toggle_button_modal(l_red_lipids, l_green_lipids, l_blue_lipids):
     prevent_initial_call=True,
 )
 def toggle_visibility_graph(n1, cliked_reset, l_red_lipids, l_green_lipids, l_blue_lipids):
+    """This callback is used to display the graph for differential lipid expression comparison."""
+
     # Find out which input triggered the function
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
 
@@ -2072,7 +2084,6 @@ def toggle_visibility_graph(n1, cliked_reset, l_red_lipids, l_green_lipids, l_bl
         return {"display": "none"}
 
 
-# Function that draws modal graph according to selected lipids
 @app.app.callback(
     Output("page-3-heatmap-lipid-comparison", "figure"),
     Input("page-3-open-modal", "n_clicks"),
@@ -2085,8 +2096,6 @@ def toggle_visibility_graph(n1, cliked_reset, l_red_lipids, l_green_lipids, l_bl
     State("dcc-store-shapes-and-masks", "data"),
     State("page-3-dropdown-brain-regions", "value"),
     State("dcc-store-color-mask", "data"),
-    # Input("page-3-log", "checked"),
-    # Input("page-3-normalize", "checked"),
     State("session-id", "data"),
     prevent_initial_call=True,
 )
@@ -2101,10 +2110,9 @@ def draw_modal_graph(
     l_shapes_and_masks,
     l_mask_name,
     l_color_mask,
-    # log_transform,
-    # as_enrichment,
     session_id,
 ):
+    """This callback is used to draw the heatmap for differential lipid expression comparison."""
 
     # Deactivated switches
     as_enrichment = False
@@ -2138,6 +2146,7 @@ def draw_modal_graph(
             for l_lipids in [l_red_lipids, l_green_lipids, l_blue_lipids]
         ]
 
+        # Compute the corresponding RGB image
         fig = figures.compute_rgb_image_per_lipid_selection(
             slice_index,
             l_lipid_bounds,
@@ -2145,6 +2154,8 @@ def draw_modal_graph(
             log=log_transform,
             cache_flask=cache_flask,
         )
+
+        # Display the user-drawn region(s) or pre-computed mask(s)
         if boolean_mask:
             if l_shapes_and_masks is not None:
                 l_draw = []
@@ -2159,8 +2170,6 @@ def draw_modal_graph(
                         l_draw.append(draw)
 
                 fig["layout"]["shapes"] = tuple(l_draw)
-                # else:
-                #    fig["layout"]["shapes"] = tuple(list(fig["layout"]["shapes"]).append(draw))
         logging.info("Modal graph computed. Returning it now")
 
         return fig
@@ -2176,6 +2185,8 @@ def draw_modal_graph(
     [State("page-4-drawer-region-selection", "is_open")],
 )
 def toggle_offcanvas(n1, n2, is_open):
+    """This callback is used to open the drawer containing the lipid expression analysis of the
+    selected region."""
     if n1 or n2:
         return not is_open
     return is_open

@@ -1,4 +1,11 @@
-###### IMPORT MODULES ######
+# Copyright (c) 2022, Colas Droin. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+
+""" This file contains the layout for the sidebar of the app."""
+
+# ==================================================================================================
+# --- Imports
+# ==================================================================================================
 
 # Standard modules
 import dash_bootstrap_components as dbc
@@ -6,10 +13,12 @@ from dash import html
 import dash_mantine_components as dmc
 from dash.dependencies import Input, Output, State
 
-# LBAE modules
+# LBAE import
 import app
 
-###### DEFFINE PAGE LAYOUT ######
+# ==================================================================================================
+# --- Layout
+# ==================================================================================================
 
 layout = html.Div(
     className="sidebar",
@@ -26,7 +35,6 @@ layout = html.Div(
                     className="d-flex justify-content-center align-items-center",
                     children=[
                         html.I(id="sidebar-title", className="icon-brain fs-3 m-auto pl-1"),
-                        # html.H5(children="Lipid Brain Explorer", className="ml-3 mb-2"),
                     ],
                 ),
             ],
@@ -36,7 +44,6 @@ layout = html.Div(
             target="sidebar-title",
             placement="right",
         ),
-        # html.Hr(),
         # Navebar to different pages
         dmc.Center(
             style={"height": "60%"},
@@ -59,7 +66,6 @@ layout = html.Div(
                             className="mt-3 mb-2",
                         ),
                         dbc.Tooltip(
-                            # container="content",
                             children="Choose the slice you want to discover",
                             target="sidebar-page-1",
                             placement="right",
@@ -74,7 +80,7 @@ layout = html.Div(
                                     className="icon-lipid fs-5",
                                     style={"margin-left": "0.7em"},
                                 )
-                            ],  # html.Span("Per-lipid analysis"),],
+                            ],
                             className="my-4",
                         ),
                         dbc.Tooltip(
@@ -94,7 +100,7 @@ layout = html.Div(
                                     className="icon-chart-bar fs-5",
                                     style={"margin-left": "0.7em"},
                                 )
-                            ],  # html.Span("Per-region analysis"),],
+                            ],
                             className="my-4",
                         ),
                         dbc.Tooltip(
@@ -121,16 +127,7 @@ layout = html.Div(
                             target="sidebar-page-4",
                             placement="right",
                         ),
-                        # # Link to page 5
-                        # dbc.NavLink(
-                        #     id="sidebar-page-5",
-                        #     href="/atlas-exploration",
-                        #     active="exact",
-                        #     children=[html.I(className="icon-library pl-1")],
-                        # ),
-                        # dbc.Tooltip(children="Explore Allen brain atlas data", target="sidebar-page-5", placement="right",),
-                        # Copyright
-                        # Link to page 4
+                        # Link to documentation
                         html.Div(
                             className="sidebar-bottom",
                             children=[

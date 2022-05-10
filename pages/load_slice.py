@@ -261,9 +261,10 @@ def page_1_visibilty_hover(active_tab):
 )
 def page_1_hover(hoverData, slice_index):
     """This callback is used to update the text displayed when hovering over the slice image."""
+
+    # If there is a region hovered, find out the region name with the current coordinates
     if hoverData is not None:
         if len(hoverData["points"]) > 0:
-            # If there is a region hovered, find out the region name with the current coordinates
             x = int(slice_index) - 1
             z = hoverData["points"][0]["x"]
             y = hoverData["points"][0]["y"]
