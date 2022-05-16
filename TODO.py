@@ -1,5 +1,4 @@
 #
-# TODO Finish docstring threeD page
 # TODO Check that all code (including callbacks) is properly commented
 # TODO Incorporate new brain 1 and brain 2
 # TODO Check all functions and deprecate the ones that are not used anymore
