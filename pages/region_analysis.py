@@ -924,7 +924,7 @@ def page_3_plot_heatmap(
     value_input = dash.callback_context.triggered[0]["prop_id"].split(".")[1]
 
     # If a new slice is loaded or the page just got loaded
-    # do nothing because of automatic relayout of the heatmap which is automatically triggered when 
+    # do nothing because of automatic relayout of the heatmap which is automatically triggered when
     # the page is loaded
     if (
         id_input == "main-slider"
@@ -1027,7 +1027,7 @@ def page_3_plot_heatmap(
                     # Reoder axis to match plotly go.image requirements
                     array_image = np.moveaxis(np.array(l_images, dtype=np.uint8), 0, 2)
 
-                    # Convert image to string to save space (new image as each mask must have a 
+                    # Convert image to string to save space (new image as each mask must have a
                     # different color)
                     base64_string = convert_image_to_base64(
                         array_image, optimize=True, format="gif", type="RGBA"
@@ -1577,7 +1577,7 @@ def page_3_record_spectra(
         if l_spectra is not None:
             if l_spectra != []:
                 logging.info("Spectra computed, returning it now")
-                # Return a dummy variable to indicate that the spectrum has been computed and 
+                # Return a dummy variable to indicate that the spectrum has been computed and
                 # trigger the callback
                 return "ok"
         logging.warning("A bug appeared during spectrum computation")
@@ -1871,7 +1871,6 @@ def page_3_draw_heatmap_per_lipid_selection(
                         :,
                     ]
                 else:
-                    # df_avg_intensity_lipids.sort_index(ascending=False, inplace=True)
                     if n_sel > 1:
                         df_avg_intensity_lipids = df_avg_intensity_lipids.iloc[
                             (df_avg_intensity_lipids.mean(axis=1)).argsort(), :

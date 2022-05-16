@@ -1,8 +1,18 @@
+# Copyright (c) 2022, Colas Droin. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+
+""" This file contains some variables used for styling/configuring Plotly widgets."""
+
+# ==================================================================================================
+# --- Imports
+# ==================================================================================================
 import numpy as np
 from matplotlib import cm
 from matplotlib.colors import ListedColormap
 
-# ! Clean config
+# ==================================================================================================
+# --- Style and configuration
+# ==================================================================================================
 
 # Define app colors (list and dictionnary)
 dic_colors = {
@@ -13,22 +23,6 @@ dic_colors = {
     "dark": "#222222",
 }
 l_colors = ["#50bdda", "#5fa970", "#de9334", "#df5034", "#222222"]
-l_colors_progress = [
-    "dark",
-    "gray",
-    "red",
-    "pink",
-    "grape",
-    "violet",
-    "indigo",
-    "blue",
-    "cyan",
-    "teal",
-    "green",
-    "lime",
-    "yellow",
-    "orange",
-]
 
 
 # Define basic config for graphs
@@ -38,11 +32,7 @@ basic_config = {
     "displaylogo": False,
 }
 
-
-# Colormap with black for 0 values
-viridis = cm.get_cmap("viridis", 256)
-newcolors = viridis(np.linspace(0, 1, 256))
-# black = np.array([30 / 256, 30 / 256, 32 / 256, 1])
-black = np.array([0 / 256, 0 / 256, 0 / 256, 1])
-newcolors[:1, :] = black
+# Viridis colormap with black for 0 values
+newcolors = cm.get_cmap("viridis", 256)(np.linspace(0, 1, 256))
+newcolors[:1, :] = np.array([0 / 256, 0 / 256, 0 / 256, 1])
 black_viridis = ListedColormap(newcolors)
