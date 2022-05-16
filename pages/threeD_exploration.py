@@ -586,7 +586,6 @@ def page_4_display_volume(clicked_compute, l_lipids):
         return {}, {"display": "none"}
 
 
-# Function to update label of the add structure button
 @app.app.callback(
     Output("page-4-add-structure-button", "children"),
     Output("page-4-add-structure-button", "disabled"),
@@ -597,7 +596,7 @@ def page_4_display_volume(clicked_compute, l_lipids):
 )
 def page_4_click(clickData, region_1_id, region_2_id, region_3_id):
     """This callback is used to update the label of the add structure button depending on the number
-    of structures already selected, and the corresponding widget."""
+    of structures already selected, and the state of the corresponding widget."""
 
     # Find out which input triggered the function
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
@@ -621,7 +620,6 @@ def page_4_click(clickData, region_1_id, region_2_id, region_3_id):
     return dash.no_update
 
 
-# Function to update label of the add lipid button
 @app.app.callback(
     Output("page-4-add-lipid-button", "children"),
     Output("page-4-add-lipid-button", "disabled"),
@@ -633,10 +631,13 @@ def page_4_click(clickData, region_1_id, region_2_id, region_3_id):
     Input("page-4-dropdown-lipid-cations", "value"),
 )
 def page_4_click(header_1, header_2, header_3, name, structure, cation):
+    """This callback is used to update the label of the add lipid button, depending on the number of
+    lipids already selected."""
+
     # Find out which input triggered the function
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
 
-    # if at least one headers is free
+    # If at least one headers is free
     if header_1 == "" or header_2 == "" or header_3 == "":
 
         if cation is not None and cation != "":
@@ -651,10 +652,14 @@ def page_4_click(header_1, header_2, header_3, name, structure, cation):
             else:
                 return "Please choose a lipid that hasn't been selected yet", True
 
+    # If all lipids have been selected, disable the button
+    if header_1 != "" and header_2 != "" and header_3 != "":
+        return "Delete some lipids to select new ones", True
+
+    # By defaults, command to select new lipids
     return "Please choose a lipid above", True
 
 
-# Function to add region choice to selection
 @app.app.callback(
     Output("page-4-toast-region-1", "header"),
     Output("page-4-toast-region-2", "header"),
@@ -693,6 +698,8 @@ def page_4_add_toast_region_selection(
     l_selected_regions,
     label_region,
 ):
+    """This callback checks for a free spot and adds the selected region to the selection when
+    clicking on the 'add structure' button."""
 
     # Find out which input triggered the function
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
@@ -704,7 +711,7 @@ def page_4_add_toast_region_selection(
     # If a region has been deleted from a toast
     if value_input == "is_open":
 
-        # Delete corressponding header and index
+        # Delete corresponding header and index
         if id_input == "page-4-toast-region-1":
             header_1 = ""
             l_selected_regions.remove(region_1_id)
@@ -783,9 +790,9 @@ def page_4_add_toast_region_selection(
 # Function to plot page-4-graph-volume when its state get updated
 @app.app.callback(
     Output("page-4-graph-volume", "figure"),
-    Input("page-4-selected-lipid-1", "data"),
-    Input("page-4-selected-lipid-2", "data"),
-    Input("page-4-selected-lipid-3", "data"),
+    State("page-4-selected-lipid-1", "data"),
+    State("page-4-selected-lipid-2", "data"),
+    State("page-4-selected-lipid-3", "data"),
     Input("page-4-display-button", "n_clicks"),
     State("page-4-toast-lipid-1", "header"),
     State("page-4-toast-lipid-2", "header"),
@@ -808,6 +815,8 @@ def page_4_plot_graph_volume(
     name_region_2,
     name_region_3,
 ):
+    """This callback is used to plot the volume graph of expression of the selected lipid(s) in the
+    selected structure(s), when clicking on the corresponding button."""
 
     # Find out which input triggered the function
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
@@ -883,7 +892,6 @@ def page_4_plot_graph_volume(
     return dash.no_update
 
 
-# Function to plot page-4-graph-heatmap
 @app.app.long_callback(
     output=Output("page-4-graph-heatmap", "figure"),
     inputs=[
@@ -895,7 +903,6 @@ def page_4_plot_graph_volume(
         State("page-4-selected-region-3", "data"),
     ],
     running=[
-        # (Output("page-4-compare-structure-button", "disabled"), True, False),
         (
             Output("page-4-progress-bar-structure", "className"),
             "",
@@ -921,8 +928,10 @@ def page_4_plot_graph_heatmap_mz_selection(
     name_region_2,
     name_region_3,
 ):
+    """This callback is used to plot the clustergram to cluster and compare lipid expression in the
+    selected structure(s), when clicking on the corresponding button. It uses a long callback to
+    update the progress bar as the figure gets computed."""
 
-    # sections = [{"value": 10, "color": "red"}]
     set_progress((0, "Inspecting dataset..."))
 
     # Find out which input triggered the function
@@ -938,7 +947,6 @@ def page_4_plot_graph_heatmap_mz_selection(
     return dash.no_update
 
 
-# Function to refine dropdown names choices
 @app.app.callback(
     Output("page-4-dropdown-lipid-names", "data"),
     Output("page-4-dropdown-lipid-structures", "data"),
@@ -952,14 +960,15 @@ def page_4_plot_graph_heatmap_mz_selection(
     State("page-4-dropdown-lipid-structures", "data"),
     State("page-4-dropdown-lipid-cations", "data"),
 )
-def page_2bis_handle_dropdowns(name, structure, options_names, options_structures, options_cations):
+def page_4_handle_dropdowns(name, structure, options_names, options_structures, options_cations):
+    """This callback is used to progressively refine dropdown selection for lipid names, structures
+    and cations. It is triggered when a new selection is made in the corresponding dropdowns."""
 
     # Find out which input triggered the function
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
 
-    # Refine dropdown hierarchically: when first one is set, the 2 other options are computed accordingly,
-    # when second one is set, the last one option is computed
-
+    # Refine dropdown hierarchically: when first one is set, the 2 other options are computed
+    # accordingly, when second one is set, the last one option is computed
     if len(id_input) == 0 or id_input == "dcc-store-slice-index":
         options_names = [
             {"label": name, "value": name}
@@ -995,7 +1004,6 @@ def page_2bis_handle_dropdowns(name, structure, options_names, options_structure
     return dash.no_update
 
 
-# Function to add dropdown choice to selection
 @app.app.callback(
     Output("page-4-toast-lipid-1", "header"),
     Output("page-4-toast-lipid-2", "header"),
@@ -1022,7 +1030,7 @@ def page_2bis_handle_dropdowns(name, structure, options_names, options_structure
     State("page-4-toast-lipid-3", "header"),
     State("page-4-last-selected-lipids", "data"),
 )
-def page_2bis_add_toast_selection(
+def page_4_add_toast_selection(
     cation,
     n_clicks,
     bool_toast_1,
@@ -1038,6 +1046,8 @@ def page_2bis_add_toast_selection(
     header_3,
     l_selected_lipids,
 ):
+    """This callback is used to add the current choice of lipids (using dropdown) to the selection
+    for further plotting, when clicking on the 'add lipid' button."""
 
     # ! Make lipid selection more natural, when limited to one lipid
 
@@ -1045,10 +1055,13 @@ def page_2bis_add_toast_selection(
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
     value_input = dash.callback_context.triggered[0]["prop_id"].split(".")[1]
 
+    # Define empty lipid list
     empty_lipid_list = [-1 for i in range(app.data.get_slice_number())]
+
     # Take advantage of dash bug that automatically triggers 'page-4-dropdown-lipid-cations'
     # everytime the page is loaded, and prevent using dcc-store-slice-index as an input
-    # if page-4-dropdown-lipid-cations is called while there's no lipid name defined, it means the page just got loaded
+    # if page-4-dropdown-lipid-cations is called while there's no lipid name defined, it means the
+    # page just got loaded
     if len(id_input) == 0 or (id_input == "page-4-dropdown-lipid-cations" and name is None):
         return (
             "",
@@ -1161,27 +1174,26 @@ def page_2bis_add_toast_selection(
     return dash.no_update
 
 
-# Function to disable/enable dropdowns depending on the number of lipids selected
 @app.app.callback(
     Output("page-4-dropdown-lipid-names", "disabled"),
     Output("page-4-dropdown-lipid-structures", "disabled"),
     Output("page-4-dropdown-lipid-cations", "disabled"),
-    # Output("page-4-warning-lipids-number", "className"),
     Input("page-4-selected-lipid-1", "data"),
     Input("page-4-selected-lipid-2", "data"),
     Input("page-4-selected-lipid-3", "data"),
 )
 def page_4_disable_dropdowns(l_lipid_1_index, l_lipid_2_index, l_lipid_3_index):
-
+    """This callback is triggered when a lipid is selected, and enables/disables the corresponding
+    dropdowns."""
     # If all slots are taken, disable all dropdowns
     if (
         np.sum(l_lipid_1_index) > -app.data.get_slice_number()
         and np.sum(l_lipid_2_index) > -app.data.get_slice_number()
         and np.sum(l_lipid_3_index) > -app.data.get_slice_number()
     ):
-        return True, True, True  # , "mt-1 text-center"
+        return True, True, True
     else:
-        return False, False, False  # , "mt-1 text-center d-none"
+        return False, False, False
 
 
 @app.app.callback(
@@ -1194,18 +1206,20 @@ def page_4_disable_dropdowns(l_lipid_1_index, l_lipid_2_index, l_lipid_3_index):
     Input("page-4-selected-region-2", "data"),
     Input("page-4-selected-region-3", "data"),
 )
-def page_2_active_display(
+def page_4_active_display(
     l_lipid_1_index, l_lipid_2_index, l_lipid_3_index, region_1_id, region_2_id, region_3_id
 ):
+    """This callback is used to enable/disable the display buttons (for both clustergram and volume
+    plots)."""
 
-    # If two structure
+    # If at least two structures
     if (
         (region_1_id != "" and region_2_id != "")
         or (region_1_id != "" and region_3_id != "")
         or (region_2_id != "" and region_3_id != "")
     ):
 
-        # If at least one lipid:
+        # If at least one lipid, activate both buttons, else only the clustergram button:
         if (
             np.sum(l_lipid_1_index + l_lipid_2_index + l_lipid_3_index)
             > -3 * app.data.get_slice_number()
@@ -1214,9 +1228,10 @@ def page_2_active_display(
         else:
             return True, False
 
-    # If one structure
+    # If just one structure, deactivate clustergram button
     if region_1_id != "" or region_2_id != "" or region_3_id != "":
-        # If at least one lipid:
+
+        # If at least one lipid, activate volume plot button:
         if (
             np.sum(l_lipid_1_index + l_lipid_2_index + l_lipid_3_index)
             > -3 * app.data.get_slice_number()
@@ -1226,6 +1241,7 @@ def page_2_active_display(
         else:
             return True, True
 
+    # Defaults is both buttons are disabled
     return True, True
 
 
@@ -1234,7 +1250,8 @@ def page_2_active_display(
     Input("page-4-display-button", "n_clicks"),
     [State("page-4-modal-volume", "is_open")],
 )
-def toggle_modal(n1, is_open):
+def page_4_toggle_modal_volume(n1, is_open):
+    """This callback is used to toggle the modal window for volume plot"""
     if n1:
         return not is_open
     return is_open
@@ -1245,13 +1262,13 @@ def toggle_modal(n1, is_open):
     Input("page-4-compare-structure-button", "n_clicks"),
     [State("page-4-modal-heatmap", "is_open")],
 )
-def toggle_modal(n1, is_open):
+def page_4_toggle_modal_clustergram(n1, is_open):
+    """This callback is used to toggle the modal window for clustergram plot"""
     if n1:
         return not is_open
     return is_open
 
 
-# download clustergram plot
 clientside_callback(
     """
     function(n_clicks){
@@ -1267,8 +1284,10 @@ clientside_callback(
     Output("page-4-download-clustergram-button", "n_clicks"),
     Input("page-4-download-clustergram-button", "n_clicks"),
 )
+"""This clientside callback allows to download the clustergram figure as a png file."""
 
 
+# ! The downloaded plot won't appear, so disable the callback for now
 # # download volume plot
 # clientside_callback(
 #     """
@@ -1285,3 +1304,4 @@ clientside_callback(
 #     Output("page-4-download-volume-button", "n_clicks"),
 #     Input("page-4-download-volume-button", "n_clicks"),
 # )
+# """This clientside callback allows to download the volume figure as a png file."""
