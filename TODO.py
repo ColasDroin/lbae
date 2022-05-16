@@ -7,10 +7,8 @@
 # TODO Replace brain homepage with rotating transparent gif of 3D expression
 # TODO Update notebooks with up-to-date classes
 # TODO Check that readme and documentations are correct and up to date
-# TODO Complete License file
 # TODO Make a docker container for the very final version of the app
-# TODO Make a sample version of the app and host on heroku (of fly.io ?)
-# TODO Make a nice readme
+# TODO Make a sample version of the app and host on heroku (or fly.io ?)
 # TODO Clean all notebooks output before last commit
 # TODO Delete TODO file
 

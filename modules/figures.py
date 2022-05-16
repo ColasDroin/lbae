@@ -1124,7 +1124,6 @@ class Figures:
 
         # Build the correspondig figure
         return self.build_lipid_heatmap_from_image(
-            self,
             array_image,
             return_base64_string=return_base64_string,
             draw=False,
@@ -1259,6 +1258,8 @@ class Figures:
             x, y = compute_thread_safe_function(
                 return_x_y,
                 cache_flask,
+                self._data,
+                slice_index,
                 self._data.get_array_avg_spectrum(slice_index, standardization=standardization),
             )
 
