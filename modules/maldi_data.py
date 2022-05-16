@@ -826,7 +826,8 @@ class MaldiData:
             np.max([array_slice.shape[1] for array_slice in l_array_slices]),
         )
 
-        # Pad the images with zeros (we add +-0.1 in case we need to round above or below 0.5 if odd dimension)
+        # Pad the images with zeros (we add +-0.1 in case we need to round above or below 0.5
+        # if odd dimension)
         l_array_slices = [
             np.pad(
                 array_slice,

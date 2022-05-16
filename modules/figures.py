@@ -301,9 +301,6 @@ class Figures:
             fig.update_xaxes(
                 title_text=self._atlas.bg_atlas.space.axis_labels[0][1], title_standoff=0
             )
-            # fig.update_yaxes(
-            #    title_text=self._atlas.bg_atlas.space.axis_labels[0][0], title_standoff=0
-            # )
 
         else:
             fig.add_trace(
@@ -354,7 +351,7 @@ class Figures:
         Returns:
             go.Figure: A Plotly figure representing the slices from the MALDI acquisitions in 3D.
         """
-        # get transform parameters (a,u,v) for each slice
+        # Get transform parameters (a,u,v) for each slice
         l_transform_parameters = return_shelved_object(
             "atlas/atlas_objects",
             "l_transform_parameters",
@@ -362,7 +359,7 @@ class Figures:
             compute_function=self._atlas.compute_projection_parameters,
         )
 
-        # reduce resolution of the slices
+        # Reduce resolution of the slices
         new_dims = []
         n_slices = self._atlas.array_coordinates_warped_data.shape[0]
         d1 = self._atlas.array_coordinates_warped_data.shape[1]
@@ -684,6 +681,7 @@ class Figures:
         ) in self._data.get_annotations_MAIA_transformed_lipids().iterrows():
             max_perc = 0
             for slice_index in range(1, self._data.get_slice_number() + 1):
+
                 # Find lipid location
                 l_lipid_loc = (
                     self._data.get_annotations()
@@ -726,8 +724,9 @@ class Figures:
                         apply_transform=False,
                     )
 
-                    # check 99th percentile for normalization
+                    # Check 99th percentile for normalization
                     perc = np.percentile(image, 99.0)
+
                     # perc must be quite small in theory... otherwise it's a bug
                     if perc > max_perc:  # and perc<1:
                         max_perc = perc
@@ -768,6 +767,7 @@ class Figures:
         """
 
         logging.info("Converting image to string")
+
         # Set optimize to False to gain computation time
         base64_string = convert_image_to_base64(
             image, type=type_image, overlay=None, transparent_zeros=True, optimize=False
@@ -860,6 +860,7 @@ class Figures:
             hb_mz = 1800
 
         logging.info("Getting image array")
+
         # Compute image with given bounds
         image = self.compute_image_per_lipid(
             slice_index,
@@ -1106,6 +1107,7 @@ class Figures:
             ll_lipid_names = [["" for y in l_t_bounds] for l_t_bounds in ll_t_bounds]
 
         logging.info("Acquiring array_image for slice " + str(slice_index) + logmem())
+
         # Get RGB array for the current lipid selection
         array_image = self.compute_rgb_array_per_lipid_selection(
             slice_index,
@@ -1119,6 +1121,7 @@ class Figures:
         )
 
         logging.info("Returning fig for slice " + str(slice_index) + logmem())
+
         # Build the correspondig figure
         return self.build_lipid_heatmap_from_image(
             self,
@@ -1695,6 +1698,7 @@ class Figures:
         # Get subsampled array of borders for each region
         array_atlas_borders = np.zeros(array_annotation.shape, dtype=np.float32)
         list_id_regions = np.array(list(set_id_regions), dtype=np.int64)
+
         # Shelving this function is useless as it takes less than 0.1s to compute after
         # first compilation
         array_atlas_borders = fill_array_borders(
@@ -1801,6 +1805,7 @@ class Figures:
             limit_value_inside=-1.99999,
         )
         logging.info("Finished interpolation betwee slices")
+
         # Get root figure
         root_data = return_shelved_object(
             "figures/3D_page",
@@ -1810,6 +1815,7 @@ class Figures:
         )
 
         logging.info("Building final figure")
+
         # Build figure
         fig = go.Figure(
             data=[
@@ -1820,16 +1826,14 @@ class Figures:
                     value=array_interpolated.flatten(),
                     isomin=0.01,
                     isomax=1.5,
-                    # opacity=0.5,  # max opacity
                     opacityscale=[
                         [-0.11, 0.00],
                         [0.01, 0.0],
                         [0.5, 0.05],
                         [2.5, 0.7],
-                    ],  # "uniform",
+                    ],
                     surface_count=10,
-                    colorscale="viridis",  # "RdBu_r",
-                    # flatshading=True,
+                    colorscale="viridis",
                 ),
                 root_data,
             ]
@@ -1839,9 +1843,9 @@ class Figures:
         fig.update_layout(
             margin=dict(t=0, r=0, b=0, l=0),
             scene=dict(
-                xaxis=dict(backgroundcolor="rgba(0,0,0,0)"),  # , color="grey", gridcolor="grey"),
-                yaxis=dict(backgroundcolor="rgba(0,0,0,0)"),  # , color="grey", gridcolor="grey"),
-                zaxis=dict(backgroundcolor="rgba(0,0,0,0)"),  # , color="grey", gridcolor="grey"),
+                xaxis=dict(backgroundcolor="rgba(0,0,0,0)"),
+                yaxis=dict(backgroundcolor="rgba(0,0,0,0)"),
+                zaxis=dict(backgroundcolor="rgba(0,0,0,0)"),
             ),
         )
 
@@ -1927,7 +1931,6 @@ class Figures:
                     ll_lipids_idx.append(l_lipids_idx)
                     ll_avg_intensity.append(l_avg_intensity)
 
-                # dic_avg_lipids = {idx: [0] * n_sel for idx in set_lipids_idx}
                 for i, (l_lipids, l_avg_intensity) in enumerate(
                     zip(ll_lipids_idx, ll_avg_intensity)
                 ):
@@ -1940,6 +1943,7 @@ class Figures:
                             dic_avg_lipids[lipid][i].append(intensity)
 
             logging.info("Averaging all lipid values across slices")
+
             # Average intensity per slice
             for lipid in dic_avg_lipids:
                 for i in range(n_sel):
@@ -1974,9 +1978,7 @@ class Figures:
         logging.info("Lowly expressed lipids excluded")
 
         # Replace idx_lipids by actual name
-        df_names = (
-            self._data.get_annotations()
-        )  # [self._data.get_annotations()["slice"] == slice_index]
+        df_names = self._data.get_annotations()
         df_avg_intensity_lipids.index = df_avg_intensity_lipids.index.map(
             lambda idx: df_names.iloc[idx]["name"]
             + "_"
@@ -1991,10 +1993,6 @@ class Figures:
             data=df_avg_intensity_lipids.to_numpy(),
             column_labels=df_avg_intensity_lipids.columns.to_list(),
             row_labels=df_avg_intensity_lipids.index.to_list(),
-            # color_threshold={
-            #    'row': 250,
-            #    'col': 700
-            # },
             hidden_labels="row" if len(df_avg_intensity_lipids.index.to_list()) > 100 else None,
             color_map="Viridis",
             height=800,
@@ -2007,7 +2005,6 @@ class Figures:
         fig_heatmap_lipids.layout.plot_bgcolor = "rgba(0,0,0,0)"
         fig_heatmap_lipids.layout.paper_bgcolor = "rgba(0,0,0,0)"
 
-        # set_progress(sections)
         set_progress((100, "Returning figure"))
         logging.info("Returning figure")
         return fig_heatmap_lipids
@@ -2030,6 +2027,7 @@ class Figures:
         for idx_slice in range(self._data.get_slice_number()):
             for type_figure in ["original_data", "warped_data", "projection_corrected", "atlas"]:
                 for display_annotations in [True, False]:
+
                     # Force no annotation for the original data
                     return_shelved_object(
                         "figures/load_page",
@@ -2065,7 +2063,7 @@ class Figures:
         if sample:
             logging.warning("Only a sample of the lipid arrays will be computed!")
 
-        # simulate a click on all lipid names
+        # Simulate a click on all lipid names
         for name in sorted(
             self._data.get_annotations_MAIA_transformed_lipids(brain_1=True).name.unique()
         ):
@@ -2088,6 +2086,7 @@ class Figures:
                 for cation in sorted(cations):
                     l_selected_lipids = []
                     for slice_index in range(self._data.get_slice_number()):
+
                         # Find lipid location
                         l_lipid_loc = (
                             self._data.get_annotations()
@@ -2111,10 +2110,10 @@ class Figures:
                         # add lipid index for each slice
                         l_selected_lipids.append(l_lipid_loc[0])
 
-                    # get final lipid name
+                    # Get final lipid name
                     lipid_string = name + " " + structure + " " + cation
 
-                    # if lipid is present in at least one slice
+                    # If lipid is present in at least one slice
                     if np.sum(l_selected_lipids) > -self._data.get_slice_number():
 
                         # Build the list of mz boundaries for each peak and each index
@@ -2133,7 +2132,7 @@ class Figures:
                             for lipid_1_index in l_selected_lipids
                         ]
 
-                        # compute 3D figures, selection is limited to one lipid
+                        # Compute 3D figures, selection is limited to one lipid
                         name_lipid = lipid_string
 
                         return_shelved_object(
@@ -2167,5 +2166,6 @@ class Figures:
                 compute_function=self.get_array_of_annotations,
                 decrease_dimensionality_factor=decrease_dimensionality_factor,
             )
+
         # Variable to signal everything has been computed
         dump_shelved_object("figures/3D_page", "arrays_annotation_computed", True)

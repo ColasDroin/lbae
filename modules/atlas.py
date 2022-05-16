@@ -307,12 +307,12 @@ class Atlas:
             older_leave_id = l_id_leaves[0]
             acronym = self.bg_atlas.structures[older_leave_id]["acronym"]
             for id_leave in l_id_leaves:
-                # fill dic with current acronym and id
+                # Fill dic with current acronym and id
                 if acronym in dic_acronym_children_id:
                     dic_acronym_children_id[acronym].add(id_leave)
                 else:
                     dic_acronym_children_id[acronym] = set([id_leave])
-            # while root is not reached, climb back the ancestor tree
+            # While root is not reached, climb back the ancestor tree
             if len(self.bg_atlas.structures[older_leave_id]["structure_id_path"]) >= 2:
                 id_parent = self.bg_atlas.structures[older_leave_id]["structure_id_path"][-2]
                 dic_acronym_children_id = fill_dic_acronym_children_id(
@@ -394,7 +394,7 @@ class Atlas:
         array_projection_correspondence = np.zeros(array_projection.shape + (2,), dtype=np.int16)
         array_projection_correspondence.fill(-1)
 
-        # list of orginal coordinates
+        # List of orginal coordinates
         l_original_coor = []
         l_transform_parameters = return_shelved_object(
             "atlas/atlas_objects",
@@ -407,7 +407,7 @@ class Atlas:
             # Get transform parameters
             a, u, v = l_transform_parameters[i]
 
-            # load corresponding slice and coor
+            # Load corresponding slice and coor
             path = "data/tiff_files/coordinates_original_data/"
             filename = (
                 path
@@ -433,7 +433,7 @@ class Atlas:
             )
             original_slice = np.array(skimage.io.imread(filename), dtype=np.int16)
 
-            # map back the pixel from the atlas coordinates
+            # Map back the pixel from the atlas coordinates
             array_projection, array_projection_correspondence = fill_array_projection(
                 i,
                 array_projection,
@@ -620,7 +620,7 @@ class Atlas:
             print("Either a mask or a mask name must be provided")
             return None
 
-        # if a mask name has been provided, get the corresponding mask array
+        # If a mask name has been provided, get the corresponding mask array
         elif mask_name is not None:
             if slice_coor_rescaled is None:
                 slice_coor_rescaled = np.asarray(
@@ -636,7 +636,7 @@ class Atlas:
                 stack_mask, slice_coor_rescaled, self.bg_atlas.reference.shape
             )
 
-        # get the list of rows containing the pixels to average
+        # Get the list of rows containing the pixels to average
         original_shape = self.data.get_image_shape(slice_index + 1)
         mask_remapped = np.zeros(original_shape, dtype=np.uint8)
         list_index_bound_rows, list_index_bound_column_per_row = get_array_rows_from_atlas_mask(
@@ -648,7 +648,7 @@ class Atlas:
             print("No selection could be found for current mask")
             grah_scattergl_data = None
         else:
-            # do the average
+            # Do the average
             grah_scattergl_data = compute_thread_safe_function(
                 compute_spectrum_per_row_selection,
                 cache_flask,
