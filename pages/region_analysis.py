@@ -45,8 +45,6 @@ from config import l_colors
 HEIGHT_PLOTS = 300
 N_LINES = int(np.ceil(HEIGHT_PLOTS / 30))
 
-###### DEFFINE PAGE LAYOUT ######
-
 # ! This page is very slow even at first loading, so mabye so automatic callbacks are triggered...
 # ! Investigate that with throttling tool from Chrome
 
