@@ -1,4 +1,12 @@
-###### IMPORT MODULES ######
+# Copyright (c) 2022, Colas Droin. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+
+""" This file contains the page used to explore and compare lipid expression in three-dimensional
+brain structures."""
+
+# ==================================================================================================
+# --- Imports
+# ==================================================================================================
 
 # Standard modules
 import dash_bootstrap_components as dbc
@@ -10,12 +18,14 @@ import numpy as np
 import dash
 import dash_mantine_components as dmc
 
-# Data module
+# LBAE imports
 from app import figures, atlas, cache_flask
 import app
 from modules.tools.storage import return_shelved_object
 
-###### DEFFINE PAGE LAYOUT ######
+# ==================================================================================================
+# --- Layout
+# ==================================================================================================
 
 
 def return_layout(basic_config, slice_index):
@@ -31,7 +41,7 @@ def return_layout(basic_config, slice_index):
             "background-color": "#1d1c1f",
         },
         children=[
-            # html.Div(className="mt-3"),
+            # React grid for nice responsivity pattern
             dash_draggable.ResponsiveGridLayout(
                 id="draggable",
                 clearSavedLayout=True,
@@ -58,7 +68,8 @@ def return_layout(basic_config, slice_index):
                     "background-color": "#1d1c1f",
                 },
                 layouts={
-                    # x sets the lateral position, y the vertical one, w is in columns (whose size depends on the dimension), h is in rows (30px)
+                    # x sets the lateral position, y the vertical one, w is in columns (whose size
+                    # depends on the dimension), h is in rows (30px)
                     # nb columns go 12->12->10->6->4->2
                     "xxl": [
                         {"i": "page-4-card-region-selection", "x": 3, "y": 0, "w": 6, "h": 16},
@@ -90,10 +101,6 @@ def return_layout(basic_config, slice_index):
                         id="page-4-card-region-selection",
                         style={"width": "100%", "height": "100%", "background-color": "#1d1c1f"},
                         children=[
-                            # dbc.CardHeader(
-                            #     children="",  # "Structure selection",
-                            #     style={"background-color": "#1d1c1f", "color": "white",},
-                            # ),
                             dbc.CardBody(
                                 className="h-100",
                                 style={"background-color": "#1d1c1f"},
@@ -108,17 +115,12 @@ def return_layout(basic_config, slice_index):
                                                         dmc.Text(
                                                             "Select brain structure(s)",
                                                             size="xl",
-                                                            # color="white",
                                                         )
                                                     ),
                                                     dcc.Graph(
                                                         id="page-4-graph-region-selection",
                                                         config=basic_config,
-                                                        style={
-                                                            # "height": "100%",
-                                                            # "position": "absolute",
-                                                            # "left": "0",
-                                                        },
+                                                        style={},
                                                         figure=return_shelved_object(
                                                             "figures/atlas_page/3D",
                                                             "treemaps",
@@ -141,11 +143,6 @@ def return_layout(basic_config, slice_index):
                                                             class_name="mb-5 pb-5 ",
                                                         )
                                                     ),
-                                                    # dbc.Tooltip(
-                                                    #     children="Please select the lipids of your choice (up to three):",
-                                                    #     target="page-4-card-lipid-selection",
-                                                    #     placement="left",
-                                                    # ),
                                                     dmc.Select(
                                                         label="Select lipid category:",
                                                         placeholder="Select lipid cat",
@@ -193,7 +190,6 @@ def return_layout(basic_config, slice_index):
                                         ],
                                     ),
                                     html.Div(
-                                        # className="d-flex justify-content-around",
                                         children=[
                                             html.Div(
                                                 style={
@@ -284,10 +280,6 @@ def return_layout(basic_config, slice_index):
                         },
                         id="page-4-card-lipid-selection",
                         children=[
-                            # dbc.CardHeader(
-                            #     children="",  # "Current selection",
-                            #     style={"background-color": "#1d1c1f", "color": "white",},
-                            # ),
                             dbc.CardBody(
                                 style={"background-color": "#1d1c1f"},
                                 className="pt-1",
@@ -312,48 +304,40 @@ def return_layout(basic_config, slice_index):
                                                     dbc.Toast(
                                                         id="page-4-toast-region-1",
                                                         header="name-region-1",
-                                                        # icon="primary",
                                                         dismissable=True,
                                                         is_open=False,
                                                         bodyClassName="p-0",
                                                         header_class_name=(
                                                             "d-flex justify-content-center ml-2"
                                                         ),
-                                                        # className="mt-1",
                                                         style={"margin": "auto"},
                                                     ),
                                                     dbc.Toast(
                                                         id="page-4-toast-region-2",
                                                         header="name-region-2",
-                                                        # icon="primary",
                                                         dismissable=True,
                                                         is_open=False,
                                                         bodyClassName="p-0",
                                                         header_class_name=(
                                                             "d-flex justify-content-center ml-2"
                                                         ),
-                                                        # className="mt-1",
                                                         style={"margin": "auto"},
                                                     ),
                                                     dbc.Toast(
                                                         id="page-4-toast-region-3",
                                                         header="name-region-3",
-                                                        # icon="primary",
                                                         dismissable=True,
                                                         is_open=False,
                                                         header_class_name=(
                                                             "d-flex justify-content-center ml-2"
                                                         ),
                                                         bodyClassName="p-0",
-                                                        # className="mt-1",
                                                         style={"margin": "auto"},
                                                     ),
                                                 ],
                                             ),
                                             dmc.Group(
                                                 direction="column",
-                                                # align="flex-start",
-                                                # class_name="w-50",
                                                 grow=True,
                                                 class_name="ml-5",
                                                 children=[
@@ -366,56 +350,39 @@ def return_layout(basic_config, slice_index):
                                                     ),
                                                     dbc.Toast(
                                                         id="page-4-toast-lipid-1",
-                                                        # header="name-lipid-1",
                                                         header="",
-                                                        # icon="primary",
                                                         dismissable=True,
                                                         is_open=False,
                                                         bodyClassName="p-0",
                                                         header_class_name=(
                                                             "d-flex justify-content-center ml-2"
                                                         ),
-                                                        # className="mt-1",
                                                         style={"margin": "auto"},
                                                     ),
                                                     dbc.Toast(
                                                         id="page-4-toast-lipid-2",
-                                                        # header="name-lipid-2",
                                                         header="",
-                                                        # icon="primary",
                                                         dismissable=True,
                                                         is_open=False,
                                                         bodyClassName="p-0",
                                                         header_class_name=(
                                                             "d-flex justify-content-center ml-2"
                                                         ),
-                                                        # className="mt-1",
                                                         style={"margin": "auto"},
                                                     ),
                                                     dbc.Toast(
                                                         id="page-4-toast-lipid-3",
-                                                        # header="name-lipid-3",
                                                         header="",
-                                                        # icon="primary",
                                                         dismissable=True,
                                                         header_class_name=(
                                                             "d-flex justify-content-center ml-2"
                                                         ),
                                                         is_open=False,
                                                         bodyClassName="p-0",
-                                                        # className="mt-1",
                                                         style={
                                                             "margin": "auto",
                                                         },
                                                     ),
-                                                    # html.Div(
-                                                    #     id="page-4-warning-lipids-number",
-                                                    #     className="text-center mt-1",
-                                                    #     children=html.Strong(
-                                                    #         children="Please delete some lipids to choose new ones.",
-                                                    #         style={"color": "#df5034"},
-                                                    #     ),
-                                                    # ),
                                                 ],
                                             ),
                                         ],
@@ -447,23 +414,6 @@ def return_layout(basic_config, slice_index):
                                                 color="light",
                                                 show_initially=False,
                                                 children=[
-                                                    # dmc.Button(
-                                                    #     children="Download plot",
-                                                    #     id="page-4-download-volume-button",
-                                                    #     disabled=False,
-                                                    #     variant="filled",
-                                                    #     radius="md",
-                                                    #     size="xs",
-                                                    #     color="cyan",
-                                                    #     compact=False,
-                                                    #     loading=False,
-                                                    #     # lass_name="mr-5",
-                                                    #     style={
-                                                    #         "position": "absolute",
-                                                    #         "right": "5rem",
-                                                    #         "top": "-3rem",
-                                                    #     },
-                                                    # ),
                                                     html.Div(
                                                         className="page-1-fixed-aspect-ratio",
                                                         id="page-4-graph-volume-parent",
@@ -535,7 +485,6 @@ def return_layout(basic_config, slice_index):
                                                 color="cyan",
                                                 compact=False,
                                                 loading=False,
-                                                # lass_name="mr-5",
                                                 style={
                                                     "position": "absolute",
                                                     "right": "5rem",
@@ -549,17 +498,6 @@ def return_layout(basic_config, slice_index):
                                             "background-color": "#1d1c1f",
                                         },
                                         children=[
-                                            # dbc.CardHeader(className="d-flex", children="Lipid expression comparison",),
-                                            # dbc.CardBody(
-                                            #    className="py-0 mb-0 mt-2",
-                                            #    children=[
-                                            # dmc.RingProgress(
-                                            #     id="page-4-progress-bar-structure",
-                                            #     size=200,
-                                            #     thickness=12,
-                                            #     label="Loading data...",
-                                            #     sections=[{"value": 0, "color": "red"},],
-                                            # ),
                                             dbc.Progress(
                                                 id="page-4-progress-bar-structure",
                                                 style={"width ": "100%"},
@@ -582,7 +520,6 @@ def return_layout(basic_config, slice_index):
                                                 },
                                             ),
                                             html.Div(
-                                                # className="page-1-fixed-aspect-ratio",
                                                 className="d-flex justify-content-center",
                                                 style={"margin-top": "-5rem"},
                                                 children=[
@@ -615,20 +552,25 @@ def return_layout(basic_config, slice_index):
     return page
 
 
-###### APP CALLBACKS ######
+# ==================================================================================================
+# --- Callbacks
+# ==================================================================================================
 
-# Function to make visible the alert regarding the plot page 4
+
 @app.app.callback(
     Output("page-4-alert", "style"),
     Output("page-4-graph-volume", "style"),
     Input("page-4-display-button", "n_clicks"),
     State("page-4-last-selected-lipids", "data"),
 )
-def page_4_display_alert(clicked_compute, l_lipids):
+def page_4_display_volume(clicked_compute, l_lipids):
+    """This callback is used to turn visible the volume plot when the corresponding button has been
+    clicked."""
 
     # Find out which input triggered the function
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
 
+    # If at least one lipid has been selected, display the volume plot
     if len(l_lipids) > 0:
         return (
             {"display": "none"},
@@ -639,7 +581,7 @@ def page_4_display_alert(clicked_compute, l_lipids):
                 "left": "0",
             },
         )
-
+    # Else display an alert regarding the number of lipids selected
     else:
         return {}, {"display": "none"}
 
@@ -654,21 +596,25 @@ def page_4_display_alert(clicked_compute, l_lipids):
     Input("page-4-selected-region-3", "data"),
 )
 def page_4_click(clickData, region_1_id, region_2_id, region_3_id):
+    """This callback is used to update the label of the add structure button depending on the number
+    of structures already selected, and the corresponding widget."""
+
     # Find out which input triggered the function
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
 
+    # Check if a structure has already been selected in the widget
     if id_input == "page-4-graph-region-selection":
         if clickData is not None:
             if "points" in clickData:
                 label = clickData["points"][0]["label"]
-                # acronym = atlas.dic_name_acronym[label]
                 return "Add " + label + " to selection", False
         return "Please choose a structure above", True
 
-    # If lipids has been selected from the dropdown, activate button
+    # If all structures have been selected, disable the button
     if region_1_id != "" and region_2_id != "" and region_3_id != "":
         return "Delete some structures to select new ones", True
 
+    # If at least one more structure can be added to the selection, command to select one
     if region_1_id != "" or region_2_id != "" or region_3_id != "":
         return "Please choose a structure above", True
 
@@ -706,32 +652,6 @@ def page_4_click(header_1, header_2, header_3, name, structure, cation):
                 return "Please choose a lipid that hasn't been selected yet", True
 
     return "Please choose a lipid above", True
-
-
-# # Function to update label of the add structure button
-# @app.app.callback(
-#     Output("page-4-compare-structure-button", "disabled"),
-#     # Output("page-4-compare-structure-button", "className"),
-#     Input("page-4-selected-region-1", "data"),
-#     Input("page-4-selected-region-2", "data"),
-#     Input("page-4-selected-region-3", "data"),
-# )
-# def page_4_click(region_1_id, region_2_id, region_3_id):
-
-#     # Find out which input triggered the function
-#     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
-
-#     # If lipids has been selected from the dropdown, activate button
-#     if (
-#         (region_1_id != "" and region_2_id != "")
-#         or (region_1_id != "" and region_3_id != "")
-#         or (region_2_id != "" and region_3_id != "")
-#     ):
-#         return False
-#         # return "mt-5"
-
-#     return True
-#     # return "d-none"
 
 
 # Function to add region choice to selection
