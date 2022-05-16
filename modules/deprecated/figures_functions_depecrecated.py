@@ -64,14 +64,20 @@ def compute_figure_basic_images_with_slider_DEPRECATED(
             "x": 0.1,
             "y": 0,
             "steps": [
-                {"args": [[f.name], frame_args(0)], "label": str(k), "method": "update",}
+                {
+                    "args": [[f.name], frame_args(0)],
+                    "label": str(k),
+                    "method": "update",
+                }
                 for k, f in enumerate(fig.frames)
             ],
         }
     ]
 
     # Layout
-    fig.update_layout(margin=dict(t=25, r=0, b=0, l=0),)
+    fig.update_layout(
+        margin=dict(t=25, r=0, b=0, l=0),
+    )
 
     def frame_args(duration):
         return {
@@ -92,7 +98,11 @@ def compute_figure_basic_images_with_slider_DEPRECATED(
             "x": 0.1,
             "y": 0,
             "steps": [
-                {"args": [[f.name], frame_args(0)], "label": f.name, "method": "animate",}
+                {
+                    "args": [[f.name], frame_args(0)],
+                    "label": f.name,
+                    "method": "animate",
+                }
                 for f in fig.frames
             ],
         }
@@ -164,7 +174,9 @@ def compute_figure_bubbles_3D_DEPRECATED(
 
 def compute_sunburst_figure_DEPRECATED(self, maxdepth=3):
     fig = px.sunburst(names=self._atlas.l_nodes, parents=self._atlas.l_parents, maxdepth=maxdepth)
-    fig.update_layout(margin=dict(t=0, r=0, b=0, l=0),)
+    fig.update_layout(
+        margin=dict(t=0, r=0, b=0, l=0),
+    )
     return fig
 
 
@@ -215,7 +227,6 @@ def compute_3D_figure_DEPRECATED(self, structure=None):
         # paper_bgcolor='rgb(50,50,50)',
         margin=dict(t=10, r=10, b=10, l=10),
         # Zoom by 2 initially
-        # ! Find a fix
         # scene={"aspectratio": {"x": 1, "y": 1.0, "z": 1.0}, "aspectmode": "cube"},
     )
 
@@ -334,10 +345,16 @@ def compute_figure_slices_2D_DEPRECATED(
             "x": 0.1,
             "y": 0,
             "steps": [
-                {"args": [[f.name], frame_args(0)], "label": f.name, "method": "animate",}
+                {
+                    "args": [[f.name], frame_args(0)],
+                    "label": f.name,
+                    "method": "animate",
+                }
                 for k, f in enumerate(fig.frames)
             ],
-            "currentvalue": {"visible": False,},
+            "currentvalue": {
+                "visible": False,
+            },
         }
     ]
 
@@ -349,7 +366,9 @@ def compute_figure_slices_2D_DEPRECATED(
             "x": 0.5,
             "xanchor": "center",
             "yanchor": "top",
-            "font": dict(size=14,),
+            "font": dict(
+                size=14,
+            ),
         },
         margin=dict(t=5, r=0, b=0, l=0),
         sliders=sliders,
@@ -402,7 +421,13 @@ def compute_atlas_with_slider_DEPRECATED(self, view="frontal", contour=False):
         base64_string = convert_image_to_base64(image_array)
 
         if not contour:
-            fig.add_trace(go.Image(visible=True, source=base64_string, hoverinfo="none",))
+            fig.add_trace(
+                go.Image(
+                    visible=True,
+                    source=base64_string,
+                    hoverinfo="none",
+                )
+            )
 
         else:
             fig.add_trace(go.Image(visible=True, source=base64_string))
@@ -434,7 +459,9 @@ def compute_atlas_with_slider_DEPRECATED(self, view="frontal", contour=False):
     for i in range(len(fig.data) // multiplier):
         step = dict(
             method="update",
-            args=[{"visible": [False] * len(fig.data) * multiplier},],  # layout attribute
+            args=[
+                {"visible": [False] * len(fig.data) * multiplier},
+            ],  # layout attribute
             label=subsampling[i],
         )
         step["args"][0]["visible"][multiplier * i] = True  # Toggle i'th trace to "visible"
@@ -446,7 +473,9 @@ def compute_atlas_with_slider_DEPRECATED(self, view="frontal", contour=False):
     sliders = [
         dict(
             active=10,
-            currentvalue={"visible": False,},
+            currentvalue={
+                "visible": False,
+            },
             pad={"t": 30, "l": 100, "r": 100},
             steps=steps,
             # len = 0.4,
@@ -466,7 +495,9 @@ def compute_atlas_with_slider_DEPRECATED(self, view="frontal", contour=False):
             "x": 0.5,
             "xanchor": "center",
             "yanchor": "top",
-            "font": dict(size=14,),
+            "font": dict(
+                size=14,
+            ),
         },
         margin=dict(t=30, r=0, b=0, l=0),
     )

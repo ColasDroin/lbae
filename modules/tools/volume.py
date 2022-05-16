@@ -336,7 +336,7 @@ def crop_array(array_annotation, list_id_regions):
     Returns:
         int, int, int, int, int, int: The min and max indices to keep for each dimension.
     """
-    # Crop the figure to shorten interpolation time
+    # Define min and max as image dimensions initially
     x_min, x_max, y_min, y_max, z_min, z_max = (
         0,
         array_annotation.shape[0],

@@ -25,9 +25,6 @@ from modules.tools.storage import return_shelved_object
 # --- Layout
 # ==================================================================================================
 
-# ! It seems that some things (useless?) are loaded at startup and take time
-#! Put basic config in config in all page file
-
 
 def return_layout(basic_config, slice_index):
 

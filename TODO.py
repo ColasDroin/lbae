@@ -1,5 +1,6 @@
 #
 # TODO Incorporate new brain 1 and brain 2
+# TODO Check what is loaded at each page load
 # TODO Adress all # ! and # ? comments in the code
 # TODO Check that all force_update are set to False
 # TODO clean and comment style.css, remove all !important that are useless

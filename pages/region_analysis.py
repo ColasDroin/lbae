@@ -486,7 +486,6 @@ def return_layout(basic_config, slice_index=1):
                                                                         color="cyan",
                                                                         compact=False,
                                                                         loading=False,
-                                                                        # lass_name="mr-5",
                                                                         style={
                                                                             "position": "absolute",
                                                                             "top": "0.7rem",
@@ -932,6 +931,7 @@ def page_3_plot_heatmap(
         or id_input == "page-3-reset-button"
         or id_input == "url"
     ):
+
         fig = return_shelved_object(
             "figures/load_page",
             "figure_basic_image",
@@ -961,6 +961,7 @@ def page_3_plot_heatmap(
         and cliked_reset is None
         and (l_mask_name is None or len(l_mask_name) == 0)
     ):
+
         fig = return_shelved_object(
             "figures/load_page",
             "figure_basic_image",
@@ -982,114 +983,122 @@ def page_3_plot_heatmap(
 
     # If the user selected a new mask or drew on the plot
     if id_input == "page-3-graph-heatmap-per-sel" or id_input == "page-3-dropdown-brain-regions":
-        # Rebuild figure
-        fig = return_shelved_object(
-            "figures/load_page",
-            "figure_basic_image",
-            force_update=False,
-            compute_function=figures.compute_figure_basic_image,
-            type_figure="projection_corrected",
-            index_image=slice_index - 1,
-            plot_atlas_contours=False,
-        )
-        color_idx = None
-        col_next = None
-        if l_mask_name is not None:
 
-            # If a mask has been selected
-            if len(l_mask_name) > 0:
-                for idx_mask, mask_name in enumerate(l_mask_name):
-                    id_name = atlas.dic_name_acronym[mask_name]
-                    if id_name in atlas.dic_existing_masks[slice_index - 1]:
-                        projected_mask = atlas.get_projected_mask_and_spectrum(
-                            slice_index - 1, mask_name, MAIA_correction=False
-                        )[0]
-                    else:
-                        logging.warning("The mask " + str(mask_name) + " couldn't be found")
+        # Check that a mask has actually been selected
+        if l_mask_name is not None or relayoutData is not None:
 
-                    # Build a list of empty images and add selected lipids for each channel
-                    normalized_projected_mask = projected_mask / np.max(projected_mask)
-                    if idx_mask < len(l_color_mask):
-                        color_rgb = l_color_mask[idx_mask]
-                    else:
-                        color_idx = len(l_color_mask)
-                        if relayoutData is not None:
-                            if "shapes" in relayoutData:
-                                color_idx += len(relayoutData["shapes"])
-                        color = config.l_colors[color_idx % 4][1:]
-                        color_rgb = [int(color[i : i + 2], 16) for i in (0, 2, 4)] + [200]
-                        l_color_mask.append(color_rgb)
+            # Rebuild figure
+            fig = return_shelved_object(
+                "figures/load_page",
+                "figure_basic_image",
+                force_update=False,
+                compute_function=figures.compute_figure_basic_image,
+                type_figure="projection_corrected",
+                index_image=slice_index - 1,
+                plot_atlas_contours=False,
+            )
+            color_idx = None
+            col_next = None
+            if l_mask_name is not None:
 
-                    l_images = [
-                        normalized_projected_mask * color
-                        for c, color in zip(["r", "g", "b", "a"], color_rgb)
-                    ]
-                    # Reoder axis to match plotly go.image requirements
-                    array_image = np.moveaxis(np.array(l_images, dtype=np.uint8), 0, 2)
+                # If a mask has been selected
+                if len(l_mask_name) > 0:
+                    for idx_mask, mask_name in enumerate(l_mask_name):
+                        id_name = atlas.dic_name_acronym[mask_name]
+                        if id_name in atlas.dic_existing_masks[slice_index - 1]:
+                            projected_mask = atlas.get_projected_mask_and_spectrum(
+                                slice_index - 1, mask_name, MAIA_correction=False
+                            )[0]
+                        else:
+                            logging.warning("The mask " + str(mask_name) + " couldn't be found")
 
-                    # Convert image to string to save space (new image as each mask must have a
-                    # different color)
-                    base64_string = convert_image_to_base64(
-                        array_image, optimize=True, format="gif", type="RGBA"
-                    )
-                    fig.add_trace(go.Image(visible=True, source=base64_string, hoverinfo="skip"))
-                    fig.update_layout(
-                        dragmode="drawclosedpath",
-                    )
+                        # Build a list of empty images and add selected lipids for each channel
+                        normalized_projected_mask = projected_mask / np.max(projected_mask)
+                        if idx_mask < len(l_color_mask):
+                            color_rgb = l_color_mask[idx_mask]
+                        else:
+                            color_idx = len(l_color_mask)
+                            if relayoutData is not None:
+                                if "shapes" in relayoutData:
+                                    color_idx += len(relayoutData["shapes"])
+                            color = config.l_colors[color_idx % 4][1:]
+                            color_rgb = [int(color[i : i + 2], 16) for i in (0, 2, 4)] + [200]
+                            l_color_mask.append(color_rgb)
 
-                    if id_input == "page-3-dropdown-brain-regions" and color_idx is not None:
-                        # Save in l_shapes_and_masks
-                        l_shapes_and_masks.append(["mask", mask_name, base64_string, color_idx])
+                        l_images = [
+                            normalized_projected_mask * color
+                            for c, color in zip(["r", "g", "b", "a"], color_rgb)
+                        ]
+                        # Reoder axis to match plotly go.image requirements
+                        array_image = np.moveaxis(np.array(l_images, dtype=np.uint8), 0, 2)
 
-        # If a region has been drawn by the user
-        if relayoutData is not None:
-            if "shapes" in relayoutData:
-                if len(relayoutData["shapes"]) > 0:
-                    if not reset or value_input == "relayoutData":
-                        if "path" in relayoutData["shapes"][-1]:
-                            fig["layout"]["shapes"] = relayoutData["shapes"]  #
-                            col_next = config.l_colors[
-                                (len(relayoutData["shapes"]) + len(l_color_mask)) % 4
-                            ]
+                        # Convert image to string to save space (new image as each mask must have a
+                        # different color)
+                        base64_string = convert_image_to_base64(
+                            array_image, optimize=True, format="gif", type="RGBA"
+                        )
+                        fig.add_trace(
+                            go.Image(visible=True, source=base64_string, hoverinfo="skip")
+                        )
+                        fig.update_layout(
+                            dragmode="drawclosedpath",
+                        )
 
-                            # compute color and save in l_shapes_and_masks
-                            if id_input == "page-3-graph-heatmap-per-sel":
-                                color_idx_for_registration = len(l_color_mask)
-                                if relayoutData is not None:
-                                    if "shapes" in relayoutData:
-                                        color_idx_for_registration += len(relayoutData["shapes"])
-                                l_shapes_and_masks.append(
-                                    [
-                                        "shape",
-                                        None,
-                                        relayoutData["shapes"][-1],
-                                        color_idx_for_registration - 1,
-                                    ]
-                                )
-        # Update col_next
-        if color_idx is not None and col_next is None:
-            col_next = config.l_colors[(color_idx + 1) % 4]
-        elif col_next is None:
-            col_next = config.l_colors[0]
-        fig.update_layout(
-            dragmode="drawclosedpath",
-            newshape=dict(
-                fillcolor=col_next,
-                opacity=0.7,
-                line=dict(color="white", width=1),
-            ),
-        )
+                        if id_input == "page-3-dropdown-brain-regions" and color_idx is not None:
+                            # Save in l_shapes_and_masks
+                            l_shapes_and_masks.append(["mask", mask_name, base64_string, color_idx])
 
-        # Update drag mode
-        if relayoutData is not None:
-            if "shapes" in relayoutData:
-                if len(relayoutData["shapes"]) + len(l_color_mask) > 3:
-                    fig.update_layout(dragmode=False)
-        if len(l_color_mask) > 3:
-            fig.update_layout(dragmode=False)
+            # If a region has been drawn by the user
+            if relayoutData is not None:
+                if "shapes" in relayoutData:
+                    if len(relayoutData["shapes"]) > 0:
+                        if not reset or value_input == "relayoutData":
+                            if "path" in relayoutData["shapes"][-1]:
+                                fig["layout"]["shapes"] = relayoutData["shapes"]  #
+                                col_next = config.l_colors[
+                                    (len(relayoutData["shapes"]) + len(l_color_mask)) % 4
+                                ]
 
-        # Return figure and corresponding data
-        return fig, l_color_mask, False, l_shapes_and_masks
+                                # compute color and save in l_shapes_and_masks
+                                if id_input == "page-3-graph-heatmap-per-sel":
+                                    color_idx_for_registration = len(l_color_mask)
+                                    if relayoutData is not None:
+                                        if "shapes" in relayoutData:
+                                            color_idx_for_registration += len(
+                                                relayoutData["shapes"]
+                                            )
+                                    l_shapes_and_masks.append(
+                                        [
+                                            "shape",
+                                            None,
+                                            relayoutData["shapes"][-1],
+                                            color_idx_for_registration - 1,
+                                        ]
+                                    )
+            # Update col_next
+            if color_idx is not None and col_next is None:
+                col_next = config.l_colors[(color_idx + 1) % 4]
+            elif col_next is None:
+                col_next = config.l_colors[0]
+            fig.update_layout(
+                dragmode="drawclosedpath",
+                newshape=dict(
+                    fillcolor=col_next,
+                    opacity=0.7,
+                    line=dict(color="white", width=1),
+                ),
+            )
+
+            # Update drag mode
+            if relayoutData is not None:
+                if "shapes" in relayoutData:
+                    if len(relayoutData["shapes"]) + len(l_color_mask) > 3:
+                        fig.update_layout(dragmode=False)
+            if len(l_color_mask) > 3:
+                fig.update_layout(dragmode=False)
+
+            # Return figure and corresponding data
+            return fig, l_color_mask, False, l_shapes_and_masks
 
     # either graph is already here
     return dash.no_update
@@ -1567,7 +1576,8 @@ def page_3_record_spectra(
     elif id_input == "page-3-reset-button" or id_input == "url":
         return []
 
-    elif id_input == "page-3-button-compute-spectra":
+    # If the user clicked on the button after drawing a region and/or selecting a structure
+    elif id_input == "page-3-button-compute-spectra" and len(l_shapes_and_masks) > 0:
         logging.info("Starting to compute spectrum")
 
         l_spectra = global_spectrum_store(
@@ -1797,11 +1807,10 @@ def page_3_draw_heatmap_per_lipid_selection(
         or id_input == "dcc-store-list-mz-spectra"
     ):
 
-        logging.info("Starting computing heatmap now")
-
         scale_switch = False
         # Load figure
         if l_spectra == "ok":
+            logging.info("Starting computing heatmap now")
             # Get the actual values for l_spectra and ll_idx_labels and not just the dummy fillings
             l_spectra = global_spectrum_store(
                 slice_index,
@@ -2147,7 +2156,6 @@ def draw_modal_graph(
         fig = figures.compute_rgb_image_per_lipid_selection(
             slice_index,
             l_lipid_bounds,
-            enrichment=as_enrichment,
             log=log_transform,
             cache_flask=cache_flask,
         )

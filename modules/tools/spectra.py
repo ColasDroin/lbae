@@ -861,9 +861,8 @@ def reduce_resolution_sorted_array_spectra(array_spectra, resolution=10**-3):
     return new_array_spectra
 
 
-# ! Very similar function in maldi_data... need to harmonize that
-
-
+# * Caution, a very similar function is also in maldi_conversion.py, meaning that if a change is
+# * made here, it should probably be made there too
 @njit
 def compute_standardization(array_spectra_pixel, idx_pixel, array_peaks, array_corrective_factors):
     """This function takes the spectrum data of a given pixel, along with the corresponding pixel
@@ -893,7 +892,7 @@ def compute_standardization(array_spectra_pixel, idx_pixel, array_peaks, array_c
         mz, intensity = array_spectra_pixel[idx_mz]
         min_mz, max_mz, mz_estimated = array_peaks[idx_peak]
 
-        # new window has been discovered
+        # New window has been discovered
         if mz >= min_mz and mz <= max_mz:
             idx_min_mz = idx_mz
             idx_max_mz = idx_mz
@@ -905,8 +904,9 @@ def compute_standardization(array_spectra_pixel, idx_pixel, array_peaks, array_c
 
             # Most likely, the annotation doesn't exist, so skip it
             if np.abs(idx_max_mz - idx_min_mz) <= 0.9:
-                # zero-out value that do not belong to the MAIA-transformed regions
+                # Zero-out value that do not belong to the MAIA-transformed regions
                 array_spectra_pixel[idx_mz, 1] = 0
+
             # Else compute a multiplicative factor
             else:
 

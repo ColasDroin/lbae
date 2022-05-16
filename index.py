@@ -176,9 +176,6 @@ def return_validation_layout(main_content, initial_slice=1):
 # ==================================================================================================
 # --- App callbacks
 # ==================================================================================================
-# ! Write docstring of callbacks when things are stabler
-
-
 @app.callback(
     Output("content", "children"),
     Output("empty-content", "children"),
@@ -186,6 +183,9 @@ def return_validation_layout(main_content, initial_slice=1):
     State("main-slider", "value"),
 )
 def render_page_content(pathname, slice_index):
+    """This callback is used as a URL router."""
+
+    # Keep track of the page in the console
     if pathname is not None:
         logging.info("Page" + pathname + "has been selected" + logmem())
 
@@ -204,29 +204,21 @@ def render_page_content(pathname, slice_index):
 
     elif pathname == "/3D-exploration":
         page = threeD_exploration.return_layout(basic_config, slice_index)
-    # elif pathname == "/atlas-exploration":
-    #    page = atlas_exploration_DEPRECATED.return_layout(basic_config, slice_index)
 
     else:
         # If the user tries to reach a different page, return a 404 message
-        # ! To Fix, Jumbotron doesn't exist anymore
-        page = dbc.Jumbotron(
-            children=[
-                html.H1("404: Not found", className="text-danger"),
-                html.Hr(),
-                html.P(f"The pathname {pathname} was not recognised..."),
-            ]
+        page = dmc.Center(
+            dmc.Alert(
+                title="404: Not found",
+                children=f"The pathname {pathname} was not recognised...",
+                color="red",
+                class_name="mt-5",
+            ),
+            class_name="mt-5",
         )
     return page, ""
 
 
-# @app.callback(
-#     Output("drawer", "opened"), Input("button-doc", "n_clicks"), prevent_initial_call=True
-# )
-# def drawer(n_clicks):
-#     return True
-
-# Callback for documentation
 @app.callback(
     Output("documentation-offcanvas", "opened"),
     [
@@ -235,6 +227,8 @@ def render_page_content(pathname, slice_index):
     [State("documentation-offcanvas", "opened")],
 )
 def toggle_collapse(n1, is_open):
+    """This callback triggers the modal windows that toggles the documentation when clicking on the
+    corresponding button."""
     if n1:
         return not is_open
     return is_open
@@ -244,7 +238,11 @@ def toggle_collapse(n1, is_open):
     Output("main-paper-slider", "className"), Input("url", "pathname"), prevent_initial_call=False
 )
 def hide_slider(pathname):
+    """This callback is used to hide the slider when the user is on a page that does not need it."""
+
+    # Pages in which the slider is displayed
     l_path_with_slider = ["/load-slice", "/lipid-selection", "/region-analysis"]
+
     # Set the content according to the current pathname
     if pathname in l_path_with_slider:
         return ""

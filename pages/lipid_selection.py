@@ -23,9 +23,6 @@ from app import figures, data, cache_flask
 import app
 from modules.tools.storage import return_shelved_object
 
-# ! Hardcode this maybe?
-HEIGHT_PLOTS = 280
-
 # ==================================================================================================
 # --- Layout
 # ==================================================================================================
@@ -361,7 +358,7 @@ def return_layout(basic_config, slice_index):
                                                         slice_index
                                                     ),
                                                     style={
-                                                        "height": HEIGHT_PLOTS,
+                                                        "height": 280,
                                                         "width": "100%",
                                                     },
                                                     responsive=True,
@@ -743,10 +740,7 @@ def page_2_plot_graph_low_res_spectrum(
         id_input == "main-slider"
         and graph_input == "Current input: " + "Selection from low-res m/z graph"
     ):
-
-        # ! Not implemented for now...
         # TODO : find a way to set relayoutdata properly
-
         pass
 
     return dash.no_update
@@ -1189,8 +1183,7 @@ def page_2_display_high_res_mz_plot(figure):
     """This callback is used to turn visible the high-resolution m/z plot."""
     if figure is not None:
         if figure["data"][0]["x"] != [[]]:
-            return {"height": HEIGHT_PLOTS}
-            # return {"height": "100%"}
+            return {"height": 280}
 
     return {"display": "none"}
 

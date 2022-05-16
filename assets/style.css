@@ -3,6 +3,10 @@ html {
   scroll-behavior: smooth;
 }
 
+body {
+  background-color: #1d1c1f;
+}
+
 /* This creates aside bar fixed to the left of the page */
 .sidebar {
   position: fixed;
