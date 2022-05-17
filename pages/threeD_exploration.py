@@ -954,22 +954,28 @@ def page_4_plot_graph_heatmap_mz_selection(
     Output("page-4-dropdown-lipid-names", "value"),
     Output("page-4-dropdown-lipid-structures", "value"),
     Output("page-4-dropdown-lipid-cations", "value"),
+    Input("page-4-add-lipid-button", "n_clicks"),
     Input("page-4-dropdown-lipid-names", "value"),
     Input("page-4-dropdown-lipid-structures", "value"),
     State("page-4-dropdown-lipid-names", "data"),
     State("page-4-dropdown-lipid-structures", "data"),
     State("page-4-dropdown-lipid-cations", "data"),
 )
-def page_4_handle_dropdowns(name, structure, options_names, options_structures, options_cations):
+def page_4_handle_dropdowns(
+    n_clicks, name, structure, options_names, options_structures, options_cations
+):
     """This callback is used to progressively refine dropdown selection for lipid names, structures
     and cations. It is triggered when a new selection is made in the corresponding dropdowns."""
 
     # Find out which input triggered the function
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
 
-    # Refine dropdown hierarchically: when first one is set, the 2 other options are computed
-    # accordingly, when second one is set, the last one option is computed
-    if len(id_input) == 0 or id_input == "dcc-store-slice-index":
+    # If the page just loaded or button 'add lipid' has been clicked, reset selection
+    if (
+        len(id_input) == 0
+        or id_input == "dcc-store-slice-index"
+        or id_input == "page-4-add-lipid-button"
+    ):
         options_names = [
             {"label": name, "value": name}
             for name in sorted(
@@ -979,6 +985,8 @@ def page_4_handle_dropdowns(name, structure, options_names, options_structures, 
 
         return options_names, [], [], None, None, None
 
+    # Refine dropdown hierarchically: when first one is set, the 2 other options are computed
+    # accordingly, when second one is set, the last one option is computed
     elif name is not None:
         if id_input == "page-4-dropdown-lipid-names":
             structures = app.data.get_annotations_MAIA_transformed_lipids(brain_1=True)[
@@ -1048,8 +1056,6 @@ def page_4_add_toast_selection(
 ):
     """This callback is used to add the current choice of lipids (using dropdown) to the selection
     for further plotting, when clicking on the 'add lipid' button."""
-
-    # ! Make lipid selection more natural, when limited to one lipid
 
     # Find out which input triggered the function
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]

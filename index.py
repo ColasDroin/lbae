@@ -187,7 +187,7 @@ def render_page_content(pathname, slice_index):
 
     # Keep track of the page in the console
     if pathname is not None:
-        logging.info("Page" + pathname + "has been selected" + logmem())
+        logging.info("Page" + pathname + " has been selected" + logmem())
 
     # Set the content according to the current pathname
     if pathname == "/":

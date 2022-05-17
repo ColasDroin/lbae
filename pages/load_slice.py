@@ -194,8 +194,6 @@ def return_layout(basic_config, slice_index):
 def tab_1_load_image(value_slider, active_tab, display_annotations):
     """This callback is used to update the image in page-1-graph-slice-selection from the slider."""
 
-    logging.info("Slider changed to value " + str(value_slider))
-
     # Find out which input triggered the function
     id_input, value_input = dash.callback_context.triggered[0]["prop_id"].split(".")
 
@@ -205,6 +203,8 @@ def tab_1_load_image(value_slider, active_tab, display_annotations):
         disabled = False
 
     if len(id_input) > 0:
+
+        logging.info("Slider changed to value " + str(value_slider))
 
         # Mapping between tab indices and type figure
         dic_mapping_tab_indices = {

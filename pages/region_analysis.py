@@ -41,18 +41,15 @@ from modules.tools.spectra import (
 )
 from config import l_colors
 
-# ! Harcode this?
-HEIGHT_PLOTS = 300
-N_LINES = int(np.ceil(HEIGHT_PLOTS / 30))
-
-# ! This page is very slow even at first loading, so mabye so automatic callbacks are triggered...
-# ! Investigate that with throttling tool from Chrome
-
 # ==================================================================================================
 # --- Layout
 # ==================================================================================================
 
+# Variables for React grid layout
+HEIGHT_PLOTS = 300
+N_LINES = int(np.ceil(HEIGHT_PLOTS / 30))
 
+# Layout of the page
 def return_layout(basic_config, slice_index=1):
 
     page = html.Div(
