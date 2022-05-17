@@ -1,4 +1,12 @@
-###### IMPORT MODULES ######
+# Copyright (c) 2022, Colas Droin. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+
+""" This file contains functions used to convert the raw MALDI data to easily readable Numpy arrays.
+"""
+
+# ==================================================================================================
+# --- Imports
+# ==================================================================================================
 
 # Standard modules
 import numpy as np
@@ -6,11 +14,15 @@ from numba import njit
 import os
 import pandas as pd
 
-# Homemade packages
+# LBAE imports
 from modules.tools.external_lib.mspec import SmzMLobj
 from modules.tools.spectra import reduce_resolution_sorted_array_spectra
 
-###### DEFINE UTILITY FUNCTIONS ######
+# ==================================================================================================
+# --- Functions
+# ==================================================================================================
+
+
 def load_file(path, resolution=1e-5):
     """This function loads the specified MALDI file from the raw data format (.mzML and .UDP)
     with the given resolution, and turns it into a scipy sparse matrix.

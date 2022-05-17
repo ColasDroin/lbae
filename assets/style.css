@@ -141,7 +141,7 @@ p, li {
   height: 0;
 }
 
-/* Used tp wrap dcc.Loading component with transparent background */
+/* Used to wrap dcc.Loading component with transparent background */
 .loading-wrapper > div {
   visibility: visible !important;
 }
@@ -222,7 +222,7 @@ div.mantine-Switch-root.mantine-16ttirm > label {
 
 /* Better color when Hovering over the dropdown selection menu */
 .VirtualizedSelectFocusedOption {
-  background-color: rgba(80, 189, 218, 0.5) !important;
+  background-color: rgba(80, 189, 218, 0.5);
 }
 .is-focused:not(.is-open) > .Select-control {
   border-color: rgba(80, 189, 218, 0.5);

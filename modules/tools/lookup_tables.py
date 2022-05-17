@@ -1,13 +1,25 @@
-###### IMPORT MODULES ######
+# Copyright (c) 2022, Colas Droin. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+
+""" This file contains functions used to build the lookup tables for faster/easier access to MALDI
+data. """
+
+# ==================================================================================================
+# --- Imports
+# ==================================================================================================
 
 # Standard modules
 import numpy as np
 from numba import njit
 
-# Homemade package
+# LBAE imports
 from modules.tools.spectra import convert_spectrum_idx_to_coor, add_zeros_to_spectrum
 
-###### DEFINE UTILITY FUNCTIONS ######
+# ==================================================================================================
+# --- Functions
+# ==================================================================================================
+
+
 @njit
 def build_index_lookup_table(
     array_spectra, array_pixel_indexes, divider_lookup, size_spectrum=2000
@@ -239,16 +251,6 @@ def process_lookup_tables(
     """
     if l_arrays_raw_data is not None:
         raise ValueError("Arrays must be loaded from file from now on.")
-        # (
-        #     array_pixel_indexes_high_res,
-        #     array_spectra_high_res,
-        #     array_averaged_mz_intensity_low_res,
-        #     array_averaged_mz_intensity_high_res,
-        #     array_averaged_mz_intensity_high_res_before_standardization,
-        #     image_shape,
-        #     array_peaks_corrected,
-        #     array_corrective_factors,
-        # ) = l_arrays_raw_data
 
     elif load_from_file:
 
