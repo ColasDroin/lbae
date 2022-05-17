@@ -12,25 +12,25 @@ from modules.tools.spectra import convert_spectrum_idx_to_coor, add_zeros_to_spe
 def build_index_lookup_table(
     array_spectra, array_pixel_indexes, divider_lookup, size_spectrum=2000
 ):
-    """This function builds a lookup table to map mz values to indexes in array_spectra. In 
-    practice, for each pixel, the lookup table gives the first index of mz such that 
-    mz>=lookup*divider_lookup. If no such mz exists, the lookup table gives last possible mz index 
-    (i.e. biggest possible mz for the current pixel, but under the lookup). If lookup*divider_lookup 
-    is smaller than the smallest mz, it returns the first mz index possible for the current pixel, 
+    """This function builds a lookup table to map mz values to indexes in array_spectra. In
+    practice, for each pixel, the lookup table gives the first index of mz such that
+    mz>=lookup*divider_lookup. If no such mz exists, the lookup table gives last possible mz index
+    (i.e. biggest possible mz for the current pixel, but under the lookup). If lookup*divider_lookup
+    is smaller than the smallest mz, it returns the first mz index possible for the current pixel,
     above the current lookup. If there are no peak at all in the spectrum... it returns -1.
 
     Args:
-        array_spectra (np.ndarray): An array of shape (2,n) containing spectrum data (m/z and 
+        array_spectra (np.ndarray): An array of shape (2,n) containing spectrum data (m/z and
             intensity) for each pixel.
-        array_pixel_indexes (np.ndarray): An array of shape (m,2) containing the boundary indices of 
-            each pixel in array_spectra. 
-        divider_lookup (int): Sets the resolution of the lookup table. The bigger it is, the bigger 
+        array_pixel_indexes (np.ndarray): An array of shape (m,2) containing the boundary indices of
+            each pixel in array_spectra.
+        divider_lookup (int): Sets the resolution of the lookup table. The bigger it is, the bigger
             the increments between two successive lookups. Must be consistent across lookup tables.
-        size_spectrum (int): The total size of the spectrum indexed by the lookup. Defaults to 2000, 
+        size_spectrum (int): The total size of the spectrum indexed by the lookup. Defaults to 2000,
             corresponding to an indexed spectrum ranging from 0 m/z to 2000 m/z.
 
     Returns:
-        np.ndarray: An array of shape (size_spectrum// divider_lookup, m), mapping m/z values to 
+        np.ndarray: An array of shape (size_spectrum// divider_lookup, m), mapping m/z values to
             indexes in array_spectra for each pixel.
     """
     # Define the empty array for the lookup table
@@ -77,24 +77,24 @@ def build_index_lookup_table(
 def build_cumulated_image_lookup_table(
     array_spectra, array_pixel_indexes, img_shape, divider_lookup, size_spectrum=2000
 ):
-    """This function builds a lookup table to map the mz values to the image consisting of cumulated 
+    """This function builds a lookup table to map the mz values to the image consisting of cumulated
     spectrum (for each pixel) until this mz value.
 
     Args:
-        array_spectra (np.ndarray): An array of shape (2,n) containing spectrum data (m/z and 
+        array_spectra (np.ndarray): An array of shape (2,n) containing spectrum data (m/z and
             intensity) for each pixel.
-        array_pixel_indexes (np.ndarray): An array of shape (m,2) containing the boundary indices of 
-            each pixel in array_spectra. 
-        img_shape (tuple(int)): A tuple or arrays of 2 integers describing the shape of the 
+        array_pixel_indexes (np.ndarray): An array of shape (m,2) containing the boundary indices of
+            each pixel in array_spectra.
+        img_shape (tuple(int)): A tuple or arrays of 2 integers describing the shape of the
             acquisition.
-        divider_lookup (int): Sets the resolution of the lookup table. The bigger it is, the bigger 
+        divider_lookup (int): Sets the resolution of the lookup table. The bigger it is, the bigger
             the increments between two successive lookups. Must be consistent across lookup tables.
-        size_spectrum (int): The total size of the spectrum indexed by the lookup. Defaults to 2000, 
+        size_spectrum (int): The total size of the spectrum indexed by the lookup. Defaults to 2000,
             corresponding to an indexed spectrum ranging from 0 m/z to 2000 m/z.
 
     Returns:
-        np.ndarray: An array of shape (size_spectrum// divider_lookup, image height, image_width), 
-            mapping m/z values to the cumulated spectrum until the corresponding m/z value for each 
+        np.ndarray: An array of shape (size_spectrum// divider_lookup, image height, image_width),
+            mapping m/z values to the cumulated spectrum until the corresponding m/z value for each
             pixel.
     """
     # Define the empty array for the lookup table
@@ -139,17 +139,17 @@ def build_cumulated_image_lookup_table(
 
 @njit
 def build_index_lookup_table_averaged_spectrum(array_mz, size_spectrum=2000):
-    """This function builds a lookup table identical to the one defined in 
-    build_index_lookup_table(), except that this one maps mz values to indexes in the averaged 
+    """This function builds a lookup table identical to the one defined in
+    build_index_lookup_table(), except that this one maps mz values to indexes in the averaged
     array_spectra (across all pixels).
 
     Args:
         array_mz (np.ndarray): The m/z array of the averaged array spectra (i.e. row 0).
-        size_spectrum (int): The total size of the spectrum indexed by the lookup. Defaults to 2000, 
+        size_spectrum (int): The total size of the spectrum indexed by the lookup. Defaults to 2000,
             corresponding to an averaged indexed spectrum ranging from 0 m/z to 2000 m/z.
 
     Returns:
-        np.ndarray: An array of length size_spectrum (i.e. the defaults divider_lookup is 1 for 
+        np.ndarray: An array of length size_spectrum (i.e. the defaults divider_lookup is 1 for
             this array), mapping m/z values to indexes in the averaged array_spectra.
     """
     # Define the empty array for the lookup table
@@ -188,53 +188,53 @@ def process_lookup_tables(
     save=True,
     return_result=False,
 ):
-    """This function has been implemented to allow the paralellization of lookup tables processing. 
+    """This function has been implemented to allow the paralellization of lookup tables processing.
     It computes and returns/saves the lookup tables for each slice. The output consists of:
-    - array_pixel_indexes_high_res: np.nddaray of shape (n,2), it maps each pixel to two 
+    - array_pixel_indexes_high_res: np.nddaray of shape (n,2), it maps each pixel to two
         array_spectra_high_res indices, delimiting the corresponding spectrum.
-    - array_spectra_high_res: np.nddaray of shape (2,m), it contains the concatenated spectra of 
-        each pixel. First row contains the m/z values, while second row contains the 
+    - array_spectra_high_res: np.nddaray of shape (2,m), it contains the concatenated spectra of
+        each pixel. First row contains the m/z values, while second row contains the
         corresponding intensities.
-    - array_averaged_mz_intensity_low_res: np.nddaray of shape (2, k), it contains the 
-        low-resolution spectrum averaged over all pixels. First row contains the m/z values, 
+    - array_averaged_mz_intensity_low_res: np.nddaray of shape (2, k), it contains the
+        low-resolution spectrum averaged over all pixels. First row contains the m/z values,
         while second row contains the corresponding intensities.
-    - array_averaged_mz_intensity_high_res: Same as array_averaged_mz_intensity_low_res, but in 
+    - array_averaged_mz_intensity_high_res: Same as array_averaged_mz_intensity_low_res, but in
         higher resolution, with, therefore, a different shape.
-    - image_shape: a tuple of integers, indicating the vertical and horizontal size of the 
+    - image_shape: a tuple of integers, indicating the vertical and horizontal size of the
         corresponding slice.
     - divider_lookup: integer that sets the resolution of the lookup tables.
-    - lookup_table_spectra_high_res: np.nddaray of shape (size_spectrum// divider_lookup, m), it 
+    - lookup_table_spectra_high_res: np.nddaray of shape (size_spectrum// divider_lookup, m), it
         maps m/z values to indexes in array_spectra for each pixel.
-    - cumulated_image_lookup_table_high_res: np.nddaray of shape 
-        (size_spectrum // divider_lookup, image height, image_width), it maps m/z values to the 
+    - cumulated_image_lookup_table_high_res: np.nddaray of shape
+        (size_spectrum // divider_lookup, image height, image_width), it maps m/z values to the
         cumulated spectrum until the corresponding m/z value for each pixel.
-    - lookup_table_averaged_spectrum_high_res: np.nddaray of length size_spectrum, it maps m/z 
+    - lookup_table_averaged_spectrum_high_res: np.nddaray of length size_spectrum, it maps m/z
         values to indexes in the averaged array_spectra for each pixel.
-    - array_peaks_corrected: A two-dimensional array containing the peak annotations (min peak, 
-        max peak, average value of the peak), sorted by min_mz, for the lipids that have 
+    - array_peaks_corrected: A two-dimensional array containing the peak annotations (min peak,
+        max peak, average value of the peak), sorted by min_mz, for the lipids that have
         been transformed.
-    - array_corrective_factors: A three-dimensional numpy array equal to the ratio of 
-        'arrays_after_transfo' and 'arrays_before_transfo' containing the corrective factor used for 
+    - array_corrective_factors: A three-dimensional numpy array equal to the ratio of
+        'arrays_after_transfo' and 'arrays_before_transfo' containing the corrective factor used for
         lipid (first dimension) and each pixel (second and third dimension).
 
 
     Args:
-        t_index_path (tuple(int, str)): A tuple containing the index of the slice (starting from 1) 
+        t_index_path (tuple(int, str)): A tuple containing the index of the slice (starting from 1)
             and the corresponding path for the raw data.
-        temp_path (str, optional): Path to load/save the output npz file. Defaults to 
+        temp_path (str, optional): Path to load/save the output npz file. Defaults to
             "/data/lipidatlas/data/app/data/temp/".
-        l_arrays_raw_data (list, optional): A list of arrays containing the data that is processed 
-            in the current function. If None, the same arrays must be loaded from the disk. Defaults 
+        l_arrays_raw_data (list, optional): A list of arrays containing the data that is processed
+            in the current function. If None, the same arrays must be loaded from the disk. Defaults
             to None.
-        load_from_file (bool, optional): If True, the arrays containing the data processed by the 
-            current function are loaded from the disk. If False, the corresponding arrays must be 
+        load_from_file (bool, optional): If True, the arrays containing the data processed by the
+            current function are loaded from the disk. If False, the corresponding arrays must be
             provided through the parameter l_arrays_raw_data. Defaults to True.
         save (bool, optional): If True, output arrays are saved in a npz file. Defaults to True.
-        return_result (bool, optional): If True, output arrays are returned by the function. 
+        return_result (bool, optional): If True, output arrays are returned by the function.
             Defaults to False.
 
     Returns:
-        Depending on 'return result', returns either nothing, either several np.ndarrays, described 
+        Depending on 'return result', returns either nothing, either several np.ndarrays, described
             above.
     """
     if l_arrays_raw_data is not None:
@@ -379,4 +379,3 @@ def process_lookup_tables(
             array_peaks_corrected,
             array_corrective_factors,
         )
-
