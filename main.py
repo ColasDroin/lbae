@@ -3,9 +3,9 @@
 
 """ This script is used to run the app and setup logging settings. 
 To run the app with gunicorn, use the following command in the (child) lbae folder: 
-gunicorn main:server -b:8050 --workers=2
+gunicorn main:server -b:8050 --worker-class gevent --threads 4 --workers=1
 Or, to run the app ignoring hangup signals, i.e. not stopping when disconnecting from the server:
-nohup gunicorn main:server -b:8050 --workers=2 &
+nohup gunicorn main:server -b:8050 --worker-class gevent --threads 4 --workers=1 &
 The app will then run on http://cajal.epfl.ch:8050/
 
 To kill gunicorn from a linux server (if it doesn't want to die, and respawn automatically), use the
