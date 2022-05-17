@@ -3,7 +3,6 @@
 # TODO Check that all force_update are set to False
 # TODO Do quality control and debug, especially when several users are on the app in parallel
 # TODO Replace brain homepage with rotating transparent gif of 3D expression
-# TODO Update notebooks with up-to-date classes
 
 ##### Finalization process #####
 # TODO Check that readme and documentations are correct and up to date

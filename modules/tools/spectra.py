@@ -152,7 +152,7 @@ def convert_array_to_fine_grained(array, resolution, lb=350, hb=1250):
         intensity).
     """
     # Build an empty (zeroed) array with the requested uncompressed size
-    new_array = np.linspace(lb, hb, int(round((hb - lb) * resolution**-1)))
+    new_array = np.linspace(lb, hb, int(round((hb - lb) / resolution)))
     new_array = np.vstack((new_array, np.zeros(new_array.shape, dtype=np.float32)))
 
     # Fill it with the values from the compressed array
@@ -728,7 +728,7 @@ def return_spectrum_per_pixel(idx_pix, array_spectra, array_pixel_indexes):
 
 
 @njit
-def add_zeros_to_spectrum(array_spectra, pad_individual_peaks=True, padding=10**-5):
+def add_zeros_to_spectrum(array_spectra, pad_individual_peaks=True, padding=10**-4):
     """This function adds zeros in-between the peaks of the spectra contained in array_spectra (e.g.
     to be able to plot them as scatterplotgl).
 
@@ -739,7 +739,7 @@ def add_zeros_to_spectrum(array_spectra, pad_individual_peaks=True, padding=10**
             threshold distance between two m/z values to consider them as belonging to the same
             peak. Else, it pads all single value in the spectrum with zeros. Defaults to False.
         padding (float, optional): The m/z distance between a peak value and a zero for the padding.
-            Default to 10**-5.
+            Default to 10**-4.
 
     Returns:
         (np.ndarray, np.ndarray): An array of shape (2,m) containing the padded spectrum data (m/z
