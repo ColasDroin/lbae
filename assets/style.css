@@ -1,3 +1,5 @@
+/*===== GENERAL CHANGES =====*/
+
 /* Smoooth scrolling looks nicer */
 html {
   scroll-behavior: smooth;
@@ -7,7 +9,55 @@ body {
   background-color: #1d1c1f;
 }
 
-/* This creates aside bar fixed to the left of the page */
+/*===== TYPOGRAPHY =====*/
+
+/* Highlight text in white for documentation */
+em{
+  color: white;
+  font-style: normal;   
+}
+
+/* Unvisited link */
+a:link {
+  color: #1fafc8;
+  font-style: italic;   
+}
+
+/* Visited link */
+a:visited {
+  color: #1fafc8;
+  font-style: italic;   
+}
+
+/* Hover link */
+a:hover {
+  color: #1fafc8;
+  font-style: italic;
+  text-decoration: underline;    
+} 
+
+/* Title in white for documentation and main page */
+h1 {
+  color: white;
+  text-align: center;
+}
+
+/* Subtitles in blue */
+h2, h3 {
+  color: #1fafc8;
+}
+
+/* Text and lists in dimmed white  */
+p, li {
+  color: rgb(221, 221, 221);
+  text-align: justify;
+  font-size: larger;
+} 
+
+
+/*===== APP SIDEBAR =====*/
+
+/* Side bar fixed to the left of the page */
 .sidebar {
   position: fixed;
   top: 0;
@@ -16,112 +66,34 @@ body {
   width: 6rem;
   /* padding: 2rem 1.5rem 1rem 1rem; */
   background-color: #1d3d5c;
-  /*z-index: 1050;*/
 }
 
-/* make sure the contents of the navlink don't wrap when navbar collapses */
-.sidebar .nav-link {
-  width: 100%;
-  overflow: hidden;
-  white-space: nowrap;
-}
 
-/* change color of selected pills */
+/* Change color of selected pills */
 .nav-pills .nav-link.active,
 .nav-pills .show > .nav-link {
-  background-color: #1fafc8 !important ;
+  background-color: #1fafc8;
 }
 
+/* Change color of hovered/focused pills */
 .nav-link:hover {
-  color: #1fafc8 !important ;
+  color: #1fafc8;
 }
-
-
-
 .nav-link:focus {
-  color: #dee2e6 !important;
+  color: #dee2e6;
 }
 
-em{
-  color: white ;
-  font-style: normal;   
-}
-
-/* unvisited link */
-a:link {
-  color: #1fafc8  ;
-  font-style: italic;   
-}
-
-/* visited link */
-a:visited {
-  color: #1fafc8  ;
-  font-style: italic;   
-}
-
-/* hover link link */
-a:hover {
-  color: #1fafc8  !important;
-  font-style: italic;
-  text-decoration: underline !important;    
-} 
-
-h1 {
-  color: white !important;
-  text-align: center !important;
-}
-
-h2, h3 {
-  color: #1fafc8  !important;
-}
-
-
-p, li {
-  color: rgb(221, 221, 221) !important;
-  text-align: justify !important;
-  font-size: larger !important;
-} 
-
-/* container for the sidebar header. make sure the contents don't wrap when
- * the sidebar is collapsed.
- */
+/* Adjust main logo position */
 .sidebar-header .nav-link {
-  display: flex;
-  justify-content: left;
-  align-items: center;
-  overflow: hidden;
-  white-space: nowrap;
   padding-left: 0.1rem;
-}
+} 
 
-
-/* For better centering icons on the sidebar */
+/* Adjust other icon position */
 #sidebar-page-3{
   padding-right: 1.2rem;
 }
 
-
-/* position the header relative to the logo and hide by default */
-.sidebar-header .nav-link h5 {
-  opacity: 0;
-  margin-left: 1rem;
-  margin-bottom: 0;
-  /* transition: opacity 0.1s ease-in-out; */
-}
-
-/* reveal the header when the sidebar is toggled */
-.sidebar:hover .sidebar-header .nav-link h5 {
-  opacity: 1;
-}
-
-/* light blue color for brain  */
-/* .icon-brain {
-  color: #3a8bb6;
-} */
-
-/* container for the sidebar footbar. make sure the contents don't wrap when
- * the sidebar is collapsed. Keep bar at the lowest position.
- */
+/* Container for the sidebar footbar. Keep bar at the lowest position. */
 .sidebar-bottom {
   display: flex;
   flex-direction: column;
@@ -129,24 +101,14 @@ p, li {
   align-items: center;
   overflow: hidden;
   white-space: nowrap;
-
   position: fixed;
   bottom: 0;
   padding-left: 0rem;
 }
 
+/*===== APP MAIN CONTENT =====*/
 
-/* Fix white border on all cards */
-.card {
-  background-color: transparent;
-}
-
-/* Fix white border on page 2 for spectra */
-.offcanvas-end {
-  border-left-color: transparent;
-}
-
-/* default settings for content */
+/* Main content takes full page with a margin for sidebar */
 #content {
   margin-left: auto;
   margin-right: auto;
@@ -157,58 +119,53 @@ p, li {
   overflow: hidden;
 }
 
-
+/* Prevent graphs from exceeding page height */
 .dash-graph {
   max-height: 100vh;
 }
 
-/* To have backdrop invisible for drawer */
-body > div.fade.offcanvas-backdrop.show {
-  opacity: 0;
+/* Fix white border on all cards */
+.card {
+  background-color: transparent;
 }
 
-#content > div > div > div > div.mantine-Switch-root.mantine-16ttirm > label {
-  /* color: #e9ecef; */
+/* To fix the aspect ratio of the image graphs, images are initally a multiple 420*300 */
+.fixed-aspect-ratio {
+  position: relative;
+  width: 100%;
+  padding-bottom: min(
+    72%,
+    100vh
+  ); /* when max-height = 100vh is reached, need to block stretching*/
+  float: left;
+  height: 0;
+}
+
+/* Used tp wrap dcc.Loading component with transparent background */
+.loading-wrapper > div {
+  visibility: visible !important;
+}
+
+/*===== MANTINE CORRECTIONS =====*/
+
+/* Correct label position for Mantine Switch */
+div.mantine-Switch-root.mantine-16ttirm > label {
   margin-top: 0.16rem;
 }
 
-#page-3-controls > div:nth-child(1) > label {
-  /* color: #e9ecef; */
-  margin-top: 0.16rem;
-}
-
-#page-3-controls > div:nth-child(2) > label {
-  /* color: #e9ecef; */
-  margin-top: 0.16rem;
-}
-
-
-#content
-  > div
-  > div
-  > div.mantine-8od8ev
-  > div
-  > div:nth-child(3)
-  > div
-  > label {
-  margin-top: 0.25rem;
-}
-
-#content
-  > div:nth-child(1)
-  > div
-  > div.mantine-Switch-root.mantine-16ttirm
-  > label {
-  margin-top: 0.25rem;
-}
-
+/* Dimmer text */
 .mantine-Text-root {
   color: #ced4da;
 }
 
+/* Button label remain readable even when disabled */
+.mantine-Button-label {
+  color: #ced4da;
+}
 
-/* correct color for dropdowns */
+/*===== COLORED DROPDOWNS =====*/
 
+/* Create three color-themed dropdowns */
 #page-3-dropdown-red .Select-value {
   background-color: #1a1b1e;
   color: #ced4da;
@@ -263,106 +220,57 @@ body > div.fade.offcanvas-backdrop.show {
   color: #ced4da;
 }
 
-/* Style toasts */
-.toast-header {
-  border-bottom: 0px !important;
-  /* padding: 1rem !important; */
-  color: #ced4da !important;
-  background-color: #2b2e33 !important;
-  border-top-left-radius: 0 !important;
-  border-top-right-radius: 0 !important;
-  /* margin: 1rem !important; */
+/* Better color when Hovering over the dropdown selection menu */
+.VirtualizedSelectFocusedOption {
+  background-color: rgba(80, 189, 218, 0.5) !important;
 }
+.is-focused:not(.is-open) > .Select-control {
+  border-color: rgba(80, 189, 218, 0.5);
+}
+
+
+/*===== NICER TOASTS =====*/
+
+/* Adapt toast color to dark theme */
+.toast-header {
+  border-bottom: 0px;
+  color: #ced4da;
+  background-color: #2b2e33;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  /* margin: 1rem; */
+}
+
+/* Better centering */
 div.toast-header > strong {
   margin-left: 3rem;
   margin-right: 3rem;
 }
 
-/* .btn-close {
-  background: #ced4da;
-} */
 
-/* shift modebar on graph */
-#page-1-graph-slice-selection .js-plotly-plot .plotly .modebar {
-  left: 68%;
-  top: -0.3rem;
+/*===== DRAWERS =====*/
+
+/* Fix white border on page 2 for spectra */
+.offcanvas-end {
+  border-left-color: transparent;
 }
 
-/* shift modebar on graph */
-#page-2-graph-heatmap-mz-selection .js-plotly-plot .plotly .modebar {
-  left: 65%;
-  top: 0rem;
+/* Invisible backdrop for drawer */
+body > div.fade.offcanvas-backdrop.show {
+  opacity: 0;
 }
 
-#page-2-graph-low-resolution-spectrum .js-plotly-plot .plotly .modebar {
-  left: 62%;
-  top: 3rem;
-}
-
-#page-2-graph-high-resolution-spectrum .js-plotly-plot .plotly .modebar {
-  left: 55%;
-  top: 3rem;
-}
-
-#page-3-graph-heatmap-per-sel .js-plotly-plot .plotly .modebar {
-  left: 68%;
-  top: 0rem;
-}
-
-#page-3-graph-spectrum-per-pixel .js-plotly-plot .plotly .modebar {
-  left: 53%;
-  top: 0.2rem;
-}
-
-#page-3-graph-heatmap-per-lipid .js-plotly-plot .plotly .modebar {
-  left: 34%;
-  top: 0rem;
-}
-
-/* dcc.Loading component with transparent background */
-/* this defines a style for a Loading component with parent_className='loading-wrapper' */
-.loading-wrapper > div {
-  visibility: visible !important;
-}
-
-/* To fix the aspect ratio of the image graphs, images are initally a multiple 420*300 */
-.page-1-fixed-aspect-ratio {
-  position: relative;
-  width: 100%;
-  padding-bottom: min(
-    72%,
-    100vh
-  ); /* when max-height = 80vh is reached, need to block stretching*/
-  float: left;
-  height: 0;
-  /* max-width: 111vh;*/ /*80/72=11 */
-}
-
-.page-4-fixed-aspect-ratio {
-  position: relative;
-  width: 100%;
-  padding-bottom: 72%;
-  float: left;
-  height: 0;
-}
-
-.fixed-aspect-ratio {
-  position: relative;
-  width: 100%;
-  padding-bottom: 57.8%;
-  float: left;
-  height: 0;
-}
-
-/* To remove the header of the drawer */
+/* Remove drawer header */
 #page-2-drawer-high-res-spectra > div.offcanvas-header {
   display: none;
 }
 
+/* Same */
 #page-2-drawer-low-res-spectra > div.offcanvas-header {
   display: none;
 }
 
+/* Same */
 #page-4-drawer-region-selection > div.offcanvas-header {
   display: none;
 }
@@ -373,52 +281,26 @@ div.toast-header > strong {
   height: 400px;
 }
 
+/* Same */
 #page-2-drawer-low-res-spectra {
   background-color: transparent;
   height: 400px;
 }
 
-/* To center main toast header */
-#page-1-main-toast > div.toast-header > strong {
-  margin: auto;
-  color: #ffffff;
-}
+/*===== SMALL FIXES =====*/
 
-
-/* Remove above style for lipid toasts */
-#page-2-toast-lipid-1 > div.toast-header > strong,
-#page-2-toast-lipid-2 > div.toast-header > strong,
-#page-2-toast-lipid-3 > div.toast-header > strong {
-  color: #222222;
-}
-
-#page-2-toast-lipid-1 > div.toast-header > button > span,
-#page-2-toast-lipid-2 > div.toast-header > button > span,
-#page-2-toast-lipid-3 > div.toast-header > button > span {
-  color: #757575;
-}
-
-.VirtualizedSelectFocusedOption {
-  background-color: rgba(80, 189, 218, 0.5) !important;
-}
-
-.is-focused:not(.is-open) > .Select-control {
-  border-color: rgba(80, 189, 218, 0.5);
-}
-
-/* decrease vertical asymetry tabs  */
+/* Decrease vertical asymetry of the tabs  */
 #page-1-card-tabs {
   padding-bottom: 0;
 }
 
 
-#content
-  > div:nth-child(1)
-  > div
-  > div.mantine-Switch-root.mantine-16ttirm
-  > label {
-  color: white;
+/* Fix bug slider above clustergram */
+#page-4-slider-percentile {
+  z-index: 10;
 }
+
+/*===== REACT GRID =====*/
 
 /* Improve react grid look */
 div.item-top {
@@ -433,11 +315,6 @@ div.item {
   /* box-shadow: 0px 10px 6px -1px rgb(30 44 57 / 15%); */
 }
 
-/* Button label remain readable even when disabled */
-.mantine-Button-label {
-  color: #ced4da;
-}
-
 div.item:focus,
 div.item:active,
 div.item.active,
@@ -448,26 +325,9 @@ div.item:focus:active {
   /* box-shadow: 0px 10px 6px -1px rgb(30 44 57 / 15%); */
 }
 
-#page-4-dropdown-lipid-names-label {
-  color: white;
-}
+/*===== APP STARTUP =====*/
 
-#page-4-dropdown-lipid-structures-label {
-  color: white;
-}
-
-#page-4-dropdown-lipid-cations-label {
-  color: white;
-}
-
-
-
-/* Fix bug slider above clustergram */
-#page-4-slider-percentile {
-  z-index: 10;
-}
-
-/* Initial spinner at startup */
+/* Initial spinner */
 
 ._dash-loading {
   margin: auto;

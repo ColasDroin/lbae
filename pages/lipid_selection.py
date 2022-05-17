@@ -42,7 +42,7 @@ def return_layout(basic_config, slice_index):
             },
             children=[
                 html.Div(
-                    className="page-1-fixed-aspect-ratio",
+                    className="fixed-aspect-ratio",
                     style={
                         "background-color": "#1d1c1f",
                     },

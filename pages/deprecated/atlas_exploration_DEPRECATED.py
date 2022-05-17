@@ -78,7 +78,7 @@ def return_layout(basic_config, slice_index):
                                     color="dark",
                                     children=[
                                         html.Div(
-                                            className="page-1-fixed-aspect-ratio",
+                                            className="fixed-aspect-ratio",
                                             children=[
                                                 dcc.Graph(
                                                     id="page-5-graph-hierarchy",
@@ -145,7 +145,7 @@ def return_layout(basic_config, slice_index):
                                 #    color="dark",
                                 #    children=[
                                 html.Div(
-                                    className="page-1-fixed-aspect-ratio",
+                                    className="fixed-aspect-ratio",
                                     children=[
                                         dcc.Graph(
                                             id="page-5-graph-3D-atlas-slices",
@@ -175,7 +175,9 @@ def return_layout(basic_config, slice_index):
                                         html.P(
                                             "Hovered region: ",
                                             id="page-5-tab-4",
-                                            className="text-warning font-weight-bold position-absolute",
+                                            className=(
+                                                "text-warning font-weight-bold position-absolute"
+                                            ),
                                             style={"left": "35%", "top": "2em"},
                                         ),
                                     ],
@@ -303,7 +305,8 @@ def page_4_hover(hoverData, active_tab):
 
 
 @app.app.callback(
-    Output("page-5-graph-atlas-3d", "figure"), Input("page-5-graph-hierarchy", "clickData"),
+    Output("page-5-graph-atlas-3d", "figure"),
+    Input("page-5-graph-hierarchy", "clickData"),
 )
 def page_4_click(clickData):
     if clickData is not None:
@@ -321,4 +324,3 @@ def page_4_click(clickData):
             return fig
 
     return dash.no_update
-

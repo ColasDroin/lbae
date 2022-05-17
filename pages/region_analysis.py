@@ -64,7 +64,7 @@ def return_layout(basic_config, slice_index=1):
         },
         children=[
             html.Div(
-                className="page-1-fixed-aspect-ratio",
+                className="fixed-aspect-ratio",
                 style={
                     "background-color": "#1d1c1f",
                 },
@@ -142,10 +142,7 @@ def return_layout(basic_config, slice_index=1):
                         },
                         class_name="position-absolute",
                         children=[
-                            html.Div(
-                                children=" Draw a region or choose a structure below",
-                                className="fs-5 text-light",
-                            ),
+                            dmc.Text("Draw a region or choose a structure below", size="lg"),
                             dmc.Group(
                                 spacing="xs",
                                 align="flex-start",
@@ -689,9 +686,7 @@ def return_layout(basic_config, slice_index=1):
                                                                 id="page-3-graph-lipid--comparison-wait"
                                                             ),
                                                             html.Div(
-                                                                className=(
-                                                                    "page-1-fixed-aspect-ratio"
-                                                                ),
+                                                                className="fixed-aspect-ratio",
                                                                 id="page-3-div-graph-lipid-comparison",
                                                                 style={"display": "none"},
                                                                 children=[

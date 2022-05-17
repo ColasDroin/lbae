@@ -415,7 +415,7 @@ def return_layout(basic_config, slice_index):
                                                 show_initially=False,
                                                 children=[
                                                     html.Div(
-                                                        className="page-1-fixed-aspect-ratio",
+                                                        className="fixed-aspect-ratio",
                                                         id="page-4-graph-volume-parent",
                                                         children=[
                                                             html.Div(
