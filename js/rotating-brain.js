@@ -15,7 +15,7 @@ Plotly.plot(gd, [{
 }], {
     scene: {
         camera: {
-            eye: { x: 1, y: 1, z: 1 }
+            eye: { x: 1, y: 0.5, z: 1 }
         },
         xaxis: {
             autorange: true,
@@ -51,6 +51,13 @@ Plotly.plot(gd, [{
     paper_bgcolor: 'rgba(0,0,0,0)',
     plot_bgcolor: 'rgba(0,0,0,0)',
     hovermode: false,
+    margin: {
+        l: 0,
+        r: 0,
+        b: 0,
+        t: 0,
+        pad: 0,
+      },
 }, {displayModeBar: false});
 
 
