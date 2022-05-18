@@ -55,14 +55,6 @@ layout = (
                                 style={"fontSize": 40, "color": "#dee2e6"},
                                 align="center",
                             ),
-                            # html.H1(
-                            #     className="icon-brain my-5 mr-5",
-                            #     style={
-                            #         "font-size": "12rem",
-                            #         "color": "#50bdda",
-                            #         "opacity": "0.9",
-                            #     },
-                            # ),
                             html.Div(id="rotating-brain"),
                             visdcc.Run_js(id="javascript"),
                             # Below logo text
@@ -72,7 +64,7 @@ layout = (
                                 size="xl",
                                 align="center",
                                 color="dimmed",
-                                class_name="mt-4",
+                                # class_name="mt-4",
                             ),
                             dmc.Center(
                                 dmc.Button(
@@ -118,6 +110,6 @@ def toggle_collapse(n, is_open):
 
 @app.app.callback(Output("javascript", "run"), [Input("main-slider", "value")])
 def display_rotating_brain(x):
-    with open('js/rotating-brain.js') as f:
+    with open("js/rotating-brain.js") as f:
         js = f.read()
-    return js 
+    return js

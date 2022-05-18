@@ -11,13 +11,48 @@ Plotly.plot(gd, [{
     colorscale: 'Viridis',
     opacity: 0.5,
     surface: { count: 20 },
+    showscale: false,
 }], {
     scene: {
         camera: {
             eye: { x: 1, y: 1, z: 1 }
-        }
+        },
+        xaxis: {
+            autorange: true,
+            showgrid: false,
+            zeroline: false,
+            showline: false,
+            autotick: true,
+            ticks: '',
+            showticklabels: false,
+            visible: false,
+          },
+          yaxis: {
+            autorange: true,
+            showgrid: false,
+            zeroline: false,
+            showline: false,
+            autotick: true,
+            ticks: '',
+            showticklabels: false,
+            visible: false,
+          },
+          zaxis: {
+            autorange: true,
+            showgrid: false,
+            zeroline: false,
+            showline: false,
+            autotick: true,
+            ticks: '',
+            showticklabels: false,
+            visible: false,
+          },
     },
-});
+    paper_bgcolor: 'rgba(0,0,0,0)',
+    plot_bgcolor: 'rgba(0,0,0,0)',
+    hovermode: false,
+}, {displayModeBar: false});
+
 
 var cnt = 0;
 
