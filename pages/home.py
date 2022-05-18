@@ -13,6 +13,7 @@ import dash_mantine_components as dmc
 from dash.dependencies import Input, Output, State
 from documentation.documentation import return_documentation
 import app
+import visdcc
 
 # ==================================================================================================
 # --- Layout
@@ -54,14 +55,16 @@ layout = (
                                 style={"fontSize": 40, "color": "#dee2e6"},
                                 align="center",
                             ),
-                            html.H1(
-                                className="icon-brain my-5 mr-5",
-                                style={
-                                    "font-size": "12rem",
-                                    "color": "#50bdda",
-                                    "opacity": "0.9",
-                                },
-                            ),
+                            # html.H1(
+                            #     className="icon-brain my-5 mr-5",
+                            #     style={
+                            #         "font-size": "12rem",
+                            #         "color": "#50bdda",
+                            #         "opacity": "0.9",
+                            #     },
+                            # ),
+                            html.Div(id="rotating-brain"),
+                            visdcc.Run_js(id="javascript"),
                             # Below logo text
                             dmc.Text(
                                 "Please start exploring our data by using the navigation bar on the"
@@ -111,3 +114,10 @@ def toggle_collapse(n, is_open):
     if n:
         return not is_open
     return is_open
+
+
+@app.app.callback(Output("javascript", "run"), [Input("main-slider", "value")])
+def display_rotating_brain(x):
+    with open('js/rotating-brain.js') as f:
+        js = f.read()
+    return js 

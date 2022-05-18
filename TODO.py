@@ -1,10 +1,11 @@
 ##### Current TODOs #####
 # TODO Incorporate new brain 1 and brain 2
-# TODO Check that all force_update are set to False
 # TODO Do quality control and debug, especially when several users are on the app in parallel
 # TODO Replace brain homepage with rotating transparent gif of 3D expression
+# TODO Replace ugly js library with clientslide callback?
 
 ##### Finalization process #####
+# TODO Check that all force_update are set to False
 # TODO Check that readme and documentations are correct and up to date
 # TODO Adress remaining # ! and # ? comments in the code
 # TODO Make a docker container for the very final version of the app

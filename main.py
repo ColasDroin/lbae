@@ -20,6 +20,7 @@ pkill -P1 gunicorn
 import logging
 from modules.tools.misc import logmem  # To track memory usage
 import dash_mantine_components as dmc
+from dash_extensions import DeferScript
 
 # ==================================================================================================
 # --- Logging settings
@@ -55,7 +56,9 @@ main_content = return_main_content()
 # Initialize app with main content and dark theme
 app.layout = dmc.MantineProvider(
     theme={"colorScheme": "dark"},  # , "colors": {"deep-blue": ["#1d3d5c"] * 10},},
-    children=[main_content],
+    children=[
+        main_content,
+    ],
 )
 
 # Give complete layout for callback validation
