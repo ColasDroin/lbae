@@ -14,6 +14,7 @@ from dash.dependencies import Input, Output, State
 from documentation.documentation import return_documentation
 import app
 import visdcc
+from dash_extensions import Lottie
 
 # ==================================================================================================
 # --- Layout
@@ -62,10 +63,11 @@ layout = (
                             html.Div(id="rotating-brain"),
                             html.Div(
                                 id="skeleton-rotating-brain",
-                                children=dmc.Loader(
-                                    color="teal",
-                                    size="xl",
-                                    style={"height": "500px", "width": "100%", "padding": "200px"},
+                                children=dmc.Image(
+                                    src="/assets/ressources/brain.png",
+                                    alt="Brain",
+                                    caption="Brain",
+                                    height=500,
                                 ),
                             ),
                             visdcc.Run_js(id="javascript"),
