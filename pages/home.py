@@ -52,10 +52,22 @@ layout = (
                         children=[
                             dmc.Text(
                                 "Welcome to the Lipid Brain Atlas Explorer",
-                                style={"fontSize": 40, "color": "#dee2e6"},
+                                style={
+                                    "fontSize": 40,
+                                    "color": "#dee2e6",
+                                    "margin-bottom": "-15rem",
+                                },
                                 align="center",
                             ),
-                            html.Div(id="rotating-brain", style={"height": "500px"}),
+                            html.Div(id="rotating-brain"),
+                            html.Div(
+                                id="skeleton-rotating-brain",
+                                children=dmc.Loader(
+                                    color="teal",
+                                    size="xl",
+                                    style={"height": "500px", "width": "100%", "padding": "200px"},
+                                ),
+                            ),
                             visdcc.Run_js(id="javascript"),
                             # Below logo text
                             dmc.Text(
@@ -65,6 +77,9 @@ layout = (
                                 align="center",
                                 color="dimmed",
                                 # class_name="mt-4",
+                                style={
+                                    "margin-top": "-3rem",
+                                },
                             ),
                             dmc.Center(
                                 dmc.Button(
@@ -102,7 +117,7 @@ layout = (
     [State("documentation-offcanvas-home", "opened")],
 )
 def toggle_collapse(n, is_open):
-    """This callback will trigger the drawer displaying the app documentation"""
+    """This callback will trigger the drawer displaying the app documentation."""
     if n:
         return not is_open
     return is_open
@@ -110,6 +125,7 @@ def toggle_collapse(n, is_open):
 
 @app.app.callback(Output("javascript", "run"), [Input("main-slider", "value")])
 def display_rotating_brain(x):
+    """This callback loads some javascript code to display the rotating brain."""
     with open("js/rotating-brain.js") as f:
         js = f.read()
     return js

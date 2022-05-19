@@ -1,5 +1,7 @@
+// Select div
 var gd = document.getElementById("rotating-brain");
 
+// Build plot
 Plotly.plot(
   gd,
   [
@@ -75,8 +77,12 @@ Plotly.plot(
   { displayModeBar: false, responsive: true, scrollZoom: false }
 );
 
-var cnt = 0;
+// Remove skeleton
+document.getElementById("skeleton-rotating-brain").innerHTML = "";
 
+// Functions to rotate brain
+
+var cnt = 0;
 function run() {
   rotate("scene", Math.PI / 720);
   requestAnimationFrame(run);

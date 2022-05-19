@@ -20,7 +20,6 @@ pkill -P1 gunicorn
 import logging
 from modules.tools.misc import logmem  # To track memory usage
 import dash_mantine_components as dmc
-from dash_extensions import DeferScript
 
 # ==================================================================================================
 # --- Logging settings
