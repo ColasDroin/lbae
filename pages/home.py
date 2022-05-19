@@ -55,7 +55,7 @@ layout = (
                                 style={"fontSize": 40, "color": "#dee2e6"},
                                 align="center",
                             ),
-                            html.Div(id="rotating-brain"),
+                            html.Div(id="rotating-brain", style={"height": "500px"}),
                             visdcc.Run_js(id="javascript"),
                             # Below logo text
                             dmc.Text(
