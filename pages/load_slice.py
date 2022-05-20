@@ -145,23 +145,13 @@ def return_layout(basic_config, slice_index):
                             show_initially=False,
                             children=[
                                 html.Div(
-                                    className="fixed-aspect-ratio",
                                     children=[
                                         dcc.Graph(
                                             id="page-1-graph-modal",
-                                            config=basic_config
-                                            | {
-                                                "toImageButtonOptions": {
-                                                    "format": "png",
-                                                    "filename": "brain_lipid_selection",
-                                                    "scale": 2,
-                                                }
-                                            },
+                                            config=basic_config,
                                             style={
                                                 "width": "100%",
-                                                "height": "100%",
-                                                "position": "absolute",
-                                                "left": "0",
+                                                "height": "80vh",
                                             },
                                         ),
                                     ],

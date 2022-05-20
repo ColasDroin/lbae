@@ -47,7 +47,7 @@ def return_layout(basic_config, slice_index):
                 clearSavedLayout=True,
                 isDraggable=False,
                 isResizable=False,
-                containerPadding=[2, 2],
+                containerPadding=[0, 0],
                 breakpoints={
                     "xxl": 1600,
                     "lg": 1200,
@@ -293,6 +293,7 @@ def return_layout(basic_config, slice_index):
                                                 direction="column",
                                                 grow=True,
                                                 class_name="ml-5",
+                                                spacing="xs",
                                                 children=[
                                                     dmc.Center(
                                                         class_name="w-100",
@@ -340,6 +341,7 @@ def return_layout(basic_config, slice_index):
                                                 direction="column",
                                                 grow=True,
                                                 class_name="ml-5",
+                                                spacing="xs",
                                                 children=[
                                                     dmc.Center(
                                                         class_name="w-100",

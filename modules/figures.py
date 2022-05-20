@@ -460,7 +460,7 @@ class Figures:
                     gridcolor="grey",
                 ),
             ),
-            margin=dict(t=5, r=0, b=0, l=0),
+            margin=dict(t=0, r=0, b=0, l=0),
             template="plotly_dark",
             sliders=sliders,
         )

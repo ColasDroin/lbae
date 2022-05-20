@@ -669,3 +669,490 @@ From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.
 2022-05-19 15:06:30.241 INFO lipid_selection - page_2_add_toast_selection: Entering function to update lipid data
 2022-05-19 15:06:30.456 INFO lipid_selection - page_2_plot_graph_heatmap_mz_selection: Entering function to plot heatmap or RGB depending on lipid selection
 2022-05-19 15:06:30.866 INFO index - render_page_content: Page/ has been selected	MemTotal: 956.765625
+[2022-05-19 16:12:53 +0200] [68114] [INFO] Starting gunicorn 20.1.0
+[2022-05-19 16:12:53 +0200] [68114] [ERROR] Connection in use: ('', 8050)
+[2022-05-19 16:12:53 +0200] [68114] [ERROR] Retrying in 1 second.
+[2022-05-19 16:12:54 +0200] [68114] [ERROR] Connection in use: ('', 8050)
+[2022-05-19 16:12:54 +0200] [68114] [ERROR] Retrying in 1 second.
+[2022-05-19 16:12:55 +0200] [68114] [ERROR] Connection in use: ('', 8050)
+[2022-05-19 16:12:55 +0200] [68114] [ERROR] Retrying in 1 second.
+[2022-05-19 16:12:56 +0200] [68114] [ERROR] Connection in use: ('', 8050)
+[2022-05-19 16:12:56 +0200] [68114] [ERROR] Retrying in 1 second.
+[2022-05-19 16:12:57 +0200] [68114] [ERROR] Connection in use: ('', 8050)
+[2022-05-19 16:12:57 +0200] [68114] [ERROR] Retrying in 1 second.
+[2022-05-19 16:12:58 +0200] [68114] [ERROR] Can't connect to ('', 8050)
+2022-05-19 16:13:18.308 INFO index - render_page_content: Page/ has been selected	MemTotal: 956.765625
+2022-05-19 16:13:36.679 INFO index - render_page_content: Page/ has been selected	MemTotal: 956.765625
+2022-05-19 16:13:47.724 INFO index - render_page_content: Page/ has been selected	MemTotal: 956.765625
+[2022-05-19 16:14:04 +0200] [302020] [INFO] Starting gunicorn 20.1.0
+[2022-05-19 16:14:04 +0200] [302020] [ERROR] Connection in use: ('', 8050)
+[2022-05-19 16:14:04 +0200] [302020] [ERROR] Retrying in 1 second.
+[2022-05-19 16:14:05 +0200] [302020] [ERROR] Connection in use: ('', 8050)
+[2022-05-19 16:14:05 +0200] [302020] [ERROR] Retrying in 1 second.
+[2022-05-19 16:14:06 +0200] [302020] [ERROR] Connection in use: ('', 8050)
+[2022-05-19 16:14:06 +0200] [302020] [ERROR] Retrying in 1 second.
+[2022-05-19 16:14:07 +0200] [302020] [ERROR] Connection in use: ('', 8050)
+[2022-05-19 16:14:07 +0200] [302020] [ERROR] Retrying in 1 second.
+[2022-05-19 16:14:08 +0200] [302020] [ERROR] Connection in use: ('', 8050)
+[2022-05-19 16:14:08 +0200] [302020] [ERROR] Retrying in 1 second.
+[2022-05-19 16:14:09 +0200] [302020] [ERROR] Can't connect to ('', 8050)
+[2022-05-19 16:15:04 +0200] [302487] [INFO] Starting gunicorn 20.1.0
+[2022-05-19 16:15:04 +0200] [302487] [ERROR] Connection in use: ('', 8050)
+[2022-05-19 16:15:04 +0200] [302487] [ERROR] Retrying in 1 second.
+[2022-05-19 16:15:05 +0200] [302487] [ERROR] Connection in use: ('', 8050)
+[2022-05-19 16:15:05 +0200] [302487] [ERROR] Retrying in 1 second.
+[2022-05-19 16:15:06 +0200] [302487] [ERROR] Connection in use: ('', 8050)
+[2022-05-19 16:15:06 +0200] [302487] [ERROR] Retrying in 1 second.
+[2022-05-19 16:15:07 +0200] [302487] [ERROR] Connection in use: ('', 8050)
+[2022-05-19 16:15:07 +0200] [302487] [ERROR] Retrying in 1 second.
+[2022-05-19 16:15:08 +0200] [302487] [ERROR] Connection in use: ('', 8050)
+[2022-05-19 16:15:08 +0200] [302487] [ERROR] Retrying in 1 second.
+[2022-05-19 16:15:09 +0200] [302487] [ERROR] Can't connect to ('', 8050)
+2022-05-19 16:15:32.864 INFO index - render_page_content: Page/ has been selected	MemTotal: 956.765625
+2022-05-19 16:15:46.026 INFO index - render_page_content: Page/ has been selected	MemTotal: 956.765625
+2022-05-19 16:15:48.807 INFO index - render_page_content: Page/load-slice has been selected	MemTotal: 956.765625
+2022-05-19 16:15:48.912 INFO storage - return_shelved_object: Returning figures/load_page/figure_basic_image_projection_corrected_0_False from shelve file.	MemTotal: 956.765625
+2022-05-19 16:15:49.648 INFO index - render_page_content: Page/ has been selected	MemTotal: 956.765625
+2022-05-19 16:18:53.975 INFO index - render_page_content: Page/ has been selected	MemTotal: 956.765625
+2022-05-19 16:19:52.498 INFO index - render_page_content: Page/ has been selected	MemTotal: 956.765625
+[2022-05-19 16:25:02 +0200] [453629] [INFO] Handling signal: hup
+[2022-05-19 16:25:02 +0200] [453629] [INFO] Hang up: Master
+[2022-05-19 16:25:02 +0200] [415593] [INFO] Booting worker with pid: 415593
+[2022-05-19 16:25:02 +0200] [453629] [WARNING] Worker with pid 456642 was terminated due to signal 1
+2022-05-19 16:25:02.784 INFO main - <module>: Starting import chain	MemTotal: 34.234375
+2022-05-19 16:25:05.391 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 247.609375
+2022-05-19 16:25:05.391 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 247.609375
+2022-05-19 16:25:05.469 INFO maldi_data - __init__: MaldiData object instantiated	MemTotal: 279.37109375
+2022-05-19 16:25:05.469 INFO atlas - __init__: Initializing Atlas object	MemTotal: 279.37109375
+2022-05-19 16:25:05.730 INFO storage - return_shelved_object: Returning atlas/atlas_objects/dic_acronym_children_id from shelve file.	MemTotal: 289.2109375
+2022-05-19 16:25:06.784 INFO storage - return_shelved_object: Returning atlas/atlas_objects/hierarchy from shelve file.	MemTotal: 510.2890625
+2022-05-19 16:25:06.904 INFO storage - return_shelved_object: Returning atlas/atlas_objects/arrays_projection_corrected_True_True from shelve file.	MemTotal: 510.3046875
+2022-05-19 16:25:07.495 INFO storage - return_shelved_object: Returning atlas/atlas_objects/arrays_projection_corrected_True_True from shelve file.	MemTotal: 661.42578125
+2022-05-19 16:25:08.214 INFO atlas - __init__: Atlas object instantiated	MemTotal: 694.796875
+2022-05-19 16:25:08.214 INFO figures - __init__: Initializing Figures object	MemTotal: 694.796875
+2022-05-19 16:25:08.332 INFO storage - return_shelved_object: Returning figures/lipid_selection/dic_normalization_factors_None from shelve file.	MemTotal: 694.921875
+2022-05-19 16:25:09.040 INFO figures - __init__: Figures object instantiated	MemTotal: 695.1796875
+2022-05-19 16:25:09.041 INFO app - <module>: Memory use after three main object have been instantiated	MemTotal: 695.1796875
+2022-05-19 16:25:09.291 INFO launch - run_compiled_functions: Please wait while compiled functions are executed...
+2022-05-19 16:25:19.890 INFO figures - compute_3D_volume_figure: Starting 3D volume computation
+2022-05-19 16:25:20.011 INFO storage - return_shelved_object: Returning figures/3D_page/arrays_annotation_6 from shelve file.	MemTotal: 832.5
+2022-05-19 16:25:20.625 INFO figures - compute_3D_volume_figure: Computed basic structure array
+2022-05-19 16:25:20.744 INFO storage - return_shelved_object: Returning figures/3D_page/arrays_expression___ from shelve file.	MemTotal: 838.09375
+2022-05-19 16:25:20.864 INFO storage - return_shelved_object: Returning figures/3D_page/arrays_expression___ from shelve file.	MemTotal: 838.09375
+2022-05-19 16:25:20.983 INFO storage - return_shelved_object: Returning figures/3D_page/arrays_expression___ from shelve file.	MemTotal: 838.09375
+2022-05-19 16:25:20.984 INFO figures - compute_3D_volume_figure: Averaged expression over all lipids
+2022-05-19 16:25:20.984 INFO figures - compute_array_coordinates_3D: Starting computing 3D arrays	MemTotal: 838.09375
+2022-05-19 16:25:20.984 DEBUG figures - compute_array_coordinates_3D: Size array_x: 19.53
+2022-05-19 16:25:20.984 INFO figures - compute_array_coordinates_3D: Starting slice iteration	MemTotal: 838.09375
+2022-05-19 16:25:20.992 INFO figures - compute_3D_volume_figure: Computed array of expression in original space
+2022-05-19 16:25:21.325 INFO figures - compute_3D_volume_figure: Filled basic structure array with array of expression
+2022-05-19 16:25:21.334 INFO figures - compute_3D_volume_figure: Built arrays of coordinates
+2022-05-19 16:25:22.145 INFO figures - compute_3D_volume_figure: Cropped the figure to only keep areas in which lipids are expressed
+2022-05-19 16:25:22.759 INFO figures - compute_3D_volume_figure: Finished interpolation betwee slices
+2022-05-19 16:25:22.878 INFO storage - return_shelved_object: Returning figures/3D_page/volume_root from shelve file.	MemTotal: 854.96484375
+2022-05-19 16:25:22.897 INFO figures - compute_3D_volume_figure: Building final figure
+2022-05-19 16:25:23.044 INFO figures - compute_3D_volume_figure: Done computing 3D volume figure
+2022-05-19 16:25:23.047 INFO maldi_data - clean_memory: Memory cleaned
+2022-05-19 16:25:23.047 INFO launch - run_compiled_functions: Compiled functions executed.
+2022-05-19 16:25:23.168 INFO app - <module>: Memory use after main functions have been compiled	MemTotal: 807.421875
+2022-05-19 16:25:23.190 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-05-19 16:25:23.191 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-05-19 16:25:23.191 DEBUG filesystemcache - set: set key 'locked-cleaning'
+2022-05-19 16:25:23.191 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-05-19 16:25:23.191 DEBUG filesystemcache - set: set key 'locked-reading'
+2022-05-19 16:25:23.335 INFO storage - return_shelved_object: Returning figures/load_page/figure_basic_image_projection_corrected_0_False from shelve file.	MemTotal: 810.03125
+2022-05-19 16:25:23.352 INFO figures - compute_heatmap_per_mz: Starting figure computation, from mz boundaries
+2022-05-19 16:25:23.352 INFO figures - compute_heatmap_per_mz: Getting image array
+2022-05-19 16:25:23.352 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-05-19 16:25:23.352 INFO spectra - compute_thread_safe_function: Trying to compute the thread-safe version of function compute_image_using_index_and_image_lookup 
+2022-05-19 16:25:23.352 DEBUG filesystemcache - get: get key 'locked-cleaning' -> hit 
+2022-05-19 16:25:23.352 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-05-19 16:25:23.353 DEBUG filesystemcache - set: set key 'locked-reading'
+2022-05-19 16:25:24.010 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-05-19 16:25:24.010 DEBUG filesystemcache - set: set key 'locked-reading'
+2022-05-19 16:25:24.010 DEBUG filesystemcache - get: get key 'locked-reading' -> hit 
+2022-05-19 16:25:24.010 DEBUG filesystemcache - get: get key 'locked-cleaning' -> hit 
+2022-05-19 16:25:24.011 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-05-19 16:25:24.011 DEBUG filesystemcache - set: set key 'locked-cleaning'
+2022-05-19 16:25:24.011 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-05-19 16:25:24.011 DEBUG filesystemcache - set: set key 'locked-cleaning'
+2022-05-19 16:25:24.011 INFO maldi_data - clean_memory: Memory cleaned
+2022-05-19 16:25:24.417 INFO figures - build_lipid_heatmap_from_image: Converting image to string
+2022-05-19 16:25:24.417 INFO image - convert_image_to_base64: Entering string conversion function
+2022-05-19 16:25:24.455 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-05-19 16:25:24.492 INFO image - convert_image_to_base64: Empty pixels are now transparent
+2022-05-19 16:25:24.511 INFO image - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-05-19 16:25:24.534 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-05-19 16:25:24.535 INFO figures - build_lipid_heatmap_from_image: Converting image to go image
+2022-05-19 16:25:24.559 INFO figures - build_lipid_heatmap_from_image: Returning figure
+2022-05-19 16:25:24.684 INFO storage - return_shelved_object: Returning annotations/lipid_options from shelve file.	MemTotal: 813.14453125
+2022-05-19 16:25:24.842 INFO storage - return_shelved_object: Returning figures/load_page/figure_basic_image_projection_corrected_0_False from shelve file.	MemTotal: 813.2109375
+2022-05-19 16:25:24.984 INFO storage - return_shelved_object: Returning figures/atlas_page/3D/treemaps from shelve file.	MemTotal: 813.2109375
+[2022-05-19 16:30:46 +0200] [415593] [INFO] Worker exiting (pid: 415593)
+allen mouse atlas (res. 100um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+[2022-05-19 16:30:47 +0200] [402228] [INFO] Booting worker with pid: 402228
+2022-05-19 16:30:47.603 INFO main - <module>: Starting import chain	MemTotal: 34.234375
+2022-05-19 16:30:49.825 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 247.4140625
+2022-05-19 16:30:49.825 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 247.4140625
+2022-05-19 16:30:49.899 INFO maldi_data - __init__: MaldiData object instantiated	MemTotal: 279.375
+2022-05-19 16:30:49.900 INFO atlas - __init__: Initializing Atlas object	MemTotal: 279.375
+2022-05-19 16:30:50.153 INFO storage - return_shelved_object: Returning atlas/atlas_objects/dic_acronym_children_id from shelve file.	MemTotal: 289.21484375
+2022-05-19 16:30:51.142 INFO storage - return_shelved_object: Returning atlas/atlas_objects/hierarchy from shelve file.	MemTotal: 510.08203125
+2022-05-19 16:30:51.254 INFO storage - return_shelved_object: Returning atlas/atlas_objects/arrays_projection_corrected_True_True from shelve file.	MemTotal: 510.4375
+2022-05-19 16:30:51.800 INFO storage - return_shelved_object: Returning atlas/atlas_objects/arrays_projection_corrected_True_True from shelve file.	MemTotal: 661.41796875
+2022-05-19 16:30:52.477 INFO atlas - __init__: Atlas object instantiated	MemTotal: 694.84375
+2022-05-19 16:30:52.477 INFO figures - __init__: Initializing Figures object	MemTotal: 694.84375
+2022-05-19 16:30:52.587 INFO storage - return_shelved_object: Returning figures/lipid_selection/dic_normalization_factors_None from shelve file.	MemTotal: 695.0078125
+2022-05-19 16:30:53.267 INFO figures - __init__: Figures object instantiated	MemTotal: 695.0078125
+2022-05-19 16:30:53.267 INFO app - <module>: Memory use after three main object have been instantiated	MemTotal: 695.0078125
+2022-05-19 16:30:53.512 INFO launch - run_compiled_functions: Please wait while compiled functions are executed...
+2022-05-19 16:31:03.640 INFO figures - compute_3D_volume_figure: Starting 3D volume computation
+2022-05-19 16:31:03.751 INFO storage - return_shelved_object: Returning figures/3D_page/arrays_annotation_6 from shelve file.	MemTotal: 832.62890625
+2022-05-19 16:31:04.332 INFO figures - compute_3D_volume_figure: Computed basic structure array
+2022-05-19 16:31:04.446 INFO storage - return_shelved_object: Returning figures/3D_page/arrays_expression___ from shelve file.	MemTotal: 838.35546875
+2022-05-19 16:31:04.559 INFO storage - return_shelved_object: Returning figures/3D_page/arrays_expression___ from shelve file.	MemTotal: 838.35546875
+2022-05-19 16:31:04.668 INFO storage - return_shelved_object: Returning figures/3D_page/arrays_expression___ from shelve file.	MemTotal: 838.35546875
+2022-05-19 16:31:04.669 INFO figures - compute_3D_volume_figure: Averaged expression over all lipids
+2022-05-19 16:31:04.669 INFO figures - compute_array_coordinates_3D: Starting computing 3D arrays	MemTotal: 838.35546875
+2022-05-19 16:31:04.669 DEBUG figures - compute_array_coordinates_3D: Size array_x: 19.53
+2022-05-19 16:31:04.669 INFO figures - compute_array_coordinates_3D: Starting slice iteration	MemTotal: 838.36328125
+2022-05-19 16:31:04.682 INFO figures - compute_3D_volume_figure: Computed array of expression in original space
+2022-05-19 16:31:04.988 INFO figures - compute_3D_volume_figure: Filled basic structure array with array of expression
+2022-05-19 16:31:04.997 INFO figures - compute_3D_volume_figure: Built arrays of coordinates
+2022-05-19 16:31:05.751 INFO figures - compute_3D_volume_figure: Cropped the figure to only keep areas in which lipids are expressed
+2022-05-19 16:31:06.277 INFO figures - compute_3D_volume_figure: Finished interpolation betwee slices
+2022-05-19 16:31:06.382 INFO storage - return_shelved_object: Returning figures/3D_page/volume_root from shelve file.	MemTotal: 855.0625
+2022-05-19 16:31:06.400 INFO figures - compute_3D_volume_figure: Building final figure
+2022-05-19 16:31:06.537 INFO figures - compute_3D_volume_figure: Done computing 3D volume figure
+2022-05-19 16:31:06.543 INFO maldi_data - clean_memory: Memory cleaned
+2022-05-19 16:31:06.543 INFO launch - run_compiled_functions: Compiled functions executed.
+2022-05-19 16:31:06.645 INFO app - <module>: Memory use after main functions have been compiled	MemTotal: 806.8203125
+2022-05-19 16:31:06.665 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-05-19 16:31:06.665 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-05-19 16:31:06.665 DEBUG filesystemcache - set: set key 'locked-cleaning'
+2022-05-19 16:31:06.665 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-05-19 16:31:06.665 DEBUG filesystemcache - set: set key 'locked-reading'
+2022-05-19 16:31:06.786 INFO storage - return_shelved_object: Returning figures/load_page/figure_basic_image_projection_corrected_0_False from shelve file.	MemTotal: 809.31640625
+2022-05-19 16:31:06.801 INFO figures - compute_heatmap_per_mz: Starting figure computation, from mz boundaries
+2022-05-19 16:31:06.801 INFO figures - compute_heatmap_per_mz: Getting image array
+2022-05-19 16:31:06.801 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-05-19 16:31:06.801 INFO spectra - compute_thread_safe_function: Trying to compute the thread-safe version of function compute_image_using_index_and_image_lookup 
+2022-05-19 16:31:06.801 DEBUG filesystemcache - get: get key 'locked-cleaning' -> hit 
+2022-05-19 16:31:06.801 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-05-19 16:31:06.801 DEBUG filesystemcache - set: set key 'locked-reading'
+2022-05-19 16:31:07.366 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-05-19 16:31:07.367 DEBUG filesystemcache - set: set key 'locked-reading'
+2022-05-19 16:31:07.367 DEBUG filesystemcache - get: get key 'locked-reading' -> hit 
+2022-05-19 16:31:07.367 DEBUG filesystemcache - get: get key 'locked-cleaning' -> hit 
+2022-05-19 16:31:07.367 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-05-19 16:31:07.367 DEBUG filesystemcache - set: set key 'locked-cleaning'
+2022-05-19 16:31:07.368 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-05-19 16:31:07.368 DEBUG filesystemcache - set: set key 'locked-cleaning'
+2022-05-19 16:31:07.368 INFO maldi_data - clean_memory: Memory cleaned
+2022-05-19 16:31:07.768 INFO figures - build_lipid_heatmap_from_image: Converting image to string
+2022-05-19 16:31:07.768 INFO image - convert_image_to_base64: Entering string conversion function
+2022-05-19 16:31:07.805 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-05-19 16:31:07.840 INFO image - convert_image_to_base64: Empty pixels are now transparent
+2022-05-19 16:31:07.856 INFO image - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-05-19 16:31:07.876 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-05-19 16:31:07.876 INFO figures - build_lipid_heatmap_from_image: Converting image to go image
+2022-05-19 16:31:07.898 INFO figures - build_lipid_heatmap_from_image: Returning figure
+2022-05-19 16:31:08.003 INFO storage - return_shelved_object: Returning annotations/lipid_options from shelve file.	MemTotal: 813.30078125
+2022-05-19 16:31:08.134 INFO storage - return_shelved_object: Returning figures/load_page/figure_basic_image_projection_corrected_0_False from shelve file.	MemTotal: 813.30078125
+2022-05-19 16:31:08.250 INFO storage - return_shelved_object: Returning figures/atlas_page/3D/treemaps from shelve file.	MemTotal: 813.30078125
+[2022-05-19 16:33:21 +0200] [402228] [INFO] Worker exiting (pid: 402228)
+allen mouse atlas (res. 100um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+[2022-05-19 16:33:22 +0200] [403042] [INFO] Booting worker with pid: 403042
+2022-05-19 16:33:22.505 INFO main - <module>: Starting import chain	MemTotal: 34.234375
+2022-05-19 16:33:24.426 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 247.640625
+2022-05-19 16:33:24.426 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 247.640625
+2022-05-19 16:33:24.484 INFO maldi_data - __init__: MaldiData object instantiated	MemTotal: 279.39453125
+2022-05-19 16:33:24.485 INFO atlas - __init__: Initializing Atlas object	MemTotal: 279.39453125
+2022-05-19 16:33:24.712 INFO storage - return_shelved_object: Returning atlas/atlas_objects/dic_acronym_children_id from shelve file.	MemTotal: 289.234375
+2022-05-19 16:33:25.671 INFO storage - return_shelved_object: Returning atlas/atlas_objects/hierarchy from shelve file.	MemTotal: 510.1015625
+2022-05-19 16:33:25.774 INFO storage - return_shelved_object: Returning atlas/atlas_objects/arrays_projection_corrected_True_True from shelve file.	MemTotal: 510.46875
+2022-05-19 16:33:26.307 INFO storage - return_shelved_object: Returning atlas/atlas_objects/arrays_projection_corrected_True_True from shelve file.	MemTotal: 661.44140625
+2022-05-19 16:33:26.969 INFO atlas - __init__: Atlas object instantiated	MemTotal: 694.8671875
+2022-05-19 16:33:26.969 INFO figures - __init__: Initializing Figures object	MemTotal: 694.8671875
+2022-05-19 16:33:27.069 INFO storage - return_shelved_object: Returning figures/lipid_selection/dic_normalization_factors_None from shelve file.	MemTotal: 694.984375
+2022-05-19 16:33:27.662 INFO figures - __init__: Figures object instantiated	MemTotal: 694.984375
+2022-05-19 16:33:27.662 INFO app - <module>: Memory use after three main object have been instantiated	MemTotal: 694.984375
+2022-05-19 16:33:27.872 INFO launch - run_compiled_functions: Please wait while compiled functions are executed...
+2022-05-19 16:33:37.327 INFO figures - compute_3D_volume_figure: Starting 3D volume computation
+2022-05-19 16:33:37.429 INFO storage - return_shelved_object: Returning figures/3D_page/arrays_annotation_6 from shelve file.	MemTotal: 832.6171875
+2022-05-19 16:33:37.953 INFO figures - compute_3D_volume_figure: Computed basic structure array
+2022-05-19 16:33:38.058 INFO storage - return_shelved_object: Returning figures/3D_page/arrays_expression___ from shelve file.	MemTotal: 838.22265625
+2022-05-19 16:33:38.161 INFO storage - return_shelved_object: Returning figures/3D_page/arrays_expression___ from shelve file.	MemTotal: 838.22265625
+2022-05-19 16:33:38.264 INFO storage - return_shelved_object: Returning figures/3D_page/arrays_expression___ from shelve file.	MemTotal: 838.22265625
+2022-05-19 16:33:38.264 INFO figures - compute_3D_volume_figure: Averaged expression over all lipids
+2022-05-19 16:33:38.265 INFO figures - compute_array_coordinates_3D: Starting computing 3D arrays	MemTotal: 838.22265625
+2022-05-19 16:33:38.265 DEBUG figures - compute_array_coordinates_3D: Size array_x: 19.53
+2022-05-19 16:33:38.265 INFO figures - compute_array_coordinates_3D: Starting slice iteration	MemTotal: 838.22265625
+2022-05-19 16:33:38.276 INFO figures - compute_3D_volume_figure: Computed array of expression in original space
+2022-05-19 16:33:38.549 INFO figures - compute_3D_volume_figure: Filled basic structure array with array of expression
+2022-05-19 16:33:38.556 INFO figures - compute_3D_volume_figure: Built arrays of coordinates
+2022-05-19 16:33:39.254 INFO figures - compute_3D_volume_figure: Cropped the figure to only keep areas in which lipids are expressed
+2022-05-19 16:33:39.774 INFO figures - compute_3D_volume_figure: Finished interpolation betwee slices
+2022-05-19 16:33:39.876 INFO storage - return_shelved_object: Returning figures/3D_page/volume_root from shelve file.	MemTotal: 854.83203125
+2022-05-19 16:33:39.893 INFO figures - compute_3D_volume_figure: Building final figure
+2022-05-19 16:33:40.020 INFO figures - compute_3D_volume_figure: Done computing 3D volume figure
+2022-05-19 16:33:40.025 INFO maldi_data - clean_memory: Memory cleaned
+2022-05-19 16:33:40.025 INFO launch - run_compiled_functions: Compiled functions executed.
+2022-05-19 16:33:40.126 INFO app - <module>: Memory use after main functions have been compiled	MemTotal: 806.6875
+2022-05-19 16:33:40.143 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-05-19 16:33:40.143 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-05-19 16:33:40.143 DEBUG filesystemcache - set: set key 'locked-cleaning'
+2022-05-19 16:33:40.143 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-05-19 16:33:40.144 DEBUG filesystemcache - set: set key 'locked-reading'
+2022-05-19 16:33:40.267 INFO storage - return_shelved_object: Returning figures/load_page/figure_basic_image_projection_corrected_0_False from shelve file.	MemTotal: 809.03515625
+2022-05-19 16:33:40.281 INFO figures - compute_heatmap_per_mz: Starting figure computation, from mz boundaries
+2022-05-19 16:33:40.281 INFO figures - compute_heatmap_per_mz: Getting image array
+2022-05-19 16:33:40.281 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-05-19 16:33:40.281 INFO spectra - compute_thread_safe_function: Trying to compute the thread-safe version of function compute_image_using_index_and_image_lookup 
+2022-05-19 16:33:40.281 DEBUG filesystemcache - get: get key 'locked-cleaning' -> hit 
+2022-05-19 16:33:40.281 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-05-19 16:33:40.281 DEBUG filesystemcache - set: set key 'locked-reading'
+2022-05-19 16:33:40.860 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-05-19 16:33:40.860 DEBUG filesystemcache - set: set key 'locked-reading'
+2022-05-19 16:33:40.860 DEBUG filesystemcache - get: get key 'locked-reading' -> hit 
+2022-05-19 16:33:40.860 DEBUG filesystemcache - get: get key 'locked-cleaning' -> hit 
+2022-05-19 16:33:40.860 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-05-19 16:33:40.860 DEBUG filesystemcache - set: set key 'locked-cleaning'
+2022-05-19 16:33:40.861 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-05-19 16:33:40.861 DEBUG filesystemcache - set: set key 'locked-cleaning'
+2022-05-19 16:33:40.861 INFO maldi_data - clean_memory: Memory cleaned
+2022-05-19 16:33:41.239 INFO figures - build_lipid_heatmap_from_image: Converting image to string
+2022-05-19 16:33:41.239 INFO image - convert_image_to_base64: Entering string conversion function
+2022-05-19 16:33:41.277 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-05-19 16:33:41.312 INFO image - convert_image_to_base64: Empty pixels are now transparent
+2022-05-19 16:33:41.329 INFO image - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-05-19 16:33:41.349 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-05-19 16:33:41.349 INFO figures - build_lipid_heatmap_from_image: Converting image to go image
+2022-05-19 16:33:41.371 INFO figures - build_lipid_heatmap_from_image: Returning figure
+2022-05-19 16:33:41.477 INFO storage - return_shelved_object: Returning annotations/lipid_options from shelve file.	MemTotal: 813.12890625
+2022-05-19 16:33:41.609 INFO storage - return_shelved_object: Returning figures/load_page/figure_basic_image_projection_corrected_0_False from shelve file.	MemTotal: 813.12890625
+2022-05-19 16:33:41.728 INFO storage - return_shelved_object: Returning figures/atlas_page/3D/treemaps from shelve file.	MemTotal: 813.12890625
+[2022-05-19 16:33:50 +0200] [453629] [WARNING] Worker with pid 403042 was terminated due to signal 4
+[2022-05-19 16:33:50 +0200] [403082] [INFO] Booting worker with pid: 403082
+2022-05-19 16:33:50.846 INFO main - <module>: Starting import chain	MemTotal: 34.234375
+2022-05-19 16:33:52.955 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 247.51171875
+2022-05-19 16:33:52.955 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 247.51171875
+2022-05-19 16:33:53.017 INFO maldi_data - __init__: MaldiData object instantiated	MemTotal: 279.375
+2022-05-19 16:33:53.017 INFO atlas - __init__: Initializing Atlas object	MemTotal: 279.375
+2022-05-19 16:33:53.250 INFO storage - return_shelved_object: Returning atlas/atlas_objects/dic_acronym_children_id from shelve file.	MemTotal: 289.21484375
+2022-05-19 16:33:54.240 INFO storage - return_shelved_object: Returning atlas/atlas_objects/hierarchy from shelve file.	MemTotal: 510.08203125
+2022-05-19 16:33:54.345 INFO storage - return_shelved_object: Returning atlas/atlas_objects/arrays_projection_corrected_True_True from shelve file.	MemTotal: 510.4375
+2022-05-19 16:33:54.896 INFO storage - return_shelved_object: Returning atlas/atlas_objects/arrays_projection_corrected_True_True from shelve file.	MemTotal: 661.41796875
+2022-05-19 16:33:55.558 INFO atlas - __init__: Atlas object instantiated	MemTotal: 694.84375
+2022-05-19 16:33:55.559 INFO figures - __init__: Initializing Figures object	MemTotal: 694.84375
+2022-05-19 16:33:55.661 INFO storage - return_shelved_object: Returning figures/lipid_selection/dic_normalization_factors_None from shelve file.	MemTotal: 695.0078125
+2022-05-19 16:33:56.279 INFO figures - __init__: Figures object instantiated	MemTotal: 695.0078125
+2022-05-19 16:33:56.279 INFO app - <module>: Memory use after three main object have been instantiated	MemTotal: 695.0078125
+2022-05-19 16:33:56.499 INFO launch - run_compiled_functions: Please wait while compiled functions are executed...
+2022-05-19 16:34:05.674 INFO figures - compute_3D_volume_figure: Starting 3D volume computation
+2022-05-19 16:34:05.784 INFO storage - return_shelved_object: Returning figures/3D_page/arrays_annotation_6 from shelve file.	MemTotal: 832.53515625
+2022-05-19 16:34:06.339 INFO figures - compute_3D_volume_figure: Computed basic structure array
+2022-05-19 16:34:06.441 INFO storage - return_shelved_object: Returning figures/3D_page/arrays_expression___ from shelve file.	MemTotal: 838.14453125
+2022-05-19 16:34:06.542 INFO storage - return_shelved_object: Returning figures/3D_page/arrays_expression___ from shelve file.	MemTotal: 838.14453125
+2022-05-19 16:34:06.644 INFO storage - return_shelved_object: Returning figures/3D_page/arrays_expression___ from shelve file.	MemTotal: 838.14453125
+2022-05-19 16:34:06.644 INFO figures - compute_3D_volume_figure: Averaged expression over all lipids
+2022-05-19 16:34:06.645 INFO figures - compute_array_coordinates_3D: Starting computing 3D arrays	MemTotal: 838.14453125
+2022-05-19 16:34:06.645 DEBUG figures - compute_array_coordinates_3D: Size array_x: 19.53
+2022-05-19 16:34:06.645 INFO figures - compute_array_coordinates_3D: Starting slice iteration	MemTotal: 838.14453125
+2022-05-19 16:34:06.655 INFO figures - compute_3D_volume_figure: Computed array of expression in original space
+2022-05-19 16:34:06.946 INFO figures - compute_3D_volume_figure: Filled basic structure array with array of expression
+2022-05-19 16:34:06.954 INFO figures - compute_3D_volume_figure: Built arrays of coordinates
+2022-05-19 16:34:07.840 INFO figures - compute_3D_volume_figure: Cropped the figure to only keep areas in which lipids are expressed
+2022-05-19 16:34:08.377 INFO figures - compute_3D_volume_figure: Finished interpolation betwee slices
+2022-05-19 16:34:08.480 INFO storage - return_shelved_object: Returning figures/3D_page/volume_root from shelve file.	MemTotal: 855.140625
+2022-05-19 16:34:08.500 INFO figures - compute_3D_volume_figure: Building final figure
+2022-05-19 16:34:08.631 INFO figures - compute_3D_volume_figure: Done computing 3D volume figure
+2022-05-19 16:34:08.636 INFO maldi_data - clean_memory: Memory cleaned
+2022-05-19 16:34:08.636 INFO launch - run_compiled_functions: Compiled functions executed.
+2022-05-19 16:34:08.738 INFO app - <module>: Memory use after main functions have been compiled	MemTotal: 806.89453125
+2022-05-19 16:34:08.757 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-05-19 16:34:08.758 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-05-19 16:34:08.758 DEBUG filesystemcache - set: set key 'locked-cleaning'
+2022-05-19 16:34:08.758 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-05-19 16:34:08.758 DEBUG filesystemcache - set: set key 'locked-reading'
+2022-05-19 16:34:08.881 INFO storage - return_shelved_object: Returning figures/load_page/figure_basic_image_projection_corrected_0_False from shelve file.	MemTotal: 809.33984375
+2022-05-19 16:34:08.895 INFO figures - compute_heatmap_per_mz: Starting figure computation, from mz boundaries
+2022-05-19 16:34:08.895 INFO figures - compute_heatmap_per_mz: Getting image array
+2022-05-19 16:34:08.895 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-05-19 16:34:08.895 INFO spectra - compute_thread_safe_function: Trying to compute the thread-safe version of function compute_image_using_index_and_image_lookup 
+2022-05-19 16:34:08.896 DEBUG filesystemcache - get: get key 'locked-cleaning' -> hit 
+2022-05-19 16:34:08.896 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-05-19 16:34:08.896 DEBUG filesystemcache - set: set key 'locked-reading'
+2022-05-19 16:34:09.487 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-05-19 16:34:09.488 DEBUG filesystemcache - set: set key 'locked-reading'
+2022-05-19 16:34:09.488 DEBUG filesystemcache - get: get key 'locked-reading' -> hit 
+2022-05-19 16:34:09.488 DEBUG filesystemcache - get: get key 'locked-cleaning' -> hit 
+2022-05-19 16:34:09.488 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-05-19 16:34:09.488 DEBUG filesystemcache - set: set key 'locked-cleaning'
+2022-05-19 16:34:09.489 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-05-19 16:34:09.489 DEBUG filesystemcache - set: set key 'locked-cleaning'
+2022-05-19 16:34:09.489 INFO maldi_data - clean_memory: Memory cleaned
+2022-05-19 16:34:09.972 INFO figures - build_lipid_heatmap_from_image: Converting image to string
+2022-05-19 16:34:09.972 INFO image - convert_image_to_base64: Entering string conversion function
+2022-05-19 16:34:10.007 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-05-19 16:34:10.038 INFO image - convert_image_to_base64: Empty pixels are now transparent
+2022-05-19 16:34:10.055 INFO image - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-05-19 16:34:10.076 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-05-19 16:34:10.076 INFO figures - build_lipid_heatmap_from_image: Converting image to go image
+2022-05-19 16:34:10.099 INFO figures - build_lipid_heatmap_from_image: Returning figure
+2022-05-19 16:34:10.210 INFO storage - return_shelved_object: Returning annotations/lipid_options from shelve file.	MemTotal: 812.578125
+2022-05-19 16:34:10.346 INFO storage - return_shelved_object: Returning figures/load_page/figure_basic_image_projection_corrected_0_False from shelve file.	MemTotal: 812.578125
+2022-05-19 16:34:10.465 INFO storage - return_shelved_object: Returning figures/atlas_page/3D/treemaps from shelve file.	MemTotal: 812.64453125
+[2022-05-19 16:34:10 +0200] [403082] [INFO] Worker exiting (pid: 403082)
+allen mouse atlas (res. 100um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+[2022-05-19 16:34:11 +0200] [403192] [INFO] Booting worker with pid: 403192
+2022-05-19 16:34:11.792 INFO main - <module>: Starting import chain	MemTotal: 34.234375
+2022-05-19 16:34:13.711 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 247.64453125
+2022-05-19 16:34:13.711 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 247.64453125
+2022-05-19 16:34:13.814 INFO maldi_data - __init__: MaldiData object instantiated	MemTotal: 279.37109375
+2022-05-19 16:34:13.814 INFO atlas - __init__: Initializing Atlas object	MemTotal: 279.37109375
+2022-05-19 16:34:14.044 INFO storage - return_shelved_object: Returning atlas/atlas_objects/dic_acronym_children_id from shelve file.	MemTotal: 289.2109375
+2022-05-19 16:34:15.019 INFO storage - return_shelved_object: Returning atlas/atlas_objects/hierarchy from shelve file.	MemTotal: 510.078125
+2022-05-19 16:34:15.120 INFO storage - return_shelved_object: Returning atlas/atlas_objects/arrays_projection_corrected_True_True from shelve file.	MemTotal: 510.4375
+2022-05-19 16:34:15.666 INFO storage - return_shelved_object: Returning atlas/atlas_objects/arrays_projection_corrected_True_True from shelve file.	MemTotal: 661.4140625
+2022-05-19 16:34:16.318 INFO atlas - __init__: Atlas object instantiated	MemTotal: 694.83984375
+2022-05-19 16:34:16.318 INFO figures - __init__: Initializing Figures object	MemTotal: 694.83984375
+2022-05-19 16:34:16.417 INFO storage - return_shelved_object: Returning figures/lipid_selection/dic_normalization_factors_None from shelve file.	MemTotal: 695.0
+2022-05-19 16:34:17.004 INFO figures - __init__: Figures object instantiated	MemTotal: 695.0
+2022-05-19 16:34:17.004 INFO app - <module>: Memory use after three main object have been instantiated	MemTotal: 695.0
+2022-05-19 16:34:17.213 INFO launch - run_compiled_functions: Please wait while compiled functions are executed...
+2022-05-19 16:34:26.177 INFO figures - compute_3D_volume_figure: Starting 3D volume computation
+2022-05-19 16:34:26.278 INFO storage - return_shelved_object: Returning figures/3D_page/arrays_annotation_6 from shelve file.	MemTotal: 832.734375
+2022-05-19 16:34:26.796 INFO figures - compute_3D_volume_figure: Computed basic structure array
+2022-05-19 16:34:26.896 INFO storage - return_shelved_object: Returning figures/3D_page/arrays_expression___ from shelve file.	MemTotal: 838.3359375
+2022-05-19 16:34:26.996 INFO storage - return_shelved_object: Returning figures/3D_page/arrays_expression___ from shelve file.	MemTotal: 838.3359375
+2022-05-19 16:34:27.096 INFO storage - return_shelved_object: Returning figures/3D_page/arrays_expression___ from shelve file.	MemTotal: 838.3359375
+2022-05-19 16:34:27.096 INFO figures - compute_3D_volume_figure: Averaged expression over all lipids
+2022-05-19 16:34:27.096 INFO figures - compute_array_coordinates_3D: Starting computing 3D arrays	MemTotal: 838.3359375
+2022-05-19 16:34:27.096 DEBUG figures - compute_array_coordinates_3D: Size array_x: 19.53
+2022-05-19 16:34:27.096 INFO figures - compute_array_coordinates_3D: Starting slice iteration	MemTotal: 838.3359375
+2022-05-19 16:34:27.103 INFO figures - compute_3D_volume_figure: Computed array of expression in original space
+2022-05-19 16:34:27.376 INFO figures - compute_3D_volume_figure: Filled basic structure array with array of expression
+2022-05-19 16:34:27.383 INFO figures - compute_3D_volume_figure: Built arrays of coordinates
+2022-05-19 16:34:28.066 INFO figures - compute_3D_volume_figure: Cropped the figure to only keep areas in which lipids are expressed
+2022-05-19 16:34:28.590 INFO figures - compute_3D_volume_figure: Finished interpolation betwee slices
+2022-05-19 16:34:28.697 INFO storage - return_shelved_object: Returning figures/3D_page/volume_root from shelve file.	MemTotal: 855.05078125
+2022-05-19 16:34:28.715 INFO figures - compute_3D_volume_figure: Building final figure
+2022-05-19 16:34:28.847 INFO figures - compute_3D_volume_figure: Done computing 3D volume figure
+2022-05-19 16:34:28.852 INFO maldi_data - clean_memory: Memory cleaned
+2022-05-19 16:34:28.852 INFO launch - run_compiled_functions: Compiled functions executed.
+2022-05-19 16:34:28.958 INFO app - <module>: Memory use after main functions have been compiled	MemTotal: 806.8046875
+2022-05-19 16:34:28.977 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-05-19 16:34:28.977 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-05-19 16:34:28.977 DEBUG filesystemcache - set: set key 'locked-cleaning'
+2022-05-19 16:34:28.977 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-05-19 16:34:28.977 DEBUG filesystemcache - set: set key 'locked-reading'
+2022-05-19 16:34:29.104 INFO storage - return_shelved_object: Returning figures/load_page/figure_basic_image_projection_corrected_0_False from shelve file.	MemTotal: 809.23828125
+2022-05-19 16:34:29.119 INFO figures - compute_heatmap_per_mz: Starting figure computation, from mz boundaries
+2022-05-19 16:34:29.119 INFO figures - compute_heatmap_per_mz: Getting image array
+2022-05-19 16:34:29.119 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-05-19 16:34:29.119 INFO spectra - compute_thread_safe_function: Trying to compute the thread-safe version of function compute_image_using_index_and_image_lookup 
+2022-05-19 16:34:29.119 DEBUG filesystemcache - get: get key 'locked-cleaning' -> hit 
+2022-05-19 16:34:29.119 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-05-19 16:34:29.119 DEBUG filesystemcache - set: set key 'locked-reading'
+2022-05-19 16:34:29.710 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-05-19 16:34:29.710 DEBUG filesystemcache - set: set key 'locked-reading'
+2022-05-19 16:34:29.710 DEBUG filesystemcache - get: get key 'locked-reading' -> hit 
+2022-05-19 16:34:29.710 DEBUG filesystemcache - get: get key 'locked-cleaning' -> hit 
+2022-05-19 16:34:29.711 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-05-19 16:34:29.711 DEBUG filesystemcache - set: set key 'locked-cleaning'
+2022-05-19 16:34:29.711 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-05-19 16:34:29.711 DEBUG filesystemcache - set: set key 'locked-cleaning'
+2022-05-19 16:34:29.711 INFO maldi_data - clean_memory: Memory cleaned
+2022-05-19 16:34:30.218 INFO figures - build_lipid_heatmap_from_image: Converting image to string
+2022-05-19 16:34:30.218 INFO image - convert_image_to_base64: Entering string conversion function
+2022-05-19 16:34:30.253 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-05-19 16:34:30.285 INFO image - convert_image_to_base64: Empty pixels are now transparent
+2022-05-19 16:34:30.301 INFO image - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-05-19 16:34:30.321 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-05-19 16:34:30.321 INFO figures - build_lipid_heatmap_from_image: Converting image to go image
+2022-05-19 16:34:30.344 INFO figures - build_lipid_heatmap_from_image: Returning figure
+2022-05-19 16:34:30.461 INFO storage - return_shelved_object: Returning annotations/lipid_options from shelve file.	MemTotal: 813.23046875
+2022-05-19 16:34:30.611 INFO storage - return_shelved_object: Returning figures/load_page/figure_basic_image_projection_corrected_0_False from shelve file.	MemTotal: 813.23046875
+2022-05-19 16:34:30.745 INFO storage - return_shelved_object: Returning figures/atlas_page/3D/treemaps from shelve file.	MemTotal: 813.23046875
+[2022-05-19 16:34:44 +0200] [403192] [INFO] Worker exiting (pid: 403192)
+allen mouse atlas (res. 100um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+[2022-05-19 16:34:46 +0200] [403245] [INFO] Booting worker with pid: 403245
+2022-05-19 16:34:46.468 INFO main - <module>: Starting import chain	MemTotal: 34.234375
+2022-05-19 16:34:48.408 INFO app - <module>: Memory use before any global variable declaration	MemTotal: 247.640625
+2022-05-19 16:34:48.408 INFO maldi_data - __init__: Initializing MaldiData object	MemTotal: 247.640625
+2022-05-19 16:34:48.474 INFO maldi_data - __init__: MaldiData object instantiated	MemTotal: 279.3671875
+2022-05-19 16:34:48.474 INFO atlas - __init__: Initializing Atlas object	MemTotal: 279.3671875
+2022-05-19 16:34:48.698 INFO storage - return_shelved_object: Returning atlas/atlas_objects/dic_acronym_children_id from shelve file.	MemTotal: 289.203125
+2022-05-19 16:34:49.656 INFO storage - return_shelved_object: Returning atlas/atlas_objects/hierarchy from shelve file.	MemTotal: 510.07421875
+2022-05-19 16:34:49.756 INFO storage - return_shelved_object: Returning atlas/atlas_objects/arrays_projection_corrected_True_True from shelve file.	MemTotal: 510.4453125
+2022-05-19 16:34:50.293 INFO storage - return_shelved_object: Returning atlas/atlas_objects/arrays_projection_corrected_True_True from shelve file.	MemTotal: 661.41015625
+2022-05-19 16:34:50.943 INFO atlas - __init__: Atlas object instantiated	MemTotal: 694.83984375
+2022-05-19 16:34:50.943 INFO figures - __init__: Initializing Figures object	MemTotal: 694.83984375
+2022-05-19 16:34:51.042 INFO storage - return_shelved_object: Returning figures/lipid_selection/dic_normalization_factors_None from shelve file.	MemTotal: 694.98046875
+2022-05-19 16:34:51.640 INFO figures - __init__: Figures object instantiated	MemTotal: 694.98046875
+2022-05-19 16:34:51.640 INFO app - <module>: Memory use after three main object have been instantiated	MemTotal: 694.98046875
+2022-05-19 16:34:51.851 INFO launch - run_compiled_functions: Please wait while compiled functions are executed...
+2022-05-19 16:35:01.939 INFO figures - compute_3D_volume_figure: Starting 3D volume computation
+2022-05-19 16:35:02.060 INFO storage - return_shelved_object: Returning figures/3D_page/arrays_annotation_6 from shelve file.	MemTotal: 832.4609375
+2022-05-19 16:35:02.702 INFO figures - compute_3D_volume_figure: Computed basic structure array
+2022-05-19 16:35:02.815 INFO storage - return_shelved_object: Returning figures/3D_page/arrays_expression___ from shelve file.	MemTotal: 838.0703125
+2022-05-19 16:35:02.933 INFO storage - return_shelved_object: Returning figures/3D_page/arrays_expression___ from shelve file.	MemTotal: 838.2578125
+2022-05-19 16:35:03.051 INFO storage - return_shelved_object: Returning figures/3D_page/arrays_expression___ from shelve file.	MemTotal: 838.2578125
+2022-05-19 16:35:03.052 INFO figures - compute_3D_volume_figure: Averaged expression over all lipids
+2022-05-19 16:35:03.052 INFO figures - compute_array_coordinates_3D: Starting computing 3D arrays	MemTotal: 838.2578125
+2022-05-19 16:35:03.053 DEBUG figures - compute_array_coordinates_3D: Size array_x: 19.53
+2022-05-19 16:35:03.053 INFO figures - compute_array_coordinates_3D: Starting slice iteration	MemTotal: 838.2734375
+2022-05-19 16:35:03.061 INFO figures - compute_3D_volume_figure: Computed array of expression in original space
+2022-05-19 16:35:03.416 INFO figures - compute_3D_volume_figure: Filled basic structure array with array of expression
+2022-05-19 16:35:03.430 INFO figures - compute_3D_volume_figure: Built arrays of coordinates
+2022-05-19 16:35:04.433 INFO figures - compute_3D_volume_figure: Cropped the figure to only keep areas in which lipids are expressed
+2022-05-19 16:35:05.080 INFO figures - compute_3D_volume_figure: Finished interpolation betwee slices
+2022-05-19 16:35:05.198 INFO storage - return_shelved_object: Returning figures/3D_page/volume_root from shelve file.	MemTotal: 855.140625
+2022-05-19 16:35:05.222 INFO figures - compute_3D_volume_figure: Building final figure
+2022-05-19 16:35:05.372 INFO figures - compute_3D_volume_figure: Done computing 3D volume figure
+2022-05-19 16:35:05.378 INFO maldi_data - clean_memory: Memory cleaned
+2022-05-19 16:35:05.378 INFO launch - run_compiled_functions: Compiled functions executed.
+2022-05-19 16:35:05.497 INFO app - <module>: Memory use after main functions have been compiled	MemTotal: 806.89453125
+2022-05-19 16:35:05.520 DEBUG filesystemcache - set: set key '__wz_cache_count'
+2022-05-19 16:35:05.520 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-05-19 16:35:05.520 DEBUG filesystemcache - set: set key 'locked-cleaning'
+2022-05-19 16:35:05.520 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-05-19 16:35:05.521 DEBUG filesystemcache - set: set key 'locked-reading'
+2022-05-19 16:35:05.665 INFO storage - return_shelved_object: Returning figures/load_page/figure_basic_image_projection_corrected_0_False from shelve file.	MemTotal: 809.48046875
+2022-05-19 16:35:05.685 INFO figures - compute_heatmap_per_mz: Starting figure computation, from mz boundaries
+2022-05-19 16:35:05.685 INFO figures - compute_heatmap_per_mz: Getting image array
+2022-05-19 16:35:05.685 INFO figures - compute_image_per_lipid: Entering compute_image_per_lipid
+2022-05-19 16:35:05.686 INFO spectra - compute_thread_safe_function: Trying to compute the thread-safe version of function compute_image_using_index_and_image_lookup 
+2022-05-19 16:35:05.686 DEBUG filesystemcache - get: get key 'locked-cleaning' -> hit 
+2022-05-19 16:35:05.686 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-05-19 16:35:05.686 DEBUG filesystemcache - set: set key 'locked-reading'
+[2022-05-19 16:35:05 +0200] [453629] [INFO] Handling signal: term
+2022-05-19 16:35:06.376 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-05-19 16:35:06.376 DEBUG filesystemcache - set: set key 'locked-reading'
+2022-05-19 16:35:06.376 DEBUG filesystemcache - get: get key 'locked-reading' -> hit 
+2022-05-19 16:35:06.376 DEBUG filesystemcache - get: get key 'locked-cleaning' -> hit 
+2022-05-19 16:35:06.376 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-05-19 16:35:06.377 DEBUG filesystemcache - set: set key 'locked-cleaning'
+2022-05-19 16:35:06.377 DEBUG filesystemcache - get: get key '__wz_cache_count' -> hit 
+2022-05-19 16:35:06.377 DEBUG filesystemcache - set: set key 'locked-cleaning'
+2022-05-19 16:35:06.377 INFO maldi_data - clean_memory: Memory cleaned
+2022-05-19 16:35:06.845 INFO figures - build_lipid_heatmap_from_image: Converting image to string
+2022-05-19 16:35:06.845 INFO image - convert_image_to_base64: Entering string conversion function
+2022-05-19 16:35:06.892 INFO image - convert_image_to_base64: Image has been converted from array to PIL image
+2022-05-19 16:35:06.935 INFO image - convert_image_to_base64: Empty pixels are now transparent
+2022-05-19 16:35:06.953 INFO image - convert_image_to_base64: png mode selected, quality argument is not supported
+2022-05-19 16:35:06.977 INFO image - convert_image_to_base64: Image has been converted to base64. Returning it now.
+2022-05-19 16:35:06.977 INFO figures - build_lipid_heatmap_from_image: Converting image to go image
+2022-05-19 16:35:07.003 INFO figures - build_lipid_heatmap_from_image: Returning figure
+2022-05-19 16:35:07.124 INFO storage - return_shelved_object: Returning annotations/lipid_options from shelve file.	MemTotal: 812.6484375
+2022-05-19 16:35:07.277 INFO storage - return_shelved_object: Returning figures/load_page/figure_basic_image_projection_corrected_0_False from shelve file.	MemTotal: 812.6484375
+2022-05-19 16:35:07.414 INFO storage - return_shelved_object: Returning figures/atlas_page/3D/treemaps from shelve file.	MemTotal: 812.6484375
+[2022-05-19 16:35:07 +0200] [403245] [INFO] Worker exiting (pid: 403245)
+allen mouse atlas (res. 100um)
+From: http://www.brain-map.org (Wang et al 2020, https://doi.org/10.1016/j.cell.2020.04.007 )
+[2022-05-19 16:35:08 +0200] [453629] [INFO] Shutting down: Master

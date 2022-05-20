@@ -39,14 +39,14 @@ layout = (
                     " application.",
                     title="Information",
                     color="cyan",
-                    class_name="mt-5",
+                    class_name="mt-4",
                 )
             ),
             dmc.Center(
                 class_name="w-100",
                 children=[
                     dmc.Group(
-                        class_name="my-5 py-5",
+                        class_name="mt-3",
                         direction="column",
                         align="center",
                         position="center",
@@ -87,7 +87,7 @@ layout = (
                                 dmc.Button(
                                     "Read documentation",
                                     id="page-0-collapse-doc-button",
-                                    class_name="mt-4",
+                                    class_name="mt-1",
                                     color="cyan",
                                 ),
                             ),

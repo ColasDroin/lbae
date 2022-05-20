@@ -42,7 +42,7 @@ sample = False
 
 # Load Atlas and Figures objects. At first launch, many objects will be precomputed and shelved in
 # the classes Atlas and Figures.
-atlas = Atlas(data, resolution=100, sample=sample)
+atlas = Atlas(data, resolution=25, sample=sample)
 figures = Figures(data, atlas, sample=sample)
 
 logging.info("Memory use after three main object have been instantiated" + logmem())
