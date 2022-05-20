@@ -65,8 +65,6 @@ layout = (
                                 id="skeleton-rotating-brain",
                                 children=dmc.Image(
                                     src="/assets/ressources/brain.png",
-                                    alt="Brain",
-                                    caption="Brain",
                                     height=500,
                                 ),
                             ),

@@ -18,6 +18,9 @@ import pandas as pd
 from modules.tools.external_lib.mspec import SmzMLobj
 from modules.tools.spectra import reduce_resolution_sorted_array_spectra
 
+# Define if the app uses the whole dataset or not
+SAMPLE_APP = False
+N_SAMPLES = 5
 # ==================================================================================================
 # --- Functions
 # ==================================================================================================
@@ -480,44 +483,20 @@ def compute_standardization(
     return array_spectra_pixel, n_peaks_transformed
 
 
-def standardize_values(
-    array_spectra,
-    array_pixel_indexes,
-    array_peaks,
-    array_mz_lipids,
-    l_lipids_float,
-    arrays_before_transfo,
-    arrays_after_transfo,
-    ignore_standardization=True,
-):
-    """This function rescale the intensity values of the lipids annotated with a Combat-like method
-    as part of the MAIA pipeline, using pre-computed intensities values.
+def get_array_peaks_to_correct(l_lipids_float, array_mz_lipids, array_peaks):
+    """This function computes an array similar to 'array_peaks', but containing only the lipids that
+    have been MAIA-transformed.
 
     Args:
-        array_spectra (np.ndarray): A numpy array containing spectrum data (pixel index, m/z and
-            intensity), sorted by pixel index and mz.
-        array_pixel_indexes (np.ndarray): A numpy array of shape (m,2) containing the boundary
-            indices of each pixel in the original spectra array.
-        array_peaks (np.ndarray): A numpy array containing the peak annotations (min peak, max peak,
-            number of pixels containing the peak, average value of the peak), sorted by min_mz.
         l_lipids_float (list): A list containing the estimated m/z values of the lipids we want to
             visualize.
-        arrays_before_transfo (np.ndarray): A numpy array of shape (n_lipids, image_shape[0],
-            image_shape[1]) containing the cumulated intensities (summed over all bins) of the
-            lipids we want to visualize, for each pixel, before these intensities were transformed.
-        arrays_after_transfo (np.ndarray): A numpy array of shape (n_lipids, image_shape[0],
-            image_shape[1]) containing the cumulated intensities (summed over all bins) of the
-            lipids we want to visualize, for each pixel, after these intensities were transformed.
-        ignore_standardization (bool): If True, the standardization step is ignored. The function
-            is not useless as it still returns 'array_peaks_to_correct' and
-            'array_corrective_factors'.
+        array_mz_lipids_per_slice (np.ndarray): A 1-D numpy array containing the per-slice mz
+            values of the lipids we want to visualize.
+        array_peaks (np.ndarray): A numpy array containing the peak annotations (min peak, max peak,
+            number of pixels containing the peak, average value of the peak), sorted by min_mz.
     Returns:
-        np.ndarray: A numpy array containing spectrum data (pixel index, m/z and intensity), sorted
-            by pixel index and mz, with lipids values transformed.
-        np.ndarray: A numpy array similar as 'array_peaks', but containing only the lipids that have
-            been transformed.
-        np.ndarray: A numpy array equal to the ratio of 'arrays_after_transfo' and
-            'arrays_before_transfo' containing the corrective factor used for lipid and each pixel.
+        np.ndarray: A numpy array similar to 'array_peaks', but containing only the lipids that have
+            been MAIA-transformed.
     """
     precision = 10**-4
 
@@ -550,6 +529,54 @@ def standardize_values(
             )
     array_peaks_to_correct = array_peaks[rows_to_keep]
 
+    return array_peaks_to_correct
+
+
+def standardize_values(
+    array_spectra,
+    array_pixel_indexes,
+    array_peaks,
+    array_mz_lipids,
+    l_lipids_float,
+    arrays_before_transfo,
+    arrays_after_transfo,
+    array_peaks_to_correct,
+    ignore_standardization=True,
+):
+    """This function rescale the intensity values of the lipids annotated with a Combat-like method
+    as part of the MAIA pipeline, using pre-computed intensities values.
+
+    Args:
+        array_spectra (np.ndarray): A numpy array containing spectrum data (pixel index, m/z and
+            intensity), sorted by pixel index and mz.
+        array_pixel_indexes (np.ndarray): A numpy array of shape (m,2) containing the boundary
+            indices of each pixel in the original spectra array.
+        array_peaks (np.ndarray): A numpy array containing the peak annotations (min peak, max peak,
+            number of pixels containing the peak, average value of the peak), sorted by min_mz.
+        array_mz_lipids_per_slice (np.ndarray): A 1-D numpy array containing the per-slice mz
+            values of the lipids we want to visualize.
+        l_lipids_float (list): A list containing the estimated m/z values of the lipids we want to
+            visualize.
+        arrays_before_transfo (np.ndarray): A numpy array of shape (n_lipids, image_shape[0],
+            image_shape[1]) containing the cumulated intensities (summed over all bins) of the
+            lipids we want to visualize, for each pixel, before these intensities were transformed.
+        arrays_after_transfo (np.ndarray): A numpy array of shape (n_lipids, image_shape[0],
+            image_shape[1]) containing the cumulated intensities (summed over all bins) of the
+            lipids we want to visualize, for each pixel, after these intensities were transformed.
+        array_peaks_to_correct (np.ndarray): A numpy array similar to 'array_peaks', but containing
+            only the lipids that have been MAIA-transformed.
+        ignore_standardization (bool): If True, the standardization step is ignored. The function
+            is not useless as it still returns 'array_peaks_to_correct' and
+            'array_corrective_factors'.
+    Returns:
+        np.ndarray: A numpy array containing spectrum data (pixel index, m/z and intensity), sorted
+            by pixel index and mz, with lipids values transformed.
+        np.ndarray: A numpy array similar to 'array_peaks', but containing only the lipids that have
+            been transformed.
+        np.ndarray: A numpy array equal to the ratio of 'arrays_after_transfo' and
+            'arrays_before_transfo' containing the corrective factor used for lipid and each pixel.
+    """
+
     if not ignore_standardization:
         # Compute the transformed spectrum for each pixel
         n_pix_transformed = 0
@@ -580,7 +607,9 @@ def standardize_values(
     array_peaks_to_correct = np.delete(array_peaks_to_correct, 2, 1)
 
     # Get the array of corrective factors (per lipid per pixel), removing zero values
-    array_corrective_factors = np.nan_to_num(arrays_after_transfo / arrays_before_transfo)
+    array_corrective_factors = np.array(
+        np.nan_to_num(arrays_after_transfo / arrays_before_transfo), dtype=np.float16
+    )
 
     # Correct for negative values
     array_corrective_factors = np.clip(array_corrective_factors, 0, None)
@@ -693,7 +722,6 @@ def extract_raw_data(
 
 def process_raw_data(
     t_index_path,
-    standardize_lipid_values=True,
     save=True,
     return_result=False,
     output_path="/data/lipidatlas/data/app/data/temp/",
@@ -725,8 +753,6 @@ def process_raw_data(
     Args:
         t_index_path (tuple(int, str)): A tuple containing the index of the slice (starting from 1)
             and the corresponding path for the raw data.
-        standardize_lipid_values (bool, optional): If True, the lipid intensities that have been
-            through the MAIA pipeline will be standardized across slices. Defaults to True.
         save (bool, optional): If True, output arrays are saved in a npz file. Defaults to True.
         return_result (bool, optional): If True, output arrays are returned by the function.
             Defaults to False.
@@ -734,6 +760,8 @@ def process_raw_data(
             "/data/lipidatlas/data/app/data/temp/".
         load_from_file(bool, optional): If True, loads the extracted data from npz file. Only option
             implemented for now.
+        sample_app (bool, optional): If True, the output arrays only consist of the MAIA-transformed
+            lipids. Defaults to False.
 
 
     Returns:
@@ -780,55 +808,68 @@ def process_raw_data(
         if not brain_1
         else "data/annotations/df_match_brain_1.csv",
     )
+
+    # Get the arrays to standardize data with MAIA
+    (
+        l_lipids_str,
+        l_lipids_float,
+        arrays_before_transfo,
+        arrays_after_transfo,
+    ) = get_standardized_values(
+        slice_index - 10 if not brain_1 else slice_index,
+        path_array_data="/data/lipidatlas/data/processed/brain1/BRAIN1"
+        if brain_1
+        else "/data/lipidatlas/data/processed/brain2/BRAIN2",
+        path_array_transformed_data="/data/lipidatlas/data/processed/brain1/BRAIN1_normalized"
+        if brain_1
+        else "/data/lipidatlas/data/processed/brain2/BRAIN2_normalized",
+    )
+
+    if SAMPLE_APP:
+        l_lipids_str = l_lipids_str[:N_SAMPLES]
+        l_lipids_float = l_lipids_float[:N_SAMPLES]
+        arrays_before_transfo = arrays_before_transfo[:N_SAMPLES]
+        arrays_after_transfo = arrays_after_transfo[:N_SAMPLES]
+
+    # Get the array of MAIA-transformed lipids
+    array_peaks_MAIA = get_array_peaks_to_correct(l_lipids_float, array_mz_lipids, array_peaks)
+
     # Filter out all the undesired values
     l_to_keep_high_res, l_mz_lipids_kept = filter_peaks(
-        array_high_res, array_peaks, array_mz_lipids[:, 0]
+        array_high_res, array_peaks_MAIA if SAMPLE_APP else array_peaks, array_mz_lipids[:, 0]
     )
-    # Keep only the annotated peaks
+
+    # Keep only the requested peaks
     array_high_res = array_high_res[l_to_keep_high_res]
 
-    if standardize_lipid_values:
-        print("Prepare data for standardization")
-        # Double sort by pixel and mz
-        array_high_res = array_high_res[
-            np.lexsort((array_high_res[:, 1], array_high_res[:, 0]), axis=0)
-        ]
-        # Get arrays spectra and corresponding array_pixel_index tables for the high res
-        array_pixel_high_res = array_high_res[:, 0].T.astype(np.int32)
-        array_pixel_indexes_high_res = return_array_pixel_indexes(
-            array_pixel_high_res, image_shape[0] * image_shape[1]
-        )
-        (
-            l_lipids_str,
-            l_lipids_float,
-            arrays_before_transfo,
-            arrays_after_transfo,
-        ) = get_standardized_values(
-            slice_index - 10 if not brain_1 else slice_index,
-            path_array_data="/data/lipidatlas/data/processed/BRAIN1"
-            if brain_1
-            else "/data/lipidatlas/data/processed/BRAIN2",
-            path_array_transformed_data="/data/lipidatlas/data/processed/BRAIN1_normalized"
-            if brain_1
-            else "/data/lipidatlas/data/processed/BRAIN2_normalized",
-        )
+    print("Prepare data for standardization")
+    # Double sort by pixel and mz
+    array_high_res = array_high_res[
+        np.lexsort((array_high_res[:, 1], array_high_res[:, 0]), axis=0)
+    ]
+    # Get arrays spectra and corresponding array_pixel_index tables for the high res
+    array_pixel_high_res = array_high_res[:, 0].T.astype(np.int32)
+    array_pixel_indexes_high_res = return_array_pixel_indexes(
+        array_pixel_high_res, image_shape[0] * image_shape[1]
+    )
 
-        print("Standardize data")
-        # Standardize a copy of a the data
-        (
-            array_high_res_standardized,
-            array_peaks_corrected,
-            array_corrective_factors,
-        ) = standardize_values(
-            array_high_res.copy(),
-            array_pixel_indexes_high_res,
-            array_peaks,
-            array_mz_lipids,
-            l_lipids_float,
-            arrays_before_transfo,
-            arrays_after_transfo,
-            ignore_standardization=False if len(l_lipids_str) > 0 else True,
-        )
+    print("Standardize data")
+    # Standardize a copy of a the data
+    (
+        array_high_res_standardized,
+        array_peaks_corrected,
+        array_corrective_factors,
+    ) = standardize_values(
+        array_high_res.copy(),
+        array_pixel_indexes_high_res,
+        array_peaks,
+        array_mz_lipids,
+        l_lipids_float,
+        arrays_before_transfo,
+        arrays_after_transfo,
+        array_peaks_MAIA,
+        ignore_standardization=False if len(l_lipids_str) > 0 else True,
+    )
 
     # Sort according to mz for averaging
     print("Sorting by m/z value for averaging")

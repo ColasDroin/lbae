@@ -1,4 +1,6 @@
 ##### Current TODOs #####
+# TODO Compress Pickle dict up to <100mb
+# TODO Finish sample app
 # TODO Incorporate new brain 1 and brain 2
 # TODO Do quality control and debug, especially when several users are on the app in parallel
 
@@ -7,7 +9,6 @@
 # TODO Check that readme and documentations are correct and up to date
 # TODO Adress remaining # ! and # ? comments in the code
 # TODO Make a docker container for the very final version of the app
-# TODO Export a sample version of the app and host on heroku (or fly.io ?)
 # TODO Clean all notebooks output before last commit
 # TODO Delete TODO file
 

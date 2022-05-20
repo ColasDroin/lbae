@@ -15,6 +15,9 @@ from numba import njit
 # LBAE imports
 from modules.tools.spectra import convert_spectrum_idx_to_coor, add_zeros_to_spectrum
 
+# Define divider_lookup (sets resolution of the lookups)
+DIVIDER_LOOKUP = 1
+
 # ==================================================================================================
 # --- Functions
 # ==================================================================================================
@@ -297,7 +300,7 @@ def process_lookup_tables(
     #     array_spectra_high_res[1, b1 : b2 + 1] /= np.sum(array_spectra_high_res[1, b1 : b2 + 1])
 
     # Define divider_lookup
-    divider_lookup = 1
+    divider_lookup = DIVIDER_LOOKUP
 
     # Build lookup table linking mz value to index in array_spectra for each pixel
     lookup_table_spectra_high_res = build_index_lookup_table(
