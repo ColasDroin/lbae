@@ -72,7 +72,10 @@ server = flask.Flask(__name__)
 
 # Prepare long callback support
 launch_uid = uuid4()
-cache_long_callback = diskcache.Cache("data/cache/")
+if SAMPLE_DATA:
+    cache_long_callback = diskcache.Cache("data_sample/cache/")
+else:
+    cache_long_callback = diskcache.Cache("data/cache/")
 long_callback_manager = DiskcacheLongCallbackManager(
     cache_long_callback,
     cache_by=[lambda: launch_uid],
@@ -108,7 +111,7 @@ else:
     CACHE_CONFIG = {
         # We use 'FileSystemCache' as we want the application to be lightweight in term of RAM
         "CACHE_TYPE": "FileSystemCache",
-        "CACHE_DIR": "data/cache/",
+        "CACHE_DIR": "data/cache/" if SAMPLE_DATA else "data_sample/cache/",
         "CACHE_THRESHOLD": 200,
     }
 
