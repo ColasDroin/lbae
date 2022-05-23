@@ -43,7 +43,7 @@ if SAMPLE_DATA:
 else:
     path_data = "data_sample/whole_dataset/"
     path_annotations = "data_sample/annotations/"
-data = MaldiData(path_data, path_annotations, sample=SAMPLE_DATA)
+data = MaldiData(path_data, path_annotations, sample_data=SAMPLE_DATA)
 
 # If True, only a small portions of the figures are precomputed (if precomputation has not already
 # been done). Used for debugging purposes.

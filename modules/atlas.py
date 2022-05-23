@@ -18,6 +18,7 @@ import skimage
 import logging
 import io
 from imageio import imread
+import shutil
 
 # LBAE imports
 from modules.tools.atlas import (
@@ -137,14 +138,28 @@ class Atlas:
         # Attribute to easily access the data
         self.data = maldi_data
 
+        # Correct atlas resolution to 100 if sampled app
+        if maldi_data._sample_data:
+            logging.info("Atlas resolution set to 100um as the sampled data is used.")
+            self.resolution = 100
+
         # Load or download the atlas if it's the first time BrainGlobeAtlas is used
-        brainglobe_dir = "data/atlas/"
+        if maldi_data._sample_data:
+            brainglobe_dir = "data_sample/atlas/"
+        else:
+            brainglobe_dir = "data/atlas/"
         os.makedirs(brainglobe_dir, exist_ok=True)
         self.bg_atlas = BrainGlobeAtlas(
             "allen_mouse_" + str(resolution) + "um",
             brainglobe_dir=brainglobe_dir,
             check_latest=False,
         )
+
+        # Remove the meshes in the sampled app as they're not used
+        if maldi_data._sample_data and "meshes" in os.listdir(
+            brainglobe_dir + "allen_mouse_" + str(resolution) + "um"
+        ):
+            shutil.rmtree(brainglobe_dir + "allen_mouse_" + str(resolution) + "um/meshes")
 
         # When computing an array of figures with a slider to explore the atlas, subsample in the
         # longitudinal direction, otherwise it's too heavy

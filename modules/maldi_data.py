@@ -17,6 +17,7 @@ from modules.tools.misc import logmem
 import logging
 import os
 from skimage import io
+import lzma
 
 # ==================================================================================================
 # --- Class
@@ -30,6 +31,7 @@ class MaldiData:
     lightweight dictionnary, and the memmap dictionnary is empty.
 
     Attributes:
+        _sample_data (bool): if True, use the sampled dataset. Else use the whole dataset.
         _dic_lightweight (dictionnary): a dictionnary containing the following lightweights arrays
         (remaining in memory as long as the app is running), as well as the shape of thoses
         stored in memory maps:
@@ -49,9 +51,9 @@ class MaldiData:
             In addition, it contains the shape of all the arrays stored in the numpy memory maps.
         _n_slices (int): number of slices present in the dataset.
         _l_slices (list): list of the slices indices in the dataset.
-        _sample_data (bool): if True, use the sampled dataset. Else use the whole dataset.
         _dic_memmap (dictionnary): a dictionnary containing numpy memory maps allowing to access the
-            heavyweights arrays of the datasets, without saturating the disk. The arrays in the
+            heavyweights arrays of the datasets, without saturating the disk (ONLY IF _sample_data
+            IS FALSE. ELSE ALL THE DATASET IS STORED IN _dic_lightweight). The arrays in the
             dictionnary are:
             - array_spectra: bidimensional, it contains the concatenated spectra of each pixel.
                 First row contains the m/z values, while second row contains the corresponding
@@ -176,16 +178,20 @@ class MaldiData:
 
         logging.info("Initializing MaldiData object" + logmem())
 
+        # Set if use the sampled dataset or not
+        self._sample_data = sample_data
+
         # Load the dictionnary containing small-size data for all slices
-        with open(path_data + "light_arrays.pickle", "rb") as handle:
-            self._dic_lightweight = pickle.load(handle)
+        if self._sample_data:
+            with lzma.open(path_data + "light_arrays.pickle", "rb") as handle:
+                self._dic_lightweight = pickle.load(handle)
+        else:
+            with open(path_data + "light_arrays.pickle", "rb") as handle:
+                self._dic_lightweight = pickle.load(handle)
 
         # Simple variable to get the number of slices
         self._n_slices = len(self._dic_lightweight)
         self._l_slices = sorted(list(self._dic_lightweight.keys()))
-
-        # Set if use the sampled dataset or not
-        self._sample_data = sample_data
 
         # Set the accesser to the mmap files
         self._dic_memmap = {}
