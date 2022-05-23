@@ -26,7 +26,8 @@ from skimage import io
 class MaldiData:
     """A class to access the various arrays in the dataset from two dictionnaries, lightweight
     (always kept in ram), and memmap (remains on disk). It uses the special attribute __slots__ for
-    faster access to the attributes.
+    faster access to the attributes. If _sample_data is True, all the dataset is stored in the
+    lightweight dictionnary, and the memmap dictionnary is empty.
 
     Attributes:
         _dic_lightweight (dictionnary): a dictionnary containing the following lightweights arrays
@@ -48,6 +49,7 @@ class MaldiData:
             In addition, it contains the shape of all the arrays stored in the numpy memory maps.
         _n_slices (int): number of slices present in the dataset.
         _l_slices (list): list of the slices indices in the dataset.
+        _sample_data (bool): if True, use the sampled dataset. Else use the whole dataset.
         _dic_memmap (dictionnary): a dictionnary containing numpy memory maps allowing to access the
             heavyweights arrays of the datasets, without saturating the disk. The arrays in the
             dictionnary are:
@@ -148,6 +150,7 @@ class MaldiData:
         "_dic_memmap",
         "_l_slices",
         "_n_slices",
+        "_sample_data",
         "_df_annotations",
         "_df_annotations_MAIA_transformed_lipids_brain_1",
         "_df_annotations_MAIA_transformed_lipids_brain_2",
@@ -158,7 +161,12 @@ class MaldiData:
     # --- Constructor
     # ==============================================================================================
 
-    def __init__(self, path_data="data/whole_dataset/", path_annotations="data/annotations/"):
+    def __init__(
+        self,
+        path_data="data/whole_dataset/",
+        path_annotations="data/annotations/",
+        sample_data=False,
+    ):
         """Initialize the class MaldiData.
 
         Args:
@@ -176,24 +184,28 @@ class MaldiData:
         self._n_slices = len(self._dic_lightweight)
         self._l_slices = sorted(list(self._dic_lightweight.keys()))
 
+        # Set if use the sampled dataset or not
+        self._sample_data = sample_data
+
         # Set the accesser to the mmap files
         self._dic_memmap = {}
-        for slice_index in self._l_slices:
-            self._dic_memmap[slice_index] = {}
-            for array_name in [
-                "array_spectra",
-                "array_avg_spectrum",
-                "array_avg_spectrum_after_standardization",
-                "array_lookup_mz",
-                "array_cumulated_lookup_mz_image",
-                "array_corrective_factors",
-            ]:
-                self._dic_memmap[slice_index][array_name] = np.memmap(
-                    path_data + array_name + "_" + str(slice_index) + ".mmap",
-                    dtype="float32" if array_name != "array_lookup_mz" else "int32",
-                    mode="r",
-                    shape=self._dic_lightweight[slice_index][array_name + "_shape"],
-                )
+        if not self._sample_data:
+            for slice_index in self._l_slices:
+                self._dic_memmap[slice_index] = {}
+                for array_name in [
+                    "array_spectra",
+                    "array_avg_spectrum",
+                    "array_avg_spectrum_after_standardization",
+                    "array_lookup_mz",
+                    "array_cumulated_lookup_mz_image",
+                    "array_corrective_factors",
+                ]:
+                    self._dic_memmap[slice_index][array_name] = np.memmap(
+                        path_data + array_name + "_" + str(slice_index) + ".mmap",
+                        dtype="float32" if array_name != "array_lookup_mz" else "int32",
+                        mode="r",
+                        shape=self._dic_lightweight[slice_index][array_name + "_shape"],
+                    )
 
         # Save path_data for cleaning memmap in case
         self._path_data = path_data
@@ -206,10 +218,14 @@ class MaldiData:
             path_annotations + "transformed_lipids_brain_1.csv"
         )
 
-        # Load lipid annotations of MAIA-transformed lipids for brain 2
-        self._df_annotations_MAIA_transformed_lipids_brain_2 = pd.read_csv(
-            path_annotations + "transformed_lipids_brain_2.csv"
-        )
+        # Brain 2 is not contained in the sampled dataset
+        if not self._sample_data:
+            # Load lipid annotations of MAIA-transformed lipids for brain 2
+            self._df_annotations_MAIA_transformed_lipids_brain_2 = pd.read_csv(
+                path_annotations + "transformed_lipids_brain_2.csv"
+            )
+        else:
+            self._df_annotations_MAIA_transformed_lipids_brain_2 = None
 
         logging.info("MaldiData object instantiated" + logmem())
 
@@ -349,31 +365,35 @@ class MaldiData:
         return self._dic_lightweight[slice_index]["array_peaks_transformed_lipids"]
 
     def get_array_corrective_factors(self, slice_index):
-        """Getter for array_corrective_factors, which is a (memmaped) numpy array containing the MAIA
+        """Getter for array_corrective_factors, which is a numpy array containing the MAIA
         corrective factors for each pixel of the requested acquired slice.
 
         Args:
             slice_index (int): Index of the slice for which the corrective factors are requested.
 
         Returns:
-            np.ndarray (mmaped): Three-dimensional array containing the MAIA corrective factor used
-            for lipids and each pixel.
+            np.ndarray (mmaped if not sampled dataset): Three-dimensional array containing the MAIA
+                corrective factor used for lipids and each pixel.
         """
-        return self._dic_memmap[slice_index]["array_corrective_factors"]
+        if self._sample_data:
+            return self._dic_lightweight[slice_index]["array_corrective_factors"]
+        else:
+            return self._dic_memmap[slice_index]["array_corrective_factors"]
 
     def get_array_spectra(self, slice_index):
-        """Getter for array_spectra, which is a (memmaped) numpy array containing the spectral data
+        """Getter for array_spectra, which is a numpy array containing the spectral data
         of slice indexed by slice_index.
 
         Args:
             slice_index (int): Index of the slice for which the spectral data is requested.
 
         Returns:
-            np.ndarray (mmaped): Spectral data of the requested slice.
+            np.ndarray (mmaped if not sampled dataset): Spectral data of the requested slice.
         """
-
-        # Previously called array_spectra_high_res.
-        return self._dic_memmap[slice_index]["array_spectra"]
+        if self._sample_data:
+            return self._dic_lightweight[slice_index]["array_spectra"]
+        else:
+            return self._dic_memmap[slice_index]["array_spectra"]
 
     def get_array_mz(self, slice_index):
         """Getter for array_mz, which corresponds to the first row of array_spectra, i.e. the m/z
@@ -383,11 +403,13 @@ class MaldiData:
             slice_index (int): Index of the slice for which the m/z values are requested.
 
         Returns:
-            np.ndarray (mmaped): m/z values of the spectral data of the requested slice.
+            np.ndarray (mmaped if not sampled dataset): m/z values of the spectral data of the
+                requested slice.
         """
-
-        # Previously called array_spectra_high_res
-        return self._dic_memmap[slice_index]["array_spectra"][0, :]
+        if self._sample_data:
+            return self._dic_lightweight[slice_index]["array_spectra"][0, :]
+        else:
+            return self._dic_memmap[slice_index]["array_spectra"][0, :]
 
     def get_array_intensity(self, slice_index):
         """Getter for array_intensity, which corresponds to the second row of array_spectra, i.e.
@@ -397,14 +419,16 @@ class MaldiData:
             slice_index (int): Index of the slice for which the intensity values are requested.
 
         Returns:
-            np.ndarray (mmaped): Intensity values of the spectral data of the requested slice.
+            np.ndarray (mmaped if not sampled dataset): Intensity values of the spectral data of the
+                requested slice.
         """
-
-        # Previously called array_spectra_high_res
-        return self._dic_memmap[slice_index]["array_spectra"][1, :]
+        if self._sample_data:
+            return self._dic_lightweight[slice_index]["array_spectra"][1, :]
+        else:
+            return self._dic_memmap[slice_index]["array_spectra"][1, :]
 
     def get_array_avg_spectrum(self, slice_index, standardization=True):
-        """Getter for array_avg_spectrum, which is a (memmaped) numpy array containing the (high
+        """Getter for array_avg_spectrum, which is a numpy array containing the (high
         resolution) averaged spectral data of slice indexed by slice_index.
 
         Args:
@@ -412,14 +436,21 @@ class MaldiData:
             standardization (bool): If True, the average spectrum is standardized with MAIA.
 
         Returns:
-            np.ndarray (mmaped): The requested average spectrum.
+            np.ndarray (mmaped if not sampled dataset): The requested average spectrum.
         """
 
         if not standardization:
-            # Previously called array_averaged_mz_intensity_high_res
-            return self._dic_memmap[slice_index]["array_avg_spectrum"]
+            if self._sample_data:
+                return self._dic_lightweight[slice_index]["array_avg_spectrum"]
+            else:
+                return self._dic_memmap[slice_index]["array_avg_spectrum"]
         else:
-            return self._dic_memmap[slice_index]["array_avg_spectrum_after_standardization"]
+            if self._sample_data:
+                return self._dic_lightweight[slice_index][
+                    "array_avg_spectrum_after_standardization"
+                ]
+            else:
+                return self._dic_memmap[slice_index]["array_avg_spectrum_after_standardization"]
 
     def get_array_lookup_mz(self, slice_index):
         """Getter for array_lookup_mz, which is a lookup table that maps m/z values to the
@@ -429,11 +460,12 @@ class MaldiData:
             slice_index (int): Index of the slice for which the lookup table is requested.
 
         Returns:
-            np.ndarray (mmaped): The requested lookup table.
+            np.ndarray (mmaped if not sampled dataset): The requested lookup table.
         """
-
-        # Previously called lookup_table_spectra_high_res
-        return self._dic_memmap[slice_index]["array_lookup_mz"]
+        if self._sample_data:
+            return self._dic_lightweight[slice_index]["array_lookup_mz"]
+        else:
+            return self._dic_memmap[slice_index]["array_lookup_mz"]
 
     def get_array_cumulated_lookup_mz_image(self, slice_index):
         """Getter for array_cumulated_lookup_mz_image, which is a lookup table that maps m/z values
@@ -443,14 +475,15 @@ class MaldiData:
             slice_index (int): Index of the slice for which the lookup table is requested.
 
         Returns:
-            np.ndarray (mmaped): The requested lookup table.
+            np.ndarray (mmaped if not sampled dataset): The requested lookup table.
         """
-
-        # Previously called cumulated_image_lookup_table_high_res
-        return self._dic_memmap[slice_index]["array_cumulated_lookup_mz_image"]
+        if self._sample_data:
+            return self._dic_lightweight[slice_index]["array_cumulated_lookup_mz_image"]
+        else:
+            return self._dic_memmap[slice_index]["array_cumulated_lookup_mz_image"]
 
     def get_partial_array_spectra(self, slice_index, lb=None, hb=None, index=None):
-        """Getter for partial_array_spectra, which is a (memmaped) numpy array containing the
+        """Getter for partial_array_spectra, which is a numpy array containing the
         spectral data of slice indexed by slice_index.
 
         Args:
@@ -460,23 +493,29 @@ class MaldiData:
             index (int): Index of the requested spectrum.
 
         Returns:
-            np.ndarray (mmaped): Spectral data of the requested slice.
+            np.ndarray (mmaped if not sampled dataset): Spectral data of the requested slice.
         """
+
+        # As there are many possibilities, define new dic depending if sampled data or not
+        if self._sample_data:
+            dic = self._dic_lightweight[slice_index]
+        else:
+            dic = self._dic_memmap[slice_index]
 
         if lb is None and hb is None and index is None:
             # Previously called array_spectra_high_res.
-            return self._dic_memmap[slice_index]["array_spectra"]
+            return dic["array_spectra"]
         elif lb is not None and hb is not None:
-            return self._dic_memmap[slice_index]["array_spectra"][:, lb:hb]
+            return dic["array_spectra"][:, lb:hb]
         elif index is not None:
-            return self._dic_memmap[slice_index]["array_spectra"][:, index]
+            return dic["array_spectra"][:, index]
 
         # If not specific index has been provided, it returns a range
         if index is None:
 
             # Start with most likely case
             if hb is not None and lb is not None:
-                return self._dic_memmap[slice_index]["array_spectra"][:, lb:hb]
+                return dic["array_spectra"][:, lb:hb]
 
             # Second most likely case : full slice
             elif lb is None and hb is None:
@@ -484,9 +523,9 @@ class MaldiData:
 
             # Most likely the remaining cases won't be used
             elif lb is None:
-                return self._dic_memmap[slice_index]["array_spectra"][:, :hb]
+                return dic["array_spectra"][:, :hb]
             else:
-                return self._dic_memmap[slice_index]["array_spectra"][:, lb:]
+                return dic["array_spectra"][:, lb:]
 
         # Else, it returns the required index
         else:
@@ -496,7 +535,7 @@ class MaldiData:
                     + " when calling array_spectra. "
                     + "Only the index request will be satisfied."
                 )
-            return self._dic_memmap[slice_index]["array_spectra"][:, index]
+            return dic["array_spectra"][:, index]
 
     def get_partial_array_mz(self, slice_index, lb=None, hb=None, index=None):
         """Getter for partial_array_mz, which corresponds to the first row of partial_array_spectra,
@@ -509,24 +548,30 @@ class MaldiData:
             index (int): Index of the slice of the requested spectrum.
 
         Returns:
-            np.ndarray (mmaped): m/z values of the spectral data of the requested slice between lb
-                and hb.
+            np.ndarray (mmaped if not sampled dataset): m/z values of the spectral data of the
+                requested slice between lb and hb.
         """
+
+        # As there are many possibilities, define new dic depending if sampled data or not
+        if self._sample_data:
+            dic = self._dic_lightweight[slice_index]
+        else:
+            dic = self._dic_memmap[slice_index]
 
         if lb is None and hb is None and index is None:
             # Previously called array_spectra_high_res
-            return self._dic_memmap[slice_index]["array_spectra"][0, :]
+            return dic["array_spectra"][0, :]
         elif lb is not None and hb is not None:
-            return self._dic_memmap[slice_index]["array_spectra"][0, lb:hb]
+            return dic["array_spectra"][0, lb:hb]
         elif index is not None:
-            return self._dic_memmap[slice_index]["array_spectra"][0, index]
+            return dic["array_spectra"][0, index]
 
         # If not specific index has been provided, it returns a range
         if index is None:
 
             # Start with most likely case
             if hb is not None and lb is not None:
-                return self._dic_memmap[slice_index]["array_spectra"][0, lb:hb]
+                return dic["array_spectra"][0, lb:hb]
 
             # Second most likely case : full slice
             elif lb is None and hb is None:
@@ -534,10 +579,10 @@ class MaldiData:
 
             # Most likely the remaining cases won't be used
             elif lb is None:
-                return self._dic_memmap[slice_index]["array_spectra"][0, :hb]
+                return dic["array_spectra"][0, :hb]
 
             else:
-                return self._dic_memmap[slice_index]["array_spectra"][0, lb:]
+                return dic["array_spectra"][0, lb:]
 
         # Else, it returns the required index
         else:
@@ -547,7 +592,7 @@ class MaldiData:
                     + " when calling array_spectra. "
                     + "Only the index request will be satisfied."
                 )
-            return self._dic_memmap[slice_index]["array_spectra"][0, index]
+            return dic["array_spectra"][0, index]
 
     def get_partial_array_intensity(self, slice_index, lb=None, hb=None, index=None):
         """Getter for partial_array_intensity, which corresponds to the second row of
@@ -560,24 +605,29 @@ class MaldiData:
             index (int): Index of the slice of the requested spectrum.
 
         Returns:
-            np.ndarray (mmaped): Intensity values of the spectral data of the requested slice
-            between lb and hb.
+            np.ndarray (mmaped if not sampled dataset): Intensity values of the spectral data of the
+                requested slice between lb and hb.
         """
+        # As there are many possibilities, define new dic depending if sampled data or not
+        if self._sample_data:
+            dic = self._dic_lightweight[slice_index]
+        else:
+            dic = self._dic_memmap[slice_index]
 
         if lb is None and hb is None and index is None:
             # Previously called array_spectra_high_res
-            return self._dic_memmap[slice_index]["array_spectra"][1, :]
+            return dic["array_spectra"][1, :]
         elif lb is not None and hb is not None:
-            return self._dic_memmap[slice_index]["array_spectra"][1, lb:hb]
+            return dic["array_spectra"][1, lb:hb]
         elif index is not None:
-            return self._dic_memmap[slice_index]["array_spectra"][1, index]
+            return dic["array_spectra"][1, index]
 
         # If not specific index has been provided, it returns a range
         if index is None:
 
             # Start with most likely case
             if hb is not None and lb is not None:
-                return self._dic_memmap[slice_index]["array_spectra"][1, lb:hb]
+                return dic["array_spectra"][1, lb:hb]
 
             # Second most likely case : full slice
             elif lb is None and hb is None:
@@ -585,10 +635,10 @@ class MaldiData:
 
             # Most likely the remaining cases won't be used
             elif lb is None:
-                return self._dic_memmap[slice_index]["array_spectra"][1, :hb]
+                return dic["array_spectra"][1, :hb]
 
             else:
-                return self._dic_memmap[slice_index]["array_spectra"][1, lb:]
+                return dic["array_spectra"][1, lb:]
 
         # Else, it returns the required index
         else:
@@ -598,7 +648,7 @@ class MaldiData:
                     + " when calling array_spectra. "
                     + "Only the index request will be satisfied."
                 )
-            return self._dic_memmap[slice_index]["array_spectra"][1, index]
+            return dic["array_spectra"][1, index]
 
     def get_partial_array_avg_spectrum(self, slice_index, lb=None, hb=None, standardization=True):
         """Getter for partial_array_avg_spectrum, which corresponds to the average spectrum of the
@@ -611,18 +661,21 @@ class MaldiData:
             standardization (bool): If True, the average spectrum is normalized.
 
         Returns:
-            np.ndarray (mmaped): Average spectrum of the spectral data of the requested slice
-            between lb and hb.
+            np.ndarray (mmaped if not sampled dataset): Average spectrum of the spectral data of the
+                requested slice between lb and hb.
         """
+        # As there are many possibilities, define new dic depending if sampled data or not
+        if self._sample_data:
+            dic = self._dic_lightweight[slice_index]
+        else:
+            dic = self._dic_memmap[slice_index]
 
         # Start with most likely case
         if hb is not None and lb is not None:
             if standardization:
-                return self._dic_memmap[slice_index]["array_avg_spectrum"][:, lb:hb]
+                return dic[slice_index]["array_avg_spectrum"][:, lb:hb]
             else:
-                return self._dic_memmap[slice_index]["array_avg_spectrum_before_standardization"][
-                    :, lb:hb
-                ]
+                return dic[slice_index]["array_avg_spectrum_before_standardization"][:, lb:hb]
 
         # Second most likely case : full slice
         elif lb is None and hb is None:
@@ -631,18 +684,14 @@ class MaldiData:
         # Most likely the remaining cases won't be used
         elif lb is None:
             if standardization:
-                return self._dic_memmap[slice_index]["array_avg_spectrum"][:, :hb]
+                return dic[slice_index]["array_avg_spectrum"][:, :hb]
             else:
-                return self._dic_memmap[slice_index]["array_avg_spectrum_before_standardization"][
-                    :, :hb
-                ]
+                return dic[slice_index]["array_avg_spectrum_before_standardization"][:, :hb]
         else:
             if standardization:
-                return self._dic_memmap[slice_index]["array_avg_spectrum"][:, lb:]
+                return dic[slice_index]["array_avg_spectrum"][:, lb:]
             else:
-                return self._dic_memmap[slice_index]["array_avg_spectrum_before_standardization"][
-                    :, lb:
-                ]
+                return dic[slice_index]["array_avg_spectrum_before_standardization"][:, lb:]
 
     def get_lookup_mz(self, slice_index, index):
         """Returns the m/z value corresponding to the index in the spectral data of the slice
@@ -653,12 +702,14 @@ class MaldiData:
             index (int): Index of the slice of the requested spectrum.
 
         Returns:
-            np.ndarray (mmaped): m/z value of the spectral data of the requested slice and requested
-                lookup.
+            np.ndarray (mmaped if not sampled dataset): m/z value of the spectral data of the
+                requested slice and requested   lookup.
         """
-
         # Just return the (one) required lookup to go faster
-        return self._dic_memmap[slice_index]["array_lookup_mz"][index]
+        if self._sample_data:
+            return self._dic_lightweight[slice_index]["array_lookup_mz"][index]
+        else:
+            return self._dic_memmap[slice_index]["array_lookup_mz"][index]
 
     def get_cumulated_lookup_mz_image(self, slice_index, index):
         """Returns the cumulated spectrum until the corresponding m/z value for the pixel
@@ -669,12 +720,14 @@ class MaldiData:
             index (int): Index of the slice of the requested spectrum.
 
         Returns:
-            np.ndarray (mmaped): Cumulated m/z value of the spectral data of the requested slice
-                and requested lookup.
+            np.ndarray (mmaped if not sampled dataset): Cumulated m/z value of the spectral data of
+                the requested slice and requested lookup.
         """
-
         # Just return the (one) required lookup to go faster
-        return self._dic_memmap[slice_index]["array_cumulated_lookup_mz_image"][index]
+        if self._sample_data:
+            return self._dic_lightweight[slice_index]["array_cumulated_lookup_mz_image"][index]
+        else:
+            return self._dic_memmap[slice_index]["array_cumulated_lookup_mz_image"][index]
 
     def clean_memory(self, slice_index=None, array=None, cache=None):
         """Cleans the memory (reset the memory-mapped arrays) of the app. slice_index and array
@@ -689,6 +742,12 @@ class MaldiData:
                 Defaults to None.
             cache (flask_caching.Cache, optional): Cache of the database. Defaults to None.
         """
+        if self._sample_data:
+            logging.warning(
+                "Cleaning memory-mapped dictionnary has been requested, but the sample dataset if"
+                " currently being used."
+            )
+            return None
 
         # Wait for memory to be released before taking action
         if cache is not None:

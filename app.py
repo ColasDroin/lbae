@@ -33,11 +33,20 @@ from modules.tools.misc import logmem
 
 logging.info("Memory use before any global variable declaration" + logmem())
 
+# Define if the app will use only a sample of the dataset, and uses a lower resolution for the atlas
+SAMPLE_DATA = True
+
 # Load data
-data = MaldiData()
+if SAMPLE_DATA:
+    path_data = "data/whole_dataset/"
+    path_annotations = "data/annotations/"
+else:
+    path_data = "data_sample/whole_dataset/"
+    path_annotations = "data_sample/annotations/"
+data = MaldiData(path_data, path_annotations, sample=SAMPLE_DATA)
 
 # If True, only a small portions of the figures are precomputed (if precomputation has not already
-# been done)
+# been done). Used for debugging purposes.
 sample = False
 
 # Load Atlas and Figures objects. At first launch, many objects will be precomputed and shelved in
