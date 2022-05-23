@@ -214,7 +214,10 @@ class Figures:
         if type_figure == "original_data":
             array_images = self._data.compute_padded_original_images()
         elif type_figure == "warped_data":
-            array_images = np.array(io.imread("data/tiff_files/warped_data.tif"))
+            if self._data._sample_data:
+                array_images = np.load("data_sample/tiff_files/warped_data.npz")
+            else:
+                array_images = np.array(io.imread("data/tiff_files/warped_data.tif"))
         elif type_figure == "projection_corrected":
             array_images = self._atlas.array_projection_corrected
         elif type_figure == "atlas":

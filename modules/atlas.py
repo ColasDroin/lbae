@@ -428,7 +428,10 @@ class Atlas:
             a, u, v = l_transform_parameters[i]
 
             # Load corresponding slice and coor
-            path = "data/tiff_files/coordinates_original_data/"
+            if self.data._sample_data:
+                path = "data_sample/tiff_files/coordinates_original_data/"
+            else:
+                path = "data/tiff_files/coordinates_original_data/"
             filename = (
                 path
                 + [
@@ -439,10 +442,16 @@ class Atlas:
             )
 
             # * Float 16 may lead to a loss of precision, caution
-            original_coor = np.array(skimage.io.imread(filename), dtype=np.float16)
+            if self.data._sample_data:
+                original_coor = np.load(filename)
+            else:
+                original_coor = np.array(skimage.io.imread(filename), dtype=np.float16)
             l_original_coor.append(original_coor)
 
-            path = "data/tiff_files/original_data/"
+            if self.data._sample_data:
+                path = "data_sample/tiff_files/original_data/"
+            else:
+                path = "data/tiff_files/original_data/"
             filename = (
                 path
                 + [
@@ -469,6 +478,7 @@ class Atlas:
                 self.bg_atlas.annotation,
                 nearest_neighbour_correction=nearest_neighbour_correction,
                 atlas_correction=atlas_correction,
+                sample_data=self.data._sample_data,
             )
 
         return array_projection, array_projection_correspondence, l_original_coor

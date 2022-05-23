@@ -274,6 +274,7 @@ def fill_array_projection(
     array_annotation,
     nearest_neighbour_correction=False,
     atlas_correction=False,
+    sample_data=False,
 ):
     """This function computes the correspondance between our initial, low-resolution, data from the
     MALDI imaging, to the high-resolution space in which the registered data lives. To that end, it
@@ -317,6 +318,8 @@ def fill_array_projection(
             fill the empty pixel. Defaults to False.
         atlas_correction (bool, optional): If True, filters out pixels that are not annotated in the
             ccfv3. Defaults to False.
+        sample_data (bool, optional): If True, the function will use the sampled version of the
+            slice data for the computations. Defaults to False.
 
     Returns:
         np.ndarray, np.ndarray: The first array is a high-resolution version of our initial data, in
@@ -349,16 +352,20 @@ def fill_array_projection(
             # If the high-resolution coordinate found be inversion exists, fill array_projection
             if i < array_projection.shape[1] and j < array_projection.shape[2] and i > 0 and j > 0:
                 try:
-                    array_projection[slice_index, i, j] = original_slice[
-                        i_original_slice, j_original_slice, 2
-                    ]
+                    if sample_data:
+                        array_projection[slice_index, i, j] = original_slice[
+                            i_original_slice, j_original_slice
+                        ]
+                    else:
+                        array_projection[slice_index, i, j] = original_slice[
+                            i_original_slice, j_original_slice, 2
+                        ]
                     array_projection_filling[slice_index, i, j] = 1
                     array_projection_correspondence[slice_index, i, j] = [
                         i_original_slice,
                         j_original_slice,
                     ]
                 except:
-                    raise ValueError
                     logging.info(
                         i,
                         j,
@@ -367,6 +374,7 @@ def fill_array_projection(
                         j_original_slice,
                         original_slice.shape,
                     )
+                    raise ValueError
 
     # Apply potential corrections
     if nearest_neighbour_correction or atlas_correction:
