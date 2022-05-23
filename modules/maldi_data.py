@@ -870,7 +870,10 @@ class MaldiData:
                 and the second and third dimensions correspond to the padded images.
         """
         # Compute number of slices from the original acquisition are present in the folder
-        path = "data/tiff_files/original_data/"
+        if self._sample_data:
+            path = "data_sample/tiff_files/original_data/"
+        else:
+            path = "data/tiff_files/original_data/"
         n_slices = len([x for x in os.listdir(path) if "slice_" in x])
         if n_slices != self.get_slice_number():
             logging.warning(
@@ -883,7 +886,10 @@ class MaldiData:
         l_array_slices = []
         for i in range(n_slices):
             filename = path + "slice_" + str(i + 1) + ".tiff"
-            l_array_slices.append(np.array(io.imread(filename), dtype=np.int16)[:, :, 2])
+            if self._sample_data:
+                l_array_slices.append(np.array(io.imread(filename), dtype=np.int16))
+            else:
+                l_array_slices.append(np.array(io.imread(filename), dtype=np.int16)[:, :, 2])
 
         # Find the size of the biggest image
         max_size = (
