@@ -10,7 +10,7 @@ import dash_draggable
 # App module
 import app
 from app import figures, atlas
-from modules.tools.storage import return_shelved_object
+from modules.storage import return_shelved_object
 
 ###### DEFFINE PAGE LAYOUT ######
 
