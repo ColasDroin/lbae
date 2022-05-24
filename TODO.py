@@ -1,6 +1,5 @@
 ##### Current TODOs #####
-# TODO Compress Pickle dict up to <100mb
-# TODO Finish sample app
+# TODO Finish sample app (search for "data" and debug)
 # TODO Incorporate new brain 1 and brain 2
 # TODO Do quality control and debug, especially when several users are on the app in parallel
 

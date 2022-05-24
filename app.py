@@ -58,7 +58,11 @@ logging.info("Memory use after three main object have been instantiated" + logme
 
 
 # Compute and shelve potentially missing objects
-launch = Launch(data, atlas, figures)
+if SAMPLE_DATA:
+    path_db = "data_sample/app_data/data.db"
+else:
+    path_db = "data/app_data/data.db"
+launch = Launch(data, atlas, figures, path = path_db)
 launch.launch()
 
 logging.info("Memory use after main functions have been compiled" + logmem())
