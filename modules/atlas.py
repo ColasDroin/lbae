@@ -382,6 +382,7 @@ class Atlas:
                 self.data._sample_data
                 and len(self.bg_atlas.get_structure_ancestors(v["acronym"])) > 1
             ):
+
                 continue
 
             if len(self.bg_atlas.get_structure_ancestors(v["acronym"])) > 0:

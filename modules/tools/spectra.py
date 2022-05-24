@@ -1404,12 +1404,12 @@ def compute_thread_safe_function(
     else:
         logging.warning("No cache provided, the thread unsafe version of the function will be run")
 
-        # Run the actual function
-        # try:
-    result = compute_function(*args_compute_function, **kwargs_compute_function)
-    # except:
-    #    logging.warning('The function "%s" failed to run' % str(compute_function))
-    #    result = None
+    # Run the actual function
+    try:
+        result = compute_function(*args_compute_function, **kwargs_compute_function)
+    except:
+        logging.warning('The function "%s" failed to run' % str(compute_function))
+        result = None
 
     if cache is not None:
         # Unlock the data

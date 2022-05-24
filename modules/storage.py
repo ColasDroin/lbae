@@ -10,6 +10,10 @@
 # Standard modules
 import logging
 import shelve
+import sys
+from pympler import asizeof
+
+# LBAE imports
 from modules.tools.misc import logmem
 
 # ==================================================================================================
@@ -22,7 +26,7 @@ class Storage:
     Attributes:
         path_db (str): Path of the shelve database.
 
-    Methods:
+    Methods: # TODO
         __init__(self, path_db="data/whole_dataset/"): Initialize the class Storage.
         get_annotations(): Getter for the lipid annotation of each slice, contained in a pandas
             dataframe.
@@ -39,6 +43,7 @@ class Storage:
             path_db (str): Path of the shelve database.
         """
         self.path_db = path_db
+        self.list_shelve_objects_size()
 
     def dump_shelved_object(self, data_folder, file_name, object):
         """This method dumps an object in a shelve database.
@@ -169,3 +174,40 @@ class Storage:
             # Completely empty database
             for key in db:
                 del db[key]
+
+    # def empty_objects_used_at_startup_shelve(self):
+    #     """This method erases all entries in the shelve database that are only used at first app
+    #     execution."""
+
+    #     l_key_to_delete = []
+
+    #     # Load from in db
+    #     with shelve.open(self.path_db) as db:
+
+    #         # Completely empty database
+    #         for key in db:
+    #             if key not in ["annotations", "masks"]:
+    #                 del db[key]
+
+    def list_shelve_objects_size(self):
+        """This method list the size of all objects in the shelve database."""
+
+        # Load from in db
+        with shelve.open(self.path_db) as db:
+
+            # print(db["atlas/atlas_objects/arrays_projection_corrected_True_True"][0].shape)
+            # print(db["atlas/atlas_objects/arrays_projection_corrected_True_True"][0].dtype)
+            # print(db["atlas/atlas_objects/arrays_projection_corrected_True_True"][1].shape)
+            # print(db["atlas/atlas_objects/arrays_projection_corrected_True_True"][1].dtype)
+            # print(db["atlas/atlas_objects/arrays_projection_corrected_True_True"][2].shape)
+            # print(db["atlas/atlas_objects/arrays_projection_corrected_True_True"][2].dtype)
+
+            tot_size = 0
+            # List size
+            for key in db:
+                try:
+                    size_obj = asizeof.asizeof(db[key]) / 1024 / 1024
+                    tot_size += size_obj
+                    logging.info(key + ":\t" + str(size_obj) + ", tot_size:\t" + str(tot_size))
+                except:
+                    pass
