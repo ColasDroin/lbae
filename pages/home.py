@@ -12,7 +12,7 @@ from dash import html
 import dash_mantine_components as dmc
 from dash.dependencies import Input, Output, State
 from documentation.documentation import return_documentation
-import app
+from app import app
 import visdcc
 from dash_extensions import Lottie
 
@@ -91,7 +91,7 @@ layout = (
                             ),
                             # Documentation in a bottom drawer
                             dmc.Drawer(
-                                children=return_documentation(app.app),
+                                children=return_documentation(app),
                                 id="documentation-offcanvas-home",
                                 opened=False,
                                 padding="md",
@@ -111,7 +111,7 @@ layout = (
 # ==================================================================================================
 
 
-@app.app.callback(
+@app.callback(
     Output("documentation-offcanvas-home", "opened"),
     [Input("page-0-collapse-doc-button", "n_clicks")],
     [State("documentation-offcanvas-home", "opened")],
@@ -123,7 +123,7 @@ def toggle_collapse(n, is_open):
     return is_open
 
 
-@app.app.callback(Output("javascript", "run"), [Input("main-slider", "value")])
+@app.callback(Output("javascript", "run"), [Input("main-slider", "value")])
 def display_rotating_brain(x):
     """This callback loads some javascript code to display the rotating brain."""
     with open("js/rotating-brain.js") as f:

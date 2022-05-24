@@ -17,9 +17,7 @@ import logging
 import dash_mantine_components as dmc
 
 # LBAE imports
-import app
-from app import figures
-from modules.tools.storage import return_shelved_object
+from app import app, figures, storage, atlas
 
 # ==================================================================================================
 # --- Layout
@@ -98,7 +96,7 @@ def return_layout(basic_config, slice_index):
                                 "scale": 2,
                             }
                         },
-                        figure=return_shelved_object(
+                        figure=storage.return_shelved_object(
                             "figures/load_page",
                             "figure_basic_image",
                             force_update=False,
@@ -174,7 +172,7 @@ def return_layout(basic_config, slice_index):
 # ==================================================================================================
 
 
-@app.app.callback(
+@app.callback(
     Output("page-1-graph-slice-selection", "figure"),
     Output("page-1-toggle-annotations", "disabled"),
     Input("main-slider", "value"),
@@ -206,7 +204,7 @@ def tab_1_load_image(value_slider, active_tab, display_annotations):
 
         # Force no annotation for the original data
         return (
-            return_shelved_object(
+            storage.return_shelved_object(
                 "figures/load_page",
                 "figure_basic_image",
                 force_update=False,
@@ -221,7 +219,7 @@ def tab_1_load_image(value_slider, active_tab, display_annotations):
     return dash.no_update
 
 
-@app.app.callback(
+@app.callback(
     Output("page-1-graph-hover-text", "class_name"),
     Input("page-1-card-tabs", "value"),
 )
@@ -241,7 +239,7 @@ def page_1_visibilty_hover(active_tab):
         return dash.no_update
 
 
-@app.app.callback(
+@app.callback(
     Output("page-1-graph-hover-text", "children"),
     Input("page-1-graph-slice-selection", "hoverData"),
     State("main-slider", "value"),
@@ -257,13 +255,11 @@ def page_1_hover(hoverData, slice_index):
             y = hoverData["points"][0]["y"]
 
             slice_coor_rescaled = np.asarray(
-                (
-                    app.atlas.array_coordinates_warped_data[x, y, z] * 1000 / app.atlas.resolution
-                ).round(0),
+                (atlas.array_coordinates_warped_data[x, y, z] * 1000 / atlas.resolution).round(0),
                 dtype=np.int16,
             )
             try:
-                label = app.atlas.labels[tuple(slice_coor_rescaled)]
+                label = atlas.labels[tuple(slice_coor_rescaled)]
             except:
                 label = "undefined"
             return "Hovered region: " + label
@@ -271,7 +267,7 @@ def page_1_hover(hoverData, slice_index):
     return dash.no_update
 
 
-@app.app.callback(
+@app.callback(
     Output("page-1-modal", "is_open"),
     Input("page-1-modal-button", "n_clicks"),
     State("page-1-modal", "is_open"),
@@ -284,7 +280,7 @@ def toggle_modal(n1, is_open):
 
 
 # Function to plot page-4-graph-heatmap-mz-selection when its state get updated
-@app.app.callback(
+@app.callback(
     output=Output("page-1-graph-modal", "figure"),
     inputs=Input("page-1-modal-button", "n_clicks"),
     prevent_initial_call=True,
@@ -292,7 +288,7 @@ def toggle_modal(n1, is_open):
 def page_1_plot_graph_modal(n1):
     """This callback is used to plot the figure representing the slices in 3D in the modal."""
     if n1:
-        return return_shelved_object(
+        return storage.return_shelved_object(
             "figures/3D_page",
             "slices_3D",
             force_update=False,

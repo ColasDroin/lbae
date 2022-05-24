@@ -19,9 +19,7 @@ from dash.dependencies import Input, Output, State, ALL
 import dash_mantine_components as dmc
 
 # LBAE imports
-from app import figures, data, cache_flask
-import app
-from modules.tools.storage import return_shelved_object
+from app import app, figures, data, storage, cache_flask
 
 # ==================================================================================================
 # --- Layout
@@ -96,7 +94,7 @@ def return_layout(basic_config, slice_index):
                                     children=[
                                         dmc.MultiSelect(
                                             id="page-2-dropdown-lipids",
-                                            data=return_shelved_object(
+                                            data=storage.return_shelved_object(
                                                 "annotations",
                                                 "lipid_options",
                                                 force_update=False,
@@ -448,7 +446,7 @@ def return_layout(basic_config, slice_index):
 # ==================================================================================================
 
 
-@app.app.callback(
+@app.callback(
     Output("page-2-graph-heatmap-mz-selection", "figure"),
     Output("page-2-badge-input", "children"),
     Input("main-slider", "value"),
@@ -660,7 +658,7 @@ def page_2_plot_graph_heatmap_mz_selection(
         return dash.no_update
 
 
-@app.app.callback(
+@app.callback(
     Output("page-2-graph-low-resolution-spectrum", "figure"),
     Input("main-slider", "value"),
     State("page-2-selected-lipid-1", "data"),
@@ -746,7 +744,7 @@ def page_2_plot_graph_low_res_spectrum(
     return dash.no_update
 
 
-@app.app.callback(
+@app.callback(
     Output("boundaries-low-resolution-mz-plot", "data"),
     Input("page-2-graph-low-resolution-spectrum", "relayoutData"),
     State("main-slider", "value"),
@@ -777,7 +775,7 @@ def page_2_store_boundaries_mz_from_graph_low_res_spectrum(relayoutData, slice_i
     return dash.no_update
 
 
-@app.app.callback(
+@app.callback(
     Output("page-2-graph-high-resolution-spectrum", "figure"),
     Input("main-slider", "value"),
     Input("boundaries-low-resolution-mz-plot", "data"),
@@ -900,7 +898,7 @@ def page_2_plot_graph_high_res_spectrum(
     return dash.no_update
 
 
-@app.app.callback(
+@app.callback(
     Output("boundaries-high-resolution-mz-plot", "data"),
     Input("page-2-graph-high-resolution-spectrum", "relayoutData"),
     Input("boundaries-low-resolution-mz-plot", "data"),
@@ -933,7 +931,7 @@ def page_2_store_boundaries_mz_from_graph_high_res_spectrum(relayoutData, bound_
         return dash.no_update
 
 
-@app.app.callback(
+@app.callback(
     Output("page-2-badge-lipid-1", "children"),
     Output("page-2-badge-lipid-2", "children"),
     Output("page-2-badge-lipid-3", "children"),
@@ -1175,7 +1173,7 @@ def page_2_add_toast_selection(
     return dash.no_update
 
 
-@app.app.callback(
+@app.callback(
     Output("page-2-graph-high-resolution-spectrum", "style"),
     Input("page-2-graph-high-resolution-spectrum", "figure"),
 )
@@ -1188,7 +1186,7 @@ def page_2_display_high_res_mz_plot(figure):
     return {"display": "none"}
 
 
-@app.app.callback(
+@app.callback(
     Output("page-2-alert", "style"),
     Input("page-2-graph-high-resolution-spectrum", "figure"),
 )
@@ -1200,7 +1198,7 @@ def page_2_display_alert(figure):
     return {}
 
 
-@app.app.callback(
+@app.callback(
     Output("page-2-download-data", "data"),
     Input("page-2-download-data-button", "n_clicks"),
     State("page-2-selected-lipid-1", "data"),
@@ -1350,7 +1348,7 @@ clientside_callback(
 """This clientside callback is used to download the current heatmap."""
 
 
-@app.app.callback(
+@app.callback(
     Output("page-2-rgb-button", "disabled"),
     Output("page-2-colormap-button", "disabled"),
     Input("page-2-selected-lipid-1", "data"),
@@ -1371,7 +1369,7 @@ def page_2_active_download(lipid_1_index, lipid_2_index, lipid_3_index):
         return True, True
 
 
-@app.app.callback(
+@app.callback(
     Output("page-2-button-bounds", "disabled"),
     Input("page-2-lower-bound", "value"),
     Input("page-2-upper-bound", "value"),
@@ -1387,7 +1385,7 @@ def page_2_button_window(lb, hb):
     return True
 
 
-@app.app.callback(
+@app.callback(
     Output("page-2-drawer-low-res-spectra", "is_open"),
     Input("page-2-show-low-res-spectrum-button", "n_clicks"),
     Input("page-2-close-low-res-spectrum-button", "n_clicks"),
@@ -1400,7 +1398,7 @@ def toggle_offcanvas(n1, n2, is_open):
     return is_open
 
 
-@app.app.callback(
+@app.callback(
     Output("page-2-drawer-high-res-spectra", "is_open"),
     Input("page-2-show-high-res-spectrum-button", "n_clicks"),
     Input("page-2-close-high-res-spectrum-button", "n_clicks"),

@@ -15,7 +15,6 @@ import sys
 import numpy as np
 
 # LBAE imports
-from modules.tools.storage import check_shelved_object, dump_shelved_object
 from modules.tools.spectra import (
     add_zeros_to_spectrum,
     compute_avg_intensity_per_lipid,
@@ -39,8 +38,8 @@ class Launch:
     Attributes:
         data (MaldiData): Used to manipulate the raw MALDI data.
         atlas (Atlas): Used to manipulate the objects coming from the Allen Brain Atlas.
-        figures (Figures): FUsed to build the figures of the app.
-        path (str): Path to the shelve database.
+        figures (Figures): Used to build the figures of the app.
+        storage (Storage): Used to access the shelve database.
         l_atlas_objects_at_init (list): List of atlas objects normally computed at app startup
             if not already in shelve database.
         l_figures_objects_at_init (list): List of figures objects normally computed at app
@@ -53,7 +52,7 @@ class Launch:
             shelve database.
 
     Methods:
-        __init__(data, atlas, figures, path): Initialize the Launch class.
+        __init__(data, atlas, figures, storage): Initialize the Launch class.
         check_missing_db_entries(): Check if all the entries in l_db_entries are in the shelve db.
         compute_and_fill_entries(l_missing_entries): Precompute all the entries in l_missing_entries
             and fill them in the shelve database.
@@ -65,7 +64,7 @@ class Launch:
     # --- Constructor
     # ==============================================================================================
 
-    def __init__(self, data, atlas, figures, path="data/app_data/data.db"):
+    def __init__(self, data, atlas, figures, storage):
         """Initialize the class Launch.
 
         Args:
@@ -73,7 +72,7 @@ class Launch:
             atlas (Atlas): Atlas object, used to manipulate the objects coming from the Allen Brain
                 Atlas.
             figures (Figures): Figures object, used to build the figures of the app.
-            path (str): Path to the shelve database. Defaults to "data/app_data/data.db".
+            storage (Storage): Storage object, used to access the shelve database.
         """
 
         # App main objects
@@ -82,7 +81,7 @@ class Launch:
         self.figures = figures
 
         # Database path
-        self.db_path = path
+        self.storage = storage
 
         # Objects to shelve in the Atlas class. Everything in this list is shelved at
         # initialization of Atlas and Figures objects. The computations described are the ones done
@@ -134,67 +133,64 @@ class Launch:
         # Objects to shelve in the Figures class. Everything in this list is shelved at
         # initialization of the Figure object. The computations described are the ones done at
         # startup.
-        self.l_figures_objects_at_init = (
-            [
-                # Computed in Figures.__init__() as an argument of Figures. Corresponds to the
-                # object returned by
-                # Figures.compute_normalization_factor_across_slices(cache_flask=None)
-                "figures/lipid_selection/dic_normalization_factors_None",
-                #
-                # Computed in Figures.__init__(). Corresponds to the object returned
-                # by Figures.compute_treemaps_figure().
-                "figures/atlas_page/3D/treemaps",
-                #
-                # Computed in Figures.__init__(). Corresponds to the object returned by
-                # Figures.compute_figure_slices_3D().
-                "figures/3D_page/slices_3D",
-                #
-                # Computed in Figures.__init__(). Corresponds to the object returned by
-                # Figures.compute_3D_root_volume().
-                "figures/3D_page/volume_root",
-                #
-                # Computed in Figures.__init(), calling Figures.shelve_arrays_basic_figures(), but
-                # it doesn't correpond to an object returned by a specific function.
-                # All figures are computed and saved in the shelve database with the following ids:
-                # "figures/load_page/figure_basic_image_$type_figure$_$idx_slice$_$display_annotations",
-                # (not explicitely in this list as there are too many).
-                #  * This a long computation.
-                "figures/load_page/arrays_basic_figures_computed",
-                #
-                # Computed in compute_figure_basic_image() only, which is called in
-                # Figures.shelve_arrays_basic_figures(), itself called in Figures.__init__().
-                # Corresponds to the object returned by
-                # figures.compute_array_basic_images(type_figure), with type_figure having the
-                # following values: "original_data", "warped_data", "projection_corrected", "atlas"
-                "figures/load_page/array_basic_images_original_data",
-                "figures/load_page/array_basic_images_warped_data",
-                "figures/load_page/array_basic_images_projection_corrected",
-                "figures/load_page/array_basic_images_atlas",
-                #
-                # Computed in Figures.__init(), calling Figures.shelve_all_l_array_2D(), but it
-                # doesn't correspond to an object returned by a specific function.
-                # All the list of 2D slices of expression objects are computed and saved in the
-                # shelve database with the following ids:
-                # "figures/3D_page/arrays_expression_$name_lipid$__",
-                # (not explicitely in this list as there are too many).
-                #  * This a very long computation.
-                "figures/3D_page/arrays_expression_computed",
-                #
-                # Computed in in Figures.__init(), calling Figures.shelve_all_arrays_annotation(),
-                # but it doesn't correspond to an object returned by a specific function. The
-                # corresponding objects saved in Figures.shelve_all_arrays_annotation() are in the
-                # comment below.
-                "figures/3D_page/arrays_annotation_computed",
-            ]
-            + [
-                # Computed in in Figures.__init(), calling Figures.shelve_all_arrays_annotation().
-                # Corresponds to the object returned by
-                # Figures.get_array_of_annotations(decrease_dimensionality_factor), with
-                # decrease_dimensionality_factor ranging from 2 to 11.
-                "figures/3D_page/arrays_annotation_" + str(decrease_dimensionality_factor)
-                for decrease_dimensionality_factor in range(2, 13)
-            ]
-        )
+        self.l_figures_objects_at_init = [
+            # Computed in Figures.__init__() as an argument of Figures. Corresponds to the
+            # object returned by
+            # Figures.compute_normalization_factor_across_slices(cache_flask=None)
+            "figures/lipid_selection/dic_normalization_factors_None",
+            #
+            # Computed in Figures.__init__(). Corresponds to the object returned
+            # by Figures.compute_treemaps_figure().
+            "figures/atlas_page/3D/treemaps",
+            #
+            # Computed in Figures.__init__(). Corresponds to the object returned by
+            # Figures.compute_figure_slices_3D().
+            "figures/3D_page/slices_3D",
+            #
+            # Computed in Figures.__init__(). Corresponds to the object returned by
+            # Figures.compute_3D_root_volume().
+            "figures/3D_page/volume_root",
+            #
+            # Computed in Figures.__init(), calling Figures.shelve_arrays_basic_figures(), but
+            # it doesn't correpond to an object returned by a specific function.
+            # All figures are computed and saved in the shelve database with the following ids:
+            # "figures/load_page/figure_basic_image_$type_figure$_$idx_slice$_$display_annotations",
+            # (not explicitely in this list as there are too many).
+            #  * This a long computation.
+            "figures/load_page/arrays_basic_figures_computed",
+            #
+            # Computed in compute_figure_basic_image() only, which is called in
+            # Figures.shelve_arrays_basic_figures(), itself called in Figures.__init__().
+            # Corresponds to the object returned by
+            # figures.compute_array_basic_images(type_figure), with type_figure having the
+            # following values: "original_data", "warped_data", "projection_corrected", "atlas"
+            "figures/load_page/array_basic_images_original_data",
+            "figures/load_page/array_basic_images_warped_data",
+            "figures/load_page/array_basic_images_projection_corrected",
+            "figures/load_page/array_basic_images_atlas",
+            #
+            # Computed in Figures.__init(), calling Figures.shelve_all_l_array_2D(), but it
+            # doesn't correspond to an object returned by a specific function.
+            # All the list of 2D slices of expression objects are computed and saved in the
+            # shelve database with the following ids:
+            # "figures/3D_page/arrays_expression_$name_lipid$__",
+            # (not explicitely in this list as there are too many).
+            #  * This a very long computation.
+            "figures/3D_page/arrays_expression_computed",
+            #
+            # Computed in in Figures.__init(), calling Figures.shelve_all_arrays_annotation(),
+            # but it doesn't correspond to an object returned by a specific function. The
+            # corresponding objects saved in Figures.shelve_all_arrays_annotation() are in the
+            # comment below.
+            "figures/3D_page/arrays_annotation_computed",
+        ] + [
+            # Computed in in Figures.__init(), calling Figures.shelve_all_arrays_annotation().
+            # Corresponds to the object returned by
+            # Figures.get_array_of_annotations(decrease_dimensionality_factor), with
+            # decrease_dimensionality_factor ranging from 2 to 11.
+            "figures/3D_page/arrays_annotation_" + str(decrease_dimensionality_factor)
+            for decrease_dimensionality_factor in range(2, 13)
+        ]
 
         # Objects to shelve not belonging to a specific class. Objects in the list are not
         # automatically shelved at startup.
@@ -229,7 +225,7 @@ class Launch:
         """
 
         # Get database
-        db = shelve.open(self.db_path)
+        db = shelve.open(self.storage.path_db)
 
         # Build a set of missing entries
         l_missing_entries = list(set(self.l_db_entries) - set(db.keys()))
@@ -268,7 +264,7 @@ class Launch:
         """
 
         # Get database
-        db = shelve.open(self.db_path)
+        db = shelve.open(self.storage.path_db)
 
         # Compute missing entries if possible
         for entry in l_missing_entries:
@@ -398,8 +394,8 @@ class Launch:
         self.run_compiled_functions()
 
         # Check if the app has been run before, and potentially force exit if not
-        if not check_shelved_object("launch", "first_launch"):
-            dump_shelved_object("launch", "first_launch", True)
+        if not self.storage.check_shelved_object("launch", "first_launch"):
+            self.storage.dump_shelved_object("launch", "first_launch", True)
             if force_exit_if_first_launch:
                 sys.exit(
                     "The app has been exited now that everything has been precomputed."

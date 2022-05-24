@@ -25,6 +25,7 @@ from modules.maldi_data import MaldiData
 from modules.figures import Figures
 from modules.atlas import Atlas
 from modules.launch import Launch
+from modules.storage import Storage
 from modules.tools.misc import logmem
 
 # ==================================================================================================
@@ -36,13 +37,22 @@ logging.info("Memory use before any global variable declaration" + logmem())
 # Define if the app will use only a sample of the dataset, and uses a lower resolution for the atlas
 SAMPLE_DATA = False
 
-# Load data
+# Define paths for the sample/not sample data
 if SAMPLE_DATA:
     path_data = "data_sample/whole_dataset/"
     path_annotations = "data_sample/annotations/"
+    path_db = "data_sample/app_data/data.db"
+    cache_dir = "data_sample/cache/"
 else:
     path_data = "data/whole_dataset/"
     path_annotations = "data/annotations/"
+    path_db = "data/app_data/data.db"
+    cache_dir = "data/cache/"
+
+# Load shelve database
+storage = Storage(path_db)
+
+# Load data
 data = MaldiData(path_data, path_annotations, sample_data=SAMPLE_DATA)
 
 # If True, only a small portions of the figures are precomputed (if precomputation has not already
@@ -51,18 +61,14 @@ sample = False
 
 # Load Atlas and Figures objects. At first launch, many objects will be precomputed and shelved in
 # the classes Atlas and Figures.
-atlas = Atlas(data, resolution=25, sample=sample)
-figures = Figures(data, atlas, sample=sample)
+atlas = Atlas(data, storage, resolution=25, sample=sample)
+figures = Figures(data, storage, atlas, sample=sample)
 
 logging.info("Memory use after three main object have been instantiated" + logmem())
 
 
 # Compute and shelve potentially missing objects
-if SAMPLE_DATA:
-    path_db = "data_sample/app_data/data.db"
-else:
-    path_db = "data/app_data/data.db"
-launch = Launch(data, atlas, figures, path=path_db)
+launch = Launch(data, atlas, figures, storage)
 launch.launch()
 
 logging.info("Memory use after main functions have been compiled" + logmem())
@@ -76,10 +82,7 @@ server = flask.Flask(__name__)
 
 # Prepare long callback support
 launch_uid = uuid4()
-if SAMPLE_DATA:
-    cache_long_callback = diskcache.Cache("data_sample/cache/")
-else:
-    cache_long_callback = diskcache.Cache("data/cache/")
+cache_long_callback = diskcache.Cache(cache_dir)
 long_callback_manager = DiskcacheLongCallbackManager(
     cache_long_callback,
     cache_by=[lambda: launch_uid],
@@ -115,7 +118,7 @@ else:
     CACHE_CONFIG = {
         # We use 'FileSystemCache' as we want the application to be lightweight in term of RAM
         "CACHE_TYPE": "FileSystemCache",
-        "CACHE_DIR": "data_sample/cache/" if SAMPLE_DATA else "data/cache/",
+        "CACHE_DIR": cache_dir,
         "CACHE_THRESHOLD": 200,
     }
 

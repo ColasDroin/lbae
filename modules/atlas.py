@@ -31,12 +31,6 @@ from modules.tools.atlas import (
 )
 from modules.tools.spectra import compute_spectrum_per_row_selection, compute_thread_safe_function
 from modules.atlas_labels import Labels
-from modules.tools.storage import (
-    return_shelved_object,
-    dump_shelved_object,
-    load_shelved_object,
-    check_shelved_object,
-)
 from modules.tools.misc import logmem
 
 
@@ -52,6 +46,7 @@ class Atlas:
     Attributes:
         resolution (int): Resolution of the atlas.
         data (MaldiData): Used to manipulate the raw MALDI data.
+        storage (Storage): Used to access the shelve database.
         bg_atlas (BrainGlobeAtlas): Used to query the Allen Brain Atlas.
         subsampling_block (int): Set the subsampling of the atlas in the longitudinal direction, to
             decrease the memory usage.
@@ -116,11 +111,12 @@ class Atlas:
     # --- Constructor
     # ==============================================================================================
 
-    def __init__(self, maldi_data, resolution=25, sample=False):
+    def __init__(self, maldi_data, storage, resolution=25, sample=False):
         """Initialize the class Atlas.
 
         Args:
             data (MaldiData): MaldiData object, used to manipulate the raw MALDI data.
+            storage (Storage): Used to access the shelve database.
             resolution (int): Resolution of the atlas. Default to 25.
             sample (bool): If True, only a fraction of the precomputations are made (for debug).
                 Default to False.
@@ -135,8 +131,9 @@ class Atlas:
             logging.warning("The resolution you chose is not available, using the default of 25um")
             self.resolution = 25
 
-        # Attribute to easily access the data
+        # Attribute to easily access the data and the shelve db
         self.data = maldi_data
+        self.storage = storage
 
         # Correct atlas resolution to 100 if sampled app
         if maldi_data._sample_data:
@@ -174,7 +171,7 @@ class Atlas:
         # Compute a dictionnary that associates to each structure (acronym) the set of ids (int) of
         # all of its children. Used only in page_4_plot_graph_volume, but it's very light (~3mb) so
         # no problem using it as an attribute
-        self.dic_acronym_children_id = return_shelved_object(
+        self.dic_acronym_children_id = self.storage.return_shelved_object(
             "atlas/atlas_objects",
             "dic_acronym_children_id",
             force_update=False,
@@ -205,7 +202,7 @@ class Atlas:
             self.l_parents,
             self.dic_name_acronym,
             self.dic_acronym_name,
-        ) = return_shelved_object(
+        ) = self.storage.return_shelved_object(
             "atlas/atlas_objects",
             "hierarchy",
             force_update=False,
@@ -216,7 +213,7 @@ class Atlas:
         # warping transformation of the data. Therefore it shouldn't be used a as a property.
         # Weights ~150mb
         # * The type is np.int16, and can't be reduced anymore as values are sometimes above 400
-        self.array_projection_correspondence_corrected = return_shelved_object(
+        self.array_projection_correspondence_corrected = self.storage.return_shelved_object(
             "atlas/atlas_objects",
             "arrays_projection_corrected",
             force_update=False,
@@ -227,7 +224,7 @@ class Atlas:
 
         # Load arrays of original images coordinates. It is used everytime a 3D object is computed.
         # Weights ~50mb
-        self.l_original_coor = return_shelved_object(
+        self.l_original_coor = self.storage.return_shelved_object(
             "atlas/atlas_objects",
             "arrays_projection_corrected",
             force_update=False,
@@ -238,8 +235,8 @@ class Atlas:
 
         # Dictionnary of existing masks per slice, which associates slice index (key) to a set of
         # masks acronyms
-        if check_shelved_object("atlas/atlas_objects", "dic_existing_masks"):
-            self.dic_existing_masks = load_shelved_object(
+        if self.storage.check_shelved_object("atlas/atlas_objects", "dic_existing_masks"):
+            self.dic_existing_masks = self.storage.load_shelved_object(
                 "atlas/atlas_objects", "dic_existing_masks"
             )
         else:
@@ -276,7 +273,7 @@ class Atlas:
                 " precomputations."
                 + logmem()
             )
-            self._array_projection_corrected = return_shelved_object(
+            self._array_projection_corrected = self.storage.return_shelved_object(
                 "atlas/atlas_objects",
                 "arrays_projection_corrected",
                 force_update=False,
@@ -301,7 +298,7 @@ class Atlas:
                 " during precomputations."
                 + logmem()
             )
-            self._list_projected_atlas_borders_arrays = return_shelved_object(
+            self._list_projected_atlas_borders_arrays = self.storage.return_shelved_object(
                 "atlas/atlas_objects",
                 "list_projected_atlas_borders_arrays",
                 force_update=False,
@@ -416,7 +413,7 @@ class Atlas:
 
         # List of orginal coordinates
         l_original_coor = []
-        l_transform_parameters = return_shelved_object(
+        l_transform_parameters = self.storage.return_shelved_object(
             "atlas/atlas_objects",
             "l_transform_parameters",
             force_update=False,
@@ -510,7 +507,7 @@ class Atlas:
 
         l_array_images = []
         # Load array of atlas images corresponding to our data and how it is projected
-        array_projected_images_atlas, array_projected_simplified_id = return_shelved_object(
+        array_projected_images_atlas, array_projected_simplified_id = self.storage.return_shelved_object(
             "atlas/atlas_objects",
             "array_images_atlas",
             force_update=False,
@@ -723,8 +720,8 @@ class Atlas:
         dic_existing_masks = {}
 
         # Define a dictionnary to save the result of the function slice by slice
-        if check_shelved_object(path_atlas, "dic_processed_temp"):
-            dic_processed_temp = load_shelved_object(
+        if self.storage.check_shelved_object(path_atlas, "dic_processed_temp"):
+            dic_processed_temp = self.storage.load_shelved_object(
                 path_atlas,
                 "dic_processed_temp",
             )
@@ -762,14 +759,14 @@ class Atlas:
 
                     if (
                         not (
-                            check_shelved_object(
+                            self.storage.check_shelved_object(
                                 path_atlas,
                                 "mask_and_spectrum_"
                                 + str(slice_index)
                                 + "_"
                                 + str(id_mask).replace("/", ""),
                             )
-                            and check_shelved_object(
+                            and self.storage.check_shelved_object(
                                 path_atlas,
                                 "mask_and_spectrum_MAIA_corrected_"
                                 + str(slice_index)
@@ -810,7 +807,7 @@ class Atlas:
                         dic_processed_temp[slice_index].add(id_mask)
 
                         # Dump the mask and data with shelve
-                        dump_shelved_object(
+                        self.storage.dump_shelved_object(
                             path_atlas,
                             "mask_and_spectrum_"
                             + str(slice_index)
@@ -827,7 +824,7 @@ class Atlas:
                             cache_flask=cache_flask,
                         )
 
-                        dump_shelved_object(
+                        self.storage.dump_shelved_object(
                             path_atlas,
                             "mask_and_spectrum_MAIA_corrected_"
                             + str(slice_index)
@@ -848,7 +845,7 @@ class Atlas:
                     logging.info('Mask "' + mask_name + '" already processed')
 
             # Dump the dictionnary of processed masks with shelve after every slice
-            dump_shelved_object(
+            self.storage.dump_shelved_object(
                 path_atlas,
                 "dic_processed_temp",
                 dic_processed_temp,
@@ -856,7 +853,7 @@ class Atlas:
 
         if not sample:
             # Dump the dictionnary of existing masks with shelve
-            dump_shelved_object(
+            self.storage.dump_shelved_object(
                 path_atlas,
                 "dic_existing_masks",
                 dic_existing_masks,
@@ -894,7 +891,7 @@ class Atlas:
             "Loading " + mask_name + " for slice " + str(slice_index) + " from shelve file."
         )
         try:
-            return load_shelved_object("atlas/atlas_objects", filename)
+            return self.storage.load_shelved_object("atlas/atlas_objects", filename)
         except:
             logging.warning(
                 "The mask and spectrum data could not be found for "

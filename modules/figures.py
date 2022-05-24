@@ -20,7 +20,6 @@ import dash_bio as dashbio
 
 # LBAE imports
 from modules.tools.image import convert_image_to_base64
-from modules.tools.storage import return_shelved_object, check_shelved_object, dump_shelved_object
 from modules.tools.atlas import project_image, slice_to_atlas_transform
 from modules.tools.misc import logmem
 from modules.tools.volume import (
@@ -51,6 +50,7 @@ class Figures:
 
     Attributes:
         _data (MaldiData): MaldiData object, used to manipulate the raw MALDI data.
+        _storage (Storage): Used to access the shelve database.
         _atlas (Atlas): Used to manipulate the objects coming from the Allen Brain Atlas.
         dic_normalization_factors (dict): Dictionnary of normalization factors across slices for
             MAIA.
@@ -119,11 +119,12 @@ class Figures:
     # --- Constructor
     # ==============================================================================================
 
-    def __init__(self, maldi_data, atlas, sample=False):
+    def __init__(self, maldi_data, storage, atlas, sample=False):
         """Initialize the Figures class.
 
         Args:
             maldi_data (MaldiData): MaldiData object, used to manipulate the raw MALDI data.
+            storage (Storage): Used to access the shelve database.
             atlas (Atlas): Used to manipulate the objects coming from the Allen Brain Atlas.
             sample (bool, optional): If True, only a fraction of the precomputations are made (for
                 debug). Default to False.
@@ -134,8 +135,11 @@ class Figures:
         self._data = maldi_data
         self._atlas = atlas
 
+        # attribute to access the shelve database
+        self._storage = storage
+
         # Dic of normalization factors across slices for MAIA normalized lipids
-        self.dic_normalization_factors = return_shelved_object(
+        self.dic_normalization_factors = self._storage.return_shelved_object(
             "figures/lipid_selection",
             "dic_normalization_factors",
             force_update=False,
@@ -144,8 +148,8 @@ class Figures:
         )
 
         # Check that treemaps has been computed already. If not, compute it and store it.
-        if not check_shelved_object("figures/atlas_page/3D", "treemaps"):
-            return_shelved_object(
+        if not self._storage.check_shelved_object("figures/atlas_page/3D", "treemaps"):
+            self._storage.return_shelved_object(
                 "figures/atlas_page/3D",
                 "treemaps",
                 force_update=False,
@@ -153,8 +157,8 @@ class Figures:
             ),
 
         # Check that 3D slice figure has been computed already. If not, compute it and store it.
-        if not check_shelved_object("figures/3D_page", "slices_3D"):
-            return_shelved_object(
+        if not self._storage.check_shelved_object("figures/3D_page", "slices_3D"):
+            self._storage.return_shelved_object(
                 "figures/3D_page",
                 "slices_3D",
                 force_update=False,
@@ -163,8 +167,8 @@ class Figures:
 
         # Check that the 3D root volume figure has been computed already. If not, compute it and
         # store it.
-        if not check_shelved_object("figures/3D_page", "volume_root"):
-            return_shelved_object(
+        if not self._storage.check_shelved_object("figures/3D_page", "volume_root"):
+            self._storage.return_shelved_object(
                 "figures/3D_page",
                 "volume_root",
                 force_update=False,
@@ -172,15 +176,17 @@ class Figures:
             )
 
         # Check that all basic figures in the load_slice page are present, if not, compute them
-        if not check_shelved_object("figures/load_page", "arrays_basic_figures_computed"):
+        if not self._storage.check_shelved_object(
+            "figures/load_page", "arrays_basic_figures_computed"
+        ):
             self.shelve_arrays_basic_figures()
 
         # Check that the lipid distributions for all slices have been computed, if not, compute them
-        if not check_shelved_object("figures/3D_page", "arrays_expression_computed"):
+        if not self._storage.check_shelved_object("figures/3D_page", "arrays_expression_computed"):
             self.shelve_all_l_array_2D(sample=sample)
 
         # Check that all arrays of annotations have been computed, if not, compute them
-        if not check_shelved_object("figures/3D_page", "arrays_annotation_computed"):
+        if not self._storage.check_shelved_object("figures/3D_page", "arrays_annotation_computed"):
             self.shelve_all_arrays_annotation()
 
         logging.info("Figures object instantiated" + logmem())
@@ -221,7 +227,10 @@ class Figures:
         elif type_figure == "projection_corrected":
             array_images = self._atlas.array_projection_corrected
         elif type_figure == "atlas":
-            array_projected_images_atlas, array_projected_simplified_id = return_shelved_object(
+            (
+                array_projected_images_atlas,
+                array_projected_simplified_id,
+            ) = self._storage.return_shelved_object(
                 "atlas/atlas_objects",
                 "array_images_atlas",
                 force_update=False,
@@ -268,7 +277,7 @@ class Figures:
 
         else:
             # Get array of images
-            array_images = return_shelved_object(
+            array_images = self._storage.return_shelved_object(
                 "figures/load_page",
                 "array_basic_images",
                 force_update=False,
@@ -355,7 +364,7 @@ class Figures:
             go.Figure: A Plotly figure representing the slices from the MALDI acquisitions in 3D.
         """
         # Get transform parameters (a,u,v) for each slice
-        l_transform_parameters = return_shelved_object(
+        l_transform_parameters = self._storage.return_shelved_object(
             "atlas/atlas_objects",
             "l_transform_parameters",
             force_update=False,
@@ -1691,7 +1700,7 @@ class Figures:
         logging.info("Starting 3D volume computation")
 
         # Get subsampled array of annotations
-        array_annotation = return_shelved_object(
+        array_annotation = self._storage.return_shelved_object(
             "figures/3D_page",
             "arrays_annotation",
             force_update=False,
@@ -1715,7 +1724,7 @@ class Figures:
 
         # Get array of expression for each lipid
         ll_array_data = [
-            return_shelved_object(
+            self._storage.return_shelved_object(
                 "figures/3D_page",
                 "arrays_expression_" + str(name_lipid) + "__",
                 force_update=False,
@@ -1811,7 +1820,7 @@ class Figures:
         logging.info("Finished interpolation betwee slices")
 
         # Get root figure
-        root_data = return_shelved_object(
+        root_data = self._storage.return_shelved_object(
             "figures/3D_page",
             "volume_root",
             force_update=False,
@@ -2033,7 +2042,7 @@ class Figures:
                 for display_annotations in [True, False]:
 
                     # Force no annotation for the original data
-                    return_shelved_object(
+                    self._storage.return_shelved_object(
                         "figures/load_page",
                         "figure_basic_image",
                         force_update=force_update,
@@ -2045,7 +2054,9 @@ class Figures:
                         else False,
                     )
 
-        dump_shelved_object("figures/load_page", "arrays_basic_figures_computed", True)
+        self._storage.dump_shelved_object(
+            "figures/load_page", "arrays_basic_figures_computed", True
+        )
 
     # ! Need to update for brain 2 as well
 
@@ -2139,7 +2150,7 @@ class Figures:
                         # Compute 3D figures, selection is limited to one lipid
                         name_lipid = lipid_string
 
-                        return_shelved_object(
+                        self._storage.return_shelved_object(
                             "figures/3D_page",
                             "arrays_expression_" + name_lipid + "__",
                             force_update=force_update,
@@ -2154,7 +2165,7 @@ class Figures:
                             return None
 
         # Variable to signal everything has been computed
-        dump_shelved_object("figures/3D_page", "arrays_expression_computed", True)
+        self._storage.dump_shelved_object("figures/3D_page", "arrays_expression_computed", True)
 
     def shelve_all_arrays_annotation(self):
         """This functions precomputes and shelves the array of structure annotation used in a
@@ -2163,7 +2174,7 @@ class Figures:
         database, to indicate that the arrays do not need to be recomputed at next app startup.
         """
         for decrease_dimensionality_factor in range(2, 13):
-            return_shelved_object(
+            self._storage.return_shelved_object(
                 "figures/3D_page",
                 "arrays_annotation",
                 force_update=False,
@@ -2172,4 +2183,4 @@ class Figures:
             )
 
         # Variable to signal everything has been computed
-        dump_shelved_object("figures/3D_page", "arrays_annotation_computed", True)
+        self._storage.dump_shelved_object("figures/3D_page", "arrays_annotation_computed", True)

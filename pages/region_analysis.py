@@ -22,10 +22,8 @@ from numba import njit
 import dash_mantine_components as dmc
 
 # LBAE imports
-import app
-from app import figures, data, atlas, cache_flask
+from app import app, figures, data, storage, atlas, cache_flask
 import config
-from modules.tools.storage import return_shelved_object
 from modules.tools.image import convert_image_to_base64
 from modules.tools.spectra import (
     sample_rows_from_path,
@@ -85,7 +83,7 @@ def return_layout(basic_config, slice_index=1):
                             "position": "absolute",
                             "left": "2.5%",
                         },
-                        figure=return_shelved_object(
+                        figure=storage.return_shelved_object(
                             "figures/load_page",
                             "figure_basic_image",
                             force_update=False,
@@ -844,7 +842,7 @@ def return_layout(basic_config, slice_index=1):
 # ==================================================================================================
 
 
-@app.app.callback(
+@app.callback(
     Output("page-3-graph-hover-text", "children"),
     Input("page-3-graph-heatmap-per-sel", "hoverData"),
     Input("main-slider", "value"),
@@ -872,7 +870,7 @@ def page_3_hover(hoverData, slice_index):
     return dash.no_update
 
 
-@app.app.callback(
+@app.callback(
     Output("page-3-graph-heatmap-per-sel", "relayoutData"),
     Input("page-3-reset-button", "n_clicks"),
     Input("url", "pathname"),
@@ -883,7 +881,7 @@ def page_3_reset_layout(cliked_reset, url):
     return {}
 
 
-@app.app.callback(
+@app.callback(
     Output("page-3-graph-heatmap-per-sel", "figure"),
     Output("dcc-store-color-mask", "data"),
     Output("dcc-store-reset", "data"),
@@ -924,7 +922,7 @@ def page_3_plot_heatmap(
         or id_input == "url"
     ):
 
-        fig = return_shelved_object(
+        fig = storage.return_shelved_object(
             "figures/load_page",
             "figure_basic_image",
             force_update=False,
@@ -954,7 +952,7 @@ def page_3_plot_heatmap(
         and (l_mask_name is None or len(l_mask_name) == 0)
     ):
 
-        fig = return_shelved_object(
+        fig = storage.return_shelved_object(
             "figures/load_page",
             "figure_basic_image",
             force_update=False,
@@ -980,7 +978,7 @@ def page_3_plot_heatmap(
         if l_mask_name is not None or relayoutData is not None:
 
             # Rebuild figure
-            fig = return_shelved_object(
+            fig = storage.return_shelved_object(
                 "figures/load_page",
                 "figure_basic_image",
                 force_update=False,
@@ -1096,7 +1094,7 @@ def page_3_plot_heatmap(
     return dash.no_update
 
 
-@app.app.callback(
+@app.callback(
     Output("page-3-dropdown-brain-regions", "data"),
     Input("main-slider", "value"),
 )
@@ -1112,7 +1110,7 @@ def page_3_update_dropdown_option(slice_index):
         return dash.no_update
 
 
-@app.app.callback(
+@app.callback(
     Output("page-3-dropdown-brain-regions", "disabled"),
     Input("page-3-dropdown-brain-regions", "value"),
     Input("page-3-reset-button", "n_clicks"),
@@ -1136,7 +1134,7 @@ def page_3_disable_dropdown(l_selection, clicked_reset):
     return dash.no_update
 
 
-@app.app.callback(
+@app.callback(
     Output("page-3-dropdown-brain-regions", "value"),
     Input("page-3-reset-button", "n_clicks"),
     Input("main-slider", "value"),
@@ -1148,7 +1146,7 @@ def page_3_empty_dropdown(clicked_reset, slice_index):
     return []
 
 
-@app.app.callback(
+@app.callback(
     Output("page-3-button-compute-spectra", "disabled"),
     Input("page-3-graph-heatmap-per-sel", "relayoutData"),
     Input("page-3-reset-button", "n_clicks"),
@@ -1180,7 +1178,7 @@ def page_3_button_compute_spectra(relayoutData, clicked_reset, mask):
     return True
 
 
-@app.app.callback(
+@app.callback(
     Output("page-3-graph-spectrum-per-pixel", "style"),
     Output("page-3-alert-2", "style"),
     Output("page-3-graph-heatmap-per-lipid", "style"),
@@ -1238,7 +1236,7 @@ def page_3_display_high_res_mz_plot(clicked_reset, clicked_compute, mask, relayo
     return dash.no_update
 
 
-@app.app.callback(
+@app.callback(
     Output("page-3-switches", "className"),
     Input("page-3-reset-button", "n_clicks"),
     Input("page-3-graph-heatmap-per-lipid", "figure"),
@@ -1277,7 +1275,7 @@ def page_3_display_switch(clicked_reset, fig_heatmap, relayoutData):
 
 
 # Function to make visible the alert regarding the m/z plot in page 3
-@app.app.callback(
+@app.callback(
     Output("page-3-alert", "style"),
     Output("page-3-alert-3", "style"),
     Output("page-3-alert-5", "style"),
@@ -1524,7 +1522,7 @@ def global_spectrum_store(
     return l_spectra
 
 
-@app.app.callback(
+@app.callback(
     Output("dcc-store-list-mz-spectra", "data"),
     Input("page-3-button-compute-spectra", "n_clicks"),
     Input("page-3-dcc-store-path-heatmap", "data"),
@@ -1587,7 +1585,7 @@ def page_3_record_spectra(
     return []
 
 
-@app.app.callback(
+@app.callback(
     Output("page-3-graph-spectrum-per-pixel", "figure"),
     Input("page-3-reset-button", "n_clicks"),
     Input("dcc-store-list-mz-spectra", "data"),
@@ -1746,7 +1744,7 @@ def page_3_plot_spectrum(
     return dash.no_update
 
 
-@app.app.callback(
+@app.callback(
     Output("page-3-graph-heatmap-per-lipid", "figure"),
     Output("page-3-dcc-store-lipids-region", "data"),
     Input("page-3-reset-button", "n_clicks"),
@@ -1909,7 +1907,7 @@ def page_3_draw_heatmap_per_lipid_selection(
     return dash.no_update
 
 
-@app.app.callback(
+@app.callback(
     Output("page-3-download-data", "data"),
     Input("page-3-download-data-button", "n_clicks"),
     State("page-3-graph-spectrum-per-pixel", "figure"),
@@ -1955,7 +1953,7 @@ def page_3_download(n_clicks, fig_mz):
     return dash.no_update
 
 
-@app.app.callback(
+@app.callback(
     Output("page-3-download-data-button", "disabled"),
     Output("page-3-download-plot-button", "disabled"),
     Output("page-3-download-heatmap-button", "disabled"),
@@ -1972,7 +1970,7 @@ def page_3_reset_download(fig_mz):
     return True, True, True
 
 
-@app.app.callback(
+@app.callback(
     Output("page-3-dropdown-red", "options"),
     Output("page-3-dropdown-green", "options"),
     Output("page-3-dropdown-blue", "options"),
@@ -2040,7 +2038,7 @@ def page_3_fill_dropdown_options(l_idx_lipids, cliked_reset, slice_index, n_clic
     return dash.no_update
 
 
-@app.app.callback(
+@app.callback(
     Output("page-3-open-modal", "disabled"),
     Input("page-3-dropdown-red", "value"),
     Input("page-3-dropdown-green", "value"),
@@ -2056,7 +2054,7 @@ def toggle_button_modal(l_red_lipids, l_green_lipids, l_blue_lipids):
         return True
 
 
-@app.app.callback(
+@app.callback(
     Output("page-3-div-graph-lipid-comparison", "style"),
     Input("page-3-open-modal", "n_clicks"),
     Input("page-3-reset-button", "n_clicks"),
@@ -2082,7 +2080,7 @@ def toggle_visibility_graph(n1, cliked_reset, l_red_lipids, l_green_lipids, l_bl
         return {"display": "none"}
 
 
-@app.app.callback(
+@app.callback(
     Output("page-3-heatmap-lipid-comparison", "figure"),
     Input("page-3-open-modal", "n_clicks"),
     Input("page-3-reset-button", "n_clicks"),
@@ -2175,7 +2173,7 @@ def draw_modal_graph(
     return dash.no_update
 
 
-@app.app.callback(
+@app.callback(
     Output("page-4-drawer-region-selection", "is_open"),
     Input("page-3-button-compute-spectra", "n_clicks"),
     Input("page-4-close-drawer-region-selection", "n_clicks"),
