@@ -34,15 +34,15 @@ from modules.tools.misc import logmem
 logging.info("Memory use before any global variable declaration" + logmem())
 
 # Define if the app will use only a sample of the dataset, and uses a lower resolution for the atlas
-SAMPLE_DATA = True
+SAMPLE_DATA = False
 
 # Load data
 if SAMPLE_DATA:
-    path_data = "data/whole_dataset/"
-    path_annotations = "data/annotations/"
-else:
     path_data = "data_sample/whole_dataset/"
     path_annotations = "data_sample/annotations/"
+else:
+    path_data = "data/whole_dataset/"
+    path_annotations = "data/annotations/"
 data = MaldiData(path_data, path_annotations, sample_data=SAMPLE_DATA)
 
 # If True, only a small portions of the figures are precomputed (if precomputation has not already
@@ -62,7 +62,7 @@ if SAMPLE_DATA:
     path_db = "data_sample/app_data/data.db"
 else:
     path_db = "data/app_data/data.db"
-launch = Launch(data, atlas, figures, path = path_db)
+launch = Launch(data, atlas, figures, path=path_db)
 launch.launch()
 
 logging.info("Memory use after main functions have been compiled" + logmem())
@@ -115,7 +115,7 @@ else:
     CACHE_CONFIG = {
         # We use 'FileSystemCache' as we want the application to be lightweight in term of RAM
         "CACHE_TYPE": "FileSystemCache",
-        "CACHE_DIR": "data/cache/" if SAMPLE_DATA else "data_sample/cache/",
+        "CACHE_DIR": "data_sample/cache/" if SAMPLE_DATA else "data/cache/",
         "CACHE_THRESHOLD": 200,
     }
 

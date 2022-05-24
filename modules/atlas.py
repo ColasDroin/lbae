@@ -184,13 +184,13 @@ class Atlas:
         # Load array of coordinates for warped data (can't be loaded on the fly from shelve as used
         # with hovering). Weights ~225mb
         if maldi_data._sample_data:
+            self.array_coordinates_warped_data = np.load(
+                "data_sample/tiff_files/coordinates_warped_data.npz"
+            )
+        else:
             # * Type turned into np.float16 to gain ram but maybe this may lead to a loss of precision
             self.array_coordinates_warped_data = np.array(
                 skimage.io.imread("data/tiff_files/coordinates_warped_data.tif"), dtype=np.float16
-            )
-        else:
-            self.array_coordinates_warped_data = np.load(
-                "data_sample/tiff_files/coordinates_warped_data.npz"
             )
 
         # Record shape of the warped data
