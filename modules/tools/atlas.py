@@ -173,8 +173,7 @@ def get_array_rows_from_atlas_mask(mask, mask_remapped, array_projection_corresp
 
 @njit
 def solve_plane_equation(
-    slice_index,
-    array_coordinates_high_res,
+    array_coordinates_high_res_slice,
     point_1=(150, 151),
     point_2=(800, 1200),
     point_3=(100, 101),
@@ -186,10 +185,9 @@ def solve_plane_equation(
     ABBA is buggued and the origin doesn't linearly maps to the 3D plane.
 
     Args:
-        slice_index (int): Index of the slice to parametrize in space.
-        array_coordinates_high_res (np.ndarray): A three-dimensional array which maps the
-            high-dimensional warped data to the atlas coordinate system. That is, for each 3-D
-            coordinate (slice_index,x,y), it associates a 3D coordinate (i,j,k) in the ccfv3.
+        array_coordinates_high_res_slice (np.ndarray): A two-dimensional array which maps the
+            high-dimensional warped data to the atlas coordinate system. That is, for each 2-D
+            coordinate (x,y), it associates a 3D coordinate (i,j,k) in the ccfv3.
         point_1 (tuple, optional): Couple of coordinates corresponding to the first point indexed on
             the 3D plane. Defaults to (150, 151).
         point_2 (tuple, optional): Couple of coordinates corresponding to the first point indexed on
@@ -217,15 +215,15 @@ def solve_plane_equation(
     A[7] = [0, point_3[0], 0, 0, point_3[1], 0, 0, 1, 0]
     A[8] = [0, 0, point_3[0], 0, 0, point_3[1], 0, 0, 1]
 
-    b[0] = array_coordinates_high_res[slice_index, point_1[0], point_1[1], 0]
-    b[1] = array_coordinates_high_res[slice_index, point_1[0], point_1[1], 1]
-    b[2] = array_coordinates_high_res[slice_index, point_1[0], point_1[1], 2]
-    b[3] = array_coordinates_high_res[slice_index, point_2[0], point_2[1], 0]
-    b[4] = array_coordinates_high_res[slice_index, point_2[0], point_2[1], 1]
-    b[5] = array_coordinates_high_res[slice_index, point_2[0], point_2[1], 2]
-    b[6] = array_coordinates_high_res[slice_index, point_3[0], point_3[1], 0]
-    b[7] = array_coordinates_high_res[slice_index, point_3[0], point_3[1], 1]
-    b[8] = array_coordinates_high_res[slice_index, point_3[0], point_3[1], 2]
+    b[0] = array_coordinates_high_res_slice[point_1[0], point_1[1], 0]
+    b[1] = array_coordinates_high_res_slice[point_1[0], point_1[1], 1]
+    b[2] = array_coordinates_high_res_slice[point_1[0], point_1[1], 2]
+    b[3] = array_coordinates_high_res_slice[point_2[0], point_2[1], 0]
+    b[4] = array_coordinates_high_res_slice[point_2[0], point_2[1], 1]
+    b[5] = array_coordinates_high_res_slice[point_2[0], point_2[1], 2]
+    b[6] = array_coordinates_high_res_slice[point_3[0], point_3[1], 0]
+    b[7] = array_coordinates_high_res_slice[point_3[0], point_3[1], 1]
+    b[8] = array_coordinates_high_res_slice[point_3[0], point_3[1], 2]
 
     # Invert the system of equation
     u1, u2, u3, v1, v2, v3, a1, a2, a3 = np.linalg.solve(A, b)
@@ -270,7 +268,7 @@ def fill_array_projection(
     u,
     v,
     original_slice,
-    array_coordinates_high_res,
+    array_coordinates_high_res_slice,
     array_annotation,
     nearest_neighbour_correction=False,
     atlas_correction=False,
@@ -306,9 +304,9 @@ def fill_array_projection(
         v (tuple(float)): The third of the three vectors used to parametrize the plane in space.
         original_slice (np.ndarray): A two-dimensional array representing an image of the MALDI
             acquisition.
-        array_coordinates_high_res (np.ndarray): A three-dimensional array which maps the
-            high-dimensional warped data to the atlas coordinate system. That is, for each 3-D
-            coordinate (slice_index,x,y), it associates a 3D coordinate (i,j,k) in the ccfv3.
+        array_coordinates_high_res_slice (np.ndarray): A two-dimensional array which maps the
+            high-dimensional warped data to the atlas coordinate system. That is, for each 2-D
+            coordinate (x,y), it associates a 3D coordinate (i,j,k) in the ccfv3.
         array_annotation (np.ndarray): A three-dimensional array containing the atlas annotation,
             used to filter out the regions of our data which are outside the annotated brain, if
             atlas_correction is True.
@@ -352,21 +350,16 @@ def fill_array_projection(
             # If the high-resolution coordinate found be inversion exists, fill array_projection
             if i < array_projection.shape[1] and j < array_projection.shape[2] and i > 0 and j > 0:
                 try:
-                    if sample_data:
-                        array_projection[slice_index, i, j] = original_slice[
-                            i_original_slice, j_original_slice
-                        ]
-                    else:
-                        array_projection[slice_index, i, j] = original_slice[
-                            i_original_slice, j_original_slice, 2
-                        ]
+                    array_projection[slice_index, i, j] = original_slice[
+                        i_original_slice, j_original_slice
+                    ]
                     array_projection_filling[slice_index, i, j] = 1
                     array_projection_correspondence[slice_index, i, j] = [
                         i_original_slice,
                         j_original_slice,
                     ]
                 except:
-                    logging.info(
+                    print(
                         i,
                         j,
                         array_projection.shape,
@@ -383,7 +376,7 @@ def fill_array_projection(
 
                 # Look for the 3D atlas coordinate of out data
                 x_atlas, y_atlas, z_atlas = (
-                    array_coordinates_high_res[slice_index, i, j] * 1000 / atlas_resolution
+                    array_coordinates_high_res_slice[i, j] * 1000 / atlas_resolution
                 )
 
                 # Ugly again, but numba doesn't support np.round

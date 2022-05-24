@@ -221,7 +221,8 @@ class Figures:
             array_images = self._data.compute_padded_original_images()
         elif type_figure == "warped_data":
             if self._data._sample_data:
-                array_images = np.load("data_sample/tiff_files/warped_data.npz")
+                with np.load("data_sample/tiff_files/warped_data.npz") as handle:
+                    array_images = handle["array_warped_data"]
             else:
                 array_images = np.array(io.imread("data/tiff_files/warped_data.tif"))
         elif type_figure == "projection_corrected":
@@ -628,10 +629,9 @@ class Figures:
             self._data.get_array_cumulated_lookup_mz_image(slice_index),
             self._data.get_divider_lookup(slice_index),
             self._data.get_array_peaks_transformed_lipids(slice_index),
-            self._data.get_array_corrective_factors(slice_index),
+            self._data.get_array_corrective_factors(slice_index).astype(np.float32),
             apply_transform=apply_transform,
         )
-
         # Log-transform the image if requested
         if log:
             image = np.log(image + 1)
@@ -732,7 +732,7 @@ class Figures:
                         self._data.get_array_cumulated_lookup_mz_image(slice_index),
                         self._data.get_divider_lookup(slice_index),
                         self._data.get_array_peaks_transformed_lipids(slice_index),
-                        self._data.get_array_corrective_factors(slice_index),
+                        self._data.get_array_corrective_factors(slice_index).astype(np.float32),
                         apply_transform=False,
                     )
 
@@ -1544,6 +1544,7 @@ class Figures:
                 lipids (through ll_t_bounds) for each slice.
         """
         l_array_data = []
+
         for slice_index in range(0, self._data.get_slice_number(), 1):
 
             if ll_t_bounds[slice_index] != [None, None, None]:
@@ -1641,7 +1642,7 @@ class Figures:
             # Get the data as 4 arrays (3 for coordinates and 1 for expression)
             array_x, array_y, array_z, array_c, total_index = filter_voxels(
                 array_data_stripped,
-                coordinates_stripped,
+                coordinates_stripped.astype(np.float32),
                 array_annotations,
                 percentile,
                 array_x,

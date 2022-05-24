@@ -321,7 +321,7 @@ class Launch:
                 self.data.get_array_lookup_pixels(slice_index),
                 self.data.get_image_shape(slice_index),
                 self.data.get_array_peaks_transformed_lipids(slice_index),
-                self.data.get_array_corrective_factors(slice_index),
+                self.data.get_array_corrective_factors(slice_index).astype(np.float32),
                 zeros_extend=False,
                 apply_correction=False,
             )
@@ -356,13 +356,13 @@ class Launch:
                 self.data.get_array_cumulated_lookup_mz_image(slice_index),
                 self.data.get_divider_lookup(slice_index),
                 self.data.get_array_peaks_transformed_lipids(slice_index),
-                self.data.get_array_corrective_factors(slice_index),
+                self.data.get_array_corrective_factors(slice_index).astype(np.float32),
                 apply_transform=False,
             )
 
         def select_lipid_and_region_and_plot_volume():
-            ll_t_bounds = [[None, None, None] * self.data.get_slice_number()]
-            ll_t_bounds[0] = [[(726.5855, 726.5894000000001)], None, None]
+            ll_t_bounds = [[None, None, None] for i in range(self.data.get_slice_number())]
+            ll_t_bounds[0] = [[(622.61, 622.62)], None, None]
             set_id_regions = {1006}
             self.figures.compute_3D_volume_figure(ll_t_bounds, set_id_regions=set_id_regions)
 

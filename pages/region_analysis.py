@@ -1464,7 +1464,7 @@ def global_spectrum_store(
                         data.get_array_lookup_pixels(slice_index),
                         data.get_image_shape(slice_index),
                         data.get_array_peaks_transformed_lipids(slice_index),
-                        data.get_array_corrective_factors(slice_index),
+                        data.get_array_corrective_factors(slice_index).astype(np.float32),
                         zeros_extend=False,
                         apply_correction=False,
                     )
