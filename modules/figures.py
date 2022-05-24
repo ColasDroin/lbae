@@ -113,7 +113,7 @@ class Figures:
             used in a 3D representation of the brain.
     """
 
-    __slots__ = ["_data", "_atlas", "dic_normalization_factors"]
+    __slots__ = ["_data", "_atlas", "_storage", "dic_normalization_factors"]
 
     # ==============================================================================================
     # --- Constructor
