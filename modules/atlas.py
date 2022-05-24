@@ -147,16 +147,21 @@ class Atlas:
             brainglobe_dir = "data/atlas/"
         os.makedirs(brainglobe_dir, exist_ok=True)
         self.bg_atlas = BrainGlobeAtlas(
-            "allen_mouse_" + str(resolution) + "um",
+            "allen_mouse_" + str(self.resolution) + "um",
             brainglobe_dir=brainglobe_dir,
             check_latest=False,
         )
 
+        # Correct path for resolution
+        appendix = "_v1.2" if self.resolution == 100 else ""
+
         # Remove the meshes in the sampled app as they're not used
         if maldi_data._sample_data and "meshes" in os.listdir(
-            brainglobe_dir + "allen_mouse_" + str(resolution) + "um"
+            brainglobe_dir + "allen_mouse_" + str(self.resolution) + "um" + appendix
         ):
-            shutil.rmtree(brainglobe_dir + "allen_mouse_" + str(resolution) + "um/meshes")
+            shutil.rmtree(
+                brainglobe_dir + "allen_mouse_" + str(self.resolution) + "um" + appendix + "/meshes"
+            )
 
         # When computing an array of figures with a slider to explore the atlas, subsample in the
         # longitudinal direction, otherwise it's too heavy
@@ -181,9 +186,10 @@ class Atlas:
         # Load array of coordinates for warped data (can't be loaded on the fly from shelve as used
         # with hovering). Weights ~225mb
         if maldi_data._sample_data:
-            self.array_coordinates_warped_data = np.load(
-                "data_sample/tiff_files/coordinates_warped_data.npz"
-            )
+            with np.load("data_sample/tiff_files/coordinates_warped_data.npz") as handle:
+                print(handle.keys())
+                self.array_coordinates_warped_data = handle["array_coordinates_warped_data"]
+
         else:
             # * Type turned into np.float16 to gain ram but maybe this may lead to a loss of precision
             self.array_coordinates_warped_data = np.array(
@@ -507,7 +513,10 @@ class Atlas:
 
         l_array_images = []
         # Load array of atlas images corresponding to our data and how it is projected
-        array_projected_images_atlas, array_projected_simplified_id = self.storage.return_shelved_object(
+        (
+            array_projected_images_atlas,
+            array_projected_simplified_id,
+        ) = self.storage.return_shelved_object(
             "atlas/atlas_objects",
             "array_images_atlas",
             force_update=False,
