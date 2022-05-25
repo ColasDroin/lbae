@@ -26,7 +26,7 @@ class Storage:
     Attributes:
         path_db (str): Path of the shelve database.
 
-    Methods: # TODO
+    Methods: # ! TODO
         __init__(self, path_db="data/whole_dataset/"): Initialize the class Storage.
         get_annotations(): Getter for the lipid annotation of each slice, contained in a pandas
             dataframe.
@@ -47,7 +47,7 @@ class Storage:
         self.path_db = path_db
         if not os.path.exists(self.path_db):
             os.makedirs(self.path_db)
-        self.list_shelve_objects_size()
+        # self.list_shelve_objects_size()
 
     def dump_shelved_object(self, data_folder, file_name, object):
         """This method dumps an object in a shelve database.
@@ -198,13 +198,6 @@ class Storage:
 
         # Load from in db
         with shelve.open(self.path_db) as db:
-
-            # print(db["atlas/atlas_objects/arrays_projection_corrected_True_True"][0].shape)
-            # print(db["atlas/atlas_objects/arrays_projection_corrected_True_True"][0].dtype)
-            # print(db["atlas/atlas_objects/arrays_projection_corrected_True_True"][1].shape)
-            # print(db["atlas/atlas_objects/arrays_projection_corrected_True_True"][1].dtype)
-            # print(db["atlas/atlas_objects/arrays_projection_corrected_True_True"][2].shape)
-            # print(db["atlas/atlas_objects/arrays_projection_corrected_True_True"][2].dtype)
 
             tot_size = 0
             # List size

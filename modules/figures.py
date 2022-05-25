@@ -219,6 +219,7 @@ class Figures:
         # Check for all array types
         if type_figure == "original_data":
             array_images = self._data.compute_padded_original_images()
+
         elif type_figure == "warped_data":
             if self._data._sample_data:
                 with np.load("data_sample/tiff_files/warped_data.npz") as handle:
@@ -243,9 +244,9 @@ class Figures:
             logging.warning('The type of requested array "{}" does not exist.'.format(type_figure))
             return None
 
-        # If the array is not uint8, convert it to float16 to gain space
+        # If the array is not uint8, convert it to gain space
         if array_images.dtype != np.uint8:
-            array_images = np.array(array_images, dtype=np.float16)
+            array_images = np.array(array_images, dtype=np.uint8)
         return array_images
 
     def compute_figure_basic_image(
