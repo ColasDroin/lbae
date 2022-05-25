@@ -10,7 +10,7 @@
 # Standard modules
 import logging
 import shelve
-import sys
+import os
 from pympler import asizeof
 
 # LBAE imports
@@ -42,7 +42,11 @@ class Storage:
         Args:
             path_db (str): Path of the shelve database.
         """
+
+        # Create database folder if not existing
         self.path_db = path_db
+        if not os.path.exists(self.path_db):
+            os.makedirs(self.path_db)
         self.list_shelve_objects_size()
 
     def dump_shelved_object(self, data_folder, file_name, object):

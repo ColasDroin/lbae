@@ -174,8 +174,8 @@ def get_array_rows_from_atlas_mask(mask, mask_remapped, array_projection_corresp
 @njit
 def solve_plane_equation(
     array_coordinates_high_res_slice,
-    point_1=(150, 151),
-    point_2=(800, 1200),
+    point_1=(50, 51),
+    point_2=(400, 200),
     point_3=(100, 101),
 ):
     """This function defines and solves a system of linear equations for three points of the plane
@@ -189,9 +189,9 @@ def solve_plane_equation(
             high-dimensional warped data to the atlas coordinate system. That is, for each 2-D
             coordinate (x,y), it associates a 3D coordinate (i,j,k) in the ccfv3.
         point_1 (tuple, optional): Couple of coordinates corresponding to the first point indexed on
-            the 3D plane. Defaults to (150, 151).
+            the 3D plane. Defaults to (50, 51).
         point_2 (tuple, optional): Couple of coordinates corresponding to the first point indexed on
-            the 3D plane. Defaults to (800, 1200).
+            the 3D plane. Defaults to (400, 200).
         point_3 (tuple, optional): Couple of coordinates corresponding to the first point indexed on
             the 3D plane. Defaults to (100, 101).
 
@@ -531,12 +531,13 @@ def compute_array_images_atlas(
             to the slices acquired during the MALDI acquisition. The second array is the
             corresponding set of annotations.
     """
-    array_images = np.empty(array_coordinates_warped_data.shape[:-1], dtype=np.uint8)
+    array_images = np.zeros(array_coordinates_warped_data.shape[:-1], dtype=np.uint8)
     array_projected_simplified_id = np.full(
         array_images.shape, simplified_atlas_annotation[0, 0, 0], dtype=np.int32
     )
 
     array_coor_rescaled = np.empty_like(array_coordinates_warped_data, dtype=np.int16)
+    # Inplace rounding for numba
     np.round_(array_coordinates_warped_data * 1000 / resolution, 0, array_coor_rescaled)
     for x in range(array_images.shape[0]):
         for y in range(array_images.shape[1]):

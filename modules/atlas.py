@@ -187,7 +187,6 @@ class Atlas:
         # with hovering). Weights ~225mb
         if maldi_data._sample_data:
             with np.load("data_sample/tiff_files/coordinates_warped_data.npz") as handle:
-                print(handle.keys())
                 self.array_coordinates_warped_data = handle["array_coordinates_warped_data"]
 
         else:
@@ -481,13 +480,13 @@ class Atlas:
                 array_projection,
                 array_projection_filling,
                 array_projection_correspondence,
-                original_coor
+                original_coor,
                 self.resolution,
                 a,
                 u,
                 v,
                 original_slice,
-                self.array_coordinates_warped_data[i],  #
+                self.array_coordinates_warped_data[i],
                 self.bg_atlas.annotation,
                 nearest_neighbour_correction=nearest_neighbour_correction,
                 atlas_correction=atlas_correction,
