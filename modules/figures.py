@@ -10,18 +10,27 @@ from the MALDI imaging, and the Allen Brain Atlas, as well as the mapping betwee
 
 # Standard modules
 import numpy as np
+import logging
+from modules.tools.misc import logmem
 import plotly.graph_objects as go
 import plotly.express as px
-from skimage import io
+from PIL import Image
 from scipy.ndimage.interpolation import map_coordinates
-import logging
 import pandas as pd
-import dash_bio as dashbio
+from modules.tools.external_lib.clustergram import Clustergram
+
+
+logging.info("Memory use before temp import" + logmem())
 
 # LBAE imports
 from modules.tools.image import convert_image_to_base64
+
+logging.info("Memory use before temp2 import" + logmem())
+
 from modules.tools.atlas import project_image, slice_to_atlas_transform
-from modules.tools.misc import logmem
+
+logging.info("Memory use before temp3 import" + logmem())
+
 from modules.tools.volume import (
     filter_voxels,
     fill_array_borders,
@@ -29,6 +38,9 @@ from modules.tools.volume import (
     fill_array_slices,
     crop_array,
 )
+
+logging.info("Memory use before temp4 import" + logmem())
+
 from config import dic_colors, l_colors
 from modules.tools.spectra import (
     compute_image_using_index_and_image_lookup,
@@ -38,6 +50,7 @@ from modules.tools.spectra import (
     compute_thread_safe_function,
 )
 
+logging.info("Memory use after temp import" + logmem())
 
 # ==================================================================================================
 # --- Class
@@ -225,7 +238,7 @@ class Figures:
                 with np.load("data_sample/tiff_files/warped_data.npz") as handle:
                     array_images = handle["array_warped_data"]
             else:
-                array_images = np.array(io.imread("data/tiff_files/warped_data.tif"))
+                array_images = np.array(Image.open("data/tiff_files/warped_data.tif"))
         elif type_figure == "projection_corrected":
             array_images = self._atlas.array_projection_corrected
         elif type_figure == "atlas":
@@ -2008,7 +2021,7 @@ class Figures:
         logging.info("Lipid indexes replaced by names")
         logging.info("Preparing plot")
         # Plot
-        fig_heatmap_lipids = dashbio.Clustergram(
+        fig_heatmap_lipids = Clustergram(
             data=df_avg_intensity_lipids.to_numpy(),
             column_labels=df_avg_intensity_lipids.columns.to_list(),
             row_labels=df_avg_intensity_lipids.index.to_list(),

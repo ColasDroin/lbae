@@ -10,38 +10,17 @@ of memory maps, and annotations."""
 
 # Standard modules
 import logging
-from modules.tools.misc import logmem
-
 import pickle
-
-logging.info("Memory use after pickle import" + logmem())
-
 import time
-
-logging.info("Memory use after time import" + logmem())
-
 import numpy as np
-
-logging.info("Memory use after np import" + logmem())
-
 import pandas as pd
-
-logging.info("Memory use after pd import" + logmem())
-
 import os
-
-logging.info("Memory use after os import" + logmem())
-
-from skimage import io
-
-logging.info("Memory use after io import" + logmem())
-
+from PIL import Image
 import lzma
 
-logging.info("Memory use after lzma import" + logmem())
+# LBAE imports
+from modules.tools.misc import logmem
 
-
-logging.info("Memory use after PIL import" + logmem())
 
 # ==================================================================================================
 # --- Class
@@ -911,9 +890,9 @@ class MaldiData:
         for i in range(n_slices):
             filename = path + "slice_" + str(i + 1) + ".tiff"
             if self._sample_data:
-                l_array_slices.append(np.array(io.imread(filename), dtype=np.int16))
+                l_array_slices.append(np.array(Image.open(filename), dtype=np.int16))
             else:
-                l_array_slices.append(np.array(io.imread(filename), dtype=np.int16)[:, :, 2])
+                l_array_slices.append(np.array(Image.open(filename), dtype=np.int16)[:, :, 2])
 
         # Find the size of the biggest image
         max_size = (

@@ -1,5 +1,5 @@
 ##### Current TODOs #####
-# TODO Finish sample app (search for "data" and debug)
+# TODO Finish sample app (find a way to save more ram...)
 # TODO Incorporate new brain 1 and brain 2
 # TODO Do quality control and debug, especially when several users are on the app in parallel
 
