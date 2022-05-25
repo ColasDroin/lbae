@@ -20,7 +20,7 @@ from modules.tools.spectra import reduce_resolution_sorted_array_spectra
 
 # Define if the app uses the whole dataset or not
 SAMPLE_APP = False
-N_SAMPLES = 5
+N_SAMPLES = 3
 # ==================================================================================================
 # --- Functions
 # ==================================================================================================

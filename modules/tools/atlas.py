@@ -73,8 +73,9 @@ def project_atlas_mask(stack_mask, slice_coordinates_rescaled, shape_atlas):
         np.ndarray: A two-dimensional array representing the projected mask on the requested slice.
     """
     # Define empty array for the projected mask, with the same dimension as the current slice
+    # ! Delete this comment if everything is working, else switch back to int16 or int32
     projected_mask = np.full(
-        slice_coordinates_rescaled.shape[:-1], stack_mask[0, 0, 0], dtype=np.int32
+        slice_coordinates_rescaled.shape[:-1], stack_mask[0, 0, 0], dtype=np.uint8
     )
     for x in range(slice_coordinates_rescaled.shape[0]):
         for y in range(slice_coordinates_rescaled.shape[1]):
@@ -175,7 +176,7 @@ def get_array_rows_from_atlas_mask(mask, mask_remapped, array_projection_corresp
 def solve_plane_equation(
     array_coordinates_high_res_slice,
     point_1=(50, 51),
-    point_2=(400, 200),
+    point_2=(200, 200),
     point_3=(100, 101),
 ):
     """This function defines and solves a system of linear equations for three points of the plane
