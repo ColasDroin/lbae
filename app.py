@@ -21,12 +21,19 @@ import diskcache
 import os
 
 # LBAE modules
+from modules.tools.misc import logmem
+
+logging.info("Memory use before any LBAE import" + logmem())
+
 from modules.maldi_data import MaldiData
+logging.info("Memory use after MaldiData import" + logmem())
+
 from modules.figures import Figures
+logging.info("Memory use after Figures import" + logmem())
+
 from modules.atlas import Atlas
 from modules.launch import Launch
 from modules.storage import Storage
-from modules.tools.misc import logmem
 
 # ==================================================================================================
 # --- App pre-computations

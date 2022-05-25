@@ -9,15 +9,39 @@ of memory maps, and annotations."""
 # ==================================================================================================
 
 # Standard modules
-import pickle
-import time
-import numpy as np
-import pandas as pd
-from modules.tools.misc import logmem
 import logging
+from modules.tools.misc import logmem
+
+import pickle
+
+logging.info("Memory use after pickle import" + logmem())
+
+import time
+
+logging.info("Memory use after time import" + logmem())
+
+import numpy as np
+
+logging.info("Memory use after np import" + logmem())
+
+import pandas as pd
+
+logging.info("Memory use after pd import" + logmem())
+
 import os
+
+logging.info("Memory use after os import" + logmem())
+
 from skimage import io
+
+logging.info("Memory use after io import" + logmem())
+
 import lzma
+
+logging.info("Memory use after lzma import" + logmem())
+
+
+logging.info("Memory use after PIL import" + logmem())
 
 # ==================================================================================================
 # --- Class
