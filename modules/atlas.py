@@ -191,9 +191,8 @@ class Atlas:
                 self.array_coordinates_warped_data = handle["array_coordinates_warped_data"]
 
         else:
-            # * Type turned into np.float16 to gain ram but maybe this may lead to a loss of precision
             self.array_coordinates_warped_data = np.array(
-                skimage.io.imread("data/tiff_files/coordinates_warped_data.tif"), dtype=np.float16
+                skimage.io.imread("data/tiff_files/coordinates_warped_data.tif")
             )
 
         # Record shape of the warped data
@@ -453,11 +452,10 @@ class Atlas:
                 ][0]
             )
 
-            # * Float 16 may lead to a loss of precision, caution
             if self.data._sample_data:
                 original_coor = np.load(filename)
             else:
-                original_coor = np.array(skimage.io.imread(filename), dtype=np.float16)
+                original_coor = np.array(skimage.io.imread(filename))
             l_original_coor.append(original_coor)
 
             if self.data._sample_data:
@@ -472,7 +470,7 @@ class Atlas:
                     if str(i + 1) == x.split("slice_")[1].split(".tiff")[0]
                 ][0]
             )
-            original_slice = np.array(skimage.io.imread(filename), dtype=np.int16)
+            original_slice = np.array(skimage.io.imread(filename), dtype=np.uint8)
             # Keep only last channel
             if not self.data._sample_data:
                 original_slice = original_slice[:, :, 2]
@@ -483,15 +481,13 @@ class Atlas:
                 array_projection,
                 array_projection_filling,
                 array_projection_correspondence,
-                original_coor.astype(np.float32),  # Need to cast back to float32 for numba
+                original_coor
                 self.resolution,
                 a,
                 u,
                 v,
                 original_slice,
-                self.array_coordinates_warped_data[i].astype(
-                    np.float32
-                ),  # Need to cast back to float32 for numba,
+                self.array_coordinates_warped_data[i],  #
                 self.bg_atlas.annotation,
                 nearest_neighbour_correction=nearest_neighbour_correction,
                 atlas_correction=atlas_correction,
@@ -512,7 +508,7 @@ class Atlas:
         l_transform_parameters = []
         for slice_index in range(self.array_coordinates_warped_data.shape[0]):
             a_atlas, u_atlas, v_atlas = solve_plane_equation(
-                self.array_coordinates_warped_data[slice_index].astype(np.float32)
+                self.array_coordinates_warped_data[slice_index]
             )
             l_transform_parameters.append((a_atlas, u_atlas, v_atlas))
         return l_transform_parameters
@@ -590,7 +586,7 @@ class Atlas:
 
         # Compute the actual array of atlas images
         return compute_array_images_atlas(
-            self.array_coordinates_warped_data.astype(np.float32),
+            self.array_coordinates_warped_data,
             simplified_atlas_annotation,
             self.bg_atlas.reference,
             self.resolution,
