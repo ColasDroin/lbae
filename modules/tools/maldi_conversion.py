@@ -671,20 +671,22 @@ def extract_raw_data(
     output_path="/data/lipidatlas/data/app/data/temp/",
 ):
     """This function loads the raw maldi data and turns it into a python friendly numpy array, along
-        with a given shape for the acquisition.
+    with a given shape for the acquisition.
 
-        Args:
-            t_index_path (tuple(int, str)): A tuple containing the index of the slice (starting from 1)
-                and the corresponding path for the raw data.
-            save (bool, optional): If True, arrays for the extracted data are saved in a npz file.
-                Defaults to True (only option implemented for now for the rest of the pipeline).
-            output_path (str, optional): Path to save the output npz file. Defaults to
-                "/data/lipidatlas/data/app/data/temp/".
-        Returns:
-            np.ndarray, np.ndarray: The first array, of shape (3,n), contains, for the current
-                acquisition, the mz value (2nd column) and intensity (3rd column) for each pixel (first
-                column). The second array contains two integers representing the acquisition shape.
-    ."""
+    Args:
+        t_index_path (tuple(int, str)): A tuple containing the index of the slice (starting from
+            1)and the corresponding path for the raw data.
+        save (bool, optional): If True, arrays for the extracted data are saved in a npz file.
+            Defaults to True (only option implemented for now for the rest of the pipeline).
+        output_path (str, optional): Path to save the output npz file. Defaults to
+            "/data/lipidatlas/data/app/data/temp/".
+
+    Returns:
+        np.ndarray, np.ndarray: The first array, of shape (3,n), contains, for the current
+            acquisition, the mz value (2nd column) and intensity (3rd column) for each pixel
+            (first column). The second array contains two integers representing the acquisition
+            shape.
+    """
     try:
         # Get slice path
         slice_index = t_index_path[0]

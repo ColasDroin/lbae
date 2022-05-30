@@ -20,17 +20,9 @@ import pandas as pd
 from modules.tools.external_lib.clustergram import Clustergram
 
 
-logging.info("Memory use before temp import" + logmem())
-
 # LBAE imports
 from modules.tools.image import convert_image_to_base64
-
-logging.info("Memory use before temp2 import" + logmem())
-
 from modules.tools.atlas import project_image, slice_to_atlas_transform
-
-logging.info("Memory use before temp3 import" + logmem())
-
 from modules.tools.volume import (
     filter_voxels,
     fill_array_borders,
@@ -38,9 +30,6 @@ from modules.tools.volume import (
     fill_array_slices,
     crop_array,
 )
-
-logging.info("Memory use before temp4 import" + logmem())
-
 from config import dic_colors, l_colors
 from modules.tools.spectra import (
     compute_image_using_index_and_image_lookup,
@@ -50,7 +39,6 @@ from modules.tools.spectra import (
     compute_thread_safe_function,
 )
 
-logging.info("Memory use after temp import" + logmem())
 
 # ==================================================================================================
 # --- Class
