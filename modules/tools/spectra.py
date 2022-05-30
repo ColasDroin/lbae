@@ -12,11 +12,9 @@ lipid annotation, for of a given slice) are defined.
 # Standard modules
 import time
 import numpy as np
-from numba import njit, jit
+from numba import njit
 import logging
-
-# mspec module
-from modules.tools.external_lib.mspec import reduce_resolution_sorted
+from typing import Tuple
 
 # ==================================================================================================
 # --- Functions for coordinates indices manipulation
@@ -1421,3 +1419,51 @@ def compute_thread_safe_function(
 
     # Return result
     return result
+
+
+# ==================================================================================================
+# --- Imported functions (from mspec)
+# ==================================================================================================
+
+
+@njit
+def reduce_resolution_sorted(
+    mz: np.ndarray, intensity: np.ndarray, resolution: float, max_intensity=True
+) -> Tuple[np.ndarray, np.ndarray]:
+    """This function function has been imported from the mspec module. Please consult the
+    corresponding module to get the docstring.
+    """
+
+    # First just count the unique values and store them to avoid recalc
+    current_mz = -1.0
+    cnt = 0
+
+    approx_mz = np.empty(mz.shape, dtype=np.double)
+    for i in range(len(mz)):
+        approx_mz[i] = np.floor(mz[i] / resolution) * resolution
+        if approx_mz[i] != current_mz:
+            cnt += 1
+            current_mz = approx_mz[i]
+
+    new_mz = np.empty(cnt, dtype=np.double)
+    new_intensity = np.empty(cnt, dtype=np.double)
+
+    current_mz = -1.0
+    rix = -1
+    for i in range(len(mz)):
+        if approx_mz[i] != current_mz:
+            rix += 1
+            new_mz[rix] = approx_mz[i]
+            new_intensity[rix] = intensity[i]
+            current_mz = approx_mz[i]
+        else:
+            # retrieve the maximum intensity value within the new bin
+            if max_intensity:
+                # check that the new intensity is greater than what is already there
+                if intensity[i] > new_intensity[rix]:
+                    new_intensity[rix] = intensity[i]
+
+            # sum the intensity values within the new bin
+            else:
+                new_intensity[rix] += intensity[i]
+    return new_mz, new_intensity

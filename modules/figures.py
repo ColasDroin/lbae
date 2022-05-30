@@ -1659,7 +1659,7 @@ class Figures:
 
             # Get the data as 4 arrays (3 for coordinates and 1 for expression)
             array_x, array_y, array_z, array_c, total_index = filter_voxels(
-                array_data_stripped,
+                array_data_stripped.astype(np.float32),
                 coordinates_stripped,
                 array_annotations,
                 percentile,

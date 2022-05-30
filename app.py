@@ -44,7 +44,7 @@ from modules.storage import Storage
 logging.info("Memory use before any global variable declaration" + logmem())
 
 # Define if the app will use only a sample of the dataset, and uses a lower resolution for the atlas
-SAMPLE_DATA = True
+SAMPLE_DATA = False
 
 # Define paths for the sample/not sample data
 if SAMPLE_DATA:

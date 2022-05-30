@@ -1,5 +1,4 @@
 ##### Current TODOs #####
-# TODO Finish sample app (find a way to save more ram...)
 # TODO Incorporate new brain 1 and brain 2
 # TODO Do quality control and debug, especially when several users are on the app in parallel
 
@@ -15,3 +14,4 @@
 # ? Split and comment the layouts?
 # ? Build basic technical documentation for the app?
 # ? Implement the app as a multipage app when the feature is available on Dash
+# ? Make a sample app with <512mb ram use... Seems pretty ambitious
