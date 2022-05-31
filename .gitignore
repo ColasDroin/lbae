@@ -4,3 +4,4 @@ notebooks/data_processing/data/
 **/__pycache__/
 **/.ipynb_checkpoints/
 nohup.out
+notebooks/scRNAseq/data/
