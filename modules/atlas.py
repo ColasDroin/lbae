@@ -14,9 +14,9 @@ import os
 import matplotlib.pyplot as plt
 from bg_atlasapi import BrainGlobeAtlas
 from io import BytesIO
-from PIL import Image
 import logging
 import io
+import skimage
 from imageio import imread
 import shutil
 
@@ -190,8 +190,8 @@ class Atlas:
                 self.array_coordinates_warped_data = handle["array_coordinates_warped_data"]
 
         else:
-            self.array_coordinates_warped_data = np.array(
-                Image.open("data/tiff_files/coordinates_warped_data.tif")
+            self.array_coordinates_warped_data = skimage.io.imread(
+                "data/tiff_files/coordinates_warped_data.tif"
             )
 
         # Record shape of the warped data
@@ -454,7 +454,7 @@ class Atlas:
             if self.data._sample_data:
                 original_coor = np.load(filename)
             else:
-                original_coor = np.array(Image.open(filename))
+                original_coor = skimage.io.imread(filename)
             l_original_coor.append(original_coor)
 
             if self.data._sample_data:
@@ -469,7 +469,7 @@ class Atlas:
                     if str(i + 1) == x.split("slice_")[1].split(".tiff")[0]
                 ][0]
             )
-            original_slice = np.array(Image.open(filename), dtype=np.uint8)
+            original_slice = np.array(skimage.io.imread(filename), dtype=np.uint8)
             # Keep only last channel
             if not self.data._sample_data:
                 original_slice = original_slice[:, :, 2]
