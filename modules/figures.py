@@ -14,7 +14,7 @@ import logging
 from modules.tools.misc import logmem
 import plotly.graph_objects as go
 import plotly.express as px
-from PIL import Image
+from skimage import io
 from scipy.ndimage.interpolation import map_coordinates
 import pandas as pd
 from modules.tools.external_lib.clustergram import Clustergram
@@ -226,7 +226,7 @@ class Figures:
                 with np.load("data_sample/tiff_files/warped_data.npz") as handle:
                     array_images = handle["array_warped_data"]
             else:
-                array_images = np.array(Image.open("data/tiff_files/warped_data.tif"))
+                array_images = io.imread("data/tiff_files/warped_data.tif")
         elif type_figure == "projection_corrected":
             array_images = self._atlas.array_projection_corrected
         elif type_figure == "atlas":

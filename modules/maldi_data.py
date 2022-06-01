@@ -15,7 +15,7 @@ import time
 import numpy as np
 import pandas as pd
 import os
-from PIL import Image
+from skimage import io
 import lzma
 
 # LBAE imports
@@ -888,9 +888,9 @@ class MaldiData:
         for i in range(n_slices):
             filename = path + "slice_" + str(i + 1) + ".tiff"
             if self._sample_data:
-                l_array_slices.append(np.array(Image.open(filename), dtype=np.int16))
+                l_array_slices.append(np.array(io.imread(filename), dtype=np.int16))
             else:
-                l_array_slices.append(np.array(Image.open(filename), dtype=np.int16)[:, :, 2])
+                l_array_slices.append(np.array(io.imread(filename), dtype=np.int16)[:, :, 2])
 
         # Find the size of the biggest image
         max_size = (
