@@ -1824,7 +1824,7 @@ class Figures:
             divider_radius=16,
             limit_value_inside=-1.99999,
         )
-        logging.info("Finished interpolation betwee slices")
+        logging.info("Finished interpolation between slices")
 
         # Get root figure
         root_data = self._storage.return_shelved_object(
