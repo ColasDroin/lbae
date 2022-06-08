@@ -51,12 +51,12 @@ def write_readme():
     image_1 = (
         """<p align="center"><img src="assets/ressources/data_acquisition.png" width="50" /></p>"""
     )
-    final_md.replace("![](assets/ressources/data_acquisition.png)", image_1)
+    final_md = final_md.replace("![](assets/ressources/data_acquisition.png)", image_1)
 
     image_2 = (
         """<p align="center"><img src="assets/ressources/slice_cleaning.png" width="100" /></p>"""
     )
-    final_md.replace("![](assets/ressources/slice_cleaning.png)", image_2)
+    final_md = final_md.replace("![](assets/ressources/slice_cleaning.png)", image_2)
 
     with open(os.path.join(os.getcwd(), "README.md"), "w") as f:
         f.write(final_md)
