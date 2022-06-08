@@ -39,7 +39,12 @@ def write_readme():
                 break
             elif file.endswith(".md") and filename in file:
                 with open(os.path.join(os.getcwd(), "documentation", file), "r") as f:
-                    final_md += f.read() + "\n"
+                    current_paragraph = f.read()
+                    if "ressources" in current_paragraph:
+                        current_paragraph = current_paragraph.replace(
+                            "ressources/", "assets/ressources/"
+                        )
+                    final_md += current_paragraph + "\n"
                 break
 
     with open(os.path.join(os.getcwd(), "README.md"), "w") as f:
