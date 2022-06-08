@@ -1,6 +1,12 @@
 # Lipid Brain Atlas Explorer documentation 
 
+<<<<<<< HEAD
 <p align="center"><img src="readme/brain.gif" alt="animated" /></p>
+=======
+<p align="center">
+  <img src="readme/brain.gif" alt="animated" />
+</p>
+>>>>>>> f42088a224f2c070ae151a2978d22d3aeded5001
 
 ## Overview
 
