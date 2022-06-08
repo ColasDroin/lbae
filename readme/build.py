@@ -26,7 +26,9 @@ def write_readme():
         "_about",
         "_further_readme",
     ]
-    final_md = "# Lipid Brain Atlas Explorer documentation \n\n ![](brain.gif) \n\n"
+    final_md = "# Lipid Brain Atlas Explorer documentation \n\n"
+    final_md += """<p align="center"><img src="readme/brain.gif" alt="animated" /></p>"""
+    final_md += "\n\n"
     for filename in order_final_md:
         for file in list(os.listdir(os.path.join(os.getcwd(), "documentation"))) + list(
             os.listdir(os.path.join(os.getcwd(), "readme"))
@@ -40,7 +42,6 @@ def write_readme():
                     final_md += f.read() + "\n"
                 break
 
-    print(final_md)
     with open(os.path.join(os.getcwd(), "README.md"), "w") as f:
         f.write(final_md)
 
