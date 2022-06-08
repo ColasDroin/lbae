@@ -1680,6 +1680,7 @@ class Figures:
         set_id_regions=None,
         decrease_dimensionality_factor=6,
         cache_flask=None,
+        return_interpolated_array=False,
     ):
         """This figure computes a Plotly Figure containing a go.Volume object representing the
         expression of the requested lipids in the selected regions, interpolated between the slices.
@@ -1700,9 +1701,12 @@ class Figures:
             cache_flask (flask_caching.Cache, optional): Cache of the Flask database. If set to
                 None, the reading of memory-mapped data will not be multithreads-safe. Defaults to
                 None.
+            return_interpolated_array (bool): If True, the interpolated array is returned. Else, the
+                corresponding Plotly figure is returned. Defaults to False.
         Returns:
-            go.Figure: A Plotly Figure containing a go.Volume object representing the expression of
-                the requested lipids in the selected regions, interpolated between the slices.
+            Depending on the value of return_interpolated_array, returns either the interpolated
+            array of expression of the requested lipids in the selected regions, or a Plotly Figure
+            containing a go.Volume object representing the interpolated expression.
         """
         logging.info("Starting 3D volume computation")
 
@@ -1717,7 +1721,11 @@ class Figures:
 
         # Get subsampled array of borders for each region
         array_atlas_borders = np.zeros(array_annotation.shape, dtype=np.float32)
-        list_id_regions = np.array(list(set_id_regions), dtype=np.int64)
+
+        if set_id_regions is not None:
+            list_id_regions = np.array(list(set_id_regions), dtype=np.int64)
+        else:
+            list_id_regions = None
 
         # Shelving this function is useless as it takes less than 0.1s to compute after
         # first compilation
@@ -1825,6 +1833,9 @@ class Figures:
             limit_value_inside=-1.99999,
         )
         logging.info("Finished interpolation between slices")
+
+        if return_interpolated_array:
+            return array_interpolated
 
         # Get root figure
         root_data = self._storage.return_shelved_object(
