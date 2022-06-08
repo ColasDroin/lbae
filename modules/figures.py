@@ -1,7 +1,7 @@
 # Copyright (c) 2022, Colas Droin. All rights reserved.
 # Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
 
-""" This class is used to produce the figures and widgets used in the app, themselves requiring data
+"""This class is used to produce the figures and widgets used in the app, themselves requiring data
 from the MALDI imaging, and the Allen Brain Atlas, as well as the mapping between the two."""
 
 # ==================================================================================================
