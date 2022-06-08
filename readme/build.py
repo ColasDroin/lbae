@@ -49,12 +49,12 @@ def write_readme():
 
     # Decrease image size and center them
     image_1 = (
-        """<p align="center"><img src="assets/ressources/data_acquisition.png" width="50" /></p>"""
+        """<p align="center"><img src="assets/ressources/data_acquisition.png" width="300" /></p>"""
     )
     final_md = final_md.replace("![](assets/ressources/data_acquisition.png)", image_1)
 
     image_2 = (
-        """<p align="center"><img src="assets/ressources/slice_cleaning.png" width="100" /></p>"""
+        """<p align="center"><img src="assets/ressources/slice_cleaning.png" width="900" /></p>"""
     )
     final_md = final_md.replace("![](assets/ressources/slice_cleaning.png)", image_2)
 
