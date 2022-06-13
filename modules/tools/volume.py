@@ -218,6 +218,7 @@ def fill_array_slices(
             in array_c, in the regions preliminarily annotated in array_slices.
     """
     for x, y, z, c in zip(array_x, array_y, array_z, array_c):
+        # ! Coordinates need to be switched
         x_scaled = int(round(y))
         y_scaled = int(round(z))
         z_scaled = int(round(x))

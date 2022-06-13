@@ -1681,6 +1681,7 @@ class Figures:
         decrease_dimensionality_factor=6,
         cache_flask=None,
         return_interpolated_array=False,
+        return_individual_slice_data=False,
     ):
         """This figure computes a Plotly Figure containing a go.Volume object representing the
         expression of the requested lipids in the selected regions, interpolated between the slices.
@@ -1703,11 +1704,20 @@ class Figures:
                 None.
             return_interpolated_array (bool): If True, the interpolated array is returned. Else, the
                 corresponding Plotly figure is returned. Defaults to False.
+            return_individual_slice_data (bool): If True, the individual slice data (not
+                interpolated) is returned.
         Returns:
-            Depending on the value of return_interpolated_array, returns either the interpolated
-            array of expression of the requested lipids in the selected regions, or a Plotly Figure
-            containing a go.Volume object representing the interpolated expression.
+            Depending on the value of return_interpolated_array and return_individual_slice_data,
+            returns either the (not) interpolated array of expression of the requested lipids in the
+            selected regions, or a Plotly Figure containing a go.Volume object representing the
+            interpolated expression.
         """
+        if return_interpolated_array and return_individual_slice_data:
+            logging.warning(
+                "Cannot return both interpolated and not interpolated array... Returning the"
+                " individual slice data."
+            )
+
         logging.info("Starting 3D volume computation")
 
         # Get subsampled array of annotations
@@ -1775,6 +1785,9 @@ class Figures:
             l_array_data_avg, high_res=False
         )
 
+        if return_individual_slice_data:
+            return array_x, array_y, array_z, array_c
+
         logging.info("Computed array of expression in original space")
 
         # Compute the rescaled array of expression for each slice averaged over projected lipids
@@ -1793,6 +1806,7 @@ class Figures:
             array_for_avg,
             limit_value_inside=-1.99999,
         )
+
         logging.info("Filled basic structure array with array of expression")
 
         # Get the corresponding coordinates
