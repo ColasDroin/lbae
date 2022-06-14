@@ -238,7 +238,12 @@ def fill_array_slices(
 
 @njit
 def fill_array_interpolation(
-    array_annotation, array_slices, divider_radius=5, annot_inside=-0.01, limit_value_inside=-2
+    array_annotation,
+    array_slices,
+    divider_radius=5,
+    annot_inside=-0.01,
+    limit_value_inside=-2,
+    structure_guided=True,
 ):
     """This function is used to fill the empty space (unassigned voxels) between the slices with
     interpolated values.
@@ -254,6 +259,8 @@ def fill_array_interpolation(
             to -0.01.
         limit_value_inside (float, optional): Alternative to annot_inside. Values above
             limit_value_inside are considered inside the brain. Defaults to -2.
+        structure_guided (bool, optional): If True, the interpolation is done using the annotated
+            structures. If False, the interpolation is done blindly.
 
     Returns:
         np.ndarray: A three-dimensional array containing the interpolated lipid intensity values.
@@ -301,12 +308,13 @@ def fill_array_interpolation(
                                     if array_slices[xt, yt, zt] >= 0:
                                         # The structure is identical
                                         if (
-                                            np.abs(
+                                            structure_guided
+                                            and np.abs(
                                                 array_annotation[x, y, z]
                                                 - array_annotation[xt, yt, zt]
                                             )
                                             < 10**-4
-                                        ):
+                                        ) or not structure_guided:
                                             d = np.sqrt(
                                                 (x - xt) ** 2 + (y - yt) ** 2 + (z - zt) ** 2
                                             )

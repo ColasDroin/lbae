@@ -5,8 +5,9 @@
 
 ##### Present TODOs #####
 # TODO Superimpose lipids in zebrafish brain
-# TODO Nearest neighbor and blind interpolation
+# TODO Blind interpolation for scRNAseq
 # TODO Cluster pixels by genes expression and lipid expression. Cross the colors to visualize how the two distributions overlap
+# TODO Script lipids clustering and 3D rotation
 
 ##### Finalization process #####
 # TODO Check that all force_update are set to False
