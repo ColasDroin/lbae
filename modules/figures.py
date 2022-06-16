@@ -1680,6 +1680,7 @@ class Figures:
         set_id_regions=None,
         decrease_dimensionality_factor=6,
         cache_flask=None,
+        structure_guided_interpolation=True,
         return_interpolated_array=False,
         return_individual_slice_data=False,
     ):
@@ -1702,6 +1703,8 @@ class Figures:
             cache_flask (flask_caching.Cache, optional): Cache of the Flask database. If set to
                 None, the reading of memory-mapped data will not be multithreads-safe. Defaults to
                 None.
+            structure_guided_interpolation (bool, optional): If True, the interpolation is done
+                using the annotated structures. If False, the interpolation is done blindly.
             return_interpolated_array (bool): If True, the interpolated array is returned. Else, the
                 corresponding Plotly figure is returned. Defaults to False.
             return_individual_slice_data (bool): If True, the individual slice data (not
@@ -1845,6 +1848,7 @@ class Figures:
             array_slices,
             divider_radius=16,
             limit_value_inside=-1.99999,
+            structure_guided=structure_guided_interpolation,
         )
         logging.info("Finished interpolation between slices")
 

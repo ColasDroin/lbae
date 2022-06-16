@@ -5,3 +5,4 @@ notebooks/data_processing/data/
 **/.ipynb_checkpoints/
 nohup.out
 notebooks/scRNAseq/data/
+notebooks/scRNAseq/temp/
