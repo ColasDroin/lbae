@@ -1673,7 +1673,8 @@ class Figures:
 
     def compute_3D_volume_figure(
         self,
-        ll_t_bounds,
+        set_progress=None,
+        ll_t_bounds=[[(None, None)]],
         name_lipid_1="",
         name_lipid_2="",
         name_lipid_3="",
@@ -1690,6 +1691,8 @@ class Figures:
         Lipid names are used to retrieve the expression data from the Shelve database.
 
         Args:
+            set_progress: Used as part of the Plotly long callbacks, to indicate the progress of the
+                computation in the corresponding progress bar.
             ll_t_bounds (list(list(tuple))): A list of lists of lipid boundaries (tuples). The first
                 list is used to separate image channels. The second list is used to separate lipid.
             name_lipid_1 (str, optional): Name of the first selected lipid. Defaults to "".
@@ -1725,7 +1728,8 @@ class Figures:
             )
 
         logging.info("Starting 3D volume computation")
-
+        if set_progress is not None:
+            set_progress((10, "Loading array of annotations"))
         # Get subsampled array of annotations
         array_annotation = self._storage.return_shelved_object(
             "figures/3D_page",
@@ -1743,6 +1747,9 @@ class Figures:
         else:
             list_id_regions = None
 
+        if set_progress is not None:
+            set_progress((10, "Computing brain borders"))
+
         # Shelving this function is useless as it takes less than 0.1s to compute after
         # first compilation
         array_atlas_borders = fill_array_borders(
@@ -1752,6 +1759,9 @@ class Figures:
         )
 
         logging.info("Computed basic structure array")
+
+        if set_progress is not None:
+            set_progress((20, "Computing expression for each lipid"))
 
         # Get array of expression for each lipid
         ll_array_data = [
@@ -1766,6 +1776,9 @@ class Figures:
             )
             for i, name_lipid in enumerate([name_lipid_1, name_lipid_2, name_lipid_3])
         ]
+
+        if set_progress is not None:
+            set_progress((50, "Averaging expression for each lipid"))
 
         # Average array of expression over lipid
         l_array_data_avg = []
@@ -1786,6 +1799,9 @@ class Figures:
             l_array_data_avg.append(avg / n)
         logging.info("Averaged expression over all lipids")
 
+        if set_progress is not None:
+            set_progress((60, "Getting slice coordinates"))
+
         # Get the 3D array of expression and coordinates
         array_x, array_y, array_z, array_c = self.compute_array_coordinates_3D(
             l_array_data_avg, high_res=False
@@ -1795,6 +1811,9 @@ class Figures:
             return array_x, array_y, array_z, array_c
 
         logging.info("Computed array of expression in original space")
+
+        if set_progress is not None:
+            set_progress((70, "Filling a new brain with expression"))
 
         # Compute the rescaled array of expression for each slice averaged over projected lipids
         array_slices = np.copy(array_atlas_borders)
@@ -1845,6 +1864,9 @@ class Figures:
             Z = Z[x_min : x_max + 1, y_min : y_max + 1, z_min : z_max + 1]
             logging.info("Cropped the figure to only keep areas in which lipids are expressed")
 
+        if set_progress is not None:
+            set_progress((70, "Interpolating expression"))
+
         # Compute an array containing the lipid expression interpolated for every voxel
         array_interpolated = fill_array_interpolation(
             array_annotation,
@@ -1857,6 +1879,9 @@ class Figures:
 
         if return_interpolated_array:
             return array_interpolated
+
+        if set_progress is not None:
+            set_progress((80, "Building figure"))
 
         # Get root figure
         root_data = self._storage.return_shelved_object(
@@ -1907,6 +1932,9 @@ class Figures:
         fig.layout.paper_bgcolor = "rgba(0,0,0,0)"
 
         logging.info("Done computing 3D volume figure")
+
+        if set_progress is not None:
+            set_progress((90, "Returning figure"))
 
         return fig
 

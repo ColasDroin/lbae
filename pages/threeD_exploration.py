@@ -410,6 +410,11 @@ def return_layout(basic_config, slice_index):
                                             "background-color": "#1d1c1f",
                                         },
                                         children=[
+                                            dbc.Progress(
+                                                id="page-4-progress-bar-volume",
+                                                style={"width ": "100%"},
+                                                color="#338297",
+                                            ),
                                             dbc.Spinner(
                                                 color="light",
                                                 show_initially=False,
@@ -418,17 +423,17 @@ def return_layout(basic_config, slice_index):
                                                         className="fixed-aspect-ratio",
                                                         id="page-4-graph-volume-parent",
                                                         children=[
-                                                            html.Div(
-                                                                id="page-4-alert",
-                                                                className="text-center my-2",
-                                                                children=html.Strong(
-                                                                    children=(
-                                                                        "Please select at least one"
-                                                                        " lipid."
-                                                                    ),
-                                                                    style={"color": "#df5034"},
-                                                                ),
-                                                            ),
+                                                            # html.Div(
+                                                            #     id="page-4-alert",
+                                                            #     className="text-center my-2",
+                                                            #     children=html.Strong(
+                                                            #         children=(
+                                                            #             "Please select at least one"
+                                                            #             " lipid."
+                                                            #         ),
+                                                            #         style={"color": "#df5034"},
+                                                            #     ),
+                                                            # ),
                                                             dcc.Graph(
                                                                 id="page-4-graph-volume",
                                                                 config=basic_config
@@ -445,6 +450,7 @@ def return_layout(basic_config, slice_index):
                                                                     "position": "absolute",
                                                                     "left": "0",
                                                                 },
+                                                                className="d-none",
                                                             ),
                                                         ],
                                                     ),
@@ -557,33 +563,33 @@ def return_layout(basic_config, slice_index):
 # ==================================================================================================
 
 
-@app.callback(
-    Output("page-4-alert", "style"),
-    Output("page-4-graph-volume", "style"),
-    Input("page-4-display-button", "n_clicks"),
-    State("page-4-last-selected-lipids", "data"),
-)
-def page_4_display_volume(clicked_compute, l_lipids):
-    """This callback is used to turn visible the volume plot when the corresponding button has been
-    clicked."""
+# @app.callback(
+#     Output("page-4-alert", "style"),
+#     Output("page-4-graph-volume", "style"),
+#     Input("page-4-display-button", "n_clicks"),
+#     State("page-4-last-selected-lipids", "data"),
+# )
+# def page_4_display_volume(clicked_compute, l_lipids):
+#     """This callback is used to turn visible the volume plot when the corresponding button has been
+#     clicked."""
 
-    # Find out which input triggered the function
-    id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
+#     # Find out which input triggered the function
+#     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
 
-    # If at least one lipid has been selected, display the volume plot
-    if len(l_lipids) > 0:
-        return (
-            {"display": "none"},
-            {
-                "width": "100%",
-                "height": "100%",
-                "position": "absolute",
-                "left": "0",
-            },
-        )
-    # Else display an alert regarding the number of lipids selected
-    else:
-        return {}, {"display": "none"}
+#     # If at least one lipid has been selected, display the volume plot
+#     if len(l_lipids) > 0:
+#         return (
+#             {"display": "none"},
+#             {
+#                 "width": "100%",
+#                 "height": "100%",
+#                 "position": "absolute",
+#                 "left": "0",
+#             },
+#         )
+#     # Else display an alert regarding the number of lipids selected
+#     else:
+#         return {}, {"display": "none"}
 
 
 @app.callback(
@@ -788,21 +794,39 @@ def page_4_add_toast_region_selection(
 
 
 # Function to plot page-4-graph-volume when its state get updated
-@app.callback(
-    Output("page-4-graph-volume", "figure"),
-    State("page-4-selected-lipid-1", "data"),
-    State("page-4-selected-lipid-2", "data"),
-    State("page-4-selected-lipid-3", "data"),
-    Input("page-4-display-button", "n_clicks"),
-    State("page-4-toast-lipid-1", "header"),
-    State("page-4-toast-lipid-2", "header"),
-    State("page-4-toast-lipid-3", "header"),
-    State("page-4-last-selected-regions", "data"),
-    State("page-4-selected-region-1", "data"),
-    State("page-4-selected-region-2", "data"),
-    State("page-4-selected-region-3", "data"),
+@app.long_callback(
+    output=Output("page-4-graph-volume", "figure"),
+    inputs=[
+        State("page-4-selected-lipid-1", "data"),
+        State("page-4-selected-lipid-2", "data"),
+        State("page-4-selected-lipid-3", "data"),
+        Input("page-4-display-button", "n_clicks"),
+        State("page-4-toast-lipid-1", "header"),
+        State("page-4-toast-lipid-2", "header"),
+        State("page-4-toast-lipid-3", "header"),
+        State("page-4-last-selected-regions", "data"),
+        State("page-4-selected-region-1", "data"),
+        State("page-4-selected-region-2", "data"),
+        State("page-4-selected-region-3", "data"),
+        Input("page-4-modal-volume", "is_open"),
+    ],
+    running=[
+        (
+            Output("page-4-progress-bar-volume", "className"),
+            "",
+            "d-none",
+        ),
+        (Output("page-4-graph-volume", "className"), "d-none", ""),
+    ],
+    progress=[
+        Output("page-4-progress-bar-volume", "value"),
+        Output("page-4-progress-bar-volume", "label"),
+    ],
+    prevent_initial_call=True,
+    cache_args_to_ignore=[0, 1, 2, 3, 7, 8],
 )
 def page_4_plot_graph_volume(
+    set_progress,
     l_lipid_1_index,
     l_lipid_2_index,
     l_lipid_3_index,
@@ -814,13 +838,21 @@ def page_4_plot_graph_volume(
     name_region_1,
     name_region_2,
     name_region_3,
+    is_open_modal,
 ):
     """This callback is used to plot the volume graph of expression of the selected lipid(s) in the
     selected structure(s), when clicking on the corresponding button."""
 
+    set_progress((0, "Inspecting dataset..."))
+
     # Find out which input triggered the function
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
     value_input = dash.callback_context.triggered[0]["prop_id"].split(".")[1]
+
+    # If the modal is closed, delete the graph
+    if is_open_modal == False:
+        logging.info("Modal closed, deleting graph")
+        return {}
 
     # Compute set of ids for the volume plot if it is going to be plotted
     if id_input == "page-4-display-button":
@@ -849,9 +881,6 @@ def page_4_plot_graph_volume(
             + str(decrease_resolution_factor)
         )
 
-    # If a lipid selection has been done
-    if id_input == "page-4-display-button":
-
         if (
             np.sum(l_lipid_1_index) > -data.get_slice_number()
             or np.sum(l_lipid_2_index) > -data.get_slice_number()
@@ -876,6 +905,7 @@ def page_4_plot_graph_volume(
             ]
 
             return figures.compute_3D_volume_figure(
+                set_progress=set_progress,
                 ll_t_bounds=lll_lipid_bounds,
                 name_lipid_1=name_lipid_1,
                 name_lipid_2=name_lipid_2,

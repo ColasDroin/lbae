@@ -364,7 +364,7 @@ class Launch:
             ll_t_bounds = [[None, None, None] for i in range(self.data.get_slice_number())]
             ll_t_bounds[0] = [[(622.61, 622.62)], None, None]
             set_id_regions = {1006}
-            self.figures.compute_3D_volume_figure(ll_t_bounds, set_id_regions=set_id_regions)
+            self.figures.compute_3D_volume_figure(None, ll_t_bounds, set_id_regions=set_id_regions)
 
         logging.info("Please wait while compiled functions are executed...")
         draw_region_and_compute_spectral_data()
