@@ -1683,6 +1683,7 @@ class Figures:
         structure_guided_interpolation=True,
         return_interpolated_array=False,
         return_individual_slice_data=False,
+        divider_radius=16,
     ):
         """This figure computes a Plotly Figure containing a go.Volume object representing the
         expression of the requested lipids in the selected regions, interpolated between the slices.
@@ -1709,6 +1710,8 @@ class Figures:
                 corresponding Plotly figure is returned. Defaults to False.
             return_individual_slice_data (bool): If True, the individual slice data (not
                 interpolated) is returned.
+            divider_radius (int): The inverse radius of the sphere used to do the interpolation.
+                Defaults to 16.
         Returns:
             Depending on the value of return_interpolated_array and return_individual_slice_data,
             returns either the (not) interpolated array of expression of the requested lipids in the
