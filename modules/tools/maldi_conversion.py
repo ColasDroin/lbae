@@ -366,7 +366,7 @@ def get_standardized_values(
     # Get the corresponding numpy arrays
     l_arrays_before_transfo = []
     l_arrays_after_transfo = []
-    l_to_keep = []
+    set_idx_to_keep = set([])
     for idx, lipid_str in enumerate(l_lipids_str):
 
         try:
@@ -384,10 +384,10 @@ def get_standardized_values(
 
         l_arrays_before_transfo.append(array_before_transfo)
         l_arrays_after_transfo.append(array_after_transfo)
-        l_to_keep.append(idx)
+        set_idx_to_keep.add(idx)
     return (
-        [x for x in l_lipids_str if x in l_to_keep],
-        [x for x in l_lipids_float if x in l_to_keep],
+        [x for idx, x in enumerate(l_lipids_str) if idx in set_idx_to_keep],
+        [x for idx, x in enumerate(l_lipids_float) if idx in set_idx_to_keep],
         np.array(l_arrays_before_transfo, dtype=np.float32),
         np.array(l_arrays_after_transfo, dtype=np.float32),
     )
