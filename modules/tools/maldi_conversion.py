@@ -366,18 +366,28 @@ def get_standardized_values(
     # Get the corresponding numpy arrays
     l_arrays_before_transfo = []
     l_arrays_after_transfo = []
-    for lipid_str in l_lipids_str:
-        array_before_transfo = np.load(
-            path_array_data + "/" + lipid_str + "/" + str(slice_index - 1) + ".npy"
-        )
+    l_to_keep = []
+    for idx, lipid_str in enumerate(l_lipids_str):
+
+        try:
+            array_before_transfo = np.load(
+                path_array_data + "/" + lipid_str + "/" + str(slice_index - 1) + ".npy"
+            )
+
+        except:
+            # If the array doesn't exist, it means that the lipid doesn't exist for the current slice
+            continue
+
         array_after_transfo = np.load(
             path_array_transformed_data + "/" + lipid_str + "/" + str(slice_index - 1) + ".npy"
         )
+
         l_arrays_before_transfo.append(array_before_transfo)
         l_arrays_after_transfo.append(array_after_transfo)
+        l_to_keep.append(idx)
     return (
-        l_lipids_str,
-        l_lipids_float,
+        [x for x in l_lipids_str if x in l_to_keep],
+        [x for x in l_lipids_float if x in l_to_keep],
         np.array(l_arrays_before_transfo, dtype=np.float32),
         np.array(l_arrays_after_transfo, dtype=np.float32),
     )
@@ -483,7 +493,7 @@ def compute_standardization(
     return array_spectra_pixel, n_peaks_transformed
 
 
-def get_array_peaks_to_correct(l_lipids_float, array_mz_lipids, array_peaks):
+def get_array_peaks_to_correct(l_lipids_float, array_mz_lipids, array_peaks, slice_index=None):
     """This function computes an array similar to 'array_peaks', but containing only the lipids that
     have been MAIA-transformed.
 
@@ -498,22 +508,39 @@ def get_array_peaks_to_correct(l_lipids_float, array_mz_lipids, array_peaks):
         np.ndarray: A numpy array similar to 'array_peaks', but containing only the lipids that have
             been MAIA-transformed.
     """
-    precision = 10**-4
+    # Low precision as the reference can be quite different from the actual m/z value estimated
+    precision = 5 * 10**-3
 
     # First get the list of mz of the current slice
     l_lipids_float_correct = []
     for mz_lipid in l_lipids_float:
         found = False
-        for mz_per_slice, mz_avg in array_mz_lipids:
-            if np.abs(mz_avg - mz_lipid) <= precision:
-                found = True
-                l_lipids_float_correct.append(mz_per_slice)
-                break
+        # Find the closest value in the whole array of annotations
+        idx_closest_value = (np.abs(array_mz_lipids[:, 1] - mz_lipid)).argmin()
+        mz_per_slice, mz_avg = array_mz_lipids[idx_closest_value]
+        diff = np.abs(mz_avg - mz_lipid)
+        if diff <= precision:
+            l_lipids_float_correct.append(mz_per_slice)
+            found = True
         if not found:
-            raise Exception("No lipid could be found for foldername with mz = " + str(mz_lipid))
+            print("Could not find the annotation of the lipid {} in df_match.csv".format(mz_lipid))
+            print("Closest mz value found was {}".format(mz_avg))
+            if slice_index is not None:
+                print("Slice index was {}".format(slice_index - 1))
+            raise Exception
+
+        # for mz_per_slice, mz_avg in array_mz_lipids:
+        #     if np.abs(mz_avg - mz_lipid) <= precision:
+        #         found = True
+        #         l_lipids_float_correct.append(mz_per_slice)
+        #         break
+        # if not found:
+        #     raise Exception("No lipid could be found for foldername with mz = " + str(mz_lipid))
 
     # keep only the peak annotation that correspond to the lipids which have been transformed
     rows_to_keep = []
+    # Take higher precision as values should be perfectly identical here
+    precision = 10**-4
     for mz_lipid in l_lipids_float_correct:
         found = False
         for idx, [mini, maxi, npix, mz_est] in enumerate(array_peaks):
@@ -522,11 +549,14 @@ def get_array_peaks_to_correct(l_lipids_float, array_mz_lipids, array_peaks):
                 rows_to_keep.append(idx)
                 break
         if not found:
-            raise Exception(
+            print(
                 "Lipid with foldername with mz = "
                 + str(mz_lipid)
                 + " was in df_match.csv but not in ranges.csv"
             )
+            if slice_index is not None:
+                print("Slice index was {}".format(slice_index - 1))
+            raise Exception
     array_peaks_to_correct = array_peaks[rows_to_keep]
 
     return array_peaks_to_correct
@@ -834,7 +864,9 @@ def process_raw_data(
         arrays_after_transfo = arrays_after_transfo[:N_SAMPLES]
 
     # Get the array of MAIA-transformed lipids
-    array_peaks_MAIA = get_array_peaks_to_correct(l_lipids_float, array_mz_lipids, array_peaks)
+    array_peaks_MAIA = get_array_peaks_to_correct(
+        l_lipids_float, array_mz_lipids, array_peaks, slice_index=slice_index - 10
+    )
 
     # Filter out all the undesired values
     l_to_keep_high_res, l_mz_lipids_kept = filter_peaks(
