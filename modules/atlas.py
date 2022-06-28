@@ -444,11 +444,7 @@ class Atlas:
                 path = "data/tiff_files/coordinates_original_data/"
             filename = (
                 path
-                + [
-                    x
-                    for x in os.listdir(path)
-                    if str(i + 1) == x.split("slice_")[1].split(".tiff")[0]
-                ][0]
+                + [x for x in os.listdir(path) if str(i + 1) == x.split("_")[1].split("-")[0]][0]
             )
 
             if self.data._sample_data:

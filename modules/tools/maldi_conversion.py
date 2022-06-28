@@ -318,6 +318,7 @@ def get_standardized_values(
     slice_index,
     path_array_data,
     path_array_transformed_data,
+    remove_non_existing=True,
 ):
     """This function loads the values of the intensities of the the lipids whose expression have
     been previously corrected using MAIA.
@@ -369,22 +370,32 @@ def get_standardized_values(
     set_idx_to_keep = set([])
     for idx, lipid_str in enumerate(l_lipids_str):
 
-        try:
-            array_before_transfo = np.load(
-                path_array_data + "/" + lipid_str + "/" + str(slice_index - 1) + ".npy"
-            )
-
-        except:
-            # If the array doesn't exist, it means that the lipid doesn't exist for the current slice
-            continue
-
         array_after_transfo = np.load(
             path_array_transformed_data + "/" + lipid_str + "/" + str(slice_index - 1) + ".npy"
         )
 
+        if remove_non_existing:
+            try:
+                array_before_transfo = np.load(
+                    path_array_data + "/" + lipid_str + "/" + str(slice_index - 1) + ".npy"
+                )
+            except:
+                # If the array doesn't exist, it means that the lipid doesn't exist for the current slice
+                continue
+
+        # Create an array of zeros instead
+        else:
+            try:
+                array_before_transfo = np.load(
+                    path_array_data + "/" + lipid_str + "/" + str(slice_index - 1) + ".npy"
+                )
+            except:
+                array_before_transfo = np.zeros_like(array_after_transfo)
+
         l_arrays_before_transfo.append(array_before_transfo)
         l_arrays_after_transfo.append(array_after_transfo)
         set_idx_to_keep.add(idx)
+
     return (
         [x for idx, x in enumerate(l_lipids_str) if idx in set_idx_to_keep],
         [x for idx, x in enumerate(l_lipids_float) if idx in set_idx_to_keep],
@@ -638,7 +649,7 @@ def standardize_values(
 
     # Get the array of corrective factors (per lipid per pixel), removing zero values
     array_corrective_factors = np.array(
-        np.nan_to_num(arrays_after_transfo / arrays_before_transfo), dtype=np.float16
+        np.nan_to_num(arrays_after_transfo / arrays_before_transfo, nan = 1.), dtype=np.float16
     )
 
     # Correct for negative values

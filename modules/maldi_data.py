@@ -272,7 +272,7 @@ class MaldiData:
         Returns:
             int: The number of slices in the dataset.
         """
-        return 32  # self._n_slices
+        return self._n_slices
 
     def get_slice_list(self, indices="all"):
         """Getter for the list of slice indices.

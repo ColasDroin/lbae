@@ -642,6 +642,10 @@ class Figures:
         if log:
             image = np.log(image + 1)
 
+        # In case of bug, return None
+        if image is None:
+            return None
+
         # Normalize the image if requested
         if normalize:
 
@@ -1060,8 +1064,8 @@ class Figures:
                             lipid_name=lipid_name,
                             cache_flask=cache_flask,
                         )
-
-                        image += image_temp
+                        if image_temp is not None:
+                            image += image_temp
 
             l_images.append(image)
 
