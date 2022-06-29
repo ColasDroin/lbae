@@ -172,11 +172,14 @@ class Launch:
             # Computed in Figures.__init(), calling Figures.shelve_all_l_array_2D(), but it
             # doesn't correspond to an object returned by a specific function.
             # All the list of 2D slices of expression objects are computed and saved in the
-            # shelve database with the following ids:
-            # "figures/3D_page/arrays_expression_$name_lipid$__",
+            # shelve database with the following ids (True is for brain 1 data, False is for brain 2
+            # data):
+            # "figures/3D_page/arrays_expression_True_$name_lipid$__",
+            # "figures/3D_page/arrays_expression_False_$name_lipid$__",
             # (not explicitely in this list as there are too many).
             #  * This a very long computation.
-            "figures/3D_page/arrays_expression_computed",
+            "figures/3D_page/arrays_expression_True_computed",
+            "figures/3D_page/arrays_expression_False_computed",
             #
             # Computed in in Figures.__init(), calling Figures.shelve_all_arrays_annotation(),
             # but it doesn't correspond to an object returned by a specific function. The
@@ -207,6 +210,7 @@ class Launch:
             + self.l_other_objects_to_compute
         )
 
+        # Db entries to ignore as they are either computed through other entries, or not relevant
         self.l_entries_to_ignore = [
             "figures/3D_page/arrays_expression_",
             "figures/load_page/figure_basic_image_",

@@ -145,6 +145,8 @@ class MaldiData:
         get_cumulated_lookup_mz_image(slice_index, index): Returns the cumulated spectrum until
             the corresponding m/z value for the pixel corresponding to the index in the spectral
             data of slice indexed by slice_index.
+        is_brain_1(self, slice_index): Returns True if the slice indexed by slice_index is from
+            brain 1, False otherwise.
         clean_memory(slice_index=None, array=None, cache=None): Cleans the memory (reset the
             memory-mapped arrays) of the app.
         compute_l_labels(): Computes and returns the labels of the lipids in the dataset.
@@ -252,9 +254,6 @@ class MaldiData:
     # ==============================================================================================
     # --- Methods
     # ==============================================================================================
-
-    def is_brain_1(self, slice_index):
-        return self._dic_lightweight[slice_index]["is_brain_1"]
 
     def get_annotations(self):
         """Getter for the lipid annotation of each slice, contained in a pandas
@@ -748,6 +747,17 @@ class MaldiData:
             return self._dic_lightweight[slice_index]["array_cumulated_lookup_mz_image"][index]
         else:
             return self._dic_memmap[slice_index]["array_cumulated_lookup_mz_image"][index]
+
+    def is_brain_1(self, slice_index):
+        """Returns True if the slice indexed by slice_index is a brain 1. Else, returns False.
+
+        Args:
+            slice_index (int): Index of the slice for which the status is requested.
+
+        Returns:
+            bool: True if the slice indexed by slice_index is a brain 1. Else, returns False.
+        """
+        return self._dic_lightweight[slice_index]["is_brain_1"]
 
     def clean_memory(self, slice_index=None, array=None, cache=None):
         """Cleans the memory (reset the memory-mapped arrays) of the app. slice_index and array

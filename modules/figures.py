@@ -182,10 +182,16 @@ class Figures:
         ):
             self.shelve_arrays_basic_figures()
 
-        # Check that the lipid distributions for all slices have been computed, if not, compute them
-        if not self._storage.check_shelved_object("figures/3D_page", "arrays_expression_computed"):
-            self.shelve_all_l_array_2D(sample=sample)
-
+        # Check that the lipid distributions for all slices, and both brains, have been computed, if
+        # not, compute them
+        if not self._storage.check_shelved_object(
+            "figures/3D_page", "arrays_expression_True_computed"
+        ):
+            self.shelve_all_l_array_2D(sample=sample, brain_1=True)
+        if not self._storage.check_shelved_object(
+            "figures/3D_page", "arrays_expression_False_computed"
+        ):
+            self.shelve_all_l_array_2D(sample=sample, brain_1=False)
         # Check that all arrays of annotations have been computed, if not, compute them
         if not self._storage.check_shelved_object("figures/3D_page", "arrays_annotation_computed"):
             self.shelve_all_arrays_annotation()
@@ -1553,7 +1559,12 @@ class Figures:
         return array_annotation
 
     def compute_l_array_2D(
-        self, ll_t_bounds, normalize_independently=True, high_res=False, cache_flask=None
+        self,
+        ll_t_bounds,
+        normalize_independently=True,
+        high_res=False,
+        brain_1=True,
+        cache_flask=None,
     ):
         """This function is used to get the list of expression per slice for all slices for the
         computation of the 3D brain volume.
@@ -1566,6 +1577,8 @@ class Figures:
                 True.
             high_res (bool, optional): If True, the returned list of arrays correspond to the
                 warped/upscaled data. Defaults to False as this is a very heavy plot.
+            brain_1 (bool, optional): If True, the returned list of arrays correspond to the
+                brain 1 data. Else, to the brain 2 data. Defaults to True.
             cache_flask (flask_caching.Cache, optional): Cache of the Flask database. If set to
                 None, the reading of memory-mapped data will not be multithreads-safe. Defaults to
                 None.
@@ -1575,13 +1588,20 @@ class Figures:
         """
         l_array_data = []
 
-        for slice_index in range(0, self._data.get_slice_number(), 1):
+        # Correct the indices for the potentially unused slices from brain 1
+        if brain_1:
+            slice_index_offset = 0
+        else:
+            slice_index_offset = len(self._data.get_slice_list(indices="brain_1"))
+
+        # Loop over slices and compute the expression of the requested lipids
+        for slice_index in range(len(ll_t_bounds)):  # (0, self._data.get_slice_number(), 1):
 
             if ll_t_bounds[slice_index] != [None, None, None]:
 
                 # Get the data as an expression image per lipid
                 array_data = self.compute_rgb_array_per_lipid_selection(
-                    slice_index + 1,
+                    slice_index + 1 + slice_index_offset,
                     ll_t_bounds[slice_index],
                     normalize_independently=normalize_independently,
                     projected_image=high_res,
@@ -1709,6 +1729,7 @@ class Figures:
         return_interpolated_array=False,
         return_individual_slice_data=False,
         divider_radius=16,
+        brain_1=False,
     ):
         """This figure computes a Plotly Figure containing a go.Volume object representing the
         expression of the requested lipids in the selected regions, interpolated between the slices.
@@ -1739,6 +1760,8 @@ class Figures:
                 interpolated) is returned.
             divider_radius (int): The inverse radius of the sphere used to do the interpolation.
                 Defaults to 16.
+            brain_1 (bool): If True, the brain 1 data is used. Else, the brain 2 data is used.
+                Defaults to False.
         Returns:
             Depending on the value of return_interpolated_array and return_individual_slice_data,
             returns either the (not) interpolated array of expression of the requested lipids in the
@@ -1791,11 +1814,12 @@ class Figures:
         ll_array_data = [
             self._storage.return_shelved_object(
                 "figures/3D_page",
-                "arrays_expression_" + str(name_lipid) + "__",
+                "arrays_expression_" + str(brain_1) + "_" + str(name_lipid) + "__",
                 force_update=False,
                 ignore_arguments_naming=True,
                 compute_function=self.compute_l_array_2D,
                 ll_t_bounds=[[l_t_bounds[i], None, None] for l_t_bounds in ll_t_bounds],
+                brain_1=brain_1,
                 cache_flask=cache_flask,
             )
             for i, name_lipid in enumerate([name_lipid_1, name_lipid_2, name_lipid_3])
@@ -1806,11 +1830,11 @@ class Figures:
 
         # Average array of expression over lipid
         l_array_data_avg = []
-        for slice_index in range(0, self._data.get_slice_number(), 1):
+        for slice_index in self._data.get_slice_list(indices="brain_1" if brain_1 else "brain_2"):
             n = 0
             avg = 0
             for i in range(3):  # * number of lipids is hardcoded
-                s = ll_array_data[i][slice_index]
+                s = ll_array_data[i][slice_index - 1]
                 if s is None:
                     s = 0
                 else:
@@ -2149,9 +2173,7 @@ class Figures:
             "figures/load_page", "arrays_basic_figures_computed", True
         )
 
-    # ! Need to update for brain 2 as well
-
-    def shelve_all_l_array_2D(self, force_update=False, sample=False):
+    def shelve_all_l_array_2D(self, force_update=False, sample=False, brain_1=True):
         """This functions precomputes and shelves all the arrays of lipid expression used in a 3D
         representation of the brain (through self.compute_3D_volume_figure()). Once everything has
         been shelved, a boolean value is stored in the shelve database, to indicate that the arrays
@@ -2162,6 +2184,8 @@ class Figures:
                 Defaults to False.
             sample (bool, optional): If True, only a fraction of the precomputations are made (for
                 debug). Default to False.
+            brain_1 (bool, optional): If True, the data is precomputed for the brain 1. Else for
+                the brain 2. Defaults to True.
         """
 
         # Count number of lipids processed for sampling
@@ -2170,28 +2194,19 @@ class Figures:
             logging.warning("Only a sample of the lipid arrays will be computed!")
 
         # Simulate a click on all lipid names
-        for name in sorted(
-            self._data.get_annotations_MAIA_transformed_lipids(brain_1=True).name.unique()
-        ):
-            structures = self._data.get_annotations_MAIA_transformed_lipids(brain_1=True)[
-                self._data.get_annotations_MAIA_transformed_lipids(brain_1=True)["name"] == name
-            ].structure.unique()
+        df_annotations_MAIA = self._data.get_annotations_MAIA_transformed_lipids(brain_1=brain_1)
+        for name in sorted(df_annotations_MAIA.name.unique()):
+            structures = df_annotations_MAIA[df_annotations_MAIA["name"] == name].structure.unique()
             for structure in sorted(structures):
-                cations = self._data.get_annotations_MAIA_transformed_lipids(brain_1=True)[
-                    (
-                        self._data.get_annotations_MAIA_transformed_lipids(brain_1=True)["name"]
-                        == name
-                    )
-                    & (
-                        self._data.get_annotations_MAIA_transformed_lipids(brain_1=True)[
-                            "structure"
-                        ]
-                        == structure
-                    )
+                cations = df_annotations_MAIA[
+                    (df_annotations_MAIA["name"] == name)
+                    & (df_annotations_MAIA["structure"] == structure)
                 ].cation.unique()
                 for cation in sorted(cations):
                     l_selected_lipids = []
-                    for slice_index in range(self._data.get_slice_number()):
+                    for slice_index in self._data.get_slice_list(
+                        indices="brain_1" if brain_1 else "brain_2"
+                    ):  # range(self._data.get_slice_number()):
 
                         # Find lipid location
                         l_lipid_loc = (
@@ -2220,7 +2235,9 @@ class Figures:
                     lipid_string = name + " " + structure + " " + cation
 
                     # If lipid is present in at least one slice
-                    if np.sum(l_selected_lipids) > -self._data.get_slice_number():
+                    if np.sum(l_selected_lipids) > -len(
+                        self._data.get_slice_list(indices="brain_1" if brain_1 else "brain_2")
+                    ):
 
                         # Build the list of mz boundaries for each peak and each index
                         lll_lipid_bounds = [
@@ -2243,11 +2260,12 @@ class Figures:
 
                         self._storage.return_shelved_object(
                             "figures/3D_page",
-                            "arrays_expression_" + name_lipid + "__",
+                            "arrays_expression_" + str(brain_1) + "_" + name_lipid + "__",
                             force_update=force_update,
                             compute_function=self.compute_l_array_2D,
                             ignore_arguments_naming=True,
                             ll_t_bounds=lll_lipid_bounds,
+                            brain_1=brain_1,
                             cache_flask=None,  # No cache needed since launched at startup
                         )
 
@@ -2256,7 +2274,9 @@ class Figures:
                             return None
 
         # Variable to signal everything has been computed
-        self._storage.dump_shelved_object("figures/3D_page", "arrays_expression_computed", True)
+        self._storage.dump_shelved_object(
+            "figures/3D_page", "arrays_expression_" + str(brain_1) + "_computed", True
+        )
 
     def shelve_all_arrays_annotation(self):
         """This functions precomputes and shelves the array of structure annotation used in a
