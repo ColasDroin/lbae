@@ -1624,6 +1624,7 @@ class Figures:
         self,
         l_array_data,
         high_res=False,
+        brain_1=True,
     ):
         """This functions computes the list of coordinates and expression values for the voxels used
         in the 3D representation of the brain.
@@ -1633,6 +1634,8 @@ class Figures:
                 for each slice of the dataset.
             high_res (bool, optional): If True, the computations made correspond to the
                 warped/upscaled data. Defaults to False as this is a very heavy plot.
+            brain_1 (bool, optional): If True, the returned list of arrays correspond to the
+                brain 1 data. Else, to the brain 2 data. Defaults to True.
         Returns:
             np.ndarray, np.ndarray, np.ndarray, np.ndarray: 4 flat numpy arrays (3 for coordinates
                 and 1 for expression).
@@ -1640,17 +1643,25 @@ class Figures:
 
         logging.info("Starting computing 3D arrays" + logmem())
 
+        # Correct the indices for the potentially unused slices from brain 1
+        if brain_1:
+            slice_index_init = 0
+            slice_index_end = len(self._data.get_slice_list(indices="brain_1"))
+        else:
+            slice_index_init = len(self._data.get_slice_list(indices="brain_1"))
+            slice_index_end = self._data.get_slice_number()
+
         # get list of original coordinates for each slice
         if not high_res:
-            l_coor = self._atlas.l_original_coor
+            l_coor = self._atlas.l_original_coor[slice_index_init:slice_index_end]
             estimate = 400 * 400
         else:
             estimate = 1311 * 918
-            l_coor = self._atlas.array_coordinates_warped_data
+            l_coor = self._atlas.array_coordinates_warped_data[slice_index_init:slice_index_end]
 
         # Initialize empty arrays with a large estimate for the orginal acquisition size
 
-        max_size = estimate * self._data.get_slice_number()
+        max_size = estimate * (slice_index_end - slice_index_init)
         array_x = np.empty(max_size, dtype=np.float32)
         array_y = np.empty(max_size, dtype=np.float32)
         array_z = np.empty(max_size, dtype=np.float32)
@@ -1664,7 +1675,7 @@ class Figures:
         resolution = self._atlas.resolution
         array_annotations = np.array(self._atlas.bg_atlas.annotation, dtype=np.int32)
 
-        for slice_index in range(0, self._data.get_slice_number(), 1):
+        for slice_index in range(0, len(l_array_data), 1):
 
             # Get the averaged expression data for the current slice
             array_data = l_array_data[slice_index]
@@ -1852,7 +1863,7 @@ class Figures:
 
         # Get the 3D array of expression and coordinates
         array_x, array_y, array_z, array_c = self.compute_array_coordinates_3D(
-            l_array_data_avg, high_res=False
+            l_array_data_avg, high_res=False, brain_1=brain_1
         )
 
         if return_individual_slice_data:

@@ -44,8 +44,8 @@ def return_main_content():
     Returns:
         html.Div: A div containing the corresponding elements.
     """
-    # List of empty lipid indexes for the dropdown of page 4
-    empty_lipid_list = [-1 for i in range(data.get_slice_number())]
+    # List of empty lipid indexes for the dropdown of page 4, assuming brain 1 is initially selected
+    empty_lipid_list = [-1 for i in data.get_slice_list(indices = 'brain_1')]
 
     # Record session id in case sessions need to be individualized
     session_id = str(uuid.uuid4())
