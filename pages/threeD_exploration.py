@@ -17,6 +17,8 @@ from dash.dependencies import Input, Output, State
 import numpy as np
 import dash
 import dash_mantine_components as dmc
+from zmq import DEALER
+import copy
 
 # LBAE imports
 from app import app, data, figures, storage, atlas, cache_flask
@@ -182,6 +184,29 @@ def return_layout(basic_config, slice_index):
                                                         transitionDuration=150,
                                                         transition="pop-top-left",
                                                         transitionTimingFunction="ease",
+                                                    ),
+                                                    dmc.Select(
+                                                        label="Select brain model:",
+                                                        placeholder="Select brain model",
+                                                        id="page-4-dropdown-brain",
+                                                        data=[
+                                                            {
+                                                                "value": "brain_1",
+                                                                "label": "Brain 1",
+                                                            },
+                                                            {
+                                                                "value": "brain_2",
+                                                                "label": "Brain 2",
+                                                            },
+                                                        ],
+                                                        clearable=True,
+                                                        searchable=False,
+                                                        radius="md",
+                                                        size="xs",
+                                                        transitionDuration=150,
+                                                        transition="pop-top-left",
+                                                        transitionTimingFunction="ease",
+                                                        value="brain_1",
                                                     ),
                                                 ],
                                             ),
@@ -809,6 +834,7 @@ def page_4_add_toast_region_selection(
         State("page-4-selected-region-2", "data"),
         State("page-4-selected-region-3", "data"),
         Input("page-4-modal-volume", "is_open"),
+        State("page-4-dropdown-brain", "value"),
     ],
     running=[
         (
@@ -839,6 +865,7 @@ def page_4_plot_graph_volume(
     name_region_2,
     name_region_3,
     is_open_modal,
+    brain,
 ):
     """This callback is used to plot the volume graph of expression of the selected lipid(s) in the
     selected structure(s), when clicking on the corresponding button."""
@@ -880,11 +907,11 @@ def page_4_plot_graph_volume(
             "For the computation of 3D volume, decrease_resolution_factor is "
             + str(decrease_resolution_factor)
         )
-
+        n_slices = len(data.get_slice_list(indices=brain))
         if (
-            np.sum(l_lipid_1_index) > -data.get_slice_number()
-            or np.sum(l_lipid_2_index) > -data.get_slice_number()
-            or np.sum(l_lipid_3_index) > -data.get_slice_number()
+            np.sum(l_lipid_1_index) > -n_slices
+            or np.sum(l_lipid_2_index) > -n_slices
+            or np.sum(l_lipid_3_index) > -n_slices
         ):
             # Build the list of mz boundaries for each peak and each index
             lll_lipid_bounds = [
@@ -913,6 +940,7 @@ def page_4_plot_graph_volume(
                 set_id_regions=set_id,
                 decrease_dimensionality_factor=decrease_resolution_factor,
                 cache_flask=cache_flask,
+                brain_1=True if brain == "brain_1" else False,
             )
 
         else:
@@ -990,26 +1018,28 @@ def page_4_plot_graph_heatmap_mz_selection(
     State("page-4-dropdown-lipid-names", "data"),
     State("page-4-dropdown-lipid-structures", "data"),
     State("page-4-dropdown-lipid-cations", "data"),
+    Input("page-4-dropdown-brain", "value"),
 )
 def page_4_handle_dropdowns(
-    n_clicks, name, structure, options_names, options_structures, options_cations
+    n_clicks, name, structure, options_names, options_structures, options_cations, brain
 ):
     """This callback is used to progressively refine dropdown selection for lipid names, structures
     and cations. It is triggered when a new selection is made in the corresponding dropdowns."""
 
     # Find out which input triggered the function
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
-
-    # If the page just loaded or button 'add lipid' has been clicked, reset selection
+    brain_1 = True if brain == "brain_1" else False
+    # If the page just loaded or button 'add lipid' has been clicked, or brain dropdown has changed, reset selection
     if (
         len(id_input) == 0
         or id_input == "dcc-store-slice-index"
         or id_input == "page-4-add-lipid-button"
+        or id_input == "page-4-dropdown-brain"
     ):
         options_names = [
             {"label": name, "value": name}
             for name in sorted(
-                data.get_annotations_MAIA_transformed_lipids(brain_1=True).name.unique()
+                data.get_annotations_MAIA_transformed_lipids(brain_1=brain_1).name.unique()
             )
         ]
 
@@ -1019,8 +1049,8 @@ def page_4_handle_dropdowns(
     # accordingly, when second one is set, the last one option is computed
     elif name is not None:
         if id_input == "page-4-dropdown-lipid-names":
-            structures = data.get_annotations_MAIA_transformed_lipids(brain_1=True)[
-                data.get_annotations_MAIA_transformed_lipids(brain_1=True)["name"] == name
+            structures = data.get_annotations_MAIA_transformed_lipids(brain_1=brain_1)[
+                data.get_annotations_MAIA_transformed_lipids(brain_1=brain_1)["name"] == name
             ].structure.unique()
             options_structures = [
                 {"label": structure, "value": structure} for structure in sorted(structures)
@@ -1029,10 +1059,10 @@ def page_4_handle_dropdowns(
 
         elif structure is not None:
             if id_input == "page-4-dropdown-lipid-structures":
-                cations = data.get_annotations_MAIA_transformed_lipids(brain_1=True)[
-                    (data.get_annotations_MAIA_transformed_lipids(brain_1=True)["name"] == name)
+                cations = data.get_annotations_MAIA_transformed_lipids(brain_1=brain_1)[
+                    (data.get_annotations_MAIA_transformed_lipids(brain_1=brain_1)["name"] == name)
                     & (
-                        data.get_annotations_MAIA_transformed_lipids(brain_1=True)["structure"]
+                        data.get_annotations_MAIA_transformed_lipids(brain_1=brain_1)["structure"]
                         == structure
                     )
                 ].cation.unique()
@@ -1067,6 +1097,7 @@ def page_4_handle_dropdowns(
     State("page-4-toast-lipid-2", "header"),
     State("page-4-toast-lipid-3", "header"),
     State("page-4-last-selected-lipids", "data"),
+    Input("page-4-dropdown-brain", "value"),
 )
 def page_4_add_toast_selection(
     cation,
@@ -1083,6 +1114,7 @@ def page_4_add_toast_selection(
     header_2,
     header_3,
     l_selected_lipids,
+    brain,
 ):
     """This callback is used to add the current choice of lipids (using dropdown) to the selection
     for further plotting, when clicking on the 'add lipid' button."""
@@ -1092,7 +1124,8 @@ def page_4_add_toast_selection(
     value_input = dash.callback_context.triggered[0]["prop_id"].split(".")[1]
 
     # Define empty lipid list
-    empty_lipid_list = [-1 for i in range(data.get_slice_number())]
+    n_slices = len(data.get_slice_list(indices=brain))
+    empty_lipid_list = [-1 for i in range(n_slices)]
 
     # Take advantage of dash bug that automatically triggers 'page-4-dropdown-lipid-cations'
     # everytime the page is loaded, and prevent using dcc-store-slice-index as an input
@@ -1115,7 +1148,7 @@ def page_4_add_toast_selection(
     # If a lipid has been deleted from a toast
     if value_input == "is_open":
 
-        # Delete corressponding header and index
+        # Delete corresponding header and index
         if id_input == "page-4-toast-lipid-1":
             header_1 = ""
             l_selected_lipids.remove(l_lipid_1_index[0])
@@ -1149,7 +1182,7 @@ def page_4_add_toast_selection(
     # Otherwise, add lipid to selection
     elif cation is not None and id_input == "page-4-add-lipid-button":
 
-        for slice_index in range(data.get_slice_number()):
+        for slice_index in data.get_slice_list(indices=brain):
 
             # Find lipid location
             l_lipid_loc = (
@@ -1157,7 +1190,7 @@ def page_4_add_toast_selection(
                 .index[
                     (data.get_annotations()["name"] == name)
                     & (data.get_annotations()["structure"] == structure)
-                    & (data.get_annotations()["slice"] == slice_index + 1)
+                    & (data.get_annotations()["slice"] == slice_index)
                     & (data.get_annotations()["cation"] == cation)
                 ]
                 .tolist()
@@ -1171,28 +1204,87 @@ def page_4_add_toast_selection(
 
             lipid_string = name + " " + structure + " " + cation
 
-            if slice_index == 0:
+            if slice_index - 1 == 0:
                 l_selected_lipids.append(l_lipid_loc[0])
 
             # Check first slot available
             if not bool_toast_1:
                 header_1 = lipid_string
-                l_lipid_1_index[slice_index] = l_lipid_loc[0]
-                if slice_index == data.get_slice_number() - 1:
+                l_lipid_1_index[slice_index - 1] = l_lipid_loc[0]
+                if slice_index == data.get_slice_list(indices=brain)[-1]:
                     bool_toast_1 = True
             elif not bool_toast_2:
                 header_2 = lipid_string
-                l_lipid_2_index[slice_index] = l_lipid_loc[0]
-                if slice_index == data.get_slice_number() - 1:
+                l_lipid_2_index[slice_index - 1] = l_lipid_loc[0]
+                if slice_index == data.get_slice_list(indices=brain)[-1]:
                     bool_toast_2 = True
             elif not bool_toast_3:
                 header_3 = lipid_string
-                l_lipid_3_index[slice_index] = l_lipid_loc[0]
-                if slice_index == data.get_slice_number() - 1:
+                l_lipid_3_index[slice_index - 1] = l_lipid_loc[0]
+                if slice_index == data.get_slice_list(indices=brain)[-1]:
                     bool_toast_3 = True
             else:
                 logging.warning("BUG, more than 3 lipids have been selected")
                 return dash.no_update
+
+        return (
+            header_1,
+            header_2,
+            header_3,
+            l_lipid_1_index,
+            l_lipid_2_index,
+            l_lipid_3_index,
+            bool_toast_1,
+            bool_toast_2,
+            bool_toast_3,
+            l_selected_lipids,
+        )
+
+    # If the brain index has changed, update the corresponding lipid indices
+    elif id_input == "page-4-dropdown-brain":
+        # Remove previous lipids information
+        if header_1 != "":
+            l_selected_lipids.remove(l_lipid_1_index[0])
+            l_lipid_1_index = copy.copy(empty_lipid_list)
+        if header_2 != "":
+            l_selected_lipids.remove(l_lipid_2_index[0])
+            l_lipid_2_index = copy.copy(empty_lipid_list)
+        if header_3 != "":
+            l_selected_lipids.remove(l_lipid_3_index[0])
+            l_lipid_3_index = copy.copy(empty_lipid_list)
+        for idx_header, header in enumerate([header_1, header_2, header_3]):
+            if header != "":
+                name, structure, cation = header.split(" ")
+                for slice_index in data.get_slice_list(indices=brain):
+
+                    # Find lipid location
+                    l_lipid_loc = (
+                        data.get_annotations()
+                        .index[
+                            (data.get_annotations()["name"] == name)
+                            & (data.get_annotations()["structure"] == structure)
+                            & (data.get_annotations()["slice"] == slice_index)
+                            & (data.get_annotations()["cation"] == cation)
+                        ]
+                        .tolist()
+                    )
+                    # If several lipids correspond to the selection, we have a problem...
+                    if len(l_lipid_loc) > 1:
+                        logging.warning("More than one lipid corresponds to the selection")
+                        l_lipid_loc = [l_lipid_loc[-1]]
+                    if len(l_lipid_loc) == 0:
+                        l_lipid_loc = [-1]
+
+                    if slice_index - 1 == 0:
+                        l_selected_lipids.append(l_lipid_loc[0])
+
+                    # Check slot that are already filled
+                    if idx_header == 0:
+                        l_lipid_1_index[slice_index - 1] = l_lipid_loc[0]
+                    elif idx_header == 1:
+                        l_lipid_2_index[slice_index - 1] = l_lipid_loc[0]
+                    elif idx_header == 2:
+                        l_lipid_3_index[slice_index - 1] = l_lipid_loc[0]
 
         return (
             header_1,
@@ -1217,15 +1309,19 @@ def page_4_add_toast_selection(
     Input("page-4-selected-lipid-1", "data"),
     Input("page-4-selected-lipid-2", "data"),
     Input("page-4-selected-lipid-3", "data"),
+    State("page-4-dropdown-brain", "value"),
 )
-def page_4_disable_dropdowns(l_lipid_1_index, l_lipid_2_index, l_lipid_3_index):
+def page_4_disable_dropdowns(l_lipid_1_index, l_lipid_2_index, l_lipid_3_index, brain):
     """This callback is triggered when a lipid is selected, and enables/disables the corresponding
     dropdowns."""
+    # Compute number of slices for current brain
+    n_slices = len(data.get_slice_list(indices=brain))
+
     # If all slots are taken, disable all dropdowns
     if (
-        np.sum(l_lipid_1_index) > -data.get_slice_number()
-        and np.sum(l_lipid_2_index) > -data.get_slice_number()
-        and np.sum(l_lipid_3_index) > -data.get_slice_number()
+        np.sum(l_lipid_1_index) > -n_slices
+        and np.sum(l_lipid_2_index) > -n_slices
+        and np.sum(l_lipid_3_index) > -n_slices
     ):
         return True, True, True
     else:
@@ -1241,12 +1337,15 @@ def page_4_disable_dropdowns(l_lipid_1_index, l_lipid_2_index, l_lipid_3_index):
     Input("page-4-selected-region-1", "data"),
     Input("page-4-selected-region-2", "data"),
     Input("page-4-selected-region-3", "data"),
+    State("page-4-dropdown-brain", "value"),
 )
 def page_4_active_display(
-    l_lipid_1_index, l_lipid_2_index, l_lipid_3_index, region_1_id, region_2_id, region_3_id
+    l_lipid_1_index, l_lipid_2_index, l_lipid_3_index, region_1_id, region_2_id, region_3_id, brain
 ):
     """This callback is used to enable/disable the display buttons (for both clustergram and volume
     plots)."""
+    # Compute number of slices for current brain
+    n_slices = len(data.get_slice_list(indices=brain))
 
     # If at least two structures
     if (
@@ -1256,10 +1355,7 @@ def page_4_active_display(
     ):
 
         # If at least one lipid, activate both buttons, else only the clustergram button:
-        if (
-            np.sum(l_lipid_1_index + l_lipid_2_index + l_lipid_3_index)
-            > -3 * data.get_slice_number()
-        ):
+        if np.sum(l_lipid_1_index + l_lipid_2_index + l_lipid_3_index) > -3 * n_slices:
             return False, False
         else:
             return True, False
@@ -1268,10 +1364,7 @@ def page_4_active_display(
     if region_1_id != "" or region_2_id != "" or region_3_id != "":
 
         # If at least one lipid, activate volume plot button:
-        if (
-            np.sum(l_lipid_1_index + l_lipid_2_index + l_lipid_3_index)
-            > -3 * data.get_slice_number()
-        ):
+        if np.sum(l_lipid_1_index + l_lipid_2_index + l_lipid_3_index) > -3 * n_slices:
             return False, True
 
         else:
