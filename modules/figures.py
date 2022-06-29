@@ -650,10 +650,17 @@ class Figures:
         if normalize:
 
             # Normalize across slice if the lipid has been MAIA transformed
-            if lipid_name in self.dic_normalization_factors and apply_transform:
+            if (
+                lipid_name,
+                self._data.is_brain_1(slice_index),
+            ) in self.dic_normalization_factors and apply_transform:
 
-                perc = self.dic_normalization_factors[lipid_name]
-                logging.info("Normalization made with to percentile computed across all slices.")
+                perc = self.dic_normalization_factors[
+                    (lipid_name, self._data.is_brain_1(slice_index))
+                ]
+                logging.info(
+                    "Normalization made with respect to percentile computed across all slices."
+                )
             else:
                 # Normalize by 99 percentile
                 perc = np.percentile(image, 99.0)
@@ -695,14 +702,17 @@ class Figures:
             "Compute normalization factor across slices for MAIA transformed lipids..."
             + " It may takes a while"
         )
+
+        # Dictionnnary that will contain the percentile across all slices of a given brain
         dic_max_percentile = {}
-        # Simulate a click on all MAIA transformed lipids
-        for (
-            index,
-            (name, structure, cation, mz),
-        ) in self._data.get_annotations_MAIA_transformed_lipids().iterrows():
+
+        # Function to compute the percentile across all slices
+        def _compute_percentile_across_slices(name, structure, cation, brain_1):
             max_perc = 0
-            for slice_index in range(1, self._data.get_slice_number() + 1):
+            lipid_string = ""
+            for slice_index in self._data.get_slice_list(
+                indices="brain_1" if brain_1 else "brain_2"
+            ):
 
                 # Find lipid location
                 l_lipid_loc = (
@@ -752,9 +762,19 @@ class Figures:
                     # perc must be quite small in theory... otherwise it's a bug
                     if perc > max_perc:  # and perc<1:
                         max_perc = perc
+            return max_perc, lipid_string
 
-            # Store max percentile across slices
-            dic_max_percentile[lipid_string] = max_perc
+        # Simulate a click on all MAIA transformed lipids
+        for brain_1 in [True, False]:
+            for (
+                index,
+                (name, structure, cation, mz),
+            ) in self._data.get_annotations_MAIA_transformed_lipids(brain_1=brain_1).iterrows():
+                max_perc, lipid_string = _compute_percentile_across_slices(
+                    name, structure, cation, brain_1
+                )
+                # Store max percentile across slices
+                dic_max_percentile[(lipid_string, brain_1)] = max_perc
 
         return dic_max_percentile
 

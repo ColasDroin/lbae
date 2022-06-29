@@ -52,8 +52,11 @@ class MaldiData:
                 (min peak, max peak, average value of the peak), sorted by min_mz, for the lipids
                 that have been transformed.
             In addition, it contains the shape of all the arrays stored in the numpy memory maps.
+            Dictionnary indices start at 1.
         _n_slices (int): number of slices present in the dataset.
-        _l_slices (list): list of the slices indices in the dataset.
+        _l_slices (list): list of slices indices in the dataset. Indices start at 1.
+        _l_slices_brain_1 (list): list of slices indices belonging to brain 1.
+        _l_slices_brain_2 (list): list of slices indices belonging to brain 2.
         _dic_memmap (dictionnary): a dictionnary containing numpy memory maps allowing to access the
             heavyweights arrays of the datasets, without saturating the disk (ONLY IF _sample_data
             IS FALSE. ELSE ALL THE DATASET IS STORED IN _dic_lightweight). The arrays in the
@@ -155,6 +158,8 @@ class MaldiData:
         "_dic_memmap",
         "_l_slices",
         "_n_slices",
+        "_l_slices_brain_1",
+        "_l_slices_brain_2",
         "_sample_data",
         "_df_annotations",
         "_df_annotations_MAIA_transformed_lipids_brain_1",
@@ -195,6 +200,12 @@ class MaldiData:
         # Simple variable to get the number of slices
         self._n_slices = len(self._dic_lightweight)
         self._l_slices = sorted(list(self._dic_lightweight.keys()))
+        self._l_slices_brain_1 = sorted(
+            [slice_idx for slice_idx, val in self._dic_lightweight.items() if val["is_brain_1"]]
+        )
+        self._l_slices_brain_2 = sorted(
+            [slice_idx for slice_idx, val in self._dic_lightweight.items() if not val["is_brain_1"]]
+        )
 
         # Set the accesser to the mmap files
         self._dic_memmap = {}
@@ -242,6 +253,9 @@ class MaldiData:
     # --- Methods
     # ==============================================================================================
 
+    def is_brain_1(self, slice_index):
+        return self._dic_lightweight[slice_index]["is_brain_1"]
+
     def get_annotations(self):
         """Getter for the lipid annotation of each slice, contained in a pandas
             dataframe.
@@ -280,18 +294,17 @@ class MaldiData:
         Args:
             indices (str, optional): If "all", return the list of all slice indices. If "brain_1",
                 return the list of slice indices for brain 1. If "brain_2", return the list of
-                slice indices for brain 2. Defaults to "all".
+                slice indices for brain 2. Defaults to "all". Indices start at 1.
 
         Returns:
             list: The list of requested slice indices.
         """
-
         if indices == "all":
             return self._l_slices
         elif indices == "brain_1":
-            return self._l_slices[:32]
+            return self._l_slices_brain_1
         elif indices == "brain_2":
-            return self._l_slices[32:]
+            return self._l_slices_brain_2
         else:
             raise ValueError("Invalid string for indices")
 

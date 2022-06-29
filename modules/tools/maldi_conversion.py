@@ -468,7 +468,7 @@ def compute_standardization(
                 integral = np.sum(array_spectra_pixel[idx_min_mz : idx_max_mz + 1, 2])
 
                 # Assess that this sum is equal to the one precomputed with MAIA
-                if np.abs(integral - intensity_before) > 10**-4:
+                if np.abs(integral - intensity_before) > 10**-4 and (idx_max_mz - idx_min_mz) > 1:
                     print("There seems to be a problem with the computation of the integral")
                     print(integral, intensity_before)
                     print(idx_min_mz, idx_max_mz)
@@ -649,7 +649,7 @@ def standardize_values(
 
     # Get the array of corrective factors (per lipid per pixel), removing zero values
     array_corrective_factors = np.array(
-        np.nan_to_num(arrays_after_transfo / arrays_before_transfo, nan = 1.), dtype=np.float16
+        np.nan_to_num(arrays_after_transfo / arrays_before_transfo, nan=1.0), dtype=np.float16
     )
 
     # Correct for negative values
