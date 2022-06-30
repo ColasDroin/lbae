@@ -144,6 +144,29 @@ def return_layout(basic_config, slice_index):
                                                         )
                                                     ),
                                                     dmc.Select(
+                                                        label="Select brain model:",
+                                                        placeholder="Select brain model",
+                                                        id="page-4-dropdown-brain",
+                                                        data=[
+                                                            {
+                                                                "value": "brain_1",
+                                                                "label": "Brain 1",
+                                                            },
+                                                            {
+                                                                "value": "brain_2",
+                                                                "label": "Brain 2",
+                                                            },
+                                                        ],
+                                                        clearable=True,
+                                                        searchable=False,
+                                                        radius="md",
+                                                        size="xs",
+                                                        transitionDuration=150,
+                                                        transition="pop-top-left",
+                                                        transitionTimingFunction="ease",
+                                                        value="brain_1",
+                                                    ),
+                                                    dmc.Select(
                                                         label="Select lipid category:",
                                                         placeholder="Select lipid cat",
                                                         id="page-4-dropdown-lipid-names",
@@ -184,29 +207,6 @@ def return_layout(basic_config, slice_index):
                                                         transitionDuration=150,
                                                         transition="pop-top-left",
                                                         transitionTimingFunction="ease",
-                                                    ),
-                                                    dmc.Select(
-                                                        label="Select brain model:",
-                                                        placeholder="Select brain model",
-                                                        id="page-4-dropdown-brain",
-                                                        data=[
-                                                            {
-                                                                "value": "brain_1",
-                                                                "label": "Brain 1",
-                                                            },
-                                                            {
-                                                                "value": "brain_2",
-                                                                "label": "Brain 2",
-                                                            },
-                                                        ],
-                                                        clearable=True,
-                                                        searchable=False,
-                                                        radius="md",
-                                                        size="xs",
-                                                        transitionDuration=150,
-                                                        transition="pop-top-left",
-                                                        transitionTimingFunction="ease",
-                                                        value="brain_1",
                                                     ),
                                                 ],
                                             ),
@@ -1129,9 +1129,13 @@ def page_4_add_toast_selection(
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
     value_input = dash.callback_context.triggered[0]["prop_id"].split(".")[1]
 
-    # Define empty lipid list
-    n_slices = len(data.get_slice_list(indices=brain))
-    empty_lipid_list = [-1 for i in range(n_slices)]
+    if brain == "brain_1" or brain == "brain_2":
+        # Define empty lipid list
+        n_slices = len(data.get_slice_list(indices=brain))
+        empty_lipid_list = [-1 for i in range(n_slices)]
+    # The function shouldn't have been called if brain index is not defined
+    else:
+        return dash.no_update
 
     # Take advantage of dash bug that automatically triggers 'page-4-dropdown-lipid-cations'
     # everytime the page is loaded, and prevent using dcc-store-slice-index as an input
@@ -1188,7 +1192,7 @@ def page_4_add_toast_selection(
     # Otherwise, add lipid to selection
     elif cation is not None and id_input == "page-4-add-lipid-button":
 
-        for slice_index in data.get_slice_list(indices=brain):
+        for idx_slice_index, slice_index in enumerate(data.get_slice_list(indices=brain)):
 
             # Find lipid location
             l_lipid_loc = (
@@ -1210,23 +1214,23 @@ def page_4_add_toast_selection(
 
             lipid_string = name + " " + structure + " " + cation
 
-            if slice_index - 1 == 0:
+            if idx_slice_index == 0:
                 l_selected_lipids.append(l_lipid_loc[0])
 
             # Check first slot available
             if not bool_toast_1:
                 header_1 = lipid_string
-                l_lipid_1_index[slice_index - 1] = l_lipid_loc[0]
+                l_lipid_1_index[idx_slice_index] = l_lipid_loc[0]
                 if slice_index == data.get_slice_list(indices=brain)[-1]:
                     bool_toast_1 = True
             elif not bool_toast_2:
                 header_2 = lipid_string
-                l_lipid_2_index[slice_index - 1] = l_lipid_loc[0]
+                l_lipid_2_index[idx_slice_index] = l_lipid_loc[0]
                 if slice_index == data.get_slice_list(indices=brain)[-1]:
                     bool_toast_2 = True
             elif not bool_toast_3:
                 header_3 = lipid_string
-                l_lipid_3_index[slice_index - 1] = l_lipid_loc[0]
+                l_lipid_3_index[idx_slice_index] = l_lipid_loc[0]
                 if slice_index == data.get_slice_list(indices=brain)[-1]:
                     bool_toast_3 = True
             else:
@@ -1261,7 +1265,7 @@ def page_4_add_toast_selection(
         for idx_header, header in enumerate([header_1, header_2, header_3]):
             if header != "":
                 name, structure, cation = header.split(" ")
-                for slice_index in data.get_slice_list(indices=brain):
+                for idx_slice_index, slice_index in enumerate(data.get_slice_list(indices=brain)):
 
                     # Find lipid location
                     l_lipid_loc = (
@@ -1281,16 +1285,16 @@ def page_4_add_toast_selection(
                     if len(l_lipid_loc) == 0:
                         l_lipid_loc = [-1]
 
-                    if slice_index - 1 == 0:
+                    if idx_slice_index == 0:
                         l_selected_lipids.append(l_lipid_loc[0])
 
                     # Check slot that are already filled
                     if idx_header == 0:
-                        l_lipid_1_index[slice_index - 1] = l_lipid_loc[0]
+                        l_lipid_1_index[idx_slice_index] = l_lipid_loc[0]
                     elif idx_header == 1:
-                        l_lipid_2_index[slice_index - 1] = l_lipid_loc[0]
+                        l_lipid_2_index[idx_slice_index] = l_lipid_loc[0]
                     elif idx_header == 2:
-                        l_lipid_3_index[slice_index - 1] = l_lipid_loc[0]
+                        l_lipid_3_index[idx_slice_index] = l_lipid_loc[0]
 
         return (
             header_1,

@@ -66,7 +66,7 @@ data = MaldiData(path_data, path_annotations, sample_data=SAMPLE_DATA)
 
 # If True, only a small portions of the figures are precomputed (if precomputation has not already
 # been done). Used for debugging purposes.
-sample = False
+sample = True
 
 # Load Atlas and Figures objects. At first launch, many objects will be precomputed and shelved in
 # the classes Atlas and Figures.

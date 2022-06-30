@@ -1612,6 +1612,7 @@ class Figures:
 
                 # Sum array colors (i.e. lipids)
                 array_data = np.sum(array_data, axis=-1)
+
             else:
                 array_data = None
 
@@ -1660,7 +1661,6 @@ class Figures:
             l_coor = self._atlas.array_coordinates_warped_data[slice_index_init:slice_index_end]
 
         # Initialize empty arrays with a large estimate for the orginal acquisition size
-
         max_size = estimate * (slice_index_end - slice_index_init)
         array_x = np.empty(max_size, dtype=np.float32)
         array_y = np.empty(max_size, dtype=np.float32)
@@ -1826,7 +1826,7 @@ class Figures:
             self._storage.return_shelved_object(
                 "figures/3D_page",
                 "arrays_expression_" + str(brain_1) + "_" + str(name_lipid) + "__",
-                force_update=False,
+                force_update=True,
                 ignore_arguments_naming=True,
                 compute_function=self.compute_l_array_2D,
                 ll_t_bounds=[[l_t_bounds[i], None, None] for l_t_bounds in ll_t_bounds],
@@ -1841,13 +1841,18 @@ class Figures:
 
         # Average array of expression over lipid
         l_array_data_avg = []
-        for slice_index in self._data.get_slice_list(indices="brain_1" if brain_1 else "brain_2"):
+        for slice_index in range(
+            len(self._data.get_slice_list(indices="brain_1" if brain_1 else "brain_2"))
+        ):
             n = 0
             avg = 0
             for i in range(3):  # * number of lipids is hardcoded
-                s = ll_array_data[i][slice_index - 1]
+                s = ll_array_data[i][slice_index]
                 if s is None:
                     s = 0
+                elif s.size == 1:
+                    if np.isnan(s):
+                        s = 0
                 else:
                     n += 1
                 avg += s
@@ -2046,13 +2051,19 @@ class Figures:
                 l_spectra = []
                 for region in l_selected_regions:
                     long_region = self._atlas.dic_acronym_name[region]
-                    if region in self._atlas.dic_existing_masks[slice_index - 1]:
-                        grah_scattergl_data = self._atlas.get_projected_mask_and_spectrum(
-                            slice_index - 1, long_region, MAIA_correction=True
-                        )[1]
-                        l_spectra.append(grah_scattergl_data)
+                    if slice_index - 1 in self._atlas.dic_existing_masks:
+                        if region in self._atlas.dic_existing_masks[slice_index - 1]:
+                            grah_scattergl_data = self._atlas.get_projected_mask_and_spectrum(
+                                slice_index - 1, long_region, MAIA_correction=True
+                            )[1]
+                            l_spectra.append(grah_scattergl_data)
+                        else:
+                            l_spectra.append(None)
                     else:
-                        l_spectra.append(None)
+                        raise Exception(
+                            "The masks have not been precomputed. Please precompute them before"
+                            " running this function."
+                        )
                 ll_idx_labels = global_lipid_index_store(self._data, slice_index - 1, l_spectra)
                 logging.info("Computing dictionnary for averaging slice " + str(slice_index))
 

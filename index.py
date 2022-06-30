@@ -45,7 +45,7 @@ def return_main_content():
         html.Div: A div containing the corresponding elements.
     """
     # List of empty lipid indexes for the dropdown of page 4, assuming brain 1 is initially selected
-    empty_lipid_list = [-1 for i in data.get_slice_list(indices = 'brain_1')]
+    empty_lipid_list = [-1 for i in data.get_slice_list(indices="brain_1")]
 
     # Record session id in case sessions need to be individualized
     session_id = str(uuid.uuid4())
@@ -103,24 +103,34 @@ def return_main_content():
                             "right": 0,  # "20%",
                             "background-color": "#1d1c1f",
                         },
-                        children=dmc.Slider(
-                            id="main-slider",
-                            min=1,
-                            max=data.get_slice_number(),
-                            step=1,
-                            marks=[
-                                {
-                                    "value": slice_index,
-                                    "label": str(slice_index),
-                                }
-                                for slice_index in range(1, data.get_slice_number() + 1, 3)
-                            ],
-                            # tooltip={"placement": "right", "always_visible": True,},
-                            size="xs",
-                            value=1,
-                            color="cyan",
-                            class_name="mt-2 mx-5",
-                        ),
+                        children=[
+                            dmc.Slider(
+                                id="main-slider",
+                                min=1,
+                                max=data.get_slice_number(),
+                                step=1,
+                                marks=[
+                                    {
+                                        "value": slice_index,
+                                        "label": str(slice_index),
+                                    }
+                                    for slice_index in range(1, data.get_slice_number() + 1, 3)
+                                ],
+                                # tooltip={"placement": "right", "always_visible": True,},
+                                size="xs",
+                                value=1,
+                                color="cyan",
+                                class_name="mt-2 mx-5",
+                            ),
+                            dmc.Chips(
+                                id="chips-values",
+                                data=[
+                                    {"value": "brain_1", "label": "Brain 1"},
+                                    {"value": "brain_2", "label": "Brain 2"},
+                                ],
+                                value="brain_1",
+                            ),
+                        ],
                     ),
                     # Documentation in a bottom drawer
                     dmc.Drawer(
