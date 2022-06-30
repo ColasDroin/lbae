@@ -1038,7 +1038,6 @@ def page_4_handle_dropdowns(
     # If the page just loaded or button 'add lipid' has been clicked, or brain dropdown has changed, reset selection
     if (
         len(id_input) == 0
-        or id_input == "dcc-store-slice-index"
         or id_input == "page-4-add-lipid-button"
         or id_input == "page-4-dropdown-brain"
     ):
@@ -1138,8 +1137,8 @@ def page_4_add_toast_selection(
         return dash.no_update
 
     # Take advantage of dash bug that automatically triggers 'page-4-dropdown-lipid-cations'
-    # everytime the page is loaded, and prevent using dcc-store-slice-index as an input
-    # if page-4-dropdown-lipid-cations is called while there's no lipid name defined, it means the
+    # everytime the page is loaded
+    # If page-4-dropdown-lipid-cations is called while there's no lipid name defined, it means the
     # page just got loaded
     if len(id_input) == 0 or (id_input == "page-4-dropdown-lipid-cations" and name is None):
         return (

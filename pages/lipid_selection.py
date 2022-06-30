@@ -254,7 +254,7 @@ def return_layout(basic_config, slice_index):
                             style={
                                 "width": "35em",
                                 "left": "1%",
-                                "bottom": "3.5rem",
+                                "bottom": "4rem",
                             },
                             class_name="position-absolute",
                         ),
@@ -263,7 +263,7 @@ def return_layout(basic_config, slice_index):
                             direction="column",
                             style={
                                 "right": "1%",
-                                "bottom": "3.5rem",
+                                "bottom": "4rem",
                             },
                             class_name="position-absolute",
                             spacing=0,

@@ -57,8 +57,6 @@ def return_main_content():
             dcc.Location(id="url", refresh=False),
             # Record session id, useful to trigger callbacks at initialization
             dcc.Store(id="session-id", data=session_id),
-            # Record slice index, to keep track of current slice
-            dcc.Store(id="dcc-store-slice-index", data=1),
             # Record the state of the range sliders for low and high resolution spectra in page 2
             dcc.Store(id="boundaries-low-resolution-mz-plot"),
             dcc.Store(id="boundaries-high-resolution-mz-plot"),
@@ -93,42 +91,44 @@ def return_main_content():
                 children=[
                     sidebar.layout,
                     html.Div(id="content"),
-                    html.Div(
+                    dmc.Center(
                         id="main-paper-slider",
                         style={
                             "position": "fixed",
-                            "bottom": "0",
+                            "bottom": "1rem",
                             "height": "3rem",
                             "left": "6rem",  # "25%",
                             "right": 0,  # "20%",
-                            "background-color": "#1d1c1f",
+                            "background-color": "rgba(0, 0, 0, 0.0)",
                         },
                         children=[
                             dmc.Slider(
                                 id="main-slider",
-                                min=1,
-                                max=data.get_slice_number(),
+                                min=data.get_slice_list(indices="brain_1")[0],
+                                max=data.get_slice_list(indices="brain_1")[-1],
                                 step=1,
                                 marks=[
                                     {
                                         "value": slice_index,
                                         "label": str(slice_index),
                                     }
-                                    for slice_index in range(1, data.get_slice_number() + 1, 3)
+                                    for slice_index in data.get_slice_list(indices="brain_1")[::3]
                                 ],
                                 # tooltip={"placement": "right", "always_visible": True,},
                                 size="xs",
                                 value=1,
                                 color="cyan",
-                                class_name="mt-2 mx-5",
+                                class_name="mt-2 mr-5 ml-2 w-75",
                             ),
                             dmc.Chips(
-                                id="chips-values",
+                                id="main-brain",
                                 data=[
                                     {"value": "brain_1", "label": "Brain 1"},
                                     {"value": "brain_2", "label": "Brain 2"},
                                 ],
                                 value="brain_1",
+                                class_name="ml-3 pt-1",
+                                color="cyan",
                             ),
                         ],
                     ),
@@ -245,7 +245,7 @@ def toggle_collapse(n1, is_open):
 
 
 @app.callback(
-    Output("main-paper-slider", "className"), Input("url", "pathname"), prevent_initial_call=False
+    Output("main-paper-slider", "class_name"), Input("url", "pathname"), prevent_initial_call=False
 )
 def hide_slider(pathname):
     """This callback is used to hide the slider when the user is on a page that does not need it."""
@@ -259,3 +259,31 @@ def hide_slider(pathname):
 
     else:
         return "d-none"
+
+
+@app.callback(
+    Output("main-slider", "min"),
+    Output("main-slider", "max"),
+    Output("main-slider", "marks"),
+    Output("main-slider", "value"),
+    Input("main-brain", "value"),
+    State("main-slider", "value"),
+    prevent_initial_call=False,
+)
+def hide_slider(brain, value):
+    """This callback is used to update the slider indices with the selected brain."""
+    l_slices = data.get_slice_list(indices=brain)
+    min = l_slices[0]
+    max = l_slices[-1]
+    marks = [
+        {
+            "value": slice_index,
+            "label": str(slice_index),
+        }
+        for slice_index in l_slices[::3]
+    ]
+    if brain == "brain_1" and value > data.get_slice_list(indices="brain_1")[-1]:
+        value -= data.get_slice_list(indices="brain_1")[-1]
+    elif brain == "brain_2" and value < data.get_slice_list(indices="brain_2")[0]:
+        value += data.get_slice_list(indices="brain_1")[-1]
+    return min, max, marks, value
