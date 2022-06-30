@@ -1826,7 +1826,7 @@ class Figures:
             self._storage.return_shelved_object(
                 "figures/3D_page",
                 "arrays_expression_" + str(brain_1) + "_" + str(name_lipid) + "__",
-                force_update=True,
+                force_update=False,
                 ignore_arguments_naming=True,
                 compute_function=self.compute_l_array_2D,
                 ll_t_bounds=[[l_t_bounds[i], None, None] for l_t_bounds in ll_t_bounds],

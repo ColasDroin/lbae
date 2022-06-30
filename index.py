@@ -19,7 +19,7 @@ import logging
 import dash_mantine_components as dmc
 
 # LBAE modules
-from app import app, data
+from app import app, data, atlas
 from pages import (
     sidebar,
     home,
@@ -97,28 +97,51 @@ def return_main_content():
                             "position": "fixed",
                             "bottom": "1rem",
                             "height": "3rem",
-                            "left": "6rem",  # "25%",
-                            "right": 0,  # "20%",
+                            "left": "7rem",
+                            "right": "1rem",
                             "background-color": "rgba(0, 0, 0, 0.0)",
                         },
                         children=[
+                            dmc.Text("Rostro-caudal coordinate: ", class_name="pr-4"),
                             dmc.Slider(
-                                id="main-slider",
+                                id="main-slider-1",
                                 min=data.get_slice_list(indices="brain_1")[0],
                                 max=data.get_slice_list(indices="brain_1")[-1],
                                 step=1,
                                 marks=[
                                     {
                                         "value": slice_index,
-                                        "label": str(slice_index),
+                                        # Use x coordinate for label
+                                        "label": "{:.2f}".format(
+                                            atlas.l_original_coor[slice_index - 1][0, 0][0]
+                                        ),
                                     }
                                     for slice_index in data.get_slice_list(indices="brain_1")[::3]
                                 ],
-                                # tooltip={"placement": "right", "always_visible": True,},
                                 size="xs",
-                                value=1,
+                                value=data.get_slice_list(indices="brain_1")[0],
                                 color="cyan",
-                                class_name="mt-2 mr-5 ml-2 w-75",
+                                class_name="mt-2 mr-5 ml-2 mb-1 w-75",
+                            ),
+                            dmc.Slider(
+                                id="main-slider-2",
+                                min=data.get_slice_list(indices="brain_2")[0],
+                                max=data.get_slice_list(indices="brain_2")[-1],
+                                step=1,
+                                marks=[
+                                    {
+                                        "value": slice_index,
+                                        # Use x coordinate for label
+                                        "label": "{:.2f}".format(
+                                            atlas.l_original_coor[slice_index - 1][0, 0][0]
+                                        ),
+                                    }
+                                    for slice_index in data.get_slice_list(indices="brain_2")[::3]
+                                ],
+                                size="xs",
+                                value=data.get_slice_list(indices="brain_2")[0],
+                                color="cyan",
+                                class_name="mt-2 mr-5 ml-2 mb-1 w-75 d-none",
                             ),
                             dmc.Chips(
                                 id="main-brain",
@@ -127,7 +150,7 @@ def return_main_content():
                                     {"value": "brain_2", "label": "Brain 2"},
                                 ],
                                 value="brain_1",
-                                class_name="ml-3 pt-1",
+                                class_name="pl-3 pt-1",
                                 color="cyan",
                             ),
                         ],
@@ -262,28 +285,23 @@ def hide_slider(pathname):
 
 
 @app.callback(
-    Output("main-slider", "min"),
-    Output("main-slider", "max"),
-    Output("main-slider", "marks"),
-    Output("main-slider", "value"),
+    Output("main-slider-1", "class_name"),
+    Output("main-slider-2", "class_name"),
+    Output("main-slider-1", "value"),
+    Output("main-slider-2", "value"),
     Input("main-brain", "value"),
-    State("main-slider", "value"),
+    State("main-slider-1", "value"),
+    State("main-slider-2", "value"),
     prevent_initial_call=False,
 )
-def hide_slider(brain, value):
+def hide_useless_slider(brain, value_1, value_2):
     """This callback is used to update the slider indices with the selected brain."""
-    l_slices = data.get_slice_list(indices=brain)
-    min = l_slices[0]
-    max = l_slices[-1]
-    marks = [
-        {
-            "value": slice_index,
-            "label": str(slice_index),
-        }
-        for slice_index in l_slices[::3]
-    ]
-    if brain == "brain_1" and value > data.get_slice_list(indices="brain_1")[-1]:
-        value -= data.get_slice_list(indices="brain_1")[-1]
-    elif brain == "brain_2" and value < data.get_slice_list(indices="brain_2")[0]:
-        value += data.get_slice_list(indices="brain_1")[-1]
-    return min, max, marks, value
+    if brain == "brain_1":
+        value_1 = value_2 - data.get_slice_list(indices="brain_1")[-1]
+        return "mt-2 mr-5 ml-2 mb-1 w-75", "mt-2 mr-5 ml-2 mb-1 w-75 d-none", value_1, value_2
+    elif brain == "brain_2":
+        value_2 = value_1 + data.get_slice_list(indices="brain_1")[-1]
+        return "mt-2 mr-5 ml-2 mb-1 w-75 d-none", "mt-2 mr-5 ml-2 mb-1 w-75", value_1, value_2
+
+
+# ! Create a dcc in updated by both main_slider_1 and 2
