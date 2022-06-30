@@ -57,6 +57,8 @@ def return_main_content():
             dcc.Location(id="url", refresh=False),
             # Record session id, useful to trigger callbacks at initialization
             dcc.Store(id="session-id", data=session_id),
+            # Record the slider index
+            dcc.Store(id="main-slider", data=1),
             # Record the state of the range sliders for low and high resolution spectra in page 2
             dcc.Store(id="boundaries-low-resolution-mz-plot"),
             dcc.Store(id="boundaries-high-resolution-mz-plot"),
@@ -213,7 +215,7 @@ def return_validation_layout(main_content, initial_slice=1):
     Output("content", "children"),
     Output("empty-content", "children"),
     Input("url", "pathname"),
-    State("main-slider", "value"),
+    State("main-slider", "data"),
 )
 def render_page_content(pathname, slice_index):
     """This callback is used as a URL router."""
@@ -304,4 +306,16 @@ def hide_useless_slider(brain, value_1, value_2):
         return "mt-2 mr-5 ml-2 mb-1 w-75 d-none", "mt-2 mr-5 ml-2 mb-1 w-75", value_1, value_2
 
 
-# ! Create a dcc in updated by both main_slider_1 and 2
+@app.callback(
+    Output("main-slider", "data"),
+    Input("main-slider-1", "value"),
+    Input("main-slider-2", "value"),
+    State("main-brain", "value"),
+    prevent_initial_call=False,
+)
+def update_slider_index(value_1, value_2, brain):
+    """This callback is used to update the slider indices with the selected brain."""
+    if brain == "brain_1":
+        return value_1
+    elif brain == "brain_2":
+        return value_2

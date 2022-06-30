@@ -175,7 +175,7 @@ def return_layout(basic_config, slice_index):
 @app.callback(
     Output("page-1-graph-slice-selection", "figure"),
     Output("page-1-toggle-annotations", "disabled"),
-    Input("main-slider", "value"),
+    Input("main-slider", "data"),
     Input("page-1-card-tabs", "value"),
     Input("page-1-toggle-annotations", "checked"),
 )
@@ -242,7 +242,7 @@ def page_1_visibilty_hover(active_tab):
 @app.callback(
     Output("page-1-graph-hover-text", "children"),
     Input("page-1-graph-slice-selection", "hoverData"),
-    State("main-slider", "value"),
+    State("main-slider", "data"),
 )
 def page_1_hover(hoverData, slice_index):
     """This callback is used to update the text displayed when hovering over the slice image."""

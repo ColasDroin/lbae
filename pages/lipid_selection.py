@@ -449,7 +449,7 @@ def return_layout(basic_config, slice_index):
 @app.callback(
     Output("page-2-graph-heatmap-mz-selection", "figure"),
     Output("page-2-badge-input", "children"),
-    Input("main-slider", "value"),
+    Input("main-slider", "data"),
     Input("boundaries-high-resolution-mz-plot", "data"),
     Input("boundaries-low-resolution-mz-plot", "data"),
     Input("page-2-selected-lipid-1", "data"),
@@ -660,7 +660,7 @@ def page_2_plot_graph_heatmap_mz_selection(
 
 @app.callback(
     Output("page-2-graph-low-resolution-spectrum", "figure"),
-    Input("main-slider", "value"),
+    Input("main-slider", "data"),
     State("page-2-selected-lipid-1", "data"),
     State("page-2-selected-lipid-2", "data"),
     State("page-2-selected-lipid-3", "data"),
@@ -747,7 +747,7 @@ def page_2_plot_graph_low_res_spectrum(
 @app.callback(
     Output("boundaries-low-resolution-mz-plot", "data"),
     Input("page-2-graph-low-resolution-spectrum", "relayoutData"),
-    State("main-slider", "value"),
+    State("main-slider", "data"),
 )
 def page_2_store_boundaries_mz_from_graph_low_res_spectrum(relayoutData, slice_index):
     """This callback stores in a dcc store the m/z boundaries of the low resolution spectrum when
@@ -777,7 +777,7 @@ def page_2_store_boundaries_mz_from_graph_low_res_spectrum(relayoutData, slice_i
 
 @app.callback(
     Output("page-2-graph-high-resolution-spectrum", "figure"),
-    Input("main-slider", "value"),
+    Input("main-slider", "data"),
     Input("boundaries-low-resolution-mz-plot", "data"),
     Input("page-2-selected-lipid-1", "data"),
     Input("page-2-selected-lipid-2", "data"),
@@ -945,7 +945,7 @@ def page_2_store_boundaries_mz_from_graph_high_res_spectrum(relayoutData, bound_
     Input("page-2-badge-lipid-1", "class_name"),
     Input("page-2-badge-lipid-2", "class_name"),
     Input("page-2-badge-lipid-3", "class_name"),
-    Input("main-slider", "value"),
+    Input("main-slider", "data"),
     State("page-2-selected-lipid-1", "data"),
     State("page-2-selected-lipid-2", "data"),
     State("page-2-selected-lipid-3", "data"),
@@ -1204,7 +1204,7 @@ def page_2_display_alert(figure):
     State("page-2-selected-lipid-1", "data"),
     State("page-2-selected-lipid-2", "data"),
     State("page-2-selected-lipid-3", "data"),
-    State("main-slider", "value"),
+    State("main-slider", "data"),
     State("page-2-toggle-apply-transform", "checked"),
     State("page-2-badge-input", "children"),
     State("boundaries-low-resolution-mz-plot", "data"),

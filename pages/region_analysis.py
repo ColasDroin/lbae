@@ -845,7 +845,7 @@ def return_layout(basic_config, slice_index=1):
 @app.callback(
     Output("page-3-graph-hover-text", "children"),
     Input("page-3-graph-heatmap-per-sel", "hoverData"),
-    Input("main-slider", "value"),
+    Input("main-slider", "data"),
 )
 def page_3_hover(hoverData, slice_index):
     """This callback is used to update the text displayed when hovering over the slice image."""
@@ -887,7 +887,7 @@ def page_3_reset_layout(cliked_reset, url):
     Output("dcc-store-reset", "data"),
     Output("dcc-store-shapes-and-masks", "data"),
     Input("page-3-graph-heatmap-per-sel", "relayoutData"),
-    Input("main-slider", "value"),
+    Input("main-slider", "data"),
     Input("page-3-reset-button", "n_clicks"),
     Input("page-3-dropdown-brain-regions", "value"),
     Input("url", "pathname"),
@@ -1096,7 +1096,7 @@ def page_3_plot_heatmap(
 
 @app.callback(
     Output("page-3-dropdown-brain-regions", "data"),
-    Input("main-slider", "value"),
+    Input("main-slider", "data"),
 )
 def page_3_update_dropdown_option(slice_index):
     """This callback updates the dropdown options for the brain regions."""
@@ -1137,7 +1137,7 @@ def page_3_disable_dropdown(l_selection, clicked_reset):
 @app.callback(
     Output("page-3-dropdown-brain-regions", "value"),
     Input("page-3-reset-button", "n_clicks"),
-    Input("main-slider", "value"),
+    Input("main-slider", "data"),
     prevent_initial_call=True,
 )
 def page_3_empty_dropdown(clicked_reset, slice_index):
@@ -1528,7 +1528,7 @@ def global_spectrum_store(
     Input("page-3-dcc-store-path-heatmap", "data"),
     Input("page-3-reset-button", "n_clicks"),
     Input("url", "pathname"),
-    Input("main-slider", "value"),
+    Input("main-slider", "data"),
     State("page-3-dropdown-brain-regions", "value"),
     State("dcc-store-shapes-and-masks", "data"),
     State("page-3-graph-heatmap-per-sel", "relayoutData"),
@@ -1589,7 +1589,7 @@ def page_3_record_spectra(
     Output("page-3-graph-spectrum-per-pixel", "figure"),
     Input("page-3-reset-button", "n_clicks"),
     Input("dcc-store-list-mz-spectra", "data"),
-    Input("main-slider", "value"),
+    Input("main-slider", "data"),
     State("page-3-dropdown-brain-regions", "value"),
     State("dcc-store-shapes-and-masks", "data"),
     State("page-3-graph-heatmap-per-sel", "relayoutData"),
@@ -1750,7 +1750,7 @@ def page_3_plot_spectrum(
     Input("page-3-reset-button", "n_clicks"),
     Input("page-3-sort-by-diff-switch", "checked"),
     Input("page-4-slider", "value"),
-    Input("main-slider", "value"),
+    Input("main-slider", "data"),
     Input("dcc-store-list-mz-spectra", "data"),
     State("page-3-dropdown-brain-regions", "value"),
     State("dcc-store-shapes-and-masks", "data"),
@@ -1980,7 +1980,7 @@ def page_3_reset_download(fig_mz):
     Output("page-3-open-modal", "n_clicks"),
     Input("page-3-dcc-store-lipids-region", "data"),
     Input("page-3-reset-button", "n_clicks"),
-    Input("main-slider", "value"),
+    Input("main-slider", "data"),
     State("page-3-open-modal", "n_clicks"),
     prevent_initial_call=True,
 )
@@ -2085,7 +2085,7 @@ def toggle_visibility_graph(n1, cliked_reset, l_red_lipids, l_green_lipids, l_bl
     Input("page-3-open-modal", "n_clicks"),
     Input("page-3-reset-button", "n_clicks"),
     Input("page-3-toggle-mask", "checked"),
-    Input("main-slider", "value"),
+    Input("main-slider", "data"),
     State("page-3-dropdown-red", "value"),
     State("page-3-dropdown-green", "value"),
     State("page-3-dropdown-blue", "value"),
