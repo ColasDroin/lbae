@@ -959,6 +959,7 @@ def page_4_plot_graph_volume(
         State("page-4-selected-region-1", "data"),
         State("page-4-selected-region-2", "data"),
         State("page-4-selected-region-3", "data"),
+        State("page-4-dropdown-brain", "value"),
     ],
     running=[
         (
@@ -985,6 +986,7 @@ def page_4_plot_graph_heatmap_mz_selection(
     name_region_1,
     name_region_2,
     name_region_3,
+    brain,
 ):
     """This callback is used to plot the clustergram to cluster and compare lipid expression in the
     selected structure(s), when clicking on the corresponding button. It uses a long callback to
@@ -1000,7 +1002,11 @@ def page_4_plot_graph_heatmap_mz_selection(
     if id_input == "page-4-compare-structure-button" or id_input == "page-4-slider-percentile":
         if len(l_selected_regions) > 1:
             return figures.compute_clustergram_figure(
-                set_progress, cache_flask, l_selected_regions, percentile=percentile
+                set_progress,
+                cache_flask,
+                l_selected_regions,
+                percentile=percentile,
+                brain_1=True if brain == "brain_1" else False,
             )
     return dash.no_update
 

@@ -1595,7 +1595,7 @@ class Figures:
             slice_index_offset = len(self._data.get_slice_list(indices="brain_1"))
 
         # Loop over slices and compute the expression of the requested lipids
-        for slice_index in range(len(ll_t_bounds)):  # (0, self._data.get_slice_number(), 1):
+        for slice_index in range(len(ll_t_bounds)):
 
             if ll_t_bounds[slice_index] != [None, None, None]:
 
@@ -1998,7 +1998,12 @@ class Figures:
         return fig
 
     def compute_clustergram_figure(
-        self, set_progress, cache_flask, l_selected_regions, percentile=90
+        self,
+        set_progress,
+        cache_flask,
+        l_selected_regions,
+        percentile=90,
+        brain_1=False,
     ):
         """This function computes a Plotly Clustergram figure, allowing to cluster and compare the
         expression of all the MAIA-transformed lipids in the dataset in the selected regions.
@@ -2013,6 +2018,8 @@ class Figures:
                 regions (at the very bottom of the hierarchy) whose border must be annotated.
             percentile (int, optional): The percentile of average expression below which the lipids
                 must be discarded (to get rid of low expression noise). Defaults to 90.
+            brain_1 (bool): If True, the brain 1 data is used. Else, the brain 2 data is used.
+                Defaults to False.
 
         Returns:
             go.Figure: a Plotly Clustergram figure clustering and comparing the expression of all the
@@ -2024,28 +2031,29 @@ class Figures:
         @cache_flask.memoize()
         def return_df_avg_lipids(l_selected_regions):
             dic_avg_lipids = {}
-            for slice_index in range(self._data.get_slice_number()):
+            l_slices = self._data.get_slice_list(indices="brain_1" if brain_1 else "brain_2")
+            for slice_index in l_slices:
 
                 # Display progress every 10 slices
                 if slice_index % 10 == 0:
                     set_progress(
                         (
-                            int(slice_index / self._data.get_slice_number() * 100),
-                            "Loading slice n°" + str(slice_index + 1),
+                            int(slice_index / len(l_slices) * 100),
+                            "Loading slice n°" + str(slice_index),
                         )
                     )
 
                 l_spectra = []
                 for region in l_selected_regions:
                     long_region = self._atlas.dic_acronym_name[region]
-                    if region in self._atlas.dic_existing_masks[slice_index]:
+                    if region in self._atlas.dic_existing_masks[slice_index - 1]:
                         grah_scattergl_data = self._atlas.get_projected_mask_and_spectrum(
-                            slice_index, long_region, MAIA_correction=True
+                            slice_index - 1, long_region, MAIA_correction=True
                         )[1]
                         l_spectra.append(grah_scattergl_data)
                     else:
                         l_spectra.append(None)
-                ll_idx_labels = global_lipid_index_store(self._data, slice_index, l_spectra)
+                ll_idx_labels = global_lipid_index_store(self._data, slice_index - 1, l_spectra)
                 logging.info("Computing dictionnary for averaging slice " + str(slice_index))
 
                 # Compute average expression for each lipid and each selection
@@ -2217,7 +2225,7 @@ class Figures:
                     l_selected_lipids = []
                     for slice_index in self._data.get_slice_list(
                         indices="brain_1" if brain_1 else "brain_2"
-                    ):  # range(self._data.get_slice_number()):
+                    ):
 
                         # Find lipid location
                         l_lipid_loc = (
