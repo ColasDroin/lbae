@@ -27,6 +27,7 @@ from pages import (
     lipid_selection,
     region_analysis,
     threeD_exploration,
+    scRNAseq,
 )
 from documentation.documentation import return_documentation
 from config import basic_config
@@ -204,6 +205,7 @@ def return_validation_layout(main_content, initial_slice=1):
             lipid_selection.return_layout(basic_config, initial_slice),
             region_analysis.return_layout(basic_config, initial_slice),
             threeD_exploration.return_layout(basic_config, initial_slice),
+            scRNAseq.return_layout(basic_config, initial_slice),
         ]
     )
 
@@ -239,6 +241,9 @@ def render_page_content(pathname, slice_index):
 
     elif pathname == "/3D-exploration":
         page = threeD_exploration.return_layout(basic_config, slice_index)
+
+    elif pathname == "/gene-data":
+        page = scRNAseq.return_layout(basic_config, slice_index)
 
     else:
         # If the user tries to reach a different page, return a 404 message
@@ -306,16 +311,20 @@ def hide_useless_slider(brain, value_1, value_2):
         return "mt-2 mr-5 ml-2 mb-1 w-75 d-none", "mt-2 mr-5 ml-2 mb-1 w-75", value_1, value_2
 
 
-@app.callback(
+app.clientside_callback(
+    """
+    function(value_1, value_2, brain){
+        if(brain == 'brain_1'){
+            return value_1;
+        }
+        else if(brain == 'brain_2'){
+            return value_2;
+            }
+    }
+    """,
     Output("main-slider", "data"),
     Input("main-slider-1", "value"),
     Input("main-slider-2", "value"),
     State("main-brain", "value"),
-    prevent_initial_call=False,
 )
-def update_slider_index(value_1, value_2, brain):
-    """This callback is used to update the slider indices with the selected brain."""
-    if brain == "brain_1":
-        return value_1
-    elif brain == "brain_2":
-        return value_2
+"""This clientside callback is used to update the slider indices with the selected brain."""

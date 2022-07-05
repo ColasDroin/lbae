@@ -55,8 +55,8 @@ layout = html.Div(
                             children=[
                                 html.I(
                                     id="sidebar-page-1",
-                                    className="icon-upload fs-5",
-                                    style={"margin-left": "0.7em"},
+                                    className="icon-slices fs-3",
+                                    style={"margin-left": "0.2em"},
                                 )
                             ],
                             className="mt-3 mb-2",
@@ -120,6 +120,25 @@ layout = html.Div(
                         ),
                         dbc.Tooltip(
                             children="Analyse brain data in 3D",
+                            target="sidebar-page-4",
+                            placement="right",
+                        ),
+                        # Link to page 5
+                        dbc.NavLink(
+                            href="/gene-data",
+                            active="exact",
+                            # disabled=True,
+                            children=[
+                                html.I(
+                                    id="sidebar-page-5",
+                                    className="icon-dna fs-5",
+                                    style={"margin-left": "0.7em"},
+                                )
+                            ],
+                            className="my-4",
+                        ),
+                        dbc.Tooltip(
+                            children="Compare with scRNAseq data",
                             target="sidebar-page-4",
                             placement="right",
                         ),
