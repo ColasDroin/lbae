@@ -151,6 +151,10 @@ class Launch:
             # Figures.compute_3D_root_volume().
             "figures/3D_page/volume_root",
             #
+            # Computed in Figures.__init__(). Corresponds to the object returned by
+            # Figures.compute_scatter_3D().
+            "figures/scRNAseq_page/scatter3D",
+            #
             # Computed in Figures.__init(), calling Figures.shelve_arrays_basic_figures(), but
             # it doesn't correpond to an object returned by a specific function.
             # All figures are computed and saved in the shelve database with the following ids:
@@ -198,12 +202,7 @@ class Launch:
         # Objects to shelve in the ScRNAseq class. Everything in this list is shelved at
         # initialization of the ScRNAseq objects. The computations described are the ones done
         # at startup.
-        self.l_scRNAseq_objects_at_init = [
-            # Computed in ScRNAseq.__init__() as an argument of ScRNAseq. Corresponds to the object
-            # returned by ScRNAseq.compute_regression_all_lipids()
-            "scRNAseq/ll_coef",
-            #
-        ]
+        self.l_scRNAseq_objects_at_init = []
 
         # Objects to shelve not belonging to a specific class. Objects in the list are not
         # automatically shelved at startup.

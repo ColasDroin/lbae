@@ -18,7 +18,7 @@ from skimage import io
 from scipy.ndimage.interpolation import map_coordinates
 import pandas as pd
 from modules.tools.external_lib.clustergram import Clustergram
-
+import copy
 
 # LBAE imports
 from modules.tools.image import convert_image_to_base64
@@ -53,6 +53,7 @@ class Figures:
         _data (MaldiData): MaldiData object, used to manipulate the raw MALDI data.
         _storage (Storage): Used to access the shelve database.
         _atlas (Atlas): Used to manipulate the objects coming from the Allen Brain Atlas.
+        _scRNAseq (ScRNAseq): Used to manipulate the objects coming from the scRNAseq dataset.
         dic_normalization_factors (dict): Dictionnary of normalization factors across slices for
             MAIA.
 
@@ -106,6 +107,8 @@ class Figures:
         compute_clustergram_figure(): Computes a Plotly Clustergram figure, allowing to cluster and
             compare the expression of all the MAIA-transformed lipids in the dataset in the selected
             regions.
+        compute_scatter_3D(): cCmputes a figure representing, in a 3D scatter plot, the spots
+            acquired using spatial scRNAseq experiments.
         shelve_arrays_basic_figures(): Shelves in the database all the arrays of basic images
             computed in compute_figure_basic_image(), across all slices and all types of arrays.
         shelve_all_l_array_2D(): Precomputes and shelves all the arrays of lipid expression used in
@@ -114,19 +117,20 @@ class Figures:
             used in a 3D representation of the brain.
     """
 
-    __slots__ = ["_data", "_atlas", "_storage", "dic_normalization_factors"]
+    __slots__ = ["_data", "_atlas", "_scRNAseq", "_storage", "dic_normalization_factors"]
 
     # ==============================================================================================
     # --- Constructor
     # ==============================================================================================
 
-    def __init__(self, maldi_data, storage, atlas, sample=False):
+    def __init__(self, maldi_data, storage, atlas, scRNAseq, sample=False):
         """Initialize the Figures class.
 
         Args:
             maldi_data (MaldiData): MaldiData object, used to manipulate the raw MALDI data.
             storage (Storage): Used to access the shelve database.
             atlas (Atlas): Used to manipulate the objects coming from the Allen Brain Atlas.
+            scRNAseq (ScRNAseq): Used to manipulate the objects coming from the scRNAseq dataset.
             sample (bool, optional): If True, only a fraction of the precomputations are made (for
                 debug). Default to False.
         """
@@ -135,6 +139,7 @@ class Figures:
         # Attribute to easily access the maldi and allen brain atlas data
         self._data = maldi_data
         self._atlas = atlas
+        self._scRNAseq = scRNAseq
 
         # attribute to access the shelve database
         self._storage = storage
@@ -168,6 +173,16 @@ class Figures:
 
         # Check that the 3D root volume figure has been computed already. If not, compute it and
         # store it.
+        if not self._storage.check_shelved_object("figures/scRNAseq_page", "scatter3D"):
+            self._storage.return_shelved_object(
+                "figures/scRNAseq_page",
+                "scatter3D",
+                force_update=False,
+                compute_function=self.compute_scatter_3D,
+            )
+
+        # Check that the 3D scatter plot for scRNAseq data has been computed already. If not,
+        # compute it and store it.
         if not self._storage.check_shelved_object("figures/3D_page", "volume_root"):
             self._storage.return_shelved_object(
                 "figures/3D_page",
@@ -2168,37 +2183,146 @@ class Figures:
         return fig_heatmap_lipids
 
     # ==============================================================================================
-    # --- Methods used mainly in threeD_exploration
+    # --- Methods used in scRNAseq page
     # ==============================================================================================
 
-    def compute_scatter_3D(
-        self,
-        brain_1=False,
-    ):
-        """This functions computes the list of coordinates and expression values for the voxels used
-        in the 3D representation of the brain.
+    def compute_scatter_3D(self):
+        """This functions computes a figure representing, in a 3D scatter plot, the spots acquired
+        using spatial scRNAseq experiments.
 
-        Args:
-            l_array_data (list(np.ndarray)): A list of numpy arrays representing lipid expression
-                for each slice of the dataset.
-            high_res (bool, optional): If True, the computations made correspond to the
-                warped/upscaled data. Defaults to False as this is a very heavy plot.
-            brain_1 (bool, optional): If True, the returned list of arrays correspond to the
-                brain 1 data. Else, to the brain 2 data. Defaults to True.
         Returns:
-            np.ndarray, np.ndarray, np.ndarray, np.ndarray: 4 flat numpy arrays (3 for coordinates
-                and 1 for expression).
+            A Plotly Figure containing a go.Scatter3d object representing the acquired spots.
         """
 
-        logging.info("Starting computing 3D arrays" + logmem())
+        logging.info("Starting computing 3D scatter plot for scRNAseq experiments" + logmem())
 
-        # Correct the indices for the potentially unused slices from brain 1
+        # Get scatter figure for the scRNAseq spots
+        scatter = go.Scatter3d(
+            x=self._scRNAseq.xmol,
+            y=self._scRNAseq.zmol,
+            z=-self._scRNAseq.ymol,
+            mode="markers",
+            marker=dict(size=2, opacity=0.8),
+        )
+
+        # Get root figure
+        root_data = self._storage.return_shelved_object(
+            "figures/3D_page",
+            "volume_root",
+            force_update=False,
+            compute_function=self.compute_3D_root_volume,
+        )
+
+        # Change orientation
+        root_data_y = copy.deepcopy(root_data["y"])
+        root_data_z = copy.deepcopy(root_data["z"])
+        root_data["y"] = root_data_z
+        root_data["z"] = -root_data_y
+
+        # Block interaction for skull
+        root_data["hoverinfo"] = "skip"
+        scatter["hoverinfo"] = "all"
+
+        # Build figure
+        fig = go.Figure(data=[root_data, scatter])
+
+        # Hide background
+        fig.update_layout(
+            margin=dict(t=0, r=0, b=0, l=0),
+            scene=dict(
+                xaxis=dict(backgroundcolor="rgba(0,0,0,0)"),
+                yaxis=dict(backgroundcolor="rgba(0,0,0,0)"),
+                zaxis=dict(backgroundcolor="rgba(0,0,0,0)"),
+            ),
+        )
+
+        # Set background color to zero
+        fig.layout.template = "plotly_dark"
+        fig.layout.plot_bgcolor = "rgba(0,0,0,0)"
+        fig.layout.paper_bgcolor = "rgba(0,0,0,0)"
+
+        return fig
+
+    def compute_barplot(self, brain_1=False, idx_dot=None):
+        """This functions computes a figure representing, in a barplot, the spots acquired
+        using spatial scRNAseq experiments.
+
+        Args:
+            brain_1: If True, the barplot will be displayed with the regression coefficients
+                computed from for the first brain.
+
+        Returns:
+            A Plotly Figure containing a go.Bar object representing the elastic net regression
+                coefficients for each lipid (bar).
+        """
+
+        logging.info("Starting computing barplot for scRNAseq experiments" + logmem())
+
         if brain_1:
-            slice_index_init = 0
-            slice_index_end = len(self._data.get_slice_list(indices="brain_1"))
+            x = self._scRNAseq.l_name_lipids_brain_1
+            y = self._scRNAseq.array_coef_brain_1
+            names = self._scRNAseq.l_genes_brain_1
+            expression = self._scRNAseq.array_exp_lipids_brain_1
         else:
-            slice_index_init = len(self._data.get_slice_list(indices="brain_1"))
-            slice_index_end = self._data.get_slice_number()
+            x = self._scRNAseq.l_name_lipids_brain_2
+            y = self._scRNAseq.array_coef_brain_2
+            names = self._scRNAseq.l_genes_brain_2
+            expression = self._scRNAseq.array_exp_lipids_brain_2
+
+        # Take the average expression across all spots, or the expression in the selected spot
+        if idx_dot is None:
+            expression = np.mean(expression, axis=0)
+        else:
+            expression = expression[idx_dot, :]
+
+        # Sort lipids by expression
+        expression = expression / np.max(expression)
+        index_sorted = np.argsort(expression)[::-1]
+        expression = expression[index_sorted]
+        x = np.array(x)[index_sorted]
+        y = y[index_sorted, :]
+
+        # Limit to the 10 most expressed genes (across all lipids),
+        # for only 10 colors are sharply distinguishable by naked eye
+        index_sorted = np.argsort(np.mean(y, axis=0))[::-1]
+        y = y[:, index_sorted[:10]]
+
+        # Normalize
+        y = (y.T / np.sum(abs(y), axis=1) * expression).T
+
+        # Limit to 40 lipids for clarity
+        x = x[:40]
+        y = y[:40, :]
+
+        # Plot figure
+        fig = go.Figure()
+        for y_gene, name in zip(y.T, names):
+            fig.add_trace(
+                go.Bar(
+                    x=x,
+                    y=y_gene,
+                    name=name,
+                )
+            )
+
+        # Hide background
+        fig.update_layout(
+            title_text="Elastic net regression coefficients",
+            barmode="relative",
+            margin=dict(t=0, r=0, b=0, l=0),
+            scene=dict(
+                xaxis=dict(backgroundcolor="rgba(0,0,0,0)"),
+                yaxis=dict(backgroundcolor="rgba(0,0,0,0)"),
+                zaxis=dict(backgroundcolor="rgba(0,0,0,0)"),
+            ),
+        )
+
+        # Set background color to zero
+        fig.layout.template = "plotly_dark"
+        fig.layout.plot_bgcolor = "rgba(0,0,0,0)"
+        fig.layout.paper_bgcolor = "rgba(0,0,0,0)"
+
+        return fig
 
     # ==============================================================================================
     # --- Methods used for shelving results

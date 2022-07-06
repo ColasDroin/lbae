@@ -19,6 +19,7 @@ import logging
 from uuid import uuid4
 import diskcache
 import os
+from modules.scRNAseq import ScRNAseq
 
 # LBAE modules
 from modules.tools.misc import logmem
@@ -36,6 +37,7 @@ logging.info("Memory use after Figures import" + logmem())
 from modules.atlas import Atlas
 from modules.launch import Launch
 from modules.storage import Storage
+from modules.scRNAseq import ScRNAseq
 
 # ==================================================================================================
 # --- App pre-computations
@@ -71,8 +73,8 @@ sample = False
 # Load Atlas and Figures objects. At first launch, many objects will be precomputed and shelved in
 # the classes Atlas and Figures.
 atlas = Atlas(data, storage, resolution=25, sample=sample)
-figures = Figures(data, storage, atlas, sample=sample)
-
+scRNAseq = ScRNAseq()
+figures = Figures(data, storage, atlas, scRNAseq, sample=sample)
 logging.info("Memory use after three main object have been instantiated" + logmem())
 
 
