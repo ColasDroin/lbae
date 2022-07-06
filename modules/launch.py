@@ -195,6 +195,16 @@ class Launch:
             for decrease_dimensionality_factor in range(2, 13)
         ]
 
+        # Objects to shelve in the ScRNAseq class. Everything in this list is shelved at
+        # initialization of the ScRNAseq objects. The computations described are the ones done
+        # at startup.
+        self.l_scRNAseq_objects_at_init = [
+            # Computed in ScRNAseq.__init__() as an argument of ScRNAseq. Corresponds to the object
+            # returned by ScRNAseq.compute_regression_all_lipids()
+            "scRNAseq/ll_coef",
+            #
+        ]
+
         # Objects to shelve not belonging to a specific class. Objects in the list are not
         # automatically shelved at startup.
         self.l_other_objects_to_compute = [
@@ -207,6 +217,7 @@ class Launch:
         self.l_db_entries = (
             self.l_atlas_objects_at_init
             + self.l_figures_objects_at_init
+            + self.l_scRNAseq_objects_at_init
             + self.l_other_objects_to_compute
         )
 
