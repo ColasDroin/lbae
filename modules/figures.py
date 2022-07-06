@@ -2168,6 +2168,39 @@ class Figures:
         return fig_heatmap_lipids
 
     # ==============================================================================================
+    # --- Methods used mainly in threeD_exploration
+    # ==============================================================================================
+
+    def compute_scatter_3D(
+        self,
+        brain_1=False,
+    ):
+        """This functions computes the list of coordinates and expression values for the voxels used
+        in the 3D representation of the brain.
+
+        Args:
+            l_array_data (list(np.ndarray)): A list of numpy arrays representing lipid expression
+                for each slice of the dataset.
+            high_res (bool, optional): If True, the computations made correspond to the
+                warped/upscaled data. Defaults to False as this is a very heavy plot.
+            brain_1 (bool, optional): If True, the returned list of arrays correspond to the
+                brain 1 data. Else, to the brain 2 data. Defaults to True.
+        Returns:
+            np.ndarray, np.ndarray, np.ndarray, np.ndarray: 4 flat numpy arrays (3 for coordinates
+                and 1 for expression).
+        """
+
+        logging.info("Starting computing 3D arrays" + logmem())
+
+        # Correct the indices for the potentially unused slices from brain 1
+        if brain_1:
+            slice_index_init = 0
+            slice_index_end = len(self._data.get_slice_list(indices="brain_1"))
+        else:
+            slice_index_init = len(self._data.get_slice_list(indices="brain_1"))
+            slice_index_end = self._data.get_slice_number()
+
+    # ==============================================================================================
     # --- Methods used for shelving results
     # ==============================================================================================
 
