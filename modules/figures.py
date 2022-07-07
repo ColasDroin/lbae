@@ -2278,7 +2278,7 @@ class Figures:
         using spatial scRNAseq experiments.
 
         Args:
-            brain_1: If True, the barplot will be displayed with the regression coefficients
+            brain_1 (bool, optional): If True, the barplot will be displayed with the regression coefficients
                 computed from for the first brain.
 
         Returns:
@@ -2308,6 +2308,112 @@ class Figures:
             expression = expression[idx_dot, :]
 
         # Sort lipids by expression
+        expression = expression / np.max(expression)
+        index_sorted = np.argsort(expression)[::-1]
+        expression = expression[index_sorted]
+        x = np.array(x)[index_sorted]
+        y = y[index_sorted, :]
+        l_score = np.array(l_score)[index_sorted]
+
+        # Limit to the 24 most expressed genes (across all lipids),
+        # for only 24 colors are sharply distinguishable by naked eye
+        index_sorted = np.argsort(np.mean(y, axis=0))[::-1]
+        y = y[:, index_sorted[:24]]
+        names = np.array(names)[index_sorted[:24]]
+
+        # Normalize by lipid expression
+        y = (y.T / np.sum(abs(y), axis=1) * expression).T
+
+        # Incorporate score in the mix
+        y = np.vstack((y.T * l_score, (1 - l_score) * expression * np.ones((len(y),)))).T
+        names = np.append(names, "Unexplained")
+
+        # Limit to 40 lipids for clarity
+        x = x[:40]
+        y = y[:40, :]
+
+        # Plot figure
+        fig = go.Figure()
+        for idx, (y_gene, name) in enumerate(zip(y.T, names)):
+            fig.add_trace(
+                go.Bar(
+                    x=x,
+                    y=y_gene,
+                    name=name,
+                    marker_color=px.colors.qualitative.Dark24[idx] if idx <= 23 else "grey",
+                    hovertext=[
+                        "{:.2f}".format(y[idx_lipid, idx] / np.sum(y[idx_lipid, :]) * 100)
+                        + "% explained"
+                        for idx_lipid in range(len(y))
+                    ],
+                )
+            )
+
+        # Hide background
+        fig.update_layout(
+            title_text="Lipid expression variance explained by gene expression",
+            title_x=0.5,
+            barmode="relative",
+            # margin=dict(t=0, r=0, b=0, l=0),
+            scene=dict(
+                xaxis=dict(backgroundcolor="rgba(0,0,0,0)"),
+                yaxis=dict(backgroundcolor="rgba(0,0,0,0)"),
+                zaxis=dict(backgroundcolor="rgba(0,0,0,0)"),
+            ),
+        )
+
+        # Set background color to zero
+        fig.layout.template = "plotly_dark"
+        fig.layout.plot_bgcolor = "rgba(0,0,0,0)"
+        fig.layout.paper_bgcolor = "rgba(0,0,0,0)"
+
+        return fig
+
+    def compute_heatmap_lipid_genes(self, lipid, l_genes, brain_1=False):
+        """This functions computes a heatmap representing, on the left side, the expression of a
+        given lipid in the (low-resolution, interpolated) MALDI data, and the right side, the
+        expressions of the selected genes (in l_genes) in the scRNAseq experiments from the
+        molecular atlas data.
+
+        Args:
+            lipid (str): The name of the lipid to be displayed.
+            l_genes (list): The list of gene names to be displayed.
+            brain_1 (bool, optional): If True, the heatmap will be computed with the data coming from the first
+                brain. Else, from the 2nd brain. Defaults to False.
+
+        Returns:
+            A Plotly Figure containing a go.Heatmap object representing the expression of the
+            selected lipid and genes.
+        """
+
+        logging.info("Starting computing heatmap for scRNAseq experiments" + logmem())
+
+        if brain_1:
+            x = self._scRNAseq.l_name_lipids_brain_1
+            y = self._scRNAseq.array_coef_brain_1
+            names = self._scRNAseq.l_genes_brain_1
+            expression = self._scRNAseq.array_exp_lipids_brain_1
+            l_score = self._scRNAseq.l_score_brain_1
+        else:
+            x = self._scRNAseq.l_name_lipids_brain_2
+            y = self._scRNAseq.array_coef_brain_2
+            names = self._scRNAseq.l_genes_brain_2
+            expression = self._scRNAseq.array_exp_lipids_brain_2
+            l_score = self._scRNAseq.l_score_brain_2
+
+            x=self._scRNAseq.xmol,
+            y=self._scRNAseq.zmol,
+            z=-self._scRNAseq.ymol
+
+        # Compute size of the canvas
+        y_min = np.min(y)
+        y_max = np.max(y)
+        z_min = np.min(z)
+        z_max = np.max(z)
+        n_slices = len(x)
+        array_expression = 
+
+
         expression = expression / np.max(expression)
         index_sorted = np.argsort(expression)[::-1]
         expression = expression[index_sorted]

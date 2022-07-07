@@ -253,7 +253,6 @@ def return_layout(basic_config, slice_index):
                                                 html.Div(
                                                     className="fixed-aspect-ratio",
                                                     id="page-5-div-graph-heatmap-lipid",
-                                                    style={"display": "none"},
                                                     children=[
                                                         dcc.Graph(
                                                             id="page-5-graph-heatmap-lipid",
@@ -273,23 +272,17 @@ def return_layout(basic_config, slice_index):
                                                                 "top": "4rem",
                                                             },
                                                         ),
-                                                        dmc.Group(
-                                                            spacing="xs",
-                                                            align="flex-start",
-                                                            children=[
-                                                                dcc.Dropdown(
-                                                                    id="page-5-dropdown-lipids",
-                                                                    options=[],
-                                                                    value=[],
-                                                                    searchable=True,
-                                                                    multi=False,
-                                                                    placeholder="Choose a lipid",
-                                                                    clearable=False,
-                                                                    style={
-                                                                        "width": "15em",
-                                                                    },
-                                                                ),
-                                                            ],
+                                                        dcc.Dropdown(
+                                                            id="page-5-dropdown-lipids",
+                                                            options=[],
+                                                            value=[],
+                                                            searchable=True,
+                                                            multi=False,
+                                                            placeholder="Choose a lipid",
+                                                            clearable=False,
+                                                            style={
+                                                                "width": "15em",
+                                                            },
                                                         ),
                                                     ],
                                                 ),
@@ -334,7 +327,6 @@ def return_layout(basic_config, slice_index):
                                                 html.Div(
                                                     className="fixed-aspect-ratio",
                                                     id="page-5-div-graph-heatmap-genes",
-                                                    style={"display": "none"},
                                                     children=[
                                                         dcc.Graph(
                                                             id="page-5-graph-heatmap-genes",

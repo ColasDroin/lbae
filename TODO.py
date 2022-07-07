@@ -1,6 +1,6 @@
 ##### Current TODOs #####
 # TODO Do quality control and debug, especially when several users are on the app in parallel
-# TODO Integrate data from the molecular atlas
+# TODO Handle brain 1 and 2 loading at startup (for each page)
 
 ##### Finalization process #####
 # TODO Check that all force_update are set to False
