@@ -107,8 +107,10 @@ class Figures:
         compute_clustergram_figure(): Computes a Plotly Clustergram figure, allowing to cluster and
             compare the expression of all the MAIA-transformed lipids in the dataset in the selected
             regions.
-        compute_scatter_3D(): cCmputes a figure representing, in a 3D scatter plot, the spots
+        compute_scatter_3D(): cmputes a figure representing, in a 3D scatter plot, the spots
             acquired using spatial scRNAseq experiments.
+        compute_barplot(): Computes a figure representing, in a barplot, the spots acquired
+            using spatial scRNAseq experiments.
         shelve_arrays_basic_figures(): Shelves in the database all the arrays of basic images
             computed in compute_figure_basic_image(), across all slices and all types of arrays.
         shelve_all_l_array_2D(): Precomputes and shelves all the arrays of lipid expression used in
@@ -173,7 +175,7 @@ class Figures:
 
         # Check that the 3D root volume figure has been computed already. If not, compute it and
         # store it.
-        if not self._storage.check_shelved_object("figures/scRNAseq_page", "scatter3D"):
+        if self._storage.check_shelved_object("figures/scRNAseq_page", "scatter3D"):
             self._storage.return_shelved_object(
                 "figures/scRNAseq_page",
                 "scatter3D",
@@ -1468,7 +1470,7 @@ class Figures:
 
         return fig
 
-    def compute_3D_root_volume(self, decrease_dimensionality_factor=7):
+    def compute_3D_root_volume(self, decrease_dimensionality_factor=7, differentiate_borders=False):
         """This function is used to generate a go.Isosurface of the Allen Brain root structure,
         which will be used to enclose the display of lipid expression of other structures in the
         brain.
@@ -1480,6 +1482,7 @@ class Figures:
         Returns:
             go.Isosurface: A semi-transparent go.Isosurface of the Allen Brain root structure.
         """
+
         # Get array of annotations, which associate coordinate to id
         array_annotation_root = np.array(self._atlas.bg_atlas.annotation, dtype=np.int32)
 
@@ -1501,7 +1504,7 @@ class Figures:
         # Get the volume array
         array_atlas_borders_root = fill_array_borders(
             array_annotation_root,
-            differentiate_borders=False,
+            differentiate_borders=differentiate_borders,
             color_near_borders=False,
             keep_structure_id=None,
         )
@@ -2202,7 +2205,7 @@ class Figures:
             y=self._scRNAseq.zmol,
             z=-self._scRNAseq.ymol,
             mode="markers",
-            marker=dict(size=2, opacity=0.8),
+            marker=dict(size=2.5, opacity=0.8, color=dic_colors["blue"]),
         )
 
         # Get root figure
@@ -2211,6 +2214,12 @@ class Figures:
             "volume_root",
             force_update=False,
             compute_function=self.compute_3D_root_volume,
+            differentiate_borders=True,
+        )
+
+        # Remove inside of volume
+        root_data["value"] = np.where(
+            (root_data["value"] == -0.01) | (root_data["value"] == -2.0), -2.0, root_data["value"]
         )
 
         # Change orientation
@@ -2218,6 +2227,13 @@ class Figures:
         root_data_z = copy.deepcopy(root_data["z"])
         root_data["y"] = root_data_z
         root_data["z"] = -root_data_y
+
+        # Remove parts of brain that prevent from clicking points
+        root_data["x"] = root_data["x"][(root_data["y"] < 6) & (root_data["z"] < -3)]
+        root_data["value"] = root_data["value"][(root_data["y"] < 6) & (root_data["z"] < -3)]
+        root_data_y_copy = copy.deepcopy(root_data["y"])
+        root_data["y"] = root_data["y"][(root_data["y"] < 6) & (root_data["z"] < -3)]
+        root_data["z"] = root_data["z"][(root_data["z"] < -3) & (root_data_y_copy < 6)]
 
         # Block interaction for skull
         root_data["hoverinfo"] = "skip"
@@ -2228,7 +2244,9 @@ class Figures:
 
         # Hide background
         fig.update_layout(
-            margin=dict(t=0, r=0, b=0, l=0),
+            title_text="Click on a point to see the corresponding scRNAseq data",
+            title_x=0.5,
+            margin=dict(r=0, b=0, l=0),
             scene=dict(
                 xaxis=dict(backgroundcolor="rgba(0,0,0,0)"),
                 yaxis=dict(backgroundcolor="rgba(0,0,0,0)"),
@@ -2240,6 +2258,18 @@ class Figures:
         fig.layout.template = "plotly_dark"
         fig.layout.plot_bgcolor = "rgba(0,0,0,0)"
         fig.layout.paper_bgcolor = "rgba(0,0,0,0)"
+
+        # Change orientation to have scatter dots face the reader
+        x_eye = 0.01 * 2
+        y_eye = 1.0 * 2
+        z_eye = 0.5 * 2
+
+        camera = dict(
+            # up=dict(x=0, y=0, z=0),
+            # center=dict(x=0, y=0, z=0),
+            eye=dict(x=x_eye, y=y_eye, z=z_eye),
+        )
+        fig.update_layout(scene_camera=camera)
 
         return fig
 
@@ -2263,11 +2293,13 @@ class Figures:
             y = self._scRNAseq.array_coef_brain_1
             names = self._scRNAseq.l_genes_brain_1
             expression = self._scRNAseq.array_exp_lipids_brain_1
+            l_score = self._scRNAseq.l_score_brain_1
         else:
             x = self._scRNAseq.l_name_lipids_brain_2
             y = self._scRNAseq.array_coef_brain_2
             names = self._scRNAseq.l_genes_brain_2
             expression = self._scRNAseq.array_exp_lipids_brain_2
+            l_score = self._scRNAseq.l_score_brain_2
 
         # Take the average expression across all spots, or the expression in the selected spot
         if idx_dot is None:
@@ -2281,14 +2313,20 @@ class Figures:
         expression = expression[index_sorted]
         x = np.array(x)[index_sorted]
         y = y[index_sorted, :]
+        l_score = np.array(l_score)[index_sorted]
 
-        # Limit to the 10 most expressed genes (across all lipids),
-        # for only 10 colors are sharply distinguishable by naked eye
+        # Limit to the 24 most expressed genes (across all lipids),
+        # for only 24 colors are sharply distinguishable by naked eye
         index_sorted = np.argsort(np.mean(y, axis=0))[::-1]
-        y = y[:, index_sorted[:10]]
+        y = y[:, index_sorted[:24]]
+        names = np.array(names)[index_sorted[:24]]
 
-        # Normalize
+        # Normalize by lipid expression
         y = (y.T / np.sum(abs(y), axis=1) * expression).T
+
+        # Incorporate score in the mix
+        y = np.vstack((y.T * l_score, (1 - l_score) * expression * np.ones((len(y),)))).T
+        names = np.append(names, "Unexplained")
 
         # Limit to 40 lipids for clarity
         x = x[:40]
@@ -2296,20 +2334,27 @@ class Figures:
 
         # Plot figure
         fig = go.Figure()
-        for y_gene, name in zip(y.T, names):
+        for idx, (y_gene, name) in enumerate(zip(y.T, names)):
             fig.add_trace(
                 go.Bar(
                     x=x,
                     y=y_gene,
                     name=name,
+                    marker_color=px.colors.qualitative.Dark24[idx] if idx <= 23 else "grey",
+                    hovertext=[
+                        "{:.2f}".format(y[idx_lipid, idx] / np.sum(y[idx_lipid, :]) * 100)
+                        + "% explained"
+                        for idx_lipid in range(len(y))
+                    ],
                 )
             )
 
         # Hide background
         fig.update_layout(
-            title_text="Elastic net regression coefficients",
+            title_text="Lipid expression variance explained by gene expression",
+            title_x=0.5,
             barmode="relative",
-            margin=dict(t=0, r=0, b=0, l=0),
+            # margin=dict(t=0, r=0, b=0, l=0),
             scene=dict(
                 xaxis=dict(backgroundcolor="rgba(0,0,0,0)"),
                 yaxis=dict(backgroundcolor="rgba(0,0,0,0)"),

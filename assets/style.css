@@ -165,7 +165,7 @@ div.mantine-Switch-root.mantine-16ttirm > label {
 
 /*===== COLORED DROPDOWNS =====*/
 
-/* Create three color-themed dropdowns */
+/* Create three color-themed dropdowns for page 3 */
 #page-3-dropdown-red .Select-value {
   background-color: #1a1b1e;
   color: #ced4da;
@@ -219,6 +219,64 @@ div.mantine-Switch-root.mantine-16ttirm > label {
   background-color: #1a1b1e;
   color: #ced4da;
 }
+
+
+/* Create three color-themed dropdowns for page 5 */
+#page-5-dropdown-red .Select-value {
+  background-color: #1a1b1e;
+  color: #ced4da;
+}
+
+#page-5-dropdown-red > div > div {
+  background-color: #2b2e33;
+}
+
+#page-5-dropdown-red .Select-control {
+  border-color: rgba(223, 80, 52, 0.8);
+}
+
+#page-5-dropdown-red .Select-menu-outer {
+  background-color: #1a1b1e;
+  color: #ced4da;
+}
+
+#page-5-dropdown-green .Select-value {
+  background-color: #1a1b1e;
+  color: #ced4da;
+}
+
+#page-5-dropdown-green > div > div {
+  background-color: #2b2e33;
+}
+
+#page-5-dropdown-green .Select-control {
+  border-color: rgba(95, 169, 112, 0.8);
+}
+
+#page-5-dropdown-green .Select-menu-outer {
+  background-color: #1a1b1e;
+  color: #ced4da;
+}
+
+#page-5-dropdown-blue .Select-value {
+  background-color: #1a1b1e;
+  color: #ced4da;
+}
+
+#page-5-dropdown-blue > div > div {
+  background-color: #2b2e33;
+}
+
+#page-5-dropdown-blue .Select-control {
+  border-color: rgba(58, 139, 182, 0.8);
+}
+
+#page-5-dropdown-blue .Select-menu-outer {
+  background-color: #1a1b1e;
+  color: #ced4da;
+}
+
+
 
 /* Better color when Hovering over the dropdown selection menu */
 .VirtualizedSelectFocusedOption {

@@ -72,47 +72,132 @@ def return_layout(basic_config, slice_index):
                         # depends on the dimension), h is in rows (30px)
                         # nb columns go 12->12->10->6->4->2
                         "xxl": [
-                            {"i": "page-5-card-graph-scatter", "x": 2, "y": 0, "w": 5, "h": 20},
-                            {"i": "page-5-card-graph-barplot", "x": 7, "y": 0, "w": 5, "h": 20},
+                            {"i": "page-5-card-graph-scatter-3D", "x": 1, "y": 0, "w": 5, "h": 18},
+                            {"i": "page-5-card-graph-barplot", "x": 6, "y": 0, "w": 5, "h": 18},
+                            {
+                                "i": "page-5-card-graph-heatmap-lipid",
+                                "x": 1,
+                                "y": 18,
+                                "w": 5,
+                                "h": 18,
+                            },
+                            {
+                                "i": "page-5-card-graph-heatmap-genes",
+                                "x": 6,
+                                "y": 18,
+                                "w": 5,
+                                "h": 18,
+                            },
                         ],
                         "lg": [
                             {"i": "page-5-card-graph-scatter", "x": 0, "y": 0, "w": 6, "h": 15},
                             {"i": "page-5-card-graph-barplot", "x": 6, "y": 0, "w": 6, "h": 15},
+                            {
+                                "i": "page-5-card-graph-heatmap-lipid",
+                                "x": 0,
+                                "y": 15,
+                                "w": 6,
+                                "h": 15,
+                            },
+                            {
+                                "i": "page-5-card-graph-heatmap-genes",
+                                "x": 6,
+                                "y": 15,
+                                "w": 6,
+                                "h": 15,
+                            },
                         ],
                         "md": [
                             {"i": "page-5-card-graph-scatter", "x": 0, "y": 0, "w": 5, "h": 14},
                             {"i": "page-5-card-graph-barplot", "x": 5, "y": 0, "w": 5, "h": 14},
+                            {
+                                "i": "page-5-card-graph-heatmap-lipid",
+                                "x": 0,
+                                "y": 14,
+                                "w": 5,
+                                "h": 14,
+                            },
+                            {
+                                "i": "page-5-card-graph-heatmap-genes",
+                                "x": 5,
+                                "y": 14,
+                                "w": 5,
+                                "h": 14,
+                            },
                         ],
                         "sm": [
                             {"i": "page-5-card-graph-scatter", "x": 0, "y": 0, "w": 6, "h": 14},
                             {"i": "page-5-card-graph-barplot", "x": 0, "y": 14, "w": 6, "h": 14},
+                            {
+                                "i": "page-5-card-graph-heatmap-lipid",
+                                "x": 0,
+                                "y": 28,
+                                "w": 6,
+                                "h": 14,
+                            },
+                            {
+                                "i": "page-5-card-graph-heatmap-genes",
+                                "x": 0,
+                                "y": 42,
+                                "w": 6,
+                                "h": 14,
+                            },
                         ],
                         "xs": [
                             {"i": "page-5-card-graph-scatter", "x": 0, "y": 0, "w": 4, "h": 12},
                             {"i": "page-5-card-graph-barplot", "x": 0, "y": 12, "w": 4, "h": 12},
+                            {
+                                "i": "page-5-card-graph-heatmap-lipid",
+                                "x": 0,
+                                "y": 24,
+                                "w": 4,
+                                "h": 12,
+                            },
+                            {
+                                "i": "page-5-card-graph-heatmap-genes",
+                                "x": 0,
+                                "y": 36,
+                                "w": 4,
+                                "h": 12,
+                            },
                         ],
                         "xxs": [
                             {"i": "page-5-card-graph-scatter", "x": 0, "y": 0, "w": 2, "h": 10},
                             {"i": "page-5-card-graph-barplot", "x": 0, "y": 10, "w": 2, "h": 10},
+                            {
+                                "i": "page-5-card-graph-heatmap-lipid",
+                                "x": 0,
+                                "y": 20,
+                                "w": 2,
+                                "h": 10,
+                            },
+                            {
+                                "i": "page-5-card-graph-heatmap-genes",
+                                "x": 0,
+                                "y": 30,
+                                "w": 2,
+                                "h": 10,
+                            },
                         ],
                     },
                     children=[
                         dbc.Card(
-                            id="page-5-card-graph-scatter",
+                            id="page-5-card-graph-scatter-3D",
                             style={
                                 "width": "100%",
                                 "height": "100%",
                                 "background-color": "#1d1c1f",
                             },
+                            className="p-0 m-0",
                             children=[
                                 dbc.CardBody(
-                                    className="h-100",
                                     style={"background-color": "#1d1c1f"},
+                                    className="p-0 m-0",
                                     children=[
                                         dcc.Graph(
-                                            id="page-4-graph-region-selection",
+                                            id="page-5-graph-scatter-3D",
                                             config=basic_config,
-                                            style={},
+                                            className="h-100 w-100",
                                             figure=storage.return_shelved_object(
                                                 "figures/scRNAseq_page",
                                                 "scatter3D",
@@ -130,17 +215,227 @@ def return_layout(basic_config, slice_index):
                                 "height": "100%",
                                 "background-color": "#1d1c1f",
                             },
+                            className="p-0 m-0",
                             id="page-5-card-graph-barplot",
                             children=[
                                 dbc.CardBody(
                                     style={"background-color": "#1d1c1f"},
-                                    # className="pt-1",
+                                    className="p-0 m-0",
                                     children=[
                                         dcc.Graph(
-                                            id="page-4-graph-region-selection",
+                                            id="page-5-graph-barplot",
                                             config=basic_config,
-                                            style={},
-                                            figure=figures.compute_barplot(brain_1=True),
+                                            className="h-100 w-100",
+                                            figure=figures.compute_barplot(
+                                                brain_1=False, idx_dot=None
+                                            ),
+                                        ),
+                                    ],
+                                ),
+                            ],
+                        ),
+                        dbc.Card(
+                            style={
+                                "width": "100%",
+                                "height": "100%",
+                                "background-color": "#1d1c1f",
+                            },
+                            className="p-0 m-0",
+                            id="page-5-card-graph-heatmap-lipid",
+                            children=[
+                                dbc.CardBody(
+                                    style={"background-color": "#1d1c1f"},
+                                    className="p-0 m-0",
+                                    children=[
+                                        dbc.Spinner(
+                                            color="dark",
+                                            children=[
+                                                html.Div(
+                                                    className="fixed-aspect-ratio",
+                                                    id="page-5-div-graph-heatmap-lipid",
+                                                    style={"display": "none"},
+                                                    children=[
+                                                        dcc.Graph(
+                                                            id="page-5-graph-heatmap-lipid",
+                                                            config=basic_config
+                                                            | {
+                                                                "toImageButtonOptions": {
+                                                                    "format": "png",
+                                                                    "filename": "heatmap_lipid",
+                                                                    "scale": 2,
+                                                                }
+                                                            },
+                                                            style={
+                                                                "width": "100%",
+                                                                "height": "100%",
+                                                                "position": "absolute",
+                                                                "left": "0",
+                                                                "top": "4rem",
+                                                            },
+                                                        ),
+                                                        dmc.Group(
+                                                            spacing="xs",
+                                                            align="flex-start",
+                                                            children=[
+                                                                dcc.Dropdown(
+                                                                    id="page-5-dropdown-lipids",
+                                                                    options=[],
+                                                                    value=[],
+                                                                    searchable=True,
+                                                                    multi=False,
+                                                                    placeholder="Choose a lipid",
+                                                                    clearable=False,
+                                                                    style={
+                                                                        "width": "15em",
+                                                                    },
+                                                                ),
+                                                            ],
+                                                        ),
+                                                    ],
+                                                ),
+                                            ],
+                                        ),
+                                        dmc.Button(
+                                            children="Download plot",
+                                            id="page-5-download-lipid-plot-button",
+                                            disabled=False,
+                                            variant="filled",
+                                            radius="md",
+                                            size="xs",
+                                            color="cyan",
+                                            compact=False,
+                                            loading=False,
+                                            style={
+                                                "position": "absolute",
+                                                "top": "0.7rem",
+                                                "left": "15rem",
+                                            },
+                                        ),
+                                    ],
+                                ),
+                            ],
+                        ),
+                        dbc.Card(
+                            style={
+                                "width": "100%",
+                                "height": "100%",
+                                "background-color": "#1d1c1f",
+                            },
+                            className="p-0 m-0",
+                            id="page-5-card-graph-heatmap-genes",
+                            children=[
+                                dbc.CardBody(
+                                    style={"background-color": "#1d1c1f"},
+                                    className="p-0 m-0",
+                                    children=[
+                                        dbc.Spinner(
+                                            color="dark",
+                                            children=[
+                                                html.Div(
+                                                    className="fixed-aspect-ratio",
+                                                    id="page-5-div-graph-heatmap-genes",
+                                                    style={"display": "none"},
+                                                    children=[
+                                                        dcc.Graph(
+                                                            id="page-5-graph-heatmap-genes",
+                                                            config=basic_config
+                                                            | {
+                                                                "toImageButtonOptions": {
+                                                                    "format": "png",
+                                                                    "filename": "heatmap_genes",
+                                                                    "scale": 2,
+                                                                }
+                                                            },
+                                                            style={
+                                                                "width": "100%",
+                                                                "height": "100%",
+                                                                "position": "absolute",
+                                                                "left": "0",
+                                                                "top": "4rem",
+                                                            },
+                                                        ),
+                                                        dmc.Group(
+                                                            spacing="xs",
+                                                            align="flex-start",
+                                                            children=[
+                                                                dcc.Dropdown(
+                                                                    id="page-5-dropdown-red",
+                                                                    options=[],
+                                                                    value=[],
+                                                                    searchable=True,
+                                                                    multi=True,
+                                                                    placeholder=(
+                                                                        "Choose up to 3 genes"
+                                                                    ),
+                                                                    clearable=False,
+                                                                    style={
+                                                                        "width": "15em",
+                                                                    },
+                                                                ),
+                                                                dcc.Dropdown(
+                                                                    id="page-5-dropdown-green",
+                                                                    options=[],
+                                                                    value=[],
+                                                                    searchable=True,
+                                                                    multi=True,
+                                                                    placeholder=(
+                                                                        "Choose up to 3 genes"
+                                                                    ),
+                                                                    clearable=False,
+                                                                    style={
+                                                                        "width": "15em",
+                                                                    },
+                                                                ),
+                                                                dcc.Dropdown(
+                                                                    id="page-5-dropdown-blue",
+                                                                    options=[],
+                                                                    value=[],
+                                                                    searchable=True,
+                                                                    multi=True,
+                                                                    placeholder=(
+                                                                        "Choose up to 3 genes"
+                                                                    ),
+                                                                    clearable=False,
+                                                                    style={
+                                                                        "width": "15em",
+                                                                    },
+                                                                ),
+                                                                dmc.Center(
+                                                                    dmc.Button(
+                                                                        children=(
+                                                                            "Visualize and compare"
+                                                                        ),
+                                                                        id="page-5-display-heatmap-genes",
+                                                                        variant="filled",
+                                                                        color="cyan",
+                                                                        radius="md",
+                                                                        size="xs",
+                                                                        disabled=True,
+                                                                        compact=False,
+                                                                        loading=False,
+                                                                    ),
+                                                                ),
+                                                            ],
+                                                        ),
+                                                    ],
+                                                ),
+                                            ],
+                                        ),
+                                        dmc.Button(
+                                            children="Download plot",
+                                            id="page-5-download-genes-plot-button",
+                                            disabled=False,
+                                            variant="filled",
+                                            radius="md",
+                                            size="xs",
+                                            color="cyan",
+                                            compact=False,
+                                            loading=False,
+                                            style={
+                                                "position": "absolute",
+                                                "top": "0.7rem",
+                                                "left": "15rem",
+                                            },
                                         ),
                                     ],
                                 ),
@@ -158,3 +453,25 @@ def return_layout(basic_config, slice_index):
 # ==================================================================================================
 # --- Callbacks
 # ==================================================================================================
+
+# Function to make visible the alert regarding the m/z plot in page 3
+@app.callback(
+    Output("page-5-graph-barplot", "figure"),
+    Input("page-5-graph-scatter-3D", "clickData"),
+    prevent_initial_call=True,
+)
+def page_5_update_barplot(clickData):
+    """This callback updates the barplot with the data from the selected spot."""
+
+    # Find out which input triggered the function
+    id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
+
+    # If a spot has has been clicked, update the barplot
+    if id_input == "page-5-graph-scatter-3D":
+        if clickData is not None:
+            if "points" in clickData:
+                if len(clickData["points"]) > 0:
+                    idx_dot = clickData["points"][0]["pointNumber"]
+                    return figures.compute_barplot(brain_1=False, idx_dot=idx_dot)
+
+    return dash.no_update

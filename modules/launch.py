@@ -151,6 +151,10 @@ class Launch:
             # Figures.compute_3D_root_volume().
             "figures/3D_page/volume_root",
             #
+            # Computed in Figures.__init__() through Figures.compute_scatter_3D(). Corresponds to
+            # the object returned by Figures.compute_3D_root_volume(differentiate_borders=True).
+            "figures/3D_page/volume_root_True",
+            #
             # Computed in Figures.__init__(). Corresponds to the object returned by
             # Figures.compute_scatter_3D().
             "figures/scRNAseq_page/scatter3D",
