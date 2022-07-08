@@ -2378,88 +2378,88 @@ class Figures:
         Args:
             lipid (str): The name of the lipid to be displayed.
             l_genes (list): The list of gene names to be displayed.
-            brain_1 (bool, optional): If True, the heatmap will be computed with the data coming from the first
-                brain. Else, from the 2nd brain. Defaults to False.
+            brain_1 (bool, optional): If True, the heatmap will be computed with the data coming
+                from the first brain. Else, from the 2nd brain. Defaults to False.
 
         Returns:
             A Plotly Figure containing a go.Heatmap object representing the expression of the
             selected lipid and genes.
         """
 
+        # ! Add description at top of page
+
         logging.info("Starting computing heatmap for scRNAseq experiments" + logmem())
 
         if brain_1:
             x = self._scRNAseq.l_name_lipids_brain_1
             y = self._scRNAseq.array_coef_brain_1
-            names = self._scRNAseq.l_genes_brain_1
-            expression = self._scRNAseq.array_exp_lipids_brain_1
+            name_genes = self._scRNAseq.l_genes_brain_1
+            name_lipids = self._scRNAseq.l_name_lipids_brain_1
+            array_lipids = self._scRNAseq.array_exp_lipids_brain_1
             l_score = self._scRNAseq.l_score_brain_1
+            array_genes = self._scRNAseq.array_exp_genes_brain_1
         else:
             x = self._scRNAseq.l_name_lipids_brain_2
             y = self._scRNAseq.array_coef_brain_2
-            names = self._scRNAseq.l_genes_brain_2
-            expression = self._scRNAseq.array_exp_lipids_brain_2
+            name_genes = self._scRNAseq.l_genes_brain_2
+            name_lipids = self._scRNAseq.l_name_lipids_brain_2
+            array_lipids = self._scRNAseq.array_exp_lipids_brain_2
             l_score = self._scRNAseq.l_score_brain_2
+            array_genes = self._scRNAseq.array_exp_genes_brain_2
 
-            x=self._scRNAseq.xmol,
-            y=self._scRNAseq.zmol,
-            z=-self._scRNAseq.ymol
+            x = self._scRNAseq.xmol
+            y = self._scRNAseq.zmol
+            z = -self._scRNAseq.ymol
 
-        # Compute size of the canvas
-        y_min = np.min(y)
-        y_max = np.max(y)
-        z_min = np.min(z)
-        z_max = np.max(z)
-        n_slices = len(x)
-        array_expression = 
+        # Create a list of slice arrays
+        x_rounded = np.round(x, 2)
+        y_rounded = np.round(y, 2)
+        z_rounded = np.round(z, 2)
 
+        # Get the unique values in these arrays
+        x_unique = np.unique(x_rounded)
+        y_unique = np.unique(y_rounded)
+        z_unique = np.unique(z_rounded)
 
-        expression = expression / np.max(expression)
-        index_sorted = np.argsort(expression)[::-1]
-        expression = expression[index_sorted]
-        x = np.array(x)[index_sorted]
-        y = y[index_sorted, :]
-        l_score = np.array(l_score)[index_sorted]
+        # map each unique value to an integer
+        array_idx_unique_x = np.unique(x_unique).argsort()
+        array_idx_unique_y = np.unique(y_unique).argsort()
+        array_idx_unique_z = np.unique(z_unique).argsort()
+        dic_map_x = {x_val: array_idx_unique_x[i] for i, x_val in enumerate(x_unique)}
+        dic_map_y = {y_val: array_idx_unique_y[i] for i, y_val in enumerate(y_unique)}
+        dic_map_z = {z_val: array_idx_unique_z[i] for i, z_val in enumerate(z_unique)}
 
-        # Limit to the 24 most expressed genes (across all lipids),
-        # for only 24 colors are sharply distinguishable by naked eye
-        index_sorted = np.argsort(np.mean(y, axis=0))[::-1]
-        y = y[:, index_sorted[:24]]
-        names = np.array(names)[index_sorted[:24]]
+        # Get idx lipid and genes
+        if lipid is not None:
+            idx_lipid = list(name_lipids).index(lipid)
+        else:
+            idx_lipid = None
 
-        # Normalize by lipid expression
-        y = (y.T / np.sum(abs(y), axis=1) * expression).T
+        l_idx_genes = [
+            list(name_genes).index(gene) if gene is not None else None for gene in l_genes
+        ]
 
-        # Incorporate score in the mix
-        y = np.vstack((y.T * l_score, (1 - l_score) * expression * np.ones((len(y),)))).T
-        names = np.append(names, "Unexplained")
-
-        # Limit to 40 lipids for clarity
-        x = x[:40]
-        y = y[:40, :]
+        # Fill array of values for lipid and genes
+        array_3d_genes = np.zeros((len(x_unique), len(y_unique), len(z_unique)))
+        array_3d_lipid = copy.copy(array_3d_genes)
+        for idx, (x_val, y_val, z_val) in enumerate(zip(x_rounded, y_rounded, z_rounded)):
+            if idx_lipid is not None:
+                array_3d_lipid[dic_map_x[x_val], dic_map_y[y_val], dic_map_z[z_val]] = array_lipids[
+                    idx, idx_lipid
+                ]
+            for idx_gene in l_idx_genes:
+                if idx_gene is not None:
+                    array_3d_genes[
+                        dic_map_x[x_val], dic_map_y[y_val], dic_map_z[z_val]
+                    ] += array_genes[idx, idx_gene]
 
         # Plot figure
-        fig = go.Figure()
-        for idx, (y_gene, name) in enumerate(zip(y.T, names)):
-            fig.add_trace(
-                go.Bar(
-                    x=x,
-                    y=y_gene,
-                    name=name,
-                    marker_color=px.colors.qualitative.Dark24[idx] if idx <= 23 else "grey",
-                    hovertext=[
-                        "{:.2f}".format(y[idx_lipid, idx] / np.sum(y[idx_lipid, :]) * 100)
-                        + "% explained"
-                        for idx_lipid in range(len(y))
-                    ],
-                )
-            )
+        fig = px.imshow(array_3d_genes[0, :, :])
 
         # Hide background
         fig.update_layout(
-            title_text="Lipid expression variance explained by gene expression",
+            title_text="Comparison between lipid and gene expression",
             title_x=0.5,
-            barmode="relative",
             # margin=dict(t=0, r=0, b=0, l=0),
             scene=dict(
                 xaxis=dict(backgroundcolor="rgba(0,0,0,0)"),

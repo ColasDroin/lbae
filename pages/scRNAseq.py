@@ -273,8 +273,8 @@ def return_layout(basic_config, slice_index):
                                                             },
                                                         ),
                                                         dcc.Dropdown(
-                                                            id="page-5-dropdown-lipids",
-                                                            options=[],
+                                                            id="page-5-dropdown-lipid",
+                                                            options=figures._scRNAseq.l_name_lipids_brain_2,
                                                             value=[],
                                                             searchable=True,
                                                             multi=False,
@@ -352,13 +352,11 @@ def return_layout(basic_config, slice_index):
                                                             children=[
                                                                 dcc.Dropdown(
                                                                     id="page-5-dropdown-red",
-                                                                    options=[],
+                                                                    options=figures._scRNAseq.l_genes_brain_2,
                                                                     value=[],
                                                                     searchable=True,
-                                                                    multi=True,
-                                                                    placeholder=(
-                                                                        "Choose up to 3 genes"
-                                                                    ),
+                                                                    multi=False,
+                                                                    placeholder="Choose a gene",
                                                                     clearable=False,
                                                                     style={
                                                                         "width": "15em",
@@ -366,13 +364,11 @@ def return_layout(basic_config, slice_index):
                                                                 ),
                                                                 dcc.Dropdown(
                                                                     id="page-5-dropdown-green",
-                                                                    options=[],
+                                                                    options=figures._scRNAseq.l_genes_brain_2,
                                                                     value=[],
                                                                     searchable=True,
-                                                                    multi=True,
-                                                                    placeholder=(
-                                                                        "Choose up to 3 genes"
-                                                                    ),
+                                                                    multi=False,
+                                                                    placeholder="Choose a gene",
                                                                     clearable=False,
                                                                     style={
                                                                         "width": "15em",
@@ -380,13 +376,11 @@ def return_layout(basic_config, slice_index):
                                                                 ),
                                                                 dcc.Dropdown(
                                                                     id="page-5-dropdown-blue",
-                                                                    options=[],
+                                                                    options=figures._scRNAseq.l_genes_brain_2,
                                                                     value=[],
                                                                     searchable=True,
-                                                                    multi=True,
-                                                                    placeholder=(
-                                                                        "Choose up to 3 genes"
-                                                                    ),
+                                                                    multi=False,
+                                                                    placeholder="Choose a gene",
                                                                     clearable=False,
                                                                     style={
                                                                         "width": "15em",
@@ -446,6 +440,8 @@ def return_layout(basic_config, slice_index):
 # --- Callbacks
 # ==================================================================================================
 
+# ! Update these callbacks to take into account brain 1 and 2 change
+
 # Function to make visible the alert regarding the m/z plot in page 3
 @app.callback(
     Output("page-5-graph-barplot", "figure"),
@@ -465,5 +461,30 @@ def page_5_update_barplot(clickData):
                 if len(clickData["points"]) > 0:
                     idx_dot = clickData["points"][0]["pointNumber"]
                     return figures.compute_barplot(brain_1=False, idx_dot=idx_dot)
+
+    return dash.no_update
+
+
+# Function to make visible the alert regarding the m/z plot in page 3
+@app.callback(
+    Output("page-5-graph-heatmap-lipid", "figure"),
+    Input("page-5-dropdown-lipid", "value"),
+    Input("page-5-dropdown-red", "value"),
+    Input("page-5-dropdown-green", "value"),
+    Input("page-5-dropdown-blue", "value"),
+    prevent_initial_call=True,
+)
+def page_5_update_heatmap_lipid(lipid, gene_1, gene_2, gene_3):
+    """This callback updates the lipid and genes comparison heatmap with the selected lipid and selected genes."""
+
+    # Find out which input triggered the function
+    id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
+
+    l_genes = [gene_1, gene_2, gene_3]
+
+    # If a spot has has been clicked, update the barplot
+    if id_input == "page-5-dropdown-lipid":
+        if lipid is not None or gene_1 is not None or gene_2 is not None or gene_3 is not None:
+            return figures.compute_heatmap_lipid_genes(lipid, l_genes, brain_1=False)
 
     return dash.no_update
