@@ -483,8 +483,7 @@ def page_5_update_heatmap_lipid(lipid, gene_1, gene_2, gene_3):
     l_genes = [gene_1, gene_2, gene_3]
 
     # If a spot has has been clicked, update the barplot
-    if id_input == "page-5-dropdown-lipid":
-        if lipid is not None or gene_1 is not None or gene_2 is not None or gene_3 is not None:
-            return figures.compute_heatmap_lipid_genes(lipid, l_genes, brain_1=False)
+    if lipid is not None or gene_1 is not None or gene_2 is not None or gene_3 is not None:
+        return figures.compute_heatmap_lipid_genes(lipid, l_genes, brain_1=False)
 
     return dash.no_update

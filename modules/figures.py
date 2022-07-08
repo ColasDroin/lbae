@@ -17,8 +17,10 @@ import plotly.express as px
 from skimage import io
 from scipy.ndimage.interpolation import map_coordinates
 import pandas as pd
+from scipy.interpolate import griddata
 from modules.tools.external_lib.clustergram import Clustergram
 import copy
+from plotly.subplots import make_subplots
 
 # LBAE imports
 from modules.tools.image import convert_image_to_base64
@@ -2408,26 +2410,8 @@ class Figures:
             array_genes = self._scRNAseq.array_exp_genes_brain_2
 
             x = self._scRNAseq.xmol
-            y = self._scRNAseq.zmol
-            z = -self._scRNAseq.ymol
-
-        # Create a list of slice arrays
-        x_rounded = np.round(x, 2)
-        y_rounded = np.round(y, 2)
-        z_rounded = np.round(z, 2)
-
-        # Get the unique values in these arrays
-        x_unique = np.unique(x_rounded)
-        y_unique = np.unique(y_rounded)
-        z_unique = np.unique(z_rounded)
-
-        # map each unique value to an integer
-        array_idx_unique_x = np.unique(x_unique).argsort()
-        array_idx_unique_y = np.unique(y_unique).argsort()
-        array_idx_unique_z = np.unique(z_unique).argsort()
-        dic_map_x = {x_val: array_idx_unique_x[i] for i, x_val in enumerate(x_unique)}
-        dic_map_y = {y_val: array_idx_unique_y[i] for i, y_val in enumerate(y_unique)}
-        dic_map_z = {z_val: array_idx_unique_z[i] for i, z_val in enumerate(z_unique)}
+            y = -self._scRNAseq.ymol
+            z = self._scRNAseq.zmol
 
         # Get idx lipid and genes
         if lipid is not None:
@@ -2435,45 +2419,141 @@ class Figures:
         else:
             idx_lipid = None
 
-        l_idx_genes = [
-            list(name_genes).index(gene) if gene is not None else None for gene in l_genes
-        ]
+        l_idx_genes = [list(name_genes).index(gene) for gene in l_genes if gene is not None]
 
-        # Fill array of values for lipid and genes
-        array_3d_genes = np.zeros((len(x_unique), len(y_unique), len(z_unique)))
-        array_3d_lipid = copy.copy(array_3d_genes)
-        for idx, (x_val, y_val, z_val) in enumerate(zip(x_rounded, y_rounded, z_rounded)):
-            if idx_lipid is not None:
-                array_3d_lipid[dic_map_x[x_val], dic_map_y[y_val], dic_map_z[z_val]] = array_lipids[
-                    idx, idx_lipid
-                ]
-            for idx_gene in l_idx_genes:
-                if idx_gene is not None:
-                    array_3d_genes[
-                        dic_map_x[x_val], dic_map_y[y_val], dic_map_z[z_val]
-                    ] += array_genes[idx, idx_gene]
+        # Build grids on which the data will be interpolated
+        x_domain = np.arange(np.min(x), np.max(x), 0.5)
+        y_domain = np.arange(np.min(y), np.max(y), 0.1)
+        z_domain = np.arange(np.min(z), np.max(z), 0.1)
+        x_grid, y_grid, z_grid = np.meshgrid(x_domain, y_domain, z_domain, indexing="ij")
 
-        # Plot figure
-        fig = px.imshow(array_3d_genes[0, :, :])
+        # Build data from interpolation since sampling is irregular
+        if idx_lipid is not None:
+            grid_lipid = griddata(
+                np.vstack((x, y, z)).T,
+                array_lipids[:, idx_lipid],
+                (x_grid, y_grid, z_grid),
+                method="linear",
+            )
+        else:
+            grid_lipid = None
 
-        # Hide background
-        fig.update_layout(
-            title_text="Comparison between lipid and gene expression",
-            title_x=0.5,
-            # margin=dict(t=0, r=0, b=0, l=0),
-            scene=dict(
-                xaxis=dict(backgroundcolor="rgba(0,0,0,0)"),
-                yaxis=dict(backgroundcolor="rgba(0,0,0,0)"),
-                zaxis=dict(backgroundcolor="rgba(0,0,0,0)"),
-            ),
-        )
+        if len(l_idx_genes) > 0:
+            grid_genes = griddata(
+                np.vstack((x, y, z)).T,
+                np.sum(array_genes[:, l_idx_genes], axis=1),
+                (x_grid, y_grid, z_grid),
+                method="linear",
+            )
+        else:
+            grid_genes = None
 
-        # Set background color to zero
-        fig.layout.template = "plotly_dark"
-        fig.layout.plot_bgcolor = "rgba(0,0,0,0)"
-        fig.layout.paper_bgcolor = "rgba(0,0,0,0)"
+        fig = make_subplots(1, 2)
 
-        return fig
+        # Build Figure, with several frames as it will be slidable
+        if grid_lipid is not None:
+            for i in range(0, grid_lipid.shape[0], 1):
+                fig.add_heatmap(
+                    z=grid_lipid[i, :, :],
+                    row=1,
+                    col=1,
+                    colorscale="Viridis",
+                    visible=True if i == 0 else False,
+                )
+        if grid_genes is not None:
+            for i in range(0, grid_genes.shape[0], 1):
+                fig.add_heatmap(
+                    z=grid_genes[i, :, :],
+                    row=1,
+                    col=2,
+                    colorscale="Viridis",
+                    visible=True if i == 0 else False,
+                )
+        if grid_genes is not None or grid_lipid is not None:
+
+            steps = []
+            for i in range(grid_lipid.shape[0]):
+                step = dict(
+                    method="restyle",
+                    args=["visible", [False] * len(fig.data)],
+                )
+                if grid_lipid is not None and grid_genes is not None:
+                    step["args"][1][i] = True
+                    step["args"][1][i + grid_lipid.shape[0]] = True
+                elif grid_lipid is not None or grid_genes is not None:
+                    step["args"][1][i] = True
+                steps.append(step)
+
+            sliders = [
+                dict(
+                    steps=steps,
+                )
+            ]
+
+            # fig = go.Figure(
+            #     frames=[
+            #         go.Frame(
+            #             data=go.Heatmap(z=grid_lipid[i, :, :], colorscale="Viridis"),
+            #             name=str(i + 1),
+            #         )
+            #         for i in range(0, grid_lipid.shape[0], 1)
+            #     ]
+            # )
+            # fig.add_trace(go.Heatmap(z=grid_lipid[0, :, :], colorscale="Viridis"))
+
+            # # Add a slider
+            # def frame_args(duration):
+            #     return {
+            #         "frame": {"duration": duration},
+            #         "mode": "immediate",
+            #         "fromcurrent": True,
+            #         "transition": {"duration": duration, "easing": "linear"},
+            #     }
+
+            # sliders = [
+            #     {
+            #         "pad": {"b": 5, "t": 10},
+            #         "len": 0.9,
+            #         "x": 0.05,
+            #         "y": 0,
+            #         "steps": [
+            #             {
+            #                 "args": [[f.name], frame_args(0)],
+            #                 "label": str(k),
+            #                 "method": "animate",
+            #             }
+            #             for k, f in enumerate(fig.frames)
+            #         ],
+            #         "currentvalue": {
+            #             "visible": False,
+            #         },
+            #     }
+            # ]
+
+            # Layout
+            fig.update_layout(
+                title_text="Comparison between lipid and gene expression",
+                title_x=0.5,
+                # margin=dict(t=0, r=0, b=0, l=0),
+                template="plotly_dark",
+                sliders=sliders,
+            )
+
+            # No display of tick labels as they're wrong anyway
+            fig.update_layout(
+                scene=dict(
+                    xaxis=dict(showticklabels=False),
+                    yaxis=dict(showticklabels=False),
+                ),
+                paper_bgcolor="rgba(0,0,0,0.)",
+                plot_bgcolor="rgba(0,0,0,0.)",
+                yaxis_scaleanchor="x",
+            )
+
+            # Hide colorbar
+            fig.update_traces(showscale=False)
+
+            return fig
 
     # ==============================================================================================
     # --- Methods used for shelving results
