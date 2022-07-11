@@ -295,7 +295,11 @@ div.mantine-Switch-root.mantine-16ttirm > label {
 }
 
 
-#react-select-2--value-item, #react-select-3--value-item, #react-select-4--value-item, #react-select-5--value-item {
+/* #react-select-2--value-item, #react-select-3--value-item, #react-select-4--value-item, #react-select-5--value-item {
+  color:antiquewhite;
+} */
+
+.has-value.Select--single>.Select-control .Select-value .Select-value-label, .has-value.is-pseudo-focused.Select--single>.Select-control .Select-value .Select-value-label{
   color:antiquewhite;
 }
 

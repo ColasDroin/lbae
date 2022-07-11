@@ -2372,7 +2372,12 @@ class Figures:
         return fig
 
     def compute_heatmap_lipid_genes(
-        self, lipid="PA 34:1 K", l_genes=["Nov", "Mef2c", "Nnat"], initial_frame=5, brain_1=False
+        self,
+        lipid="PA 34:1 K",
+        l_genes=["Nov", "Mef2c", "Nnat"],
+        initial_frame=5,
+        brain_1=False,
+        set_progress=None,
     ):
         """This functions computes a heatmap representing, on the left side, the expression of a
         given lipid in the (low-resolution, interpolated) MALDI data, and the right side, the
@@ -2394,6 +2399,9 @@ class Figures:
         # ! Add description at top of page
 
         logging.info("Starting computing heatmap for scRNAseq experiments" + logmem())
+
+        if set_progress is not None:
+            set_progress((5, "Loading data"))
 
         if brain_1:
             x = self._scRNAseq.l_name_lipids_brain_1
@@ -2432,6 +2440,9 @@ class Figures:
         y_domain = np.arange(np.min(y), np.max(y), 0.1)
         z_domain = np.arange(np.min(z), np.max(z), 0.1)
         x_grid, y_grid, z_grid = np.meshgrid(x_domain, y_domain, z_domain, indexing="ij")
+
+        if set_progress is not None:
+            set_progress((15, "Preparing interpolation"))
 
         # Build data from interpolation since sampling is irregular
         if idx_lipid is not None:
@@ -2472,6 +2483,8 @@ class Figures:
         else:
             grid_genes = None
 
+        if set_progress is not None:
+            set_progress((75, "Finished interpolation... Building figure"))
         fig = make_subplots(1, 2)
 
         # Build Figure, with several frames as it will be slidable
@@ -2511,6 +2524,7 @@ class Figures:
                 step = dict(
                     method="restyle",
                     args=["visible", [False] * len(fig.data)],
+                    label=str(i),
                 )
                 if grid_lipid is not None and grid_genes is not None:
                     step["args"][1][i] = True
@@ -2523,6 +2537,13 @@ class Figures:
                 dict(
                     active=initial_frame,
                     steps=steps,
+                    pad={"b": 5, "t": 10},
+                    len=0.9,
+                    x=0.05,
+                    y=0.15,
+                    currentvalue={
+                        "visible": False,
+                    },
                 )
             ]
 
@@ -2530,7 +2551,8 @@ class Figures:
             fig.update_layout(
                 title_text="Comparison between lipid and gene expression",
                 title_x=0.5,
-                margin=dict(t=20, r=0, b=0, l=0),
+                title_y=0.95,
+                margin=dict(t=0, r=20, b=0, l=20),
                 template="plotly_dark",
                 sliders=sliders,
             )
@@ -2555,6 +2577,8 @@ class Figures:
             fig.update_xaxes(showticklabels=False)  # Hide x axis ticks
             fig.update_yaxes(showticklabels=False)  # Hide y axis ticks
 
+            if set_progress is not None:
+                set_progress((90, "Returning figure"))
             return fig
 
     # ==============================================================================================
