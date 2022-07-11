@@ -276,6 +276,30 @@ div.mantine-Switch-root.mantine-16ttirm > label {
   color: #ced4da;
 }
 
+#page-5-dropdown-lipid .Select-value {
+  background-color: #1a1b1e;
+  color: #ced4da;
+}
+
+#page-5-dropdown-lipid > div > div {
+  background-color: #2b2e33;
+}
+
+#page-5-dropdown-lipid .Select-control {
+  border-color: rgba(246, 246, 246, 0.8);
+}
+
+#page-5-dropdown-lipid .Select-menu-outer {
+  background-color: #1a1b1e;
+  color: #ced4da;
+}
+
+
+#react-select-2--value-item, #react-select-3--value-item, #react-select-4--value-item, #react-select-5--value-item {
+  color:antiquewhite;
+}
+
+
 
 
 /* Better color when Hovering over the dropdown selection menu */

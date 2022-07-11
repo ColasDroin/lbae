@@ -76,57 +76,36 @@ def return_layout(basic_config, slice_index):
                             {"i": "page-5-card-graph-barplot", "x": 6, "y": 0, "w": 5, "h": 18},
                             {
                                 "i": "page-5-card-graph-heatmap-lipid",
-                                "x": 1,
+                                "x": 3,
                                 "y": 18,
-                                "w": 5,
-                                "h": 18,
-                            },
-                            {
-                                "i": "page-5-card-graph-heatmap-genes",
-                                "x": 6,
-                                "y": 18,
-                                "w": 5,
+                                "w": 6,
                                 "h": 18,
                             },
                         ],
                         "lg": [
-                            {"i": "page-5-card-graph-scatter", "x": 0, "y": 0, "w": 6, "h": 15},
+                            {"i": "page-5-card-graph-scatter-3D", "x": 0, "y": 0, "w": 6, "h": 15},
                             {"i": "page-5-card-graph-barplot", "x": 6, "y": 0, "w": 6, "h": 15},
                             {
                                 "i": "page-5-card-graph-heatmap-lipid",
-                                "x": 0,
-                                "y": 15,
-                                "w": 6,
-                                "h": 15,
-                            },
-                            {
-                                "i": "page-5-card-graph-heatmap-genes",
-                                "x": 6,
+                                "x": 3,
                                 "y": 15,
                                 "w": 6,
                                 "h": 15,
                             },
                         ],
                         "md": [
-                            {"i": "page-5-card-graph-scatter", "x": 0, "y": 0, "w": 5, "h": 14},
+                            {"i": "page-5-card-graph-scatter-3D", "x": 0, "y": 0, "w": 5, "h": 14},
                             {"i": "page-5-card-graph-barplot", "x": 5, "y": 0, "w": 5, "h": 14},
                             {
                                 "i": "page-5-card-graph-heatmap-lipid",
-                                "x": 0,
+                                "x": 2,
                                 "y": 14,
-                                "w": 5,
-                                "h": 14,
-                            },
-                            {
-                                "i": "page-5-card-graph-heatmap-genes",
-                                "x": 5,
-                                "y": 14,
-                                "w": 5,
+                                "w": 6,
                                 "h": 14,
                             },
                         ],
                         "sm": [
-                            {"i": "page-5-card-graph-scatter", "x": 0, "y": 0, "w": 6, "h": 14},
+                            {"i": "page-5-card-graph-scatter-3D", "x": 0, "y": 0, "w": 6, "h": 14},
                             {"i": "page-5-card-graph-barplot", "x": 0, "y": 14, "w": 6, "h": 14},
                             {
                                 "i": "page-5-card-graph-heatmap-lipid",
@@ -135,16 +114,9 @@ def return_layout(basic_config, slice_index):
                                 "w": 6,
                                 "h": 14,
                             },
-                            {
-                                "i": "page-5-card-graph-heatmap-genes",
-                                "x": 0,
-                                "y": 42,
-                                "w": 6,
-                                "h": 14,
-                            },
                         ],
                         "xs": [
-                            {"i": "page-5-card-graph-scatter", "x": 0, "y": 0, "w": 4, "h": 12},
+                            {"i": "page-5-card-graph-scatter-3D", "x": 0, "y": 0, "w": 4, "h": 12},
                             {"i": "page-5-card-graph-barplot", "x": 0, "y": 12, "w": 4, "h": 12},
                             {
                                 "i": "page-5-card-graph-heatmap-lipid",
@@ -153,28 +125,14 @@ def return_layout(basic_config, slice_index):
                                 "w": 4,
                                 "h": 12,
                             },
-                            {
-                                "i": "page-5-card-graph-heatmap-genes",
-                                "x": 0,
-                                "y": 36,
-                                "w": 4,
-                                "h": 12,
-                            },
                         ],
                         "xxs": [
-                            {"i": "page-5-card-graph-scatter", "x": 0, "y": 0, "w": 2, "h": 10},
+                            {"i": "page-5-card-graph-scatter-3D", "x": 0, "y": 0, "w": 2, "h": 10},
                             {"i": "page-5-card-graph-barplot", "x": 0, "y": 10, "w": 2, "h": 10},
                             {
                                 "i": "page-5-card-graph-heatmap-lipid",
                                 "x": 0,
                                 "y": 20,
-                                "w": 2,
-                                "h": 10,
-                            },
-                            {
-                                "i": "page-5-card-graph-heatmap-genes",
-                                "x": 0,
-                                "y": 30,
                                 "w": 2,
                                 "h": 10,
                             },
@@ -256,6 +214,9 @@ def return_layout(basic_config, slice_index):
                                                     children=[
                                                         dcc.Graph(
                                                             id="page-5-graph-heatmap-lipid",
+                                                            figure=figures.compute_heatmap_lipid_genes(
+                                                                brain_1=False
+                                                            ),
                                                             config=basic_config
                                                             | {
                                                                 "toImageButtonOptions": {
@@ -265,163 +226,103 @@ def return_layout(basic_config, slice_index):
                                                                 }
                                                             },
                                                             style={
-                                                                "width": "100%",
+                                                                "width": "80%",
                                                                 "height": "100%",
                                                                 "position": "absolute",
-                                                                "left": "0",
-                                                                "top": "4rem",
-                                                            },
-                                                        ),
-                                                        dcc.Dropdown(
-                                                            id="page-5-dropdown-lipid",
-                                                            options=figures._scRNAseq.l_name_lipids_brain_2,
-                                                            value=[],
-                                                            searchable=True,
-                                                            multi=False,
-                                                            placeholder="Choose a lipid",
-                                                            clearable=False,
-                                                            style={
-                                                                "width": "15em",
-                                                            },
-                                                        ),
-                                                    ],
-                                                ),
-                                            ],
-                                        ),
-                                        dmc.Button(
-                                            children="Download plot",
-                                            id="page-5-download-lipid-plot-button",
-                                            disabled=False,
-                                            variant="filled",
-                                            radius="md",
-                                            size="xs",
-                                            color="cyan",
-                                            compact=False,
-                                            loading=False,
-                                            style={
-                                                "position": "absolute",
-                                                "top": "0.7rem",
-                                                "left": "15rem",
-                                            },
-                                        ),
-                                    ],
-                                ),
-                            ],
-                        ),
-                        dbc.Card(
-                            style={
-                                "width": "100%",
-                                "height": "100%",
-                                "background-color": "#1d1c1f",
-                            },
-                            className="p-0 m-0",
-                            id="page-5-card-graph-heatmap-genes",
-                            children=[
-                                dbc.CardBody(
-                                    style={"background-color": "#1d1c1f"},
-                                    className="p-0 m-0",
-                                    children=[
-                                        dbc.Spinner(
-                                            color="dark",
-                                            children=[
-                                                html.Div(
-                                                    className="fixed-aspect-ratio",
-                                                    id="page-5-div-graph-heatmap-genes",
-                                                    children=[
-                                                        dcc.Graph(
-                                                            id="page-5-graph-heatmap-genes",
-                                                            config=basic_config
-                                                            | {
-                                                                "toImageButtonOptions": {
-                                                                    "format": "png",
-                                                                    "filename": "heatmap_genes",
-                                                                    "scale": 2,
-                                                                }
-                                                            },
-                                                            style={
-                                                                "width": "100%",
-                                                                "height": "100%",
-                                                                "position": "absolute",
-                                                                "left": "0",
-                                                                "top": "4rem",
+                                                                "left": "20%",
+                                                                "top": "0",
                                                             },
                                                         ),
                                                         dmc.Group(
-                                                            spacing="xs",
+                                                            spacing="lg",
+                                                            direction="column",
                                                             align="flex-start",
+                                                            # position="left",
+                                                            style={
+                                                                "width": "20%",
+                                                            },
                                                             children=[
+                                                                dcc.Dropdown(
+                                                                    id="page-5-dropdown-lipid",
+                                                                    options=figures._scRNAseq.l_name_lipids_brain_2,
+                                                                    searchable=True,
+                                                                    value="PA 34:1 K",
+                                                                    multi=False,
+                                                                    placeholder="Choose a lipid",
+                                                                    clearable=False,
+                                                                    style={
+                                                                        "width": "100%",
+                                                                    },
+                                                                ),
                                                                 dcc.Dropdown(
                                                                     id="page-5-dropdown-red",
                                                                     options=figures._scRNAseq.l_genes_brain_2,
-                                                                    value=[],
                                                                     searchable=True,
                                                                     multi=False,
+                                                                    value="Nov",
                                                                     placeholder="Choose a gene",
-                                                                    clearable=False,
+                                                                    clearable=np.True_,
                                                                     style={
-                                                                        "width": "15em",
+                                                                        "width": "100%",
                                                                     },
                                                                 ),
                                                                 dcc.Dropdown(
                                                                     id="page-5-dropdown-green",
                                                                     options=figures._scRNAseq.l_genes_brain_2,
-                                                                    value=[],
                                                                     searchable=True,
                                                                     multi=False,
+                                                                    value="Mef2c",
                                                                     placeholder="Choose a gene",
-                                                                    clearable=False,
+                                                                    clearable=True,
                                                                     style={
-                                                                        "width": "15em",
+                                                                        "width": "100%",
                                                                     },
                                                                 ),
                                                                 dcc.Dropdown(
                                                                     id="page-5-dropdown-blue",
                                                                     options=figures._scRNAseq.l_genes_brain_2,
-                                                                    value=[],
                                                                     searchable=True,
+                                                                    value="Nnat",
                                                                     multi=False,
                                                                     placeholder="Choose a gene",
-                                                                    clearable=False,
+                                                                    clearable=True,
                                                                     style={
-                                                                        "width": "15em",
+                                                                        "width": "100%",
                                                                     },
                                                                 ),
-                                                                dmc.Center(
-                                                                    dmc.Button(
-                                                                        children=(
-                                                                            "Visualize and compare"
-                                                                        ),
-                                                                        id="page-5-display-heatmap-genes",
-                                                                        variant="filled",
-                                                                        color="cyan",
-                                                                        radius="md",
-                                                                        size="xs",
-                                                                        disabled=True,
-                                                                        compact=False,
-                                                                        loading=False,
+                                                                # dmc.Center(
+                                                                dmc.Button(
+                                                                    children=(
+                                                                        "Visualize and compare"
                                                                     ),
+                                                                    id="page-5-display-heatmap-genes",
+                                                                    variant="filled",
+                                                                    color="cyan",
+                                                                    radius="md",
+                                                                    size="xs",
+                                                                    disabled=True,
+                                                                    compact=False,
+                                                                    loading=False,
+                                                                    fullWidth=True,
                                                                 ),
+                                                                dmc.Button(
+                                                                    children="Download plot",
+                                                                    id="page-5-download-lipid-plot-button",
+                                                                    disabled=False,
+                                                                    variant="filled",
+                                                                    radius="md",
+                                                                    size="xs",
+                                                                    color="cyan",
+                                                                    compact=False,
+                                                                    loading=False,
+                                                                    fullWidth=True,
+                                                                ),
+                                                                # ),
                                                             ],
                                                         ),
                                                     ],
                                                 ),
                                             ],
-                                        ),
-                                        dmc.Button(
-                                            children="Download plot",
-                                            id="page-5-download-genes-plot-button",
-                                            disabled=False,
-                                            variant="filled",
-                                            radius="md",
-                                            size="xs",
-                                            color="cyan",
-                                            compact=False,
-                                            loading=False,
-                                            style={
-                                                "position": "absolute",
-                                                "top": "0.7rem",
-                                                "left": "15rem",
-                                            },
                                         ),
                                     ],
                                 ),

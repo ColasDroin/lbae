@@ -89,8 +89,34 @@ class ScRNAseq:
         # Load the array of coordinates
         self.xmol, self.ymol, self.zmol = np.load(path_scRNAseq + "array_coordinates.npy")
 
+        # Normalize gene expression values
+        self.normalize_gene_expression_values()
+
         logging.info("ScRNAseq object instantiated" + logmem())
 
     # ==============================================================================================
     # --- Methods
     # ==============================================================================================
+
+    def normalize_gene_expression_values(self, percentile=75):
+        """Normalize inplace the gene expression values according to the provided percentile."""
+
+        logging.info("Normalizing gene expression values" + logmem())
+
+        # Normalize the gene expression values
+        self.array_exp_genes_brain_1 = (
+            self.array_exp_genes_brain_1
+            / np.percentile(self.array_exp_genes_brain_1, percentile)
+            * 255
+        )
+        self.array_exp_genes_brain_2 = (
+            self.array_exp_genes_brain_2
+            / np.percentile(self.array_exp_genes_brain_2, percentile)
+            * 255
+        )
+
+        # Clip the gene expression values above 255
+        self.array_exp_genes_brain_1[self.array_exp_genes_brain_1 > 255] = 255
+        self.array_exp_genes_brain_2[self.array_exp_genes_brain_2 > 255] = 255
+
+        logging.info("Gene expression values normalized" + logmem())

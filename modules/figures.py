@@ -2371,7 +2371,9 @@ class Figures:
 
         return fig
 
-    def compute_heatmap_lipid_genes(self, lipid, l_genes, brain_1=False):
+    def compute_heatmap_lipid_genes(
+        self, lipid="PA 34:1 K", l_genes=["Nov", "Mef2c", "Nnat"], initial_frame=5, brain_1=False
+    ):
         """This functions computes a heatmap representing, on the left side, the expression of a
         given lipid in the (low-resolution, interpolated) MALDI data, and the right side, the
         expressions of the selected genes (in l_genes) in the scRNAseq experiments from the
@@ -2380,6 +2382,7 @@ class Figures:
         Args:
             lipid (str): The name of the lipid to be displayed.
             l_genes (list): The list of gene names to be displayed.
+            initial_frame   (int, optional): The frame on which the slider is initialized.
             brain_1 (bool, optional): If True, the heatmap will be computed with the data coming
                 from the first brain. Else, from the 2nd brain. Defaults to False.
 
@@ -2419,7 +2422,10 @@ class Figures:
         else:
             idx_lipid = None
 
-        l_idx_genes = [list(name_genes).index(gene) for gene in l_genes if gene is not None]
+        l_idx_genes_with_None = [
+            list(name_genes).index(gene) if gene is not None else None for gene in l_genes
+        ]
+        l_idx_genes = [idx_gene for idx_gene in l_idx_genes_with_None if idx_gene is not None]
 
         # Build grids on which the data will be interpolated
         x_domain = np.arange(np.min(x), np.max(x), 0.5)
@@ -2438,12 +2444,30 @@ class Figures:
         else:
             grid_lipid = None
 
-        if len(l_idx_genes) > 0:
+        if len(l_idx_genes) == 1:
             grid_genes = griddata(
                 np.vstack((x, y, z)).T,
-                np.sum(array_genes[:, l_idx_genes], axis=1),
+                array_genes[:, l_idx_genes[0]],
                 (x_grid, y_grid, z_grid),
                 method="linear",
+            )
+        elif len(l_idx_genes) > 1:
+            grid_genes = np.moveaxis(
+                np.stack(
+                    [
+                        griddata(
+                            np.vstack((x, y, z)).T,
+                            array_genes[:, idx_genes],
+                            (x_grid, y_grid, z_grid),
+                            method="linear",
+                        )
+                        if idx_genes is not None
+                        else np.zeros_like(x_grid)
+                        for idx_genes in l_idx_genes_with_None
+                    ]
+                ),
+                0,
+                -1,
             )
         else:
             grid_genes = None
@@ -2458,17 +2482,28 @@ class Figures:
                     row=1,
                     col=1,
                     colorscale="Viridis",
-                    visible=True if i == 0 else False,
+                    visible=True if i == initial_frame else False,
+                    showscale=False,
                 )
         if grid_genes is not None:
-            for i in range(0, grid_genes.shape[0], 1):
-                fig.add_heatmap(
-                    z=grid_genes[i, :, :],
-                    row=1,
-                    col=2,
-                    colorscale="Viridis",
-                    visible=True if i == 0 else False,
-                )
+            if len(grid_genes.shape) == 3:
+                for i in range(0, grid_genes.shape[0], 1):
+                    fig.add_heatmap(
+                        z=grid_genes[i, :, :],
+                        row=1,
+                        col=2,
+                        colorscale="Viridis",
+                        visible=True if i == initial_frame else False,
+                        showscale=False,
+                    )
+            elif len(grid_genes.shape) == 4:
+                for i in range(0, grid_genes.shape[0], 1):
+                    fig.add_image(
+                        z=grid_genes[i, :, :, :],
+                        row=1,
+                        col=2,
+                        visible=True if i == initial_frame else False,
+                    )
         if grid_genes is not None or grid_lipid is not None:
 
             steps = []
@@ -2486,55 +2521,16 @@ class Figures:
 
             sliders = [
                 dict(
+                    active=initial_frame,
                     steps=steps,
                 )
             ]
-
-            # fig = go.Figure(
-            #     frames=[
-            #         go.Frame(
-            #             data=go.Heatmap(z=grid_lipid[i, :, :], colorscale="Viridis"),
-            #             name=str(i + 1),
-            #         )
-            #         for i in range(0, grid_lipid.shape[0], 1)
-            #     ]
-            # )
-            # fig.add_trace(go.Heatmap(z=grid_lipid[0, :, :], colorscale="Viridis"))
-
-            # # Add a slider
-            # def frame_args(duration):
-            #     return {
-            #         "frame": {"duration": duration},
-            #         "mode": "immediate",
-            #         "fromcurrent": True,
-            #         "transition": {"duration": duration, "easing": "linear"},
-            #     }
-
-            # sliders = [
-            #     {
-            #         "pad": {"b": 5, "t": 10},
-            #         "len": 0.9,
-            #         "x": 0.05,
-            #         "y": 0,
-            #         "steps": [
-            #             {
-            #                 "args": [[f.name], frame_args(0)],
-            #                 "label": str(k),
-            #                 "method": "animate",
-            #             }
-            #             for k, f in enumerate(fig.frames)
-            #         ],
-            #         "currentvalue": {
-            #             "visible": False,
-            #         },
-            #     }
-            # ]
 
             # Layout
             fig.update_layout(
                 title_text="Comparison between lipid and gene expression",
                 title_x=0.5,
-                # margin=dict(t=0, r=0, b=0, l=0),
+                margin=dict(t=20, r=0, b=0, l=0),
                 template="plotly_dark",
                 sliders=sliders,
             )
@@ -2550,8 +2546,14 @@ class Figures:
                 yaxis_scaleanchor="x",
             )
 
-            # Hide colorbar
-            fig.update_traces(showscale=False)
+            # Reverse y axis if Image has been used
+            if grid_genes is not None:
+                if len(grid_genes.shape) == 4:
+                    fig.update_yaxes(autorange=True, row=1, col=2)
+
+            # Remove tick labels
+            fig.update_xaxes(showticklabels=False)  # Hide x axis ticks
+            fig.update_yaxes(showticklabels=False)  # Hide y axis ticks
 
             return fig
 
