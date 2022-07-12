@@ -159,6 +159,11 @@ class Launch:
             # Figures.compute_scatter_3D().
             "figures/scRNAseq_page/scatter3D",
             #
+            # Computed in Figures.__init__(). Corresponds to the object returned by
+            # Figures.compute_heatmap_lipid_genes() with brain_1 parameter True or False.
+            "figures/scRNAseq_page/base_heatmap_lipid_True",
+            "figures/scRNAseq_page/base_heatmap_lipid_False",
+            #
             # Computed in Figures.__init(), calling Figures.shelve_arrays_basic_figures(), but
             # it doesn't correpond to an object returned by a specific function.
             # All figures are computed and saved in the shelve database with the following ids:

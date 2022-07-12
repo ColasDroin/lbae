@@ -113,6 +113,8 @@ class Figures:
             acquired using spatial scRNAseq experiments.
         compute_barplot(): Computes a figure representing, in a barplot, the spots acquired
             using spatial scRNAseq experiments.
+        compute_heatmap_lipid_genes(): Computes a heatmap representing the expression of a
+        given lipid in the MALDI data and the expressions of the selected genes.
         shelve_arrays_basic_figures(): Shelves in the database all the arrays of basic images
             computed in compute_figure_basic_image(), across all slices and all types of arrays.
         shelve_all_l_array_2D(): Precomputes and shelves all the arrays of lipid expression used in
@@ -194,6 +196,29 @@ class Figures:
                 force_update=False,
                 compute_function=self.compute_3D_root_volume,
             )
+
+        # Check that the base figures for lipid/genes heatmap have been computed already. If not,
+        # compute them and store them.
+        if not self._storage.check_shelved_object(
+            "figures/scRNAseq_page", "base_heatmap_lipid_True"
+        ) or not self._storage.check_shelved_object(
+            "figures/scRNAseq_page", "base_heatmap_lipid_False"
+        ):
+            self._storage.return_shelved_object(
+                "figures/scRNAseq_page",
+                "base_heatmap_lipid",
+                force_update=False,
+                compute_function=self.compute_heatmap_lipid_genes,
+                brain_1=False,
+            ),
+            # ! Change defaults parameters when brain_1 is True
+            # self._storage.return_shelved_object(
+            #     "figures/scRNAseq_page",
+            #     "base_heatmap_lipid",
+            #     force_update=False,
+            #     compute_function=self.compute_heatmap_lipid_genes,
+            #     brain_1=True,
+            # ),
 
         # Check that all basic figures in the load_slice page are present, if not, compute them
         if not self._storage.check_shelved_object(
@@ -2284,8 +2309,9 @@ class Figures:
                 computed from for the first brain.
 
         Returns:
-            A Plotly Figure containing a go.Bar object representing the elastic net regression
-                coefficients for each lipid (bar).
+            Plotly.Figure, list(str), list(str): A Plotly Figure containing a go.Bar object
+                representing the elastic net regression coefficients for each lipid (bar), and the
+                corresponding names of the genes and lipids represented.
         """
 
         logging.info("Starting computing barplot for scRNAseq experiments" + logmem())
@@ -2317,9 +2343,9 @@ class Figures:
         y = y[index_sorted, :]
         l_score = np.array(l_score)[index_sorted]
 
-        # Limit to the 24 most expressed genes (across all lipids),
+        # Limit to the 24 most expressed genes,
         # for only 24 colors are sharply distinguishable by naked eye
-        index_sorted = np.argsort(np.mean(y, axis=0))[::-1]
+        index_sorted = np.argsort(y[0, :])[::-1]
         y = y[:, index_sorted[:24]]
         names = np.array(names)[index_sorted[:24]]
 
@@ -2369,7 +2395,7 @@ class Figures:
         fig.layout.plot_bgcolor = "rgba(0,0,0,0)"
         fig.layout.paper_bgcolor = "rgba(0,0,0,0)"
 
-        return fig
+        return fig, names, x
 
     def compute_heatmap_lipid_genes(
         self,
@@ -2390,13 +2416,13 @@ class Figures:
             initial_frame   (int, optional): The frame on which the slider is initialized.
             brain_1 (bool, optional): If True, the heatmap will be computed with the data coming
                 from the first brain. Else, from the 2nd brain. Defaults to False.
+            set_progress: Used as part of the Plotly long callbacks, to indicate the progress of the
+                computation in the corresponding progress bar.
 
         Returns:
             A Plotly Figure containing a go.Heatmap object representing the expression of the
             selected lipid and genes.
         """
-
-        # ! Add description at top of page
 
         logging.info("Starting computing heatmap for scRNAseq experiments" + logmem())
 
@@ -2540,7 +2566,7 @@ class Figures:
                     pad={"b": 5, "t": 10},
                     len=0.9,
                     x=0.05,
-                    y=0.15,
+                    y=0.0,
                     currentvalue={
                         "visible": False,
                     },
@@ -2551,8 +2577,8 @@ class Figures:
             fig.update_layout(
                 title_text="Comparison between lipid and gene expression",
                 title_x=0.5,
-                title_y=0.95,
-                margin=dict(t=0, r=20, b=0, l=20),
+                title_y=0.98,
+                margin=dict(t=20, r=20, b=20, l=20),
                 template="plotly_dark",
                 sliders=sliders,
             )

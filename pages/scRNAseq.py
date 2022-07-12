@@ -78,8 +78,8 @@ def return_layout(basic_config, slice_index):
                                 "i": "page-5-card-graph-heatmap-lipid",
                                 "x": 3,
                                 "y": 18,
-                                "w": 5,
-                                "h": 20,
+                                "w": 6,
+                                "h": 15,
                             },
                         ],
                         "lg": [
@@ -186,7 +186,7 @@ def return_layout(basic_config, slice_index):
                                             className="h-100 w-100",
                                             figure=figures.compute_barplot(
                                                 brain_1=False, idx_dot=None
-                                            ),
+                                            )[0],
                                         ),
                                     ],
                                 ),
@@ -197,6 +197,7 @@ def return_layout(basic_config, slice_index):
                                 "width": "100%",
                                 "height": "100%",
                                 "background-color": "#1d1c1f",
+                                "overflow": "clip",
                             },
                             className="p-0 m-0",
                             id="page-5-card-graph-heatmap-lipid",
@@ -209,10 +210,32 @@ def return_layout(basic_config, slice_index):
                                             className="fixed-aspect-ratio",
                                             id="page-5-div-graph-heatmap-lipid",
                                             children=[
+                                                # dmc.Center(
+                                                #     dmc.Alert(
+                                                #         "Please select a lipid, and up to three"
+                                                #         " genes, and click the display button to"
+                                                #         " see the data comparison.",
+                                                #         id="page-5-alert-heatmap-lipid",
+                                                #         title="Input needed",
+                                                #         color="cyan",
+                                                #         class_name="d-none",
+                                                #     ),
+                                                #     style={
+                                                #         "width": "60%",
+                                                #         "height": "100%",
+                                                #         "position": "absolute",
+                                                #         "left": "20%",
+                                                #         "top": "0",
+                                                #     },
+                                                # ),
                                                 dcc.Graph(
                                                     id="page-5-graph-heatmap-lipid",
-                                                    figure=figures.compute_heatmap_lipid_genes(
-                                                        brain_1=False
+                                                    figure=storage.return_shelved_object(
+                                                        "figures/scRNAseq_page",
+                                                        "base_heatmap_lipid",
+                                                        force_update=False,
+                                                        compute_function=figures.compute_heatmap_lipid_genes,
+                                                        brain_1=False,
                                                     ),
                                                     config=basic_config
                                                     | {
@@ -223,22 +246,24 @@ def return_layout(basic_config, slice_index):
                                                         }
                                                     },
                                                     style={
-                                                        "width": "80%",
-                                                        "height": "100%",
+                                                        "width": "60%",
+                                                        # "height": "100%",
                                                         "position": "absolute",
                                                         "left": "20%",
                                                         "top": "0",
                                                     },
+                                                    className="d-none",
                                                 ),
                                                 dbc.Progress(
                                                     id="page-5-progress-bar-structure",
                                                     color="#338297",
                                                     style={
-                                                        "width": "80%",
+                                                        "width": "50%",
                                                         "position": "absolute",
-                                                        "left": "20%",
-                                                        "top": "40%",
+                                                        "left": "25%",
+                                                        "top": "20%",
                                                     },
+                                                    className="d-none",
                                                 ),
                                                 dmc.Group(
                                                     spacing="lg",
@@ -246,6 +271,9 @@ def return_layout(basic_config, slice_index):
                                                     align="stretch",
                                                     style={
                                                         "width": "20%",
+                                                        "position": "absolute",
+                                                        "left": "0",
+                                                        "top": "0",
                                                     },
                                                     grow=True,
                                                     children=[
@@ -318,7 +346,6 @@ def return_layout(basic_config, slice_index):
                                                                 ),
                                                             ],
                                                         ),
-                                                        # dmc.Center(
                                                         dmc.Button(
                                                             children="Visualize and compare",
                                                             id="page-5-display-heatmap-genes",
@@ -346,6 +373,62 @@ def return_layout(basic_config, slice_index):
                                                         ),
                                                     ],
                                                 ),
+                                                dmc.Group(
+                                                    spacing="lg",
+                                                    direction="column",
+                                                    align="stretch",
+                                                    style={
+                                                        "width": "20%",
+                                                        "position": "absolute",
+                                                        "left": "80%",
+                                                        "top": "0",
+                                                    },
+                                                    grow=True,
+                                                    children=[
+                                                        dmc.Space(h="md"),
+                                                        dmc.Text("Current selection:", size="lg"),
+                                                        dmc.Group(
+                                                            spacing="xs",
+                                                            direction="column",
+                                                            children=[
+                                                                dmc.Text("Lipid:"),
+                                                                dmc.Badge(
+                                                                    id="page-5-badge-lipid",
+                                                                    children="name-lipid-1",
+                                                                    color="cyan",
+                                                                    variant="filled",
+                                                                ),
+                                                            ],
+                                                        ),
+                                                        dmc.Group(
+                                                            spacing="xs",
+                                                            direction="column",
+                                                            align="stretch",
+                                                            grow=True,
+                                                            children=[
+                                                                dmc.Text("Genes:"),
+                                                                dmc.Badge(
+                                                                    id="page-5-badge-gene-1",
+                                                                    children="name-gene-1",
+                                                                    color="red",
+                                                                    variant="filled",
+                                                                ),
+                                                                dmc.Badge(
+                                                                    id="page-5-badge-gene-2",
+                                                                    children="name-gene-2",
+                                                                    color="green",
+                                                                    variant="filled",
+                                                                ),
+                                                                dmc.Badge(
+                                                                    id="page-5-badge-gene-3",
+                                                                    children="name-gene-3",
+                                                                    color="blue",
+                                                                    variant="filled",
+                                                                ),
+                                                            ],
+                                                        ),
+                                                    ],
+                                                ),
                                             ],
                                         ),
                                     ],
@@ -370,6 +453,10 @@ def return_layout(basic_config, slice_index):
 
 @app.callback(
     Output("page-5-graph-barplot", "figure"),
+    Output("page-5-dropdown-lipid", "value"),
+    Output("page-5-dropdown-red", "value"),
+    Output("page-5-dropdown-green", "value"),
+    Output("page-5-dropdown-blue", "value"),
     Input("page-5-graph-scatter-3D", "clickData"),
     prevent_initial_call=True,
 )
@@ -385,7 +472,12 @@ def page_5_update_barplot(clickData):
             if "points" in clickData:
                 if len(clickData["points"]) > 0:
                     idx_dot = clickData["points"][0]["pointNumber"]
-                    return figures.compute_barplot(brain_1=False, idx_dot=idx_dot)
+                    (
+                        fig,
+                        l_genes,
+                        l_lipids,
+                    ) = figures.compute_barplot(brain_1=False, idx_dot=idx_dot)
+                    return fig, l_lipids[0], l_genes[0], l_genes[1], l_genes[2]
 
     return dash.no_update
 
@@ -405,9 +497,9 @@ def page_5_update_barplot(clickData):
             "",
             "d-none",
         ),
-        (Output("page-5-graph-heatmap-lipid", "className"), "d-none", ""),
         (Output("page-5-download-lipid-plot-button", "disabled"), True, False),
         (Output("page-5-display-heatmap-genes", "disabled"), True, False),
+        (Output("page-5-graph-heatmap-lipid", "className"), "d-none", ""),
     ],
     progress=[
         Output("page-5-progress-bar-structure", "value"),
@@ -420,37 +512,40 @@ def page_5_update_heatmap_lipid(set_progress, lipid, gene_1, gene_2, gene_3, cli
     """This callback updates the lipid and genes comparison heatmap with the selected lipid and
     selected genes."""
 
-    # Find out which input triggered the function
-    id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
-
     # If no click has been done, just return nothing
     if clicked is None:
         return dash.no_update
 
-    l_genes = [gene_1, gene_2, gene_3]
+    # Find out which input triggered the function
+    id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
 
     # If a spot has has been clicked, update the barplot
     if lipid is not None or gene_1 is not None or gene_2 is not None or gene_3 is not None:
+        l_genes = [gene_1, gene_2, gene_3]
         return figures.compute_heatmap_lipid_genes(
             lipid, l_genes, brain_1=False, set_progress=set_progress
         )
+    else:
+        return {}
 
-    return dash.no_update
 
+@app.callback(
+    # Output("page-5-alert-heatmap-lipid", "class_name"),
+    Output("page-5-badge-lipid", "children"),
+    Output("page-5-badge-gene-1", "children"),
+    Output("page-5-badge-gene-2", "children"),
+    Output("page-5-badge-gene-3", "children"),
+    State("page-5-dropdown-lipid", "value"),
+    State("page-5-dropdown-red", "value"),
+    State("page-5-dropdown-green", "value"),
+    State("page-5-dropdown-blue", "value"),
+    Input("page-5-display-heatmap-genes", "n_clicks"),
+)
+def page_5_update_heatmap_visibility(lipid, gene_1, gene_2, gene_3, clicked):
+    """This callback updates the lipid and genes comparison heatmap with the selected lipid and
+    selected genes."""
 
-# @app.callback(
-#     Output("page-5-display-heatmap-genes", "disabled"),
-#     Input("page-5-dropdown-lipid", "value"),
-#     Input("page-5-dropdown-red", "value"),
-#     Input("page-5-dropdown-green", "value"),
-#     Input("page-5-dropdown-blue", "value"),
-#     prevent_initial_call=False,
-# )
-# def page_5_update_button_status(lipid, gene_1, gene_2, gene_3):
-#     """This callback updates the lipid and genes comparison heatmap with the selected lipid and
-#     selected genes."""
+    # Find out which input triggered the function
+    id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
 
-#     if lipid is not None or gene_1 is not None or gene_2 is not None or gene_3 is not None:
-#         return False
-
-#     return True
+    return lipid, gene_1, gene_2, gene_3

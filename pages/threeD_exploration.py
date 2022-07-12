@@ -143,29 +143,29 @@ def return_layout(basic_config, slice_index):
                                                             class_name="mb-5 pb-5 ",
                                                         )
                                                     ),
-                                                    dmc.Select(
-                                                        label="Select brain model:",
-                                                        placeholder="Select brain model",
-                                                        id="page-4-dropdown-brain",
-                                                        data=[
-                                                            {
-                                                                "value": "brain_1",
-                                                                "label": "Brain 1",
-                                                            },
-                                                            {
-                                                                "value": "brain_2",
-                                                                "label": "Brain 2",
-                                                            },
-                                                        ],
-                                                        clearable=True,
-                                                        searchable=False,
-                                                        radius="md",
-                                                        size="xs",
-                                                        transitionDuration=150,
-                                                        transition="pop-top-left",
-                                                        transitionTimingFunction="ease",
-                                                        value="brain_1",
-                                                    ),
+                                                    # dmc.Select(
+                                                    #     label="Select brain model:",
+                                                    #     placeholder="Select brain model",
+                                                    #     id="page-4-dropdown-brain",
+                                                    #     data=[
+                                                    #         {
+                                                    #             "value": "brain_1",
+                                                    #             "label": "Brain 1",
+                                                    #         },
+                                                    #         {
+                                                    #             "value": "brain_2",
+                                                    #             "label": "Brain 2",
+                                                    #         },
+                                                    #     ],
+                                                    #     clearable=True,
+                                                    #     searchable=False,
+                                                    #     radius="md",
+                                                    #     size="xs",
+                                                    #     transitionDuration=150,
+                                                    #     transition="pop-top-left",
+                                                    #     transitionTimingFunction="ease",
+                                                    #     value="brain_1",
+                                                    # ),
                                                     dmc.Select(
                                                         label="Select lipid category:",
                                                         placeholder="Select lipid cat",
@@ -834,7 +834,7 @@ def page_4_add_toast_region_selection(
         State("page-4-selected-region-2", "data"),
         State("page-4-selected-region-3", "data"),
         Input("page-4-modal-volume", "is_open"),
-        State("page-4-dropdown-brain", "value"),
+        State("main-brain", "value"),
     ],
     running=[
         (
@@ -959,7 +959,7 @@ def page_4_plot_graph_volume(
         State("page-4-selected-region-1", "data"),
         State("page-4-selected-region-2", "data"),
         State("page-4-selected-region-3", "data"),
-        State("page-4-dropdown-brain", "value"),
+        State("main-brain", "value"),
     ],
     running=[
         (
@@ -1024,7 +1024,7 @@ def page_4_plot_graph_heatmap_mz_selection(
     State("page-4-dropdown-lipid-names", "data"),
     State("page-4-dropdown-lipid-structures", "data"),
     State("page-4-dropdown-lipid-cations", "data"),
-    Input("page-4-dropdown-brain", "value"),
+    Input("main-brain", "value"),
 )
 def page_4_handle_dropdowns(
     n_clicks, name, structure, options_names, options_structures, options_cations, brain
@@ -1039,7 +1039,7 @@ def page_4_handle_dropdowns(
     if (
         len(id_input) == 0
         or id_input == "page-4-add-lipid-button"
-        or id_input == "page-4-dropdown-brain"
+        or id_input == "main-brain"
     ):
         options_names = [
             {"label": name, "value": name}
@@ -1102,7 +1102,7 @@ def page_4_handle_dropdowns(
     State("page-4-toast-lipid-2", "header"),
     State("page-4-toast-lipid-3", "header"),
     State("page-4-last-selected-lipids", "data"),
-    Input("page-4-dropdown-brain", "value"),
+    Input("main-brain", "value"),
 )
 def page_4_add_toast_selection(
     cation,
@@ -1250,7 +1250,7 @@ def page_4_add_toast_selection(
         )
 
     # If the brain index has changed, update the corresponding lipid indices
-    elif id_input == "page-4-dropdown-brain":
+    elif id_input == "main-brain":
         # Remove previous lipids information
         if header_1 != "":
             l_selected_lipids.remove(l_lipid_1_index[0])
@@ -1318,7 +1318,7 @@ def page_4_add_toast_selection(
     Input("page-4-selected-lipid-1", "data"),
     Input("page-4-selected-lipid-2", "data"),
     Input("page-4-selected-lipid-3", "data"),
-    State("page-4-dropdown-brain", "value"),
+    State("main-brain", "value"),
 )
 def page_4_disable_dropdowns(l_lipid_1_index, l_lipid_2_index, l_lipid_3_index, brain):
     """This callback is triggered when a lipid is selected, and enables/disables the corresponding
@@ -1346,7 +1346,7 @@ def page_4_disable_dropdowns(l_lipid_1_index, l_lipid_2_index, l_lipid_3_index, 
     Input("page-4-selected-region-1", "data"),
     Input("page-4-selected-region-2", "data"),
     Input("page-4-selected-region-3", "data"),
-    State("page-4-dropdown-brain", "value"),
+    State("main-brain", "value"),
 )
 def page_4_active_display(
     l_lipid_1_index, l_lipid_2_index, l_lipid_3_index, region_1_id, region_2_id, region_3_id, brain

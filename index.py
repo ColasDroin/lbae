@@ -105,7 +105,11 @@ def return_main_content():
                             "background-color": "rgba(0, 0, 0, 0.0)",
                         },
                         children=[
-                            dmc.Text("Rostro-caudal coordinate: ", class_name="pr-4"),
+                            dmc.Text(
+                                id="main-text-slider",
+                                children="Rostro-caudal coordinate: ",
+                                class_name="pr-4",
+                            ),
                             dmc.Slider(
                                 id="main-slider-1",
                                 min=data.get_slice_list(indices="brain_1")[0],
@@ -278,10 +282,16 @@ def toggle_collapse(n1, is_open):
     Output("main-paper-slider", "class_name"), Input("url", "pathname"), prevent_initial_call=False
 )
 def hide_slider(pathname):
-    """This callback is used to hide the slider when the user is on a page that does not need it."""
+    """This callback is used to hide the slider div when the user is on a page that does not need it."""
 
     # Pages in which the slider is displayed
-    l_path_with_slider = ["/load-slice", "/lipid-selection", "/region-analysis"]
+    l_path_with_slider = [
+        "/load-slice",
+        "/lipid-selection",
+        "/region-analysis",
+        "/3D-exploration",
+        "/gene-data",
+    ]
 
     # Set the content according to the current pathname
     if pathname in l_path_with_slider:
@@ -289,6 +299,30 @@ def hide_slider(pathname):
 
     else:
         return "d-none"
+
+
+@app.callback(
+    Output("main-slider-1", "style"),
+    Output("main-slider-2", "style"),
+    Output("main-text-slider", "style"),
+    Input("url", "pathname"),
+    prevent_initial_call=False,
+)
+def hide_slider_but_leave_brain(pathname):
+    """This callback is used to hide the slider but leave brain chips when needed."""
+
+    # Pages in which the slider is displayed
+    l_path_without_slider_but_with_brain = [
+        "/3D-exploration",
+        "/gene-data",
+    ]
+
+    # Set the content according to the current pathname
+    if pathname in l_path_without_slider_but_with_brain:
+        return {"visibility": "hidden"}, {"visibility": "hidden"}, {"visibility": "hidden"}
+
+    else:
+        return {}, {}, {}
 
 
 @app.callback(
