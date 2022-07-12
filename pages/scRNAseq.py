@@ -27,7 +27,7 @@ from app import app, data, figures, storage, atlas, cache_flask
 # ==================================================================================================
 
 
-def return_layout(basic_config, slice_index):
+def return_layout(basic_config, slice_index, brain):
 
     page = (
         html.Div(
@@ -183,10 +183,10 @@ def return_layout(basic_config, slice_index):
                                         dcc.Graph(
                                             id="page-5-graph-barplot",
                                             config=basic_config,
-                                            className="h-100 w-100",
-                                            figure=figures.compute_barplot(
-                                                brain_1=False, idx_dot=None
-                                            )[0],
+                                            className="d-none",
+                                            style={
+                                                "background-color": "#1d1c1f",
+                                            },
                                         ),
                                     ],
                                 ),
@@ -231,6 +231,14 @@ def return_layout(basic_config, slice_index):
                                                 dcc.Graph(
                                                     id="page-5-graph-heatmap-lipid",
                                                     figure=storage.return_shelved_object(
+                                                        "figures/scRNAseq_page",
+                                                        "base_heatmap_lipid",
+                                                        force_update=False,
+                                                        compute_function=figures.compute_heatmap_lipid_genes,
+                                                        brain_1=True,
+                                                    )
+                                                    if brain == "brain_1"
+                                                    else storage.return_shelved_object(
                                                         "figures/scRNAseq_page",
                                                         "base_heatmap_lipid",
                                                         force_update=False,
@@ -287,9 +295,11 @@ def return_layout(basic_config, slice_index):
                                                                 dmc.Text("Select a lipid:"),
                                                                 dcc.Dropdown(
                                                                     id="page-5-dropdown-lipid",
-                                                                    options=figures._scRNAseq.l_name_lipids_brain_2,
+                                                                    options=figures._scRNAseq.l_name_lipids_brain_1
+                                                                    if brain == "brain_1"
+                                                                    else figures._scRNAseq.l_name_lipids_brain_2,
                                                                     searchable=True,
-                                                                    value="PA 34:1 K",
+                                                                    # value="PA 34:1 K",
                                                                     multi=False,
                                                                     placeholder="Choose a lipid",
                                                                     clearable=False,
@@ -310,10 +320,12 @@ def return_layout(basic_config, slice_index):
                                                                 ),
                                                                 dcc.Dropdown(
                                                                     id="page-5-dropdown-red",
-                                                                    options=figures._scRNAseq.l_genes_brain_2,
+                                                                    options=figures._scRNAseq.l_genes_brain_1
+                                                                    if brain == "brain_1"
+                                                                    else figures._scRNAseq.l_genes_brain_2,
                                                                     searchable=True,
                                                                     multi=False,
-                                                                    value="Nov",
+                                                                    # value="Nov",
                                                                     placeholder="Choose a gene",
                                                                     clearable=np.True_,
                                                                     style={
@@ -322,10 +334,12 @@ def return_layout(basic_config, slice_index):
                                                                 ),
                                                                 dcc.Dropdown(
                                                                     id="page-5-dropdown-green",
-                                                                    options=figures._scRNAseq.l_genes_brain_2,
+                                                                    options=figures._scRNAseq.l_genes_brain_1
+                                                                    if brain == "brain_1"
+                                                                    else figures._scRNAseq.l_genes_brain_2,
                                                                     searchable=True,
                                                                     multi=False,
-                                                                    value="Mef2c",
+                                                                    # value="Mef2c",
                                                                     placeholder="Choose a gene",
                                                                     clearable=True,
                                                                     style={
@@ -334,9 +348,11 @@ def return_layout(basic_config, slice_index):
                                                                 ),
                                                                 dcc.Dropdown(
                                                                     id="page-5-dropdown-blue",
-                                                                    options=figures._scRNAseq.l_genes_brain_2,
+                                                                    options=figures._scRNAseq.l_genes_brain_1
+                                                                    if brain == "brain_1"
+                                                                    else figures._scRNAseq.l_genes_brain_2,
                                                                     searchable=True,
-                                                                    value="Nnat",
+                                                                    # value="Nnat",
                                                                     multi=False,
                                                                     placeholder="Choose a gene",
                                                                     clearable=True,
@@ -448,19 +464,19 @@ def return_layout(basic_config, slice_index):
 # --- Callbacks
 # ==================================================================================================
 
-# ! Update these callbacks to take into account brain 1 and 2 change
-
 
 @app.callback(
     Output("page-5-graph-barplot", "figure"),
+    Output("page-5-graph-barplot", "className"),
     Output("page-5-dropdown-lipid", "value"),
     Output("page-5-dropdown-red", "value"),
     Output("page-5-dropdown-green", "value"),
     Output("page-5-dropdown-blue", "value"),
     Input("page-5-graph-scatter-3D", "clickData"),
-    prevent_initial_call=True,
+    Input("main-brain", "value"),
+    prevent_initial_call=False,
 )
-def page_5_update_barplot(clickData):
+def page_5_update_barplot(clickData, brain):
     """This callback updates the barplot with the data from the selected spot."""
 
     # Find out which input triggered the function
@@ -472,14 +488,20 @@ def page_5_update_barplot(clickData):
             if "points" in clickData:
                 if len(clickData["points"]) > 0:
                     idx_dot = clickData["points"][0]["pointNumber"]
-                    (
-                        fig,
-                        l_genes,
-                        l_lipids,
-                    ) = figures.compute_barplot(brain_1=False, idx_dot=idx_dot)
-                    return fig, l_lipids[0], l_genes[0], l_genes[1], l_genes[2]
+                    (fig, l_genes, l_lipids,) = (
+                        figures.compute_barplot(brain_1=True, idx_dot=idx_dot)
+                        if brain == "brain_1"
+                        else figures.compute_barplot(brain_1=False, idx_dot=idx_dot)
+                    )
+                    return fig, "w-100 h-100", l_lipids[0], l_genes[0], l_genes[1], l_genes[2]
 
-    return dash.no_update
+    elif brain is not None:
+        (fig, l_genes, l_lipids,) = (
+            figures.compute_barplot(brain_1=True, idx_dot=None)
+            if brain == "brain_1"
+            else figures.compute_barplot(brain_1=False, idx_dot=None)
+        )
+    return fig, "w-100 h-100", l_lipids[0], l_genes[0], l_genes[1], l_genes[2]
 
 
 @app.long_callback(
@@ -490,6 +512,7 @@ def page_5_update_barplot(clickData):
         State("page-5-dropdown-green", "value"),
         State("page-5-dropdown-blue", "value"),
         Input("page-5-display-heatmap-genes", "n_clicks"),
+        Input("main-brain", "value"),
     ],
     running=[
         (
@@ -508,7 +531,7 @@ def page_5_update_barplot(clickData):
     prevent_initial_call=True,
     cache_args_to_ignore=[4],
 )
-def page_5_update_heatmap_lipid(set_progress, lipid, gene_1, gene_2, gene_3, clicked):
+def page_5_update_heatmap_lipid(set_progress, lipid, gene_1, gene_2, gene_3, clicked, brain):
     """This callback updates the lipid and genes comparison heatmap with the selected lipid and
     selected genes."""
 
@@ -522,30 +545,86 @@ def page_5_update_heatmap_lipid(set_progress, lipid, gene_1, gene_2, gene_3, cli
     # If a spot has has been clicked, update the barplot
     if lipid is not None or gene_1 is not None or gene_2 is not None or gene_3 is not None:
         l_genes = [gene_1, gene_2, gene_3]
-        return figures.compute_heatmap_lipid_genes(
-            lipid, l_genes, brain_1=False, set_progress=set_progress
+        return (
+            figures.compute_heatmap_lipid_genes(
+                lipid, l_genes, brain_1=True, set_progress=set_progress
+            )
+            if brain == "brain_1"
+            else figures.compute_heatmap_lipid_genes(
+                lipid, l_genes, brain_1=False, set_progress=set_progress
+            )
         )
     else:
         return {}
 
 
 @app.callback(
-    # Output("page-5-alert-heatmap-lipid", "class_name"),
     Output("page-5-badge-lipid", "children"),
     Output("page-5-badge-gene-1", "children"),
     Output("page-5-badge-gene-2", "children"),
     Output("page-5-badge-gene-3", "children"),
-    State("page-5-dropdown-lipid", "value"),
-    State("page-5-dropdown-red", "value"),
-    State("page-5-dropdown-green", "value"),
-    State("page-5-dropdown-blue", "value"),
+    Input("page-5-dropdown-lipid", "value"),
+    Input("page-5-dropdown-red", "value"),
+    Input("page-5-dropdown-green", "value"),
+    Input("page-5-dropdown-blue", "value"),
     Input("page-5-display-heatmap-genes", "n_clicks"),
+    State("page-5-badge-lipid", "children"),
+    State("page-5-badge-gene-1", "children"),
+    State("page-5-badge-gene-2", "children"),
+    State("page-5-badge-gene-3", "children"),
+    Input("main-brain", "value"),
 )
-def page_5_update_heatmap_visibility(lipid, gene_1, gene_2, gene_3, clicked):
+def page_5_update_badge_names(
+    lipid,
+    gene_1,
+    gene_2,
+    gene_3,
+    clicked,
+    current_lipid,
+    current_gene_1,
+    current_gene_2,
+    current_gene_3,
+    brain,
+):
     """This callback updates the lipid and genes comparison heatmap with the selected lipid and
     selected genes."""
 
     # Find out which input triggered the function
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
 
-    return lipid, gene_1, gene_2, gene_3
+    if id_input == "page-5-display-heatmap-genes" or id_input == "main-brain":
+        return lipid, gene_1, gene_2, gene_3
+
+    if (
+        current_lipid == "name-lipid-1"
+        and current_gene_1 == "name-gene-1"
+        and current_gene_2 == "name-gene-2"
+        and current_gene_3 == "name-gene-3"
+    ):
+        return lipid, gene_1, gene_2, gene_3
+
+    return dash.no_update
+
+
+@app.callback(
+    Output("page-5-dropdown-lipid", "options"),
+    Output("page-5-dropdown-red", "options"),
+    Output("page-5-dropdown-green", "options"),
+    Output("page-5-dropdown-blue", "options"),
+    Input("main-brain", "value"),
+)
+def page_5_update_dropdown_options(brain):
+    """This callback updates the lipid and genes dropdown options depening on the selected brain."""
+
+    options_genes = (
+        figures._scRNAseq.l_genes_brain_1
+        if brain == "brain_1"
+        else figures._scRNAseq.l_genes_brain_2
+    )
+    options_lipids = (
+        figures._scRNAseq.l_name_lipids_brain_1
+        if brain == "brain_1"
+        else figures._scRNAseq.l_name_lipids_brain_2
+    )
+
+    return options_lipids, options_genes, options_genes, options_genes

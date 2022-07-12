@@ -189,7 +189,7 @@ def return_main_content():
     return main_content
 
 
-def return_validation_layout(main_content, initial_slice=1):
+def return_validation_layout(main_content, initial_slice=1, brain="brain_1"):
     """This function compute the layout of the app, including the main container, the sidebar and
     the different pages.
 
@@ -209,7 +209,7 @@ def return_validation_layout(main_content, initial_slice=1):
             lipid_selection.return_layout(basic_config, initial_slice),
             region_analysis.return_layout(basic_config, initial_slice),
             threeD_exploration.return_layout(basic_config, initial_slice),
-            scRNAseq.return_layout(basic_config, initial_slice),
+            scRNAseq.return_layout(basic_config, initial_slice, brain),
         ]
     )
 
@@ -222,8 +222,9 @@ def return_validation_layout(main_content, initial_slice=1):
     Output("empty-content", "children"),
     Input("url", "pathname"),
     State("main-slider", "data"),
+    State("main-brain", "value"),
 )
-def render_page_content(pathname, slice_index):
+def render_page_content(pathname, slice_index, brain):
     """This callback is used as a URL router."""
 
     # Keep track of the page in the console
@@ -247,7 +248,7 @@ def render_page_content(pathname, slice_index):
         page = threeD_exploration.return_layout(basic_config, slice_index)
 
     elif pathname == "/gene-data":
-        page = scRNAseq.return_layout(basic_config, slice_index)
+        page = scRNAseq.return_layout(basic_config, slice_index, brain)
 
     else:
         # If the user tries to reach a different page, return a 404 message

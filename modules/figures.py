@@ -2399,8 +2399,8 @@ class Figures:
 
     def compute_heatmap_lipid_genes(
         self,
-        lipid="PA 34:1 K",
-        l_genes=["Nov", "Mef2c", "Nnat"],
+        lipid=None,
+        l_genes=None,
         initial_frame=5,
         brain_1=False,
         set_progress=None,
@@ -2411,8 +2411,10 @@ class Figures:
         molecular atlas data.
 
         Args:
-            lipid (str): The name of the lipid to be displayed.
-            l_genes (list): The list of gene names to be displayed.
+            lipid (str): The name of the lipid to be displayed. If None, the most expressed lipid
+                will be displayed. Defaults to None.
+            l_genes (list): The list of gene names to be displayed. If None, the three most
+                expressed genes will be displayed. Defaults to None.
             initial_frame   (int, optional): The frame on which the slider is initialized.
             brain_1 (bool, optional): If True, the heatmap will be computed with the data coming
                 from the first brain. Else, from the 2nd brain. Defaults to False.
@@ -2435,7 +2437,6 @@ class Figures:
             name_genes = self._scRNAseq.l_genes_brain_1
             name_lipids = self._scRNAseq.l_name_lipids_brain_1
             array_lipids = self._scRNAseq.array_exp_lipids_brain_1
-            l_score = self._scRNAseq.l_score_brain_1
             array_genes = self._scRNAseq.array_exp_genes_brain_1
         else:
             x = self._scRNAseq.l_name_lipids_brain_2
@@ -2443,12 +2444,25 @@ class Figures:
             name_genes = self._scRNAseq.l_genes_brain_2
             name_lipids = self._scRNAseq.l_name_lipids_brain_2
             array_lipids = self._scRNAseq.array_exp_lipids_brain_2
-            l_score = self._scRNAseq.l_score_brain_2
             array_genes = self._scRNAseq.array_exp_genes_brain_2
 
-            x = self._scRNAseq.xmol
-            y = -self._scRNAseq.ymol
-            z = self._scRNAseq.zmol
+        # Get the most expressed lipid and genes if not provided
+        if lipid is None and l_genes is None:
+            expression = np.mean(array_lipids, axis=0)
+            index_sorted = np.argsort(expression)[::-1]
+            expression = expression[index_sorted]
+            lipids = np.array(x)[index_sorted]
+            y_sorted = y[index_sorted, :]
+            index_sorted = np.argsort(y_sorted[0, :])[::-1]
+            y_sorted = y_sorted[:, index_sorted]
+            genes = np.array(name_genes)[index_sorted]
+            lipid = lipids[0]
+            l_genes = genes[:3]
+
+        # Get coordinates
+        x = self._scRNAseq.xmol
+        y = -self._scRNAseq.ymol
+        z = self._scRNAseq.zmol
 
         # Get idx lipid and genes
         if lipid is not None:

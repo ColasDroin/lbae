@@ -2,6 +2,7 @@
 # TODO Do quality control and debug, especially when several users are on the app in parallel
 # TODO Handle brain 1 and 2 loading at startup (for each page)
 # TODO Check scaling for each page
+# TODO Write documentation for page 5
 
 ##### Finalization process #####
 # TODO Check that all force_update are set to False
