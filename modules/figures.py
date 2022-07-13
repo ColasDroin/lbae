@@ -168,14 +168,16 @@ class Figures:
                 compute_function=self.compute_treemaps_figure,
             ),
 
-        # Check that 3D slice figure has been computed already. If not, compute it and store it.
-        if not self._storage.check_shelved_object("figures/3D_page", "slices_3D"):
-            self._storage.return_shelved_object(
-                "figures/3D_page",
-                "slices_3D",
-                force_update=False,
-                compute_function=self.compute_figure_slices_3D,
-            )
+        # Check that 3D slice figures have been computed already. If not, compute it and store it.
+        for brain in ["brain_1", "brain_2"]:
+            if not self._storage.check_shelved_object("figures/3D_page", "slices_3D_" + brain):
+                self._storage.return_shelved_object(
+                    "figures/3D_page",
+                    "slices_3D",
+                    force_update=False,
+                    compute_function=self.compute_figure_slices_3D,
+                    brain=brain,
+                )
 
         # Check that the 3D root volume figure has been computed already. If not, compute it and
         # store it.
@@ -409,13 +411,14 @@ class Figures:
 
         return fig
 
-    def compute_figure_slices_3D(self, reduce_resolution_factor=20):
+    def compute_figure_slices_3D(self, reduce_resolution_factor=20, brain="brain_1"):
         """This function computes and returns a figure representing the slices from the maldi data
         in 3D.
 
         Args:
             reduce_resolution_factor (int, optional): Divides (reduce) the initial resolution of the
                 data. Needed as the resulting figure can be very heavy. Defaults to 20.
+            brain (str, optional): Name of the brain to be used. Defaults to 'brain_1'.
 
         Returns:
             go.Figure: A Plotly figure representing the slices from the MALDI acquisitions in 3D.
@@ -451,26 +454,22 @@ class Figures:
             frames=[
                 go.Frame(
                     data=self.get_surface(
-                        i, l_transform_parameters, array_projection_small, reduce_resolution_factor
-                    ),
-                    name=str(i + 1),
-                )
-                if i != 12 and i != 8
-                else go.Frame(
-                    data=self.get_surface(
-                        i - 1,
+                        slice_index - 1,
                         l_transform_parameters,
                         array_projection_small,
                         reduce_resolution_factor,
                     ),
                     name=str(i + 1),
                 )
-                for i in range(0, self._data.get_slice_number(), 1)
+                for i, slice_index in enumerate(self._data.get_slice_list(brain))
             ]
         )
         fig.add_trace(
             self.get_surface(
-                0, l_transform_parameters, array_projection_small, reduce_resolution_factor
+                self._data.get_slice_list(brain)[0] - 1,
+                l_transform_parameters,
+                array_projection_small,
+                reduce_resolution_factor,
             )
         )
 

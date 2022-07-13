@@ -279,13 +279,13 @@ def toggle_modal(n1, is_open):
     return is_open
 
 
-# Function to plot page-4-graph-heatmap-mz-selection when its state get updated
 @app.callback(
-    output=Output("page-1-graph-modal", "figure"),
-    inputs=Input("page-1-modal-button", "n_clicks"),
+    Output("page-1-graph-modal", "figure"),
+    Input("page-1-modal-button", "n_clicks"),
+    Input("main-brain", "value"),
     prevent_initial_call=True,
 )
-def page_1_plot_graph_modal(n1):
+def page_1_plot_graph_modal(n1, brain):
     """This callback is used to plot the figure representing the slices in 3D in the modal."""
     if n1:
         return storage.return_shelved_object(
@@ -293,5 +293,6 @@ def page_1_plot_graph_modal(n1):
             "slices_3D",
             force_update=False,
             compute_function=figures.compute_figure_slices_3D,
+            brain=brain,
         )
     return dash.no_update

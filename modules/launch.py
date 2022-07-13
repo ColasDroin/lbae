@@ -144,8 +144,9 @@ class Launch:
             "figures/atlas_page/3D/treemaps",
             #
             # Computed in Figures.__init__(). Corresponds to the object returned by
-            # Figures.compute_figure_slices_3D().
-            "figures/3D_page/slices_3D",
+            # Figures.compute_figure_slices_3D(brain), with brain equal to 'brain_1' or 'brain_2'.
+            "figures/3D_page/slices_3D_brain_1",
+            "figures/3D_page/slices_3D_brain_2",
             #
             # Computed in Figures.__init__(). Corresponds to the object returned by
             # Figures.compute_3D_root_volume().

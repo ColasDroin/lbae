@@ -36,7 +36,7 @@ layout = (
             dmc.Center(
                 dmc.Alert(
                     "A connection of at least 10Mbps is recommended to comfortably use the"
-                    " application.",
+                    " application.This app is not recommended for use on a mobile device.",
                     title="Information",
                     color="cyan",
                     class_name="mt-4",
