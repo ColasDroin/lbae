@@ -116,7 +116,7 @@ def return_layout(basic_config, slice_index=1):
                         },
                     ),
                     dmc.Button(
-                        children="Compute spectral data",
+                        children="Compute spectral analysis",
                         id="page-3-button-compute-spectra",
                         variant="filled",
                         color="cyan",
@@ -921,7 +921,6 @@ def page_3_plot_heatmap(
         or id_input == "page-3-reset-button"
         or id_input == "url"
     ):
-
         fig = storage.return_shelved_object(
             "figures/load_page",
             "figure_basic_image",

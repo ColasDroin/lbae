@@ -107,8 +107,9 @@ def return_main_content():
                         children=[
                             dmc.Text(
                                 id="main-text-slider",
-                                children="Rostro-caudal coordinate: ",
+                                children="Rostro-caudal coordinate (mm): ",
                                 class_name="pr-4",
+                                size="sm",
                             ),
                             dmc.Slider(
                                 id="main-slider-1",
@@ -128,7 +129,7 @@ def return_main_content():
                                 size="xs",
                                 value=data.get_slice_list(indices="brain_1")[0],
                                 color="cyan",
-                                class_name="mt-2 mr-5 ml-2 mb-1 w-75",
+                                class_name="mt-2 mr-5 ml-2 mb-1 w-50",
                             ),
                             dmc.Slider(
                                 id="main-slider-2",
@@ -148,7 +149,7 @@ def return_main_content():
                                 size="xs",
                                 value=data.get_slice_list(indices="brain_2")[0],
                                 color="cyan",
-                                class_name="mt-2 mr-5 ml-2 mb-1 w-75 d-none",
+                                class_name="mt-2 mr-5 ml-2 mb-1 w-50 d-none",
                             ),
                             dmc.Chips(
                                 id="main-brain",
@@ -157,7 +158,7 @@ def return_main_content():
                                     {"value": "brain_2", "label": "Brain 2"},
                                 ],
                                 value="brain_1",
-                                class_name="pl-3 pt-1",
+                                class_name="pl-2 pt-1",
                                 color="cyan",
                             ),
                         ],
@@ -340,10 +341,10 @@ def hide_useless_slider(brain, value_1, value_2):
     """This callback is used to update the slider indices with the selected brain."""
     if brain == "brain_1":
         value_1 = value_2 - data.get_slice_list(indices="brain_1")[-1]
-        return "mt-2 mr-5 ml-2 mb-1 w-75", "mt-2 mr-5 ml-2 mb-1 w-75 d-none", value_1, value_2
+        return "mt-2 mr-5 ml-2 mb-1 w-50", "mt-2 mr-5 ml-2 mb-1 w-50 d-none", value_1, value_2
     elif brain == "brain_2":
         value_2 = value_1 + data.get_slice_list(indices="brain_1")[-1]
-        return "mt-2 mr-5 ml-2 mb-1 w-75 d-none", "mt-2 mr-5 ml-2 mb-1 w-75", value_1, value_2
+        return "mt-2 mr-5 ml-2 mb-1 w-50 d-none", "mt-2 mr-5 ml-2 mb-1 w-50", value_1, value_2
 
 
 app.clientside_callback(

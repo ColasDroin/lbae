@@ -369,9 +369,9 @@ class Figures:
             )
 
             # Add the labels only if it's not a simple annotation illustration
-            fig.update_xaxes(
-                title_text=self._atlas.bg_atlas.space.axis_labels[0][1], title_standoff=0
-            )
+            # fig.update_xaxes(
+            #     title_text=self._atlas.bg_atlas.space.axis_labels[0][1], title_standoff=0
+            # )
 
         else:
             fig.add_trace(
