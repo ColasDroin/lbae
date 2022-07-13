@@ -163,6 +163,25 @@ def return_layout(basic_config, slice_index, brain):
                                                 compute_function=figures.compute_scatter_3D,
                                             ),
                                         ),
+                                        # This button is hidden for now, because the corresponding
+                                        # downloaded plot is black, because of a bug with Plotly
+                                        dmc.Button(
+                                            children="Download 3D scatterplot",
+                                            id="page-5-download-scatter-3D",
+                                            disabled=False,
+                                            variant="filled",
+                                            radius="md",
+                                            size="xs",
+                                            color="cyan",
+                                            compact=False,
+                                            loading=False,
+                                            style={
+                                                "position": "absolute",
+                                                "top": "15%",
+                                                "right": "15%",
+                                                "display": "none",
+                                            },
+                                        ),
                                     ],
                                 ),
                             ],
@@ -186,6 +205,41 @@ def return_layout(basic_config, slice_index, brain):
                                             className="d-none",
                                             style={
                                                 "background-color": "#1d1c1f",
+                                            },
+                                        ),
+                                        dmc.Group(
+                                            direction="row",
+                                            align="flex-start",
+                                            position="left",
+                                            spacing="xs",
+                                            children=[
+                                                dmc.Button(
+                                                    children="Display average data",
+                                                    id="page-5-display-avg-data",
+                                                    disabled=False,
+                                                    variant="filled",
+                                                    radius="md",
+                                                    size="xs",
+                                                    color="cyan",
+                                                    compact=False,
+                                                    loading=False,
+                                                ),
+                                                dmc.Button(
+                                                    children="Download barplot",
+                                                    id="page-5-download-barplot",
+                                                    disabled=False,
+                                                    variant="filled",
+                                                    radius="md",
+                                                    size="xs",
+                                                    color="cyan",
+                                                    compact=False,
+                                                    loading=False,
+                                                ),
+                                            ],
+                                            style={
+                                                "position": "absolute",
+                                                "top": "15%",
+                                                "right": "25%",
                                             },
                                         ),
                                     ],
@@ -228,39 +282,42 @@ def return_layout(basic_config, slice_index, brain):
                                                 #         "top": "0",
                                                 #     },
                                                 # ),
-                                                dcc.Graph(
-                                                    id="page-5-graph-heatmap-lipid",
-                                                    figure=storage.return_shelved_object(
-                                                        "figures/scRNAseq_page",
-                                                        "base_heatmap_lipid",
-                                                        force_update=False,
-                                                        compute_function=figures.compute_heatmap_lipid_genes,
-                                                        brain_1=True,
-                                                    )
-                                                    if brain == "brain_1"
-                                                    else storage.return_shelved_object(
-                                                        "figures/scRNAseq_page",
-                                                        "base_heatmap_lipid",
-                                                        force_update=False,
-                                                        compute_function=figures.compute_heatmap_lipid_genes,
-                                                        brain_1=False,
+                                                html.Div(
+                                                    id="page-5-div-div-graph-heatmap-lipid",
+                                                    children=dcc.Graph(
+                                                        id="page-5-graph-heatmap-lipid",
+                                                        figure=storage.return_shelved_object(
+                                                            "figures/scRNAseq_page",
+                                                            "base_heatmap_lipid",
+                                                            force_update=False,
+                                                            compute_function=figures.compute_heatmap_lipid_genes,
+                                                            brain_1=True,
+                                                        )
+                                                        if brain == "brain_1"
+                                                        else storage.return_shelved_object(
+                                                            "figures/scRNAseq_page",
+                                                            "base_heatmap_lipid",
+                                                            force_update=False,
+                                                            compute_function=figures.compute_heatmap_lipid_genes,
+                                                            brain_1=False,
+                                                        ),
+                                                        config=basic_config
+                                                        | {
+                                                            "toImageButtonOptions": {
+                                                                "format": "png",
+                                                                "filename": "heatmap_lipid",
+                                                                "scale": 2,
+                                                            }
+                                                        },
+                                                        style={
+                                                            "width": "60%",
+                                                            # "height": "100%",
+                                                            "position": "absolute",
+                                                            "left": "20%",
+                                                            "top": "0",
+                                                        },
+                                                        className="d-none",
                                                     ),
-                                                    config=basic_config
-                                                    | {
-                                                        "toImageButtonOptions": {
-                                                            "format": "png",
-                                                            "filename": "heatmap_lipid",
-                                                            "scale": 2,
-                                                        }
-                                                    },
-                                                    style={
-                                                        "width": "60%",
-                                                        # "height": "100%",
-                                                        "position": "absolute",
-                                                        "left": "20%",
-                                                        "top": "0",
-                                                    },
-                                                    className="d-none",
                                                 ),
                                                 dbc.Progress(
                                                     id="page-5-progress-bar-structure",
@@ -376,7 +433,7 @@ def return_layout(basic_config, slice_index, brain):
                                                             class_name="mt-3",
                                                         ),
                                                         dmc.Button(
-                                                            children="Download plot",
+                                                            children="Download comparison plot",
                                                             id="page-5-download-lipid-plot-button",
                                                             disabled=False,
                                                             variant="filled",
@@ -474,9 +531,10 @@ def return_layout(basic_config, slice_index, brain):
     Output("page-5-dropdown-blue", "value"),
     Input("page-5-graph-scatter-3D", "clickData"),
     Input("main-brain", "value"),
+    Input("page-5-display-avg-data", "n_clicks"),
     prevent_initial_call=False,
 )
-def page_5_update_barplot(clickData, brain):
+def page_5_update_barplot(clickData, brain, clicked):
     """This callback updates the barplot with the data from the selected spot."""
 
     # Find out which input triggered the function
@@ -628,3 +686,58 @@ def page_5_update_dropdown_options(brain):
     )
 
     return options_lipids, options_genes, options_genes, options_genes
+
+
+# ! This callback doesn't work for now, because of a bug with Plotly
+clientside_callback(
+    """
+    function(n_clicks){
+        if(n_clicks > 0){
+            domtoimage.toBlob(document.getElementById('page-5-graph-scatter-3D'))
+                .then(function (blob) {
+                    window.saveAs(blob, 'scatter3D.png');
+                }
+            );
+        }
+    }
+    """,
+    Output("page-5-download-scatter-3D", "n_clicks"),
+    Input("page-5-download-scatter-3D", "n_clicks"),
+)
+"""This clientside callback is used to download the 3D scatterplot."""
+
+
+clientside_callback(
+    """
+    function(n_clicks){
+        if(n_clicks > 0){
+            domtoimage.toBlob(document.getElementById('page-5-graph-barplot'))
+                .then(function (blob) {
+                    window.saveAs(blob, 'barplot.png');
+                }
+            );
+        }
+    }
+    """,
+    Output("page-5-download-barplot", "n_clicks"),
+    Input("page-5-download-barplot", "n_clicks"),
+)
+"""This clientside callback is used to download the elastic net barplot."""
+
+
+clientside_callback(
+    """
+    function(n_clicks){
+        if(n_clicks > 0){
+            domtoimage.toBlob(document.getElementById('page-5-div-graph-heatmap-lipid'))
+                .then(function (blob) {
+                    window.saveAs(blob, 'comparison.png');
+                }
+            );
+        }
+    }
+    """,
+    Output("page-5-download-lipid-plot-button", "n_clicks"),
+    Input("page-5-download-lipid-plot-button", "n_clicks"),
+)
+"""This clientside callback is used to download the plot comparing lipid and gene expression in interpolated slices."""
