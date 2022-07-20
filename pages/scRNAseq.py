@@ -72,67 +72,145 @@ def return_layout(basic_config, slice_index, brain):
                         # depends on the dimension), h is in rows (30px)
                         # nb columns go 12->12->10->6->4->2
                         "xxl": [
-                            {"i": "page-5-card-graph-scatter-3D", "x": 1, "y": 0, "w": 5, "h": 18},
-                            {"i": "page-5-card-graph-barplot", "x": 6, "y": 0, "w": 5, "h": 18},
+                            {"i": "page-5-card-graph-scatter-3D", "x": 1, "y": 0, "w": 5, "h": 17},
+                            {
+                                "i": "page-5-card-graph-barplot-lipids",
+                                "x": 6,
+                                "y": 0,
+                                "w": 5,
+                                "h": 17,
+                            },
+                            {
+                                "i": "page-5-card-graph-barplot-genes",
+                                "x": 1,
+                                "y": 18,
+                                "w": 5,
+                                "h": 15,
+                            },
                             {
                                 "i": "page-5-card-graph-heatmap-lipid",
-                                "x": 3,
+                                "x": 6,
                                 "y": 18,
-                                "w": 6,
+                                "w": 5,
                                 "h": 15,
                             },
                         ],
                         "lg": [
                             {"i": "page-5-card-graph-scatter-3D", "x": 0, "y": 0, "w": 6, "h": 13},
-                            {"i": "page-5-card-graph-barplot", "x": 6, "y": 0, "w": 6, "h": 13},
+                            {
+                                "i": "page-5-card-graph-barplot-lipids",
+                                "x": 6,
+                                "y": 0,
+                                "w": 6,
+                                "h": 13,
+                            },
+                            {
+                                "i": "page-5-card-graph-barplot-genes",
+                                "x": 0,
+                                "y": 13,
+                                "w": 6,
+                                "h": 15,
+                            },
                             {
                                 "i": "page-5-card-graph-heatmap-lipid",
-                                "x": 1,
+                                "x": 6,
                                 "y": 13,
-                                "w": 10,
+                                "w": 6,
                                 "h": 15,
                             },
                         ],
                         "md": [
                             {"i": "page-5-card-graph-scatter-3D", "x": 0, "y": 0, "w": 5, "h": 13},
-                            {"i": "page-5-card-graph-barplot", "x": 5, "y": 0, "w": 5, "h": 13},
+                            {
+                                "i": "page-5-card-graph-barplot-lipids",
+                                "x": 5,
+                                "y": 0,
+                                "w": 5,
+                                "h": 13,
+                            },
+                            {
+                                "i": "page-5-card-graph-barplot-genes",
+                                "x": 0,
+                                "y": 13,
+                                "w": 5,
+                                "h": 14,
+                            },
                             {
                                 "i": "page-5-card-graph-heatmap-lipid",
-                                "x": 1,
+                                "x": 5,
                                 "y": 13,
-                                "w": 8,
+                                "w": 5,
                                 "h": 14,
                             },
                         ],
                         "sm": [
                             {"i": "page-5-card-graph-scatter-3D", "x": 0, "y": 0, "w": 6, "h": 11},
-                            {"i": "page-5-card-graph-barplot", "x": 0, "y": 14, "w": 6, "h": 11},
+                            {
+                                "i": "page-5-card-graph-barplot-lipids",
+                                "x": 0,
+                                "y": 11,
+                                "w": 6,
+                                "h": 11,
+                            },
+                            {
+                                "i": "page-5-card-graph-barplot-genes",
+                                "x": 0,
+                                "y": 22,
+                                "w": 6,
+                                "h": 11,
+                            },
                             {
                                 "i": "page-5-card-graph-heatmap-lipid",
                                 "x": 0,
-                                "y": 28,
+                                "y": 33,
                                 "w": 6,
                                 "h": 14,
                             },
                         ],
                         "xs": [
                             {"i": "page-5-card-graph-scatter-3D", "x": 0, "y": 0, "w": 4, "h": 12},
-                            {"i": "page-5-card-graph-barplot", "x": 0, "y": 12, "w": 4, "h": 12},
+                            {
+                                "i": "page-5-card-graph-barplot-lipids",
+                                "x": 0,
+                                "y": 12,
+                                "w": 4,
+                                "h": 12,
+                            },
+                            {
+                                "i": "page-5-card-graph-barplot-genes",
+                                "x": 0,
+                                "y": 24,
+                                "w": 4,
+                                "h": 12,
+                            },
                             {
                                 "i": "page-5-card-graph-heatmap-lipid",
                                 "x": 0,
-                                "y": 24,
+                                "y": 36,
                                 "w": 4,
                                 "h": 12,
                             },
                         ],
                         "xxs": [
                             {"i": "page-5-card-graph-scatter-3D", "x": 0, "y": 0, "w": 2, "h": 10},
-                            {"i": "page-5-card-graph-barplot", "x": 0, "y": 10, "w": 2, "h": 10},
+                            {
+                                "i": "page-5-card-graph-barplot-lipids",
+                                "x": 0,
+                                "y": 10,
+                                "w": 2,
+                                "h": 10,
+                            },
+                            {
+                                "i": "page-5-card-graph-barplot-genes",
+                                "x": 0,
+                                "y": 20,
+                                "w": 2,
+                                "h": 10,
+                            },
                             {
                                 "i": "page-5-card-graph-heatmap-lipid",
                                 "x": 0,
-                                "y": 20,
+                                "y": 30,
                                 "w": 2,
                                 "h": 10,
                             },
@@ -193,14 +271,14 @@ def return_layout(basic_config, slice_index, brain):
                                 "background-color": "#1d1c1f",
                             },
                             className="p-0 m-0",
-                            id="page-5-card-graph-barplot",
+                            id="page-5-card-graph-barplot-lipids",
                             children=[
                                 dbc.CardBody(
                                     style={"background-color": "#1d1c1f"},
                                     className="p-0 m-0",
                                     children=[
                                         dcc.Graph(
-                                            id="page-5-graph-barplot",
+                                            id="page-5-graph-barplot-lipids",
                                             config=basic_config,
                                             className="d-none",
                                             style={
@@ -226,7 +304,7 @@ def return_layout(basic_config, slice_index, brain):
                                                 ),
                                                 dmc.Button(
                                                     children="Download barplot",
-                                                    id="page-5-download-barplot",
+                                                    id="page-5-download-barplot-lipids",
                                                     disabled=False,
                                                     variant="filled",
                                                     radius="md",
@@ -240,6 +318,66 @@ def return_layout(basic_config, slice_index, brain):
                                                 "position": "absolute",
                                                 "top": "15%",
                                                 "right": "25%",
+                                            },
+                                        ),
+                                    ],
+                                ),
+                            ],
+                        ),
+                        dbc.Card(
+                            style={
+                                "width": "100%",
+                                "height": "100%",
+                                "background-color": "#1d1c1f",
+                            },
+                            className="p-0 m-0",
+                            id="page-5-card-graph-barplot-genes",
+                            children=[
+                                dbc.CardBody(
+                                    style={"background-color": "#1d1c1f"},
+                                    className="p-0 m-0",
+                                    children=[
+                                        dcc.Graph(
+                                            id="page-5-graph-barplot-genes",
+                                            config=basic_config,
+                                            className="d-none",
+                                            style={
+                                                "background-color": "#1d1c1f",
+                                            },
+                                        ),
+                                        dmc.Group(
+                                            direction="row",
+                                            align="flex-start",
+                                            position="left",
+                                            spacing="xs",
+                                            children=[
+                                                dmc.Button(
+                                                    children="Display average data",
+                                                    id="page-5-display-avg-data-bis",
+                                                    disabled=False,
+                                                    variant="filled",
+                                                    radius="md",
+                                                    size="xs",
+                                                    color="cyan",
+                                                    compact=False,
+                                                    loading=False,
+                                                ),
+                                                dmc.Button(
+                                                    children="Download barplot",
+                                                    id="page-5-download-barplot-genes",
+                                                    disabled=False,
+                                                    variant="filled",
+                                                    radius="md",
+                                                    size="xs",
+                                                    color="cyan",
+                                                    compact=False,
+                                                    loading=False,
+                                                ),
+                                            ],
+                                            style={
+                                                "position": "absolute",
+                                                "top": "10%",
+                                                "right": "20%",
                                             },
                                         ),
                                     ],
@@ -523,8 +661,10 @@ def return_layout(basic_config, slice_index, brain):
 
 
 @app.callback(
-    Output("page-5-graph-barplot", "figure"),
-    Output("page-5-graph-barplot", "className"),
+    Output("page-5-graph-barplot-lipids", "figure"),
+    Output("page-5-graph-barplot-genes", "figure"),
+    Output("page-5-graph-barplot-lipids", "className"),
+    Output("page-5-graph-barplot-genes", "className"),
     Output("page-5-dropdown-lipid", "value"),
     Output("page-5-dropdown-red", "value"),
     Output("page-5-dropdown-green", "value"),
@@ -532,10 +672,11 @@ def return_layout(basic_config, slice_index, brain):
     Input("page-5-graph-scatter-3D", "clickData"),
     Input("main-brain", "value"),
     Input("page-5-display-avg-data", "n_clicks"),
+    Input("page-5-display-avg-data-bis", "n_clicks"),
     prevent_initial_call=False,
 )
-def page_5_update_barplot(clickData, brain, clicked):
-    """This callback updates the barplot with the data from the selected spot."""
+def page_5_update_barplots(clickData, brain, clicked, clicked_bis):
+    """This callback updates the barplots with the data from the selected spot."""
 
     # Find out which input triggered the function
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
@@ -546,20 +687,38 @@ def page_5_update_barplot(clickData, brain, clicked):
             if "points" in clickData:
                 if len(clickData["points"]) > 0:
                     idx_dot = clickData["points"][0]["pointNumber"]
-                    (fig, l_genes, l_lipids,) = (
-                        figures.compute_barplot(brain_1=True, idx_dot=idx_dot)
+                    (fig_lipids, fig_genes, l_genes, l_lipids,) = (
+                        figures.compute_barplots_enrichment(brain_1=True, idx_dot=idx_dot)
                         if brain == "brain_1"
-                        else figures.compute_barplot(brain_1=False, idx_dot=idx_dot)
+                        else figures.compute_barplots_enrichment(brain_1=False, idx_dot=idx_dot)
                     )
-                    return fig, "w-100 h-100", l_lipids[0], l_genes[0], l_genes[1], l_genes[2]
+                    return (
+                        fig_lipids,
+                        fig_genes,
+                        "w-100 h-100",
+                        "w-100 h-100",
+                        l_lipids[0],
+                        l_genes[0],
+                        l_genes[1],
+                        l_genes[2],
+                    )
 
     elif brain is not None:
-        (fig, l_genes, l_lipids,) = (
-            figures.compute_barplot(brain_1=True, idx_dot=None)
+        (fig_lipids, fig_genes, l_genes, l_lipids,) = (
+            figures.compute_barplots_enrichment(brain_1=True, idx_dot=None)
             if brain == "brain_1"
-            else figures.compute_barplot(brain_1=False, idx_dot=None)
+            else figures.compute_barplots_enrichment(brain_1=False, idx_dot=None)
         )
-    return fig, "w-100 h-100", l_lipids[0], l_genes[0], l_genes[1], l_genes[2]
+    return (
+        fig_lipids,
+        fig_genes,
+        "w-100 h-100",
+        "w-100 h-100",
+        l_lipids[0],
+        l_genes[0],
+        l_genes[1],
+        l_genes[2],
+    )
 
 
 @app.long_callback(
@@ -711,16 +870,34 @@ clientside_callback(
     """
     function(n_clicks){
         if(n_clicks > 0){
-            domtoimage.toBlob(document.getElementById('page-5-graph-barplot'))
+            domtoimage.toBlob(document.getElementById('page-5-graph-barplot-lipids'))
                 .then(function (blob) {
-                    window.saveAs(blob, 'barplot.png');
+                    window.saveAs(blob, 'barplot_lipids.png');
                 }
             );
         }
     }
     """,
-    Output("page-5-download-barplot", "n_clicks"),
-    Input("page-5-download-barplot", "n_clicks"),
+    Output("page-5-download-barplot-lipids", "n_clicks"),
+    Input("page-5-download-barplot-lipids", "n_clicks"),
+)
+"""This clientside callback is used to download the lipid expression barplot."""
+
+
+clientside_callback(
+    """
+    function(n_clicks){
+        if(n_clicks > 0){
+            domtoimage.toBlob(document.getElementById('page-5-graph-barplot-genes'))
+                .then(function (blob) {
+                    window.saveAs(blob, 'barplot_genes.png');
+                }
+            );
+        }
+    }
+    """,
+    Output("page-5-download-barplot-genes", "n_clicks"),
+    Input("page-5-download-barplot-genes", "n_clicks"),
 )
 """This clientside callback is used to download the elastic net barplot."""
 

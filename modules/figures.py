@@ -111,8 +111,9 @@ class Figures:
             regions.
         compute_scatter_3D(): cmputes a figure representing, in a 3D scatter plot, the spots
             acquired using spatial scRNAseq experiments.
-        compute_barplot(): Computes a figure representing, in a barplot, the spots acquired
-            using spatial scRNAseq experiments.
+        compute_barplots_enrichment(): Computes two figures representing, in barplots, the lipid
+            expression in the spots acquired using spatial scRNAseq experiments, as well as how it
+            can be explained by an elastic net regression using gene expression as explaing factors.
         compute_heatmap_lipid_genes(): Computes a heatmap representing the expression of a
         given lipid in the MALDI data and the expressions of the selected genes.
         shelve_arrays_basic_figures(): Shelves in the database all the arrays of basic images
@@ -2299,18 +2300,22 @@ class Figures:
 
         return fig
 
-    def compute_barplot(self, brain_1=False, idx_dot=None):
-        """This functions computes a figure representing, in a barplot, the spots acquired
-        using spatial scRNAseq experiments.
+    # ! Check for stored values of old version of compute_barplot
+
+    def compute_barplots_enrichment(self, brain_1=False, idx_dot=None):
+        """This functions computes two figures representing, in barplots, the lipid expression in
+        the spots acquired using spatial scRNAseq experiments, as well as how it can be explained by
+        an elastic net regression using gene expression as explaing factors.
 
         Args:
             brain_1 (bool, optional): If True, the barplot will be displayed with the regression coefficients
                 computed from for the first brain.
 
         Returns:
-            Plotly.Figure, list(str), list(str): A Plotly Figure containing a go.Bar object
-                representing the elastic net regression coefficients for each lipid (bar), and the
-                corresponding names of the genes and lipids represented.
+            Plotly.Figure, Plotly.Figure, list(str), list(str): Two Plotly Figures containing each a
+                go.Bar object representing the standardized lipid expression in the scRNAseq spots,
+                and the elastic net regression coefficients for each lipid (bar). The two lists
+                contain the corresponding names of the genes and lipids represented.
         """
 
         logging.info("Starting computing barplot for scRNAseq experiments" + logmem())
@@ -2328,57 +2333,56 @@ class Figures:
             expression = self._scRNAseq.array_exp_lipids_brain_2
             l_score = self._scRNAseq.l_score_brain_2
 
+        # Turn expression into enrichment score
+        expression = (expression - np.mean(expression, axis=0)) / np.std(expression, axis=0)
+
         # Take the average expression across all spots, or the expression in the selected spot
         if idx_dot is None:
             expression = np.mean(expression, axis=0)
         else:
             expression = expression[idx_dot, :]
 
-        # Sort lipids by expression
-        expression = expression / np.max(expression)
+        # Sort lipids by enrichment
         index_sorted = np.argsort(expression)[::-1]
         expression = expression[index_sorted]
+
+        # Get arrays for plotting
         x = np.array(x)[index_sorted]
         y = y[index_sorted, :]
         l_score = np.array(l_score)[index_sorted]
 
-        # Limit to the 24 most expressed genes,
+        # Limit to the 24 most expressed genes (in the most enriched lipid),
         # for only 24 colors are sharply distinguishable by naked eye
         index_sorted = np.argsort(y[0, :])[::-1]
         y = y[:, index_sorted[:24]]
         names = np.array(names)[index_sorted[:24]]
 
-        # Normalize by lipid expression
-        y = (y.T / np.sum(abs(y), axis=1) * expression).T
+        # Normalize to 1
+        # y = (y.T / np.sum(abs(y), axis=1) * expression).T
+        y = (y.T / np.sum(abs(y), axis=1)).T
 
         # Incorporate score in the mix
-        y = np.vstack((y.T * l_score, (1 - l_score) * expression * np.ones((len(y),)))).T
+        # y = np.vstack((y.T * l_score, (1 - l_score) * expression * np.ones((len(y),)))).T
+        y = np.vstack((y.T * l_score, (1 - l_score) * 1.0 * np.ones((len(y),)))).T
         names = np.append(names, "Unexplained")
 
         # Limit to 40 lipids for clarity
         x = x[:40]
         y = y[:40, :]
+        expression = expression[:40]
 
         # Plot figure
-        fig = go.Figure()
-        for idx, (y_gene, name) in enumerate(zip(y.T, names)):
-            fig.add_trace(
-                go.Bar(
-                    x=x,
-                    y=y_gene,
-                    name=name,
-                    marker_color=px.colors.qualitative.Dark24[idx] if idx <= 23 else "grey",
-                    hovertext=[
-                        "{:.2f}".format(y[idx_lipid, idx] / np.sum(y[idx_lipid, :]) * 100)
-                        + "% explained"
-                        for idx_lipid in range(len(y))
-                    ],
-                )
+        fig_lipids = go.Figure()
+        fig_lipids.add_trace(
+            go.Bar(
+                x=x,
+                y=expression,
             )
+        )
 
         # Hide background
-        fig.update_layout(
-            title_text="Lipid expression variance explained by gene expression",
+        fig_lipids.update_layout(
+            title_text="Lipid expression enrichment in selected spot (z-score)",
             title_x=0.5,
             barmode="relative",
             # margin=dict(t=0, r=0, b=0, l=0),
@@ -2390,11 +2394,50 @@ class Figures:
         )
 
         # Set background color to zero
-        fig.layout.template = "plotly_dark"
-        fig.layout.plot_bgcolor = "rgba(0,0,0,0)"
-        fig.layout.paper_bgcolor = "rgba(0,0,0,0)"
+        fig_lipids.layout.template = "plotly_dark"
+        fig_lipids.layout.plot_bgcolor = "rgba(0,0,0,0)"
+        fig_lipids.layout.paper_bgcolor = "rgba(0,0,0,0)"
 
-        return fig, names, x
+        # Plot figure
+        fig_genes = go.Figure()
+        for idx, (y_gene, name) in enumerate(zip(y.T, names)):
+            fig_genes.add_trace(
+                go.Bar(
+                    x=x,
+                    y=abs(y_gene),
+                    name=name,
+                    marker_pattern_shape=["+" if t > 0 else "-" for t in y_gene],  # Doesn't work...
+                    marker_color=px.colors.qualitative.Dark24[idx] if idx <= 23 else "grey",
+                    hovertext=[
+                        "{:.2f}".format(y[idx_lipid, idx] / np.sum(abs(y[idx_lipid, :])) * 1.0)
+                        + " (Fraction of (absolute) total elastic net coefficients)"
+                        for idx_lipid in range(len(y))
+                    ],
+                )
+            )
+
+        # Hide background
+        fig_genes.update_layout(
+            title_text=(
+                "Elastic net coefficients, representing how lipid is explained by the corresponding"
+                " gene"
+            ),
+            title_x=0.5,
+            barmode="relative",
+            # margin=dict(t=0, r=0, b=0, l=0),
+            scene=dict(
+                xaxis=dict(backgroundcolor="rgba(0,0,0,0)"),
+                yaxis=dict(backgroundcolor="rgba(0,0,0,0)"),
+                zaxis=dict(backgroundcolor="rgba(0,0,0,0)"),
+            ),
+        )
+
+        # Set background color to zero
+        fig_genes.layout.template = "plotly_dark"
+        fig_genes.layout.plot_bgcolor = "rgba(0,0,0,0)"
+        fig_genes.layout.paper_bgcolor = "rgba(0,0,0,0)"
+
+        return fig_lipids, fig_genes, names, x
 
     def compute_heatmap_lipid_genes(
         self,
