@@ -14,7 +14,6 @@ from dash.dependencies import Input, Output, State
 from documentation.documentation import return_documentation
 from app import app
 import visdcc
-from dash_extensions import Lottie
 
 # ==================================================================================================
 # --- Layout
@@ -34,13 +33,30 @@ layout = (
         },
         children=[
             dmc.Center(
-                dmc.Alert(
-                    "A connection of at least 10Mbps is recommended to comfortably use the"
-                    " application. This app is not recommended for use on a mobile device.",
-                    title="Information",
-                    color="cyan",
+                dmc.Group(
+                    direction="column",
+                    align="stretch",
                     class_name="mt-4",
-                )
+                    children=[
+                        dmc.Alert(
+                            "A connection of at least 10Mbps is recommended to comfortably use the"
+                            " application.",
+                            title="Information",
+                            color="cyan",
+                        ),
+                        dmc.Alert(
+                            "This app is not recommended for use on a mobile device.",
+                            title="Information",
+                            color="cyan",
+                        ),
+                        dmc.Alert(
+                            "Performance tends to be reduced on Safari, consider switching to"
+                            " another browser if encountering issues.",
+                            title="Information",
+                            color="cyan",
+                        ),
+                    ],
+                ),
             ),
             dmc.Center(
                 class_name="w-100",

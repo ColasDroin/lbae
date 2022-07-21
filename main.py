@@ -11,6 +11,9 @@ The app will then run on http://cajal.epfl.ch:8050/
 To kill gunicorn from a linux server (if it doesn't want to die, and respawn automatically), use the
 following command: 
 pkill -P1 gunicorn
+
+For a faster app, please install orjson with pip before launching the app:
+pip install orjson
 """
 
 # ==================================================================================================
@@ -72,6 +75,6 @@ server = app.server
 if __name__ == "__main__":
     logging.info("Starting app" + logmem())
     try:
-        app.run_server(port=8077, debug=False)
+        app.run(port=8077, debug=False)
     except Exception as e:
         print(e)
