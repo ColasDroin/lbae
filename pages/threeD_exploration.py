@@ -660,7 +660,7 @@ def page_4_click(clickData, region_1_id, region_2_id, region_3_id):
     State("page-4-dropdown-lipid-structures", "value"),
     Input("page-4-dropdown-lipid-cations", "value"),
 )
-def page_4_click(header_1, header_2, header_3, name, structure, cation):
+def page_4_click_lipid(header_1, header_2, header_3, name, structure, cation):
     """This callback is used to update the label of the add lipid button, depending on the number of
     lipids already selected."""
 
@@ -818,7 +818,7 @@ def page_4_add_toast_region_selection(
 
 
 # Function to plot page-4-graph-volume when its state get updated
-@app.long_callback(
+@app.callback(
     output=Output("page-4-graph-volume", "figure"),
     inputs=[
         State("page-4-selected-lipid-1", "data"),
@@ -848,6 +848,7 @@ def page_4_add_toast_region_selection(
         Output("page-4-progress-bar-volume", "label"),
     ],
     prevent_initial_call=True,
+    background = False,
     cache_args_to_ignore=[0, 1, 2, 3, 7, 8],
 )
 def page_4_plot_graph_volume(
@@ -869,6 +870,17 @@ def page_4_plot_graph_volume(
     """This callback is used to plot the volume graph of expression of the selected lipid(s) in the
     selected structure(s), when clicking on the corresponding button."""
 
+
+    print('ICI', set_progress, l_lipid_1_index, l_lipid_2_index, l_lipid_3_index, n_clicks_button_display,name_lipid_1,
+    name_lipid_2,
+    name_lipid_3,
+    l_selected_regions,
+    name_region_1,
+    name_region_2,
+    name_region_3,
+    is_open_modal,
+    brain,)
+    
     set_progress((0, "Inspecting dataset..."))
 
     # Find out which input triggered the function
@@ -948,7 +960,7 @@ def page_4_plot_graph_volume(
 
     return dash.no_update
 
-
+# ! Fix this long callback when possible
 @app.long_callback(
     output=Output("page-4-graph-heatmap", "figure"),
     inputs=[

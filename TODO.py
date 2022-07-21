@@ -1,6 +1,8 @@
 ##### Current TODOs #####
 # TODO Do quality control and debug, especially when several users are on the app in parallel
-# TODO Relative enrichment for lipid
+# TODO Fix long callbacks
+# TODO Implement new features from Dash 1.4 and 1.5 and 1.6
+# TODO Correlate cell type atlas with lipid atlas 
 
 ##### Finalization process #####
 # TODO Check that all force_update are set to False

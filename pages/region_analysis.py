@@ -1024,7 +1024,7 @@ def page_3_plot_heatmap(
                         # Convert image to string to save space (new image as each mask must have a
                         # different color)
                         base64_string = convert_image_to_base64(
-                            array_image, optimize=True, format="gif", type="RGBA"
+                            array_image, optimize=True, format="webp", type="RGBA"
                         )
                         fig.add_trace(
                             go.Image(visible=True, source=base64_string, hoverinfo="skip")

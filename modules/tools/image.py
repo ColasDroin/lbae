@@ -126,7 +126,7 @@ def convert_image_to_base64(
         if format == "webp":
             logging.info("Webp mode selected, binary or paletted modes are not supported")
             pil_img.save(
-                stream, format=format, optimize=optimize, quality=quality, method=6, lossless=False
+                stream, format=format, optimize=optimize, quality=quality, method=3, lossless=False
             )
 
         elif format == "gif":

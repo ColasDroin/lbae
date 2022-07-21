@@ -720,6 +720,7 @@ def page_5_update_barplots(clickData, brain, clicked, clicked_bis):
         l_genes[2],
     )
 
+# ! Fix this long callback when possible
 
 @app.long_callback(
     output=Output("page-5-graph-heatmap-lipid", "figure"),
