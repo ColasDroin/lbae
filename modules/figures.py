@@ -1800,8 +1800,8 @@ class Figures:
             name_lipid_2 (str, optional): Name of the second selected lipid. Defaults to "".
             name_lipid_3 (str, optional): Name of the third selected lipid. Defaults to "".
             set_id_regions (set(int), optional): A set containing the identifiers of the brain
-                regions (at the very bottom of the hierarchy) whose border must be annotated.
-                Defaults to None, corresponding to the whole brain.
+                regions (at the very bottom of the hierarchy) in which lipid expression is 
+                requested. Defaults to None, corresponding to the whole brain.
             decrease_dimensionality_factor (int): An integer used for subsampling the array of
                 annotation, and therefore the resulting figure. The higher, the higher the
                 subsampling. Needed as this is a very heavy plot. Defaults to 6.
