@@ -6,3 +6,4 @@ notebooks/data_processing/data/
 nohup.out
 notebooks/scRNAseq/data/
 notebooks/scRNAseq/temp/
+notebooks/scRNAseq/output/

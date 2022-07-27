@@ -110,7 +110,7 @@ def fill_array_borders(
     -2 is outside brain or selected structures
     -0.1 is border if differentiate_borders is True
     -0.01 is inside brain/structure
-    -0.2 is near border is color_near_borders is True
+    0.2 is near border if color_near_borders is True
     NB: the -0.01 values get changed after assignment to lipid expression, later on in
     fill_array_interpolation.
 
