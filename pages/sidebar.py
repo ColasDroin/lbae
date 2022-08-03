@@ -139,7 +139,7 @@ layout = html.Div(
                         ),
                         dbc.Tooltip(
                             children="Compare with scRNAseq data",
-                            target="sidebar-page-4",
+                            target="sidebar-page-5",
                             placement="right",
                         ),
                         # Link to documentation
