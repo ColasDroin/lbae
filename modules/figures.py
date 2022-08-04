@@ -84,7 +84,7 @@ class Figures:
         compute_rgb_array_per_lipid_selection(): Computes a numpy RGB array of expression of the
             requested lipids in the requested slice.
         compute_rgb_image_per_lipid_selection(): Similar to compute_heatmap_per_lipid_selection, but
-            computes a RGB image instead of a heatmap.
+            computes an RGB image instead of a heatmap.
         compute_spectrum_low_res(): Returns the full (low-resolution) spectrum of the requested
             slice.
         compute_spectrum_high_res(): Returns the full (high-resolution) spectrum of the requested

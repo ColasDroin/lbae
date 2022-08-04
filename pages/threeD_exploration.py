@@ -686,7 +686,7 @@ def page_4_click_lipid(header_1, header_2, header_3, name, structure, cation):
     if header_1 != "" and header_2 != "" and header_3 != "":
         return "Delete some lipids to select new ones", True
 
-    # By defaults, command to select new lipids
+    # By default, command to select new lipids
     return "Please choose a lipid above", True
 
 

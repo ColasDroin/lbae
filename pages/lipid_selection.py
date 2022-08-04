@@ -578,7 +578,7 @@ def page_2_plot_graph_heatmap_mz_selection(
                     "Current input: " + "Lipid selection colormap",
                 )
 
-            # Or if the current plot must be a RGB image
+            # Or if the current plot must be an RGB image
             elif (
                 id_input == "page-2-rgb-button"
                 or (
@@ -601,7 +601,7 @@ def page_2_plot_graph_heatmap_mz_selection(
                     "Current input: " + "Lipid selection RGB",
                 )
 
-            # Plot RBG by defaults
+            # Plot RBG By default
             else:
                 logging.info("Right before calling the graphing function")
                 return (

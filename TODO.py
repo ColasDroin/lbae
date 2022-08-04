@@ -1,6 +1,9 @@
 ##### Current TODOs #####
 # TODO Do quality control and debug, especially when several users are on the app in parallel
+# TODO Update README when scRNAseq page is up to date
 # TODO Fix long callbacks
+# TODO Big lipid selection 3D when changing brain
+# TODO Solve bug masks lower left part of screen
 # TODO Implement new features from Dash 1.4 and 1.5 and 1.6
 # TODO Correlate cell type atlas with lipid atlas 
 

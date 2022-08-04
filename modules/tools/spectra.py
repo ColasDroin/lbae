@@ -520,7 +520,7 @@ def compute_normalized_image_per_lipid(
     computes an image containing the cumulated intensity of the spectra between low_bound and
     high_bound, for each pixel. In addition, it adds a step of normalization, such that the output
     is more visually pleasing and comparable across selections. The output can also be provided in
-    8 bits, that is, the format of a single channel in a RGB image.
+    8 bits, that is, the format of a single channel in an RGB image.
 
     Args:
         low_bound (float): Lower m/z value for the annotation.
