@@ -28,7 +28,6 @@ from app import app, data, figures, storage, atlas, cache_flask
 
 
 def return_layout(basic_config, slice_index):
-
     page = html.Div(
         # This style is needed for keeping background color when reducing image size
         style={
@@ -79,8 +78,8 @@ def return_layout(basic_config, slice_index):
                         {"i": "page-4-card-lipid-selection", "x": 0, "y": 14, "w": 12, "h": 10},
                     ],
                     "md": [
-                        {"i": "page-4-card-region-selection", "x": 0, "y": 0, "w": 7, "h": 14},
-                        {"i": "page-4-card-lipid-selection", "x": 6, "y": 0, "w": 3, "h": 12},
+                        {"i": "page-4-card-region-selection", "x": 0, "y": 0, "w": 10, "h": 15},
+                        {"i": "page-4-card-lipid-selection", "x": 6, "y": 0, "w": 10, "h": 12},
                     ],
                     "sm": [
                         {"i": "page-4-card-region-selection", "x": 0, "y": 0, "w": 6, "h": 19},
@@ -669,14 +668,12 @@ def page_4_click_lipid(header_1, header_2, header_3, name, structure, cation):
 
     # If at least one headers is free
     if header_1 == "" or header_2 == "" or header_3 == "":
-
         if cation is not None and cation != "":
             # Get lipid name
             lipid_string = name + " " + structure + " " + cation
 
             # Compare to existing headers
             if lipid_string not in [header_1, header_2, header_3]:
-
                 return "Add " + lipid_string + " to selection", False
 
             else:
@@ -740,7 +737,6 @@ def page_4_add_toast_region_selection(
 
     # If a region has been deleted from a toast
     if value_input == "is_open":
-
         # Delete corresponding header and index
         if id_input == "page-4-toast-region-1":
             header_1 = ""
@@ -818,7 +814,7 @@ def page_4_add_toast_region_selection(
 
 
 # Function to plot page-4-graph-volume when its state get updated
-@app.callback(
+@app.long_callback(
     output=Output("page-4-graph-volume", "figure"),
     inputs=[
         State("page-4-selected-lipid-1", "data"),
@@ -848,7 +844,7 @@ def page_4_add_toast_region_selection(
         Output("page-4-progress-bar-volume", "label"),
     ],
     prevent_initial_call=True,
-    background = False,
+    background=True,
     cache_args_to_ignore=[0, 1, 2, 3, 7, 8],
 )
 def page_4_plot_graph_volume(
@@ -870,17 +866,24 @@ def page_4_plot_graph_volume(
     """This callback is used to plot the volume graph of expression of the selected lipid(s) in the
     selected structure(s), when clicking on the corresponding button."""
 
+    print(
+        "ICI",
+        set_progress,
+        l_lipid_1_index,
+        l_lipid_2_index,
+        l_lipid_3_index,
+        n_clicks_button_display,
+        name_lipid_1,
+        name_lipid_2,
+        name_lipid_3,
+        l_selected_regions,
+        name_region_1,
+        name_region_2,
+        name_region_3,
+        is_open_modal,
+        brain,
+    )
 
-    print('ICI', set_progress, l_lipid_1_index, l_lipid_2_index, l_lipid_3_index, n_clicks_button_display,name_lipid_1,
-    name_lipid_2,
-    name_lipid_3,
-    l_selected_regions,
-    name_region_1,
-    name_region_2,
-    name_region_3,
-    is_open_modal,
-    brain,)
-    
     set_progress((0, "Inspecting dataset..."))
 
     # Find out which input triggered the function
@@ -959,6 +962,7 @@ def page_4_plot_graph_volume(
             return dash.no_update
 
     return dash.no_update
+
 
 # ! Fix this long callback when possible
 @app.long_callback(
@@ -1047,11 +1051,7 @@ def page_4_handle_dropdowns(
     id_input = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
     brain_1 = True if brain == "brain_1" else False
     # If the page just loaded or button 'add lipid' has been clicked, or brain dropdown has changed, reset selection
-    if (
-        len(id_input) == 0
-        or id_input == "page-4-add-lipid-button"
-        or id_input == "main-brain"
-    ):
+    if len(id_input) == 0 or id_input == "page-4-add-lipid-button" or id_input == "main-brain":
         options_names = [
             {"label": name, "value": name}
             for name in sorted(
@@ -1167,7 +1167,6 @@ def page_4_add_toast_selection(
 
     # If a lipid has been deleted from a toast
     if value_input == "is_open":
-
         # Delete corresponding header and index
         if id_input == "page-4-toast-lipid-1":
             header_1 = ""
@@ -1201,9 +1200,7 @@ def page_4_add_toast_selection(
 
     # Otherwise, add lipid to selection
     elif cation is not None and id_input == "page-4-add-lipid-button":
-
         for idx_slice_index, slice_index in enumerate(data.get_slice_list(indices=brain)):
-
             # Find lipid location
             l_lipid_loc = (
                 data.get_annotations()
@@ -1276,7 +1273,6 @@ def page_4_add_toast_selection(
             if header != "":
                 name, structure, cation = header.split(" ")
                 for idx_slice_index, slice_index in enumerate(data.get_slice_list(indices=brain)):
-
                     # Find lipid location
                     l_lipid_loc = (
                         data.get_annotations()
@@ -1373,7 +1369,6 @@ def page_4_active_display(
         or (region_1_id != "" and region_3_id != "")
         or (region_2_id != "" and region_3_id != "")
     ):
-
         # If at least one lipid, activate both buttons, else only the clustergram button:
         if np.sum(l_lipid_1_index + l_lipid_2_index + l_lipid_3_index) > -3 * n_slices:
             return False, False
@@ -1382,7 +1377,6 @@ def page_4_active_display(
 
     # If just one structure, deactivate clustergram button
     if region_1_id != "" or region_2_id != "" or region_3_id != "":
-
         # If at least one lipid, activate volume plot button:
         if np.sum(l_lipid_1_index + l_lipid_2_index + l_lipid_3_index) > -3 * n_slices:
             return False, True

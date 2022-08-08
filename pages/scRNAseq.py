@@ -28,7 +28,6 @@ from app import app, data, figures, storage, atlas, cache_flask
 
 
 def return_layout(basic_config, slice_index, brain):
-
     page = (
         html.Div(
             # This style is needed for keeping background color when reducing image size
@@ -120,26 +119,26 @@ def return_layout(basic_config, slice_index, brain):
                             },
                         ],
                         "md": [
-                            {"i": "page-5-card-graph-scatter-3D", "x": 0, "y": 0, "w": 5, "h": 13},
+                            {"i": "page-5-card-graph-scatter-3D", "x": 0, "y": 0, "w": 10, "h": 13},
                             {
                                 "i": "page-5-card-graph-barplot-lipids",
                                 "x": 5,
                                 "y": 0,
-                                "w": 5,
+                                "w": 10,
                                 "h": 13,
                             },
                             {
                                 "i": "page-5-card-graph-barplot-genes",
                                 "x": 0,
                                 "y": 13,
-                                "w": 5,
+                                "w": 10,
                                 "h": 14,
                             },
                             {
                                 "i": "page-5-card-graph-heatmap-lipid",
                                 "x": 5,
                                 "y": 13,
-                                "w": 5,
+                                "w": 10,
                                 "h": 14,
                             },
                         ],
@@ -720,7 +719,9 @@ def page_5_update_barplots(clickData, brain, clicked, clicked_bis):
         l_genes[2],
     )
 
+
 # ! Fix this long callback when possible
+
 
 @app.long_callback(
     output=Output("page-5-graph-heatmap-lipid", "figure"),

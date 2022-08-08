@@ -19,6 +19,8 @@ import dash_mantine_components as dmc
 layout = html.Div(
     className="sidebar",
     children=[
+        # dmc.Group(
+        #    children=[
         # Header with logo
         dbc.Nav(
             className="sidebar-header",
@@ -42,7 +44,7 @@ layout = html.Div(
         ),
         # Navebar to different pages
         dmc.Center(
-            style={"height": "60%"},
+            style={"height": "75%"},
             children=[
                 dbc.Nav(
                     vertical=True,
@@ -59,7 +61,7 @@ layout = html.Div(
                                     style={"margin-left": "0.2em"},
                                 )
                             ],
-                            className="mt-3 mb-2",
+                            className="mt-1 mb-2",
                         ),
                         dbc.Tooltip(
                             children="Choose the slice you want to discover",
@@ -153,7 +155,7 @@ layout = html.Div(
                                     children=[
                                         html.I(
                                             id="sidebar-documentation-inside",
-                                            className="icon-library mb-5 fs-3",
+                                            className="icon-library mb-3 fs-3",
                                             style={"margin-left": "0.5rem"},
                                         )
                                     ],
@@ -165,7 +167,7 @@ layout = html.Div(
                                 ),
                                 html.H4(
                                     id="sidebar-copyright",
-                                    className="icon-cc mb-3 mt-5 fs-2",
+                                    className="icon-cc mb-3 mt-3 fs-2",
                                     style={"color": "#dee2e6", "margin-left": "0.5rem"},
                                 ),
                                 dbc.Tooltip(
@@ -178,6 +180,8 @@ layout = html.Div(
                     ],
                 ),
             ],
+            #    ),
+            # ],
         ),
     ],
 )
