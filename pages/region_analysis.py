@@ -49,7 +49,6 @@ N_LINES = int(np.ceil(HEIGHT_PLOTS / 30))
 
 # Layout of the page
 def return_layout(basic_config, slice_index=1):
-
     page = html.Div(
         style={
             "position": "absolute",
@@ -950,7 +949,6 @@ def page_3_plot_heatmap(
         and cliked_reset is None
         and (l_mask_name is None or len(l_mask_name) == 0)
     ):
-
         fig = storage.return_shelved_object(
             "figures/load_page",
             "figure_basic_image",
@@ -972,10 +970,8 @@ def page_3_plot_heatmap(
 
     # If the user selected a new mask or drew on the plot
     if id_input == "page-3-graph-heatmap-per-sel" or id_input == "page-3-dropdown-brain-regions":
-
         # Check that a mask has actually been selected
         if l_mask_name is not None or relayoutData is not None:
-
             # Rebuild figure
             fig = storage.return_shelved_object(
                 "figures/load_page",
@@ -989,7 +985,6 @@ def page_3_plot_heatmap(
             color_idx = None
             col_next = None
             if l_mask_name is not None:
-
                 # If a mask has been selected
                 if len(l_mask_name) > 0:
                     for idx_mask, mask_name in enumerate(l_mask_name):
@@ -1003,6 +998,10 @@ def page_3_plot_heatmap(
 
                         # Build a list of empty images and add selected lipids for each channel
                         normalized_projected_mask = projected_mask / np.max(projected_mask)
+
+                        # Correct bug with atlas projection
+                        normalized_projected_mask[:, :10] = 0
+
                         if idx_mask < len(l_color_mask):
                             color_rgb = l_color_mask[idx_mask]
                         else:
@@ -1263,7 +1262,6 @@ def page_3_display_switch(clicked_reset, fig_heatmap, relayoutData):
     # Else, display it if more than 1 selection recorded
     if fig_heatmap is not None:
         if len(fig_heatmap["data"]) > 0:
-
             # If more than 1 selection recorded in the heatmap, display switch
             if len(fig_heatmap["data"][0]["x"]) > 1:
                 return "ml-1 d-flex align-items-center justify-content-center"
@@ -1297,7 +1295,6 @@ def page_3_display_alert(clicked_compute, clicked_reset, relayoutData, mask):
 
     # If the button to compute spectra has been clicked, hide the alerts
     elif id_input == "page-3-button-compute-spectra":
-
         # If at least one mask selected
         if mask is not None:
             if mask != []:
@@ -1410,7 +1407,6 @@ def global_spectrum_store(
             l_paths = []
             for shape in relayoutData["shapes"]:
                 if "path" in shape:
-
                     # Get condensed path version of the annotation
                     parsed_path = shape["path"][1:-1].replace("L", ",").split(",")
                     path = [round(float(x)) for x in parsed_path]
@@ -1637,7 +1633,6 @@ def page_3_plot_spectrum(
             )
             ll_idx_labels = global_lipid_index_store(data, slice_index, l_spectra)
             for idx_spectra, (spectrum, l_idx_labels) in enumerate(zip(l_spectra, ll_idx_labels)):
-
                 # Find color of the current spectrum
                 col = config.l_colors[idx_spectra % 4]
 
@@ -1795,7 +1790,6 @@ def page_3_draw_heatmap_per_lipid_selection(
         or id_input == "page-4-slider"
         or id_input == "dcc-store-list-mz-spectra"
     ):
-
         scale_switch = False
         # Load figure
         if l_spectra == "ok":
@@ -1824,7 +1818,6 @@ def page_3_draw_heatmap_per_lipid_selection(
                 ll_avg_intensity = []
                 n_sel = len(l_spectra)
                 for spectrum, l_idx_labels in zip(l_spectra, ll_idx_labels):
-
                     array_intensity_with_lipids = np.array(spectrum, dtype=np.float32)[1, :]
                     array_idx_labels = np.array(l_idx_labels, dtype=np.int32)
 
@@ -1920,7 +1913,6 @@ def page_3_download(n_clicks, fig_mz):
     if fig_mz is not None:
         fig_mz = go.Figure(data=fig_mz)
         if len(fig_mz.data) > 1:
-
             # Excel writer for download
             def to_excel(bytes_io):
                 xlsx_writer = pd.ExcelWriter(bytes_io, engine="xlsxwriter")
