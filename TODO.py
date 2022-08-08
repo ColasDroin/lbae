@@ -1,7 +1,5 @@
 ##### Current TODOs #####
 # TODO Do quality control and debug, especially when several users are on the app in parallel
-# TODO Solve bug masks lower left part of screen
-# TODO Correlate cell type atlas with lipid atlas
 
 ##### Finalization process #####
 # TODO Check that all force_update are set to False
