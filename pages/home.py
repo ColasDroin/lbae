@@ -11,7 +11,7 @@
 from dash import html
 import dash_mantine_components as dmc
 from dash.dependencies import Input, Output, State
-from documentation.documentation import return_documentation
+from in_app_documentation.documentation import return_documentation
 from app import app
 import visdcc
 

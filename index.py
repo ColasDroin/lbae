@@ -29,7 +29,7 @@ from pages import (
     threeD_exploration,
     scRNAseq,
 )
-from documentation.documentation import return_documentation
+from in_app_documentation.documentation import return_documentation
 from config import basic_config
 from modules.tools.misc import logmem
 
@@ -284,7 +284,8 @@ def toggle_collapse(n1, is_open):
     Output("main-paper-slider", "class_name"), Input("url", "pathname"), prevent_initial_call=False
 )
 def hide_slider(pathname):
-    """This callback is used to hide the slider div when the user is on a page that does not need it."""
+    """This callback is used to hide the slider div when the user is on a page that does not need it.
+    """
 
     # Pages in which the slider is displayed
     l_path_with_slider = [

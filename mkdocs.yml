@@ -1,1 +1,13 @@
-site_name: My Docs
+site_name: LBAE technical documentation
+
+theme:
+  name: "material"
+
+plugins:
+  - search
+  - mkdocstrings
+
+nav:
+  - LBAE technical documentation home: index.md
+  - Modules:
+      - coucou test: test/index2.md

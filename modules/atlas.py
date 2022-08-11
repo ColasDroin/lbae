@@ -115,7 +115,7 @@ class Atlas:
         """Initialize the class Atlas.
 
         Args:
-            data (MaldiData): MaldiData object, used to manipulate the raw MALDI data.
+            maldi_data (MaldiData): MaldiData object, used to manipulate the raw MALDI data.
             storage (Storage): Used to access the shelve database.
             resolution (int): Resolution of the atlas. Default to 25.
             sample (bool): If True, only a fraction of the precomputations are made (for debug).
@@ -374,13 +374,11 @@ class Atlas:
 
         # Loop over each structure
         for x, v in self.bg_atlas.structures.items():
-
             # Keep only a very restrained amount of structures if sample data
             if (
                 self.data._sample_data
                 and len(self.bg_atlas.get_structure_ancestors(v["acronym"])) > 1
             ):
-
                 continue
 
             if len(self.bg_atlas.get_structure_ancestors(v["acronym"])) > 0:
@@ -433,7 +431,6 @@ class Atlas:
             compute_function=self.compute_projection_parameters,
         )
         for i in range(array_projection.shape[0]):
-
             # Get transform parameters
             a, u, v = l_transform_parameters[i]
 
@@ -531,7 +528,6 @@ class Atlas:
 
         # Loop over slice, compute image every time
         for slice_index in range(array_projected_simplified_id.shape[0]):
-
             contours = (
                 array_projected_simplified_id[slice_index, 1:, 1:]
                 - array_projected_simplified_id[slice_index, :-1, :-1]
@@ -743,7 +739,6 @@ class Atlas:
             dic_processed_temp = {}
 
         for slice_index in range(self.data.get_slice_number()):
-
             # Break the loop after the first slice if sample is True
             if sample and slice_index > 1:
                 break
@@ -766,7 +761,6 @@ class Atlas:
             n_computed = 0
             for mask_name, id_mask in self.dic_name_acronym.items():
                 if id_mask not in dic_processed_temp[slice_index]:
-
                     # Break the loop after a few computations if sample is True
                     if sample and n_computed > 1:
                         break
