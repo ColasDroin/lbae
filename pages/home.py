@@ -8,12 +8,14 @@
 # ==================================================================================================
 
 # Standard modules
-from dash import html
+import dash
+from dash import html, dcc
 import dash_mantine_components as dmc
 from dash.dependencies import Input, Output, State
 from in_app_documentation.documentation import return_documentation
 from app import app
 import visdcc
+from user_agents import parse
 
 # ==================================================================================================
 # --- Layout
@@ -46,14 +48,18 @@ layout = (
                         ),
                         dmc.Alert(
                             "This app is not recommended for use on a mobile device.",
+                            id="mobile-warning",
                             title="Information",
                             color="cyan",
+                            class_name="d-none",
                         ),
                         dmc.Alert(
                             "Performance tends to be reduced on Safari, consider switching to"
                             " another browser if encountering issues.",
+                            id="safari-warning",
                             title="Information",
                             color="cyan",
+                            class_name="d-none",
                         ),
                     ],
                 ),
@@ -118,6 +124,8 @@ layout = (
                     ),
                 ],
             ),
+            dcc.Store(id="dcc-store-mobile"),
+            dcc.Store(id="dcc-store-browser"),
         ],
     ),
 )
@@ -145,3 +153,32 @@ def display_rotating_brain(x):
     with open("js/rotating-brain.js") as f:
         js = f.read()
     return js
+
+
+app.clientside_callback(
+    """
+    function(trigger) {
+        browserInfo = navigator.userAgent;
+        return browserInfo
+    }
+    """,
+    Output("dcc-store-browser", "data"),
+    Input("dcc-store-browser", "data"),
+)
+
+
+@app.callback(
+    Output("safari-warning", "class_name"),
+    Output("mobile-warning", "class_name"),
+    Input("dcc-store-browser", "data"),
+)
+def update(JSoutput):
+    user_agent = parse(JSoutput)
+    safari_class = ""
+    mobile_class = ""
+    if not "Safari" in user_agent.browser.family:
+        safari_class = "d-none"
+    if user_agent.is_mobile is False:
+        mobile_class = "d-none"
+
+    return safari_class, mobile_class
