@@ -28,13 +28,13 @@ def merge_md(write_doc=False):
     order_final_md = ["_overview", "_data", "_alignment", "_usage", "_about", "_further"]
     final_md = "# Lipid Brain Atlas Explorer documentation \n\n"
     for filename in order_final_md:
-        for file in os.listdir(os.path.join(os.getcwd(), "documentation")):
+        for file in os.listdir(os.path.join(os.getcwd(), "in_app_documentation")):
             if file.endswith(".md") and filename in file:
-                with open(os.path.join(os.getcwd(), "documentation", file), "r") as f:
+                with open(os.path.join(os.getcwd(), "in_app_documentation", file), "r") as f:
                     final_md += f.read() + "\n"
                 break
     if write_doc:
-        with open(os.path.join(os.getcwd(), "documentation", "documentation.md"), "w") as f:
+        with open(os.path.join(os.getcwd(), "in_app_documentation", "documentation.md"), "w") as f:
             f.write(final_md)
 
     return final_md
@@ -47,7 +47,7 @@ def load_md():
     Returns:
         str: A string representing the documentation of the app written in markdown.
     """
-    with open(os.path.join(os.getcwd(), "documentation", "documentation.md"), "r") as f:
+    with open(os.path.join(os.getcwd(), "in_app_documentation", "documentation.md"), "r") as f:
         md = f.read()
     return md
 

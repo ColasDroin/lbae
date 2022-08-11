@@ -30,7 +30,7 @@ def write_readme():
     final_md += """<p align="center"><img src="readme/brain.gif" alt="animated" /></p>"""
     final_md += "\n\n"
     for filename in order_final_md:
-        for file in list(os.listdir(os.path.join(os.getcwd(), "documentation"))) + list(
+        for file in list(os.listdir(os.path.join(os.getcwd(), "in_app_documentation"))) + list(
             os.listdir(os.path.join(os.getcwd(), "readme"))
         ):
             if file.endswith("_readme.md") and filename in file:
@@ -38,7 +38,7 @@ def write_readme():
                     final_md += f.read() + "\n"
                 break
             elif file.endswith(".md") and filename in file:
-                with open(os.path.join(os.getcwd(), "documentation", file), "r") as f:
+                with open(os.path.join(os.getcwd(), "in_app_documentation", file), "r") as f:
                     current_paragraph = f.read()
                     if "ressources" in current_paragraph:
                         current_paragraph = current_paragraph.replace(
