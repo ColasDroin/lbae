@@ -147,7 +147,7 @@ def toggle_collapse(n, is_open):
     return is_open
 
 
-@app.callback(Output("javascript", "run"), [Input("main-slider", "data")])
+@app.long_callback(output=Output("javascript", "run"), inputs=[Input("main-slider", "data")])
 def display_rotating_brain(x):
     """This callback loads some javascript code to display the rotating brain."""
     with open("js/rotating-brain.js") as f:

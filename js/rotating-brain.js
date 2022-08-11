@@ -28,7 +28,7 @@ Plotly.plot(
   {
     scene: {
       camera: {
-        eye: { x: 1.1, y: 1.1, z: 0.2 },
+        eye: { x: 0, y: 1.1 * 1.3, z: 0.2 * 1.3 },
       },
       dragmode: false,
       xaxis: {
@@ -74,7 +74,7 @@ Plotly.plot(
       pad: 0,
     },
   },
-  { displayModeBar: false, responsive: true, scrollZoom: false }
+  { displayModeBar: true, responsive: true, scrollZoom: false }
 );
 
 // Remove skeleton

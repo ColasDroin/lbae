@@ -2,6 +2,8 @@ site_name: LBAE technical documentation
 
 theme:
   name: "material"
+  palette:
+    scheme: slate
 
 plugins:
   - search
@@ -11,3 +13,5 @@ nav:
   - LBAE technical documentation home: index.md
   - Modules:
       - coucou test: test/index2.md
+# Run with 'mkdocs serve'
+# Build with 'mkdocs build'
