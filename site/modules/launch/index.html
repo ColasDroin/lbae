@@ -1,0 +1,2758 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.3.9">
+    
+    
+      
+        <title>launch - LBAE technical documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.1d29e8d0.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.cbb835fc.min.css">
+        
+      
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#modules.launch" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="LBAE technical documentation" class="md-header__button md-logo" aria-label="LBAE technical documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            LBAE technical documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              launch
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="LBAE technical documentation" class="md-nav__button md-logo" aria-label="LBAE technical documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    LBAE technical documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        Welcome page
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../main/" class="md-nav__link">
+        main
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../app/" class="md-nav__link">
+        app
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../index_py/" class="md-nav__link">
+        index
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5">
+          Modules
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Modules" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Modules
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../atlas_labels/" class="md-nav__link">
+        atlas_labels
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../atlas/" class="md-nav__link">
+        atlas
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../figures/" class="md-nav__link">
+        figures
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          launch
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        launch
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#modules.launch" class="md-nav__link">
+    modules.launch
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#modules.launch.Launch" class="md-nav__link">
+    Launch
+  </a>
+  
+    <nav class="md-nav" aria-label="Launch">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#modules.launch.Launch.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modules.launch.Launch.check_missing_db_entries" class="md-nav__link">
+    check_missing_db_entries()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modules.launch.Launch.compute_and_fill_entries" class="md-nav__link">
+    compute_and_fill_entries()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modules.launch.Launch.launch" class="md-nav__link">
+    launch()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modules.launch.Launch.run_compiled_functions" class="md-nav__link">
+    run_compiled_functions()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../maldi_data/" class="md-nav__link">
+        maldi_data
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../scRNAseq/" class="md-nav__link">
+        scRNAseq
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../storage/" class="md-nav__link">
+        storage
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_8" type="checkbox" id="__nav_5_8" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5_8">
+          Tools
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Tools" data-md-level="2">
+        <label class="md-nav__title" for="__nav_5_8">
+          <span class="md-nav__icon md-icon"></span>
+          Tools
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tools/atlas/" class="md-nav__link">
+        Atlas
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tools/image/" class="md-nav__link">
+        Image
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tools/lookup_tables/" class="md-nav__link">
+        Lookup tables
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tools/maldi_conversion/" class="md-nav__link">
+        Maldi conversion
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tools/misc/" class="md-nav__link">
+        Misc
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tools/spectra/" class="md-nav__link">
+        Spectra
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tools/volume/" class="md-nav__link">
+        Volume
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6">
+          Pages
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Pages" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Pages
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pages/home/" class="md-nav__link">
+        home
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pages/sidebar/" class="md-nav__link">
+        sidebar
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pages/load_slice/" class="md-nav__link">
+        load_slice
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pages/lipid_selection/" class="md-nav__link">
+        lipid_selection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pages/region_analysis/" class="md-nav__link">
+        region_analysis
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pages/threeD_exploration/" class="md-nav__link">
+        threeD_exploration
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pages/scRNAseq/" class="md-nav__link">
+        scRNAseq
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#modules.launch" class="md-nav__link">
+    modules.launch
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#modules.launch.Launch" class="md-nav__link">
+    Launch
+  </a>
+  
+    <nav class="md-nav" aria-label="Launch">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#modules.launch.Launch.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modules.launch.Launch.check_missing_db_entries" class="md-nav__link">
+    check_missing_db_entries()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modules.launch.Launch.compute_and_fill_entries" class="md-nav__link">
+    compute_and_fill_entries()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modules.launch.Launch.launch" class="md-nav__link">
+    launch()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modules.launch.Launch.run_compiled_functions" class="md-nav__link">
+    run_compiled_functions()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+
+  <h1>launch</h1>
+
+<div class="doc doc-object doc-module">
+
+
+<a id="modules.launch"></a>
+  <div class="doc doc-contents first">
+  
+      <p>This class contains functions used to do check and run all precomputation at first app 
+launch.</p>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="modules.launch.Launch" class="doc doc-heading">
+        <code>Launch</code>
+
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+
+  
+      <p>Class used to precompute and shelve objects at app launch.</p>
+
+  <p><strong>Attributes:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>data</code></td>
+          <td>
+                <code>MaldiData</code>
+          </td>
+          <td><p>Used to manipulate the raw MALDI data.</p></td>
+        </tr>
+        <tr>
+          <td><code>atlas</code></td>
+          <td>
+                <code>Atlas</code>
+          </td>
+          <td><p>Used to manipulate the objects coming from the Allen Brain Atlas.</p></td>
+        </tr>
+        <tr>
+          <td><code>figures</code></td>
+          <td>
+                <code>Figures</code>
+          </td>
+          <td><p>Used to build the figures of the app.</p></td>
+        </tr>
+        <tr>
+          <td><code>storage</code></td>
+          <td>
+                <code>Storage</code>
+          </td>
+          <td><p>Used to access the shelve database.</p></td>
+        </tr>
+        <tr>
+          <td><code>l_atlas_objects_at_init</code></td>
+          <td>
+                <code>list</code>
+          </td>
+          <td><p>List of atlas objects normally computed at app startup
+if not already in shelve database.</p></td>
+        </tr>
+        <tr>
+          <td><code>l_figures_objects_at_init</code></td>
+          <td>
+                <code>list</code>
+          </td>
+          <td><p>List of figures objects normally computed at app
+startup if not already in shelve database.</p></td>
+        </tr>
+        <tr>
+          <td><code>l_other_objects_to_compute</code></td>
+          <td>
+                <code>list</code>
+          </td>
+          <td><p>List of other objects which must be computed to
+prevent slowing down the app during normal use.</p></td>
+        </tr>
+        <tr>
+          <td><code>l_db_entries</code></td>
+          <td>
+                <code>list</code>
+          </td>
+          <td><p>List of all entries in the shelve database (i.e. concatenation of the
+3 previous lists).</p></td>
+        </tr>
+        <tr>
+          <td><code>l_entries_to_ignore</code></td>
+          <td>
+                <code>list</code>
+          </td>
+          <td><p>List of entries to ignore when checking if they are in the
+shelve database.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+<details class="methods">
+  <summary>Methods</summary>
+  <p><strong>init</strong>(data, atlas, figures, storage): Initialize the Launch class.
+check_missing_db_entries(): Check if all the entries in l_db_entries are in the shelve db.
+compute_and_fill_entries(l_missing_entries): Precompute all the entries in l_missing_entries
+    and fill them in the shelve database.
+launch(force_exit_if_first_launch=True): Launch the checks and precomputations at app
+    startup.</p>
+</details>
+
+        <details class="quote">
+          <summary>Source code in <code>modules/launch.py</code></summary>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 35</span>
+<span class="normal"> 36</span>
+<span class="normal"> 37</span>
+<span class="normal"> 38</span>
+<span class="normal"> 39</span>
+<span class="normal"> 40</span>
+<span class="normal"> 41</span>
+<span class="normal"> 42</span>
+<span class="normal"> 43</span>
+<span class="normal"> 44</span>
+<span class="normal"> 45</span>
+<span class="normal"> 46</span>
+<span class="normal"> 47</span>
+<span class="normal"> 48</span>
+<span class="normal"> 49</span>
+<span class="normal"> 50</span>
+<span class="normal"> 51</span>
+<span class="normal"> 52</span>
+<span class="normal"> 53</span>
+<span class="normal"> 54</span>
+<span class="normal"> 55</span>
+<span class="normal"> 56</span>
+<span class="normal"> 57</span>
+<span class="normal"> 58</span>
+<span class="normal"> 59</span>
+<span class="normal"> 60</span>
+<span class="normal"> 61</span>
+<span class="normal"> 62</span>
+<span class="normal"> 63</span>
+<span class="normal"> 64</span>
+<span class="normal"> 65</span>
+<span class="normal"> 66</span>
+<span class="normal"> 67</span>
+<span class="normal"> 68</span>
+<span class="normal"> 69</span>
+<span class="normal"> 70</span>
+<span class="normal"> 71</span>
+<span class="normal"> 72</span>
+<span class="normal"> 73</span>
+<span class="normal"> 74</span>
+<span class="normal"> 75</span>
+<span class="normal"> 76</span>
+<span class="normal"> 77</span>
+<span class="normal"> 78</span>
+<span class="normal"> 79</span>
+<span class="normal"> 80</span>
+<span class="normal"> 81</span>
+<span class="normal"> 82</span>
+<span class="normal"> 83</span>
+<span class="normal"> 84</span>
+<span class="normal"> 85</span>
+<span class="normal"> 86</span>
+<span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span>
+<span class="normal">158</span>
+<span class="normal">159</span>
+<span class="normal">160</span>
+<span class="normal">161</span>
+<span class="normal">162</span>
+<span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span>
+<span class="normal">166</span>
+<span class="normal">167</span>
+<span class="normal">168</span>
+<span class="normal">169</span>
+<span class="normal">170</span>
+<span class="normal">171</span>
+<span class="normal">172</span>
+<span class="normal">173</span>
+<span class="normal">174</span>
+<span class="normal">175</span>
+<span class="normal">176</span>
+<span class="normal">177</span>
+<span class="normal">178</span>
+<span class="normal">179</span>
+<span class="normal">180</span>
+<span class="normal">181</span>
+<span class="normal">182</span>
+<span class="normal">183</span>
+<span class="normal">184</span>
+<span class="normal">185</span>
+<span class="normal">186</span>
+<span class="normal">187</span>
+<span class="normal">188</span>
+<span class="normal">189</span>
+<span class="normal">190</span>
+<span class="normal">191</span>
+<span class="normal">192</span>
+<span class="normal">193</span>
+<span class="normal">194</span>
+<span class="normal">195</span>
+<span class="normal">196</span>
+<span class="normal">197</span>
+<span class="normal">198</span>
+<span class="normal">199</span>
+<span class="normal">200</span>
+<span class="normal">201</span>
+<span class="normal">202</span>
+<span class="normal">203</span>
+<span class="normal">204</span>
+<span class="normal">205</span>
+<span class="normal">206</span>
+<span class="normal">207</span>
+<span class="normal">208</span>
+<span class="normal">209</span>
+<span class="normal">210</span>
+<span class="normal">211</span>
+<span class="normal">212</span>
+<span class="normal">213</span>
+<span class="normal">214</span>
+<span class="normal">215</span>
+<span class="normal">216</span>
+<span class="normal">217</span>
+<span class="normal">218</span>
+<span class="normal">219</span>
+<span class="normal">220</span>
+<span class="normal">221</span>
+<span class="normal">222</span>
+<span class="normal">223</span>
+<span class="normal">224</span>
+<span class="normal">225</span>
+<span class="normal">226</span>
+<span class="normal">227</span>
+<span class="normal">228</span>
+<span class="normal">229</span>
+<span class="normal">230</span>
+<span class="normal">231</span>
+<span class="normal">232</span>
+<span class="normal">233</span>
+<span class="normal">234</span>
+<span class="normal">235</span>
+<span class="normal">236</span>
+<span class="normal">237</span>
+<span class="normal">238</span>
+<span class="normal">239</span>
+<span class="normal">240</span>
+<span class="normal">241</span>
+<span class="normal">242</span>
+<span class="normal">243</span>
+<span class="normal">244</span>
+<span class="normal">245</span>
+<span class="normal">246</span>
+<span class="normal">247</span>
+<span class="normal">248</span>
+<span class="normal">249</span>
+<span class="normal">250</span>
+<span class="normal">251</span>
+<span class="normal">252</span>
+<span class="normal">253</span>
+<span class="normal">254</span>
+<span class="normal">255</span>
+<span class="normal">256</span>
+<span class="normal">257</span>
+<span class="normal">258</span>
+<span class="normal">259</span>
+<span class="normal">260</span>
+<span class="normal">261</span>
+<span class="normal">262</span>
+<span class="normal">263</span>
+<span class="normal">264</span>
+<span class="normal">265</span>
+<span class="normal">266</span>
+<span class="normal">267</span>
+<span class="normal">268</span>
+<span class="normal">269</span>
+<span class="normal">270</span>
+<span class="normal">271</span>
+<span class="normal">272</span>
+<span class="normal">273</span>
+<span class="normal">274</span>
+<span class="normal">275</span>
+<span class="normal">276</span>
+<span class="normal">277</span>
+<span class="normal">278</span>
+<span class="normal">279</span>
+<span class="normal">280</span>
+<span class="normal">281</span>
+<span class="normal">282</span>
+<span class="normal">283</span>
+<span class="normal">284</span>
+<span class="normal">285</span>
+<span class="normal">286</span>
+<span class="normal">287</span>
+<span class="normal">288</span>
+<span class="normal">289</span>
+<span class="normal">290</span>
+<span class="normal">291</span>
+<span class="normal">292</span>
+<span class="normal">293</span>
+<span class="normal">294</span>
+<span class="normal">295</span>
+<span class="normal">296</span>
+<span class="normal">297</span>
+<span class="normal">298</span>
+<span class="normal">299</span>
+<span class="normal">300</span>
+<span class="normal">301</span>
+<span class="normal">302</span>
+<span class="normal">303</span>
+<span class="normal">304</span>
+<span class="normal">305</span>
+<span class="normal">306</span>
+<span class="normal">307</span>
+<span class="normal">308</span>
+<span class="normal">309</span>
+<span class="normal">310</span>
+<span class="normal">311</span>
+<span class="normal">312</span>
+<span class="normal">313</span>
+<span class="normal">314</span>
+<span class="normal">315</span>
+<span class="normal">316</span>
+<span class="normal">317</span>
+<span class="normal">318</span>
+<span class="normal">319</span>
+<span class="normal">320</span>
+<span class="normal">321</span>
+<span class="normal">322</span>
+<span class="normal">323</span>
+<span class="normal">324</span>
+<span class="normal">325</span>
+<span class="normal">326</span>
+<span class="normal">327</span>
+<span class="normal">328</span>
+<span class="normal">329</span>
+<span class="normal">330</span>
+<span class="normal">331</span>
+<span class="normal">332</span>
+<span class="normal">333</span>
+<span class="normal">334</span>
+<span class="normal">335</span>
+<span class="normal">336</span>
+<span class="normal">337</span>
+<span class="normal">338</span>
+<span class="normal">339</span>
+<span class="normal">340</span>
+<span class="normal">341</span>
+<span class="normal">342</span>
+<span class="normal">343</span>
+<span class="normal">344</span>
+<span class="normal">345</span>
+<span class="normal">346</span>
+<span class="normal">347</span>
+<span class="normal">348</span>
+<span class="normal">349</span>
+<span class="normal">350</span>
+<span class="normal">351</span>
+<span class="normal">352</span>
+<span class="normal">353</span>
+<span class="normal">354</span>
+<span class="normal">355</span>
+<span class="normal">356</span>
+<span class="normal">357</span>
+<span class="normal">358</span>
+<span class="normal">359</span>
+<span class="normal">360</span>
+<span class="normal">361</span>
+<span class="normal">362</span>
+<span class="normal">363</span>
+<span class="normal">364</span>
+<span class="normal">365</span>
+<span class="normal">366</span>
+<span class="normal">367</span>
+<span class="normal">368</span>
+<span class="normal">369</span>
+<span class="normal">370</span>
+<span class="normal">371</span>
+<span class="normal">372</span>
+<span class="normal">373</span>
+<span class="normal">374</span>
+<span class="normal">375</span>
+<span class="normal">376</span>
+<span class="normal">377</span>
+<span class="normal">378</span>
+<span class="normal">379</span>
+<span class="normal">380</span>
+<span class="normal">381</span>
+<span class="normal">382</span>
+<span class="normal">383</span>
+<span class="normal">384</span>
+<span class="normal">385</span>
+<span class="normal">386</span>
+<span class="normal">387</span>
+<span class="normal">388</span>
+<span class="normal">389</span>
+<span class="normal">390</span>
+<span class="normal">391</span>
+<span class="normal">392</span>
+<span class="normal">393</span>
+<span class="normal">394</span>
+<span class="normal">395</span>
+<span class="normal">396</span>
+<span class="normal">397</span>
+<span class="normal">398</span>
+<span class="normal">399</span>
+<span class="normal">400</span>
+<span class="normal">401</span>
+<span class="normal">402</span>
+<span class="normal">403</span>
+<span class="normal">404</span>
+<span class="normal">405</span>
+<span class="normal">406</span>
+<span class="normal">407</span>
+<span class="normal">408</span>
+<span class="normal">409</span>
+<span class="normal">410</span>
+<span class="normal">411</span>
+<span class="normal">412</span>
+<span class="normal">413</span>
+<span class="normal">414</span>
+<span class="normal">415</span>
+<span class="normal">416</span>
+<span class="normal">417</span>
+<span class="normal">418</span>
+<span class="normal">419</span>
+<span class="normal">420</span>
+<span class="normal">421</span>
+<span class="normal">422</span>
+<span class="normal">423</span>
+<span class="normal">424</span>
+<span class="normal">425</span>
+<span class="normal">426</span>
+<span class="normal">427</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">Launch</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Class used to precompute and shelve objects at app launch.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        data (MaldiData): Used to manipulate the raw MALDI data.</span>
+<span class="sd">        atlas (Atlas): Used to manipulate the objects coming from the Allen Brain Atlas.</span>
+<span class="sd">        figures (Figures): Used to build the figures of the app.</span>
+<span class="sd">        storage (Storage): Used to access the shelve database.</span>
+<span class="sd">        l_atlas_objects_at_init (list): List of atlas objects normally computed at app startup</span>
+<span class="sd">            if not already in shelve database.</span>
+<span class="sd">        l_figures_objects_at_init (list): List of figures objects normally computed at app</span>
+<span class="sd">            startup if not already in shelve database.</span>
+<span class="sd">        l_other_objects_to_compute (list): List of other objects which must be computed to</span>
+<span class="sd">            prevent slowing down the app during normal use.</span>
+<span class="sd">        l_db_entries (list): List of all entries in the shelve database (i.e. concatenation of the</span>
+<span class="sd">            3 previous lists).</span>
+<span class="sd">        l_entries_to_ignore (list): List of entries to ignore when checking if they are in the</span>
+<span class="sd">            shelve database.</span>
+
+<span class="sd">    Methods:</span>
+<span class="sd">        __init__(data, atlas, figures, storage): Initialize the Launch class.</span>
+<span class="sd">        check_missing_db_entries(): Check if all the entries in l_db_entries are in the shelve db.</span>
+<span class="sd">        compute_and_fill_entries(l_missing_entries): Precompute all the entries in l_missing_entries</span>
+<span class="sd">            and fill them in the shelve database.</span>
+<span class="sd">        launch(force_exit_if_first_launch=True): Launch the checks and precomputations at app</span>
+<span class="sd">            startup.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># ==============================================================================================</span>
+    <span class="c1"># --- Constructor</span>
+    <span class="c1"># ==============================================================================================</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">atlas</span><span class="p">,</span> <span class="n">figures</span><span class="p">,</span> <span class="n">storage</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Initialize the class Launch.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            data (MaldiData): MaldiData object, used to manipulate the raw MALDI data.</span>
+<span class="sd">            atlas (Atlas): Atlas object, used to manipulate the objects coming from the Allen Brain</span>
+<span class="sd">                Atlas.</span>
+<span class="sd">            figures (Figures): Figures object, used to build the figures of the app.</span>
+<span class="sd">            storage (Storage): Storage object, used to access the shelve database.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># App main objects</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">atlas</span> <span class="o">=</span> <span class="n">atlas</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">figures</span> <span class="o">=</span> <span class="n">figures</span>
+
+        <span class="c1"># Database path</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">storage</span> <span class="o">=</span> <span class="n">storage</span>
+
+        <span class="c1"># Objects to shelve in the Atlas class. Everything in this list is shelved at</span>
+        <span class="c1"># initialization of Atlas and Figures objects. The computations described are the ones done</span>
+        <span class="c1"># at startup.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">l_atlas_objects_at_init</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="c1"># Computed in Atlas.__init__() as an argument of Atlas. Corresponds to the object</span>
+            <span class="c1"># returned by Atlas.compute_dic_acronym_children_id()</span>
+            <span class="s2">&quot;atlas/atlas_objects/dic_acronym_children_id&quot;</span><span class="p">,</span>
+            <span class="c1">#</span>
+            <span class="c1"># Computed in Atlas.__init__() as an argument of Atlas. Corresponds to the object</span>
+            <span class="c1"># returned by Atlas.compute_hierarchy_list()</span>
+            <span class="s2">&quot;atlas/atlas_objects/hierarchy&quot;</span><span class="p">,</span>
+            <span class="c1">#</span>
+            <span class="c1"># Computed in Atlas.__init__() as an argument of Atlas. Corresponds to the object</span>
+            <span class="c1"># returned by Atlas.compute_array_projection(True, True)</span>
+            <span class="s2">&quot;atlas/atlas_objects/arrays_projection_corrected_True_True&quot;</span><span class="p">,</span>
+            <span class="c1">#</span>
+            <span class="c1"># Computed in Atlas.__init__(), calling Atlas.compute_array_projection() when</span>
+            <span class="c1"># computing arrays_projection_corrected_True_True. Corresponds to the object returned by</span>
+            <span class="c1"># Atlas.compute_projection_parameters()</span>
+            <span class="c1"># * This computation takes ~20s</span>
+            <span class="s2">&quot;atlas/atlas_objects/l_transform_parameters&quot;</span><span class="p">,</span>
+            <span class="c1">#</span>
+            <span class="c1"># Computed in Atlas.__init__(), calling Atlas.save_all_projected_masks_and_spectra(),</span>
+            <span class="c1"># but it doesn&#39;t correpond to an object returned by a specific function.</span>
+            <span class="c1"># All the masks and spectra are also computed and saved in the shelve database with the</span>
+            <span class="c1"># following ids:</span>
+            <span class="c1"># &quot;atlas/atlas_objects/mask_and_spectrum_$slice_index$_$id_mask$&quot;,</span>
+            <span class="c1"># &quot;atlas/atlas_objects/mask_and_spectrum_MAIA_corrected_$slice_index$_$id_mask$&quot;</span>
+            <span class="c1"># (not explicitely in this list as there are too many, and they are necessarily computed</span>
+            <span class="c1"># along with dic_existing_masks).</span>
+            <span class="c1">#  * This a very long computation, the longest in the app. *</span>
+            <span class="s2">&quot;atlas/atlas_objects/dic_existing_masks&quot;</span><span class="p">,</span>
+            <span class="c1">#</span>
+            <span class="c1"># Computed when needed, as a property of Atlas. Corresponds to the object returned by</span>
+            <span class="c1"># Atlas.compute_list_projected_atlas_borders_figures(). In practice, this function is</span>
+            <span class="c1"># called at startup, when calling Figures.compute_dic_fig_contours() in</span>
+            <span class="c1"># Figures.__init()__, through the computation of compute_figure_basic_image (with</span>
+            <span class="c1"># plot_atlas_contours set to True).</span>
+            <span class="s2">&quot;atlas/atlas_objects/list_projected_atlas_borders_arrays&quot;</span><span class="p">,</span>
+            <span class="c1">#</span>
+            <span class="c1"># Computed at startup through calling</span>
+            <span class="c1"># Atlas.compute_list_projected_atlas_borders_figures() (see comment just above).</span>
+            <span class="c1"># Corresponds to the object returned by atlas.prepare_and_compute_array_images_atlas().</span>
+            <span class="s2">&quot;atlas/atlas_objects/array_images_atlas_True&quot;</span><span class="p">,</span>
+            <span class="c1">#</span>
+        <span class="p">]</span>
+
+        <span class="c1"># Objects to shelve in the Figures class. Everything in this list is shelved at</span>
+        <span class="c1"># initialization of the Figure object. The computations described are the ones done at</span>
+        <span class="c1"># startup.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">l_figures_objects_at_init</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="c1"># Computed in Figures.__init__() as an argument of Figures. Corresponds to the</span>
+            <span class="c1"># object returned by</span>
+            <span class="c1"># Figures.compute_normalization_factor_across_slices(cache_flask=None)</span>
+            <span class="s2">&quot;figures/lipid_selection/dic_normalization_factors_None&quot;</span><span class="p">,</span>
+            <span class="c1">#</span>
+            <span class="c1"># Computed in Figures.__init__(). Corresponds to the object returned</span>
+            <span class="c1"># by Figures.compute_treemaps_figure().</span>
+            <span class="s2">&quot;figures/atlas_page/3D/treemaps&quot;</span><span class="p">,</span>
+            <span class="c1">#</span>
+            <span class="c1"># Computed in Figures.__init__(). Corresponds to the object returned by</span>
+            <span class="c1"># Figures.compute_figure_slices_3D(brain), with brain equal to &#39;brain_1&#39; or &#39;brain_2&#39;.</span>
+            <span class="s2">&quot;figures/3D_page/slices_3D_brain_1&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;figures/3D_page/slices_3D_brain_2&quot;</span><span class="p">,</span>
+            <span class="c1">#</span>
+            <span class="c1"># Computed in Figures.__init__(). Corresponds to the object returned by</span>
+            <span class="c1"># Figures.compute_3D_root_volume().</span>
+            <span class="s2">&quot;figures/3D_page/volume_root&quot;</span><span class="p">,</span>
+            <span class="c1">#</span>
+            <span class="c1"># Computed in Figures.__init__() through Figures.compute_scatter_3D(). Corresponds to</span>
+            <span class="c1"># the object returned by Figures.compute_3D_root_volume(differentiate_borders=True).</span>
+            <span class="s2">&quot;figures/3D_page/volume_root_True&quot;</span><span class="p">,</span>
+            <span class="c1">#</span>
+            <span class="c1"># Computed in Figures.__init__(). Corresponds to the object returned by</span>
+            <span class="c1"># Figures.compute_scatter_3D().</span>
+            <span class="s2">&quot;figures/scRNAseq_page/scatter3D&quot;</span><span class="p">,</span>
+            <span class="c1">#</span>
+            <span class="c1"># Computed in Figures.__init__(). Corresponds to the object returned by</span>
+            <span class="c1"># Figures.compute_heatmap_lipid_genes() with brain_1 parameter True or False.</span>
+            <span class="s2">&quot;figures/scRNAseq_page/base_heatmap_lipid_True&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;figures/scRNAseq_page/base_heatmap_lipid_False&quot;</span><span class="p">,</span>
+            <span class="c1">#</span>
+            <span class="c1"># Computed in Figures.__init(), calling Figures.shelve_arrays_basic_figures(), but</span>
+            <span class="c1"># it doesn&#39;t correpond to an object returned by a specific function.</span>
+            <span class="c1"># All figures are computed and saved in the shelve database with the following ids:</span>
+            <span class="c1"># &quot;figures/load_page/figure_basic_image_$type_figure$_$idx_slice$_$display_annotations&quot;,</span>
+            <span class="c1"># (not explicitely in this list as there are too many).</span>
+            <span class="c1">#  * This a long computation.</span>
+            <span class="s2">&quot;figures/load_page/arrays_basic_figures_computed&quot;</span><span class="p">,</span>
+            <span class="c1">#</span>
+            <span class="c1"># Computed in compute_figure_basic_image() only, which is called in</span>
+            <span class="c1"># Figures.shelve_arrays_basic_figures(), itself called in Figures.__init__().</span>
+            <span class="c1"># Corresponds to the object returned by</span>
+            <span class="c1"># figures.compute_array_basic_images(type_figure), with type_figure having the</span>
+            <span class="c1"># following values: &quot;original_data&quot;, &quot;warped_data&quot;, &quot;projection_corrected&quot;, &quot;atlas&quot;</span>
+            <span class="s2">&quot;figures/load_page/array_basic_images_original_data&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;figures/load_page/array_basic_images_warped_data&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;figures/load_page/array_basic_images_projection_corrected&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;figures/load_page/array_basic_images_atlas&quot;</span><span class="p">,</span>
+            <span class="c1">#</span>
+            <span class="c1"># Computed in Figures.__init(), calling Figures.shelve_all_l_array_2D(), but it</span>
+            <span class="c1"># doesn&#39;t correspond to an object returned by a specific function.</span>
+            <span class="c1"># All the list of 2D slices of expression objects are computed and saved in the</span>
+            <span class="c1"># shelve database with the following ids (True is for brain 1 data, False is for brain 2</span>
+            <span class="c1"># data):</span>
+            <span class="c1"># &quot;figures/3D_page/arrays_expression_True_$name_lipid$__&quot;,</span>
+            <span class="c1"># &quot;figures/3D_page/arrays_expression_False_$name_lipid$__&quot;,</span>
+            <span class="c1"># (not explicitely in this list as there are too many).</span>
+            <span class="c1">#  * This a very long computation.</span>
+            <span class="s2">&quot;figures/3D_page/arrays_expression_True_computed&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;figures/3D_page/arrays_expression_False_computed&quot;</span><span class="p">,</span>
+            <span class="c1">#</span>
+            <span class="c1"># Computed in in Figures.__init(), calling Figures.shelve_all_arrays_annotation(),</span>
+            <span class="c1"># but it doesn&#39;t correspond to an object returned by a specific function. The</span>
+            <span class="c1"># corresponding objects saved in Figures.shelve_all_arrays_annotation() are in the</span>
+            <span class="c1"># comment below.</span>
+            <span class="s2">&quot;figures/3D_page/arrays_annotation_computed&quot;</span><span class="p">,</span>
+        <span class="p">]</span> <span class="o">+</span> <span class="p">[</span>
+            <span class="c1"># Computed in in Figures.__init(), calling Figures.shelve_all_arrays_annotation().</span>
+            <span class="c1"># Corresponds to the object returned by</span>
+            <span class="c1"># Figures.get_array_of_annotations(decrease_dimensionality_factor), with</span>
+            <span class="c1"># decrease_dimensionality_factor ranging from 2 to 11.</span>
+            <span class="s2">&quot;figures/3D_page/arrays_annotation_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">decrease_dimensionality_factor</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">decrease_dimensionality_factor</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">13</span><span class="p">)</span>
+        <span class="p">]</span>
+
+        <span class="c1"># Objects to shelve in the ScRNAseq class. Everything in this list is shelved at</span>
+        <span class="c1"># initialization of the ScRNAseq objects. The computations described are the ones done</span>
+        <span class="c1"># at startup.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">l_scRNAseq_objects_at_init</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c1"># Objects to shelve not belonging to a specific class. Objects in the list are not</span>
+        <span class="c1"># automatically shelved at startup.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">l_other_objects_to_compute</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="c1"># Computed when loading the lipid_selection page. Corresponds to the object returned by</span>
+            <span class="c1"># return_lipid_options().</span>
+            <span class="s2">&quot;annotations/lipid_options&quot;</span><span class="p">,</span>
+        <span class="p">]</span>
+
+        <span class="c1"># List of all db entries</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">l_db_entries</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">l_atlas_objects_at_init</span>
+            <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">l_figures_objects_at_init</span>
+            <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">l_scRNAseq_objects_at_init</span>
+            <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">l_other_objects_to_compute</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Db entries to ignore as they are either computed through other entries, or not relevant</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">l_entries_to_ignore</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s2">&quot;figures/3D_page/arrays_expression_&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;figures/load_page/figure_basic_image_&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;atlas/atlas_objects/mask_and_spectrum_&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;atlas/atlas_objects/dic_processed_temp&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;launch/first_launch&quot;</span><span class="p">,</span>
+        <span class="p">]</span>
+
+    <span class="c1"># ==============================================================================================</span>
+    <span class="c1"># --- Methods</span>
+    <span class="c1"># ==============================================================================================</span>
+
+    <span class="k">def</span> <span class="nf">check_missing_db_entries</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This function checks if all the entries in self.l_db_entries are in the shelve database.</span>
+<span class="sd">        It then returns a list containing the missing entries.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Get database</span>
+        <span class="n">db</span> <span class="o">=</span> <span class="n">shelve</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">storage</span><span class="o">.</span><span class="n">path_db</span><span class="p">)</span>
+
+        <span class="c1"># Build a set of missing entries</span>
+        <span class="n">l_missing_entries</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">l_db_entries</span><span class="p">)</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">l_missing_entries</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Missing entries found in the shelve database:&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">l_missing_entries</span><span class="p">))</span>
+
+        <span class="c1"># Find out if there are entries in the databse and not in the list of entries to check</span>
+        <span class="n">l_unexpected_entries</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">l_db_entries</span><span class="p">))</span>
+
+        <span class="c1"># Remove entries that are not in the initial list but are in the database, i.e all 2D lipid</span>
+        <span class="c1"># slices, all brain regions, all figures in the load_slice page, and all atlas masks.</span>
+        <span class="n">l_unexpected_entries</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">x</span>
+            <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">l_unexpected_entries</span>
+            <span class="k">if</span> <span class="p">[</span><span class="n">entry</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">x</span> <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">l_entries_to_ignore</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+        <span class="p">]</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">l_unexpected_entries</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="s2">&quot;WARNING: unexpected entries found in the shelve database: &quot;</span>
+                <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">l_unexpected_entries</span><span class="p">)</span>
+            <span class="p">)</span>
+
+        <span class="c1"># Close database</span>
+        <span class="n">db</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">l_missing_entries</span>
+
+    <span class="k">def</span> <span class="nf">compute_and_fill_entries</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">l_missing_entries</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This function precompute all the entries in l_missing_entries and fill them in the shelve</span>
+<span class="sd">        database.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            l_missing_entries (list): list of entries to compute and insert in the shelve database.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Get database</span>
+        <span class="n">db</span> <span class="o">=</span> <span class="n">shelve</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">storage</span><span class="o">.</span><span class="n">path_db</span><span class="p">)</span>
+
+        <span class="c1"># Compute missing entries if possible</span>
+        <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">l_missing_entries</span><span class="p">:</span>
+
+            <span class="k">if</span> <span class="n">entry</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">l_atlas_objects_at_init</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                    <span class="s2">&quot;This entry should not be missing,&quot;</span>
+                    <span class="o">+</span> <span class="s2">&quot; as it is computed during Atlas initialization: &quot;</span>
+                    <span class="o">+</span> <span class="n">entry</span>
+                    <span class="o">+</span> <span class="s2">&quot; . Please rebuild the atlas variable&quot;</span>
+                <span class="p">)</span>
+
+            <span class="k">elif</span> <span class="n">entry</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">l_figures_objects_at_init</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                    <span class="s2">&quot;This entry should not be missing,&quot;</span>
+                    <span class="o">+</span> <span class="s2">&quot; as it is computed during Figures initialization: &quot;</span>
+                    <span class="o">+</span> <span class="n">entry</span>
+                    <span class="o">+</span> <span class="s2">&quot; . Please rebuild the figures variable&quot;</span>
+                <span class="p">)</span>
+
+            <span class="k">elif</span> <span class="n">entry</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">l_other_objects_to_compute</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Entry: &quot;</span> <span class="o">+</span> <span class="n">entry</span> <span class="o">+</span> <span class="s2">&quot; is missing. Computing now.&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">entry</span> <span class="o">==</span> <span class="s2">&quot;annotations/lipid_options&quot;</span><span class="p">:</span>
+                    <span class="n">db</span><span class="p">[</span><span class="n">entry</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">return_lipid_options</span><span class="p">()</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                        <span class="s2">&quot;Entry &quot;</span> <span class="o">+</span> <span class="n">entry</span> <span class="o">+</span> <span class="s2">&quot; not found in the list of entries to compute.&quot;</span>
+                    <span class="p">)</span>
+
+        <span class="c1"># Close database</span>
+        <span class="n">db</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">run_compiled_functions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This function runs once the slowest numba functions, whose compilation can take a little</span>
+<span class="sd">        bit of time, so that the app is as fast as it can be after startup. Basically, it simulates</span>
+<span class="sd">        the user doing various actions in the app.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Simulate the user drawing one region (here on slice 1), and compute the corresponding</span>
+        <span class="c1"># spectral data</span>
+        <span class="k">def</span> <span class="nf">draw_region_and_compute_spectral_data</span><span class="p">():</span>
+            <span class="c1"># Define function parameters</span>
+            <span class="n">slice_index</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+                <span class="p">[(</span><span class="mi">53</span><span class="p">,</span> <span class="mi">108</span><span class="p">),</span> <span class="p">(</span><span class="mi">54</span><span class="p">,</span> <span class="mi">102</span><span class="p">),</span> <span class="p">(</span><span class="mi">59</span><span class="p">,</span> <span class="mi">101</span><span class="p">),</span> <span class="p">(</span><span class="mi">58</span><span class="p">,</span> <span class="mi">103</span><span class="p">),</span> <span class="p">(</span><span class="mi">56</span><span class="p">,</span> <span class="mi">105</span><span class="p">),</span> <span class="p">(</span><span class="mi">53</span><span class="p">,</span> <span class="mi">108</span><span class="p">)],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span>
+            <span class="p">)</span>
+
+            <span class="c1"># Force compile numba functions executing them</span>
+            <span class="n">list_index_bound_rows</span><span class="p">,</span> <span class="n">list_index_bound_column_per_row</span> <span class="o">=</span> <span class="n">sample_rows_from_path</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+            <span class="n">grah_scattergl_data</span> <span class="o">=</span> <span class="n">compute_spectrum_per_row_selection</span><span class="p">(</span>
+                <span class="n">list_index_bound_rows</span><span class="p">,</span>
+                <span class="n">list_index_bound_column_per_row</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get_array_spectra</span><span class="p">(</span><span class="n">slice_index</span><span class="p">),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get_array_lookup_pixels</span><span class="p">(</span><span class="n">slice_index</span><span class="p">),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get_image_shape</span><span class="p">(</span><span class="n">slice_index</span><span class="p">),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get_array_peaks_transformed_lipids</span><span class="p">(</span><span class="n">slice_index</span><span class="p">),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get_array_corrective_factors</span><span class="p">(</span><span class="n">slice_index</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span>
+                <span class="n">zeros_extend</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                <span class="n">apply_correction</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">grah_scattergl_data</span> <span class="o">=</span> <span class="n">convert_array_to_fine_grained</span><span class="p">(</span>
+                <span class="n">grah_scattergl_data</span><span class="p">,</span>
+                <span class="mi">10</span><span class="o">**-</span><span class="mi">3</span><span class="p">,</span>
+                <span class="n">lb</span><span class="o">=</span><span class="mi">350</span><span class="p">,</span>
+                <span class="n">hb</span><span class="o">=</span><span class="mi">1250</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">grah_scattergl_data</span> <span class="o">=</span> <span class="n">strip_zeros</span><span class="p">(</span><span class="n">grah_scattergl_data</span><span class="p">)</span>
+            <span class="n">l_idx_labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+            <span class="n">return_idx_sup</span><span class="p">(</span><span class="n">l_idx_labels</span><span class="p">)</span>
+            <span class="n">return_idx_inf</span><span class="p">(</span><span class="n">l_idx_labels</span><span class="p">)</span>
+            <span class="n">add_zeros_to_spectrum</span><span class="p">(</span>
+                <span class="n">grah_scattergl_data</span><span class="p">,</span>
+                <span class="n">pad_individual_peaks</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">padding</span><span class="o">=</span><span class="mi">10</span><span class="o">**-</span><span class="mi">4</span><span class="p">,</span>
+            <span class="p">)</span>
+
+            <span class="n">array_intensity_with_lipids</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+                <span class="p">[</span><span class="mf">1.21864345e-04</span><span class="p">,</span> <span class="mf">9.33317497e-05</span><span class="p">,</span> <span class="mf">6.23099259e-05</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span>
+            <span class="p">)</span>
+            <span class="n">array_idx_labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+            <span class="n">compute_avg_intensity_per_lipid</span><span class="p">(</span><span class="n">array_intensity_with_lipids</span><span class="p">,</span> <span class="n">array_idx_labels</span><span class="p">)</span>
+            <span class="n">compute_image_using_index_and_image_lookup</span><span class="p">(</span>
+                <span class="mf">500.1</span><span class="p">,</span>
+                <span class="mf">500.2</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get_array_spectra</span><span class="p">(</span><span class="n">slice_index</span><span class="p">),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get_array_lookup_pixels</span><span class="p">(</span><span class="n">slice_index</span><span class="p">),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get_image_shape</span><span class="p">(</span><span class="n">slice_index</span><span class="p">),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get_array_lookup_mz</span><span class="p">(</span><span class="n">slice_index</span><span class="p">),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get_array_cumulated_lookup_mz_image</span><span class="p">(</span><span class="n">slice_index</span><span class="p">),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get_divider_lookup</span><span class="p">(</span><span class="n">slice_index</span><span class="p">),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get_array_peaks_transformed_lipids</span><span class="p">(</span><span class="n">slice_index</span><span class="p">),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get_array_corrective_factors</span><span class="p">(</span><span class="n">slice_index</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span>
+                <span class="n">apply_transform</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">select_lipid_and_region_and_plot_volume</span><span class="p">():</span>
+            <span class="n">ll_t_bounds</span> <span class="o">=</span> <span class="p">[[</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get_slice_list</span><span class="p">(</span><span class="n">indices</span><span class="o">=</span><span class="s2">&quot;brain_1&quot;</span><span class="p">)]</span>
+            <span class="n">ll_t_bounds</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">[[(</span><span class="mf">622.61</span><span class="p">,</span> <span class="mf">622.62</span><span class="p">)],</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
+            <span class="n">set_id_regions</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1006</span><span class="p">}</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">figures</span><span class="o">.</span><span class="n">compute_3D_volume_figure</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">ll_t_bounds</span><span class="p">,</span> <span class="n">set_id_regions</span><span class="o">=</span><span class="n">set_id_regions</span><span class="p">)</span>
+
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Please wait while compiled functions are executed...&quot;</span><span class="p">)</span>
+        <span class="n">draw_region_and_compute_spectral_data</span><span class="p">()</span>
+        <span class="n">select_lipid_and_region_and_plot_volume</span><span class="p">()</span>
+        <span class="c1"># Clean memory as it has not been done since compute_thread_safe function wasn&#39;t used</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">clean_memory</span><span class="p">(</span><span class="n">slice_index</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Compiled functions executed.&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">launch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">force_exit_if_first_launch</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This function is used at the execution of the app. It will take care of checking/cleaning</span>
+<span class="sd">        the database entries, run compiled functions once, and precompute all the objects that can</span>
+<span class="sd">        be precomputed. At the very first launch, the app can be greedy in memory, reason for</span>
+<span class="sd">        which the user can choose to force the exit of the app, to start with a lighter process.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            force_exit_if_first_launch (bool): if True, the app will force exit if it is the first</span>
+<span class="sd">                launch.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Check for missing entries</span>
+        <span class="n">l_missing_entries</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_missing_db_entries</span><span class="p">()</span>
+
+        <span class="c1"># Compute missing entries</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">compute_and_fill_entries</span><span class="p">(</span><span class="n">l_missing_entries</span><span class="p">)</span>
+
+        <span class="c1"># Run compiled functions</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">run_compiled_functions</span><span class="p">()</span>
+
+        <span class="c1"># Check if the app has been run before, and potentially force exit if not</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">storage</span><span class="o">.</span><span class="n">check_shelved_object</span><span class="p">(</span><span class="s2">&quot;launch&quot;</span><span class="p">,</span> <span class="s2">&quot;first_launch&quot;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">storage</span><span class="o">.</span><span class="n">dump_shelved_object</span><span class="p">(</span><span class="s2">&quot;launch&quot;</span><span class="p">,</span> <span class="s2">&quot;first_launch&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">force_exit_if_first_launch</span><span class="p">:</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span>
+                    <span class="s2">&quot;The app has been exited now that everything has been precomputed.&quot;</span>
+                    <span class="o">+</span> <span class="s2">&quot;Please launch the app again.&quot;</span>
+                <span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+        </details>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="modules.launch.Launch.__init__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">atlas</span><span class="p">,</span> <span class="n">figures</span><span class="p">,</span> <span class="n">storage</span><span class="p">)</span></code>
+
+</h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Initialize the class Launch.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>data</code></td>
+          <td>
+                <code>MaldiData</code>
+          </td>
+          <td><p>MaldiData object, used to manipulate the raw MALDI data.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>atlas</code></td>
+          <td>
+                <code>Atlas</code>
+          </td>
+          <td><p>Atlas object, used to manipulate the objects coming from the Allen Brain
+Atlas.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>figures</code></td>
+          <td>
+                <code>Figures</code>
+          </td>
+          <td><p>Figures object, used to build the figures of the app.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>storage</code></td>
+          <td>
+                <code>Storage</code>
+          </td>
+          <td><p>Storage object, used to access the shelve database.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>modules/launch.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 67</span>
+<span class="normal"> 68</span>
+<span class="normal"> 69</span>
+<span class="normal"> 70</span>
+<span class="normal"> 71</span>
+<span class="normal"> 72</span>
+<span class="normal"> 73</span>
+<span class="normal"> 74</span>
+<span class="normal"> 75</span>
+<span class="normal"> 76</span>
+<span class="normal"> 77</span>
+<span class="normal"> 78</span>
+<span class="normal"> 79</span>
+<span class="normal"> 80</span>
+<span class="normal"> 81</span>
+<span class="normal"> 82</span>
+<span class="normal"> 83</span>
+<span class="normal"> 84</span>
+<span class="normal"> 85</span>
+<span class="normal"> 86</span>
+<span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span>
+<span class="normal">158</span>
+<span class="normal">159</span>
+<span class="normal">160</span>
+<span class="normal">161</span>
+<span class="normal">162</span>
+<span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span>
+<span class="normal">166</span>
+<span class="normal">167</span>
+<span class="normal">168</span>
+<span class="normal">169</span>
+<span class="normal">170</span>
+<span class="normal">171</span>
+<span class="normal">172</span>
+<span class="normal">173</span>
+<span class="normal">174</span>
+<span class="normal">175</span>
+<span class="normal">176</span>
+<span class="normal">177</span>
+<span class="normal">178</span>
+<span class="normal">179</span>
+<span class="normal">180</span>
+<span class="normal">181</span>
+<span class="normal">182</span>
+<span class="normal">183</span>
+<span class="normal">184</span>
+<span class="normal">185</span>
+<span class="normal">186</span>
+<span class="normal">187</span>
+<span class="normal">188</span>
+<span class="normal">189</span>
+<span class="normal">190</span>
+<span class="normal">191</span>
+<span class="normal">192</span>
+<span class="normal">193</span>
+<span class="normal">194</span>
+<span class="normal">195</span>
+<span class="normal">196</span>
+<span class="normal">197</span>
+<span class="normal">198</span>
+<span class="normal">199</span>
+<span class="normal">200</span>
+<span class="normal">201</span>
+<span class="normal">202</span>
+<span class="normal">203</span>
+<span class="normal">204</span>
+<span class="normal">205</span>
+<span class="normal">206</span>
+<span class="normal">207</span>
+<span class="normal">208</span>
+<span class="normal">209</span>
+<span class="normal">210</span>
+<span class="normal">211</span>
+<span class="normal">212</span>
+<span class="normal">213</span>
+<span class="normal">214</span>
+<span class="normal">215</span>
+<span class="normal">216</span>
+<span class="normal">217</span>
+<span class="normal">218</span>
+<span class="normal">219</span>
+<span class="normal">220</span>
+<span class="normal">221</span>
+<span class="normal">222</span>
+<span class="normal">223</span>
+<span class="normal">224</span>
+<span class="normal">225</span>
+<span class="normal">226</span>
+<span class="normal">227</span>
+<span class="normal">228</span>
+<span class="normal">229</span>
+<span class="normal">230</span>
+<span class="normal">231</span>
+<span class="normal">232</span>
+<span class="normal">233</span>
+<span class="normal">234</span>
+<span class="normal">235</span>
+<span class="normal">236</span>
+<span class="normal">237</span>
+<span class="normal">238</span>
+<span class="normal">239</span>
+<span class="normal">240</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">atlas</span><span class="p">,</span> <span class="n">figures</span><span class="p">,</span> <span class="n">storage</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Initialize the class Launch.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        data (MaldiData): MaldiData object, used to manipulate the raw MALDI data.</span>
+<span class="sd">        atlas (Atlas): Atlas object, used to manipulate the objects coming from the Allen Brain</span>
+<span class="sd">            Atlas.</span>
+<span class="sd">        figures (Figures): Figures object, used to build the figures of the app.</span>
+<span class="sd">        storage (Storage): Storage object, used to access the shelve database.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># App main objects</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">atlas</span> <span class="o">=</span> <span class="n">atlas</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">figures</span> <span class="o">=</span> <span class="n">figures</span>
+
+    <span class="c1"># Database path</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">storage</span> <span class="o">=</span> <span class="n">storage</span>
+
+    <span class="c1"># Objects to shelve in the Atlas class. Everything in this list is shelved at</span>
+    <span class="c1"># initialization of Atlas and Figures objects. The computations described are the ones done</span>
+    <span class="c1"># at startup.</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">l_atlas_objects_at_init</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="c1"># Computed in Atlas.__init__() as an argument of Atlas. Corresponds to the object</span>
+        <span class="c1"># returned by Atlas.compute_dic_acronym_children_id()</span>
+        <span class="s2">&quot;atlas/atlas_objects/dic_acronym_children_id&quot;</span><span class="p">,</span>
+        <span class="c1">#</span>
+        <span class="c1"># Computed in Atlas.__init__() as an argument of Atlas. Corresponds to the object</span>
+        <span class="c1"># returned by Atlas.compute_hierarchy_list()</span>
+        <span class="s2">&quot;atlas/atlas_objects/hierarchy&quot;</span><span class="p">,</span>
+        <span class="c1">#</span>
+        <span class="c1"># Computed in Atlas.__init__() as an argument of Atlas. Corresponds to the object</span>
+        <span class="c1"># returned by Atlas.compute_array_projection(True, True)</span>
+        <span class="s2">&quot;atlas/atlas_objects/arrays_projection_corrected_True_True&quot;</span><span class="p">,</span>
+        <span class="c1">#</span>
+        <span class="c1"># Computed in Atlas.__init__(), calling Atlas.compute_array_projection() when</span>
+        <span class="c1"># computing arrays_projection_corrected_True_True. Corresponds to the object returned by</span>
+        <span class="c1"># Atlas.compute_projection_parameters()</span>
+        <span class="c1"># * This computation takes ~20s</span>
+        <span class="s2">&quot;atlas/atlas_objects/l_transform_parameters&quot;</span><span class="p">,</span>
+        <span class="c1">#</span>
+        <span class="c1"># Computed in Atlas.__init__(), calling Atlas.save_all_projected_masks_and_spectra(),</span>
+        <span class="c1"># but it doesn&#39;t correpond to an object returned by a specific function.</span>
+        <span class="c1"># All the masks and spectra are also computed and saved in the shelve database with the</span>
+        <span class="c1"># following ids:</span>
+        <span class="c1"># &quot;atlas/atlas_objects/mask_and_spectrum_$slice_index$_$id_mask$&quot;,</span>
+        <span class="c1"># &quot;atlas/atlas_objects/mask_and_spectrum_MAIA_corrected_$slice_index$_$id_mask$&quot;</span>
+        <span class="c1"># (not explicitely in this list as there are too many, and they are necessarily computed</span>
+        <span class="c1"># along with dic_existing_masks).</span>
+        <span class="c1">#  * This a very long computation, the longest in the app. *</span>
+        <span class="s2">&quot;atlas/atlas_objects/dic_existing_masks&quot;</span><span class="p">,</span>
+        <span class="c1">#</span>
+        <span class="c1"># Computed when needed, as a property of Atlas. Corresponds to the object returned by</span>
+        <span class="c1"># Atlas.compute_list_projected_atlas_borders_figures(). In practice, this function is</span>
+        <span class="c1"># called at startup, when calling Figures.compute_dic_fig_contours() in</span>
+        <span class="c1"># Figures.__init()__, through the computation of compute_figure_basic_image (with</span>
+        <span class="c1"># plot_atlas_contours set to True).</span>
+        <span class="s2">&quot;atlas/atlas_objects/list_projected_atlas_borders_arrays&quot;</span><span class="p">,</span>
+        <span class="c1">#</span>
+        <span class="c1"># Computed at startup through calling</span>
+        <span class="c1"># Atlas.compute_list_projected_atlas_borders_figures() (see comment just above).</span>
+        <span class="c1"># Corresponds to the object returned by atlas.prepare_and_compute_array_images_atlas().</span>
+        <span class="s2">&quot;atlas/atlas_objects/array_images_atlas_True&quot;</span><span class="p">,</span>
+        <span class="c1">#</span>
+    <span class="p">]</span>
+
+    <span class="c1"># Objects to shelve in the Figures class. Everything in this list is shelved at</span>
+    <span class="c1"># initialization of the Figure object. The computations described are the ones done at</span>
+    <span class="c1"># startup.</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">l_figures_objects_at_init</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="c1"># Computed in Figures.__init__() as an argument of Figures. Corresponds to the</span>
+        <span class="c1"># object returned by</span>
+        <span class="c1"># Figures.compute_normalization_factor_across_slices(cache_flask=None)</span>
+        <span class="s2">&quot;figures/lipid_selection/dic_normalization_factors_None&quot;</span><span class="p">,</span>
+        <span class="c1">#</span>
+        <span class="c1"># Computed in Figures.__init__(). Corresponds to the object returned</span>
+        <span class="c1"># by Figures.compute_treemaps_figure().</span>
+        <span class="s2">&quot;figures/atlas_page/3D/treemaps&quot;</span><span class="p">,</span>
+        <span class="c1">#</span>
+        <span class="c1"># Computed in Figures.__init__(). Corresponds to the object returned by</span>
+        <span class="c1"># Figures.compute_figure_slices_3D(brain), with brain equal to &#39;brain_1&#39; or &#39;brain_2&#39;.</span>
+        <span class="s2">&quot;figures/3D_page/slices_3D_brain_1&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;figures/3D_page/slices_3D_brain_2&quot;</span><span class="p">,</span>
+        <span class="c1">#</span>
+        <span class="c1"># Computed in Figures.__init__(). Corresponds to the object returned by</span>
+        <span class="c1"># Figures.compute_3D_root_volume().</span>
+        <span class="s2">&quot;figures/3D_page/volume_root&quot;</span><span class="p">,</span>
+        <span class="c1">#</span>
+        <span class="c1"># Computed in Figures.__init__() through Figures.compute_scatter_3D(). Corresponds to</span>
+        <span class="c1"># the object returned by Figures.compute_3D_root_volume(differentiate_borders=True).</span>
+        <span class="s2">&quot;figures/3D_page/volume_root_True&quot;</span><span class="p">,</span>
+        <span class="c1">#</span>
+        <span class="c1"># Computed in Figures.__init__(). Corresponds to the object returned by</span>
+        <span class="c1"># Figures.compute_scatter_3D().</span>
+        <span class="s2">&quot;figures/scRNAseq_page/scatter3D&quot;</span><span class="p">,</span>
+        <span class="c1">#</span>
+        <span class="c1"># Computed in Figures.__init__(). Corresponds to the object returned by</span>
+        <span class="c1"># Figures.compute_heatmap_lipid_genes() with brain_1 parameter True or False.</span>
+        <span class="s2">&quot;figures/scRNAseq_page/base_heatmap_lipid_True&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;figures/scRNAseq_page/base_heatmap_lipid_False&quot;</span><span class="p">,</span>
+        <span class="c1">#</span>
+        <span class="c1"># Computed in Figures.__init(), calling Figures.shelve_arrays_basic_figures(), but</span>
+        <span class="c1"># it doesn&#39;t correpond to an object returned by a specific function.</span>
+        <span class="c1"># All figures are computed and saved in the shelve database with the following ids:</span>
+        <span class="c1"># &quot;figures/load_page/figure_basic_image_$type_figure$_$idx_slice$_$display_annotations&quot;,</span>
+        <span class="c1"># (not explicitely in this list as there are too many).</span>
+        <span class="c1">#  * This a long computation.</span>
+        <span class="s2">&quot;figures/load_page/arrays_basic_figures_computed&quot;</span><span class="p">,</span>
+        <span class="c1">#</span>
+        <span class="c1"># Computed in compute_figure_basic_image() only, which is called in</span>
+        <span class="c1"># Figures.shelve_arrays_basic_figures(), itself called in Figures.__init__().</span>
+        <span class="c1"># Corresponds to the object returned by</span>
+        <span class="c1"># figures.compute_array_basic_images(type_figure), with type_figure having the</span>
+        <span class="c1"># following values: &quot;original_data&quot;, &quot;warped_data&quot;, &quot;projection_corrected&quot;, &quot;atlas&quot;</span>
+        <span class="s2">&quot;figures/load_page/array_basic_images_original_data&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;figures/load_page/array_basic_images_warped_data&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;figures/load_page/array_basic_images_projection_corrected&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;figures/load_page/array_basic_images_atlas&quot;</span><span class="p">,</span>
+        <span class="c1">#</span>
+        <span class="c1"># Computed in Figures.__init(), calling Figures.shelve_all_l_array_2D(), but it</span>
+        <span class="c1"># doesn&#39;t correspond to an object returned by a specific function.</span>
+        <span class="c1"># All the list of 2D slices of expression objects are computed and saved in the</span>
+        <span class="c1"># shelve database with the following ids (True is for brain 1 data, False is for brain 2</span>
+        <span class="c1"># data):</span>
+        <span class="c1"># &quot;figures/3D_page/arrays_expression_True_$name_lipid$__&quot;,</span>
+        <span class="c1"># &quot;figures/3D_page/arrays_expression_False_$name_lipid$__&quot;,</span>
+        <span class="c1"># (not explicitely in this list as there are too many).</span>
+        <span class="c1">#  * This a very long computation.</span>
+        <span class="s2">&quot;figures/3D_page/arrays_expression_True_computed&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;figures/3D_page/arrays_expression_False_computed&quot;</span><span class="p">,</span>
+        <span class="c1">#</span>
+        <span class="c1"># Computed in in Figures.__init(), calling Figures.shelve_all_arrays_annotation(),</span>
+        <span class="c1"># but it doesn&#39;t correspond to an object returned by a specific function. The</span>
+        <span class="c1"># corresponding objects saved in Figures.shelve_all_arrays_annotation() are in the</span>
+        <span class="c1"># comment below.</span>
+        <span class="s2">&quot;figures/3D_page/arrays_annotation_computed&quot;</span><span class="p">,</span>
+    <span class="p">]</span> <span class="o">+</span> <span class="p">[</span>
+        <span class="c1"># Computed in in Figures.__init(), calling Figures.shelve_all_arrays_annotation().</span>
+        <span class="c1"># Corresponds to the object returned by</span>
+        <span class="c1"># Figures.get_array_of_annotations(decrease_dimensionality_factor), with</span>
+        <span class="c1"># decrease_dimensionality_factor ranging from 2 to 11.</span>
+        <span class="s2">&quot;figures/3D_page/arrays_annotation_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">decrease_dimensionality_factor</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">decrease_dimensionality_factor</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">13</span><span class="p">)</span>
+    <span class="p">]</span>
+
+    <span class="c1"># Objects to shelve in the ScRNAseq class. Everything in this list is shelved at</span>
+    <span class="c1"># initialization of the ScRNAseq objects. The computations described are the ones done</span>
+    <span class="c1"># at startup.</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">l_scRNAseq_objects_at_init</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># Objects to shelve not belonging to a specific class. Objects in the list are not</span>
+    <span class="c1"># automatically shelved at startup.</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">l_other_objects_to_compute</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="c1"># Computed when loading the lipid_selection page. Corresponds to the object returned by</span>
+        <span class="c1"># return_lipid_options().</span>
+        <span class="s2">&quot;annotations/lipid_options&quot;</span><span class="p">,</span>
+    <span class="p">]</span>
+
+    <span class="c1"># List of all db entries</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">l_db_entries</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">l_atlas_objects_at_init</span>
+        <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">l_figures_objects_at_init</span>
+        <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">l_scRNAseq_objects_at_init</span>
+        <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">l_other_objects_to_compute</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Db entries to ignore as they are either computed through other entries, or not relevant</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">l_entries_to_ignore</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">&quot;figures/3D_page/arrays_expression_&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;figures/load_page/figure_basic_image_&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;atlas/atlas_objects/mask_and_spectrum_&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;atlas/atlas_objects/dic_processed_temp&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;launch/first_launch&quot;</span><span class="p">,</span>
+    <span class="p">]</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="modules.launch.Launch.check_missing_db_entries" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">check_missing_db_entries</span><span class="p">()</span></code>
+
+</h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>This function checks if all the entries in self.l_db_entries are in the shelve database.
+It then returns a list containing the missing entries.</p>
+
+      <details class="quote">
+        <summary>Source code in <code>modules/launch.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">246</span>
+<span class="normal">247</span>
+<span class="normal">248</span>
+<span class="normal">249</span>
+<span class="normal">250</span>
+<span class="normal">251</span>
+<span class="normal">252</span>
+<span class="normal">253</span>
+<span class="normal">254</span>
+<span class="normal">255</span>
+<span class="normal">256</span>
+<span class="normal">257</span>
+<span class="normal">258</span>
+<span class="normal">259</span>
+<span class="normal">260</span>
+<span class="normal">261</span>
+<span class="normal">262</span>
+<span class="normal">263</span>
+<span class="normal">264</span>
+<span class="normal">265</span>
+<span class="normal">266</span>
+<span class="normal">267</span>
+<span class="normal">268</span>
+<span class="normal">269</span>
+<span class="normal">270</span>
+<span class="normal">271</span>
+<span class="normal">272</span>
+<span class="normal">273</span>
+<span class="normal">274</span>
+<span class="normal">275</span>
+<span class="normal">276</span>
+<span class="normal">277</span>
+<span class="normal">278</span>
+<span class="normal">279</span>
+<span class="normal">280</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">check_missing_db_entries</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This function checks if all the entries in self.l_db_entries are in the shelve database.</span>
+<span class="sd">    It then returns a list containing the missing entries.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Get database</span>
+    <span class="n">db</span> <span class="o">=</span> <span class="n">shelve</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">storage</span><span class="o">.</span><span class="n">path_db</span><span class="p">)</span>
+
+    <span class="c1"># Build a set of missing entries</span>
+    <span class="n">l_missing_entries</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">l_db_entries</span><span class="p">)</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">l_missing_entries</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Missing entries found in the shelve database:&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">l_missing_entries</span><span class="p">))</span>
+
+    <span class="c1"># Find out if there are entries in the databse and not in the list of entries to check</span>
+    <span class="n">l_unexpected_entries</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">l_db_entries</span><span class="p">))</span>
+
+    <span class="c1"># Remove entries that are not in the initial list but are in the database, i.e all 2D lipid</span>
+    <span class="c1"># slices, all brain regions, all figures in the load_slice page, and all atlas masks.</span>
+    <span class="n">l_unexpected_entries</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">x</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">l_unexpected_entries</span>
+        <span class="k">if</span> <span class="p">[</span><span class="n">entry</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">x</span> <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">l_entries_to_ignore</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+    <span class="p">]</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">l_unexpected_entries</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+            <span class="s2">&quot;WARNING: unexpected entries found in the shelve database: &quot;</span>
+            <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">l_unexpected_entries</span><span class="p">)</span>
+        <span class="p">)</span>
+
+    <span class="c1"># Close database</span>
+    <span class="n">db</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">l_missing_entries</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="modules.launch.Launch.compute_and_fill_entries" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">compute_and_fill_entries</span><span class="p">(</span><span class="n">l_missing_entries</span><span class="p">)</span></code>
+
+</h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>This function precompute all the entries in l_missing_entries and fill them in the shelve
+database.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>l_missing_entries</code></td>
+          <td>
+                <code>list</code>
+          </td>
+          <td><p>list of entries to compute and insert in the shelve database.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>modules/launch.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">282</span>
+<span class="normal">283</span>
+<span class="normal">284</span>
+<span class="normal">285</span>
+<span class="normal">286</span>
+<span class="normal">287</span>
+<span class="normal">288</span>
+<span class="normal">289</span>
+<span class="normal">290</span>
+<span class="normal">291</span>
+<span class="normal">292</span>
+<span class="normal">293</span>
+<span class="normal">294</span>
+<span class="normal">295</span>
+<span class="normal">296</span>
+<span class="normal">297</span>
+<span class="normal">298</span>
+<span class="normal">299</span>
+<span class="normal">300</span>
+<span class="normal">301</span>
+<span class="normal">302</span>
+<span class="normal">303</span>
+<span class="normal">304</span>
+<span class="normal">305</span>
+<span class="normal">306</span>
+<span class="normal">307</span>
+<span class="normal">308</span>
+<span class="normal">309</span>
+<span class="normal">310</span>
+<span class="normal">311</span>
+<span class="normal">312</span>
+<span class="normal">313</span>
+<span class="normal">314</span>
+<span class="normal">315</span>
+<span class="normal">316</span>
+<span class="normal">317</span>
+<span class="normal">318</span>
+<span class="normal">319</span>
+<span class="normal">320</span>
+<span class="normal">321</span>
+<span class="normal">322</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">compute_and_fill_entries</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">l_missing_entries</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This function precompute all the entries in l_missing_entries and fill them in the shelve</span>
+<span class="sd">    database.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        l_missing_entries (list): list of entries to compute and insert in the shelve database.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Get database</span>
+    <span class="n">db</span> <span class="o">=</span> <span class="n">shelve</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">storage</span><span class="o">.</span><span class="n">path_db</span><span class="p">)</span>
+
+    <span class="c1"># Compute missing entries if possible</span>
+    <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">l_missing_entries</span><span class="p">:</span>
+
+        <span class="k">if</span> <span class="n">entry</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">l_atlas_objects_at_init</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="s2">&quot;This entry should not be missing,&quot;</span>
+                <span class="o">+</span> <span class="s2">&quot; as it is computed during Atlas initialization: &quot;</span>
+                <span class="o">+</span> <span class="n">entry</span>
+                <span class="o">+</span> <span class="s2">&quot; . Please rebuild the atlas variable&quot;</span>
+            <span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">entry</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">l_figures_objects_at_init</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="s2">&quot;This entry should not be missing,&quot;</span>
+                <span class="o">+</span> <span class="s2">&quot; as it is computed during Figures initialization: &quot;</span>
+                <span class="o">+</span> <span class="n">entry</span>
+                <span class="o">+</span> <span class="s2">&quot; . Please rebuild the figures variable&quot;</span>
+            <span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">entry</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">l_other_objects_to_compute</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Entry: &quot;</span> <span class="o">+</span> <span class="n">entry</span> <span class="o">+</span> <span class="s2">&quot; is missing. Computing now.&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">entry</span> <span class="o">==</span> <span class="s2">&quot;annotations/lipid_options&quot;</span><span class="p">:</span>
+                <span class="n">db</span><span class="p">[</span><span class="n">entry</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">return_lipid_options</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                    <span class="s2">&quot;Entry &quot;</span> <span class="o">+</span> <span class="n">entry</span> <span class="o">+</span> <span class="s2">&quot; not found in the list of entries to compute.&quot;</span>
+                <span class="p">)</span>
+
+    <span class="c1"># Close database</span>
+    <span class="n">db</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="modules.launch.Launch.launch" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">launch</span><span class="p">(</span><span class="n">force_exit_if_first_launch</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></code>
+
+</h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>This function is used at the execution of the app. It will take care of checking/cleaning
+the database entries, run compiled functions once, and precompute all the objects that can
+be precomputed. At the very first launch, the app can be greedy in memory, reason for
+which the user can choose to force the exit of the app, to start with a lighter process.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>force_exit_if_first_launch</code></td>
+          <td>
+                <code>bool</code>
+          </td>
+          <td><p>if True, the app will force exit if it is the first
+launch.</p></td>
+          <td>
+                <code>True</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>modules/launch.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">400</span>
+<span class="normal">401</span>
+<span class="normal">402</span>
+<span class="normal">403</span>
+<span class="normal">404</span>
+<span class="normal">405</span>
+<span class="normal">406</span>
+<span class="normal">407</span>
+<span class="normal">408</span>
+<span class="normal">409</span>
+<span class="normal">410</span>
+<span class="normal">411</span>
+<span class="normal">412</span>
+<span class="normal">413</span>
+<span class="normal">414</span>
+<span class="normal">415</span>
+<span class="normal">416</span>
+<span class="normal">417</span>
+<span class="normal">418</span>
+<span class="normal">419</span>
+<span class="normal">420</span>
+<span class="normal">421</span>
+<span class="normal">422</span>
+<span class="normal">423</span>
+<span class="normal">424</span>
+<span class="normal">425</span>
+<span class="normal">426</span>
+<span class="normal">427</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">launch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">force_exit_if_first_launch</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This function is used at the execution of the app. It will take care of checking/cleaning</span>
+<span class="sd">    the database entries, run compiled functions once, and precompute all the objects that can</span>
+<span class="sd">    be precomputed. At the very first launch, the app can be greedy in memory, reason for</span>
+<span class="sd">    which the user can choose to force the exit of the app, to start with a lighter process.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        force_exit_if_first_launch (bool): if True, the app will force exit if it is the first</span>
+<span class="sd">            launch.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Check for missing entries</span>
+    <span class="n">l_missing_entries</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_missing_db_entries</span><span class="p">()</span>
+
+    <span class="c1"># Compute missing entries</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">compute_and_fill_entries</span><span class="p">(</span><span class="n">l_missing_entries</span><span class="p">)</span>
+
+    <span class="c1"># Run compiled functions</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">run_compiled_functions</span><span class="p">()</span>
+
+    <span class="c1"># Check if the app has been run before, and potentially force exit if not</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">storage</span><span class="o">.</span><span class="n">check_shelved_object</span><span class="p">(</span><span class="s2">&quot;launch&quot;</span><span class="p">,</span> <span class="s2">&quot;first_launch&quot;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">storage</span><span class="o">.</span><span class="n">dump_shelved_object</span><span class="p">(</span><span class="s2">&quot;launch&quot;</span><span class="p">,</span> <span class="s2">&quot;first_launch&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">force_exit_if_first_launch</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span>
+                <span class="s2">&quot;The app has been exited now that everything has been precomputed.&quot;</span>
+                <span class="o">+</span> <span class="s2">&quot;Please launch the app again.&quot;</span>
+            <span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="modules.launch.Launch.run_compiled_functions" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">run_compiled_functions</span><span class="p">()</span></code>
+
+</h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>This function runs once the slowest numba functions, whose compilation can take a little
+bit of time, so that the app is as fast as it can be after startup. Basically, it simulates
+the user doing various actions in the app.</p>
+
+      <details class="quote">
+        <summary>Source code in <code>modules/launch.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">324</span>
+<span class="normal">325</span>
+<span class="normal">326</span>
+<span class="normal">327</span>
+<span class="normal">328</span>
+<span class="normal">329</span>
+<span class="normal">330</span>
+<span class="normal">331</span>
+<span class="normal">332</span>
+<span class="normal">333</span>
+<span class="normal">334</span>
+<span class="normal">335</span>
+<span class="normal">336</span>
+<span class="normal">337</span>
+<span class="normal">338</span>
+<span class="normal">339</span>
+<span class="normal">340</span>
+<span class="normal">341</span>
+<span class="normal">342</span>
+<span class="normal">343</span>
+<span class="normal">344</span>
+<span class="normal">345</span>
+<span class="normal">346</span>
+<span class="normal">347</span>
+<span class="normal">348</span>
+<span class="normal">349</span>
+<span class="normal">350</span>
+<span class="normal">351</span>
+<span class="normal">352</span>
+<span class="normal">353</span>
+<span class="normal">354</span>
+<span class="normal">355</span>
+<span class="normal">356</span>
+<span class="normal">357</span>
+<span class="normal">358</span>
+<span class="normal">359</span>
+<span class="normal">360</span>
+<span class="normal">361</span>
+<span class="normal">362</span>
+<span class="normal">363</span>
+<span class="normal">364</span>
+<span class="normal">365</span>
+<span class="normal">366</span>
+<span class="normal">367</span>
+<span class="normal">368</span>
+<span class="normal">369</span>
+<span class="normal">370</span>
+<span class="normal">371</span>
+<span class="normal">372</span>
+<span class="normal">373</span>
+<span class="normal">374</span>
+<span class="normal">375</span>
+<span class="normal">376</span>
+<span class="normal">377</span>
+<span class="normal">378</span>
+<span class="normal">379</span>
+<span class="normal">380</span>
+<span class="normal">381</span>
+<span class="normal">382</span>
+<span class="normal">383</span>
+<span class="normal">384</span>
+<span class="normal">385</span>
+<span class="normal">386</span>
+<span class="normal">387</span>
+<span class="normal">388</span>
+<span class="normal">389</span>
+<span class="normal">390</span>
+<span class="normal">391</span>
+<span class="normal">392</span>
+<span class="normal">393</span>
+<span class="normal">394</span>
+<span class="normal">395</span>
+<span class="normal">396</span>
+<span class="normal">397</span>
+<span class="normal">398</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">run_compiled_functions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This function runs once the slowest numba functions, whose compilation can take a little</span>
+<span class="sd">    bit of time, so that the app is as fast as it can be after startup. Basically, it simulates</span>
+<span class="sd">    the user doing various actions in the app.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Simulate the user drawing one region (here on slice 1), and compute the corresponding</span>
+    <span class="c1"># spectral data</span>
+    <span class="k">def</span> <span class="nf">draw_region_and_compute_spectral_data</span><span class="p">():</span>
+        <span class="c1"># Define function parameters</span>
+        <span class="n">slice_index</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+            <span class="p">[(</span><span class="mi">53</span><span class="p">,</span> <span class="mi">108</span><span class="p">),</span> <span class="p">(</span><span class="mi">54</span><span class="p">,</span> <span class="mi">102</span><span class="p">),</span> <span class="p">(</span><span class="mi">59</span><span class="p">,</span> <span class="mi">101</span><span class="p">),</span> <span class="p">(</span><span class="mi">58</span><span class="p">,</span> <span class="mi">103</span><span class="p">),</span> <span class="p">(</span><span class="mi">56</span><span class="p">,</span> <span class="mi">105</span><span class="p">),</span> <span class="p">(</span><span class="mi">53</span><span class="p">,</span> <span class="mi">108</span><span class="p">)],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Force compile numba functions executing them</span>
+        <span class="n">list_index_bound_rows</span><span class="p">,</span> <span class="n">list_index_bound_column_per_row</span> <span class="o">=</span> <span class="n">sample_rows_from_path</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="n">grah_scattergl_data</span> <span class="o">=</span> <span class="n">compute_spectrum_per_row_selection</span><span class="p">(</span>
+            <span class="n">list_index_bound_rows</span><span class="p">,</span>
+            <span class="n">list_index_bound_column_per_row</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get_array_spectra</span><span class="p">(</span><span class="n">slice_index</span><span class="p">),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get_array_lookup_pixels</span><span class="p">(</span><span class="n">slice_index</span><span class="p">),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get_image_shape</span><span class="p">(</span><span class="n">slice_index</span><span class="p">),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get_array_peaks_transformed_lipids</span><span class="p">(</span><span class="n">slice_index</span><span class="p">),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get_array_corrective_factors</span><span class="p">(</span><span class="n">slice_index</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span>
+            <span class="n">zeros_extend</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">apply_correction</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">grah_scattergl_data</span> <span class="o">=</span> <span class="n">convert_array_to_fine_grained</span><span class="p">(</span>
+            <span class="n">grah_scattergl_data</span><span class="p">,</span>
+            <span class="mi">10</span><span class="o">**-</span><span class="mi">3</span><span class="p">,</span>
+            <span class="n">lb</span><span class="o">=</span><span class="mi">350</span><span class="p">,</span>
+            <span class="n">hb</span><span class="o">=</span><span class="mi">1250</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">grah_scattergl_data</span> <span class="o">=</span> <span class="n">strip_zeros</span><span class="p">(</span><span class="n">grah_scattergl_data</span><span class="p">)</span>
+        <span class="n">l_idx_labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+        <span class="n">return_idx_sup</span><span class="p">(</span><span class="n">l_idx_labels</span><span class="p">)</span>
+        <span class="n">return_idx_inf</span><span class="p">(</span><span class="n">l_idx_labels</span><span class="p">)</span>
+        <span class="n">add_zeros_to_spectrum</span><span class="p">(</span>
+            <span class="n">grah_scattergl_data</span><span class="p">,</span>
+            <span class="n">pad_individual_peaks</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">padding</span><span class="o">=</span><span class="mi">10</span><span class="o">**-</span><span class="mi">4</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">array_intensity_with_lipids</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+            <span class="p">[</span><span class="mf">1.21864345e-04</span><span class="p">,</span> <span class="mf">9.33317497e-05</span><span class="p">,</span> <span class="mf">6.23099259e-05</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span>
+        <span class="p">)</span>
+        <span class="n">array_idx_labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+        <span class="n">compute_avg_intensity_per_lipid</span><span class="p">(</span><span class="n">array_intensity_with_lipids</span><span class="p">,</span> <span class="n">array_idx_labels</span><span class="p">)</span>
+        <span class="n">compute_image_using_index_and_image_lookup</span><span class="p">(</span>
+            <span class="mf">500.1</span><span class="p">,</span>
+            <span class="mf">500.2</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get_array_spectra</span><span class="p">(</span><span class="n">slice_index</span><span class="p">),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get_array_lookup_pixels</span><span class="p">(</span><span class="n">slice_index</span><span class="p">),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get_image_shape</span><span class="p">(</span><span class="n">slice_index</span><span class="p">),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get_array_lookup_mz</span><span class="p">(</span><span class="n">slice_index</span><span class="p">),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get_array_cumulated_lookup_mz_image</span><span class="p">(</span><span class="n">slice_index</span><span class="p">),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get_divider_lookup</span><span class="p">(</span><span class="n">slice_index</span><span class="p">),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get_array_peaks_transformed_lipids</span><span class="p">(</span><span class="n">slice_index</span><span class="p">),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get_array_corrective_factors</span><span class="p">(</span><span class="n">slice_index</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span>
+            <span class="n">apply_transform</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">select_lipid_and_region_and_plot_volume</span><span class="p">():</span>
+        <span class="n">ll_t_bounds</span> <span class="o">=</span> <span class="p">[[</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get_slice_list</span><span class="p">(</span><span class="n">indices</span><span class="o">=</span><span class="s2">&quot;brain_1&quot;</span><span class="p">)]</span>
+        <span class="n">ll_t_bounds</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">[[(</span><span class="mf">622.61</span><span class="p">,</span> <span class="mf">622.62</span><span class="p">)],</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
+        <span class="n">set_id_regions</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1006</span><span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">figures</span><span class="o">.</span><span class="n">compute_3D_volume_figure</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">ll_t_bounds</span><span class="p">,</span> <span class="n">set_id_regions</span><span class="o">=</span><span class="n">set_id_regions</span><span class="p">)</span>
+
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Please wait while compiled functions are executed...&quot;</span><span class="p">)</span>
+    <span class="n">draw_region_and_compute_spectral_data</span><span class="p">()</span>
+    <span class="n">select_lipid_and_region_and_plot_volume</span><span class="p">()</span>
+    <span class="c1"># Clean memory as it has not been done since compute_thread_safe function wasn&#39;t used</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">clean_memory</span><span class="p">(</span><span class="n">slice_index</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Compiled functions executed.&quot;</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+              
+            </article>
+            
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../figures/" class="md-footer__link md-footer__link--prev" aria-label="Previous: figures" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              figures
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../maldi_data/" class="md-footer__link md-footer__link--next" aria-label="Next: maldi_data" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              maldi_data
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.sections"], "search": "../../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.6c7ad80a.min.js"></script>
+      
+    
+  </body>
+</html>

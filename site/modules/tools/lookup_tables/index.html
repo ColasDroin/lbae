@@ -1,0 +1,2024 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.3.9">
+    
+    
+      
+        <title>Lookup tables - LBAE technical documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.1d29e8d0.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.cbb835fc.min.css">
+        
+      
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#modules.tools.lookup_tables" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="LBAE technical documentation" class="md-header__button md-logo" aria-label="LBAE technical documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            LBAE technical documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Lookup tables
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="LBAE technical documentation" class="md-nav__button md-logo" aria-label="LBAE technical documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    LBAE technical documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        Welcome page
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../main/" class="md-nav__link">
+        main
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../app/" class="md-nav__link">
+        app
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../index_py/" class="md-nav__link">
+        index
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5">
+          Modules
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Modules" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Modules
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../atlas_labels/" class="md-nav__link">
+        atlas_labels
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../atlas/" class="md-nav__link">
+        atlas
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../figures/" class="md-nav__link">
+        figures
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../launch/" class="md-nav__link">
+        launch
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../maldi_data/" class="md-nav__link">
+        maldi_data
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../scRNAseq/" class="md-nav__link">
+        scRNAseq
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../storage/" class="md-nav__link">
+        storage
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_8" type="checkbox" id="__nav_5_8" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5_8">
+          Tools
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Tools" data-md-level="2">
+        <label class="md-nav__title" for="__nav_5_8">
+          <span class="md-nav__icon md-icon"></span>
+          Tools
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../atlas/" class="md-nav__link">
+        Atlas
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../image/" class="md-nav__link">
+        Image
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Lookup tables
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Lookup tables
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#modules.tools.lookup_tables" class="md-nav__link">
+    modules.tools.lookup_tables
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#modules.tools.lookup_tables.build_cumulated_image_lookup_table" class="md-nav__link">
+    build_cumulated_image_lookup_table()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#modules.tools.lookup_tables.build_index_lookup_table" class="md-nav__link">
+    build_index_lookup_table()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#modules.tools.lookup_tables.build_index_lookup_table_averaged_spectrum" class="md-nav__link">
+    build_index_lookup_table_averaged_spectrum()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#modules.tools.lookup_tables.process_lookup_tables" class="md-nav__link">
+    process_lookup_tables()
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../maldi_conversion/" class="md-nav__link">
+        Maldi conversion
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../misc/" class="md-nav__link">
+        Misc
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../spectra/" class="md-nav__link">
+        Spectra
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../volume/" class="md-nav__link">
+        Volume
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6">
+          Pages
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Pages" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Pages
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pages/home/" class="md-nav__link">
+        home
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pages/sidebar/" class="md-nav__link">
+        sidebar
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pages/load_slice/" class="md-nav__link">
+        load_slice
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pages/lipid_selection/" class="md-nav__link">
+        lipid_selection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pages/region_analysis/" class="md-nav__link">
+        region_analysis
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pages/threeD_exploration/" class="md-nav__link">
+        threeD_exploration
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pages/scRNAseq/" class="md-nav__link">
+        scRNAseq
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#modules.tools.lookup_tables" class="md-nav__link">
+    modules.tools.lookup_tables
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#modules.tools.lookup_tables.build_cumulated_image_lookup_table" class="md-nav__link">
+    build_cumulated_image_lookup_table()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#modules.tools.lookup_tables.build_index_lookup_table" class="md-nav__link">
+    build_index_lookup_table()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#modules.tools.lookup_tables.build_index_lookup_table_averaged_spectrum" class="md-nav__link">
+    build_index_lookup_table_averaged_spectrum()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#modules.tools.lookup_tables.process_lookup_tables" class="md-nav__link">
+    process_lookup_tables()
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+
+  <h1>Lookup tables</h1>
+
+<div class="doc doc-object doc-module">
+
+
+<a id="modules.tools.lookup_tables"></a>
+  <div class="doc doc-contents first">
+  
+      <p>This file contains functions used to build the lookup tables for faster/easier access to MALDI
+data.</p>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="modules.tools.lookup_tables.build_cumulated_image_lookup_table" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">build_cumulated_image_lookup_table</span><span class="p">(</span><span class="n">array_spectra</span><span class="p">,</span> <span class="n">array_pixel_indexes</span><span class="p">,</span> <span class="n">img_shape</span><span class="p">,</span> <span class="n">divider_lookup</span><span class="p">,</span> <span class="n">size_spectrum</span><span class="o">=</span><span class="mi">2000</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>This function builds a lookup table to map the mz values to the image consisting of cumulated
+spectrum (for each pixel) until this mz value.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>array_spectra</code></td>
+          <td>
+                <code><span title="numpy">np</span>.<span title="numpy.ndarray">ndarray</span></code>
+          </td>
+          <td><p>An array of shape (2,n) containing spectrum data (m/z and
+intensity) for each pixel.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>array_pixel_indexes</code></td>
+          <td>
+                <code><span title="numpy">np</span>.<span title="numpy.ndarray">ndarray</span></code>
+          </td>
+          <td><p>An array of shape (m,2) containing the boundary indices of
+each pixel in array_spectra.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>img_shape</code></td>
+          <td>
+                <code>tuple(int</code>
+          </td>
+          <td><p>A tuple or arrays of 2 integers describing the shape of the
+acquisition.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>divider_lookup</code></td>
+          <td>
+                <code>int</code>
+          </td>
+          <td><p>Sets the resolution of the lookup table. The bigger it is, the bigger
+the increments between two successive lookups. Must be consistent across lookup tables.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>size_spectrum</code></td>
+          <td>
+                <code>int</code>
+          </td>
+          <td><p>The total size of the spectrum indexed by the lookup. Defaults to 2000,
+corresponding to an indexed spectrum ranging from 0 m/z to 2000 m/z.</p></td>
+          <td>
+                <code>2000</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+          </td>
+          <td><p>np.ndarray: An array of shape (size_spectrum// divider_lookup, image height, image_width),
+mapping m/z values to the cumulated spectrum until the corresponding m/z value for each
+pixel.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>modules/tools/lookup_tables.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@njit</span>
+<span class="k">def</span> <span class="nf">build_cumulated_image_lookup_table</span><span class="p">(</span>
+    <span class="n">array_spectra</span><span class="p">,</span> <span class="n">array_pixel_indexes</span><span class="p">,</span> <span class="n">img_shape</span><span class="p">,</span> <span class="n">divider_lookup</span><span class="p">,</span> <span class="n">size_spectrum</span><span class="o">=</span><span class="mi">2000</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This function builds a lookup table to map the mz values to the image consisting of cumulated</span>
+<span class="sd">    spectrum (for each pixel) until this mz value.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        array_spectra (np.ndarray): An array of shape (2,n) containing spectrum data (m/z and</span>
+<span class="sd">            intensity) for each pixel.</span>
+<span class="sd">        array_pixel_indexes (np.ndarray): An array of shape (m,2) containing the boundary indices of</span>
+<span class="sd">            each pixel in array_spectra.</span>
+<span class="sd">        img_shape (tuple(int)): A tuple or arrays of 2 integers describing the shape of the</span>
+<span class="sd">            acquisition.</span>
+<span class="sd">        divider_lookup (int): Sets the resolution of the lookup table. The bigger it is, the bigger</span>
+<span class="sd">            the increments between two successive lookups. Must be consistent across lookup tables.</span>
+<span class="sd">        size_spectrum (int): The total size of the spectrum indexed by the lookup. Defaults to 2000,</span>
+<span class="sd">            corresponding to an indexed spectrum ranging from 0 m/z to 2000 m/z.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        np.ndarray: An array of shape (size_spectrum// divider_lookup, image height, image_width),</span>
+<span class="sd">            mapping m/z values to the cumulated spectrum until the corresponding m/z value for each</span>
+<span class="sd">            pixel.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Define the empty array for the lookup table</span>
+    <span class="n">image_lookup_table</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
+        <span class="p">(</span><span class="n">size_spectrum</span> <span class="o">//</span> <span class="n">divider_lookup</span><span class="p">,</span> <span class="n">img_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">img_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span>
+    <span class="p">)</span>
+    <span class="n">image_lookup_table</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">img_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">img_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">idx_pix</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">array_pixel_indexes</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="n">j</span> <span class="o">=</span> <span class="n">array_pixel_indexes</span><span class="p">[</span><span class="n">idx_pix</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="c1"># If current pixel contains no peak, just skip to next one and add nothing</span>
+        <span class="k">if</span> <span class="n">j</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="n">pix_value</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">coor_pix</span> <span class="o">=</span> <span class="n">convert_spectrum_idx_to_coor</span><span class="p">(</span><span class="n">idx_pix</span><span class="p">,</span> <span class="n">img_shape</span><span class="p">)</span>
+
+        <span class="c1"># Loop over lookup indexes</span>
+        <span class="k">for</span> <span class="n">index_lookup</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">size_spectrum</span> <span class="o">//</span> <span class="n">divider_lookup</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+
+            <span class="c1"># Find the first mz index corresponding to current lookup for current pixel</span>
+            <span class="c1"># (skipped if current mz&gt;lookup)</span>
+            <span class="k">while</span> <span class="n">array_spectra</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="n">index_lookup</span> <span class="o">*</span> <span class="n">divider_lookup</span><span class="p">)</span> <span class="ow">and</span> <span class="n">array_spectra</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">&lt;</span> <span class="p">(</span>
+                <span class="p">(</span><span class="n">index_lookup</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">divider_lookup</span>
+            <span class="p">):</span>
+                <span class="n">pix_value</span> <span class="o">+=</span> <span class="n">array_spectra</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span>
+                <span class="n">j</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="n">j</span> <span class="o">==</span> <span class="n">array_pixel_indexes</span><span class="p">[</span><span class="n">idx_pix</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="k">break</span>
+
+            <span class="c1"># Check that we&#39;re still in the good pixel and add mz index to lookup</span>
+            <span class="k">if</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">array_pixel_indexes</span><span class="p">[</span><span class="n">idx_pix</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">image_lookup_table</span><span class="p">[</span><span class="n">index_lookup</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">coor_pix</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">coor_pix</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="n">pix_value</span>
+
+            <span class="c1"># If we&#39;re not in the requested pixel, this means that the while loop was exited because</span>
+            <span class="c1"># the lookup didn&#39;t exist, so we fill the rest of the table with biggest possible value</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">index_lookup</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">size_spectrum</span> <span class="o">//</span> <span class="n">divider_lookup</span><span class="p">):</span>
+                    <span class="n">image_lookup_table</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">coor_pix</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">coor_pix</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="n">pix_value</span>
+                <span class="k">break</span>
+
+    <span class="k">return</span> <span class="n">image_lookup_table</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="modules.tools.lookup_tables.build_index_lookup_table" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">build_index_lookup_table</span><span class="p">(</span><span class="n">array_spectra</span><span class="p">,</span> <span class="n">array_pixel_indexes</span><span class="p">,</span> <span class="n">divider_lookup</span><span class="p">,</span> <span class="n">size_spectrum</span><span class="o">=</span><span class="mi">2000</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>This function builds a lookup table to map mz values to indexes in array_spectra. In
+practice, for each pixel, the lookup table gives the first index of mz such that
+mz&gt;=lookup<em>divider_lookup. If no such mz exists, the lookup table gives last possible mz index
+(i.e. biggest possible mz for the current pixel, but under the lookup). If lookup</em>divider_lookup
+is smaller than the smallest mz, it returns the first mz index possible for the current pixel,
+above the current lookup. If there are no peak at all in the spectrum... it returns -1.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>array_spectra</code></td>
+          <td>
+                <code><span title="numpy">np</span>.<span title="numpy.ndarray">ndarray</span></code>
+          </td>
+          <td><p>An array of shape (2,n) containing spectrum data (m/z and
+intensity) for each pixel.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>array_pixel_indexes</code></td>
+          <td>
+                <code><span title="numpy">np</span>.<span title="numpy.ndarray">ndarray</span></code>
+          </td>
+          <td><p>An array of shape (m,2) containing the boundary indices of
+each pixel in array_spectra.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>divider_lookup</code></td>
+          <td>
+                <code>int</code>
+          </td>
+          <td><p>Sets the resolution of the lookup table. The bigger it is, the bigger
+the increments between two successive lookups. Must be consistent across lookup tables.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>size_spectrum</code></td>
+          <td>
+                <code>int</code>
+          </td>
+          <td><p>The total size of the spectrum indexed by the lookup. Defaults to 2000,
+corresponding to an indexed spectrum ranging from 0 m/z to 2000 m/z.</p></td>
+          <td>
+                <code>2000</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+          </td>
+          <td><p>np.ndarray: An array of shape (size_spectrum// divider_lookup, m), mapping m/z values to
+indexes in array_spectra for each pixel.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>modules/tools/lookup_tables.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span>
+<span class="normal">74</span>
+<span class="normal">75</span>
+<span class="normal">76</span>
+<span class="normal">77</span>
+<span class="normal">78</span>
+<span class="normal">79</span>
+<span class="normal">80</span>
+<span class="normal">81</span>
+<span class="normal">82</span>
+<span class="normal">83</span>
+<span class="normal">84</span>
+<span class="normal">85</span>
+<span class="normal">86</span>
+<span class="normal">87</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@njit</span>
+<span class="k">def</span> <span class="nf">build_index_lookup_table</span><span class="p">(</span>
+    <span class="n">array_spectra</span><span class="p">,</span> <span class="n">array_pixel_indexes</span><span class="p">,</span> <span class="n">divider_lookup</span><span class="p">,</span> <span class="n">size_spectrum</span><span class="o">=</span><span class="mi">2000</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This function builds a lookup table to map mz values to indexes in array_spectra. In</span>
+<span class="sd">    practice, for each pixel, the lookup table gives the first index of mz such that</span>
+<span class="sd">    mz&gt;=lookup*divider_lookup. If no such mz exists, the lookup table gives last possible mz index</span>
+<span class="sd">    (i.e. biggest possible mz for the current pixel, but under the lookup). If lookup*divider_lookup</span>
+<span class="sd">    is smaller than the smallest mz, it returns the first mz index possible for the current pixel,</span>
+<span class="sd">    above the current lookup. If there are no peak at all in the spectrum... it returns -1.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        array_spectra (np.ndarray): An array of shape (2,n) containing spectrum data (m/z and</span>
+<span class="sd">            intensity) for each pixel.</span>
+<span class="sd">        array_pixel_indexes (np.ndarray): An array of shape (m,2) containing the boundary indices of</span>
+<span class="sd">            each pixel in array_spectra.</span>
+<span class="sd">        divider_lookup (int): Sets the resolution of the lookup table. The bigger it is, the bigger</span>
+<span class="sd">            the increments between two successive lookups. Must be consistent across lookup tables.</span>
+<span class="sd">        size_spectrum (int): The total size of the spectrum indexed by the lookup. Defaults to 2000,</span>
+<span class="sd">            corresponding to an indexed spectrum ranging from 0 m/z to 2000 m/z.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        np.ndarray: An array of shape (size_spectrum// divider_lookup, m), mapping m/z values to</span>
+<span class="sd">            indexes in array_spectra for each pixel.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Define the empty array for the lookup table</span>
+    <span class="n">lookup_table</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
+        <span class="p">(</span><span class="n">size_spectrum</span> <span class="o">//</span> <span class="n">divider_lookup</span><span class="p">,</span> <span class="n">array_pixel_indexes</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span>
+    <span class="p">)</span>
+    <span class="n">lookup_table</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">array_pixel_indexes</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+
+    <span class="c1"># Loop over pixel indexes</span>
+    <span class="k">for</span> <span class="n">idx_pix</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">array_pixel_indexes</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="n">j</span> <span class="o">=</span> <span class="n">array_pixel_indexes</span><span class="p">[</span><span class="n">idx_pix</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+
+        <span class="c1"># If there&#39;s no peak for the current pixel, lookup is -1</span>
+        <span class="k">if</span> <span class="n">j</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">size_spectrum</span> <span class="o">//</span> <span class="n">divider_lookup</span><span class="p">):</span>
+                <span class="n">lookup_table</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">idx_pix</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+
+        <span class="c1"># Loop over lookup indexes</span>
+        <span class="k">for</span> <span class="n">index_lookup</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">size_spectrum</span> <span class="o">//</span> <span class="n">divider_lookup</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+
+            <span class="c1"># First find the first mz index corresponding to current lookup for current pixel</span>
+            <span class="c1"># (skipped if current mz&gt;lookup)</span>
+            <span class="k">while</span> <span class="n">array_spectra</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">&lt;</span> <span class="p">((</span><span class="n">index_lookup</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">divider_lookup</span><span class="p">):</span>
+                <span class="n">j</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="n">j</span> <span class="o">==</span> <span class="n">array_pixel_indexes</span><span class="p">[</span><span class="n">idx_pix</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="k">break</span>
+
+            <span class="c1"># Check that we&#39;re still in the requested pixel and add mz index to lookup</span>
+            <span class="k">if</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">array_pixel_indexes</span><span class="p">[</span><span class="n">idx_pix</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">lookup_table</span><span class="p">[</span><span class="n">index_lookup</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">idx_pix</span><span class="p">]</span> <span class="o">=</span> <span class="n">j</span>
+
+            <span class="c1"># If we&#39;re not in the requested pixel, this means that the while loop was exited because</span>
+            <span class="c1"># the lookup didn&#39;t exist, so we fill the rest of the table with biggest possible value</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">index_lookup</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">size_spectrum</span> <span class="o">//</span> <span class="n">divider_lookup</span><span class="p">):</span>
+                    <span class="n">lookup_table</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">idx_pix</span><span class="p">]</span> <span class="o">=</span> <span class="n">j</span> <span class="o">-</span> <span class="mi">1</span>
+                <span class="k">break</span>
+
+    <span class="k">return</span> <span class="n">lookup_table</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="modules.tools.lookup_tables.build_index_lookup_table_averaged_spectrum" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">build_index_lookup_table_averaged_spectrum</span><span class="p">(</span><span class="n">array_mz</span><span class="p">,</span> <span class="n">size_spectrum</span><span class="o">=</span><span class="mi">2000</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>This function builds a lookup table identical to the one defined in
+build_index_lookup_table(), except that this one maps mz values to indexes in the averaged
+array_spectra (across all pixels).</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>array_mz</code></td>
+          <td>
+                <code><span title="numpy">np</span>.<span title="numpy.ndarray">ndarray</span></code>
+          </td>
+          <td><p>The m/z array of the averaged array spectra (i.e. row 0).</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>size_spectrum</code></td>
+          <td>
+                <code>int</code>
+          </td>
+          <td><p>The total size of the spectrum indexed by the lookup. Defaults to 2000,
+corresponding to an averaged indexed spectrum ranging from 0 m/z to 2000 m/z.</p></td>
+          <td>
+                <code>2000</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+          </td>
+          <td><p>np.ndarray: An array of length size_spectrum (i.e. the defaults divider_lookup is 1 for
+this array), mapping m/z values to indexes in the averaged array_spectra.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>modules/tools/lookup_tables.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span>
+<span class="normal">158</span>
+<span class="normal">159</span>
+<span class="normal">160</span>
+<span class="normal">161</span>
+<span class="normal">162</span>
+<span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span>
+<span class="normal">166</span>
+<span class="normal">167</span>
+<span class="normal">168</span>
+<span class="normal">169</span>
+<span class="normal">170</span>
+<span class="normal">171</span>
+<span class="normal">172</span>
+<span class="normal">173</span>
+<span class="normal">174</span>
+<span class="normal">175</span>
+<span class="normal">176</span>
+<span class="normal">177</span>
+<span class="normal">178</span>
+<span class="normal">179</span>
+<span class="normal">180</span>
+<span class="normal">181</span>
+<span class="normal">182</span>
+<span class="normal">183</span>
+<span class="normal">184</span>
+<span class="normal">185</span>
+<span class="normal">186</span>
+<span class="normal">187</span>
+<span class="normal">188</span>
+<span class="normal">189</span>
+<span class="normal">190</span>
+<span class="normal">191</span>
+<span class="normal">192</span>
+<span class="normal">193</span>
+<span class="normal">194</span>
+<span class="normal">195</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@njit</span>
+<span class="k">def</span> <span class="nf">build_index_lookup_table_averaged_spectrum</span><span class="p">(</span><span class="n">array_mz</span><span class="p">,</span> <span class="n">size_spectrum</span><span class="o">=</span><span class="mi">2000</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This function builds a lookup table identical to the one defined in</span>
+<span class="sd">    build_index_lookup_table(), except that this one maps mz values to indexes in the averaged</span>
+<span class="sd">    array_spectra (across all pixels).</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        array_mz (np.ndarray): The m/z array of the averaged array spectra (i.e. row 0).</span>
+<span class="sd">        size_spectrum (int): The total size of the spectrum indexed by the lookup. Defaults to 2000,</span>
+<span class="sd">            corresponding to an averaged indexed spectrum ranging from 0 m/z to 2000 m/z.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        np.ndarray: An array of length size_spectrum (i.e. the defaults divider_lookup is 1 for</span>
+<span class="sd">            this array), mapping m/z values to indexes in the averaged array_spectra.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Define the empty array for the lookup table</span>
+    <span class="n">lookup_table</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">size_spectrum</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+    <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">lookup_table</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="c1"># Loop over lookup indexes</span>
+    <span class="k">for</span> <span class="n">index_lookup</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">size_spectrum</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+
+        <span class="c1"># Find the first mz index corresponding to current lookup for current pixel</span>
+        <span class="k">while</span> <span class="n">array_mz</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">index_lookup</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">j</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">j</span> <span class="o">==</span> <span class="n">array_mz</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+                <span class="k">break</span>
+
+        <span class="c1"># Add the lookup to the table if it exists</span>
+        <span class="k">if</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">array_mz</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+            <span class="n">lookup_table</span><span class="p">[</span><span class="n">index_lookup</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">j</span>
+
+        <span class="c1"># If the lookup doesn&#39;t exist, so we fill the rest of the table with biggest possible m/z</span>
+        <span class="c1"># value</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">index_lookup</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">size_spectrum</span><span class="p">):</span>
+                <span class="n">lookup_table</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">j</span> <span class="o">-</span> <span class="mi">1</span>
+            <span class="k">break</span>
+
+    <span class="k">return</span> <span class="n">lookup_table</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="modules.tools.lookup_tables.process_lookup_tables" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">process_lookup_tables</span><span class="p">(</span><span class="n">t_index_path</span><span class="p">,</span> <span class="n">temp_path</span><span class="o">=</span><span class="s1">&#39;/data/lipidatlas/data/app/data/temp/&#39;</span><span class="p">,</span> <span class="n">l_arrays_raw_data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">load_from_file</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">save</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">return_result</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>This function has been implemented to allow the paralellization of lookup tables processing.
+It computes and returns/saves the lookup tables for each slice. The output consists of:
+- array_pixel_indexes_high_res: np.nddaray of shape (n,2), it maps each pixel to two
+    array_spectra_high_res indices, delimiting the corresponding spectrum.
+- array_spectra_high_res: np.nddaray of shape (2,m), it contains the concatenated spectra of
+    each pixel. First row contains the m/z values, while second row contains the
+    corresponding intensities.
+- array_averaged_mz_intensity_low_res: np.nddaray of shape (2, k), it contains the
+    low-resolution spectrum averaged over all pixels. First row contains the m/z values,
+    while second row contains the corresponding intensities.
+- array_averaged_mz_intensity_high_res: Same as array_averaged_mz_intensity_low_res, but in
+    higher resolution, with, therefore, a different shape.
+- image_shape: a tuple of integers, indicating the vertical and horizontal size of the
+    corresponding slice.
+- divider_lookup: integer that sets the resolution of the lookup tables.
+- lookup_table_spectra_high_res: np.nddaray of shape (size_spectrum// divider_lookup, m), it
+    maps m/z values to indexes in array_spectra for each pixel.
+- cumulated_image_lookup_table_high_res: np.nddaray of shape
+    (size_spectrum // divider_lookup, image height, image_width), it maps m/z values to the
+    cumulated spectrum until the corresponding m/z value for each pixel.
+- lookup_table_averaged_spectrum_high_res: np.nddaray of length size_spectrum, it maps m/z
+    values to indexes in the averaged array_spectra for each pixel.
+- array_peaks_corrected: A two-dimensional array containing the peak annotations (min peak,
+    max peak, average value of the peak), sorted by min_mz, for the lipids that have
+    been transformed.
+- array_corrective_factors: A three-dimensional numpy array equal to the ratio of
+    'arrays_after_transfo' and 'arrays_before_transfo' containing the corrective factor used for
+    lipid (first dimension) and each pixel (second and third dimension).</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>t_index_path</code></td>
+          <td>
+                <code>tuple(int, str</code>
+          </td>
+          <td><p>A tuple containing the index of the slice (starting from 1)
+and the corresponding path for the raw data.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>temp_path</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>Path to load/save the output npz file. Defaults to
+"/data/lipidatlas/data/app/data/temp/".</p></td>
+          <td>
+                <code>&#39;/data/lipidatlas/data/app/data/temp/&#39;</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>l_arrays_raw_data</code></td>
+          <td>
+                <code>list</code>
+          </td>
+          <td><p>A list of arrays containing the data that is processed
+in the current function. If None, the same arrays must be loaded from the disk. Defaults
+to None.</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>load_from_file</code></td>
+          <td>
+                <code>bool</code>
+          </td>
+          <td><p>If True, the arrays containing the data processed by the
+current function are loaded from the disk. If False, the corresponding arrays must be
+provided through the parameter l_arrays_raw_data. Defaults to True.</p></td>
+          <td>
+                <code>True</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>save</code></td>
+          <td>
+                <code>bool</code>
+          </td>
+          <td><p>If True, output arrays are saved in a npz file. Defaults to True.</p></td>
+          <td>
+                <code>True</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>return_result</code></td>
+          <td>
+                <code>bool</code>
+          </td>
+          <td><p>If True, output arrays are returned by the function.
+Defaults to False.</p></td>
+          <td>
+                <code>False</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+          </td>
+          <td><p>Depending on 'return result', returns either nothing, either several np.ndarrays, described
+above.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>modules/tools/lookup_tables.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">198</span>
+<span class="normal">199</span>
+<span class="normal">200</span>
+<span class="normal">201</span>
+<span class="normal">202</span>
+<span class="normal">203</span>
+<span class="normal">204</span>
+<span class="normal">205</span>
+<span class="normal">206</span>
+<span class="normal">207</span>
+<span class="normal">208</span>
+<span class="normal">209</span>
+<span class="normal">210</span>
+<span class="normal">211</span>
+<span class="normal">212</span>
+<span class="normal">213</span>
+<span class="normal">214</span>
+<span class="normal">215</span>
+<span class="normal">216</span>
+<span class="normal">217</span>
+<span class="normal">218</span>
+<span class="normal">219</span>
+<span class="normal">220</span>
+<span class="normal">221</span>
+<span class="normal">222</span>
+<span class="normal">223</span>
+<span class="normal">224</span>
+<span class="normal">225</span>
+<span class="normal">226</span>
+<span class="normal">227</span>
+<span class="normal">228</span>
+<span class="normal">229</span>
+<span class="normal">230</span>
+<span class="normal">231</span>
+<span class="normal">232</span>
+<span class="normal">233</span>
+<span class="normal">234</span>
+<span class="normal">235</span>
+<span class="normal">236</span>
+<span class="normal">237</span>
+<span class="normal">238</span>
+<span class="normal">239</span>
+<span class="normal">240</span>
+<span class="normal">241</span>
+<span class="normal">242</span>
+<span class="normal">243</span>
+<span class="normal">244</span>
+<span class="normal">245</span>
+<span class="normal">246</span>
+<span class="normal">247</span>
+<span class="normal">248</span>
+<span class="normal">249</span>
+<span class="normal">250</span>
+<span class="normal">251</span>
+<span class="normal">252</span>
+<span class="normal">253</span>
+<span class="normal">254</span>
+<span class="normal">255</span>
+<span class="normal">256</span>
+<span class="normal">257</span>
+<span class="normal">258</span>
+<span class="normal">259</span>
+<span class="normal">260</span>
+<span class="normal">261</span>
+<span class="normal">262</span>
+<span class="normal">263</span>
+<span class="normal">264</span>
+<span class="normal">265</span>
+<span class="normal">266</span>
+<span class="normal">267</span>
+<span class="normal">268</span>
+<span class="normal">269</span>
+<span class="normal">270</span>
+<span class="normal">271</span>
+<span class="normal">272</span>
+<span class="normal">273</span>
+<span class="normal">274</span>
+<span class="normal">275</span>
+<span class="normal">276</span>
+<span class="normal">277</span>
+<span class="normal">278</span>
+<span class="normal">279</span>
+<span class="normal">280</span>
+<span class="normal">281</span>
+<span class="normal">282</span>
+<span class="normal">283</span>
+<span class="normal">284</span>
+<span class="normal">285</span>
+<span class="normal">286</span>
+<span class="normal">287</span>
+<span class="normal">288</span>
+<span class="normal">289</span>
+<span class="normal">290</span>
+<span class="normal">291</span>
+<span class="normal">292</span>
+<span class="normal">293</span>
+<span class="normal">294</span>
+<span class="normal">295</span>
+<span class="normal">296</span>
+<span class="normal">297</span>
+<span class="normal">298</span>
+<span class="normal">299</span>
+<span class="normal">300</span>
+<span class="normal">301</span>
+<span class="normal">302</span>
+<span class="normal">303</span>
+<span class="normal">304</span>
+<span class="normal">305</span>
+<span class="normal">306</span>
+<span class="normal">307</span>
+<span class="normal">308</span>
+<span class="normal">309</span>
+<span class="normal">310</span>
+<span class="normal">311</span>
+<span class="normal">312</span>
+<span class="normal">313</span>
+<span class="normal">314</span>
+<span class="normal">315</span>
+<span class="normal">316</span>
+<span class="normal">317</span>
+<span class="normal">318</span>
+<span class="normal">319</span>
+<span class="normal">320</span>
+<span class="normal">321</span>
+<span class="normal">322</span>
+<span class="normal">323</span>
+<span class="normal">324</span>
+<span class="normal">325</span>
+<span class="normal">326</span>
+<span class="normal">327</span>
+<span class="normal">328</span>
+<span class="normal">329</span>
+<span class="normal">330</span>
+<span class="normal">331</span>
+<span class="normal">332</span>
+<span class="normal">333</span>
+<span class="normal">334</span>
+<span class="normal">335</span>
+<span class="normal">336</span>
+<span class="normal">337</span>
+<span class="normal">338</span>
+<span class="normal">339</span>
+<span class="normal">340</span>
+<span class="normal">341</span>
+<span class="normal">342</span>
+<span class="normal">343</span>
+<span class="normal">344</span>
+<span class="normal">345</span>
+<span class="normal">346</span>
+<span class="normal">347</span>
+<span class="normal">348</span>
+<span class="normal">349</span>
+<span class="normal">350</span>
+<span class="normal">351</span>
+<span class="normal">352</span>
+<span class="normal">353</span>
+<span class="normal">354</span>
+<span class="normal">355</span>
+<span class="normal">356</span>
+<span class="normal">357</span>
+<span class="normal">358</span>
+<span class="normal">359</span>
+<span class="normal">360</span>
+<span class="normal">361</span>
+<span class="normal">362</span>
+<span class="normal">363</span>
+<span class="normal">364</span>
+<span class="normal">365</span>
+<span class="normal">366</span>
+<span class="normal">367</span>
+<span class="normal">368</span>
+<span class="normal">369</span>
+<span class="normal">370</span>
+<span class="normal">371</span>
+<span class="normal">372</span>
+<span class="normal">373</span>
+<span class="normal">374</span>
+<span class="normal">375</span>
+<span class="normal">376</span>
+<span class="normal">377</span>
+<span class="normal">378</span>
+<span class="normal">379</span>
+<span class="normal">380</span>
+<span class="normal">381</span>
+<span class="normal">382</span>
+<span class="normal">383</span>
+<span class="normal">384</span>
+<span class="normal">385</span>
+<span class="normal">386</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">process_lookup_tables</span><span class="p">(</span>
+    <span class="n">t_index_path</span><span class="p">,</span>
+    <span class="n">temp_path</span><span class="o">=</span><span class="s2">&quot;/data/lipidatlas/data/app/data/temp/&quot;</span><span class="p">,</span>  <span class="c1"># &quot;notebooks/data_processing/data/temp/&quot;,</span>
+    <span class="n">l_arrays_raw_data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">load_from_file</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">save</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">return_result</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This function has been implemented to allow the paralellization of lookup tables processing.</span>
+<span class="sd">    It computes and returns/saves the lookup tables for each slice. The output consists of:</span>
+<span class="sd">    - array_pixel_indexes_high_res: np.nddaray of shape (n,2), it maps each pixel to two</span>
+<span class="sd">        array_spectra_high_res indices, delimiting the corresponding spectrum.</span>
+<span class="sd">    - array_spectra_high_res: np.nddaray of shape (2,m), it contains the concatenated spectra of</span>
+<span class="sd">        each pixel. First row contains the m/z values, while second row contains the</span>
+<span class="sd">        corresponding intensities.</span>
+<span class="sd">    - array_averaged_mz_intensity_low_res: np.nddaray of shape (2, k), it contains the</span>
+<span class="sd">        low-resolution spectrum averaged over all pixels. First row contains the m/z values,</span>
+<span class="sd">        while second row contains the corresponding intensities.</span>
+<span class="sd">    - array_averaged_mz_intensity_high_res: Same as array_averaged_mz_intensity_low_res, but in</span>
+<span class="sd">        higher resolution, with, therefore, a different shape.</span>
+<span class="sd">    - image_shape: a tuple of integers, indicating the vertical and horizontal size of the</span>
+<span class="sd">        corresponding slice.</span>
+<span class="sd">    - divider_lookup: integer that sets the resolution of the lookup tables.</span>
+<span class="sd">    - lookup_table_spectra_high_res: np.nddaray of shape (size_spectrum// divider_lookup, m), it</span>
+<span class="sd">        maps m/z values to indexes in array_spectra for each pixel.</span>
+<span class="sd">    - cumulated_image_lookup_table_high_res: np.nddaray of shape</span>
+<span class="sd">        (size_spectrum // divider_lookup, image height, image_width), it maps m/z values to the</span>
+<span class="sd">        cumulated spectrum until the corresponding m/z value for each pixel.</span>
+<span class="sd">    - lookup_table_averaged_spectrum_high_res: np.nddaray of length size_spectrum, it maps m/z</span>
+<span class="sd">        values to indexes in the averaged array_spectra for each pixel.</span>
+<span class="sd">    - array_peaks_corrected: A two-dimensional array containing the peak annotations (min peak,</span>
+<span class="sd">        max peak, average value of the peak), sorted by min_mz, for the lipids that have</span>
+<span class="sd">        been transformed.</span>
+<span class="sd">    - array_corrective_factors: A three-dimensional numpy array equal to the ratio of</span>
+<span class="sd">        &#39;arrays_after_transfo&#39; and &#39;arrays_before_transfo&#39; containing the corrective factor used for</span>
+<span class="sd">        lipid (first dimension) and each pixel (second and third dimension).</span>
+
+
+<span class="sd">    Args:</span>
+<span class="sd">        t_index_path (tuple(int, str)): A tuple containing the index of the slice (starting from 1)</span>
+<span class="sd">            and the corresponding path for the raw data.</span>
+<span class="sd">        temp_path (str, optional): Path to load/save the output npz file. Defaults to</span>
+<span class="sd">            &quot;/data/lipidatlas/data/app/data/temp/&quot;.</span>
+<span class="sd">        l_arrays_raw_data (list, optional): A list of arrays containing the data that is processed</span>
+<span class="sd">            in the current function. If None, the same arrays must be loaded from the disk. Defaults</span>
+<span class="sd">            to None.</span>
+<span class="sd">        load_from_file (bool, optional): If True, the arrays containing the data processed by the</span>
+<span class="sd">            current function are loaded from the disk. If False, the corresponding arrays must be</span>
+<span class="sd">            provided through the parameter l_arrays_raw_data. Defaults to True.</span>
+<span class="sd">        save (bool, optional): If True, output arrays are saved in a npz file. Defaults to True.</span>
+<span class="sd">        return_result (bool, optional): If True, output arrays are returned by the function.</span>
+<span class="sd">            Defaults to False.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Depending on &#39;return result&#39;, returns either nothing, either several np.ndarrays, described</span>
+<span class="sd">            above.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">l_arrays_raw_data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Arrays must be loaded from file from now on.&quot;</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">load_from_file</span><span class="p">:</span>
+
+        <span class="c1"># Get slice path</span>
+        <span class="n">slice_index</span> <span class="o">=</span> <span class="n">t_index_path</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">t_index_path</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="c1"># Correct temp path</span>
+        <span class="k">if</span> <span class="s2">&quot;MouseBrain2&quot;</span> <span class="ow">in</span> <span class="n">name</span><span class="p">:</span>
+            <span class="n">temp_path</span> <span class="o">+=</span> <span class="s2">&quot;brain_2/&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">temp_path</span> <span class="o">+=</span> <span class="s2">&quot;brain_1/&quot;</span>
+
+        <span class="n">path</span> <span class="o">=</span> <span class="n">temp_path</span> <span class="o">+</span> <span class="s2">&quot;slice_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">slice_index</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.npz&quot;</span>
+        <span class="n">npzfile</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+
+        <span class="c1"># Load individual arrays</span>
+        <span class="n">array_pixel_indexes_high_res</span> <span class="o">=</span> <span class="n">npzfile</span><span class="p">[</span><span class="s2">&quot;array_pixel_indexes_high_res&quot;</span><span class="p">]</span>
+        <span class="n">array_spectra_high_res</span> <span class="o">=</span> <span class="n">npzfile</span><span class="p">[</span><span class="s2">&quot;array_spectra_high_res&quot;</span><span class="p">]</span>
+        <span class="n">array_averaged_mz_intensity_low_res</span> <span class="o">=</span> <span class="n">npzfile</span><span class="p">[</span><span class="s2">&quot;array_averaged_mz_intensity_low_res&quot;</span><span class="p">]</span>
+        <span class="n">array_averaged_mz_intensity_high_res</span> <span class="o">=</span> <span class="n">npzfile</span><span class="p">[</span><span class="s2">&quot;array_averaged_mz_intensity_high_res&quot;</span><span class="p">]</span>
+        <span class="n">array_averaged_mz_intensity_high_res_after_standardization</span> <span class="o">=</span> <span class="n">npzfile</span><span class="p">[</span>
+            <span class="s2">&quot;array_averaged_mz_intensity_high_res_after_standardization&quot;</span>
+        <span class="p">]</span>
+        <span class="n">image_shape</span> <span class="o">=</span> <span class="n">npzfile</span><span class="p">[</span><span class="s2">&quot;image_shape&quot;</span><span class="p">]</span>
+        <span class="n">array_peaks_corrected</span> <span class="o">=</span> <span class="n">npzfile</span><span class="p">[</span><span class="s2">&quot;array_peaks_corrected&quot;</span><span class="p">]</span>
+        <span class="n">array_corrective_factors</span> <span class="o">=</span> <span class="n">npzfile</span><span class="p">[</span><span class="s2">&quot;array_corrective_factors&quot;</span><span class="p">]</span>
+
+        <span class="c1"># Try to see if the array has already been processed before</span>
+        <span class="k">if</span> <span class="s2">&quot;divider_lookup&quot;</span> <span class="ow">in</span> <span class="n">npzfile</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;This file has already been processed before&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Either the data or a filename must be provided&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="c1"># No normalization anymore as it&#39;s done in &#39;process_raw_data()&#39;</span>
+    <span class="c1"># # Normalize spectrum</span>
+    <span class="c1"># array_averaged_mz_intensity_low_res[1, :]/= np.sum(array_averaged_mz_intensity_low_res[1, :])</span>
+    <span class="c1"># array_averaged_mz_intensity_high_res[1, :]/=np.sum(array_averaged_mz_intensity_high_res[1, :])</span>
+    <span class="c1"># for (b1, b2) in array_pixel_indexes_high_res:</span>
+    <span class="c1">#     # ? Instead of processing this way (divide by the entire pixel sum of spectra), maybe</span>
+    <span class="c1">#     # ? divide by the number of non-zero values in the spectrum ?</span>
+    <span class="c1">#     array_spectra_high_res[1, b1 : b2 + 1] /= np.sum(array_spectra_high_res[1, b1 : b2 + 1])</span>
+
+    <span class="c1"># Define divider_lookup</span>
+    <span class="n">divider_lookup</span> <span class="o">=</span> <span class="n">DIVIDER_LOOKUP</span>
+
+    <span class="c1"># Build lookup table linking mz value to index in array_spectra for each pixel</span>
+    <span class="n">lookup_table_spectra_high_res</span> <span class="o">=</span> <span class="n">build_index_lookup_table</span><span class="p">(</span>
+        <span class="n">array_spectra_high_res</span><span class="p">,</span> <span class="n">array_pixel_indexes_high_res</span><span class="p">,</span> <span class="n">divider_lookup</span>
+    <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="s2">&quot;Size (in mb) of lookup_table_spectra_high_res: &quot;</span><span class="p">,</span>
+        <span class="nb">round</span><span class="p">(</span><span class="n">lookup_table_spectra_high_res</span><span class="o">.</span><span class="n">nbytes</span> <span class="o">/</span> <span class="mi">1024</span> <span class="o">/</span> <span class="mi">1024</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+    <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Shape of lookup_table_spectra_high_res: &quot;</span><span class="p">,</span> <span class="n">lookup_table_spectra_high_res</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+    <span class="c1"># Build lookup table of the cumulated spectrum for each pixel</span>
+    <span class="n">cumulated_image_lookup_table_high_res</span> <span class="o">=</span> <span class="n">build_cumulated_image_lookup_table</span><span class="p">(</span>
+        <span class="n">array_spectra_high_res</span><span class="p">,</span> <span class="n">array_pixel_indexes_high_res</span><span class="p">,</span> <span class="n">image_shape</span><span class="p">,</span> <span class="n">divider_lookup</span>
+    <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="s2">&quot;Size (in mb) of cumulated_image_lookup_table_high_res: &quot;</span><span class="p">,</span>
+        <span class="nb">round</span><span class="p">(</span><span class="n">cumulated_image_lookup_table_high_res</span><span class="o">.</span><span class="n">nbytes</span> <span class="o">/</span> <span class="mi">1024</span> <span class="o">/</span> <span class="mi">1024</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+    <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="s2">&quot;Shape of cumulated_image_lookup_table_high_res: &quot;</span><span class="p">,</span>
+        <span class="n">cumulated_image_lookup_table_high_res</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Extend averaged arrays with zeros for nicer display</span>
+    <span class="n">array_averaged_mz_intensity_low_res</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">add_zeros_to_spectrum</span><span class="p">(</span>
+        <span class="n">array_averaged_mz_intensity_low_res</span><span class="p">,</span> <span class="n">pad_individual_peaks</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+    <span class="n">array_averaged_mz_intensity_high_res</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">add_zeros_to_spectrum</span><span class="p">(</span>
+        <span class="n">array_averaged_mz_intensity_high_res</span><span class="p">,</span> <span class="n">pad_individual_peaks</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+    <span class="n">array_averaged_mz_intensity_high_res_after_standardization</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">add_zeros_to_spectrum</span><span class="p">(</span>
+        <span class="n">array_averaged_mz_intensity_high_res_after_standardization</span><span class="p">,</span> <span class="n">pad_individual_peaks</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Build lookup table to compute fast the indexes corresponding to the boundaries selected in app</span>
+    <span class="n">lookup_table_averaged_spectrum_high_res</span> <span class="o">=</span> <span class="n">build_index_lookup_table_averaged_spectrum</span><span class="p">(</span>
+        <span class="n">array_mz</span><span class="o">=</span><span class="n">array_averaged_mz_intensity_high_res</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span>
+    <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="s2">&quot;Size (in mb) of lookup_table_averaged_spectrum_high_res: &quot;</span><span class="p">,</span>
+        <span class="nb">round</span><span class="p">(</span><span class="n">lookup_table_averaged_spectrum_high_res</span><span class="o">.</span><span class="n">nbytes</span> <span class="o">/</span> <span class="mi">1024</span> <span class="o">/</span> <span class="mi">1024</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+    <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="s2">&quot;Shape of lookup_table_averaged_spectrum_high_res: &quot;</span><span class="p">,</span>
+        <span class="n">lookup_table_averaged_spectrum_high_res</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">save</span><span class="p">:</span>
+        <span class="c1"># Save as npz file</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Saving...&quot;</span><span class="p">)</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">savez</span><span class="p">(</span>
+            <span class="n">path</span><span class="p">,</span>
+            <span class="n">array_pixel_indexes_high_res</span><span class="o">=</span><span class="n">array_pixel_indexes_high_res</span><span class="p">,</span>
+            <span class="n">array_spectra_high_res</span><span class="o">=</span><span class="n">array_spectra_high_res</span><span class="p">,</span>
+            <span class="n">array_averaged_mz_intensity_low_res</span><span class="o">=</span><span class="n">array_averaged_mz_intensity_low_res</span><span class="p">,</span>
+            <span class="n">array_averaged_mz_intensity_high_res</span><span class="o">=</span><span class="n">array_averaged_mz_intensity_high_res</span><span class="p">,</span>
+            <span class="n">array_averaged_mz_intensity_high_res_after_standardization</span><span class="o">=</span><span class="n">array_averaged_mz_intensity_high_res_after_standardization</span><span class="p">,</span>
+            <span class="n">image_shape</span><span class="o">=</span><span class="n">image_shape</span><span class="p">,</span>
+            <span class="n">divider_lookup</span><span class="o">=</span><span class="n">divider_lookup</span><span class="p">,</span>
+            <span class="n">lookup_table_spectra_high_res</span><span class="o">=</span><span class="n">lookup_table_spectra_high_res</span><span class="p">,</span>
+            <span class="n">cumulated_image_lookup_table_high_res</span><span class="o">=</span><span class="n">cumulated_image_lookup_table_high_res</span><span class="p">,</span>
+            <span class="n">lookup_table_averaged_spectrum_high_res</span><span class="o">=</span><span class="n">lookup_table_averaged_spectrum_high_res</span><span class="p">,</span>
+            <span class="n">array_peaks_corrected</span><span class="o">=</span><span class="n">array_peaks_corrected</span><span class="p">,</span>
+            <span class="n">array_corrective_factors</span><span class="o">=</span><span class="n">array_corrective_factors</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="c1"># Returns all array if needed</span>
+    <span class="k">if</span> <span class="n">return_result</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="n">array_pixel_indexes_high_res</span><span class="p">,</span>
+            <span class="n">array_spectra_high_res</span><span class="p">,</span>
+            <span class="n">array_averaged_mz_intensity_low_res</span><span class="p">,</span>
+            <span class="n">array_averaged_mz_intensity_high_res</span><span class="p">,</span>
+            <span class="n">array_averaged_mz_intensity_high_res_after_standardization</span><span class="p">,</span>
+            <span class="n">image_shape</span><span class="p">,</span>
+            <span class="n">divider_lookup</span><span class="p">,</span>
+            <span class="n">lookup_table_spectra_high_res</span><span class="p">,</span>
+            <span class="n">cumulated_image_lookup_table_high_res</span><span class="p">,</span>
+            <span class="n">lookup_table_averaged_spectrum_high_res</span><span class="p">,</span>
+            <span class="n">array_peaks_corrected</span><span class="p">,</span>
+            <span class="n">array_corrective_factors</span><span class="p">,</span>
+        <span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+              
+            </article>
+            
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../image/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Image" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Image
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../maldi_conversion/" class="md-footer__link md-footer__link--next" aria-label="Next: Maldi conversion" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Maldi conversion
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.sections"], "search": "../../../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.6c7ad80a.min.js"></script>
+      
+    
+  </body>
+</html>

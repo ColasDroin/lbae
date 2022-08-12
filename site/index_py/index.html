@@ -1,0 +1,1725 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.3.9">
+    
+    
+      
+        <title>index - LBAE technical documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.1d29e8d0.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.cbb835fc.min.css">
+        
+      
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#index" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="LBAE technical documentation" class="md-header__button md-logo" aria-label="LBAE technical documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            LBAE technical documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              index
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="LBAE technical documentation" class="md-nav__button md-logo" aria-label="LBAE technical documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    LBAE technical documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Welcome page
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../main/" class="md-nav__link">
+        main
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../app/" class="md-nav__link">
+        app
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          index
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        index
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#index" class="md-nav__link">
+    index
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#index.hide_slider" class="md-nav__link">
+    hide_slider()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#index.hide_slider_but_leave_brain" class="md-nav__link">
+    hide_slider_but_leave_brain()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#index.hide_useless_slider" class="md-nav__link">
+    hide_useless_slider()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#index.render_page_content" class="md-nav__link">
+    render_page_content()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#index.return_main_content" class="md-nav__link">
+    return_main_content()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#index.return_validation_layout" class="md-nav__link">
+    return_validation_layout()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#index.toggle_collapse" class="md-nav__link">
+    toggle_collapse()
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5">
+          Modules
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Modules" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Modules
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../modules/atlas_labels/" class="md-nav__link">
+        atlas_labels
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../modules/atlas/" class="md-nav__link">
+        atlas
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../modules/figures/" class="md-nav__link">
+        figures
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../modules/launch/" class="md-nav__link">
+        launch
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../modules/maldi_data/" class="md-nav__link">
+        maldi_data
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../modules/scRNAseq/" class="md-nav__link">
+        scRNAseq
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../modules/storage/" class="md-nav__link">
+        storage
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_8" type="checkbox" id="__nav_5_8" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5_8">
+          Tools
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Tools" data-md-level="2">
+        <label class="md-nav__title" for="__nav_5_8">
+          <span class="md-nav__icon md-icon"></span>
+          Tools
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../modules/tools/atlas/" class="md-nav__link">
+        Atlas
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../modules/tools/image/" class="md-nav__link">
+        Image
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../modules/tools/lookup_tables/" class="md-nav__link">
+        Lookup tables
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../modules/tools/maldi_conversion/" class="md-nav__link">
+        Maldi conversion
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../modules/tools/misc/" class="md-nav__link">
+        Misc
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../modules/tools/spectra/" class="md-nav__link">
+        Spectra
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../modules/tools/volume/" class="md-nav__link">
+        Volume
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6">
+          Pages
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Pages" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Pages
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pages/home/" class="md-nav__link">
+        home
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pages/sidebar/" class="md-nav__link">
+        sidebar
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pages/load_slice/" class="md-nav__link">
+        load_slice
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pages/lipid_selection/" class="md-nav__link">
+        lipid_selection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pages/region_analysis/" class="md-nav__link">
+        region_analysis
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pages/threeD_exploration/" class="md-nav__link">
+        threeD_exploration
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pages/scRNAseq/" class="md-nav__link">
+        scRNAseq
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#index" class="md-nav__link">
+    index
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#index.hide_slider" class="md-nav__link">
+    hide_slider()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#index.hide_slider_but_leave_brain" class="md-nav__link">
+    hide_slider_but_leave_brain()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#index.hide_useless_slider" class="md-nav__link">
+    hide_useless_slider()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#index.render_page_content" class="md-nav__link">
+    render_page_content()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#index.return_main_content" class="md-nav__link">
+    return_main_content()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#index.return_validation_layout" class="md-nav__link">
+    return_validation_layout()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#index.toggle_collapse" class="md-nav__link">
+    toggle_collapse()
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+
+  <h1>index</h1>
+
+<div class="doc doc-object doc-module">
+
+
+<a id="index"></a>
+  <div class="doc doc-contents first">
+  
+      <p>This module is where the app layout is created: the main container, the sidebar and the 
+different pages. All the dcc.store, used to store client data across pages, are created here. It is 
+also here that the URL routing is done.</p>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="index.hide_slider" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">hide_slider</span><span class="p">(</span><span class="n">pathname</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>This callback is used to hide the slider div when the user is on a page that does not need it.</p>
+
+      <details class="quote">
+        <summary>Source code in <code>lbae/index.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">283</span>
+<span class="normal">284</span>
+<span class="normal">285</span>
+<span class="normal">286</span>
+<span class="normal">287</span>
+<span class="normal">288</span>
+<span class="normal">289</span>
+<span class="normal">290</span>
+<span class="normal">291</span>
+<span class="normal">292</span>
+<span class="normal">293</span>
+<span class="normal">294</span>
+<span class="normal">295</span>
+<span class="normal">296</span>
+<span class="normal">297</span>
+<span class="normal">298</span>
+<span class="normal">299</span>
+<span class="normal">300</span>
+<span class="normal">301</span>
+<span class="normal">302</span>
+<span class="normal">303</span>
+<span class="normal">304</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@app</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s2">&quot;main-paper-slider&quot;</span><span class="p">,</span> <span class="s2">&quot;class_name&quot;</span><span class="p">),</span> <span class="n">Input</span><span class="p">(</span><span class="s2">&quot;url&quot;</span><span class="p">,</span> <span class="s2">&quot;pathname&quot;</span><span class="p">),</span> <span class="n">prevent_initial_call</span><span class="o">=</span><span class="kc">False</span>
+<span class="p">)</span>
+<span class="k">def</span> <span class="nf">hide_slider</span><span class="p">(</span><span class="n">pathname</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This callback is used to hide the slider div when the user is on a page that does not need it.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Pages in which the slider is displayed</span>
+    <span class="n">l_path_with_slider</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">&quot;/load-slice&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;/lipid-selection&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;/region-analysis&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;/3D-exploration&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;/gene-data&quot;</span><span class="p">,</span>
+    <span class="p">]</span>
+
+    <span class="c1"># Set the content according to the current pathname</span>
+    <span class="k">if</span> <span class="n">pathname</span> <span class="ow">in</span> <span class="n">l_path_with_slider</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;&quot;</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;d-none&quot;</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="index.hide_slider_but_leave_brain" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">hide_slider_but_leave_brain</span><span class="p">(</span><span class="n">pathname</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>This callback is used to hide the slider but leave brain chips when needed.</p>
+
+      <details class="quote">
+        <summary>Source code in <code>lbae/index.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">307</span>
+<span class="normal">308</span>
+<span class="normal">309</span>
+<span class="normal">310</span>
+<span class="normal">311</span>
+<span class="normal">312</span>
+<span class="normal">313</span>
+<span class="normal">314</span>
+<span class="normal">315</span>
+<span class="normal">316</span>
+<span class="normal">317</span>
+<span class="normal">318</span>
+<span class="normal">319</span>
+<span class="normal">320</span>
+<span class="normal">321</span>
+<span class="normal">322</span>
+<span class="normal">323</span>
+<span class="normal">324</span>
+<span class="normal">325</span>
+<span class="normal">326</span>
+<span class="normal">327</span>
+<span class="normal">328</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@app</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s2">&quot;main-slider-1&quot;</span><span class="p">,</span> <span class="s2">&quot;style&quot;</span><span class="p">),</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s2">&quot;main-slider-2&quot;</span><span class="p">,</span> <span class="s2">&quot;style&quot;</span><span class="p">),</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s2">&quot;main-text-slider&quot;</span><span class="p">,</span> <span class="s2">&quot;style&quot;</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">(</span><span class="s2">&quot;url&quot;</span><span class="p">,</span> <span class="s2">&quot;pathname&quot;</span><span class="p">),</span>
+    <span class="n">prevent_initial_call</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">def</span> <span class="nf">hide_slider_but_leave_brain</span><span class="p">(</span><span class="n">pathname</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This callback is used to hide the slider but leave brain chips when needed.&quot;&quot;&quot;</span>
+
+    <span class="c1"># Pages in which the slider is displayed</span>
+    <span class="n">l_path_without_slider_but_with_brain</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">&quot;/3D-exploration&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;/gene-data&quot;</span><span class="p">,</span>
+    <span class="p">]</span>
+
+    <span class="c1"># Set the content according to the current pathname</span>
+    <span class="k">if</span> <span class="n">pathname</span> <span class="ow">in</span> <span class="n">l_path_without_slider_but_with_brain</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;visibility&quot;</span><span class="p">:</span> <span class="s2">&quot;hidden&quot;</span><span class="p">},</span> <span class="p">{</span><span class="s2">&quot;visibility&quot;</span><span class="p">:</span> <span class="s2">&quot;hidden&quot;</span><span class="p">},</span> <span class="p">{</span><span class="s2">&quot;visibility&quot;</span><span class="p">:</span> <span class="s2">&quot;hidden&quot;</span><span class="p">}</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">{},</span> <span class="p">{},</span> <span class="p">{}</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="index.hide_useless_slider" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">hide_useless_slider</span><span class="p">(</span><span class="n">brain</span><span class="p">,</span> <span class="n">value_1</span><span class="p">,</span> <span class="n">value_2</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>This callback is used to update the slider indices with the selected brain.</p>
+
+      <details class="quote">
+        <summary>Source code in <code>lbae/index.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">331</span>
+<span class="normal">332</span>
+<span class="normal">333</span>
+<span class="normal">334</span>
+<span class="normal">335</span>
+<span class="normal">336</span>
+<span class="normal">337</span>
+<span class="normal">338</span>
+<span class="normal">339</span>
+<span class="normal">340</span>
+<span class="normal">341</span>
+<span class="normal">342</span>
+<span class="normal">343</span>
+<span class="normal">344</span>
+<span class="normal">345</span>
+<span class="normal">346</span>
+<span class="normal">347</span>
+<span class="normal">348</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@app</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s2">&quot;main-slider-1&quot;</span><span class="p">,</span> <span class="s2">&quot;class_name&quot;</span><span class="p">),</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s2">&quot;main-slider-2&quot;</span><span class="p">,</span> <span class="s2">&quot;class_name&quot;</span><span class="p">),</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s2">&quot;main-slider-1&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">),</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s2">&quot;main-slider-2&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">(</span><span class="s2">&quot;main-brain&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">),</span>
+    <span class="n">State</span><span class="p">(</span><span class="s2">&quot;main-slider-1&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">),</span>
+    <span class="n">State</span><span class="p">(</span><span class="s2">&quot;main-slider-2&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">),</span>
+    <span class="n">prevent_initial_call</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">def</span> <span class="nf">hide_useless_slider</span><span class="p">(</span><span class="n">brain</span><span class="p">,</span> <span class="n">value_1</span><span class="p">,</span> <span class="n">value_2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This callback is used to update the slider indices with the selected brain.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">brain</span> <span class="o">==</span> <span class="s2">&quot;brain_1&quot;</span><span class="p">:</span>
+        <span class="n">value_1</span> <span class="o">=</span> <span class="n">value_2</span> <span class="o">-</span> <span class="n">data</span><span class="o">.</span><span class="n">get_slice_list</span><span class="p">(</span><span class="n">indices</span><span class="o">=</span><span class="s2">&quot;brain_1&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">return</span> <span class="s2">&quot;mt-2 mr-5 ml-2 mb-1 w-50&quot;</span><span class="p">,</span> <span class="s2">&quot;mt-2 mr-5 ml-2 mb-1 w-50 d-none&quot;</span><span class="p">,</span> <span class="n">value_1</span><span class="p">,</span> <span class="n">value_2</span>
+    <span class="k">elif</span> <span class="n">brain</span> <span class="o">==</span> <span class="s2">&quot;brain_2&quot;</span><span class="p">:</span>
+        <span class="n">value_2</span> <span class="o">=</span> <span class="n">value_1</span> <span class="o">+</span> <span class="n">data</span><span class="o">.</span><span class="n">get_slice_list</span><span class="p">(</span><span class="n">indices</span><span class="o">=</span><span class="s2">&quot;brain_1&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">return</span> <span class="s2">&quot;mt-2 mr-5 ml-2 mb-1 w-50 d-none&quot;</span><span class="p">,</span> <span class="s2">&quot;mt-2 mr-5 ml-2 mb-1 w-50&quot;</span><span class="p">,</span> <span class="n">value_1</span><span class="p">,</span> <span class="n">value_2</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="index.render_page_content" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">render_page_content</span><span class="p">(</span><span class="n">pathname</span><span class="p">,</span> <span class="n">slice_index</span><span class="p">,</span> <span class="n">brain</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>This callback is used as a URL router.</p>
+
+      <details class="quote">
+        <summary>Source code in <code>lbae/index.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">221</span>
+<span class="normal">222</span>
+<span class="normal">223</span>
+<span class="normal">224</span>
+<span class="normal">225</span>
+<span class="normal">226</span>
+<span class="normal">227</span>
+<span class="normal">228</span>
+<span class="normal">229</span>
+<span class="normal">230</span>
+<span class="normal">231</span>
+<span class="normal">232</span>
+<span class="normal">233</span>
+<span class="normal">234</span>
+<span class="normal">235</span>
+<span class="normal">236</span>
+<span class="normal">237</span>
+<span class="normal">238</span>
+<span class="normal">239</span>
+<span class="normal">240</span>
+<span class="normal">241</span>
+<span class="normal">242</span>
+<span class="normal">243</span>
+<span class="normal">244</span>
+<span class="normal">245</span>
+<span class="normal">246</span>
+<span class="normal">247</span>
+<span class="normal">248</span>
+<span class="normal">249</span>
+<span class="normal">250</span>
+<span class="normal">251</span>
+<span class="normal">252</span>
+<span class="normal">253</span>
+<span class="normal">254</span>
+<span class="normal">255</span>
+<span class="normal">256</span>
+<span class="normal">257</span>
+<span class="normal">258</span>
+<span class="normal">259</span>
+<span class="normal">260</span>
+<span class="normal">261</span>
+<span class="normal">262</span>
+<span class="normal">263</span>
+<span class="normal">264</span>
+<span class="normal">265</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@app</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s2">&quot;content&quot;</span><span class="p">,</span> <span class="s2">&quot;children&quot;</span><span class="p">),</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s2">&quot;empty-content&quot;</span><span class="p">,</span> <span class="s2">&quot;children&quot;</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">(</span><span class="s2">&quot;url&quot;</span><span class="p">,</span> <span class="s2">&quot;pathname&quot;</span><span class="p">),</span>
+    <span class="n">State</span><span class="p">(</span><span class="s2">&quot;main-slider&quot;</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">),</span>
+    <span class="n">State</span><span class="p">(</span><span class="s2">&quot;main-brain&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">),</span>
+<span class="p">)</span>
+<span class="k">def</span> <span class="nf">render_page_content</span><span class="p">(</span><span class="n">pathname</span><span class="p">,</span> <span class="n">slice_index</span><span class="p">,</span> <span class="n">brain</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This callback is used as a URL router.&quot;&quot;&quot;</span>
+
+    <span class="c1"># Keep track of the page in the console</span>
+    <span class="k">if</span> <span class="n">pathname</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Page&quot;</span> <span class="o">+</span> <span class="n">pathname</span> <span class="o">+</span> <span class="s2">&quot; has been selected&quot;</span> <span class="o">+</span> <span class="n">logmem</span><span class="p">())</span>
+
+    <span class="c1"># Set the content according to the current pathname</span>
+    <span class="k">if</span> <span class="n">pathname</span> <span class="o">==</span> <span class="s2">&quot;/&quot;</span><span class="p">:</span>
+        <span class="n">page</span> <span class="o">=</span> <span class="n">home</span><span class="o">.</span><span class="n">layout</span>
+
+    <span class="k">elif</span> <span class="n">pathname</span> <span class="o">==</span> <span class="s2">&quot;/load-slice&quot;</span><span class="p">:</span>
+        <span class="n">page</span> <span class="o">=</span> <span class="n">load_slice</span><span class="o">.</span><span class="n">return_layout</span><span class="p">(</span><span class="n">basic_config</span><span class="p">,</span> <span class="n">slice_index</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">pathname</span> <span class="o">==</span> <span class="s2">&quot;/lipid-selection&quot;</span><span class="p">:</span>
+        <span class="n">page</span> <span class="o">=</span> <span class="n">lipid_selection</span><span class="o">.</span><span class="n">return_layout</span><span class="p">(</span><span class="n">basic_config</span><span class="p">,</span> <span class="n">slice_index</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">pathname</span> <span class="o">==</span> <span class="s2">&quot;/region-analysis&quot;</span><span class="p">:</span>
+        <span class="n">page</span> <span class="o">=</span> <span class="n">region_analysis</span><span class="o">.</span><span class="n">return_layout</span><span class="p">(</span><span class="n">basic_config</span><span class="p">,</span> <span class="n">slice_index</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">pathname</span> <span class="o">==</span> <span class="s2">&quot;/3D-exploration&quot;</span><span class="p">:</span>
+        <span class="n">page</span> <span class="o">=</span> <span class="n">threeD_exploration</span><span class="o">.</span><span class="n">return_layout</span><span class="p">(</span><span class="n">basic_config</span><span class="p">,</span> <span class="n">slice_index</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">pathname</span> <span class="o">==</span> <span class="s2">&quot;/gene-data&quot;</span><span class="p">:</span>
+        <span class="n">page</span> <span class="o">=</span> <span class="n">scRNAseq</span><span class="o">.</span><span class="n">return_layout</span><span class="p">(</span><span class="n">basic_config</span><span class="p">,</span> <span class="n">slice_index</span><span class="p">,</span> <span class="n">brain</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># If the user tries to reach a different page, return a 404 message</span>
+        <span class="n">page</span> <span class="o">=</span> <span class="n">dmc</span><span class="o">.</span><span class="n">Center</span><span class="p">(</span>
+            <span class="n">dmc</span><span class="o">.</span><span class="n">Alert</span><span class="p">(</span>
+                <span class="n">title</span><span class="o">=</span><span class="s2">&quot;404: Not found&quot;</span><span class="p">,</span>
+                <span class="n">children</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;The pathname </span><span class="si">{</span><span class="n">pathname</span><span class="si">}</span><span class="s2"> was not recognised...&quot;</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span>
+                <span class="n">class_name</span><span class="o">=</span><span class="s2">&quot;mt-5&quot;</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="n">class_name</span><span class="o">=</span><span class="s2">&quot;mt-5&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="k">return</span> <span class="n">page</span><span class="p">,</span> <span class="s2">&quot;&quot;</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="index.return_main_content" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">return_main_content</span><span class="p">()</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>This function compute the elements of the app that are shared across pages, including all the
+dcc.store.</p>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+          </td>
+          <td><p>html.Div: A div containing the corresponding elements.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>lbae/index.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 41</span>
+<span class="normal"> 42</span>
+<span class="normal"> 43</span>
+<span class="normal"> 44</span>
+<span class="normal"> 45</span>
+<span class="normal"> 46</span>
+<span class="normal"> 47</span>
+<span class="normal"> 48</span>
+<span class="normal"> 49</span>
+<span class="normal"> 50</span>
+<span class="normal"> 51</span>
+<span class="normal"> 52</span>
+<span class="normal"> 53</span>
+<span class="normal"> 54</span>
+<span class="normal"> 55</span>
+<span class="normal"> 56</span>
+<span class="normal"> 57</span>
+<span class="normal"> 58</span>
+<span class="normal"> 59</span>
+<span class="normal"> 60</span>
+<span class="normal"> 61</span>
+<span class="normal"> 62</span>
+<span class="normal"> 63</span>
+<span class="normal"> 64</span>
+<span class="normal"> 65</span>
+<span class="normal"> 66</span>
+<span class="normal"> 67</span>
+<span class="normal"> 68</span>
+<span class="normal"> 69</span>
+<span class="normal"> 70</span>
+<span class="normal"> 71</span>
+<span class="normal"> 72</span>
+<span class="normal"> 73</span>
+<span class="normal"> 74</span>
+<span class="normal"> 75</span>
+<span class="normal"> 76</span>
+<span class="normal"> 77</span>
+<span class="normal"> 78</span>
+<span class="normal"> 79</span>
+<span class="normal"> 80</span>
+<span class="normal"> 81</span>
+<span class="normal"> 82</span>
+<span class="normal"> 83</span>
+<span class="normal"> 84</span>
+<span class="normal"> 85</span>
+<span class="normal"> 86</span>
+<span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span>
+<span class="normal">158</span>
+<span class="normal">159</span>
+<span class="normal">160</span>
+<span class="normal">161</span>
+<span class="normal">162</span>
+<span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span>
+<span class="normal">166</span>
+<span class="normal">167</span>
+<span class="normal">168</span>
+<span class="normal">169</span>
+<span class="normal">170</span>
+<span class="normal">171</span>
+<span class="normal">172</span>
+<span class="normal">173</span>
+<span class="normal">174</span>
+<span class="normal">175</span>
+<span class="normal">176</span>
+<span class="normal">177</span>
+<span class="normal">178</span>
+<span class="normal">179</span>
+<span class="normal">180</span>
+<span class="normal">181</span>
+<span class="normal">182</span>
+<span class="normal">183</span>
+<span class="normal">184</span>
+<span class="normal">185</span>
+<span class="normal">186</span>
+<span class="normal">187</span>
+<span class="normal">188</span>
+<span class="normal">189</span>
+<span class="normal">190</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">return_main_content</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;This function compute the elements of the app that are shared across pages, including all the</span>
+<span class="sd">    dcc.store.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        html.Div: A div containing the corresponding elements.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># List of empty lipid indexes for the dropdown of page 4, assuming brain 1 is initially selected</span>
+    <span class="n">empty_lipid_list</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">get_slice_list</span><span class="p">(</span><span class="n">indices</span><span class="o">=</span><span class="s2">&quot;brain_1&quot;</span><span class="p">)]</span>
+
+    <span class="c1"># Record session id in case sessions need to be individualized</span>
+    <span class="n">session_id</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">())</span>
+
+    <span class="c1"># Define static content</span>
+    <span class="n">main_content</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span>
+        <span class="n">children</span><span class="o">=</span><span class="p">[</span>
+            <span class="c1"># To handle url since multi-page app</span>
+            <span class="n">dcc</span><span class="o">.</span><span class="n">Location</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&quot;url&quot;</span><span class="p">,</span> <span class="n">refresh</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+            <span class="c1"># Record session id, useful to trigger callbacks at initialization</span>
+            <span class="n">dcc</span><span class="o">.</span><span class="n">Store</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&quot;session-id&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">session_id</span><span class="p">),</span>
+            <span class="c1"># Record the slider index</span>
+            <span class="n">dcc</span><span class="o">.</span><span class="n">Store</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&quot;main-slider&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+            <span class="c1"># Record the state of the range sliders for low and high resolution spectra in page 2</span>
+            <span class="n">dcc</span><span class="o">.</span><span class="n">Store</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&quot;boundaries-low-resolution-mz-plot&quot;</span><span class="p">),</span>
+            <span class="n">dcc</span><span class="o">.</span><span class="n">Store</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&quot;boundaries-high-resolution-mz-plot&quot;</span><span class="p">),</span>
+            <span class="c1"># Record the lipids selected in page 2</span>
+            <span class="n">dcc</span><span class="o">.</span><span class="n">Store</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&quot;page-2-selected-lipid-1&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=-</span><span class="mi">1</span><span class="p">),</span>
+            <span class="n">dcc</span><span class="o">.</span><span class="n">Store</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&quot;page-2-selected-lipid-2&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=-</span><span class="mi">1</span><span class="p">),</span>
+            <span class="n">dcc</span><span class="o">.</span><span class="n">Store</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&quot;page-2-selected-lipid-3&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=-</span><span class="mi">1</span><span class="p">),</span>
+            <span class="n">dcc</span><span class="o">.</span><span class="n">Store</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&quot;page-2-last-selected-lipids&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">[]),</span>
+            <span class="c1"># Record the lipids selected in page 4</span>
+            <span class="n">dcc</span><span class="o">.</span><span class="n">Store</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&quot;page-4-selected-lipid-1&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">empty_lipid_list</span><span class="p">),</span>
+            <span class="n">dcc</span><span class="o">.</span><span class="n">Store</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&quot;page-4-selected-lipid-2&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">empty_lipid_list</span><span class="p">),</span>
+            <span class="n">dcc</span><span class="o">.</span><span class="n">Store</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&quot;page-4-selected-lipid-3&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">empty_lipid_list</span><span class="p">),</span>
+            <span class="n">dcc</span><span class="o">.</span><span class="n">Store</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&quot;page-4-last-selected-regions&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">[]),</span>
+            <span class="n">dcc</span><span class="o">.</span><span class="n">Store</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&quot;page-4-selected-region-1&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">),</span>
+            <span class="n">dcc</span><span class="o">.</span><span class="n">Store</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&quot;page-4-selected-region-2&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">),</span>
+            <span class="n">dcc</span><span class="o">.</span><span class="n">Store</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&quot;page-4-selected-region-3&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">),</span>
+            <span class="n">dcc</span><span class="o">.</span><span class="n">Store</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&quot;page-4-last-selected-lipids&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">[]),</span>
+            <span class="c1"># Record the shapes drawn in page 3</span>
+            <span class="n">dcc</span><span class="o">.</span><span class="n">Store</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&quot;dcc-store-color-mask&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">[]),</span>
+            <span class="n">dcc</span><span class="o">.</span><span class="n">Store</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&quot;dcc-store-reset&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+            <span class="n">dcc</span><span class="o">.</span><span class="n">Store</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&quot;dcc-store-shapes-and-masks&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">[]),</span>
+            <span class="n">dcc</span><span class="o">.</span><span class="n">Store</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&quot;dcc-store-list-idx-lipids&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">[]),</span>
+            <span class="c1"># Record the annotated paths drawn in page 3</span>
+            <span class="n">dcc</span><span class="o">.</span><span class="n">Store</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&quot;page-3-dcc-store-path-heatmap&quot;</span><span class="p">),</span>
+            <span class="n">dcc</span><span class="o">.</span><span class="n">Store</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&quot;page-3-dcc-store-basic-figure&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+            <span class="c1"># Record the computed spectra drawn in page 3</span>
+            <span class="n">dcc</span><span class="o">.</span><span class="n">Store</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&quot;dcc-store-list-mz-spectra&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">[]),</span>
+            <span class="c1"># Record the lipids expressed in the region in page 3</span>
+            <span class="n">dcc</span><span class="o">.</span><span class="n">Store</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&quot;page-3-dcc-store-lipids-region&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">[]),</span>
+            <span class="c1"># Actual app layout</span>
+            <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span>
+                <span class="n">children</span><span class="o">=</span><span class="p">[</span>
+                    <span class="n">sidebar</span><span class="o">.</span><span class="n">layout</span><span class="p">,</span>
+                    <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&quot;content&quot;</span><span class="p">),</span>
+                    <span class="n">dmc</span><span class="o">.</span><span class="n">Center</span><span class="p">(</span>
+                        <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;main-paper-slider&quot;</span><span class="p">,</span>
+                        <span class="n">style</span><span class="o">=</span><span class="p">{</span>
+                            <span class="s2">&quot;position&quot;</span><span class="p">:</span> <span class="s2">&quot;fixed&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;bottom&quot;</span><span class="p">:</span> <span class="s2">&quot;1rem&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;height&quot;</span><span class="p">:</span> <span class="s2">&quot;3rem&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;left&quot;</span><span class="p">:</span> <span class="s2">&quot;7rem&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;right&quot;</span><span class="p">:</span> <span class="s2">&quot;1rem&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;background-color&quot;</span><span class="p">:</span> <span class="s2">&quot;rgba(0, 0, 0, 0.0)&quot;</span><span class="p">,</span>
+                        <span class="p">},</span>
+                        <span class="n">children</span><span class="o">=</span><span class="p">[</span>
+                            <span class="n">dmc</span><span class="o">.</span><span class="n">Text</span><span class="p">(</span>
+                                <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;main-text-slider&quot;</span><span class="p">,</span>
+                                <span class="n">children</span><span class="o">=</span><span class="s2">&quot;Rostro-caudal coordinate (mm): &quot;</span><span class="p">,</span>
+                                <span class="n">class_name</span><span class="o">=</span><span class="s2">&quot;pr-4&quot;</span><span class="p">,</span>
+                                <span class="n">size</span><span class="o">=</span><span class="s2">&quot;sm&quot;</span><span class="p">,</span>
+                            <span class="p">),</span>
+                            <span class="n">dmc</span><span class="o">.</span><span class="n">Slider</span><span class="p">(</span>
+                                <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;main-slider-1&quot;</span><span class="p">,</span>
+                                <span class="nb">min</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">get_slice_list</span><span class="p">(</span><span class="n">indices</span><span class="o">=</span><span class="s2">&quot;brain_1&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span>
+                                <span class="nb">max</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">get_slice_list</span><span class="p">(</span><span class="n">indices</span><span class="o">=</span><span class="s2">&quot;brain_1&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+                                <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                                <span class="n">marks</span><span class="o">=</span><span class="p">[</span>
+                                    <span class="p">{</span>
+                                        <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="n">slice_index</span><span class="p">,</span>
+                                        <span class="c1"># Use x coordinate for label</span>
+                                        <span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;</span><span class="si">{:.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                                            <span class="n">atlas</span><span class="o">.</span><span class="n">l_original_coor</span><span class="p">[</span><span class="n">slice_index</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+                                        <span class="p">),</span>
+                                    <span class="p">}</span>
+                                    <span class="k">for</span> <span class="n">slice_index</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">get_slice_list</span><span class="p">(</span><span class="n">indices</span><span class="o">=</span><span class="s2">&quot;brain_1&quot;</span><span class="p">)[::</span><span class="mi">3</span><span class="p">]</span>
+                                <span class="p">],</span>
+                                <span class="n">size</span><span class="o">=</span><span class="s2">&quot;xs&quot;</span><span class="p">,</span>
+                                <span class="n">value</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">get_slice_list</span><span class="p">(</span><span class="n">indices</span><span class="o">=</span><span class="s2">&quot;brain_1&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span>
+                                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;cyan&quot;</span><span class="p">,</span>
+                                <span class="n">class_name</span><span class="o">=</span><span class="s2">&quot;mt-2 mr-5 ml-2 mb-1 w-50&quot;</span><span class="p">,</span>
+                            <span class="p">),</span>
+                            <span class="n">dmc</span><span class="o">.</span><span class="n">Slider</span><span class="p">(</span>
+                                <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;main-slider-2&quot;</span><span class="p">,</span>
+                                <span class="nb">min</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">get_slice_list</span><span class="p">(</span><span class="n">indices</span><span class="o">=</span><span class="s2">&quot;brain_2&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span>
+                                <span class="nb">max</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">get_slice_list</span><span class="p">(</span><span class="n">indices</span><span class="o">=</span><span class="s2">&quot;brain_2&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+                                <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                                <span class="n">marks</span><span class="o">=</span><span class="p">[</span>
+                                    <span class="p">{</span>
+                                        <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="n">slice_index</span><span class="p">,</span>
+                                        <span class="c1"># Use x coordinate for label</span>
+                                        <span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;</span><span class="si">{:.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                                            <span class="n">atlas</span><span class="o">.</span><span class="n">l_original_coor</span><span class="p">[</span><span class="n">slice_index</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+                                        <span class="p">),</span>
+                                    <span class="p">}</span>
+                                    <span class="k">for</span> <span class="n">slice_index</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">get_slice_list</span><span class="p">(</span><span class="n">indices</span><span class="o">=</span><span class="s2">&quot;brain_2&quot;</span><span class="p">)[::</span><span class="mi">3</span><span class="p">]</span>
+                                <span class="p">],</span>
+                                <span class="n">size</span><span class="o">=</span><span class="s2">&quot;xs&quot;</span><span class="p">,</span>
+                                <span class="n">value</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">get_slice_list</span><span class="p">(</span><span class="n">indices</span><span class="o">=</span><span class="s2">&quot;brain_2&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span>
+                                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;cyan&quot;</span><span class="p">,</span>
+                                <span class="n">class_name</span><span class="o">=</span><span class="s2">&quot;mt-2 mr-5 ml-2 mb-1 w-50 d-none&quot;</span><span class="p">,</span>
+                            <span class="p">),</span>
+                            <span class="n">dmc</span><span class="o">.</span><span class="n">Chips</span><span class="p">(</span>
+                                <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;main-brain&quot;</span><span class="p">,</span>
+                                <span class="n">data</span><span class="o">=</span><span class="p">[</span>
+                                    <span class="p">{</span><span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;brain_1&quot;</span><span class="p">,</span> <span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;Brain 1&quot;</span><span class="p">},</span>
+                                    <span class="p">{</span><span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;brain_2&quot;</span><span class="p">,</span> <span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;Brain 2&quot;</span><span class="p">},</span>
+                                <span class="p">],</span>
+                                <span class="n">value</span><span class="o">=</span><span class="s2">&quot;brain_1&quot;</span><span class="p">,</span>
+                                <span class="n">class_name</span><span class="o">=</span><span class="s2">&quot;pl-2 pt-1&quot;</span><span class="p">,</span>
+                                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;cyan&quot;</span><span class="p">,</span>
+                            <span class="p">),</span>
+                        <span class="p">],</span>
+                    <span class="p">),</span>
+                    <span class="c1"># Documentation in a bottom drawer</span>
+                    <span class="n">dmc</span><span class="o">.</span><span class="n">Drawer</span><span class="p">(</span>
+                        <span class="n">children</span><span class="o">=</span><span class="n">return_documentation</span><span class="p">(</span><span class="n">app</span><span class="p">),</span>
+                        <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;documentation-offcanvas&quot;</span><span class="p">,</span>
+                        <span class="c1"># title=&quot;LBAE documentation&quot;,</span>
+                        <span class="n">opened</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                        <span class="n">padding</span><span class="o">=</span><span class="s2">&quot;md&quot;</span><span class="p">,</span>
+                        <span class="n">size</span><span class="o">=</span><span class="s2">&quot;85vh&quot;</span><span class="p">,</span>
+                        <span class="n">position</span><span class="o">=</span><span class="s2">&quot;bottom&quot;</span><span class="p">,</span>
+                    <span class="p">),</span>
+                    <span class="c1"># Spinner when switching pages</span>
+                    <span class="n">dbc</span><span class="o">.</span><span class="n">Spinner</span><span class="p">(</span>
+                        <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;main-spinner&quot;</span><span class="p">,</span>
+                        <span class="n">color</span><span class="o">=</span><span class="s2">&quot;light&quot;</span><span class="p">,</span>
+                        <span class="n">children</span><span class="o">=</span><span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&quot;empty-content&quot;</span><span class="p">),</span>
+                        <span class="n">fullscreen</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                        <span class="n">fullscreen_style</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;left&quot;</span><span class="p">:</span> <span class="s2">&quot;6rem&quot;</span><span class="p">,</span> <span class="s2">&quot;background-color&quot;</span><span class="p">:</span> <span class="s2">&quot;#1d1c1f&quot;</span><span class="p">},</span>
+                        <span class="n">spinner_style</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;width&quot;</span><span class="p">:</span> <span class="s2">&quot;6rem&quot;</span><span class="p">,</span> <span class="s2">&quot;height&quot;</span><span class="p">:</span> <span class="s2">&quot;6rem&quot;</span><span class="p">},</span>
+                        <span class="n">delay_hide</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+                    <span class="p">),</span>
+                <span class="p">],</span>
+            <span class="p">),</span>
+        <span class="p">],</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">main_content</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="index.return_validation_layout" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">return_validation_layout</span><span class="p">(</span><span class="n">main_content</span><span class="p">,</span> <span class="n">initial_slice</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">brain</span><span class="o">=</span><span class="s1">&#39;brain_1&#39;</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>This function compute the layout of the app, including the main container, the sidebar and
+the different pages.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>main_content</code></td>
+          <td>
+                <code><span title="dash.html">html</span>.<span title="dash.html.Div">Div</span></code>
+          </td>
+          <td><p>A div containing the elements of the app that are shared across
+pages.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>initial_slice</code></td>
+          <td>
+                <code>int</code>
+          </td>
+          <td><p>Index of the slice to be displayed at launch.</p></td>
+          <td>
+                <code>1</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+          </td>
+          <td><p>html.Div: A div containing the layout of the app.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>lbae/index.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">193</span>
+<span class="normal">194</span>
+<span class="normal">195</span>
+<span class="normal">196</span>
+<span class="normal">197</span>
+<span class="normal">198</span>
+<span class="normal">199</span>
+<span class="normal">200</span>
+<span class="normal">201</span>
+<span class="normal">202</span>
+<span class="normal">203</span>
+<span class="normal">204</span>
+<span class="normal">205</span>
+<span class="normal">206</span>
+<span class="normal">207</span>
+<span class="normal">208</span>
+<span class="normal">209</span>
+<span class="normal">210</span>
+<span class="normal">211</span>
+<span class="normal">212</span>
+<span class="normal">213</span>
+<span class="normal">214</span>
+<span class="normal">215</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">return_validation_layout</span><span class="p">(</span><span class="n">main_content</span><span class="p">,</span> <span class="n">initial_slice</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">brain</span><span class="o">=</span><span class="s2">&quot;brain_1&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This function compute the layout of the app, including the main container, the sidebar and</span>
+<span class="sd">    the different pages.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        main_content (html.Div): A div containing the elements of the app that are shared across</span>
+<span class="sd">            pages.</span>
+<span class="sd">        initial_slice (int): Index of the slice to be displayed at launch.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        html.Div: A div containing the layout of the app.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span>
+        <span class="p">[</span>
+            <span class="n">main_content</span><span class="p">,</span>
+            <span class="n">home</span><span class="o">.</span><span class="n">layout</span><span class="p">,</span>
+            <span class="n">load_slice</span><span class="o">.</span><span class="n">return_layout</span><span class="p">(</span><span class="n">basic_config</span><span class="p">,</span> <span class="n">initial_slice</span><span class="p">),</span>
+            <span class="n">lipid_selection</span><span class="o">.</span><span class="n">return_layout</span><span class="p">(</span><span class="n">basic_config</span><span class="p">,</span> <span class="n">initial_slice</span><span class="p">),</span>
+            <span class="n">region_analysis</span><span class="o">.</span><span class="n">return_layout</span><span class="p">(</span><span class="n">basic_config</span><span class="p">,</span> <span class="n">initial_slice</span><span class="p">),</span>
+            <span class="n">threeD_exploration</span><span class="o">.</span><span class="n">return_layout</span><span class="p">(</span><span class="n">basic_config</span><span class="p">,</span> <span class="n">initial_slice</span><span class="p">),</span>
+            <span class="n">scRNAseq</span><span class="o">.</span><span class="n">return_layout</span><span class="p">(</span><span class="n">basic_config</span><span class="p">,</span> <span class="n">initial_slice</span><span class="p">,</span> <span class="n">brain</span><span class="p">),</span>
+        <span class="p">]</span>
+    <span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="index.toggle_collapse" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">toggle_collapse</span><span class="p">(</span><span class="n">n1</span><span class="p">,</span> <span class="n">is_open</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>This callback triggers the modal windows that toggles the documentation when clicking on the
+corresponding button.</p>
+
+      <details class="quote">
+        <summary>Source code in <code>lbae/index.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">268</span>
+<span class="normal">269</span>
+<span class="normal">270</span>
+<span class="normal">271</span>
+<span class="normal">272</span>
+<span class="normal">273</span>
+<span class="normal">274</span>
+<span class="normal">275</span>
+<span class="normal">276</span>
+<span class="normal">277</span>
+<span class="normal">278</span>
+<span class="normal">279</span>
+<span class="normal">280</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@app</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s2">&quot;documentation-offcanvas&quot;</span><span class="p">,</span> <span class="s2">&quot;opened&quot;</span><span class="p">),</span>
+    <span class="p">[</span>
+        <span class="n">Input</span><span class="p">(</span><span class="s2">&quot;sidebar-documentation&quot;</span><span class="p">,</span> <span class="s2">&quot;n_clicks&quot;</span><span class="p">),</span>
+    <span class="p">],</span>
+    <span class="p">[</span><span class="n">State</span><span class="p">(</span><span class="s2">&quot;documentation-offcanvas&quot;</span><span class="p">,</span> <span class="s2">&quot;opened&quot;</span><span class="p">)],</span>
+<span class="p">)</span>
+<span class="k">def</span> <span class="nf">toggle_collapse</span><span class="p">(</span><span class="n">n1</span><span class="p">,</span> <span class="n">is_open</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This callback triggers the modal windows that toggles the documentation when clicking on the</span>
+<span class="sd">    corresponding button.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">n1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="ow">not</span> <span class="n">is_open</span>
+    <span class="k">return</span> <span class="n">is_open</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+              
+            </article>
+            
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../app/" class="md-footer__link md-footer__link--prev" aria-label="Previous: app" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              app
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../modules/atlas_labels/" class="md-footer__link md-footer__link--next" aria-label="Next: atlas_labels" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              atlas_labels
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.sections"], "search": "../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.6c7ad80a.min.js"></script>
+      
+    
+  </body>
+</html>
