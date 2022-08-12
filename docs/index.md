@@ -1,21 +1,5 @@
-# Welcome to MkDocs
+# Welcome to the Lipid Brain Atlas Explorer technical documentation 
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+Please use the navigation bar on the left, or the search field on top to navigate through the documentation.
 
-## Commands
-
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
-
-## Project layout
-
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
-
-## Test
-
-::: modules.atlas
+Please check the repository of the project at github/TODO.com for more information about the project.

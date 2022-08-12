@@ -4,14 +4,41 @@ theme:
   name: "material"
   palette:
     scheme: slate
+  features:
+    - navigation.sections
 
 plugins:
   - search
   - mkdocstrings
 
 nav:
-  - LBAE technical documentation home: index.md
+  - Welcome page: index.md
+  - main: main.md
+  - app: app.md
+  - index: index_py.md
   - Modules:
-      - coucou test: test/index2.md
+      - atlas_labels: modules/atlas_labels.md
+      - atlas: modules/atlas.md
+      - figures: modules/figures.md
+      - launch: modules/launch.md
+      - maldi_data: modules/maldi_data.md
+      - scRNAseq: modules/scRNAseq.md
+      - storage: modules/storage.md
+      - Tools:
+          - modules/tools/atlas.md
+          - modules/tools/image.md
+          - modules/tools/lookup_tables.md
+          - modules/tools/maldi_conversion.md
+          - modules/tools/misc.md
+          - modules/tools/spectra.md
+          - modules/tools/volume.md
+  - Pages:
+      - home: pages/home.md
+      - sidebar: pages/sidebar.md
+      - load_slice: pages/load_slice.md
+      - lipid_selection: pages/lipid_selection.md
+      - region_analysis: pages/region_analysis.md
+      - threeD_exploration: pages/threeD_exploration.md
+      - scRNAseq: pages/scRNAseq.md
 # Run with 'mkdocs serve'
 # Build with 'mkdocs build'
