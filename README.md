@@ -36,7 +36,7 @@ A documentation explaining the use of the app is contained inside of the app, in
 The app (frontend and backend) was developed by Colas Droin under the supervision of Gioele La Manno and Giovanni d'Angelo, as part of the Lipid Brain Atlas project. Laura Capolupo was involved in data collection and acquisition, Hannah Schede was involded in the development of MAIA. 
 
 
-# Use and deployment
+## Use and deployment
 
 The app is compatible with Python 3.8 and above. Required packages can be installed with: 
 
@@ -54,7 +54,7 @@ In both cases, it will be accesible with a browser at http://localhost:8077.
 
 
 
-# Technical documentation
+## Technical documentation
 
 The technical documentation of the app is available at TODO.
 
