@@ -24,6 +24,8 @@ def write_readme():
         "_alignment",
         "_usage_readme",
         "_about",
+        "_deployment_readme",
+        "_citing_readme",
         "_further_readme",
     ]
     final_md = "# Lipid Brain Atlas Explorer documentation \n\n"

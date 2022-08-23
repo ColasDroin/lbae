@@ -2,7 +2,7 @@
 # Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
 
 """ This script is used to run the app and setup logging settings. 
-To run the app with gunicorn, use the following command in the (child) lbae folder: 
+To run the app with gunicorn, use the following command in the main lbae folder: 
 gunicorn main:server -b:8050 --worker-class gevent --threads 4 --workers=1
 Or, to run the app ignoring hangup signals, i.e. not stopping when disconnecting from the server:
 nohup gunicorn main:server -b:8050 --worker-class gevent --threads 4 --workers=1 &

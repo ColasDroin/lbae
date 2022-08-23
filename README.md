@@ -36,9 +36,29 @@ A documentation explaining the use of the app is contained inside of the app, in
 The app (frontend and backend) was developed by Colas Droin under the supervision of Gioele La Manno and Giovanni d'Angelo, as part of the Lipid Brain Atlas project. Laura Capolupo was involved in data collection and acquisition, Hannah Schede was involded in the development of MAIA. 
 
 
-# To go further
+# Use and deployment
 
-For more information about the technical details of this project (especially data handling, app design and implementation), please refer to [TODO.bioarxiv.com](TODO.bioarxiv.com).
+The app is compatible with Python 3.8 and above. Required packages can be installed with: 
+```pip install -r requirements.txt```
+The app can be run locally using the command:
+```python main.py```
+Or it can be deployed on a server with Gunicorn (here with 4 threads and only 1 worker to avoid using too much RAM):
+```gunicorn main:server -b:8077 --worker-class gevent --threads 4 --workers=1```
+In both cases, it will be accesible with a browser at http://localhost:8077.
+
+
+
+# Citing
+
+If this app has been useful to your research work, it would be very much appreciated that you cite the corresponding publications: 
+- TODO (paper app)
+- TODO (paper atlas)
+
+
+
+# Technical documentation
+
+The technical documentation of the app is available at TODO.
 
 
 
