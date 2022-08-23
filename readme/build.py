@@ -23,10 +23,10 @@ def write_readme():
         "_data",
         "_alignment",
         "_usage_readme",
-        "_about",
         "_deployment_readme",
         "_technical_doc_readme",
         "_citing_readme",
+        "_about",
     ]
     final_md = "# Lipid Brain Atlas Explorer documentation \n\n"
     final_md += """<p align="center"><img src="readme/brain.gif" alt="animated" /></p>"""

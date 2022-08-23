@@ -31,10 +31,6 @@ This procedure allows to track the displacement of every single slice pixel, eac
 A documentation explaining the use of the app is contained inside of the app, in front page. 
 
 
-## About
-
-The app (frontend and backend) was developed by Colas Droin under the supervision of Gioele La Manno and Giovanni d'Angelo, as part of the Lipid Brain Atlas project. Laura Capolupo was involved in data collection and acquisition, Hannah Schede was involded in the development of MAIA. 
-
 
 ## Use and deployment
 
@@ -59,4 +55,16 @@ In both cases, it will be accesible with a browser at http://localhost:8077.
 The technical documentation of the app is available at TODO.
 
 
+
+
+## Citing
+
+If this app has been useful to your research work, it would be very much appreciated that you cite the corresponding publications: 
+- TODO (paper app)
+- TODO (paper atlas)
+
+
+## About
+
+The app (frontend and backend) was developed by Colas Droin under the supervision of Gioele La Manno and Giovanni d'Angelo, as part of the Lipid Brain Atlas project. Laura Capolupo was involved in data collection and acquisition, Hannah Schede was involded in the development of MAIA. 
 
