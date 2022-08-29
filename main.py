@@ -23,6 +23,7 @@ pip install orjson
 import logging
 from modules.tools.misc import logmem  # To track memory usage
 import dash_mantine_components as dmc
+import orjson  # Not needed, but is added to requirements.txt this way
 
 # ==================================================================================================
 # --- Logging settings

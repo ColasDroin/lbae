@@ -866,24 +866,6 @@ def page_4_plot_graph_volume(
     """This callback is used to plot the volume graph of expression of the selected lipid(s) in the
     selected structure(s), when clicking on the corresponding button."""
 
-    print(
-        "ICI",
-        set_progress,
-        l_lipid_1_index,
-        l_lipid_2_index,
-        l_lipid_3_index,
-        n_clicks_button_display,
-        name_lipid_1,
-        name_lipid_2,
-        name_lipid_3,
-        l_selected_regions,
-        name_region_1,
-        name_region_2,
-        name_region_3,
-        is_open_modal,
-        brain,
-    )
-
     set_progress((0, "Inspecting dataset..."))
 
     # Find out which input triggered the function
