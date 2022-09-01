@@ -141,7 +141,6 @@ def get_array_rows_from_atlas_mask(mask, mask_remapped, array_projection_corresp
                 ymin = y
                 first = True
             elif mask_remapped[x, y] == 0 and first:
-
                 # Correct for bug due to mask assignment with different resolution
                 if np.max(mask_remapped[x, y : y + 5]) != 0:
                     continue
@@ -248,7 +247,7 @@ def slice_to_atlas_transform(a, u, v, lambd, mu):
 
     Returns:
         (int, int, int): A 3D coordinate in the ccfv3, mapping our flat (2D) data to the atlas
-        coordinate system.
+            coordinate system.
     """
     # Equation of a plan in space
     x_atlas = a[0] + lambd * u[0] + mu * v[0]
@@ -374,7 +373,6 @@ def fill_array_projection(
     if nearest_neighbour_correction or atlas_correction:
         for i in range(array_projection.shape[1]):
             for j in range(array_projection.shape[2]):
-
                 # Look for the 3D atlas coordinate of out data
                 x_atlas, y_atlas, z_atlas = (
                     array_coordinates_high_res_slice[i, j] * 1000 / atlas_resolution
@@ -396,15 +394,12 @@ def fill_array_projection(
                 ):
                     # If the current annotation in the ccfv3 maps to an existing structure
                     if array_annotation[x_atlas, y_atlas, z_atlas] != 0:
-
                         # Nearest neighbour correction to fill most of the empty pixels in the
                         # high-resolution image
                         if nearest_neighbour_correction:
-
                             # If the pixel hasn't already been dealt with before (because of the
                             # way the projection is done and warping, this may happen)
                             if array_projection_filling[slice_index, i, j] == 0:
-
                                 # Only fill missing areas if far from the sides
                                 if (
                                     i > 20
@@ -543,7 +538,6 @@ def compute_array_images_atlas(
     for x in range(array_images.shape[0]):
         for y in range(array_images.shape[1]):
             for z in range(array_images.shape[2]):
-
                 if (
                     min(array_coor_rescaled[x, y, z]) >= 0
                     and array_coor_rescaled[x, y, z][0] < atlas_reference.shape[0]

@@ -147,7 +147,7 @@ def convert_array_to_fine_grained(array, resolution, lb=350, hb=1250):
 
     Returns:
         (np.ndarray): A sparse, fine-grained array of shape (2,m) containing spectrum data (m/z and
-        intensity).
+            intensity).
     """
     # Build an empty (zeroed) array with the requested uncompressed size
     new_array = np.linspace(lb, hb, int(round((hb - lb) / resolution)))
@@ -343,7 +343,7 @@ def compute_image_using_index_and_image_lookup(
         array_pixel_indexes (np.ndarray): An array of shape (m,2) containing the boundary indices of
             each pixel in array_spectra.
         img_shape (tuple(int)): A tuple with the two integer values corresponding to height and
-        width of the current slice acquisition.
+            width of the current slice acquisition.
         lookup_table_spectra (np.ndarray): An array of shape (k,m) representing a
             lookup table with the following mapping: lookup_table_spectra[i,j] contains the first
             m/z index of pixel j such that m/z >= i * divider_lookup.
@@ -518,18 +518,18 @@ def compute_normalized_image_per_lipid(
     8 bits, that is, the format of a single channel in an RGB image.
 
     Args:
-        low_bound (float): Lower m/z value for the annotation.
-        high_bound (float): Higher m/z value for the annotation.
+        lb_mz (float): Lower m/z value for the annotation.
+        hb_mz (float): Higher m/z value for the annotation.
         array_spectra (np.ndarray): An array of shape (2,n) containing spectrum
             data (m/z and intensity) for each pixel.
         array_pixel_indexes (np.ndarray): An array of shape (m,2) containing the boundary indices of
             each pixel in array_spectra.
-        img_shape (tuple(int)): A tuple with the two integer values corresponding to height and
+        image_shape (tuple(int)): A tuple with the two integer values corresponding to height and
             width of the current slice acquisition.
         lookup_table_spectra (np.ndarray): An array of shape (k,m) representing a
             lookup table with the following mapping: lookup_table_spectra[i,j] contains the first
             m/z index of pixel j such that m/z >= i * divider_lookup.
-        lookup_table_image (np.ndarray): An array of shape (k,m) representing a
+        cumulated_image_lookup_table (np.ndarray): An array of shape (k,m) representing a
             lookup table with the following mapping: lookup_table_image[i,j] contains, for the pixel
             of index j, the cumulated intensities from the lowest possible m/z until the first m/z
             such that m/z >= i * divider_lookup.
@@ -650,7 +650,7 @@ def compute_index_boundaries(low_bound, high_bound, array_spectra_avg, lookup_ta
 
     Returns:
         (tuple(int)): A tuple of integer representing the best guess for the indices of low_bound and
-        high_bound in array_spectra_avg.
+            high_bound in array_spectra_avg.
     """
     # Extract the arrays provided by the lookup table as first guess for the low and high bounds
     array_to_sum_lb = array_spectra_avg[
@@ -860,8 +860,8 @@ def compute_standardization(array_spectra_pixel, idx_pixel, array_peaks, array_c
     to the transformation registered in 'array_corrective_factors'.
 
     Args:
-        array_spectra (np.ndarray): A numpy array containing spectrum data (m/z and intensity) of
-            pixel 'idx_pixel', sorted by mz.
+        array_spectra_pixel (np.ndarray): A numpy array containing spectrum data (m/z and intensity)
+            of pixel 'idx_pixel', sorted by mz.
         idx_pixel (int): Index of the current pixel whose spectrum is transformed.
         array_peaks (np.ndarray): A numpy array containing the peak annotations (min peak, max peak,
             average value of the peak), filtered for the lipids who have preliminarily been
@@ -1115,12 +1115,12 @@ def sample_rows_from_path(path):
 
     Args:
         path (np.ndarray): A two-dimensional array, containing, in each row, the row and column
-        coordinates (x and y) of the current selection.
+            coordinates (x and y) of the current selection.
 
     Returns:
         (np.ndarray, np.ndarray): The first array contains the lower and upper indexes of the rows
-        belonging to the current selection. The second array contains, for each row, the
-        corresponding column boundaries (there can be more than 2 for non-convex shapes).
+            belonging to the current selection. The second array contains, for each row, the
+            corresponding column boundaries (there can be more than 2 for non-convex shapes).
     """
     # Find out the lower and upper rows
     x_min = path[:, 0].min()
@@ -1277,14 +1277,13 @@ def compute_avg_intensity_per_lipid(l_intensity_with_lipids, l_idx_labels):
 
     Args:
         l_intensity_with_lipids (list(float)): A list of peak intensities (where one lipid can
-        correspond to several
-            peaks, but one peak always correspond to one lipid).
+            correspond to several peaks, but one peak always correspond to one lipid).
         l_idx_labels (list(int)): A list of lipid annotation, each lipid being annotated with a
-        unique integer.
+            unique integer.
 
     Returns:
         (list(int), list(float)): The first list provides the lipid indices, while the second provide
-        the lipid average intensities. Peaks corresponding to identical lipid have been averaged.
+            the lipid average intensities. Peaks corresponding to identical lipid have been averaged.
     """
     # Define empty lists for the lipid indices and intensities
     l_unique_idx_labels = []
@@ -1364,7 +1363,7 @@ def compute_thread_safe_function(
         cache (flask_caching.Cache): A caching object, used to check if the reading of memory-mapped
             data is safe
         *args_compute_function: Arguments of compute_function.
-        *kwargs_compute_function: Named arguments of compute_function.
+        **kwargs_compute_function: Named arguments of compute_function.
 
     Returns:
         The result of compute_function. Type may vary depending on compute_function.

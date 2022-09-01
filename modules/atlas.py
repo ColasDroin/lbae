@@ -41,7 +41,8 @@ from modules.tools.misc import logmem
 
 class Atlas:
     """Class used to do the interface between the data coming from acquisitions (MALDI), and
-    the Allen Brain Atlas.
+    the Allen Brain Atlas. Private attributes (starting with an underscore) are described as
+    properties.
 
     Attributes:
         resolution (int): Resolution of the atlas.
@@ -70,8 +71,6 @@ class Atlas:
             original data in the CCFv3.
         dic_existing_masks (dict): A dictionnary of existing masks per slice, which associates slice
             index (key) to a set of masks acronyms.
-
-        Private attributes (starting with an underscore) are described as properties below.
 
     Properties:
         array_projection_corrected (np.ndarray): A three-dimensional array which contains the data
@@ -269,7 +268,7 @@ class Atlas:
 
         Returns:
             (np.ndarray): A three-dimensional array which contains the data (one integer per
-            coordinate, corresponding to a pixel intensity) from our original acquisition.
+                coordinate, corresponding to a pixel intensity) from our original acquisition.
         """
         if self._array_projection_corrected is None:
             logging.info(
@@ -294,7 +293,7 @@ class Atlas:
 
         Returns:
             (list(np.ndarray)): A list of arrays, one per slice, which contains the atlas
-            borders projected on our data.
+                borders projected on our data.
         """
         if self._list_projected_atlas_borders_arrays is None:
             logging.info(
@@ -510,7 +509,7 @@ class Atlas:
 
         Returns:
             (list(np.ndarray)): A list of arrays, one per slice, which contains the atlas
-            borders projected on our data.
+                borders projected on our data.
         """
 
         l_array_images = []
@@ -564,7 +563,7 @@ class Atlas:
 
         Args:
             zero_out_of_annotation (bool, optional): If True, the pixels outside of the atlas
-            annotations are zero-ed out. Defaults to False.
+                annotations are zero-ed out. Defaults to False.
 
         Returns:
             (np.ndarray, np.ndarray): The first array is basically a list of atlas images

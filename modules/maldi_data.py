@@ -35,9 +35,9 @@ class MaldiData:
 
     Attributes:
         _sample_data (bool): if True, use the sampled dataset. Else use the whole dataset.
-        _dic_lightweight (dictionnary): a dictionnary containing the following lightweights arrays
-        (remaining in memory as long as the app is running), as well as the shape of thoses
-        stored in memory maps:
+        _dic_lightweight (dictionnary): a dictionnary containing the following lightweights arrays,
+            which remain in memory as long as the app is running, as well as the shape of thoses
+            stored in memory maps:
             - image_shape: a tuple of integers, indicating the vertical and horizontal sizes of the
                 corresponding slice.
             - divider_lookup: integer that sets the resolution of the lookup tables.

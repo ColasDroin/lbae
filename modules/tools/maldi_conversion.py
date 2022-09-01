@@ -414,7 +414,7 @@ def compute_standardization(
     to the transformation made in 'arrays_before_transfo' and 'arrays_after_transfo'.
 
     Args:
-        array_spectra (np.ndarray): A numpy array containing spectrum data (pixel index, m/z and
+        array_spectra_pixel (np.ndarray): A numpy array containing spectrum data (pixel index, m/z and
             intensity) of pixel 'idx_pixel', sorted by mz.
         idx_pixel (int): Index of the current pixel whose spectrum is transformed.
         array_peaks (np.ndarray): A numpy array containing the peak annotations (min peak, max peak,
@@ -509,7 +509,7 @@ def get_array_peaks_to_correct(l_lipids_float, array_mz_lipids, array_peaks, sli
     Args:
         l_lipids_float (list): A list containing the estimated m/z values of the lipids we want to
             visualize.
-        array_mz_lipids_per_slice (np.ndarray): A 1-D numpy array containing the per-slice mz
+        array_mz_lipids (np.ndarray): A 1-D numpy array containing the per-slice mz
             values of the lipids we want to visualize.
         array_peaks (np.ndarray): A numpy array containing the peak annotations (min peak, max peak,
             number of pixels containing the peak, average value of the peak), sorted by min_mz.
@@ -592,7 +592,7 @@ def standardize_values(
             indices of each pixel in the original spectra array.
         array_peaks (np.ndarray): A numpy array containing the peak annotations (min peak, max peak,
             number of pixels containing the peak, average value of the peak), sorted by min_mz.
-        array_mz_lipids_per_slice (np.ndarray): A 1-D numpy array containing the per-slice mz
+        array_mz_lipids (np.ndarray): A 1-D numpy array containing the per-slice mz
             values of the lipids we want to visualize.
         l_lipids_float (list): A list containing the estimated m/z values of the lipids we want to
             visualize.
@@ -799,11 +799,8 @@ def process_raw_data(
             Defaults to False.
         output_path (str, optional): Path to save the output npz file. Defaults to
             "/data/lipidatlas/data/app/data/temp/".
-        load_from_file(bool, optional): If True, loads the extracted data from npz file. Only option
+        load_from_file (bool, optional): If True, loads the extracted data from npz file. Only option
             implemented for now.
-        sample_app (bool, optional): If True, the output arrays only consist of the MAIA-transformed
-            lipids. Defaults to False.
-
 
     Returns:
         Depending on 'return result', returns either nothing, either several np.ndarrays, described

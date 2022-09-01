@@ -49,7 +49,9 @@ from modules.tools.spectra import (
 
 class Figures:
     """This class is used to produce the figures and widgets used in the app. It uses the special
-    attribute __slots__ for faster access to the attributes.
+    attribute __slots__ for faster access to the attributes. Parameters are ignored in the docstring
+    of the listed methods below to save space. Please consult the docstring of the actual methods
+    in the source-code for more information:
 
     Attributes:
         _data (MaldiData): MaldiData object, used to manipulate the raw MALDI data.
@@ -59,10 +61,7 @@ class Figures:
         dic_normalization_factors (dict): Dictionnary of normalization factors across slices for
             MAIA.
 
-
-    Methods (parameters are ignored in the docstring below to save space. Please consult the
-        docstring of the corresponding methods for more information):
-
+    Methods:
         __init__(): Initialize the Figures class.
         compute_array_basic_images(): Computes a three-dimensional array representing all slices
             from the maldi_data acquisition (TIC) or the corresponding image from the atlas.
@@ -851,7 +850,7 @@ class Figures:
 
         Returns:
             Depending on the inputted arguments, may either return a base64 string, a go.Image, or
-            a Plotly Figure.
+                a Plotly Figure.
         """
 
         logging.info("Converting image to string")
@@ -936,7 +935,7 @@ class Figures:
                 None.
         Returns:
             Depending on the value return_base64_string, may either return a base64 string, or
-            a Plotly Figure.
+                a Plotly Figure.
         """
 
         logging.info("Starting figure computation, from mz boundaries")
@@ -1009,7 +1008,7 @@ class Figures:
 
         Returns:
             Depending on the value return_base64_string, may either return a base64 string, or
-            a Plotly Figure.
+                a Plotly Figure.
         """
 
         logging.info("Compute heatmap per lipid selection" + str(ll_t_bounds))
@@ -1088,8 +1087,8 @@ class Figures:
 
         Returns:
             (np.ndarray): A three-dimensional RGB numpy array (of uint8 dtype). The first two
-            dimensions correspond to the acquisition image shape, and the third dimension
-            corresponds to the channels.
+                dimensions correspond to the acquisition image shape, and the third dimension
+                corresponds to the channels.
         """
 
         # Empty lipid names if no names provided
@@ -1183,7 +1182,7 @@ class Figures:
 
         Returns:
             Depending on the inputted arguments, may either return a base64 string, a go.Image, or
-            a Plotly Figure.
+                a Plotly Figure.
         """
 
         logging.info("Started RGB image computation for slice " + str(slice_index) + logmem())
@@ -1310,8 +1309,8 @@ class Figures:
                 None.
         Returns:
             Depending on the value of the boundaries, and the plot parameter, it may return a Plotly
-            Figure containing an empty spectrum, or a spectrum between the two provided boundaries,
-            or the corresponding data of such a spectrum.
+                Figure containing an empty spectrum, or a spectrum between the two provided boundaries,
+                or the corresponding data of such a spectrum.
         """
 
         # Define default values for graph (empty)
@@ -1571,7 +1570,7 @@ class Figures:
         decrease the size of the output.
         Args:
             decrease_dimensionality_factor (int): An integer used for subsampling the array. The
-            higher, the higher the subsampling.
+                higher, the higher the subsampling.
 
         Returns:
             (np.ndarray): A 3D array of annotation, in which structures are annotated with specific
@@ -1811,9 +1810,9 @@ class Figures:
                 Defaults to False.
         Returns:
             Depending on the value of return_interpolated_array and return_individual_slice_data,
-            returns either the (not) interpolated array of expression of the requested lipids in the
-            selected regions, or a Plotly Figure containing a go.Volume object representing the
-            interpolated expression.
+                returns either the (not) interpolated array of expression of the requested lipids in the
+                selected regions, or a Plotly Figure containing a go.Volume object representing the
+                interpolated expression.
         """
         if return_interpolated_array and return_individual_slice_data:
             logging.warning(
@@ -2454,7 +2453,7 @@ class Figures:
 
         Returns:
             (Plotly.Figure): A Plotly Figure containing a go.Heatmap object representing the expression of the
-            selected lipid and genes.
+                selected lipid and genes.
         """
 
         logging.info("Starting computing heatmap for scRNAseq experiments" + logmem())

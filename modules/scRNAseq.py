@@ -65,7 +65,7 @@ class ScRNAseq:
         """Initialize the class ScRNAseq.
 
         Args:
-            path (str): Path of the scRNAseq data.
+            path_scRNAseq (str): Path of the scRNAseq data.
         """
 
         logging.info("Initializing ScRNAseq object" + logmem())
