@@ -22,7 +22,7 @@ def logmem():
     It is almost instantaneous as it takes about 0.5ms to run.
 
     Returns:
-        str: Amount of memory used by the program.
+        (str): Amount of memory used by the program.
     """
     memory = psutil.Process(os.getpid()).memory_info().rss / (1024 * 1024)
     memory_string = "MemTotal: " + str(memory)
@@ -45,4 +45,3 @@ def delete_all_files_in_folder(input_folder):
                 shutil.rmtree(file_path)
         except Exception as e:
             print("Failed to delete %s. Reason: %s" % (file_path, e))
-

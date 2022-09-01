@@ -260,7 +260,7 @@ class MaldiData:
             dataframe.
 
         Returns:
-            pd.DataFrame: A dataframe of annotations.
+            (pd.DataFrame): A dataframe of annotations.
         """
         return self._df_annotations
 
@@ -272,7 +272,7 @@ class MaldiData:
                 brain 2. Defaults to True.
 
         Returns:
-            pd.DataFrame: A dataframe of lipid annotations for the MAIA transformed lipids.
+            (pd.DataFrame): A dataframe of lipid annotations for the MAIA transformed lipids.
         """
         if brain_1:
             return self._df_annotations_MAIA_transformed_lipids_brain_1
@@ -283,7 +283,7 @@ class MaldiData:
         """Getter for the number of slice present in the dataset.
 
         Returns:
-            int: The number of slices in the dataset.
+            (int): The number of slices in the dataset.
         """
         return self._n_slices
 
@@ -296,7 +296,7 @@ class MaldiData:
                 slice indices for brain 2. Defaults to "all". Indices start at 1.
 
         Returns:
-            list: The list of requested slice indices.
+            (list): The list of requested slice indices.
         """
         if indices == "all":
             return self._l_slices
@@ -315,7 +315,7 @@ class MaldiData:
             slice_index (int): Index of the slice whose shape is requested.
 
         Returns:
-            np.ndarray: The shape of the requested slice image.
+            (np.ndarray): The shape of the requested slice image.
         """
         return self._dic_lightweight[slice_index]["image_shape"]
 
@@ -327,7 +327,7 @@ class MaldiData:
             slice_index (int): Index of the slice whose divider lookup value is requested.
 
         Returns:
-            int: The divider lookup value for the requested slice.
+            (int): The divider lookup value for the requested slice.
         """
         return self._dic_lightweight[slice_index]["divider_lookup"]
 
@@ -339,7 +339,7 @@ class MaldiData:
             slice_index (int): Index of the slice whose spectrum data is requested.
 
         Returns:
-            np.ndarray: A low-resolution version of the average spectrum of the acquisition indexed
+            (np.ndarray): A low-resolution version of the average spectrum of the acquisition indexed
                 by slice_index.
         """
         # Previously called array_averaged_mz_intensity_low_res
@@ -353,7 +353,7 @@ class MaldiData:
             slice_index (int): Index of the slice whose pixel lookup table is requested.
 
         Returns:
-            np.ndarray: The requested lookup table.
+            (np.ndarray): The requested lookup table.
         """
         # Previously called array_pixel_indexes_high_res
         return self._dic_lightweight[slice_index]["array_lookup_pixels"]
@@ -366,7 +366,7 @@ class MaldiData:
             slice_index (int): Index of the slice for which the lookup table is requested.
 
         Returns:
-            np.ndarray: The requested lookup table.
+            (np.ndarray): The requested lookup table.
         """
         # Previously called lookup_table_averaged_spectrum_high_res
         return self._dic_lightweight[slice_index]["array_lookup_mz_avg"]
@@ -379,7 +379,7 @@ class MaldiData:
             slice_index (int): Index of the slice for which the peaks lookup table is requested.
 
         Returns:
-            np.ndarray: Bidimensional array of peak annotations for the requested slice.
+            (np.ndarray): Bidimensional array of peak annotations for the requested slice.
         """
         return self._dic_lightweight[slice_index]["array_peaks_transformed_lipids"]
 
@@ -391,7 +391,7 @@ class MaldiData:
             slice_index (int): Index of the slice for which the corrective factors are requested.
 
         Returns:
-            np.ndarray (mmaped if not sampled dataset): Three-dimensional array containing the MAIA
+            (np.ndarray (mmaped if not sampled dataset)): Three-dimensional array containing the MAIA
                 corrective factor used for lipids and each pixel.
         """
         if self._sample_data:
@@ -407,7 +407,7 @@ class MaldiData:
             slice_index (int): Index of the slice for which the spectral data is requested.
 
         Returns:
-            np.ndarray (mmaped if not sampled dataset): Spectral data of the requested slice.
+            (np.ndarray (mmaped if not sampled dataset)): Spectral data of the requested slice.
         """
         if self._sample_data:
             return self._dic_lightweight[slice_index]["array_spectra"]
@@ -422,7 +422,7 @@ class MaldiData:
             slice_index (int): Index of the slice for which the m/z values are requested.
 
         Returns:
-            np.ndarray (mmaped if not sampled dataset): m/z values of the spectral data of the
+            (np.ndarray (mmaped if not sampled dataset)): m/z values of the spectral data of the
                 requested slice.
         """
         if self._sample_data:
@@ -438,7 +438,7 @@ class MaldiData:
             slice_index (int): Index of the slice for which the intensity values are requested.
 
         Returns:
-            np.ndarray (mmaped if not sampled dataset): Intensity values of the spectral data of the
+            (np.ndarray (mmaped if not sampled dataset)): Intensity values of the spectral data of the
                 requested slice.
         """
         if self._sample_data:
@@ -455,7 +455,7 @@ class MaldiData:
             standardization (bool): If True, the average spectrum is standardized with MAIA.
 
         Returns:
-            np.ndarray (mmaped if not sampled dataset): The requested average spectrum.
+            (np.ndarray (mmaped if not sampled dataset)): The requested average spectrum.
         """
 
         if not standardization:
@@ -479,7 +479,7 @@ class MaldiData:
             slice_index (int): Index of the slice for which the lookup table is requested.
 
         Returns:
-            np.ndarray (mmaped if not sampled dataset): The requested lookup table.
+            (np.ndarray (mmaped if not sampled dataset)): The requested lookup table.
         """
         if self._sample_data:
             return self._dic_lightweight[slice_index]["array_lookup_mz"]
@@ -494,7 +494,7 @@ class MaldiData:
             slice_index (int): Index of the slice for which the lookup table is requested.
 
         Returns:
-            np.ndarray (mmaped if not sampled dataset): The requested lookup table.
+            (np.ndarray (mmaped if not sampled dataset)): The requested lookup table.
         """
         if self._sample_data:
             return self._dic_lightweight[slice_index]["array_cumulated_lookup_mz_image"]
@@ -512,7 +512,7 @@ class MaldiData:
             index (int): Index of the requested spectrum.
 
         Returns:
-            np.ndarray (mmaped if not sampled dataset): Spectral data of the requested slice.
+            (np.ndarray (mmaped if not sampled dataset)): Spectral data of the requested slice.
         """
 
         # As there are many possibilities, define new dic depending if sampled data or not
@@ -531,7 +531,6 @@ class MaldiData:
 
         # If not specific index has been provided, it returns a range
         if index is None:
-
             # Start with most likely case
             if hb is not None and lb is not None:
                 return dic["array_spectra"][:, lb:hb]
@@ -567,7 +566,7 @@ class MaldiData:
             index (int): Index of the slice of the requested spectrum.
 
         Returns:
-            np.ndarray (mmaped if not sampled dataset): m/z values of the spectral data of the
+            (np.ndarray (mmaped if not sampled dataset)): m/z values of the spectral data of the
                 requested slice between lb and hb.
         """
 
@@ -587,7 +586,6 @@ class MaldiData:
 
         # If not specific index has been provided, it returns a range
         if index is None:
-
             # Start with most likely case
             if hb is not None and lb is not None:
                 return dic["array_spectra"][0, lb:hb]
@@ -624,7 +622,7 @@ class MaldiData:
             index (int): Index of the slice of the requested spectrum.
 
         Returns:
-            np.ndarray (mmaped if not sampled dataset): Intensity values of the spectral data of the
+            (np.ndarray, mmaped if not sampled dataset): Intensity values of the spectral data of the
                 requested slice between lb and hb.
         """
         # As there are many possibilities, define new dic depending if sampled data or not
@@ -643,7 +641,6 @@ class MaldiData:
 
         # If not specific index has been provided, it returns a range
         if index is None:
-
             # Start with most likely case
             if hb is not None and lb is not None:
                 return dic["array_spectra"][1, lb:hb]
@@ -680,7 +677,7 @@ class MaldiData:
             standardization (bool): If True, the average spectrum is normalized.
 
         Returns:
-            np.ndarray (mmaped if not sampled dataset): Average spectrum of the spectral data of the
+            (np.ndarray, mmaped if not sampled dataset)): Average spectrum of the spectral data of the
                 requested slice between lb and hb.
         """
         # As there are many possibilities, define new dic depending if sampled data or not
@@ -721,7 +718,7 @@ class MaldiData:
             index (int): Index of the slice of the requested spectrum.
 
         Returns:
-            np.ndarray (mmaped if not sampled dataset): m/z value of the spectral data of the
+            (np.ndarray (mmaped if not sampled dataset)): m/z value of the spectral data of the
                 requested slice and requested   lookup.
         """
         # Just return the (one) required lookup to go faster
@@ -739,7 +736,7 @@ class MaldiData:
             index (int): Index of the slice of the requested spectrum.
 
         Returns:
-            np.ndarray (mmaped if not sampled dataset): Cumulated m/z value of the spectral data of
+            (np.ndarray (mmaped if not sampled dataset)): Cumulated m/z value of the spectral data of
                 the requested slice and requested lookup.
         """
         # Just return the (one) required lookup to go faster
@@ -755,7 +752,7 @@ class MaldiData:
             slice_index (int): Index of the slice for which the status is requested.
 
         Returns:
-            bool: True if the slice indexed by slice_index is a brain 1. Else, returns False.
+            (bool): True if the slice indexed by slice_index is a brain 1. Else, returns False.
         """
         return self._dic_lightweight[slice_index]["is_brain_1"]
 
@@ -849,7 +846,7 @@ class MaldiData:
         """Computes the list of labels of the dataset.
 
         Returns:
-            list: List of labels of the dataset.
+            (list): List of labels of the dataset.
         """
 
         l_labels = (
@@ -865,7 +862,7 @@ class MaldiData:
         """Computes and returns the list of lipid names, structures and cation.
 
         Returns:
-            list: List of lipid names, structures and cations.
+            (list): List of lipid names, structures and cations.
         """
 
         return [
@@ -890,7 +887,7 @@ class MaldiData:
         """Pads the original images of the dataset so that they are all the same size.
 
         Returns:
-            np.ndarray: A 3D numpy array, where the first dimension corresponds to the slice index,
+            (np.ndarray): A 3D numpy array, where the first dimension corresponds to the slice index,
                 and the second and third dimensions correspond to the padded images.
         """
         # Compute number of slices from the original acquisition are present in the folder

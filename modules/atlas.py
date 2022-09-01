@@ -268,7 +268,7 @@ class Atlas:
         only used with objects that should also be precomputed.
 
         Returns:
-            np.ndarray: A three-dimensional array which contains the data (one integer per
+            (np.ndarray): A three-dimensional array which contains the data (one integer per
             coordinate, corresponding to a pixel intensity) from our original acquisition.
         """
         if self._array_projection_corrected is None:
@@ -293,7 +293,7 @@ class Atlas:
         to save memory as it is only used with objects that should also be precomputed.
 
         Returns:
-            list(np.ndarray): A list of arrays, one per slice, which contains the atlas
+            (list(np.ndarray)): A list of arrays, one per slice, which contains the atlas
             borders projected on our data.
         """
         if self._list_projected_atlas_borders_arrays is None:
@@ -319,7 +319,7 @@ class Atlas:
             children.
 
         Returns:
-            dict: A dictionnary that associate to each structure (acronym) the set of ids (int) of
+            (dict): A dictionnary that associate to each structure (acronym) the set of ids (int) of
                 all of its children.
         """
 
@@ -359,10 +359,10 @@ class Atlas:
         acronyms to their complete name in the process.
 
         Returns:
-            list(str): List of children (node) names.
-            list(str): List of parent names.
-            dict: A dictionnary that associate structure name to its acronym.
-            dict: A dictionnary that associate structure acronym to its name.
+            (list(str)): List of children (node) names.
+            (list(str)): List of parent names.
+            (dict): A dictionnary that associate structure name to its acronym.
+            (dict): A dictionnary that associate structure acronym to its name.
         """
 
         # Create a list of parents for all ancestors
@@ -408,7 +408,7 @@ class Atlas:
                 region are zeroed out. Defaults to False.
 
         Returns:
-            np.ndarray, np.ndarray, list(np.ndarray): The first array is a high-resolution version
+            (np.ndarray, np.ndarray, list(np.ndarray)): The first array is a high-resolution version
                 of our initial data, in which each individual pixel has been mapped according to the
                 second array, which acts as a mapping table. The list contains the arrays of
                 original coordinates, for each slice.
@@ -493,7 +493,7 @@ class Atlas:
         slices.
 
         Returns:
-            list((float,float,float)): A list of tuples, each with three parameters, that allow to
+            (list((float,float,float))): A list of tuples, each with three parameters, that allow to
                 map the 3D coordinates of the CCFv3 to the tiled planes representing the slices. One
                 per slice.
         """
@@ -509,7 +509,7 @@ class Atlas:
         """Compute an array of projected atlas borders (i.e. image of atlas annotations).
 
         Returns:
-            list(np.ndarray): A list of arrays, one per slice, which contains the atlas
+            (list(np.ndarray)): A list of arrays, one per slice, which contains the atlas
             borders projected on our data.
         """
 
@@ -567,7 +567,7 @@ class Atlas:
             annotations are zero-ed out. Defaults to False.
 
         Returns:
-            np.ndarray, np.ndarray: The first array is basically a list of atlas images
+            (np.ndarray, np.ndarray): The first array is basically a list of atlas images
                 corresponding to the slices acquired during the MALDI acquisition. The second array
                 is the corresponding set of annotations.
         """
@@ -593,7 +593,7 @@ class Atlas:
             structure (str): Structure (brain region) acronym.
 
         Returns:
-            np.ndarray: A 3D mask with the same shape as the array of annotations from the atlas,
+            (np.ndarray): A 3D mask with the same shape as the array of annotations from the atlas,
                 where all elements are zeros except for the requested structure.
         """
 
@@ -647,7 +647,7 @@ class Atlas:
                 None.
 
         Returns:
-            np.ndarray: A 2D numpy array containing the averaged spectral data of the pixels in the
+            (np.ndarray): A 2D numpy array containing the averaged spectral data of the pixels in the
                 requested mask of the requested slice. First row contains m/z values, second row
                 contains the averaged intensities.
         """
@@ -880,7 +880,7 @@ class Atlas:
             MAIA_correction (bool, optional):  If True, the MAIA corrected version of the MALDI data
                 is used for computation (if it exists). Defaults to False.
         Returns:
-            np.ndarray, np.ndarray: The first array is represents the projected 2D mask on the
+            (np.ndarray, np.ndarray): The first array is represents the projected 2D mask on the
                 requested slice. The second array corresponds to the corresponding averaged spectral
                 data (first row is m/z values, second row is averaged intensities).
         """

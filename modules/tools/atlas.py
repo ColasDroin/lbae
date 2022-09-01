@@ -35,7 +35,7 @@ def project_image(slice_index, original_image, array_projection_correspondence):
             the warped higher-resolution image.
 
     Returns:
-        np.ndarray: A warped, high-resolution image, corresponding to the clean, registered version,
+        (np.ndarray): A warped, high-resolution image, corresponding to the clean, registered version,
             of our acquisition.
     """
     # Correct index as slice names start at 1
@@ -70,7 +70,7 @@ def project_atlas_mask(stack_mask, slice_coordinates_rescaled, shape_atlas):
             ccfv3-indexed atlas.
 
     Returns:
-        np.ndarray: A two-dimensional array representing the projected mask on the requested slice.
+        (np.ndarray): A two-dimensional array representing the projected mask on the requested slice.
     """
     # Define empty array for the projected mask, with the same dimension as the current slice
     # ! Delete this comment if everything is working, else switch back to int16 or int32
@@ -197,7 +197,7 @@ def solve_plane_equation(
             the 3D plane. Defaults to (100, 101).
 
     Returns:
-        tuple(float), tuple(float), tuple(float): Three vectors allowing to parametrize the
+        (tuple(float), tuple(float), tuple(float)): Three vectors allowing to parametrize the
             coordinate of our slice in the ccfv3.
     """
     # Define empty array for the linear system of equations
@@ -321,7 +321,7 @@ def fill_array_projection(
             slice data for the computations. Defaults to False.
 
     Returns:
-        np.ndarray, np.ndarray: The first array is a high-resolution version of our initial data, in
+        (np.ndarray, np.ndarray): The first array is a high-resolution version of our initial data, in
             which each individual pixel has been mapped according to the second array, which acts as
             a mapping table.
     """
@@ -493,7 +493,7 @@ def compute_simplified_atlas_annotation(atlas_annotation):
         atlas_annotation (np.ndarray): Initial 3D array of annotations.
 
     Returns:
-        np.ndarray: Simplified 3D array of annotations.
+        (np.ndarray): Simplified 3D array of annotations.
     """
     # Compute an array which map labels ids to increasing integers
     unique_id_dic = {ni: indi for indi, ni in enumerate(set(atlas_annotation.flatten()))}
@@ -528,7 +528,7 @@ def compute_array_images_atlas(
             all the data that doesn't belong to a given structure is zeroed-out. Defaults to False.
 
     Returns:
-        np.ndarray, np.ndarray: The first array is basically a list of atlas images corresponding
+        (np.ndarray, np.ndarray): The first array is basically a list of atlas images corresponding
             to the slices acquired during the MALDI acquisition. The second array is the
             corresponding set of annotations.
     """

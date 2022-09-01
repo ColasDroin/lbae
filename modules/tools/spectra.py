@@ -31,7 +31,7 @@ def convert_spectrum_idx_to_coor(index, shape):
         shape (tuple(int)): Shape of the MALDI acquisition of the corresponding slice.
 
     Returns:
-        tuple(int): Corresponding coordinate in the original image.
+        (tuple(int)): Corresponding coordinate in the original image.
     """
     return int(index / shape[1]), int(index % shape[1])
 
@@ -46,7 +46,7 @@ def convert_coor_to_spectrum_idx(coordinate, shape):
         shape (tuple(int)): Shape of the MALDI acquisition of the corresponding slice.
 
     Returns:
-        int: Pixel index in a flattened version of the slice image.
+        (int): Pixel index in a flattened version of the slice image.
     """
     ind = coordinate[0] * shape[1] + coordinate[1]
     if ind >= shape[0] * shape[1]:
@@ -146,7 +146,7 @@ def convert_array_to_fine_grained(array, resolution, lb=350, hb=1250):
         hb (int, optional): Higher bound for the fine-grained array. Defaults to 1250.
 
     Returns:
-        np.ndarray: A sparse, fine-grained array of shape (2,m) containing spectrum data (m/z and
+        (np.ndarray): A sparse, fine-grained array of shape (2,m) containing spectrum data (m/z and
         intensity).
     """
     # Build an empty (zeroed) array with the requested uncompressed size
@@ -170,7 +170,7 @@ def strip_zeros(array):
             and intensity).
 
     Returns:
-        np.ndarray: The same array stripped from its zero intensity values. Now of shape (2,m).
+        (np.ndarray): The same array stripped from its zero intensity values. Now of shape (2,m).
     """
     # Look for the non-zero values and store them in l_to_keep
     l_to_keep = [idx for idx, x in enumerate(array[1, :]) if x != 0 and not np.isnan(x)]
@@ -227,7 +227,7 @@ def compute_image_using_index_lookup(
         apply_transform (bool): If True, the MAIA correction for pixel intensity is reverted.
 
     Returns:
-        np.ndarray: An array of shape img_shape (reprensenting an image) containing the cumulated
+        (np.ndarray): An array of shape img_shape (reprensenting an image) containing the cumulated
             intensity of the spectra between low_bound and high_bound, for each pixel.
     """
     # Build empty image
@@ -251,7 +251,6 @@ def compute_image_using_index_lookup(
 
     # Find lower bound and add from there
     for idx_pix in range(array_pixel_indexes.shape[0]):
-
         # If pixel contains no peak, skip it
         if array_pixel_indexes[idx_pix, 0] == -1:
             continue
@@ -300,7 +299,6 @@ def _fill_image(
     # While i is in the interval of the current lipid annotation, delimited by low and high bounds,
     # fill image with intensities
     for i in range(0, higher_bound + 1 - lower_bound):
-
         # If i corresponds to a m/z value above the high_bound of the lipid annotation, exit loop
         if array_to_sum[0, i] > high_bound:
             break
@@ -364,7 +362,7 @@ def compute_image_using_index_and_image_lookup(
             Defaults to False.
 
     Returns:
-        np.ndarray: An array of shape img_shape (reprensenting an image) containing the cumulated
+        (np.ndarray): An array of shape img_shape (reprensenting an image) containing the cumulated
             intensity of the spectra between low_bound and high_bound, for each pixel.
     """
 
@@ -435,7 +433,6 @@ def _compute_image_using_index_and_image_lookup_partial(
             array_idx_high_bound_sup_pix,
         )
     ):
-
         # Extract array from mmap
         array_to_sum_lb = array_spectra[:, idx_low_bound_inf : idx_low_bound_sup + 1]
         array_to_sum_hb = array_spectra[:, idx_high_bound_inf : idx_high_bound_sup + 1]
@@ -476,7 +473,6 @@ def _correct_image(
     # First correct for the m/z values that have been summed in the image and shouldn't have
     i = 0
     while array_to_sum_lb[0, i] < low_bound and i < array_to_sum_lb.shape[1]:
-
         # If the peak corresponding to highest mz is before the lookup value, just skip it
         # altogether as no correction is needed (empty spectrum between lower and low bound)
         if array_to_sum_lb[0, i] < int(low_bound / divider_lookup) * divider_lookup:
@@ -489,7 +485,6 @@ def _correct_image(
     # Then add the m/z values that are missing in the image
     i = 0
     while array_to_sum_hb[0, i] <= high_bound and i <= array_to_sum_hb.shape[1]:
-
         # If the peak corresponding to the highest mz is before the lookup value, just skip it
         # altogether as no correction is needed (empty spectrum between high and higher bound)
         if array_to_sum_hb[0, i] < int(high_bound / divider_lookup) * divider_lookup:
@@ -553,7 +548,7 @@ def compute_normalized_image_per_lipid(
             between 0 and 1. Else, the values are between 0 and 255.
 
     Returns:
-        np.ndarray: An array of shape img_shape (reprensenting an image) containing the cumulated
+        (np.ndarray): An array of shape img_shape (reprensenting an image) containing the cumulated
             intensity of the spectra between low_bound and high_bound, for each pixel. This image is
             normalized according to percentile_normalized. Output values are between 0 and 1 (255)
             depending if RGB_channel_format is False (True).
@@ -604,7 +599,7 @@ def compute_index_boundaries_nolookup(low_bound, high_bound, array_spectra_avg):
             spectrum data (m/z and intensity).
 
     Returns:
-        tuple(int): A tuple of integer representing the best guess for the indices of low_bound and
+        (tuple(int)): A tuple of integer representing the best guess for the indices of low_bound and
             high_bound in array_spectra_avg.
     """
     # Extract the mz values for array_spectra_avg
@@ -654,7 +649,7 @@ def compute_index_boundaries(low_bound, high_bound, array_spectra_avg, lookup_ta
             equal to the lookup.
 
     Returns:
-        tuple(int): A tuple of integer representing the best guess for the indices of low_bound and
+        (tuple(int)): A tuple of integer representing the best guess for the indices of low_bound and
         high_bound in array_spectra_avg.
     """
     # Extract the arrays provided by the lookup table as first guess for the low and high bounds
@@ -715,7 +710,7 @@ def return_spectrum_per_pixel(idx_pix, array_spectra, array_pixel_indexes):
             each pixel in array_spectra.
 
     Returns:
-        np.ndarray: An array of shape (2,m) containing spectrum data (m/z and intensity) for the
+        (np.ndarray): An array of shape (2,m) containing spectrum data (m/z and intensity) for the
             requested pixel.
     """
     # Get the indices of the spectrum of the requested pixel
@@ -757,10 +752,8 @@ def add_zeros_to_spectrum(array_spectra, pad_individual_peaks=True, padding=10**
 
         # Loop over m/z values
         for i in range(array_spectra.shape[1] - 1):
-
             # If there's a discontinuity between two peaks, pad with zeros
             if array_spectra[0, i + 1] - array_spectra[0, i] >= 2 * 10**-4:
-
                 # Add left peak
                 new_array_spectra[0, i + pad] = array_spectra[0, i]
                 new_array_spectra[1, i + pad] = array_spectra[1, i]
@@ -793,7 +786,6 @@ def add_zeros_to_spectrum(array_spectra, pad_individual_peaks=True, padding=10**
 
     # Or pad each m/z value individually
     else:
-
         # Loop over m/z values
         for i in range(array_spectra.shape[1]):
             # Store old array in a regular grid in the extended array
@@ -822,7 +814,7 @@ def compute_zeros_extended_spectrum_per_pixel(idx_pix, array_spectra, array_pixe
             each pixel in array_spectra.
 
     Returns:
-        np.ndarray: An array of shape (2,m) containing the zero-padded spectrum data (m/z and
+        (np.ndarray): An array of shape (2,m) containing the zero-padded spectrum data (m/z and
             intensity) for the requested pixel.
     """
     array_spectra = return_spectrum_per_pixel(idx_pix, array_spectra, array_pixel_indexes)
@@ -879,7 +871,7 @@ def compute_standardization(array_spectra_pixel, idx_pixel, array_peaks, array_c
             for each pixel.
 
     Returns:
-        np.ndarray: A numpy array containing spectrum data (pixel index, m/z and intensity), of
+        (np.ndarray): A numpy array containing spectrum data (pixel index, m/z and intensity), of
             pixel 'idx_pixel', sorted by mz, with lipids values transformed.
     """
     # Define initial values
@@ -907,7 +899,6 @@ def compute_standardization(array_spectra_pixel, idx_pixel, array_peaks, array_c
 
             # Else compute a multiplicative factor
             else:
-
                 # Get array of intensity before and after correction for current pixel
                 correction = array_corrective_factors[idx_peak].flatten()[idx_pixel]
 
@@ -969,7 +960,7 @@ def compute_spectrum_per_row_selection(
             the fly. Defaults to False.
 
     Returns:
-        np.ndarray: Spectrum averaged from a manual selection of rows of pixel, containing m/z
+        (np.ndarray): Spectrum averaged from a manual selection of rows of pixel, containing m/z
             values in the first row, and intensities in the second row.
     """
     # Get list of row indexes for the current selection
@@ -1050,10 +1041,10 @@ def get_list_row_indexes(
             the current slice.
 
     Returns:
-        (list(list): List of 2-elements lists which contains the mz indices (inner list) in
+        (list(list)): List of 2-elements lists which contains the mz indices (inner list) in
             array_spectra of the extrema pixel for each row (outer list).
-        int: Total size of the concatenated spectra indexed
-        list(list)):  List of 2-elements lists which contains pixels indices (inner list) in
+        (int): Total size of the concatenated spectra indexed
+        (list(list)):  List of 2-elements lists which contains pixels indices (inner list) in
             array_spectra of the extrema pixel for each row (outer list).
     """
     # Compute size array
@@ -1086,7 +1077,6 @@ def get_list_row_indexes(
 
             # Case we started or finished with empty pixel
             if idx_1 == -1 or idx_2 == -1:
-
                 # Move forward until a non-empty pixel is found for idx_1
                 j = 1
                 while idx_1 == -1:
@@ -1180,7 +1170,6 @@ def sample_rows_from_path(path):
     # Clean list
     l_to_del = []
     for x in range(x_min, x_max + 1):
-
         # If everything went fine, x should appear an even number of times
         if len(list_index_bound_column_per_row[x - x_min]) % 2 == 0:
             pass
@@ -1227,7 +1216,7 @@ def return_index_labels(l_min, l_max, l_mz, zero_padding_extra=5 * 10**-5):
         zero_padding_extra (float, optional): Size of the zero-padding. Defaults to 5*10**-5.
 
     Returns:
-        np.ndarray: A 1-dimensional array containing the indices of the lipid labels.
+        (np.ndarray): A 1-dimensional array containing the indices of the lipid labels.
     """
     # Build empty array for lipid indexes
     array_indexes = np.empty((len(l_mz),), dtype=np.int32)
@@ -1235,7 +1224,6 @@ def return_index_labels(l_min, l_max, l_mz, zero_padding_extra=5 * 10**-5):
     idx_lipid = 0
     idx_mz = 0
     while idx_lipid < len(l_min) and idx_mz < len(l_mz):
-
         # Case peak is in lipid boundaries
         if (
             l_mz[idx_mz] >= l_min[idx_lipid] - zero_padding_extra
@@ -1264,7 +1252,7 @@ def return_idx_sup(l_idx_labels):
         l_idx_labels (np.ndarray): A 1-dimensional array containing the indices of the lipid labels.
 
     Returns:
-        np.ndarray: A list containing the indices of the lipids that have an annotation.
+        (np.ndarray): A list containing the indices of the lipids that have an annotation.
     """
     return [i for i, x in enumerate(l_idx_labels) if x >= 0]
 
@@ -1277,7 +1265,7 @@ def return_idx_inf(l_idx_labels):
         l_idx_labels (np.ndarray): A 1-dimensional array containing the indices of the lipid labels.
 
     Returns:
-        np.ndarray: A list containing the indices of the lipids that do not have an annotation.
+        (np.ndarray): A list containing the indices of the lipids that do not have an annotation.
     """
     return [i for i, x in enumerate(l_idx_labels) if x < 0]
 
@@ -1295,7 +1283,7 @@ def compute_avg_intensity_per_lipid(l_intensity_with_lipids, l_idx_labels):
         unique integer.
 
     Returns:
-        list(int), list(float): The first list provides the lipid indices, while the second provide
+        (list(int), list(float)): The first list provides the lipid indices, while the second provide
         the lipid average intensities. Peaks corresponding to identical lipid have been averaged.
     """
     # Define empty lists for the lipid indices and intensities
@@ -1305,10 +1293,8 @@ def compute_avg_intensity_per_lipid(l_intensity_with_lipids, l_idx_labels):
 
     # Loop over the lipid indices (i.e. m/z values)
     for i, idx_label in enumerate(l_idx_labels):
-
         # Actual lipid and not just a placeholder
         if idx_label >= 0:
-
             # New lipid is discovered
             if idx_label != idx_label_temp:
                 idx_label_temp = l_idx_labels[i]
@@ -1335,12 +1321,11 @@ def global_lipid_index_store(data, slice_index, l_spectra):
             the slice having index slice_index.
 
     Returns:
-        list(list(str)): A list of list of lipid labels, one list per spectrum.
+        (list(list(str))): A list of list of lipid labels, one list per spectrum.
     """
     logging.info("Starting computing ll_idx_labels")
     ll_idx_labels = []
     for spectrum in l_spectra:
-
         if spectrum is not None:
             # Get the average spectrum and add it to m/z plot
             grah_scattergl_data = np.array(spectrum, dtype=np.float32)
@@ -1391,7 +1376,6 @@ def compute_thread_safe_function(
     )
 
     if cache is not None:
-
         # Wait for the data to be safe for reading
         while cache.get("locked-cleaning"):
             time.sleep(0.05)

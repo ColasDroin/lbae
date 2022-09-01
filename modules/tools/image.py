@@ -31,7 +31,7 @@ def black_to_transparency(img):
         img (PIL.Image): The image for which the pixels must be made transparent.
 
     Returns:
-        PIL.Image: The image with transparent pixels.
+        (PIL.Image): The image with transparent pixels.
     """
     # Need to copy as PIL arrays are read-only
     x = np.asarray(img.convert("RGBA")).copy()
@@ -77,7 +77,7 @@ def convert_image_to_base64(
             Defaults to False.
 
     Returns:
-        str: The base 64 image encoded in a string.
+        (str): The base 64 image encoded in a string.
     """
     logging.info("Entering string conversion function")
 

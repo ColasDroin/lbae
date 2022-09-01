@@ -1,6 +1,7 @@
 ##### Current TODOs #####
 # TODO Do quality control and debug, especially when several users are on the app in parallel
-# TODO Make a workflow chart as a new figure
+# TODO Update links in the documentation, the technical documentation, the github readme, the yml file for the technical doc
+
 ##### Finalization process #####
 # TODO Check that all force_update are set to False
 # TODO Check that readme and documentations are correct and up to date

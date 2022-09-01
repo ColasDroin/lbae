@@ -49,7 +49,7 @@ class Labels:
             key (tuple): Coordinates of the voxel to query.
 
         Returns:
-            str: Label of the voxel in the Allen Brain Atlas.
+            (str): Label of the voxel in the Allen Brain Atlas.
         """
         x = self.bg_atlas.annotation[key]
         if isinstance(x, np.uint32):

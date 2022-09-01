@@ -23,7 +23,7 @@ def merge_md(write_doc=False):
             to False.
 
     Returns:
-        str: A string representing the documentation of the app written in markdown.
+        (str): A string representing the documentation of the app written in markdown.
     """
     order_final_md = ["_overview", "_data", "_alignment", "_usage", "_about", "_further"]
     final_md = "# Lipid Brain Atlas Explorer documentation \n\n"
@@ -45,7 +45,7 @@ def load_md():
     corresponding file.
 
     Returns:
-        str: A string representing the documentation of the app written in markdown.
+        (str): A string representing the documentation of the app written in markdown.
     """
     with open(os.path.join(os.getcwd(), "in_app_documentation", "documentation.md"), "r") as f:
         md = f.read()
@@ -60,7 +60,7 @@ def convert_md(md, app):
         app (dash.Dash): The dash app, used to fetch the asset folder URL.
 
     Returns:
-        list: A list of dash components representing the documentation.
+        (list): A list of dash components representing the documentation.
     """
 
     l_md = [x.split(".png)") for y in md.split("\n") for x in y.split("![](")]
@@ -91,7 +91,7 @@ def return_documentation(app, write_doc=False):
         write_doc (bool, optional): It True, the markdown document is saved as a new file. Defaults
             to False.
     Returns:
-        dmc.Center: A Dash Mantine Component representing the documentation in a nice centered and
+        (dmc.Center): A Dash Mantine Component representing the documentation in a nice centered and
             scrollable page.
     """
     layout = dmc.Center(

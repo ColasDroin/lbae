@@ -1,4 +1,8 @@
 site_name: LBAE technical documentation
+repo_url: https://github.com/ColasDroin/lbae
+site_url: https://TOUPDATE.com
+site_description: A web application to explore the mouse Lipid Brain Atlas.
+site_author: Colas Droin
 
 theme:
   name: "material"

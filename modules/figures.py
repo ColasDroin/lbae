@@ -265,7 +265,7 @@ class Figures:
                 from the MALDI data ("atlas"). Default to "warped_data".
 
         Returns:
-            np.ndarray: A three-dimensional array representing all slices from the maldi_data
+            (np.ndarray): A three-dimensional array representing all slices from the maldi_data
                 acquisition (TIC) or the corresponding image from the atlas. The first dimension
                 corresponds to the slices, the second and third to the images themselves.
         """
@@ -328,7 +328,7 @@ class Figures:
                 in page region_analysis). Defaults to False.
 
         Returns:
-            go.Figure: A Plotly figure representing the requested slice image of the requested type.
+            (go.Figure): A Plotly figure representing the requested slice image of the requested type.
         """
 
         # If only boundaries is requested, force the computation of atlas contours
@@ -422,7 +422,7 @@ class Figures:
             brain (str, optional): Name of the brain to be used. Defaults to 'brain_1'.
 
         Returns:
-            go.Figure: A Plotly figure representing the slices from the MALDI acquisitions in 3D.
+            (go.Figure): A Plotly figure representing the slices from the MALDI acquisitions in 3D.
         """
         # Get transform parameters (a,u,v) for each slice
         l_transform_parameters = self._storage.return_shelved_object(
@@ -561,7 +561,7 @@ class Figures:
             reduce_resolution_factor (int, optional): Divides (reduce) the initial resolution of the
                 data. Needed as the resulting figure can be very heavy. Defaults to 20.
         Returns:
-            go.Surface: A Plotly Surface representing the requested slice in 3D.
+            (go.Surface): A Plotly Surface representing the requested slice in 3D.
         """
 
         #  Get the parameters for the transformation of the coordinats from 2D to 3D
@@ -580,7 +580,6 @@ class Figures:
 
             # Loop over the second 2D coordinate of the slice
             for j, mu in enumerate(range(array_projection[slice_index].shape[1])):
-
                 # Get rescaled 3D coordinates
                 x_atlas, y_atlas, z_atlas = (
                     np.array(
@@ -664,7 +663,7 @@ class Figures:
                 None, the reading of memory-mapped data will not be multithreads-safe. Defaults to
                 None.
         Returns:
-            np.ndarray: An image (in the form of a numpy array) representing the intensity of the
+            (np.ndarray): An image (in the form of a numpy array) representing the intensity of the
                 lipid peaking between the values lb_mz and hb_mz in the spectral data, for the slice
                 slice_index.
         """
@@ -698,13 +697,11 @@ class Figures:
 
         # Normalize the image if requested
         if normalize:
-
             # Normalize across slice if the lipid has been MAIA transformed
             if (
                 lipid_name,
                 self._data.is_brain_1(slice_index),
             ) in self.dic_normalization_factors and apply_transform:
-
                 perc = self.dic_normalization_factors[
                     (lipid_name, self._data.is_brain_1(slice_index))
                 ]
@@ -745,7 +742,7 @@ class Figures:
                 None, the reading of memory-mapped data will not be multithreads-safe. Defaults to
                 None.
         Returns:
-            dict: A dictionnary associating, for each MAIA-transformed lipid name, the 99th
+            (dict): A dictionnary associating, for each MAIA-transformed lipid name, the 99th
                 percentile of the intensity across all slices.
         """
         logging.info(
@@ -763,7 +760,6 @@ class Figures:
             for slice_index in self._data.get_slice_list(
                 indices="brain_1" if brain_1 else "brain_2"
             ):
-
                 # Find lipid location
                 l_lipid_loc = (
                     self._data.get_annotations()
@@ -1029,7 +1025,6 @@ class Figures:
         # Loop over channels
         for l_t_bounds, l_lipid_names in zip(ll_t_bounds, ll_lipid_names):
             if l_t_bounds is not None:
-
                 # Loop over lipids
                 for boundaries, lipid_name in zip(l_t_bounds, l_lipid_names):
                     if boundaries is not None:
@@ -1092,7 +1087,7 @@ class Figures:
                 None.
 
         Returns:
-            np.ndarray: A three-dimensional RGB numpy array (of uint8 dtype). The first two
+            (np.ndarray): A three-dimensional RGB numpy array (of uint8 dtype). The first two
             dimensions correspond to the acquisition image shape, and the third dimension
             corresponds to the channels.
         """
@@ -1115,7 +1110,6 @@ class Figures:
                 else self._data.get_image_shape(slice_index)
             )
             if l_boundaries is not None:
-
                 # Loop over lipids
                 for boundaries, lipid_name in zip(l_boundaries, l_names):
                     if boundaries is not None:
@@ -1232,7 +1226,7 @@ class Figures:
                 annotate), corresponding to the position of colored box superimposed on the spectra.
                 Defaults to None.
         Returns:
-            go.Figure: A Plotly Figure representing the low-resolution spectrum.
+            (go.Figure): A Plotly Figure representing the low-resolution spectrum.
         """
 
         # Define figure data
@@ -1403,7 +1397,7 @@ class Figures:
         """This function returns an empty spectrum, used to display when no spectrum is available.
 
         Returns:
-            Plotly Figure: A Plotly Figure representing an empty spectrum."""
+            (Plotly Figure): A Plotly Figure representing an empty spectrum."""
 
         # Define empty figure data
         data = (go.Scattergl(x=[], y=[], visible=True),)
@@ -1439,7 +1433,7 @@ class Figures:
                 a new figure will be generated. Defaults to None.
 
         Returns:
-            Plotly Figure: A Plotly Figure containing an empty go.Heatmap, or complete the figure
+            (Plotly Figure): A Plotly Figure containing an empty go.Heatmap, or complete the figure
                 passed as argument with a proper layout that matches the theme of the app.
         """
 
@@ -1475,7 +1469,7 @@ class Figures:
             maxdepth (int, optional): The depth of the treemap to generate. Defaults to 5.
 
         Returns:
-            Plotly.Figure: A Plotly Figure containing a treemap of the Allen Brain Atlas hierarchy.
+            (Plotly.Figure): A Plotly Figure containing a treemap of the Allen Brain Atlas hierarchy.
         """
 
         # Build treemaps from list of children and parents
@@ -1507,7 +1501,7 @@ class Figures:
                 brain to display, to get a lighter output. Defaults to 7.
 
         Returns:
-            go.Isosurface: A semi-transparent go.Isosurface of the Allen Brain root structure.
+            (go.Isosurface): A semi-transparent go.Isosurface of the Allen Brain root structure.
         """
 
         # Get array of annotations, which associate coordinate to id
@@ -1580,7 +1574,7 @@ class Figures:
             higher, the higher the subsampling.
 
         Returns:
-            np.ndarray: A 3D array of annotation, in which structures are annotated with specific
+            (np.ndarray): A 3D array of annotation, in which structures are annotated with specific
                 identifiers.
         """
         # Get subsampled array of annotations
@@ -1628,7 +1622,7 @@ class Figures:
                 None, the reading of memory-mapped data will not be multithreads-safe. Defaults to
                 None.
         Returns:
-            list(np.ndarray): A list of numpy arrays representing the expression of the requested
+            (list(np.ndarray)): A list of numpy arrays representing the expression of the requested
                 lipids (through ll_t_bounds) for each slice.
         """
         l_array_data = []
@@ -1641,9 +1635,7 @@ class Figures:
 
         # Loop over slices and compute the expression of the requested lipids
         for slice_index in range(len(ll_t_bounds)):
-
             if ll_t_bounds[slice_index] != [None, None, None]:
-
                 # Get the data as an expression image per lipid
                 array_data = self.compute_rgb_array_per_lipid_selection(
                     slice_index + 1 + slice_index_offset,
@@ -1683,7 +1675,7 @@ class Figures:
             brain_1 (bool, optional): If True, the returned list of arrays correspond to the
                 brain 1 data. Else, to the brain 2 data. Defaults to True.
         Returns:
-            np.ndarray, np.ndarray, np.ndarray, np.ndarray: 4 flat numpy arrays (3 for coordinates
+            (np.ndarray, np.ndarray, np.ndarray, np.ndarray): 4 flat numpy arrays (3 for coordinates
                 and 1 for expression).
         """
 
@@ -1721,7 +1713,6 @@ class Figures:
         array_annotations = np.array(self._atlas.bg_atlas.annotation, dtype=np.int32)
 
         for slice_index in range(0, len(l_array_data), 1):
-
             # Get the averaged expression data for the current slice
             array_data = l_array_data[slice_index]
 
@@ -1800,7 +1791,7 @@ class Figures:
             name_lipid_2 (str, optional): Name of the second selected lipid. Defaults to "".
             name_lipid_3 (str, optional): Name of the third selected lipid. Defaults to "".
             set_id_regions (set(int), optional): A set containing the identifiers of the brain
-                regions (at the very bottom of the hierarchy) in which lipid expression is 
+                regions (at the very bottom of the hierarchy) in which lipid expression is
                 requested. Defaults to None, corresponding to the whole brain.
             decrease_dimensionality_factor (int): An integer used for subsampling the array of
                 annotation, and therefore the resulting figure. The higher, the higher the
@@ -2072,7 +2063,7 @@ class Figures:
                 Defaults to False.
 
         Returns:
-            go.Figure: a Plotly Clustergram figure clustering and comparing the expression of all the
+            (go.Figure): a Plotly Clustergram figure clustering and comparing the expression of all the
                 MAIA-transformed lipids in the dataset in the selected regions.
         """
         logging.info("Starting computing clustergram figure")
@@ -2083,7 +2074,6 @@ class Figures:
             dic_avg_lipids = {}
             l_slices = self._data.get_slice_list(indices="brain_1" if brain_1 else "brain_2")
             for slice_index in l_slices:
-
                 # Display progress every 10 slices
                 if slice_index % 10 == 0:
                     set_progress(
@@ -2118,7 +2108,6 @@ class Figures:
                 ll_avg_intensity = []
                 n_sel = len(l_spectra)
                 for spectrum, l_idx_labels in zip(l_spectra, ll_idx_labels):
-
                     if spectrum is not None:
                         array_intensity_with_lipids = np.array(spectrum, dtype=np.float32)[1, :]
                         array_idx_labels = np.array(l_idx_labels, dtype=np.int32)
@@ -2221,7 +2210,7 @@ class Figures:
         using spatial scRNAseq experiments.
 
         Returns:
-            A Plotly Figure containing a go.Scatter3d object representing the acquired spots.
+            (Plotly.Figure): A Plotly Figure containing a go.Scatter3d object representing the acquired spots.
         """
 
         logging.info("Starting computing 3D scatter plot for scRNAseq experiments" + logmem())
@@ -2312,7 +2301,7 @@ class Figures:
                 computed from for the first brain.
 
         Returns:
-            Plotly.Figure, Plotly.Figure, list(str), list(str): Two Plotly Figures containing each a
+            (Plotly.Figure, Plotly.Figure, list(str), list(str)): Two Plotly Figures containing each a
                 go.Bar object representing the standardized lipid expression in the scRNAseq spots,
                 and the elastic net regression coefficients for each lipid (bar). The two lists
                 contain the corresponding names of the genes and lipids represented.
@@ -2464,7 +2453,7 @@ class Figures:
                 computation in the corresponding progress bar.
 
         Returns:
-            A Plotly Figure containing a go.Heatmap object representing the expression of the
+            (Plotly.Figure): A Plotly Figure containing a go.Heatmap object representing the expression of the
             selected lipid and genes.
         """
 
@@ -2600,7 +2589,6 @@ class Figures:
                         visible=True if i == initial_frame else False,
                     )
         if grid_genes is not None or grid_lipid is not None:
-
             steps = []
             for i in range(grid_lipid.shape[0]):
                 step = dict(
@@ -2681,7 +2669,6 @@ class Figures:
         for idx_slice in range(self._data.get_slice_number()):
             for type_figure in ["original_data", "warped_data", "projection_corrected", "atlas"]:
                 for display_annotations in [True, False]:
-
                     # Force no annotation for the original data
                     self._storage.return_shelved_object(
                         "figures/load_page",
@@ -2733,7 +2720,6 @@ class Figures:
                     for slice_index in self._data.get_slice_list(
                         indices="brain_1" if brain_1 else "brain_2"
                     ):
-
                         # Find lipid location
                         l_lipid_loc = (
                             self._data.get_annotations()
@@ -2764,7 +2750,6 @@ class Figures:
                     if np.sum(l_selected_lipids) > -len(
                         self._data.get_slice_list(indices="brain_1" if brain_1 else "brain_2")
                     ):
-
                         # Build the list of mz boundaries for each peak and each index
                         lll_lipid_bounds = [
                             [

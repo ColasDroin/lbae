@@ -1373,7 +1373,7 @@ def global_spectrum_store(
         log_transform (bool): If True, the average spectrum is computed from log-transformed data.
 
     Returns:
-        list(np.ndarray): A list of numpy arrays, each corresponding to the spectral data of a
+        (list(np.ndarray)): A list of numpy arrays, each corresponding to the spectral data of a
             user-draw region, or pre-existing mask.
     """
 

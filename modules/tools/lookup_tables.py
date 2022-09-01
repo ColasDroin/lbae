@@ -45,7 +45,7 @@ def build_index_lookup_table(
             corresponding to an indexed spectrum ranging from 0 m/z to 2000 m/z.
 
     Returns:
-        np.ndarray: An array of shape (size_spectrum// divider_lookup, m), mapping m/z values to
+        (np.ndarray): An array of shape (size_spectrum// divider_lookup, m), mapping m/z values to
             indexes in array_spectra for each pixel.
     """
     # Define the empty array for the lookup table
@@ -65,7 +65,6 @@ def build_index_lookup_table(
 
         # Loop over lookup indexes
         for index_lookup in range(size_spectrum // divider_lookup - 1):
-
             # First find the first mz index corresponding to current lookup for current pixel
             # (skipped if current mz>lookup)
             while array_spectra[0, j] < ((index_lookup + 1) * divider_lookup):
@@ -108,7 +107,7 @@ def build_cumulated_image_lookup_table(
             corresponding to an indexed spectrum ranging from 0 m/z to 2000 m/z.
 
     Returns:
-        np.ndarray: An array of shape (size_spectrum// divider_lookup, image height, image_width),
+        (np.ndarray): An array of shape (size_spectrum// divider_lookup, image height, image_width),
             mapping m/z values to the cumulated spectrum until the corresponding m/z value for each
             pixel.
     """
@@ -127,7 +126,6 @@ def build_cumulated_image_lookup_table(
 
         # Loop over lookup indexes
         for index_lookup in range(size_spectrum // divider_lookup - 1):
-
             # Find the first mz index corresponding to current lookup for current pixel
             # (skipped if current mz>lookup)
             while array_spectra[0, j] >= (index_lookup * divider_lookup) and array_spectra[0, j] < (
@@ -164,7 +162,7 @@ def build_index_lookup_table_averaged_spectrum(array_mz, size_spectrum=2000):
             corresponding to an averaged indexed spectrum ranging from 0 m/z to 2000 m/z.
 
     Returns:
-        np.ndarray: An array of length size_spectrum (i.e. the defaults divider_lookup is 1 for
+        (np.ndarray): An array of length size_spectrum (i.e. the defaults divider_lookup is 1 for
             this array), mapping m/z values to indexes in the averaged array_spectra.
     """
     # Define the empty array for the lookup table
@@ -174,7 +172,6 @@ def build_index_lookup_table_averaged_spectrum(array_mz, size_spectrum=2000):
 
     # Loop over lookup indexes
     for index_lookup in range(size_spectrum - 1):
-
         # Find the first mz index corresponding to current lookup for current pixel
         while array_mz[j] < index_lookup + 1:
             j += 1
@@ -256,7 +253,6 @@ def process_lookup_tables(
         raise ValueError("Arrays must be loaded from file from now on.")
 
     elif load_from_file:
-
         # Get slice path
         slice_index = t_index_path[0]
         name = t_index_path[1]

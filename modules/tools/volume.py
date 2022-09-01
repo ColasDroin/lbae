@@ -136,7 +136,7 @@ def fill_array_borders(
             decrease_dimensionality_factor. Defaults to None.
 
     Returns:
-        np.ndarray: A numpy array representing the borders of the atlas.
+        (np.ndarray): A numpy array representing the borders of the atlas.
     """
     array_atlas_borders = np.full_like(array_annotation, annot_outside, dtype=np.float32)
     for x in range(1, array_annotation.shape[0] - 1):
@@ -214,7 +214,7 @@ def fill_array_slices(
             corresponds to an annotated region of the brain. Defaults to -0.05.
 
     Returns:
-        np.ndarray: A 3D numpy array representing the expression of the lipids preliminarily stored
+        (np.ndarray): A 3D numpy array representing the expression of the lipids preliminarily stored
             in array_c, in the regions preliminarily annotated in array_slices.
     """
     for x, y, z, c in zip(array_x, array_y, array_z, array_c):
@@ -263,7 +263,7 @@ def fill_array_interpolation(
             structures. If False, the interpolation is done blindly.
 
     Returns:
-        np.ndarray: A three-dimensional array containing the interpolated lipid intensity values.
+        (np.ndarray): A three-dimensional array containing the interpolated lipid intensity values.
     """
     array_interpolated = np.copy(array_slices)
 
@@ -343,7 +343,7 @@ def crop_array(array_annotation, list_id_regions):
             keep.
 
     Returns:
-        int, int, int, int, int, int: The min and max indices to keep for each dimension.
+        (int, int, int, int, int, int): The min and max indices to keep for each dimension.
     """
     # Define min and max as image dimensions initially
     x_min, x_max, y_min, y_max, z_min, z_max = (

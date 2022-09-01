@@ -43,7 +43,7 @@ def return_main_content():
     dcc.store.
 
     Returns:
-        html.Div: A div containing the corresponding elements.
+        (html.Div): A div containing the corresponding elements.
     """
     # List of empty lipid indexes for the dropdown of page 4, assuming brain 1 is initially selected
     empty_lipid_list = [-1 for i in data.get_slice_list(indices="brain_1")]
@@ -200,7 +200,7 @@ def return_validation_layout(main_content, initial_slice=1, brain="brain_1"):
         initial_slice (int): Index of the slice to be displayed at launch.
 
     Returns:
-        html.Div: A div containing the layout of the app.
+        (html.Div): A div containing the layout of the app.
     """
     return html.Div(
         [

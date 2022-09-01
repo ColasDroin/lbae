@@ -35,7 +35,7 @@ def load_file(path, resolution=1e-5):
         resolution (float, optional): The resolution of the file to load. Defaults to 1e-5.
 
     Returns:
-        scipy.sparse: A sparse matrix containing the intensity for each m/z value.
+        (scipy.sparse): A sparse matrix containing the intensity for each m/z value.
     """
     # Check if imzML exists and load if possible
     if os.path.exists(path + ".imzML"):
@@ -64,7 +64,7 @@ def process_sparse_matrix(smz, sort=["Pixel", "m/z"], sample=False):
             to False.
 
     Returns:
-        pandas.Dataframe: A sorted dataframe with three columns: pixels index, m/z, and intensity
+        (pandas.Dataframe): A sorted dataframe with three columns: pixels index, m/z, and intensity
             value.
     """
     # We're going to slice the matrix row by row, so it's faster to convert to csr rather than csc
@@ -102,7 +102,7 @@ def compute_TIC_per_pixel(array_spectra, n_pixels):
         n_pixels (int): Number of pixels in the acquisition.
 
     Returns:
-        np.ndarray: A numpy array of len n_pixels containing the TIC for each pixel.
+        (np.ndarray): A numpy array of len n_pixels containing the TIC for each pixel.
     """
     array_TIC = np.zeros((n_pixels,), dtype=np.float32)
     for i in range(array_spectra.shape[0]):
@@ -121,7 +121,7 @@ def normalize_per_TIC_per_pixel(array_spectra, array_TIC):
         array_TIC (np.ndarray): A numpy array of len n_pixels containing the TIC for each pixel.
 
     Returns:
-        np.ndarray: A numpy array containing TIC-normalized spectrum data (pixel index, m/z and
+        (np.ndarray): A numpy array containing TIC-normalized spectrum data (pixel index, m/z and
             intensity).
     """
     for i in range(array_spectra.shape[0]):
@@ -138,7 +138,7 @@ def load_peak_file(path, array=True):
         path (string): The path of the csv file containing the peaks annotations.
 
     Returns:
-        np.ndarray: The sorted dataframe containing the annotations (min peak, max peak, number of
+        (np.ndarray): The sorted dataframe containing the annotations (min peak, max peak, number of
             pixels containing the current molecule, estimated mz of the current molecule).
     """
     # Load the peaks annotations using the last definition used for the csv file
@@ -177,7 +177,7 @@ def load_lipid_file(section_index, path):
         path (string): The path of the csv file containing the lipids annotations.
 
     Returns:
-        np.ndarray: A two-dimensional array of m/z values corrsponding to the lipids that we want to
+        (np.ndarray): A two-dimensional array of m/z values corrsponding to the lipids that we want to
             keep for further visualization (first column is per-slice value, second column is
             averaged value). Sorted by individual slice value in the end.
     """
@@ -216,9 +216,9 @@ def filter_peaks(array_spectra, array_peaks, array_mz_lipids_per_slice):
             values of the lipids we want to visualize.
 
     Returns:
-        list: m/z values corresponding to peaks that have been annotated and belong to lipids we
+        (list): m/z values corresponding to peaks that have been annotated and belong to lipids we
             want to visualize.
-        list: m/z values of the lipids the lipids we want to visualize that have been kept.
+        (list): m/z values of the lipids the lipids we want to visualize that have been kept.
     """
     # Define initial values
     l_to_keep = []
@@ -300,7 +300,7 @@ def return_array_pixel_indexes(array_pixel, total_shape):
         total_shape (int): Total number of pixels in the slice.
 
     Returns:
-        np.ndarray: An array of shape (m,2) containing the boundary indices of each pixel in the
+        (np.ndarray): An array of shape (m,2) containing the boundary indices of each pixel in the
             original spectra array.
     """
     array_pixel_indexes = np.empty((total_shape, 2), dtype=np.int32)
@@ -335,7 +335,7 @@ def get_standardized_values(
             data is missing.
 
     Returns:
-        list, list, np.array, np.array : 2 lists and 2 arrays containing respectively:
+        (list, list, np.array, np.array): 2 lists and 2 arrays containing respectively:
             - The name of the folders containing the transformed lipid expression. The name is a
                 string representing the mz value itself.
             - The corresponding mz values as floats.
@@ -369,7 +369,6 @@ def get_standardized_values(
     l_arrays_after_transfo = []
     set_idx_to_keep = set([])
     for idx, lipid_str in enumerate(l_lipids_str):
-
         array_after_transfo = np.load(
             path_array_transformed_data + "/" + lipid_str + "/" + str(slice_index - 1) + ".npy"
         )
@@ -432,7 +431,7 @@ def compute_standardization(
         Exception: _description_
 
     Returns:
-        np.ndarray: A numpy array containing spectrum data (pixel index, m/z and intensity), of
+        (np.ndarray): A numpy array containing spectrum data (pixel index, m/z and intensity), of
             pixel 'idx_pixel', sorted by mz, with lipids values transformed.
     """
     # Define initial values
@@ -459,7 +458,6 @@ def compute_standardization(
 
             # Else compute a multiplicative factor
             else:
-
                 # Get array of intensity before and after correction for current pixel
                 intensity_before = arrays_before_transfo[idx_peak].flatten()[idx_pixel]
                 intensity_after = arrays_after_transfo[idx_peak].flatten()[idx_pixel]
@@ -516,7 +514,7 @@ def get_array_peaks_to_correct(l_lipids_float, array_mz_lipids, array_peaks, sli
         array_peaks (np.ndarray): A numpy array containing the peak annotations (min peak, max peak,
             number of pixels containing the peak, average value of the peak), sorted by min_mz.
     Returns:
-        np.ndarray: A numpy array similar to 'array_peaks', but containing only the lipids that have
+        (np.ndarray): A numpy array similar to 'array_peaks', but containing only the lipids that have
             been MAIA-transformed.
     """
     # Low precision as the reference can be quite different from the actual m/z value estimated
@@ -610,11 +608,11 @@ def standardize_values(
             is not useless as it still returns 'array_peaks_to_correct' and
             'array_corrective_factors'.
     Returns:
-        np.ndarray: A numpy array containing spectrum data (pixel index, m/z and intensity), sorted
+        (np.ndarray): A numpy array containing spectrum data (pixel index, m/z and intensity), sorted
             by pixel index and mz, with lipids values transformed.
-        np.ndarray: A numpy array similar to 'array_peaks', but containing only the lipids that have
+        (np.ndarray): A numpy array similar to 'array_peaks', but containing only the lipids that have
             been transformed.
-        np.ndarray: A numpy array equal to the ratio of 'arrays_after_transfo' and
+        (np.ndarray): A numpy array equal to the ratio of 'arrays_after_transfo' and
             'arrays_before_transfo' containing the corrective factor used for lipid and each pixel.
     """
 
@@ -670,7 +668,7 @@ def return_average_spectrum(array_intensity, array_unique_counts):
             across all spectra from all pixels.
 
     Returns:
-        np.ndarray: Array of length m containing the summed intensities for the unique m/z values
+        (np.ndarray): Array of length m containing the summed intensities for the unique m/z values
             across all spectra from all pixels.
     """
     array_unique_intensity = np.zeros(array_unique_counts.shape[0], dtype=np.float32)
@@ -691,7 +689,7 @@ def return_averaged_spectra_array(array):
             in each row.
 
     Returns:
-        np.ndarray: Array of shape (2,n) containing intensities averaged over unique m/z values
+        (np.ndarray): Array of shape (2,n) containing intensities averaged over unique m/z values
             across all pixels.
     """
     # Take the transpose for easier browsing
@@ -723,7 +721,7 @@ def extract_raw_data(
             "/data/lipidatlas/data/app/data/temp/".
 
     Returns:
-        np.ndarray, np.ndarray: The first array, of shape (3,n), contains, for the current
+        (np.ndarray, np.ndarray): The first array, of shape (3,n), contains, for the current
             acquisition, the mz value (2nd column) and intensity (3rd column) for each pixel
             (first column). The second array contains two integers representing the acquisition
             shape.
