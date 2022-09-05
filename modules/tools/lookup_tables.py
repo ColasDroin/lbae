@@ -286,15 +286,6 @@ def process_lookup_tables(
         print("Either the data or a filename must be provided")
         return None
 
-    # No normalization anymore as it's done in 'process_raw_data()'
-    # # Normalize spectrum
-    # array_averaged_mz_intensity_low_res[1, :]/= np.sum(array_averaged_mz_intensity_low_res[1, :])
-    # array_averaged_mz_intensity_high_res[1, :]/=np.sum(array_averaged_mz_intensity_high_res[1, :])
-    # for (b1, b2) in array_pixel_indexes_high_res:
-    #     # ? Instead of processing this way (divide by the entire pixel sum of spectra), maybe
-    #     # ? divide by the number of non-zero values in the spectrum ?
-    #     array_spectra_high_res[1, b1 : b2 + 1] /= np.sum(array_spectra_high_res[1, b1 : b2 + 1])
-
     # Define divider_lookup
     divider_lookup = DIVIDER_LOOKUP
 

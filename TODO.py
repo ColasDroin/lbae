@@ -1,6 +1,6 @@
 ##### Current TODOs #####
 # TODO Do quality control and debug, especially when several users are on the app in parallel
-# TODO Add the annotation to the lipid selection page
+# TODO Update page 6 with "feature importance selection"
 # TODO Update links in the documentation, the technical documentation, the github readme, the yml file for the technical doc
 
 ##### Finalization process #####
@@ -10,6 +10,3 @@
 # TODO Make a docker container for the very final version of the app
 # TODO Clean all notebooks output before last commit
 # TODO Delete TODO file
-
-### if time left TODO ###
-# TODO fix technical documentation
