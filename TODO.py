@@ -1,5 +1,6 @@
 ##### Current TODOs #####
 # TODO Do quality control and debug, especially when several users are on the app in parallel
+# TODO Add the annotation to the lipid selection page
 # TODO Update links in the documentation, the technical documentation, the github readme, the yml file for the technical doc
 
 ##### Finalization process #####

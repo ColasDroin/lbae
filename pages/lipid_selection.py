@@ -616,9 +616,17 @@ def page_2_plot_graph_heatmap_mz_selection(
                 )
 
         else:
-            # Probably the page has just been loaded, so do nothing
-            return dash.no_update
-
+            # No lipid has been selected, return image from boundaries
+            if lb is not None and hb is not None:
+                return (
+                        figures.compute_heatmap_per_mz(slice_index, lb, hb, cache_flask=cache_flask),
+                        "Current input: " + "m/z boundaries",
+                    )
+            else:
+                return (
+                        figures.compute_heatmap_per_mz(slice_index, 500, 500, cache_flask=cache_flask),
+                        "Current input: " + "m/z boundaries",
+                    )                
     # Case trigger is range slider from high resolution spectrum
     if id_input == "boundaries-high-resolution-mz-plot" or (
         id_input == "main-slider"

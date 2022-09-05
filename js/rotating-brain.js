@@ -74,7 +74,7 @@ Plotly.plot(
       pad: 0,
     },
   },
-  { displayModeBar: true, responsive: true, scrollZoom: false }
+  { displayModeBar: false, responsive: true, scrollZoom: false }
 );
 
 // Remove skeleton
