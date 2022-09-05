@@ -946,7 +946,6 @@ def page_4_plot_graph_volume(
     return dash.no_update
 
 
-# ! Fix this long callback when possible
 @app.long_callback(
     output=Output("page-4-graph-heatmap", "figure"),
     inputs=[

@@ -213,14 +213,14 @@ class Figures:
                 compute_function=self.compute_heatmap_lipid_genes,
                 brain_1=False,
             ),
-            # ! Change defaults parameters when brain_1 is True
-            # self._storage.return_shelved_object(
-            #     "figures/scRNAseq_page",
-            #     "base_heatmap_lipid",
-            #     force_update=False,
-            #     compute_function=self.compute_heatmap_lipid_genes,
-            #     brain_1=True,
-            # ),
+
+            self._storage.return_shelved_object(
+                "figures/scRNAseq_page",
+                "base_heatmap_lipid",
+                force_update=False,
+                compute_function=self.compute_heatmap_lipid_genes,
+                brain_1=True,
+            ),
 
         # Check that all basic figures in the load_slice page are present, if not, compute them
         if not self._storage.check_shelved_object(
@@ -327,7 +327,8 @@ class Figures:
                 in page region_analysis). Defaults to False.
 
         Returns:
-            (go.Figure): A Plotly figure representing the requested slice image of the requested type.
+            (go.Figure): A Plotly figure representing the requested slice image of the requested
+                type.
         """
 
         # If only boundaries is requested, force the computation of atlas contours
@@ -1309,8 +1310,8 @@ class Figures:
                 None.
         Returns:
             Depending on the value of the boundaries, and the plot parameter, it may return a Plotly
-                Figure containing an empty spectrum, or a spectrum between the two provided boundaries,
-                or the corresponding data of such a spectrum.
+                Figure containing an empty spectrum, or a spectrum between the two
+                provided boundaries, or the corresponding data of such a spectrum.
         """
 
         # Define default values for graph (empty)
@@ -1468,7 +1469,8 @@ class Figures:
             maxdepth (int, optional): The depth of the treemap to generate. Defaults to 5.
 
         Returns:
-            (Plotly.Figure): A Plotly Figure containing a treemap of the Allen Brain Atlas hierarchy.
+            (Plotly.Figure): A Plotly Figure containing a treemap of the Allen Brain Atlas
+                hierarchy.
         """
 
         # Build treemaps from list of children and parents
@@ -1810,9 +1812,9 @@ class Figures:
                 Defaults to False.
         Returns:
             Depending on the value of return_interpolated_array and return_individual_slice_data,
-                returns either the (not) interpolated array of expression of the requested lipids in the
-                selected regions, or a Plotly Figure containing a go.Volume object representing the
-                interpolated expression.
+                returns either the (not) interpolated array of expression of the requested lipids
+                in the selected regions, or a Plotly Figure containing a go.Volume object
+                representing the interpolated expression.
         """
         if return_interpolated_array and return_individual_slice_data:
             logging.warning(
@@ -2062,8 +2064,8 @@ class Figures:
                 Defaults to False.
 
         Returns:
-            (go.Figure): a Plotly Clustergram figure clustering and comparing the expression of all the
-                MAIA-transformed lipids in the dataset in the selected regions.
+            (go.Figure): a Plotly Clustergram figure clustering and comparing the expression of all
+                the MAIA-transformed lipids in the dataset in the selected regions.
         """
         logging.info("Starting computing clustergram figure")
 
@@ -2209,7 +2211,8 @@ class Figures:
         using spatial scRNAseq experiments.
 
         Returns:
-            (Plotly.Figure): A Plotly Figure containing a go.Scatter3d object representing the acquired spots.
+            (Plotly.Figure): A Plotly Figure containing a go.Scatter3d object representing the
+                acquired spots.
         """
 
         logging.info("Starting computing 3D scatter plot for scRNAseq experiments" + logmem())
@@ -2288,22 +2291,20 @@ class Figures:
 
         return fig
 
-    # ! Check for stored values of old version of compute_barplot
-
     def compute_barplots_enrichment(self, brain_1=False, idx_dot=None):
         """This functions computes two figures representing, in barplots, the lipid expression in
         the spots acquired using spatial scRNAseq experiments, as well as how it can be explained by
         an elastic net regression using gene expression as explaing factors.
 
         Args:
-            brain_1 (bool, optional): If True, the barplot will be displayed with the regression coefficients
-                computed from for the first brain.
+            brain_1 (bool, optional): If True, the barplot will be displayed with the regression
+                coefficients computed from for the first brain.
 
         Returns:
-            (Plotly.Figure, Plotly.Figure, list(str), list(str)): Two Plotly Figures containing each a
-                go.Bar object representing the standardized lipid expression in the scRNAseq spots,
-                and the elastic net regression coefficients for each lipid (bar). The two lists
-                contain the corresponding names of the genes and lipids represented.
+            (Plotly.Figure, Plotly.Figure, list(str), list(str)): Two Plotly Figures containing each
+                a go.Bar object representing the standardized lipid expression in the scRNAseq
+                spots, and the elastic net regression coefficients for each lipid (bar). The two
+                lists contain the corresponding names of the genes and lipids represented.
         """
 
         logging.info("Starting computing barplot for scRNAseq experiments" + logmem())
@@ -2452,8 +2453,8 @@ class Figures:
                 computation in the corresponding progress bar.
 
         Returns:
-            (Plotly.Figure): A Plotly Figure containing a go.Heatmap object representing the expression of the
-                selected lipid and genes.
+            (Plotly.Figure): A Plotly Figure containing a go.Heatmap object representing the
+                expression of the selected lipid and genes.
         """
 
         logging.info("Starting computing heatmap for scRNAseq experiments" + logmem())
