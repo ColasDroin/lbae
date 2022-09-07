@@ -844,7 +844,6 @@ def page_4_add_toast_region_selection(
         Output("page-4-progress-bar-volume", "label"),
     ],
     prevent_initial_call=True,
-    background=True,
     cache_args_to_ignore=[0, 1, 2, 3, 7, 8],
 )
 def page_4_plot_graph_volume(

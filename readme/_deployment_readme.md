@@ -1,9 +1,13 @@
 
 ## Use and deployment
 
-The app is compatible with Python 3.8 and above. Required packages can be installed with: 
+The app is compatible with Python 3.8 and is guaranteed to work until version 3.9.5. 
+
+Required packages can be installed with: 
 
 ```pip install -r requirements.txt```
+
+Warning: The Dash version version MUST BE <=2.5.1, otherwise, bug may be present with long_callbacks. 
 
 The app can be run locally using the command:
 
