@@ -103,13 +103,13 @@ layout = (
                                     "margin-top": "-3rem",
                                 },
                             ),
-                            dmc.Text(
-                                "The mouse lipid brain atlas publication can be found here: TODO,"
-                                " and the github repository of the app can be found here: TODO.",
-                                size="xl",
-                                align="center",
-                                color="dimmed",
-                            ),
+                            # dmc.Text(
+                            #     "The mouse lipid brain atlas publication can be found here: TODO,"
+                            #     " and the github repository of the app can be found here: TODO.",
+                            #     size="xl",
+                            #     align="center",
+                            #     color="dimmed",
+                            # ),
                             dmc.Center(
                                 dmc.Button(
                                     "Read documentation",
