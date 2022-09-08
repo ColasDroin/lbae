@@ -6,7 +6,13 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
+        <meta name="description" content="A web application to explore the mouse Lipid Brain Atlas.">
       
+      
+        <meta name="author" content="Colas Droin">
+      
+      
+        <link rel="canonical" href="https://TOUPDATE.com/modules/atlas/">
       
       <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.3.9">
@@ -138,6 +144,18 @@
 </div>
     
     
+      <div class="md-header__source">
+        <a href="https://github.com/ColasDroin/lbae" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
   </nav>
   
 </header>
@@ -170,6 +188,18 @@
     </a>
     LBAE technical documentation
   </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/ColasDroin/lbae" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
   
   <ul class="md-nav__list" data-md-scrollfix>
     
@@ -922,6 +952,10 @@
             <article class="md-content__inner md-typeset">
               
                 
+  <a href="https://github.com/ColasDroin/lbae/edit/master/docs/modules/atlas.md" title="Edit this page" class="md-content__button md-icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+  </a>
+
 
 
   <h1>atlas</h1>
@@ -961,7 +995,8 @@ the Allen Brain Atlas, including the mapping with the Common Coordinate Framewor
 
   
       <p>Class used to do the interface between the data coming from acquisitions (MALDI), and
-the Allen Brain Atlas.</p>
+the Allen Brain Atlas. Private attributes (starting with an underscore) are described as
+properties.</p>
 
   <p><strong>Attributes:</strong></p>
   <table>
@@ -2003,10 +2038,10 @@ get_projected_mask_and_spectrum(slice_index, mask_name, MAIA_correction=False): 
 <span class="normal">908</span>
 <span class="normal">909</span>
 <span class="normal">910</span>
-<span class="normal">911</span>
-<span class="normal">912</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">Atlas</span><span class="p">:</span>
+<span class="normal">911</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">Atlas</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Class used to do the interface between the data coming from acquisitions (MALDI), and</span>
-<span class="sd">    the Allen Brain Atlas.</span>
+<span class="sd">    the Allen Brain Atlas. Private attributes (starting with an underscore) are described as</span>
+<span class="sd">    properties.</span>
 
 <span class="sd">    Attributes:</span>
 <span class="sd">        resolution (int): Resolution of the atlas.</span>
@@ -2035,8 +2070,6 @@ get_projected_mask_and_spectrum(slice_index, mask_name, MAIA_correction=False): 
 <span class="sd">            original data in the CCFv3.</span>
 <span class="sd">        dic_existing_masks (dict): A dictionnary of existing masks per slice, which associates slice</span>
 <span class="sd">            index (key) to a set of masks acronyms.</span>
-
-<span class="sd">        Private attributes (starting with an underscore) are described as properties below.</span>
 
 <span class="sd">    Properties:</span>
 <span class="sd">        array_projection_corrected (np.ndarray): A three-dimensional array which contains the data</span>
@@ -2233,8 +2266,8 @@ get_projected_mask_and_spectrum(slice_index, mask_name, MAIA_correction=False): 
 <span class="sd">        only used with objects that should also be precomputed.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            np.ndarray: A three-dimensional array which contains the data (one integer per</span>
-<span class="sd">            coordinate, corresponding to a pixel intensity) from our original acquisition.</span>
+<span class="sd">            (np.ndarray): A three-dimensional array which contains the data (one integer per</span>
+<span class="sd">                coordinate, corresponding to a pixel intensity) from our original acquisition.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_array_projection_corrected</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
@@ -2258,8 +2291,8 @@ get_projected_mask_and_spectrum(slice_index, mask_name, MAIA_correction=False): 
 <span class="sd">        to save memory as it is only used with objects that should also be precomputed.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            list(np.ndarray): A list of arrays, one per slice, which contains the atlas</span>
-<span class="sd">            borders projected on our data.</span>
+<span class="sd">            (list(np.ndarray)): A list of arrays, one per slice, which contains the atlas</span>
+<span class="sd">                borders projected on our data.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_list_projected_atlas_borders_arrays</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
@@ -2284,7 +2317,7 @@ get_projected_mask_and_spectrum(slice_index, mask_name, MAIA_correction=False): 
 <span class="sd">            children.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            dict: A dictionnary that associate to each structure (acronym) the set of ids (int) of</span>
+<span class="sd">            (dict): A dictionnary that associate to each structure (acronym) the set of ids (int) of</span>
 <span class="sd">                all of its children.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -2324,10 +2357,10 @@ get_projected_mask_and_spectrum(slice_index, mask_name, MAIA_correction=False): 
 <span class="sd">        acronyms to their complete name in the process.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            list(str): List of children (node) names.</span>
-<span class="sd">            list(str): List of parent names.</span>
-<span class="sd">            dict: A dictionnary that associate structure name to its acronym.</span>
-<span class="sd">            dict: A dictionnary that associate structure acronym to its name.</span>
+<span class="sd">            (list(str)): List of children (node) names.</span>
+<span class="sd">            (list(str)): List of parent names.</span>
+<span class="sd">            (dict): A dictionnary that associate structure name to its acronym.</span>
+<span class="sd">            (dict): A dictionnary that associate structure acronym to its name.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c1"># Create a list of parents for all ancestors</span>
@@ -2373,7 +2406,7 @@ get_projected_mask_and_spectrum(slice_index, mask_name, MAIA_correction=False): 
 <span class="sd">                region are zeroed out. Defaults to False.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            np.ndarray, np.ndarray, list(np.ndarray): The first array is a high-resolution version</span>
+<span class="sd">            (np.ndarray, np.ndarray, list(np.ndarray)): The first array is a high-resolution version</span>
 <span class="sd">                of our initial data, in which each individual pixel has been mapped according to the</span>
 <span class="sd">                second array, which acts as a mapping table. The list contains the arrays of</span>
 <span class="sd">                original coordinates, for each slice.</span>
@@ -2458,7 +2491,7 @@ get_projected_mask_and_spectrum(slice_index, mask_name, MAIA_correction=False): 
 <span class="sd">        slices.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            list((float,float,float)): A list of tuples, each with three parameters, that allow to</span>
+<span class="sd">            (list((float,float,float))): A list of tuples, each with three parameters, that allow to</span>
 <span class="sd">                map the 3D coordinates of the CCFv3 to the tiled planes representing the slices. One</span>
 <span class="sd">                per slice.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -2474,8 +2507,8 @@ get_projected_mask_and_spectrum(slice_index, mask_name, MAIA_correction=False): 
         <span class="sd">&quot;&quot;&quot;Compute an array of projected atlas borders (i.e. image of atlas annotations).</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            list(np.ndarray): A list of arrays, one per slice, which contains the atlas</span>
-<span class="sd">            borders projected on our data.</span>
+<span class="sd">            (list(np.ndarray)): A list of arrays, one per slice, which contains the atlas</span>
+<span class="sd">                borders projected on our data.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">l_array_images</span> <span class="o">=</span> <span class="p">[]</span>
@@ -2529,10 +2562,10 @@ get_projected_mask_and_spectrum(slice_index, mask_name, MAIA_correction=False): 
 
 <span class="sd">        Args:</span>
 <span class="sd">            zero_out_of_annotation (bool, optional): If True, the pixels outside of the atlas</span>
-<span class="sd">            annotations are zero-ed out. Defaults to False.</span>
+<span class="sd">                annotations are zero-ed out. Defaults to False.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            np.ndarray, np.ndarray: The first array is basically a list of atlas images</span>
+<span class="sd">            (np.ndarray, np.ndarray): The first array is basically a list of atlas images</span>
 <span class="sd">                corresponding to the slices acquired during the MALDI acquisition. The second array</span>
 <span class="sd">                is the corresponding set of annotations.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -2558,7 +2591,7 @@ get_projected_mask_and_spectrum(slice_index, mask_name, MAIA_correction=False): 
 <span class="sd">            structure (str): Structure (brain region) acronym.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            np.ndarray: A 3D mask with the same shape as the array of annotations from the atlas,</span>
+<span class="sd">            (np.ndarray): A 3D mask with the same shape as the array of annotations from the atlas,</span>
 <span class="sd">                where all elements are zeros except for the requested structure.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -2612,7 +2645,7 @@ get_projected_mask_and_spectrum(slice_index, mask_name, MAIA_correction=False): 
 <span class="sd">                None.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            np.ndarray: A 2D numpy array containing the averaged spectral data of the pixels in the</span>
+<span class="sd">            (np.ndarray): A 2D numpy array containing the averaged spectral data of the pixels in the</span>
 <span class="sd">                requested mask of the requested slice. First row contains m/z values, second row</span>
 <span class="sd">                contains the averaged intensities.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -2845,7 +2878,7 @@ get_projected_mask_and_spectrum(slice_index, mask_name, MAIA_correction=False): 
 <span class="sd">            MAIA_correction (bool, optional):  If True, the MAIA corrected version of the MALDI data</span>
 <span class="sd">                is used for computation (if it exists). Defaults to False.</span>
 <span class="sd">        Returns:</span>
-<span class="sd">            np.ndarray, np.ndarray: The first array is represents the projected 2D mask on the</span>
+<span class="sd">            (np.ndarray, np.ndarray): The first array is represents the projected 2D mask on the</span>
 <span class="sd">                requested slice. The second array corresponds to the corresponding averaged spectral</span>
 <span class="sd">                data (first row is m/z values, second row is averaged intensities).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -2961,7 +2994,8 @@ Default to False.</p></td>
 
       <details class="quote">
         <summary>Source code in <code>modules/atlas.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">114</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">113</span>
+<span class="normal">114</span>
 <span class="normal">115</span>
 <span class="normal">116</span>
 <span class="normal">117</span>
@@ -3105,8 +3139,7 @@ Default to False.</p></td>
 <span class="normal">255</span>
 <span class="normal">256</span>
 <span class="normal">257</span>
-<span class="normal">258</span>
-<span class="normal">259</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">maldi_data</span><span class="p">,</span> <span class="n">storage</span><span class="p">,</span> <span class="n">resolution</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span> <span class="n">sample</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="normal">258</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">maldi_data</span><span class="p">,</span> <span class="n">storage</span><span class="p">,</span> <span class="n">resolution</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span> <span class="n">sample</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Initialize the class Atlas.</span>
 
 <span class="sd">    Args:</span>
@@ -3288,20 +3321,18 @@ only used with objects that should also be precomputed.</p>
     <tbody>
         <tr>
           <td>
+                <code><span title="numpy">np</span>.<span title="numpy.ndarray">ndarray</span></code>
           </td>
-          <td><p>np.ndarray: A three-dimensional array which contains the data (one integer per</p></td>
-        </tr>
-        <tr>
-          <td>
-          </td>
-          <td><p>coordinate, corresponding to a pixel intensity) from our original acquisition.</p></td>
+          <td><p>A three-dimensional array which contains the data (one integer per
+coordinate, corresponding to a pixel intensity) from our original acquisition.</p></td>
         </tr>
     </tbody>
   </table>
 
       <details class="quote">
         <summary>Source code in <code>modules/atlas.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">265</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">264</span>
+<span class="normal">265</span>
 <span class="normal">266</span>
 <span class="normal">267</span>
 <span class="normal">268</span>
@@ -3323,15 +3354,14 @@ only used with objects that should also be precomputed.</p>
 <span class="normal">284</span>
 <span class="normal">285</span>
 <span class="normal">286</span>
-<span class="normal">287</span>
-<span class="normal">288</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@property</span>
+<span class="normal">287</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@property</span>
 <span class="k">def</span> <span class="nf">array_projection_corrected</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Load arrays of images using atlas projection. It&#39;s a property to save memory as it is</span>
 <span class="sd">    only used with objects that should also be precomputed.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        np.ndarray: A three-dimensional array which contains the data (one integer per</span>
-<span class="sd">        coordinate, corresponding to a pixel intensity) from our original acquisition.</span>
+<span class="sd">        (np.ndarray): A three-dimensional array which contains the data (one integer per</span>
+<span class="sd">            coordinate, corresponding to a pixel intensity) from our original acquisition.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_array_projection_corrected</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
@@ -3416,8 +3446,9 @@ region are zeroed out. Defaults to False.</p></td>
     <tbody>
         <tr>
           <td>
+                <code><span title="numpy">np</span>.<span title="numpy.ndarray">ndarray</span>, <span title="numpy">np</span>.<span title="numpy.ndarray">ndarray</span>, list(<span title="numpy">np</span>.<span title="numpy.ndarray">ndarray</span>)</code>
           </td>
-          <td><p>np.ndarray, np.ndarray, list(np.ndarray): The first array is a high-resolution version
+          <td><p>The first array is a high-resolution version
 of our initial data, in which each individual pixel has been mapped according to the
 second array, which acts as a mapping table. The list contains the arrays of
 original coordinates, for each slice.</p></td>
@@ -3427,7 +3458,8 @@ original coordinates, for each slice.</p></td>
 
       <details class="quote">
         <summary>Source code in <code>modules/atlas.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">400</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">399</span>
+<span class="normal">400</span>
 <span class="normal">401</span>
 <span class="normal">402</span>
 <span class="normal">403</span>
@@ -3515,8 +3547,7 @@ original coordinates, for each slice.</p></td>
 <span class="normal">485</span>
 <span class="normal">486</span>
 <span class="normal">487</span>
-<span class="normal">488</span>
-<span class="normal">489</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">compute_array_projection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nearest_neighbour_correction</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">atlas_correction</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="normal">488</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">compute_array_projection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nearest_neighbour_correction</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">atlas_correction</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Compute three arrays relating the original coordinates of our data to their projection in</span>
 <span class="sd">    the CCFv3.</span>
 
@@ -3527,7 +3558,7 @@ original coordinates, for each slice.</p></td>
 <span class="sd">            region are zeroed out. Defaults to False.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        np.ndarray, np.ndarray, list(np.ndarray): The first array is a high-resolution version</span>
+<span class="sd">        (np.ndarray, np.ndarray, list(np.ndarray)): The first array is a high-resolution version</span>
 <span class="sd">            of our initial data, in which each individual pixel has been mapped according to the</span>
 <span class="sd">            second array, which acts as a mapping table. The list contains the arrays of</span>
 <span class="sd">            original coordinates, for each slice.</span>
@@ -3631,13 +3662,14 @@ original coordinates, for each slice.</p></td>
   <table>
     <thead>
       <tr>
-<th>Name</th>        <th>Type</th>
+        <th>Type</th>
         <th>Description</th>
       </tr>
     </thead>
     <tbody>
         <tr>
-<td><code>dict</code></td>          <td>
+          <td>
+                <code>dict</code>
           </td>
           <td><p>A dictionnary that associate to each structure (acronym) the set of ids (int) of
 all of its children.</p></td>
@@ -3647,7 +3679,8 @@ all of its children.</p></td>
 
       <details class="quote">
         <summary>Source code in <code>modules/atlas.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">317</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">316</span>
+<span class="normal">317</span>
 <span class="normal">318</span>
 <span class="normal">319</span>
 <span class="normal">320</span>
@@ -3683,13 +3716,12 @@ all of its children.</p></td>
 <span class="normal">350</span>
 <span class="normal">351</span>
 <span class="normal">352</span>
-<span class="normal">353</span>
-<span class="normal">354</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">compute_dic_acronym_children_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="normal">353</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">compute_dic_acronym_children_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Recursively compute a dictionnary that associates brain structures to the set of their</span>
 <span class="sd">        children.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        dict: A dictionnary that associate to each structure (acronym) the set of ids (int) of</span>
+<span class="sd">        (dict): A dictionnary that associate to each structure (acronym) the set of ids (int) of</span>
 <span class="sd">            all of its children.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -3748,30 +3780,32 @@ acronyms to their complete name in the process.</p>
   <table>
     <thead>
       <tr>
-<th>Name</th>        <th>Type</th>
+        <th>Type</th>
         <th>Description</th>
       </tr>
     </thead>
     <tbody>
         <tr>
-<td><code>list</code></td>          <td>
-                <code>str</code>
+          <td>
+                <code>list(str)</code>
           </td>
           <td><p>List of children (node) names.</p></td>
         </tr>
         <tr>
-<td><code>list</code></td>          <td>
-                <code>str</code>
+          <td>
+                <code>list(str)</code>
           </td>
           <td><p>List of parent names.</p></td>
         </tr>
         <tr>
-<td><code>dict</code></td>          <td>
+          <td>
+                <code>dict</code>
           </td>
           <td><p>A dictionnary that associate structure name to its acronym.</p></td>
         </tr>
         <tr>
-<td><code>dict</code></td>          <td>
+          <td>
+                <code>dict</code>
           </td>
           <td><p>A dictionnary that associate structure acronym to its name.</p></td>
         </tr>
@@ -3780,7 +3814,8 @@ acronyms to their complete name in the process.</p>
 
       <details class="quote">
         <summary>Source code in <code>modules/atlas.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">356</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">355</span>
+<span class="normal">356</span>
 <span class="normal">357</span>
 <span class="normal">358</span>
 <span class="normal">359</span>
@@ -3821,17 +3856,16 @@ acronyms to their complete name in the process.</p>
 <span class="normal">394</span>
 <span class="normal">395</span>
 <span class="normal">396</span>
-<span class="normal">397</span>
-<span class="normal">398</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">compute_hierarchy_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="normal">397</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">compute_hierarchy_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Compute, for each children (node), the corresponding parent, to build a list associating</span>
 <span class="sd">    child/parent for all structures, and also compute dictionnaries that associate structure</span>
 <span class="sd">    acronyms to their complete name in the process.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        list(str): List of children (node) names.</span>
-<span class="sd">        list(str): List of parent names.</span>
-<span class="sd">        dict: A dictionnary that associate structure name to its acronym.</span>
-<span class="sd">        dict: A dictionnary that associate structure acronym to its name.</span>
+<span class="sd">        (list(str)): List of children (node) names.</span>
+<span class="sd">        (list(str)): List of parent names.</span>
+<span class="sd">        (dict): A dictionnary that associate structure name to its acronym.</span>
+<span class="sd">        (dict): A dictionnary that associate structure acronym to its name.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1"># Create a list of parents for all ancestors</span>
@@ -3889,28 +3923,25 @@ acronyms to their complete name in the process.</p>
   <table>
     <thead>
       <tr>
-<th>Name</th>        <th>Type</th>
+        <th>Type</th>
         <th>Description</th>
       </tr>
     </thead>
     <tbody>
         <tr>
-<td><code>list</code></td>          <td>
-                <code><span title="numpy">np</span>.<span title="numpy.ndarray">ndarray</span></code>
+          <td>
+                <code>list(<span title="numpy">np</span>.<span title="numpy.ndarray">ndarray</span>)</code>
           </td>
-          <td><p>A list of arrays, one per slice, which contains the atlas</p></td>
-        </tr>
-        <tr>
-<td></td>          <td>
-          </td>
-          <td><p>borders projected on our data.</p></td>
+          <td><p>A list of arrays, one per slice, which contains the atlas
+borders projected on our data.</p></td>
         </tr>
     </tbody>
   </table>
 
       <details class="quote">
         <summary>Source code in <code>modules/atlas.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">508</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">507</span>
+<span class="normal">508</span>
 <span class="normal">509</span>
 <span class="normal">510</span>
 <span class="normal">511</span>
@@ -3959,13 +3990,12 @@ acronyms to their complete name in the process.</p>
 <span class="normal">554</span>
 <span class="normal">555</span>
 <span class="normal">556</span>
-<span class="normal">557</span>
-<span class="normal">558</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">compute_list_projected_atlas_borders_figures</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="normal">557</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">compute_list_projected_atlas_borders_figures</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Compute an array of projected atlas borders (i.e. image of atlas annotations).</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        list(np.ndarray): A list of arrays, one per slice, which contains the atlas</span>
-<span class="sd">        borders projected on our data.</span>
+<span class="sd">        (list(np.ndarray)): A list of arrays, one per slice, which contains the atlas</span>
+<span class="sd">            borders projected on our data.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">l_array_images</span> <span class="o">=</span> <span class="p">[]</span>
@@ -4036,14 +4066,14 @@ slices.</p>
   <table>
     <thead>
       <tr>
-<th>Name</th>        <th>Type</th>
+        <th>Type</th>
         <th>Description</th>
       </tr>
     </thead>
     <tbody>
         <tr>
-<td><code>list</code></td>          <td>
-                <code>float, float, float</code>
+          <td>
+                <code>list(float, float, float)</code>
           </td>
           <td><p>A list of tuples, each with three parameters, that allow to
 map the 3D coordinates of the CCFv3 to the tiled planes representing the slices. One
@@ -4054,7 +4084,8 @@ per slice.</p></td>
 
       <details class="quote">
         <summary>Source code in <code>modules/atlas.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">491</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">490</span>
+<span class="normal">491</span>
 <span class="normal">492</span>
 <span class="normal">493</span>
 <span class="normal">494</span>
@@ -4068,13 +4099,12 @@ per slice.</p></td>
 <span class="normal">502</span>
 <span class="normal">503</span>
 <span class="normal">504</span>
-<span class="normal">505</span>
-<span class="normal">506</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">compute_projection_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="normal">505</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">compute_projection_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Compute the parameters used to map the 3D coordinates of the CCFv3 to the the 2D (tiled)</span>
 <span class="sd">    slices.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        list((float,float,float)): A list of tuples, each with three parameters, that allow to</span>
+<span class="sd">        (list((float,float,float))): A list of tuples, each with three parameters, that allow to</span>
 <span class="sd">            map the 3D coordinates of the CCFv3 to the tiled planes representing the slices. One</span>
 <span class="sd">            per slice.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -4198,8 +4228,9 @@ None.</p></td>
     <tbody>
         <tr>
           <td>
+                <code><span title="numpy">np</span>.<span title="numpy.ndarray">ndarray</span></code>
           </td>
-          <td><p>np.ndarray: A 2D numpy array containing the averaged spectral data of the pixels in the
+          <td><p>A 2D numpy array containing the averaged spectral data of the pixels in the
 requested mask of the requested slice. First row contains m/z values, second row
 contains the averaged intensities.</p></td>
         </tr>
@@ -4208,7 +4239,8 @@ contains the averaged intensities.</p></td>
 
       <details class="quote">
         <summary>Source code in <code>modules/atlas.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">622</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">621</span>
+<span class="normal">622</span>
 <span class="normal">623</span>
 <span class="normal">624</span>
 <span class="normal">625</span>
@@ -4289,8 +4321,7 @@ contains the averaged intensities.</p></td>
 <span class="normal">700</span>
 <span class="normal">701</span>
 <span class="normal">702</span>
-<span class="normal">703</span>
-<span class="normal">704</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">compute_spectrum_data</span><span class="p">(</span>
+<span class="normal">703</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">compute_spectrum_data</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">slice_index</span><span class="p">,</span>
     <span class="n">projected_mask</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -4318,7 +4349,7 @@ contains the averaged intensities.</p></td>
 <span class="sd">            None.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        np.ndarray: A 2D numpy array containing the averaged spectral data of the pixels in the</span>
+<span class="sd">        (np.ndarray): A 2D numpy array containing the averaged spectral data of the pixels in the</span>
 <span class="sd">            requested mask of the requested slice. First row contains m/z values, second row</span>
 <span class="sd">            contains the averaged intensities.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -4430,8 +4461,9 @@ set to 0.</p>
     <tbody>
         <tr>
           <td>
+                <code><span title="numpy">np</span>.<span title="numpy.ndarray">ndarray</span></code>
           </td>
-          <td><p>np.ndarray: A 3D mask with the same shape as the array of annotations from the atlas,
+          <td><p>A 3D mask with the same shape as the array of annotations from the atlas,
 where all elements are zeros except for the requested structure.</p></td>
         </tr>
     </tbody>
@@ -4439,7 +4471,8 @@ where all elements are zeros except for the requested structure.</p></td>
 
       <details class="quote">
         <summary>Source code in <code>modules/atlas.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">587</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">586</span>
+<span class="normal">587</span>
 <span class="normal">588</span>
 <span class="normal">589</span>
 <span class="normal">590</span>
@@ -4471,8 +4504,7 @@ where all elements are zeros except for the requested structure.</p></td>
 <span class="normal">616</span>
 <span class="normal">617</span>
 <span class="normal">618</span>
-<span class="normal">619</span>
-<span class="normal">620</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_atlas_mask</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">structure</span><span class="p">):</span>
+<span class="normal">619</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_atlas_mask</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">structure</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Compute a mask for the structure given as argument. The brain regions corresponding to</span>
 <span class="sd">    the structure id or any of its descendants are set to the id of the structure. The rest is</span>
 <span class="sd">    set to 0.</span>
@@ -4481,7 +4513,7 @@ where all elements are zeros except for the requested structure.</p></td>
 <span class="sd">        structure (str): Structure (brain region) acronym.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        np.ndarray: A 3D mask with the same shape as the array of annotations from the atlas,</span>
+<span class="sd">        (np.ndarray): A 3D mask with the same shape as the array of annotations from the atlas,</span>
 <span class="sd">            where all elements are zeros except for the requested structure.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -4583,8 +4615,9 @@ is used for computation (if it exists). Defaults to False.</p></td>
     <tbody>
         <tr>
           <td>
+                <code><span title="numpy">np</span>.<span title="numpy.ndarray">ndarray</span>, <span title="numpy">np</span>.<span title="numpy.ndarray">ndarray</span></code>
           </td>
-          <td><p>np.ndarray, np.ndarray: The first array is represents the projected 2D mask on the
+          <td><p>The first array is represents the projected 2D mask on the
 requested slice. The second array corresponds to the corresponding averaged spectral
 data (first row is m/z values, second row is averaged intensities).</p></td>
         </tr>
@@ -4593,7 +4626,8 @@ data (first row is m/z values, second row is averaged intensities).</p></td>
 
       <details class="quote">
         <summary>Source code in <code>modules/atlas.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">873</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">872</span>
+<span class="normal">873</span>
 <span class="normal">874</span>
 <span class="normal">875</span>
 <span class="normal">876</span>
@@ -4631,8 +4665,7 @@ data (first row is m/z values, second row is averaged intensities).</p></td>
 <span class="normal">908</span>
 <span class="normal">909</span>
 <span class="normal">910</span>
-<span class="normal">911</span>
-<span class="normal">912</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_projected_mask_and_spectrum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">slice_index</span><span class="p">,</span> <span class="n">mask_name</span><span class="p">,</span> <span class="n">MAIA_correction</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="normal">911</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_projected_mask_and_spectrum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">slice_index</span><span class="p">,</span> <span class="n">mask_name</span><span class="p">,</span> <span class="n">MAIA_correction</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;This function is used to get the projected mask and corresponding averaged spectral data</span>
 <span class="sd">    for a given mask and a given slice.</span>
 
@@ -4642,7 +4675,7 @@ data (first row is m/z values, second row is averaged intensities).</p></td>
 <span class="sd">        MAIA_correction (bool, optional):  If True, the MAIA corrected version of the MALDI data</span>
 <span class="sd">            is used for computation (if it exists). Defaults to False.</span>
 <span class="sd">    Returns:</span>
-<span class="sd">        np.ndarray, np.ndarray: The first array is represents the projected 2D mask on the</span>
+<span class="sd">        (np.ndarray, np.ndarray): The first array is represents the projected 2D mask on the</span>
 <span class="sd">            requested slice. The second array corresponds to the corresponding averaged spectral</span>
 <span class="sd">            data (first row is m/z values, second row is averaged intensities).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -4701,28 +4734,25 @@ to save memory as it is only used with objects that should also be precomputed.<
   <table>
     <thead>
       <tr>
-<th>Name</th>        <th>Type</th>
+        <th>Type</th>
         <th>Description</th>
       </tr>
     </thead>
     <tbody>
         <tr>
-<td><code>list</code></td>          <td>
-                <code><span title="numpy">np</span>.<span title="numpy.ndarray">ndarray</span></code>
+          <td>
+                <code>list(<span title="numpy">np</span>.<span title="numpy.ndarray">ndarray</span>)</code>
           </td>
-          <td><p>A list of arrays, one per slice, which contains the atlas</p></td>
-        </tr>
-        <tr>
-<td></td>          <td>
-          </td>
-          <td><p>borders projected on our data.</p></td>
+          <td><p>A list of arrays, one per slice, which contains the atlas
+borders projected on our data.</p></td>
         </tr>
     </tbody>
   </table>
 
       <details class="quote">
         <summary>Source code in <code>modules/atlas.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">290</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">289</span>
+<span class="normal">290</span>
 <span class="normal">291</span>
 <span class="normal">292</span>
 <span class="normal">293</span>
@@ -4742,15 +4772,14 @@ to save memory as it is only used with objects that should also be precomputed.<
 <span class="normal">307</span>
 <span class="normal">308</span>
 <span class="normal">309</span>
-<span class="normal">310</span>
-<span class="normal">311</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@property</span>
+<span class="normal">310</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@property</span>
 <span class="k">def</span> <span class="nf">list_projected_atlas_borders_arrays</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Load array of projected atlas borders (i.e. image of atlas annotations). It&#39;s a property</span>
 <span class="sd">    to save memory as it is only used with objects that should also be precomputed.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        list(np.ndarray): A list of arrays, one per slice, which contains the atlas</span>
-<span class="sd">        borders projected on our data.</span>
+<span class="sd">        (list(np.ndarray)): A list of arrays, one per slice, which contains the atlas</span>
+<span class="sd">            borders projected on our data.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_list_projected_atlas_borders_arrays</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
@@ -4802,7 +4831,8 @@ computation of an array of simplified structures ids can't be compiled with numb
           <td>
                 <code>bool</code>
           </td>
-          <td><p>If True, the pixels outside of the atlas</p></td>
+          <td><p>If True, the pixels outside of the atlas
+annotations are zero-ed out. Defaults to False.</p></td>
           <td>
                 <code>False</code>
           </td>
@@ -4821,8 +4851,9 @@ computation of an array of simplified structures ids can't be compiled with numb
     <tbody>
         <tr>
           <td>
+                <code><span title="numpy">np</span>.<span title="numpy.ndarray">ndarray</span>, <span title="numpy">np</span>.<span title="numpy.ndarray">ndarray</span></code>
           </td>
-          <td><p>np.ndarray, np.ndarray: The first array is basically a list of atlas images
+          <td><p>The first array is basically a list of atlas images
 corresponding to the slices acquired during the MALDI acquisition. The second array
 is the corresponding set of annotations.</p></td>
         </tr>
@@ -4831,7 +4862,8 @@ is the corresponding set of annotations.</p></td>
 
       <details class="quote">
         <summary>Source code in <code>modules/atlas.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">561</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">560</span>
+<span class="normal">561</span>
 <span class="normal">562</span>
 <span class="normal">563</span>
 <span class="normal">564</span>
@@ -4854,17 +4886,16 @@ is the corresponding set of annotations.</p></td>
 <span class="normal">581</span>
 <span class="normal">582</span>
 <span class="normal">583</span>
-<span class="normal">584</span>
-<span class="normal">585</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">prepare_and_compute_array_images_atlas</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">zero_out_of_annotation</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="normal">584</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">prepare_and_compute_array_images_atlas</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">zero_out_of_annotation</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;This function is mainly a wrapper for compute_array_images_atlas. It is needed as the</span>
 <span class="sd">    computation of an array of simplified structures ids can&#39;t be compiled with numba.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        zero_out_of_annotation (bool, optional): If True, the pixels outside of the atlas</span>
-<span class="sd">        annotations are zero-ed out. Defaults to False.</span>
+<span class="sd">            annotations are zero-ed out. Defaults to False.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        np.ndarray, np.ndarray: The first array is basically a list of atlas images</span>
+<span class="sd">        (np.ndarray, np.ndarray): The first array is basically a list of atlas images</span>
 <span class="sd">            corresponding to the slices acquired during the MALDI acquisition. The second array</span>
 <span class="sd">            is the corresponding set of annotations.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -4951,7 +4982,8 @@ debug). Defaults to False.</p></td>
 
       <details class="quote">
         <summary>Source code in <code>modules/atlas.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">706</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">705</span>
+<span class="normal">706</span>
 <span class="normal">707</span>
 <span class="normal">708</span>
 <span class="normal">709</span>
@@ -5115,8 +5147,7 @@ debug). Defaults to False.</p></td>
 <span class="normal">867</span>
 <span class="normal">868</span>
 <span class="normal">869</span>
-<span class="normal">870</span>
-<span class="normal">871</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">save_all_projected_masks_and_spectra</span><span class="p">(</span>
+<span class="normal">870</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">save_all_projected_masks_and_spectra</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span> <span class="n">force_update</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">cache_flask</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sample</span><span class="o">=</span><span class="kc">False</span>
 <span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;This function saves all the (2D) masks and corresponding averaged spectral data, for all</span>

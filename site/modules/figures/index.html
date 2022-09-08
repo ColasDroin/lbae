@@ -6,7 +6,13 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
+        <meta name="description" content="A web application to explore the mouse Lipid Brain Atlas.">
       
+      
+        <meta name="author" content="Colas Droin">
+      
+      
+        <link rel="canonical" href="https://TOUPDATE.com/modules/figures/">
       
       <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.3.9">
@@ -138,6 +144,18 @@
 </div>
     
     
+      <div class="md-header__source">
+        <a href="https://github.com/ColasDroin/lbae" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
   </nav>
   
 </header>
@@ -170,6 +188,18 @@
     </a>
     LBAE technical documentation
   </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/ColasDroin/lbae" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
   
   <ul class="md-nav__list" data-md-scrollfix>
     
@@ -1146,6 +1176,10 @@
             <article class="md-content__inner md-typeset">
               
                 
+  <a href="https://github.com/ColasDroin/lbae/edit/master/docs/modules/figures.md" title="Edit this page" class="md-content__button md-icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+  </a>
+
 
 
   <h1>figures</h1>
@@ -1185,7 +1219,9 @@ from the MALDI imaging, and the Allen Brain Atlas, as well as the mapping betwee
 
   
       <p>This class is used to produce the figures and widgets used in the app. It uses the special
-attribute <strong>slots</strong> for faster access to the attributes.</p>
+attribute <strong>slots</strong> for faster access to the attributes. Parameters are ignored in the docstring
+of the listed methods below to save space. Please consult the docstring of the actual methods
+in the source-code for more information:</p>
 
   <p><strong>Attributes:</strong></p>
   <table>
@@ -1235,9 +1271,10 @@ MAIA.</p></td>
         </tr>
     </tbody>
   </table>
-      <p>Methods (parameters are ignored in the docstring below to save space. Please consult the
-    docstring of the corresponding methods for more information):</p>
-<pre><code>__init__(): Initialize the Figures class.
+
+<details class="methods">
+  <summary>Methods</summary>
+  <p><strong>init</strong>(): Initialize the Figures class.
 compute_array_basic_images(): Computes a three-dimensional array representing all slices
     from the maldi_data acquisition (TIC) or the corresponding image from the atlas.
 compute_figure_basic_image(): Computes a figure representing slices from the TIC or the
@@ -1295,9 +1332,8 @@ shelve_arrays_basic_figures(): Shelves in the database all the arrays of basic i
 shelve_all_l_array_2D(): Precomputes and shelves all the arrays of lipid expression used in
     a 3D representation of the brain.
 shelve_all_arrays_annotation(): Precomputes and shelves the array of structure annotation
-    used in a 3D representation of the brain.
-</code></pre>
-
+    used in a 3D representation of the brain.</p>
+</details>
 
         <details class="quote">
           <summary>Source code in <code>modules/figures.py</code></summary>
@@ -4059,24 +4095,11 @@ shelve_all_arrays_annotation(): Precomputes and shelves the array of structure a
 <span class="normal">2805</span>
 <span class="normal">2806</span>
 <span class="normal">2807</span>
-<span class="normal">2808</span>
-<span class="normal">2809</span>
-<span class="normal">2810</span>
-<span class="normal">2811</span>
-<span class="normal">2812</span>
-<span class="normal">2813</span>
-<span class="normal">2814</span>
-<span class="normal">2815</span>
-<span class="normal">2816</span>
-<span class="normal">2817</span>
-<span class="normal">2818</span>
-<span class="normal">2819</span>
-<span class="normal">2820</span>
-<span class="normal">2821</span>
-<span class="normal">2822</span>
-<span class="normal">2823</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">Figures</span><span class="p">:</span>
+<span class="normal">2808</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">Figures</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;This class is used to produce the figures and widgets used in the app. It uses the special</span>
-<span class="sd">    attribute __slots__ for faster access to the attributes.</span>
+<span class="sd">    attribute __slots__ for faster access to the attributes. Parameters are ignored in the docstring</span>
+<span class="sd">    of the listed methods below to save space. Please consult the docstring of the actual methods</span>
+<span class="sd">    in the source-code for more information:</span>
 
 <span class="sd">    Attributes:</span>
 <span class="sd">        _data (MaldiData): MaldiData object, used to manipulate the raw MALDI data.</span>
@@ -4086,10 +4109,7 @@ shelve_all_arrays_annotation(): Precomputes and shelves the array of structure a
 <span class="sd">        dic_normalization_factors (dict): Dictionnary of normalization factors across slices for</span>
 <span class="sd">            MAIA.</span>
 
-
-<span class="sd">    Methods (parameters are ignored in the docstring below to save space. Please consult the</span>
-<span class="sd">        docstring of the corresponding methods for more information):</span>
-
+<span class="sd">    Methods:</span>
 <span class="sd">        __init__(): Initialize the Figures class.</span>
 <span class="sd">        compute_array_basic_images(): Computes a three-dimensional array representing all slices</span>
 <span class="sd">            from the maldi_data acquisition (TIC) or the corresponding image from the atlas.</span>
@@ -4241,14 +4261,14 @@ shelve_all_arrays_annotation(): Precomputes and shelves the array of structure a
                 <span class="n">compute_function</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">compute_heatmap_lipid_genes</span><span class="p">,</span>
                 <span class="n">brain_1</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
             <span class="p">),</span>
-            <span class="c1"># ! Change defaults parameters when brain_1 is True</span>
-            <span class="c1"># self._storage.return_shelved_object(</span>
-            <span class="c1">#     &quot;figures/scRNAseq_page&quot;,</span>
-            <span class="c1">#     &quot;base_heatmap_lipid&quot;,</span>
-            <span class="c1">#     force_update=False,</span>
-            <span class="c1">#     compute_function=self.compute_heatmap_lipid_genes,</span>
-            <span class="c1">#     brain_1=True,</span>
-            <span class="c1"># ),</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_storage</span><span class="o">.</span><span class="n">return_shelved_object</span><span class="p">(</span>
+                <span class="s2">&quot;figures/scRNAseq_page&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;base_heatmap_lipid&quot;</span><span class="p">,</span>
+                <span class="n">force_update</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                <span class="n">compute_function</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">compute_heatmap_lipid_genes</span><span class="p">,</span>
+                <span class="n">brain_1</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="p">),</span>
 
         <span class="c1"># Check that all basic figures in the load_slice page are present, if not, compute them</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_storage</span><span class="o">.</span><span class="n">check_shelved_object</span><span class="p">(</span>
@@ -4292,7 +4312,7 @@ shelve_all_arrays_annotation(): Precomputes and shelves the array of structure a
 <span class="sd">                from the MALDI data (&quot;atlas&quot;). Default to &quot;warped_data&quot;.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            np.ndarray: A three-dimensional array representing all slices from the maldi_data</span>
+<span class="sd">            (np.ndarray): A three-dimensional array representing all slices from the maldi_data</span>
 <span class="sd">                acquisition (TIC) or the corresponding image from the atlas. The first dimension</span>
 <span class="sd">                corresponds to the slices, the second and third to the images themselves.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -4355,7 +4375,8 @@ shelve_all_arrays_annotation(): Precomputes and shelves the array of structure a
 <span class="sd">                in page region_analysis). Defaults to False.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            go.Figure: A Plotly figure representing the requested slice image of the requested type.</span>
+<span class="sd">            (go.Figure): A Plotly figure representing the requested slice image of the requested</span>
+<span class="sd">                type.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c1"># If only boundaries is requested, force the computation of atlas contours</span>
@@ -4449,7 +4470,7 @@ shelve_all_arrays_annotation(): Precomputes and shelves the array of structure a
 <span class="sd">            brain (str, optional): Name of the brain to be used. Defaults to &#39;brain_1&#39;.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            go.Figure: A Plotly figure representing the slices from the MALDI acquisitions in 3D.</span>
+<span class="sd">            (go.Figure): A Plotly figure representing the slices from the MALDI acquisitions in 3D.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Get transform parameters (a,u,v) for each slice</span>
         <span class="n">l_transform_parameters</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_storage</span><span class="o">.</span><span class="n">return_shelved_object</span><span class="p">(</span>
@@ -4588,7 +4609,7 @@ shelve_all_arrays_annotation(): Precomputes and shelves the array of structure a
 <span class="sd">            reduce_resolution_factor (int, optional): Divides (reduce) the initial resolution of the</span>
 <span class="sd">                data. Needed as the resulting figure can be very heavy. Defaults to 20.</span>
 <span class="sd">        Returns:</span>
-<span class="sd">            go.Surface: A Plotly Surface representing the requested slice in 3D.</span>
+<span class="sd">            (go.Surface): A Plotly Surface representing the requested slice in 3D.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c1">#  Get the parameters for the transformation of the coordinats from 2D to 3D</span>
@@ -4607,7 +4628,6 @@ shelve_all_arrays_annotation(): Precomputes and shelves the array of structure a
 
             <span class="c1"># Loop over the second 2D coordinate of the slice</span>
             <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">mu</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">array_projection</span><span class="p">[</span><span class="n">slice_index</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])):</span>
-
                 <span class="c1"># Get rescaled 3D coordinates</span>
                 <span class="n">x_atlas</span><span class="p">,</span> <span class="n">y_atlas</span><span class="p">,</span> <span class="n">z_atlas</span> <span class="o">=</span> <span class="p">(</span>
                     <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
@@ -4691,7 +4711,7 @@ shelve_all_arrays_annotation(): Precomputes and shelves the array of structure a
 <span class="sd">                None, the reading of memory-mapped data will not be multithreads-safe. Defaults to</span>
 <span class="sd">                None.</span>
 <span class="sd">        Returns:</span>
-<span class="sd">            np.ndarray: An image (in the form of a numpy array) representing the intensity of the</span>
+<span class="sd">            (np.ndarray): An image (in the form of a numpy array) representing the intensity of the</span>
 <span class="sd">                lipid peaking between the values lb_mz and hb_mz in the spectral data, for the slice</span>
 <span class="sd">                slice_index.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -4725,13 +4745,11 @@ shelve_all_arrays_annotation(): Precomputes and shelves the array of structure a
 
         <span class="c1"># Normalize the image if requested</span>
         <span class="k">if</span> <span class="n">normalize</span><span class="p">:</span>
-
             <span class="c1"># Normalize across slice if the lipid has been MAIA transformed</span>
             <span class="k">if</span> <span class="p">(</span>
                 <span class="n">lipid_name</span><span class="p">,</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">is_brain_1</span><span class="p">(</span><span class="n">slice_index</span><span class="p">),</span>
             <span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dic_normalization_factors</span> <span class="ow">and</span> <span class="n">apply_transform</span><span class="p">:</span>
-
                 <span class="n">perc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dic_normalization_factors</span><span class="p">[</span>
                     <span class="p">(</span><span class="n">lipid_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">is_brain_1</span><span class="p">(</span><span class="n">slice_index</span><span class="p">))</span>
                 <span class="p">]</span>
@@ -4772,7 +4790,7 @@ shelve_all_arrays_annotation(): Precomputes and shelves the array of structure a
 <span class="sd">                None, the reading of memory-mapped data will not be multithreads-safe. Defaults to</span>
 <span class="sd">                None.</span>
 <span class="sd">        Returns:</span>
-<span class="sd">            dict: A dictionnary associating, for each MAIA-transformed lipid name, the 99th</span>
+<span class="sd">            (dict): A dictionnary associating, for each MAIA-transformed lipid name, the 99th</span>
 <span class="sd">                percentile of the intensity across all slices.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
@@ -4790,7 +4808,6 @@ shelve_all_arrays_annotation(): Precomputes and shelves the array of structure a
             <span class="k">for</span> <span class="n">slice_index</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">get_slice_list</span><span class="p">(</span>
                 <span class="n">indices</span><span class="o">=</span><span class="s2">&quot;brain_1&quot;</span> <span class="k">if</span> <span class="n">brain_1</span> <span class="k">else</span> <span class="s2">&quot;brain_2&quot;</span>
             <span class="p">):</span>
-
                 <span class="c1"># Find lipid location</span>
                 <span class="n">l_lipid_loc</span> <span class="o">=</span> <span class="p">(</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">get_annotations</span><span class="p">()</span>
@@ -4882,7 +4899,7 @@ shelve_all_arrays_annotation(): Precomputes and shelves the array of structure a
 
 <span class="sd">        Returns:</span>
 <span class="sd">            Depending on the inputted arguments, may either return a base64 string, a go.Image, or</span>
-<span class="sd">            a Plotly Figure.</span>
+<span class="sd">                a Plotly Figure.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Converting image to string&quot;</span><span class="p">)</span>
@@ -4967,7 +4984,7 @@ shelve_all_arrays_annotation(): Precomputes and shelves the array of structure a
 <span class="sd">                None.</span>
 <span class="sd">        Returns:</span>
 <span class="sd">            Depending on the value return_base64_string, may either return a base64 string, or</span>
-<span class="sd">            a Plotly Figure.</span>
+<span class="sd">                a Plotly Figure.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Starting figure computation, from mz boundaries&quot;</span><span class="p">)</span>
@@ -5040,7 +5057,7 @@ shelve_all_arrays_annotation(): Precomputes and shelves the array of structure a
 
 <span class="sd">        Returns:</span>
 <span class="sd">            Depending on the value return_base64_string, may either return a base64 string, or</span>
-<span class="sd">            a Plotly Figure.</span>
+<span class="sd">                a Plotly Figure.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Compute heatmap per lipid selection&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ll_t_bounds</span><span class="p">))</span>
@@ -5056,7 +5073,6 @@ shelve_all_arrays_annotation(): Precomputes and shelves the array of structure a
         <span class="c1"># Loop over channels</span>
         <span class="k">for</span> <span class="n">l_t_bounds</span><span class="p">,</span> <span class="n">l_lipid_names</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">ll_t_bounds</span><span class="p">,</span> <span class="n">ll_lipid_names</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">l_t_bounds</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-
                 <span class="c1"># Loop over lipids</span>
                 <span class="k">for</span> <span class="n">boundaries</span><span class="p">,</span> <span class="n">lipid_name</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">l_t_bounds</span><span class="p">,</span> <span class="n">l_lipid_names</span><span class="p">):</span>
                     <span class="k">if</span> <span class="n">boundaries</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -5119,9 +5135,9 @@ shelve_all_arrays_annotation(): Precomputes and shelves the array of structure a
 <span class="sd">                None.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            np.ndarray: A three-dimensional RGB numpy array (of uint8 dtype). The first two</span>
-<span class="sd">            dimensions correspond to the acquisition image shape, and the third dimension</span>
-<span class="sd">            corresponds to the channels.</span>
+<span class="sd">            (np.ndarray): A three-dimensional RGB numpy array (of uint8 dtype). The first two</span>
+<span class="sd">                dimensions correspond to the acquisition image shape, and the third dimension</span>
+<span class="sd">                corresponds to the channels.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c1"># Empty lipid names if no names provided</span>
@@ -5142,7 +5158,6 @@ shelve_all_arrays_annotation(): Precomputes and shelves the array of structure a
                 <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">get_image_shape</span><span class="p">(</span><span class="n">slice_index</span><span class="p">)</span>
             <span class="p">)</span>
             <span class="k">if</span> <span class="n">l_boundaries</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-
                 <span class="c1"># Loop over lipids</span>
                 <span class="k">for</span> <span class="n">boundaries</span><span class="p">,</span> <span class="n">lipid_name</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">l_boundaries</span><span class="p">,</span> <span class="n">l_names</span><span class="p">):</span>
                     <span class="k">if</span> <span class="n">boundaries</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -5216,7 +5231,7 @@ shelve_all_arrays_annotation(): Precomputes and shelves the array of structure a
 
 <span class="sd">        Returns:</span>
 <span class="sd">            Depending on the inputted arguments, may either return a base64 string, a go.Image, or</span>
-<span class="sd">            a Plotly Figure.</span>
+<span class="sd">                a Plotly Figure.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Started RGB image computation for slice &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">slice_index</span><span class="p">)</span> <span class="o">+</span> <span class="n">logmem</span><span class="p">())</span>
@@ -5259,7 +5274,7 @@ shelve_all_arrays_annotation(): Precomputes and shelves the array of structure a
 <span class="sd">                annotate), corresponding to the position of colored box superimposed on the spectra.</span>
 <span class="sd">                Defaults to None.</span>
 <span class="sd">        Returns:</span>
-<span class="sd">            go.Figure: A Plotly Figure representing the low-resolution spectrum.</span>
+<span class="sd">            (go.Figure): A Plotly Figure representing the low-resolution spectrum.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c1"># Define figure data</span>
@@ -5343,8 +5358,8 @@ shelve_all_arrays_annotation(): Precomputes and shelves the array of structure a
 <span class="sd">                None.</span>
 <span class="sd">        Returns:</span>
 <span class="sd">            Depending on the value of the boundaries, and the plot parameter, it may return a Plotly</span>
-<span class="sd">            Figure containing an empty spectrum, or a spectrum between the two provided boundaries,</span>
-<span class="sd">            or the corresponding data of such a spectrum.</span>
+<span class="sd">                Figure containing an empty spectrum, or a spectrum between the two</span>
+<span class="sd">                provided boundaries, or the corresponding data of such a spectrum.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c1"># Define default values for graph (empty)</span>
@@ -5430,7 +5445,7 @@ shelve_all_arrays_annotation(): Precomputes and shelves the array of structure a
         <span class="sd">&quot;&quot;&quot;This function returns an empty spectrum, used to display when no spectrum is available.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            Plotly Figure: A Plotly Figure representing an empty spectrum.&quot;&quot;&quot;</span>
+<span class="sd">            (Plotly Figure): A Plotly Figure representing an empty spectrum.&quot;&quot;&quot;</span>
 
         <span class="c1"># Define empty figure data</span>
         <span class="n">data</span> <span class="o">=</span> <span class="p">(</span><span class="n">go</span><span class="o">.</span><span class="n">Scattergl</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="p">[],</span> <span class="n">y</span><span class="o">=</span><span class="p">[],</span> <span class="n">visible</span><span class="o">=</span><span class="kc">True</span><span class="p">),)</span>
@@ -5466,7 +5481,7 @@ shelve_all_arrays_annotation(): Precomputes and shelves the array of structure a
 <span class="sd">                a new figure will be generated. Defaults to None.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            Plotly Figure: A Plotly Figure containing an empty go.Heatmap, or complete the figure</span>
+<span class="sd">            (Plotly Figure): A Plotly Figure containing an empty go.Heatmap, or complete the figure</span>
 <span class="sd">                passed as argument with a proper layout that matches the theme of the app.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -5502,7 +5517,8 @@ shelve_all_arrays_annotation(): Precomputes and shelves the array of structure a
 <span class="sd">            maxdepth (int, optional): The depth of the treemap to generate. Defaults to 5.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            Plotly.Figure: A Plotly Figure containing a treemap of the Allen Brain Atlas hierarchy.</span>
+<span class="sd">            (Plotly.Figure): A Plotly Figure containing a treemap of the Allen Brain Atlas</span>
+<span class="sd">                hierarchy.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c1"># Build treemaps from list of children and parents</span>
@@ -5534,7 +5550,7 @@ shelve_all_arrays_annotation(): Precomputes and shelves the array of structure a
 <span class="sd">                brain to display, to get a lighter output. Defaults to 7.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            go.Isosurface: A semi-transparent go.Isosurface of the Allen Brain root structure.</span>
+<span class="sd">            (go.Isosurface): A semi-transparent go.Isosurface of the Allen Brain root structure.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c1"># Get array of annotations, which associate coordinate to id</span>
@@ -5604,10 +5620,10 @@ shelve_all_arrays_annotation(): Precomputes and shelves the array of structure a
 <span class="sd">        decrease the size of the output.</span>
 <span class="sd">        Args:</span>
 <span class="sd">            decrease_dimensionality_factor (int): An integer used for subsampling the array. The</span>
-<span class="sd">            higher, the higher the subsampling.</span>
+<span class="sd">                higher, the higher the subsampling.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            np.ndarray: A 3D array of annotation, in which structures are annotated with specific</span>
+<span class="sd">            (np.ndarray): A 3D array of annotation, in which structures are annotated with specific</span>
 <span class="sd">                identifiers.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Get subsampled array of annotations</span>
@@ -5655,7 +5671,7 @@ shelve_all_arrays_annotation(): Precomputes and shelves the array of structure a
 <span class="sd">                None, the reading of memory-mapped data will not be multithreads-safe. Defaults to</span>
 <span class="sd">                None.</span>
 <span class="sd">        Returns:</span>
-<span class="sd">            list(np.ndarray): A list of numpy arrays representing the expression of the requested</span>
+<span class="sd">            (list(np.ndarray)): A list of numpy arrays representing the expression of the requested</span>
 <span class="sd">                lipids (through ll_t_bounds) for each slice.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">l_array_data</span> <span class="o">=</span> <span class="p">[]</span>
@@ -5668,9 +5684,7 @@ shelve_all_arrays_annotation(): Precomputes and shelves the array of structure a
 
         <span class="c1"># Loop over slices and compute the expression of the requested lipids</span>
         <span class="k">for</span> <span class="n">slice_index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ll_t_bounds</span><span class="p">)):</span>
-
             <span class="k">if</span> <span class="n">ll_t_bounds</span><span class="p">[</span><span class="n">slice_index</span><span class="p">]</span> <span class="o">!=</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
-
                 <span class="c1"># Get the data as an expression image per lipid</span>
                 <span class="n">array_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_rgb_array_per_lipid_selection</span><span class="p">(</span>
                     <span class="n">slice_index</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">slice_index_offset</span><span class="p">,</span>
@@ -5710,7 +5724,7 @@ shelve_all_arrays_annotation(): Precomputes and shelves the array of structure a
 <span class="sd">            brain_1 (bool, optional): If True, the returned list of arrays correspond to the</span>
 <span class="sd">                brain 1 data. Else, to the brain 2 data. Defaults to True.</span>
 <span class="sd">        Returns:</span>
-<span class="sd">            np.ndarray, np.ndarray, np.ndarray, np.ndarray: 4 flat numpy arrays (3 for coordinates</span>
+<span class="sd">            (np.ndarray, np.ndarray, np.ndarray, np.ndarray): 4 flat numpy arrays (3 for coordinates</span>
 <span class="sd">                and 1 for expression).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -5748,7 +5762,6 @@ shelve_all_arrays_annotation(): Precomputes and shelves the array of structure a
         <span class="n">array_annotations</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_atlas</span><span class="o">.</span><span class="n">bg_atlas</span><span class="o">.</span><span class="n">annotation</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
 
         <span class="k">for</span> <span class="n">slice_index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">l_array_data</span><span class="p">),</span> <span class="mi">1</span><span class="p">):</span>
-
             <span class="c1"># Get the averaged expression data for the current slice</span>
             <span class="n">array_data</span> <span class="o">=</span> <span class="n">l_array_data</span><span class="p">[</span><span class="n">slice_index</span><span class="p">]</span>
 
@@ -5827,7 +5840,7 @@ shelve_all_arrays_annotation(): Precomputes and shelves the array of structure a
 <span class="sd">            name_lipid_2 (str, optional): Name of the second selected lipid. Defaults to &quot;&quot;.</span>
 <span class="sd">            name_lipid_3 (str, optional): Name of the third selected lipid. Defaults to &quot;&quot;.</span>
 <span class="sd">            set_id_regions (set(int), optional): A set containing the identifiers of the brain</span>
-<span class="sd">                regions (at the very bottom of the hierarchy) in which lipid expression is </span>
+<span class="sd">                regions (at the very bottom of the hierarchy) in which lipid expression is</span>
 <span class="sd">                requested. Defaults to None, corresponding to the whole brain.</span>
 <span class="sd">            decrease_dimensionality_factor (int): An integer used for subsampling the array of</span>
 <span class="sd">                annotation, and therefore the resulting figure. The higher, the higher the</span>
@@ -5847,9 +5860,9 @@ shelve_all_arrays_annotation(): Precomputes and shelves the array of structure a
 <span class="sd">                Defaults to False.</span>
 <span class="sd">        Returns:</span>
 <span class="sd">            Depending on the value of return_interpolated_array and return_individual_slice_data,</span>
-<span class="sd">            returns either the (not) interpolated array of expression of the requested lipids in the</span>
-<span class="sd">            selected regions, or a Plotly Figure containing a go.Volume object representing the</span>
-<span class="sd">            interpolated expression.</span>
+<span class="sd">                returns either the (not) interpolated array of expression of the requested lipids</span>
+<span class="sd">                in the selected regions, or a Plotly Figure containing a go.Volume object</span>
+<span class="sd">                representing the interpolated expression.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">return_interpolated_array</span> <span class="ow">and</span> <span class="n">return_individual_slice_data</span><span class="p">:</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
@@ -6099,8 +6112,8 @@ shelve_all_arrays_annotation(): Precomputes and shelves the array of structure a
 <span class="sd">                Defaults to False.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            go.Figure: a Plotly Clustergram figure clustering and comparing the expression of all the</span>
-<span class="sd">                MAIA-transformed lipids in the dataset in the selected regions.</span>
+<span class="sd">            (go.Figure): a Plotly Clustergram figure clustering and comparing the expression of all</span>
+<span class="sd">                the MAIA-transformed lipids in the dataset in the selected regions.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Starting computing clustergram figure&quot;</span><span class="p">)</span>
 
@@ -6110,7 +6123,6 @@ shelve_all_arrays_annotation(): Precomputes and shelves the array of structure a
             <span class="n">dic_avg_lipids</span> <span class="o">=</span> <span class="p">{}</span>
             <span class="n">l_slices</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">get_slice_list</span><span class="p">(</span><span class="n">indices</span><span class="o">=</span><span class="s2">&quot;brain_1&quot;</span> <span class="k">if</span> <span class="n">brain_1</span> <span class="k">else</span> <span class="s2">&quot;brain_2&quot;</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">slice_index</span> <span class="ow">in</span> <span class="n">l_slices</span><span class="p">:</span>
-
                 <span class="c1"># Display progress every 10 slices</span>
                 <span class="k">if</span> <span class="n">slice_index</span> <span class="o">%</span> <span class="mi">10</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                     <span class="n">set_progress</span><span class="p">(</span>
@@ -6145,7 +6157,6 @@ shelve_all_arrays_annotation(): Precomputes and shelves the array of structure a
                 <span class="n">ll_avg_intensity</span> <span class="o">=</span> <span class="p">[]</span>
                 <span class="n">n_sel</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">l_spectra</span><span class="p">)</span>
                 <span class="k">for</span> <span class="n">spectrum</span><span class="p">,</span> <span class="n">l_idx_labels</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">l_spectra</span><span class="p">,</span> <span class="n">ll_idx_labels</span><span class="p">):</span>
-
                     <span class="k">if</span> <span class="n">spectrum</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                         <span class="n">array_intensity_with_lipids</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">spectrum</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)[</span><span class="mi">1</span><span class="p">,</span> <span class="p">:]</span>
                         <span class="n">array_idx_labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">l_idx_labels</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
@@ -6248,7 +6259,8 @@ shelve_all_arrays_annotation(): Precomputes and shelves the array of structure a
 <span class="sd">        using spatial scRNAseq experiments.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            A Plotly Figure containing a go.Scatter3d object representing the acquired spots.</span>
+<span class="sd">            (Plotly.Figure): A Plotly Figure containing a go.Scatter3d object representing the</span>
+<span class="sd">                acquired spots.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Starting computing 3D scatter plot for scRNAseq experiments&quot;</span> <span class="o">+</span> <span class="n">logmem</span><span class="p">())</span>
@@ -6327,22 +6339,20 @@ shelve_all_arrays_annotation(): Precomputes and shelves the array of structure a
 
         <span class="k">return</span> <span class="n">fig</span>
 
-    <span class="c1"># ! Check for stored values of old version of compute_barplot</span>
-
     <span class="k">def</span> <span class="nf">compute_barplots_enrichment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">brain_1</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">idx_dot</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;This functions computes two figures representing, in barplots, the lipid expression in</span>
 <span class="sd">        the spots acquired using spatial scRNAseq experiments, as well as how it can be explained by</span>
 <span class="sd">        an elastic net regression using gene expression as explaing factors.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            brain_1 (bool, optional): If True, the barplot will be displayed with the regression coefficients</span>
-<span class="sd">                computed from for the first brain.</span>
+<span class="sd">            brain_1 (bool, optional): If True, the barplot will be displayed with the regression</span>
+<span class="sd">                coefficients computed from for the first brain.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            Plotly.Figure, Plotly.Figure, list(str), list(str): Two Plotly Figures containing each a</span>
-<span class="sd">                go.Bar object representing the standardized lipid expression in the scRNAseq spots,</span>
-<span class="sd">                and the elastic net regression coefficients for each lipid (bar). The two lists</span>
-<span class="sd">                contain the corresponding names of the genes and lipids represented.</span>
+<span class="sd">            (Plotly.Figure, Plotly.Figure, list(str), list(str)): Two Plotly Figures containing each</span>
+<span class="sd">                a go.Bar object representing the standardized lipid expression in the scRNAseq</span>
+<span class="sd">                spots, and the elastic net regression coefficients for each lipid (bar). The two</span>
+<span class="sd">                lists contain the corresponding names of the genes and lipids represented.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Starting computing barplot for scRNAseq experiments&quot;</span> <span class="o">+</span> <span class="n">logmem</span><span class="p">())</span>
@@ -6491,8 +6501,8 @@ shelve_all_arrays_annotation(): Precomputes and shelves the array of structure a
 <span class="sd">                computation in the corresponding progress bar.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            A Plotly Figure containing a go.Heatmap object representing the expression of the</span>
-<span class="sd">            selected lipid and genes.</span>
+<span class="sd">            (Plotly.Figure): A Plotly Figure containing a go.Heatmap object representing the</span>
+<span class="sd">                expression of the selected lipid and genes.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Starting computing heatmap for scRNAseq experiments&quot;</span> <span class="o">+</span> <span class="n">logmem</span><span class="p">())</span>
@@ -6627,7 +6637,6 @@ shelve_all_arrays_annotation(): Precomputes and shelves the array of structure a
                         <span class="n">visible</span><span class="o">=</span><span class="kc">True</span> <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">initial_frame</span> <span class="k">else</span> <span class="kc">False</span><span class="p">,</span>
                     <span class="p">)</span>
         <span class="k">if</span> <span class="n">grid_genes</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">grid_lipid</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-
             <span class="n">steps</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">grid_lipid</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
                 <span class="n">step</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
@@ -6708,7 +6717,6 @@ shelve_all_arrays_annotation(): Precomputes and shelves the array of structure a
         <span class="k">for</span> <span class="n">idx_slice</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">get_slice_number</span><span class="p">()):</span>
             <span class="k">for</span> <span class="n">type_figure</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;original_data&quot;</span><span class="p">,</span> <span class="s2">&quot;warped_data&quot;</span><span class="p">,</span> <span class="s2">&quot;projection_corrected&quot;</span><span class="p">,</span> <span class="s2">&quot;atlas&quot;</span><span class="p">]:</span>
                 <span class="k">for</span> <span class="n">display_annotations</span> <span class="ow">in</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">]:</span>
-
                     <span class="c1"># Force no annotation for the original data</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">_storage</span><span class="o">.</span><span class="n">return_shelved_object</span><span class="p">(</span>
                         <span class="s2">&quot;figures/load_page&quot;</span><span class="p">,</span>
@@ -6760,7 +6768,6 @@ shelve_all_arrays_annotation(): Precomputes and shelves the array of structure a
                     <span class="k">for</span> <span class="n">slice_index</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">get_slice_list</span><span class="p">(</span>
                         <span class="n">indices</span><span class="o">=</span><span class="s2">&quot;brain_1&quot;</span> <span class="k">if</span> <span class="n">brain_1</span> <span class="k">else</span> <span class="s2">&quot;brain_2&quot;</span>
                     <span class="p">):</span>
-
                         <span class="c1"># Find lipid location</span>
                         <span class="n">l_lipid_loc</span> <span class="o">=</span> <span class="p">(</span>
                             <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">get_annotations</span><span class="p">()</span>
@@ -6791,7 +6798,6 @@ shelve_all_arrays_annotation(): Precomputes and shelves the array of structure a
                     <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">l_selected_lipids</span><span class="p">)</span> <span class="o">&gt;</span> <span class="o">-</span><span class="nb">len</span><span class="p">(</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">get_slice_list</span><span class="p">(</span><span class="n">indices</span><span class="o">=</span><span class="s2">&quot;brain_1&quot;</span> <span class="k">if</span> <span class="n">brain_1</span> <span class="k">else</span> <span class="s2">&quot;brain_2&quot;</span><span class="p">)</span>
                     <span class="p">):</span>
-
                         <span class="c1"># Build the list of mz boundaries for each peak and each index</span>
                         <span class="n">lll_lipid_bounds</span> <span class="o">=</span> <span class="p">[</span>
                             <span class="p">[</span>
@@ -6944,7 +6950,8 @@ debug). Default to False.</p></td>
 
       <details class="quote">
         <summary>Source code in <code>modules/figures.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">133</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">132</span>
+<span class="normal">133</span>
 <span class="normal">134</span>
 <span class="normal">135</span>
 <span class="normal">136</span>
@@ -7056,8 +7063,7 @@ debug). Default to False.</p></td>
 <span class="normal">242</span>
 <span class="normal">243</span>
 <span class="normal">244</span>
-<span class="normal">245</span>
-<span class="normal">246</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">maldi_data</span><span class="p">,</span> <span class="n">storage</span><span class="p">,</span> <span class="n">atlas</span><span class="p">,</span> <span class="n">scRNAseq</span><span class="p">,</span> <span class="n">sample</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="normal">245</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">maldi_data</span><span class="p">,</span> <span class="n">storage</span><span class="p">,</span> <span class="n">atlas</span><span class="p">,</span> <span class="n">scRNAseq</span><span class="p">,</span> <span class="n">sample</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Initialize the Figures class.</span>
 
 <span class="sd">    Args:</span>
@@ -7141,14 +7147,14 @@ debug). Default to False.</p></td>
             <span class="n">compute_function</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">compute_heatmap_lipid_genes</span><span class="p">,</span>
             <span class="n">brain_1</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
         <span class="p">),</span>
-        <span class="c1"># ! Change defaults parameters when brain_1 is True</span>
-        <span class="c1"># self._storage.return_shelved_object(</span>
-        <span class="c1">#     &quot;figures/scRNAseq_page&quot;,</span>
-        <span class="c1">#     &quot;base_heatmap_lipid&quot;,</span>
-        <span class="c1">#     force_update=False,</span>
-        <span class="c1">#     compute_function=self.compute_heatmap_lipid_genes,</span>
-        <span class="c1">#     brain_1=True,</span>
-        <span class="c1"># ),</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_storage</span><span class="o">.</span><span class="n">return_shelved_object</span><span class="p">(</span>
+            <span class="s2">&quot;figures/scRNAseq_page&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;base_heatmap_lipid&quot;</span><span class="p">,</span>
+            <span class="n">force_update</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">compute_function</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">compute_heatmap_lipid_genes</span><span class="p">,</span>
+            <span class="n">brain_1</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="p">),</span>
 
     <span class="c1"># Check that all basic figures in the load_slice page are present, if not, compute them</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_storage</span><span class="o">.</span><span class="n">check_shelved_object</span><span class="p">(</span>
@@ -7275,19 +7281,19 @@ being integrated to a Plotly Figure. Defaults to False.</p></td>
         <tr>
           <td>
           </td>
-          <td><p>Depending on the inputted arguments, may either return a base64 string, a go.Image, or</p></td>
-        </tr>
-        <tr>
-          <td>
-          </td>
-          <td><p>a Plotly Figure.</p></td>
+          <td><p>Depending on the inputted arguments, may either return a base64 string, a go.Image, or
+a Plotly Figure.</p></td>
         </tr>
     </tbody>
   </table>
 
       <details class="quote">
         <summary>Source code in <code>modules/figures.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">831</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">827</span>
+<span class="normal">828</span>
+<span class="normal">829</span>
+<span class="normal">830</span>
+<span class="normal">831</span>
 <span class="normal">832</span>
 <span class="normal">833</span>
 <span class="normal">834</span>
@@ -7363,11 +7369,7 @@ being integrated to a Plotly Figure. Defaults to False.</p></td>
 <span class="normal">904</span>
 <span class="normal">905</span>
 <span class="normal">906</span>
-<span class="normal">907</span>
-<span class="normal">908</span>
-<span class="normal">909</span>
-<span class="normal">910</span>
-<span class="normal">911</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">build_lipid_heatmap_from_image</span><span class="p">(</span>
+<span class="normal">907</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">build_lipid_heatmap_from_image</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">image</span><span class="p">,</span>
     <span class="n">return_base64_string</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
@@ -7394,7 +7396,7 @@ being integrated to a Plotly Figure. Defaults to False.</p></td>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        Depending on the inputted arguments, may either return a base64 string, a go.Image, or</span>
-<span class="sd">        a Plotly Figure.</span>
+<span class="sd">            a Plotly Figure.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Converting image to string&quot;</span><span class="p">)</span>
@@ -7506,15 +7508,21 @@ brain to display, to get a lighter output. Defaults to 7.</p></td>
     <tbody>
         <tr>
           <td>
+                <code><span title="plotly.graph_objects">go</span>.<span title="plotly.graph_objects.Isosurface">Isosurface</span></code>
           </td>
-          <td><p>go.Isosurface: A semi-transparent go.Isosurface of the Allen Brain root structure.</p></td>
+          <td><p>A semi-transparent go.Isosurface of the Allen Brain root structure.</p></td>
         </tr>
     </tbody>
   </table>
 
       <details class="quote">
         <summary>Source code in <code>modules/figures.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1500</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1495</span>
+<span class="normal">1496</span>
+<span class="normal">1497</span>
+<span class="normal">1498</span>
+<span class="normal">1499</span>
+<span class="normal">1500</span>
 <span class="normal">1501</span>
 <span class="normal">1502</span>
 <span class="normal">1503</span>
@@ -7582,12 +7590,7 @@ brain to display, to get a lighter output. Defaults to 7.</p></td>
 <span class="normal">1565</span>
 <span class="normal">1566</span>
 <span class="normal">1567</span>
-<span class="normal">1568</span>
-<span class="normal">1569</span>
-<span class="normal">1570</span>
-<span class="normal">1571</span>
-<span class="normal">1572</span>
-<span class="normal">1573</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">compute_3D_root_volume</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">decrease_dimensionality_factor</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">differentiate_borders</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="normal">1568</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">compute_3D_root_volume</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">decrease_dimensionality_factor</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">differentiate_borders</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;This function is used to generate a go.Isosurface of the Allen Brain root structure,</span>
 <span class="sd">    which will be used to enclose the display of lipid expression of other structures in the</span>
 <span class="sd">    brain.</span>
@@ -7597,7 +7600,7 @@ brain to display, to get a lighter output. Defaults to 7.</p></td>
 <span class="sd">            brain to display, to get a lighter output. Defaults to 7.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        go.Isosurface: A semi-transparent go.Isosurface of the Allen Brain root structure.</span>
+<span class="sd">        (go.Isosurface): A semi-transparent go.Isosurface of the Allen Brain root structure.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1"># Get array of annotations, which associate coordinate to id</span>
@@ -7751,7 +7754,7 @@ list is used to separate image channels. The second list is used to separate lip
                 <code>set(int)</code>
           </td>
           <td><p>A set containing the identifiers of the brain
-regions (at the very bottom of the hierarchy) in which lipid expression is 
+regions (at the very bottom of the hierarchy) in which lipid expression is
 requested. Defaults to None, corresponding to the whole brain.</p></td>
           <td>
                 <code>None</code>
@@ -7851,29 +7854,25 @@ Defaults to False.</p></td>
         <tr>
           <td>
           </td>
-          <td><p>Depending on the value of return_interpolated_array and return_individual_slice_data,</p></td>
-        </tr>
-        <tr>
-          <td>
-          </td>
-          <td><p>returns either the (not) interpolated array of expression of the requested lipids in the</p></td>
-        </tr>
-        <tr>
-          <td>
-          </td>
-          <td><p>selected regions, or a Plotly Figure containing a go.Volume object representing the</p></td>
-        </tr>
-        <tr>
-          <td>
-          </td>
-          <td><p>interpolated expression.</p></td>
+          <td><p>Depending on the value of return_interpolated_array and return_individual_slice_data,
+returns either the (not) interpolated array of expression of the requested lipids
+in the selected regions, or a Plotly Figure containing a go.Volume object
+representing the interpolated expression.</p></td>
         </tr>
     </tbody>
   </table>
 
       <details class="quote">
         <summary>Source code in <code>modules/figures.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1774</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1766</span>
+<span class="normal">1767</span>
+<span class="normal">1768</span>
+<span class="normal">1769</span>
+<span class="normal">1770</span>
+<span class="normal">1771</span>
+<span class="normal">1772</span>
+<span class="normal">1773</span>
+<span class="normal">1774</span>
 <span class="normal">1775</span>
 <span class="normal">1776</span>
 <span class="normal">1777</span>
@@ -8139,15 +8138,7 @@ Defaults to False.</p></td>
 <span class="normal">2037</span>
 <span class="normal">2038</span>
 <span class="normal">2039</span>
-<span class="normal">2040</span>
-<span class="normal">2041</span>
-<span class="normal">2042</span>
-<span class="normal">2043</span>
-<span class="normal">2044</span>
-<span class="normal">2045</span>
-<span class="normal">2046</span>
-<span class="normal">2047</span>
-<span class="normal">2048</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">compute_3D_volume_figure</span><span class="p">(</span>
+<span class="normal">2040</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">compute_3D_volume_figure</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">set_progress</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">ll_t_bounds</span><span class="o">=</span><span class="p">[[(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)]],</span>
@@ -8176,7 +8167,7 @@ Defaults to False.</p></td>
 <span class="sd">        name_lipid_2 (str, optional): Name of the second selected lipid. Defaults to &quot;&quot;.</span>
 <span class="sd">        name_lipid_3 (str, optional): Name of the third selected lipid. Defaults to &quot;&quot;.</span>
 <span class="sd">        set_id_regions (set(int), optional): A set containing the identifiers of the brain</span>
-<span class="sd">            regions (at the very bottom of the hierarchy) in which lipid expression is </span>
+<span class="sd">            regions (at the very bottom of the hierarchy) in which lipid expression is</span>
 <span class="sd">            requested. Defaults to None, corresponding to the whole brain.</span>
 <span class="sd">        decrease_dimensionality_factor (int): An integer used for subsampling the array of</span>
 <span class="sd">            annotation, and therefore the resulting figure. The higher, the higher the</span>
@@ -8196,9 +8187,9 @@ Defaults to False.</p></td>
 <span class="sd">            Defaults to False.</span>
 <span class="sd">    Returns:</span>
 <span class="sd">        Depending on the value of return_interpolated_array and return_individual_slice_data,</span>
-<span class="sd">        returns either the (not) interpolated array of expression of the requested lipids in the</span>
-<span class="sd">        selected regions, or a Plotly Figure containing a go.Volume object representing the</span>
-<span class="sd">        interpolated expression.</span>
+<span class="sd">            returns either the (not) interpolated array of expression of the requested lipids</span>
+<span class="sd">            in the selected regions, or a Plotly Figure containing a go.Volume object</span>
+<span class="sd">            representing the interpolated expression.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">return_interpolated_array</span> <span class="ow">and</span> <span class="n">return_individual_slice_data</span><span class="p">:</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
@@ -8486,8 +8477,9 @@ from the MALDI data ("atlas"). Default to "warped_data".</p></td>
     <tbody>
         <tr>
           <td>
+                <code><span title="numpy">np</span>.<span title="numpy.ndarray">ndarray</span></code>
           </td>
-          <td><p>np.ndarray: A three-dimensional array representing all slices from the maldi_data
+          <td><p>A three-dimensional array representing all slices from the maldi_data
 acquisition (TIC) or the corresponding image from the atlas. The first dimension
 corresponds to the slices, the second and third to the images themselves.</p></td>
         </tr>
@@ -8496,7 +8488,8 @@ corresponds to the slices, the second and third to the images themselves.</p></t
 
       <details class="quote">
         <summary>Source code in <code>modules/figures.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">252</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">251</span>
+<span class="normal">252</span>
 <span class="normal">253</span>
 <span class="normal">254</span>
 <span class="normal">255</span>
@@ -8547,8 +8540,7 @@ corresponds to the slices, the second and third to the images themselves.</p></t
 <span class="normal">300</span>
 <span class="normal">301</span>
 <span class="normal">302</span>
-<span class="normal">303</span>
-<span class="normal">304</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">compute_array_basic_images</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">type_figure</span><span class="o">=</span><span class="s2">&quot;warped_data&quot;</span><span class="p">):</span>
+<span class="normal">303</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">compute_array_basic_images</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">type_figure</span><span class="o">=</span><span class="s2">&quot;warped_data&quot;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;This function computes and returns a three-dimensional array representing all slices from</span>
 <span class="sd">    the maldi_data acquisition (TIC) or the corresponding image from the atlas. No spectral data</span>
 <span class="sd">    is read in the process, as the arrays corresponding to the images are directly stored as</span>
@@ -8564,7 +8556,7 @@ corresponds to the slices, the second and third to the images themselves.</p></t
 <span class="sd">            from the MALDI data (&quot;atlas&quot;). Default to &quot;warped_data&quot;.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        np.ndarray: A three-dimensional array representing all slices from the maldi_data</span>
+<span class="sd">        (np.ndarray): A three-dimensional array representing all slices from the maldi_data</span>
 <span class="sd">            acquisition (TIC) or the corresponding image from the atlas. The first dimension</span>
 <span class="sd">            corresponds to the slices, the second and third to the images themselves.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -8680,8 +8672,9 @@ brain 1 data. Else, to the brain 2 data. Defaults to True.</p></td>
     <tbody>
         <tr>
           <td>
+                <code><span title="numpy">np</span>.<span title="numpy.ndarray">ndarray</span>, <span title="numpy">np</span>.<span title="numpy.ndarray">ndarray</span>, <span title="numpy">np</span>.<span title="numpy.ndarray">ndarray</span>, <span title="numpy">np</span>.<span title="numpy.ndarray">ndarray</span></code>
           </td>
-          <td><p>np.ndarray, np.ndarray, np.ndarray, np.ndarray: 4 flat numpy arrays (3 for coordinates
+          <td><p>4 flat numpy arrays (3 for coordinates
 and 1 for expression).</p></td>
         </tr>
     </tbody>
@@ -8689,7 +8682,14 @@ and 1 for expression).</p></td>
 
       <details class="quote">
         <summary>Source code in <code>modules/figures.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1669</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1662</span>
+<span class="normal">1663</span>
+<span class="normal">1664</span>
+<span class="normal">1665</span>
+<span class="normal">1666</span>
+<span class="normal">1667</span>
+<span class="normal">1668</span>
+<span class="normal">1669</span>
 <span class="normal">1670</span>
 <span class="normal">1671</span>
 <span class="normal">1672</span>
@@ -8784,15 +8784,7 @@ and 1 for expression).</p></td>
 <span class="normal">1761</span>
 <span class="normal">1762</span>
 <span class="normal">1763</span>
-<span class="normal">1764</span>
-<span class="normal">1765</span>
-<span class="normal">1766</span>
-<span class="normal">1767</span>
-<span class="normal">1768</span>
-<span class="normal">1769</span>
-<span class="normal">1770</span>
-<span class="normal">1771</span>
-<span class="normal">1772</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">compute_array_coordinates_3D</span><span class="p">(</span>
+<span class="normal">1764</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">compute_array_coordinates_3D</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">l_array_data</span><span class="p">,</span>
     <span class="n">high_res</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
@@ -8809,7 +8801,7 @@ and 1 for expression).</p></td>
 <span class="sd">        brain_1 (bool, optional): If True, the returned list of arrays correspond to the</span>
 <span class="sd">            brain 1 data. Else, to the brain 2 data. Defaults to True.</span>
 <span class="sd">    Returns:</span>
-<span class="sd">        np.ndarray, np.ndarray, np.ndarray, np.ndarray: 4 flat numpy arrays (3 for coordinates</span>
+<span class="sd">        (np.ndarray, np.ndarray, np.ndarray, np.ndarray): 4 flat numpy arrays (3 for coordinates</span>
 <span class="sd">            and 1 for expression).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -8847,7 +8839,6 @@ and 1 for expression).</p></td>
     <span class="n">array_annotations</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_atlas</span><span class="o">.</span><span class="n">bg_atlas</span><span class="o">.</span><span class="n">annotation</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
 
     <span class="k">for</span> <span class="n">slice_index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">l_array_data</span><span class="p">),</span> <span class="mi">1</span><span class="p">):</span>
-
         <span class="c1"># Get the averaged expression data for the current slice</span>
         <span class="n">array_data</span> <span class="o">=</span> <span class="n">l_array_data</span><span class="p">[</span><span class="n">slice_index</span><span class="p">]</span>
 
@@ -8934,8 +8925,8 @@ an elastic net regression using gene expression as explaing factors.</p>
           <td>
                 <code>bool</code>
           </td>
-          <td><p>If True, the barplot will be displayed with the regression coefficients
-computed from for the first brain.</p></td>
+          <td><p>If True, the barplot will be displayed with the regression
+coefficients computed from for the first brain.</p></td>
           <td>
                 <code>False</code>
           </td>
@@ -8954,18 +8945,30 @@ computed from for the first brain.</p></td>
     <tbody>
         <tr>
           <td>
+                <code>Plotly.<span title="Plotly.Figure">Figure</span>, Plotly.<span title="Plotly.Figure">Figure</span>, list(str), list(str)</code>
           </td>
-          <td><p>Plotly.Figure, Plotly.Figure, list(str), list(str): Two Plotly Figures containing each a
-go.Bar object representing the standardized lipid expression in the scRNAseq spots,
-and the elastic net regression coefficients for each lipid (bar). The two lists
-contain the corresponding names of the genes and lipids represented.</p></td>
+          <td><p>Two Plotly Figures containing each
+a go.Bar object representing the standardized lipid expression in the scRNAseq
+spots, and the elastic net regression coefficients for each lipid (bar). The two
+lists contain the corresponding names of the genes and lipids represented.</p></td>
         </tr>
     </tbody>
   </table>
 
       <details class="quote">
         <summary>Source code in <code>modules/figures.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">2305</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">2294</span>
+<span class="normal">2295</span>
+<span class="normal">2296</span>
+<span class="normal">2297</span>
+<span class="normal">2298</span>
+<span class="normal">2299</span>
+<span class="normal">2300</span>
+<span class="normal">2301</span>
+<span class="normal">2302</span>
+<span class="normal">2303</span>
+<span class="normal">2304</span>
+<span class="normal">2305</span>
 <span class="normal">2306</span>
 <span class="normal">2307</span>
 <span class="normal">2308</span>
@@ -9089,31 +9092,20 @@ contain the corresponding names of the genes and lipids represented.</p></td>
 <span class="normal">2426</span>
 <span class="normal">2427</span>
 <span class="normal">2428</span>
-<span class="normal">2429</span>
-<span class="normal">2430</span>
-<span class="normal">2431</span>
-<span class="normal">2432</span>
-<span class="normal">2433</span>
-<span class="normal">2434</span>
-<span class="normal">2435</span>
-<span class="normal">2436</span>
-<span class="normal">2437</span>
-<span class="normal">2438</span>
-<span class="normal">2439</span>
-<span class="normal">2440</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">compute_barplots_enrichment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">brain_1</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">idx_dot</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="normal">2429</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">compute_barplots_enrichment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">brain_1</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">idx_dot</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;This functions computes two figures representing, in barplots, the lipid expression in</span>
 <span class="sd">    the spots acquired using spatial scRNAseq experiments, as well as how it can be explained by</span>
 <span class="sd">    an elastic net regression using gene expression as explaing factors.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        brain_1 (bool, optional): If True, the barplot will be displayed with the regression coefficients</span>
-<span class="sd">            computed from for the first brain.</span>
+<span class="sd">        brain_1 (bool, optional): If True, the barplot will be displayed with the regression</span>
+<span class="sd">            coefficients computed from for the first brain.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        Plotly.Figure, Plotly.Figure, list(str), list(str): Two Plotly Figures containing each a</span>
-<span class="sd">            go.Bar object representing the standardized lipid expression in the scRNAseq spots,</span>
-<span class="sd">            and the elastic net regression coefficients for each lipid (bar). The two lists</span>
-<span class="sd">            contain the corresponding names of the genes and lipids represented.</span>
+<span class="sd">        (Plotly.Figure, Plotly.Figure, list(str), list(str)): Two Plotly Figures containing each</span>
+<span class="sd">            a go.Bar object representing the standardized lipid expression in the scRNAseq</span>
+<span class="sd">            spots, and the elastic net regression coefficients for each lipid (bar). The two</span>
+<span class="sd">            lists contain the corresponding names of the genes and lipids represented.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Starting computing barplot for scRNAseq experiments&quot;</span> <span class="o">+</span> <span class="n">logmem</span><span class="p">())</span>
@@ -9337,16 +9329,25 @@ Defaults to False.</p></td>
     <tbody>
         <tr>
           <td>
+                <code><span title="plotly.graph_objects">go</span>.<span title="plotly.graph_objects.Figure">Figure</span></code>
           </td>
-          <td><p>go.Figure: a Plotly Clustergram figure clustering and comparing the expression of all the
-MAIA-transformed lipids in the dataset in the selected regions.</p></td>
+          <td><p>a Plotly Clustergram figure clustering and comparing the expression of all
+the MAIA-transformed lipids in the dataset in the selected regions.</p></td>
         </tr>
     </tbody>
   </table>
 
       <details class="quote">
         <summary>Source code in <code>modules/figures.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">2050</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">2042</span>
+<span class="normal">2043</span>
+<span class="normal">2044</span>
+<span class="normal">2045</span>
+<span class="normal">2046</span>
+<span class="normal">2047</span>
+<span class="normal">2048</span>
+<span class="normal">2049</span>
+<span class="normal">2050</span>
 <span class="normal">2051</span>
 <span class="normal">2052</span>
 <span class="normal">2053</span>
@@ -9499,17 +9500,7 @@ MAIA-transformed lipids in the dataset in the selected regions.</p></td>
 <span class="normal">2200</span>
 <span class="normal">2201</span>
 <span class="normal">2202</span>
-<span class="normal">2203</span>
-<span class="normal">2204</span>
-<span class="normal">2205</span>
-<span class="normal">2206</span>
-<span class="normal">2207</span>
-<span class="normal">2208</span>
-<span class="normal">2209</span>
-<span class="normal">2210</span>
-<span class="normal">2211</span>
-<span class="normal">2212</span>
-<span class="normal">2213</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">compute_clustergram_figure</span><span class="p">(</span>
+<span class="normal">2203</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">compute_clustergram_figure</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">set_progress</span><span class="p">,</span>
     <span class="n">cache_flask</span><span class="p">,</span>
@@ -9534,8 +9525,8 @@ MAIA-transformed lipids in the dataset in the selected regions.</p></td>
 <span class="sd">            Defaults to False.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        go.Figure: a Plotly Clustergram figure clustering and comparing the expression of all the</span>
-<span class="sd">            MAIA-transformed lipids in the dataset in the selected regions.</span>
+<span class="sd">        (go.Figure): a Plotly Clustergram figure clustering and comparing the expression of all</span>
+<span class="sd">            the MAIA-transformed lipids in the dataset in the selected regions.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Starting computing clustergram figure&quot;</span><span class="p">)</span>
 
@@ -9545,7 +9536,6 @@ MAIA-transformed lipids in the dataset in the selected regions.</p></td>
         <span class="n">dic_avg_lipids</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">l_slices</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">get_slice_list</span><span class="p">(</span><span class="n">indices</span><span class="o">=</span><span class="s2">&quot;brain_1&quot;</span> <span class="k">if</span> <span class="n">brain_1</span> <span class="k">else</span> <span class="s2">&quot;brain_2&quot;</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">slice_index</span> <span class="ow">in</span> <span class="n">l_slices</span><span class="p">:</span>
-
             <span class="c1"># Display progress every 10 slices</span>
             <span class="k">if</span> <span class="n">slice_index</span> <span class="o">%</span> <span class="mi">10</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="n">set_progress</span><span class="p">(</span>
@@ -9580,7 +9570,6 @@ MAIA-transformed lipids in the dataset in the selected regions.</p></td>
             <span class="n">ll_avg_intensity</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="n">n_sel</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">l_spectra</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">spectrum</span><span class="p">,</span> <span class="n">l_idx_labels</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">l_spectra</span><span class="p">,</span> <span class="n">ll_idx_labels</span><span class="p">):</span>
-
                 <span class="k">if</span> <span class="n">spectrum</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="n">array_intensity_with_lipids</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">spectrum</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)[</span><span class="mi">1</span><span class="p">,</span> <span class="p">:]</span>
                     <span class="n">array_idx_labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">l_idx_labels</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
@@ -9780,15 +9769,18 @@ in page region_analysis). Defaults to False.</p></td>
     <tbody>
         <tr>
           <td>
+                <code><span title="plotly.graph_objects">go</span>.<span title="plotly.graph_objects.Figure">Figure</span></code>
           </td>
-          <td><p>go.Figure: A Plotly figure representing the requested slice image of the requested type.</p></td>
+          <td><p>A Plotly figure representing the requested slice image of the requested
+type.</p></td>
         </tr>
     </tbody>
   </table>
 
       <details class="quote">
         <summary>Source code in <code>modules/figures.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">306</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">305</span>
+<span class="normal">306</span>
 <span class="normal">307</span>
 <span class="normal">308</span>
 <span class="normal">309</span>
@@ -9920,7 +9912,8 @@ in page region_analysis). Defaults to False.</p></td>
 <span class="sd">            in page region_analysis). Defaults to False.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        go.Figure: A Plotly figure representing the requested slice image of the requested type.</span>
+<span class="sd">        (go.Figure): A Plotly figure representing the requested slice image of the requested</span>
+<span class="sd">            type.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1"># If only boundaries is requested, force the computation of atlas contours</span>
@@ -10070,8 +10063,9 @@ data. Needed as the resulting figure can be very heavy. Defaults to 20.</p></td>
     <tbody>
         <tr>
           <td>
+                <code><span title="plotly.graph_objects">go</span>.<span title="plotly.graph_objects.Figure">Figure</span></code>
           </td>
-          <td><p>go.Figure: A Plotly figure representing the slices from the MALDI acquisitions in 3D.</p></td>
+          <td><p>A Plotly figure representing the slices from the MALDI acquisitions in 3D.</p></td>
         </tr>
     </tbody>
   </table>
@@ -10220,7 +10214,7 @@ data. Needed as the resulting figure can be very heavy. Defaults to 20.</p></td>
 <span class="sd">        brain (str, optional): Name of the brain to be used. Defaults to &#39;brain_1&#39;.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        go.Figure: A Plotly figure representing the slices from the MALDI acquisitions in 3D.</span>
+<span class="sd">        (go.Figure): A Plotly figure representing the slices from the MALDI acquisitions in 3D.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># Get transform parameters (a,u,v) for each slice</span>
     <span class="n">l_transform_parameters</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_storage</span><span class="o">.</span><span class="n">return_shelved_object</span><span class="p">(</span>
@@ -10444,20 +10438,28 @@ computation in the corresponding progress bar.</p></td>
     <tbody>
         <tr>
           <td>
+                <code>Plotly.<span title="Plotly.Figure">Figure</span></code>
           </td>
-          <td><p>A Plotly Figure containing a go.Heatmap object representing the expression of the</p></td>
-        </tr>
-        <tr>
-          <td>
-          </td>
-          <td><p>selected lipid and genes.</p></td>
+          <td><p>A Plotly Figure containing a go.Heatmap object representing the
+expression of the selected lipid and genes.</p></td>
         </tr>
     </tbody>
   </table>
 
       <details class="quote">
         <summary>Source code in <code>modules/figures.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">2442</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">2431</span>
+<span class="normal">2432</span>
+<span class="normal">2433</span>
+<span class="normal">2434</span>
+<span class="normal">2435</span>
+<span class="normal">2436</span>
+<span class="normal">2437</span>
+<span class="normal">2438</span>
+<span class="normal">2439</span>
+<span class="normal">2440</span>
+<span class="normal">2441</span>
+<span class="normal">2442</span>
 <span class="normal">2443</span>
 <span class="normal">2444</span>
 <span class="normal">2445</span>
@@ -10667,19 +10669,7 @@ computation in the corresponding progress bar.</p></td>
 <span class="normal">2649</span>
 <span class="normal">2650</span>
 <span class="normal">2651</span>
-<span class="normal">2652</span>
-<span class="normal">2653</span>
-<span class="normal">2654</span>
-<span class="normal">2655</span>
-<span class="normal">2656</span>
-<span class="normal">2657</span>
-<span class="normal">2658</span>
-<span class="normal">2659</span>
-<span class="normal">2660</span>
-<span class="normal">2661</span>
-<span class="normal">2662</span>
-<span class="normal">2663</span>
-<span class="normal">2664</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">compute_heatmap_lipid_genes</span><span class="p">(</span>
+<span class="normal">2652</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">compute_heatmap_lipid_genes</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">lipid</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">l_genes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -10704,8 +10694,8 @@ computation in the corresponding progress bar.</p></td>
 <span class="sd">            computation in the corresponding progress bar.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        A Plotly Figure containing a go.Heatmap object representing the expression of the</span>
-<span class="sd">        selected lipid and genes.</span>
+<span class="sd">        (Plotly.Figure): A Plotly Figure containing a go.Heatmap object representing the</span>
+<span class="sd">            expression of the selected lipid and genes.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Starting computing heatmap for scRNAseq experiments&quot;</span> <span class="o">+</span> <span class="n">logmem</span><span class="p">())</span>
@@ -10840,7 +10830,6 @@ computation in the corresponding progress bar.</p></td>
                     <span class="n">visible</span><span class="o">=</span><span class="kc">True</span> <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">initial_frame</span> <span class="k">else</span> <span class="kc">False</span><span class="p">,</span>
                 <span class="p">)</span>
     <span class="k">if</span> <span class="n">grid_genes</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">grid_lipid</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-
         <span class="n">steps</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">grid_lipid</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
             <span class="n">step</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
@@ -11046,19 +11035,19 @@ None.</p></td>
         <tr>
           <td>
           </td>
-          <td><p>Depending on the value return_base64_string, may either return a base64 string, or</p></td>
-        </tr>
-        <tr>
-          <td>
-          </td>
-          <td><p>a Plotly Figure.</p></td>
+          <td><p>Depending on the value return_base64_string, may either return a base64 string, or
+a Plotly Figure.</p></td>
         </tr>
     </tbody>
   </table>
 
       <details class="quote">
         <summary>Source code in <code>modules/figures.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 973</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 969</span>
+<span class="normal"> 970</span>
+<span class="normal"> 971</span>
+<span class="normal"> 972</span>
+<span class="normal"> 973</span>
 <span class="normal"> 974</span>
 <span class="normal"> 975</span>
 <span class="normal"> 976</span>
@@ -11135,12 +11124,7 @@ None.</p></td>
 <span class="normal">1047</span>
 <span class="normal">1048</span>
 <span class="normal">1049</span>
-<span class="normal">1050</span>
-<span class="normal">1051</span>
-<span class="normal">1052</span>
-<span class="normal">1053</span>
-<span class="normal">1054</span>
-<span class="normal">1055</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">compute_heatmap_per_lipid_selection</span><span class="p">(</span>
+<span class="normal">1050</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">compute_heatmap_per_lipid_selection</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">slice_index</span><span class="p">,</span>
     <span class="n">ll_t_bounds</span><span class="p">,</span>
@@ -11183,7 +11167,7 @@ None.</p></td>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        Depending on the value return_base64_string, may either return a base64 string, or</span>
-<span class="sd">        a Plotly Figure.</span>
+<span class="sd">            a Plotly Figure.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Compute heatmap per lipid selection&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ll_t_bounds</span><span class="p">))</span>
@@ -11199,7 +11183,6 @@ None.</p></td>
     <span class="c1"># Loop over channels</span>
     <span class="k">for</span> <span class="n">l_t_bounds</span><span class="p">,</span> <span class="n">l_lipid_names</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">ll_t_bounds</span><span class="p">,</span> <span class="n">ll_lipid_names</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">l_t_bounds</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-
             <span class="c1"># Loop over lipids</span>
             <span class="k">for</span> <span class="n">boundaries</span><span class="p">,</span> <span class="n">lipid_name</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">l_t_bounds</span><span class="p">,</span> <span class="n">l_lipid_names</span><span class="p">):</span>
                 <span class="k">if</span> <span class="n">boundaries</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -11347,19 +11330,19 @@ None.</p></td>
         <tr>
           <td>
           </td>
-          <td><p>Depending on the value return_base64_string, may either return a base64 string, or</p></td>
-        </tr>
-        <tr>
-          <td>
-          </td>
-          <td><p>a Plotly Figure.</p></td>
+          <td><p>Depending on the value return_base64_string, may either return a base64 string, or
+a Plotly Figure.</p></td>
         </tr>
     </tbody>
   </table>
 
       <details class="quote">
         <summary>Source code in <code>modules/figures.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">913</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">909</span>
+<span class="normal">910</span>
+<span class="normal">911</span>
+<span class="normal">912</span>
+<span class="normal">913</span>
 <span class="normal">914</span>
 <span class="normal">915</span>
 <span class="normal">916</span>
@@ -11413,11 +11396,7 @@ None.</p></td>
 <span class="normal">964</span>
 <span class="normal">965</span>
 <span class="normal">966</span>
-<span class="normal">967</span>
-<span class="normal">968</span>
-<span class="normal">969</span>
-<span class="normal">970</span>
-<span class="normal">971</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">compute_heatmap_per_mz</span><span class="p">(</span>
+<span class="normal">967</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">compute_heatmap_per_mz</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">slice_index</span><span class="p">,</span>
     <span class="n">lb_mz</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -11447,7 +11426,7 @@ None.</p></td>
 <span class="sd">            None.</span>
 <span class="sd">    Returns:</span>
 <span class="sd">        Depending on the value return_base64_string, may either return a base64 string, or</span>
-<span class="sd">        a Plotly Figure.</span>
+<span class="sd">            a Plotly Figure.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Starting figure computation, from mz boundaries&quot;</span><span class="p">)</span>
@@ -11639,8 +11618,9 @@ None.</p></td>
     <tbody>
         <tr>
           <td>
+                <code><span title="numpy">np</span>.<span title="numpy.ndarray">ndarray</span></code>
           </td>
-          <td><p>np.ndarray: An image (in the form of a numpy array) representing the intensity of the
+          <td><p>An image (in the form of a numpy array) representing the intensity of the
 lipid peaking between the values lb_mz and hb_mz in the spectral data, for the slice
 slice_index.</p></td>
         </tr>
@@ -11649,7 +11629,8 @@ slice_index.</p></td>
 
       <details class="quote">
         <summary>Source code in <code>modules/figures.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">622</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">621</span>
+<span class="normal">622</span>
 <span class="normal">623</span>
 <span class="normal">624</span>
 <span class="normal">625</span>
@@ -11761,10 +11742,7 @@ slice_index.</p></td>
 <span class="normal">731</span>
 <span class="normal">732</span>
 <span class="normal">733</span>
-<span class="normal">734</span>
-<span class="normal">735</span>
-<span class="normal">736</span>
-<span class="normal">737</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">compute_image_per_lipid</span><span class="p">(</span>
+<span class="normal">734</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">compute_image_per_lipid</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">slice_index</span><span class="p">,</span>
     <span class="n">lb_mz</span><span class="p">,</span>
@@ -11809,7 +11787,7 @@ slice_index.</p></td>
 <span class="sd">            None, the reading of memory-mapped data will not be multithreads-safe. Defaults to</span>
 <span class="sd">            None.</span>
 <span class="sd">    Returns:</span>
-<span class="sd">        np.ndarray: An image (in the form of a numpy array) representing the intensity of the</span>
+<span class="sd">        (np.ndarray): An image (in the form of a numpy array) representing the intensity of the</span>
 <span class="sd">            lipid peaking between the values lb_mz and hb_mz in the spectral data, for the slice</span>
 <span class="sd">            slice_index.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -11843,13 +11821,11 @@ slice_index.</p></td>
 
     <span class="c1"># Normalize the image if requested</span>
     <span class="k">if</span> <span class="n">normalize</span><span class="p">:</span>
-
         <span class="c1"># Normalize across slice if the lipid has been MAIA transformed</span>
         <span class="k">if</span> <span class="p">(</span>
             <span class="n">lipid_name</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">is_brain_1</span><span class="p">(</span><span class="n">slice_index</span><span class="p">),</span>
         <span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dic_normalization_factors</span> <span class="ow">and</span> <span class="n">apply_transform</span><span class="p">:</span>
-
             <span class="n">perc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dic_normalization_factors</span><span class="p">[</span>
                 <span class="p">(</span><span class="n">lipid_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">is_brain_1</span><span class="p">(</span><span class="n">slice_index</span><span class="p">))</span>
             <span class="p">]</span>
@@ -11976,14 +11952,14 @@ None.</p></td>
   <table>
     <thead>
       <tr>
-<th>Name</th>        <th>Type</th>
+        <th>Type</th>
         <th>Description</th>
       </tr>
     </thead>
     <tbody>
         <tr>
-<td><code>list</code></td>          <td>
-                <code><span title="numpy">np</span>.<span title="numpy.ndarray">ndarray</span></code>
+          <td>
+                <code>list(<span title="numpy">np</span>.<span title="numpy.ndarray">ndarray</span>)</code>
           </td>
           <td><p>A list of numpy arrays representing the expression of the requested
 lipids (through ll_t_bounds) for each slice.</p></td>
@@ -11993,7 +11969,12 @@ lipids (through ll_t_bounds) for each slice.</p></td>
 
       <details class="quote">
         <summary>Source code in <code>modules/figures.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1606</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1601</span>
+<span class="normal">1602</span>
+<span class="normal">1603</span>
+<span class="normal">1604</span>
+<span class="normal">1605</span>
+<span class="normal">1606</span>
 <span class="normal">1607</span>
 <span class="normal">1608</span>
 <span class="normal">1609</span>
@@ -12047,14 +12028,7 @@ lipids (through ll_t_bounds) for each slice.</p></td>
 <span class="normal">1657</span>
 <span class="normal">1658</span>
 <span class="normal">1659</span>
-<span class="normal">1660</span>
-<span class="normal">1661</span>
-<span class="normal">1662</span>
-<span class="normal">1663</span>
-<span class="normal">1664</span>
-<span class="normal">1665</span>
-<span class="normal">1666</span>
-<span class="normal">1667</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">compute_l_array_2D</span><span class="p">(</span>
+<span class="normal">1660</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">compute_l_array_2D</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">ll_t_bounds</span><span class="p">,</span>
     <span class="n">normalize_independently</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -12079,7 +12053,7 @@ lipids (through ll_t_bounds) for each slice.</p></td>
 <span class="sd">            None, the reading of memory-mapped data will not be multithreads-safe. Defaults to</span>
 <span class="sd">            None.</span>
 <span class="sd">    Returns:</span>
-<span class="sd">        list(np.ndarray): A list of numpy arrays representing the expression of the requested</span>
+<span class="sd">        (list(np.ndarray)): A list of numpy arrays representing the expression of the requested</span>
 <span class="sd">            lipids (through ll_t_bounds) for each slice.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">l_array_data</span> <span class="o">=</span> <span class="p">[]</span>
@@ -12092,9 +12066,7 @@ lipids (through ll_t_bounds) for each slice.</p></td>
 
     <span class="c1"># Loop over slices and compute the expression of the requested lipids</span>
     <span class="k">for</span> <span class="n">slice_index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ll_t_bounds</span><span class="p">)):</span>
-
         <span class="k">if</span> <span class="n">ll_t_bounds</span><span class="p">[</span><span class="n">slice_index</span><span class="p">]</span> <span class="o">!=</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
-
             <span class="c1"># Get the data as an expression image per lipid</span>
             <span class="n">array_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_rgb_array_per_lipid_selection</span><span class="p">(</span>
                 <span class="n">slice_index</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">slice_index_offset</span><span class="p">,</span>
@@ -12167,13 +12139,14 @@ None.</p></td>
   <table>
     <thead>
       <tr>
-<th>Name</th>        <th>Type</th>
+        <th>Type</th>
         <th>Description</th>
       </tr>
     </thead>
     <tbody>
         <tr>
-<td><code>dict</code></td>          <td>
+          <td>
+                <code>dict</code>
           </td>
           <td><p>A dictionnary associating, for each MAIA-transformed lipid name, the 99th
 percentile of the intensity across all slices.</p></td>
@@ -12183,7 +12156,10 @@ percentile of the intensity across all slices.</p></td>
 
       <details class="quote">
         <summary>Source code in <code>modules/figures.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">739</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">736</span>
+<span class="normal">737</span>
+<span class="normal">738</span>
+<span class="normal">739</span>
 <span class="normal">740</span>
 <span class="normal">741</span>
 <span class="normal">742</span>
@@ -12269,11 +12245,7 @@ percentile of the intensity across all slices.</p></td>
 <span class="normal">822</span>
 <span class="normal">823</span>
 <span class="normal">824</span>
-<span class="normal">825</span>
-<span class="normal">826</span>
-<span class="normal">827</span>
-<span class="normal">828</span>
-<span class="normal">829</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">compute_normalization_factor_across_slices</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache_flask</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="normal">825</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">compute_normalization_factor_across_slices</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache_flask</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;This function computes a dictionnary of normalization factors (used for MAIA-transformed</span>
 <span class="sd">    lipids) across all slices (99th percentile of expression).</span>
 
@@ -12282,7 +12254,7 @@ percentile of the intensity across all slices.</p></td>
 <span class="sd">            None, the reading of memory-mapped data will not be multithreads-safe. Defaults to</span>
 <span class="sd">            None.</span>
 <span class="sd">    Returns:</span>
-<span class="sd">        dict: A dictionnary associating, for each MAIA-transformed lipid name, the 99th</span>
+<span class="sd">        (dict): A dictionnary associating, for each MAIA-transformed lipid name, the 99th</span>
 <span class="sd">            percentile of the intensity across all slices.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
@@ -12300,7 +12272,6 @@ percentile of the intensity across all slices.</p></td>
         <span class="k">for</span> <span class="n">slice_index</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">get_slice_list</span><span class="p">(</span>
             <span class="n">indices</span><span class="o">=</span><span class="s2">&quot;brain_1&quot;</span> <span class="k">if</span> <span class="n">brain_1</span> <span class="k">else</span> <span class="s2">&quot;brain_2&quot;</span>
         <span class="p">):</span>
-
             <span class="c1"># Find lipid location</span>
             <span class="n">l_lipid_loc</span> <span class="o">=</span> <span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">get_annotations</span><span class="p">()</span>
@@ -12503,25 +12474,23 @@ None.</p></td>
     <tbody>
         <tr>
           <td>
+                <code><span title="numpy">np</span>.<span title="numpy.ndarray">ndarray</span></code>
           </td>
-          <td><p>np.ndarray: A three-dimensional RGB numpy array (of uint8 dtype). The first two</p></td>
-        </tr>
-        <tr>
-          <td>
-          </td>
-          <td><p>dimensions correspond to the acquisition image shape, and the third dimension</p></td>
-        </tr>
-        <tr>
-          <td>
-          </td>
-          <td><p>corresponds to the channels.</p></td>
+          <td><p>A three-dimensional RGB numpy array (of uint8 dtype). The first two
+dimensions correspond to the acquisition image shape, and the third dimension
+corresponds to the channels.</p></td>
         </tr>
     </tbody>
   </table>
 
       <details class="quote">
         <summary>Source code in <code>modules/figures.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1057</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1052</span>
+<span class="normal">1053</span>
+<span class="normal">1054</span>
+<span class="normal">1055</span>
+<span class="normal">1056</span>
+<span class="normal">1057</span>
 <span class="normal">1058</span>
 <span class="normal">1059</span>
 <span class="normal">1060</span>
@@ -12603,13 +12572,7 @@ None.</p></td>
 <span class="normal">1136</span>
 <span class="normal">1137</span>
 <span class="normal">1138</span>
-<span class="normal">1139</span>
-<span class="normal">1140</span>
-<span class="normal">1141</span>
-<span class="normal">1142</span>
-<span class="normal">1143</span>
-<span class="normal">1144</span>
-<span class="normal">1145</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">compute_rgb_array_per_lipid_selection</span><span class="p">(</span>
+<span class="normal">1139</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">compute_rgb_array_per_lipid_selection</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">slice_index</span><span class="p">,</span>
     <span class="n">ll_t_bounds</span><span class="p">,</span>
@@ -12647,9 +12610,9 @@ None.</p></td>
 <span class="sd">            None.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        np.ndarray: A three-dimensional RGB numpy array (of uint8 dtype). The first two</span>
-<span class="sd">        dimensions correspond to the acquisition image shape, and the third dimension</span>
-<span class="sd">        corresponds to the channels.</span>
+<span class="sd">        (np.ndarray): A three-dimensional RGB numpy array (of uint8 dtype). The first two</span>
+<span class="sd">            dimensions correspond to the acquisition image shape, and the third dimension</span>
+<span class="sd">            corresponds to the channels.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1"># Empty lipid names if no names provided</span>
@@ -12670,7 +12633,6 @@ None.</p></td>
             <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">get_image_shape</span><span class="p">(</span><span class="n">slice_index</span><span class="p">)</span>
         <span class="p">)</span>
         <span class="k">if</span> <span class="n">l_boundaries</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-
             <span class="c1"># Loop over lipids</span>
             <span class="k">for</span> <span class="n">boundaries</span><span class="p">,</span> <span class="n">lipid_name</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">l_boundaries</span><span class="p">,</span> <span class="n">l_names</span><span class="p">):</span>
                 <span class="k">if</span> <span class="n">boundaries</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -12860,19 +12822,21 @@ None.</p></td>
         <tr>
           <td>
           </td>
-          <td><p>Depending on the inputted arguments, may either return a base64 string, a go.Image, or</p></td>
-        </tr>
-        <tr>
-          <td>
-          </td>
-          <td><p>a Plotly Figure.</p></td>
+          <td><p>Depending on the inputted arguments, may either return a base64 string, a go.Image, or
+a Plotly Figure.</p></td>
         </tr>
     </tbody>
   </table>
 
       <details class="quote">
         <summary>Source code in <code>modules/figures.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1147</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1141</span>
+<span class="normal">1142</span>
+<span class="normal">1143</span>
+<span class="normal">1144</span>
+<span class="normal">1145</span>
+<span class="normal">1146</span>
+<span class="normal">1147</span>
 <span class="normal">1148</span>
 <span class="normal">1149</span>
 <span class="normal">1150</span>
@@ -12943,13 +12907,7 @@ None.</p></td>
 <span class="normal">1215</span>
 <span class="normal">1216</span>
 <span class="normal">1217</span>
-<span class="normal">1218</span>
-<span class="normal">1219</span>
-<span class="normal">1220</span>
-<span class="normal">1221</span>
-<span class="normal">1222</span>
-<span class="normal">1223</span>
-<span class="normal">1224</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">compute_rgb_image_per_lipid_selection</span><span class="p">(</span>
+<span class="normal">1218</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">compute_rgb_image_per_lipid_selection</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">slice_index</span><span class="p">,</span>
     <span class="n">ll_t_bounds</span><span class="p">,</span>
@@ -12994,7 +12952,7 @@ None.</p></td>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        Depending on the inputted arguments, may either return a base64 string, a go.Image, or</span>
-<span class="sd">        a Plotly Figure.</span>
+<span class="sd">            a Plotly Figure.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Started RGB image computation for slice &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">slice_index</span><span class="p">)</span> <span class="o">+</span> <span class="n">logmem</span><span class="p">())</span>
@@ -13059,15 +13017,27 @@ using spatial scRNAseq experiments.</p>
     <tbody>
         <tr>
           <td>
+                <code>Plotly.<span title="Plotly.Figure">Figure</span></code>
           </td>
-          <td><p>A Plotly Figure containing a go.Scatter3d object representing the acquired spots.</p></td>
+          <td><p>A Plotly Figure containing a go.Scatter3d object representing the
+acquired spots.</p></td>
         </tr>
     </tbody>
   </table>
 
       <details class="quote">
         <summary>Source code in <code>modules/figures.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">2219</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">2209</span>
+<span class="normal">2210</span>
+<span class="normal">2211</span>
+<span class="normal">2212</span>
+<span class="normal">2213</span>
+<span class="normal">2214</span>
+<span class="normal">2215</span>
+<span class="normal">2216</span>
+<span class="normal">2217</span>
+<span class="normal">2218</span>
+<span class="normal">2219</span>
 <span class="normal">2220</span>
 <span class="normal">2221</span>
 <span class="normal">2222</span>
@@ -13140,21 +13110,13 @@ using spatial scRNAseq experiments.</p>
 <span class="normal">2289</span>
 <span class="normal">2290</span>
 <span class="normal">2291</span>
-<span class="normal">2292</span>
-<span class="normal">2293</span>
-<span class="normal">2294</span>
-<span class="normal">2295</span>
-<span class="normal">2296</span>
-<span class="normal">2297</span>
-<span class="normal">2298</span>
-<span class="normal">2299</span>
-<span class="normal">2300</span>
-<span class="normal">2301</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">compute_scatter_3D</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="normal">2292</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">compute_scatter_3D</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;This functions computes a figure representing, in a 3D scatter plot, the spots acquired</span>
 <span class="sd">    using spatial scRNAseq experiments.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        A Plotly Figure containing a go.Scatter3d object representing the acquired spots.</span>
+<span class="sd">        (Plotly.Figure): A Plotly Figure containing a go.Scatter3d object representing the</span>
+<span class="sd">            acquired spots.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Starting computing 3D scatter plot for scRNAseq experiments&quot;</span> <span class="o">+</span> <span class="n">logmem</span><span class="p">())</span>
@@ -13369,24 +13331,22 @@ None.</p></td>
         <tr>
           <td>
           </td>
-          <td><p>Depending on the value of the boundaries, and the plot parameter, it may return a Plotly</p></td>
-        </tr>
-        <tr>
-          <td>
-          </td>
-          <td><p>Figure containing an empty spectrum, or a spectrum between the two provided boundaries,</p></td>
-        </tr>
-        <tr>
-          <td>
-          </td>
-          <td><p>or the corresponding data of such a spectrum.</p></td>
+          <td><p>Depending on the value of the boundaries, and the plot parameter, it may return a Plotly
+Figure containing an empty spectrum, or a spectrum between the two
+provided boundaries, or the corresponding data of such a spectrum.</p></td>
         </tr>
     </tbody>
   </table>
 
       <details class="quote">
         <summary>Source code in <code>modules/figures.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1284</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1278</span>
+<span class="normal">1279</span>
+<span class="normal">1280</span>
+<span class="normal">1281</span>
+<span class="normal">1282</span>
+<span class="normal">1283</span>
+<span class="normal">1284</span>
 <span class="normal">1285</span>
 <span class="normal">1286</span>
 <span class="normal">1287</span>
@@ -13496,13 +13456,7 @@ None.</p></td>
 <span class="normal">1391</span>
 <span class="normal">1392</span>
 <span class="normal">1393</span>
-<span class="normal">1394</span>
-<span class="normal">1395</span>
-<span class="normal">1396</span>
-<span class="normal">1397</span>
-<span class="normal">1398</span>
-<span class="normal">1399</span>
-<span class="normal">1400</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">compute_spectrum_high_res</span><span class="p">(</span>
+<span class="normal">1394</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">compute_spectrum_high_res</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">slice_index</span><span class="p">,</span>
     <span class="n">lb</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -13537,8 +13491,8 @@ None.</p></td>
 <span class="sd">            None.</span>
 <span class="sd">    Returns:</span>
 <span class="sd">        Depending on the value of the boundaries, and the plot parameter, it may return a Plotly</span>
-<span class="sd">        Figure containing an empty spectrum, or a spectrum between the two provided boundaries,</span>
-<span class="sd">        or the corresponding data of such a spectrum.</span>
+<span class="sd">            Figure containing an empty spectrum, or a spectrum between the two</span>
+<span class="sd">            provided boundaries, or the corresponding data of such a spectrum.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1"># Define default values for graph (empty)</span>
@@ -13686,15 +13640,22 @@ Defaults to None.</p></td>
     <tbody>
         <tr>
           <td>
+                <code><span title="plotly.graph_objects">go</span>.<span title="plotly.graph_objects.Figure">Figure</span></code>
           </td>
-          <td><p>go.Figure: A Plotly Figure representing the low-resolution spectrum.</p></td>
+          <td><p>A Plotly Figure representing the low-resolution spectrum.</p></td>
         </tr>
     </tbody>
   </table>
 
       <details class="quote">
         <summary>Source code in <code>modules/figures.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1226</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1220</span>
+<span class="normal">1221</span>
+<span class="normal">1222</span>
+<span class="normal">1223</span>
+<span class="normal">1224</span>
+<span class="normal">1225</span>
+<span class="normal">1226</span>
 <span class="normal">1227</span>
 <span class="normal">1228</span>
 <span class="normal">1229</span>
@@ -13744,13 +13705,7 @@ Defaults to None.</p></td>
 <span class="normal">1273</span>
 <span class="normal">1274</span>
 <span class="normal">1275</span>
-<span class="normal">1276</span>
-<span class="normal">1277</span>
-<span class="normal">1278</span>
-<span class="normal">1279</span>
-<span class="normal">1280</span>
-<span class="normal">1281</span>
-<span class="normal">1282</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">compute_spectrum_low_res</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">slice_index</span><span class="p">,</span> <span class="n">annotations</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="normal">1276</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">compute_spectrum_low_res</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">slice_index</span><span class="p">,</span> <span class="n">annotations</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;This function returns the full (low-resolution) spectrum of the requested slice.</span>
 
 <span class="sd">    Args:</span>
@@ -13759,7 +13714,7 @@ Defaults to None.</p></td>
 <span class="sd">            annotate), corresponding to the position of colored box superimposed on the spectra.</span>
 <span class="sd">            Defaults to None.</span>
 <span class="sd">    Returns:</span>
-<span class="sd">        go.Figure: A Plotly Figure representing the low-resolution spectrum.</span>
+<span class="sd">        (go.Figure): A Plotly Figure representing the low-resolution spectrum.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1"># Define figure data</span>
@@ -13863,15 +13818,23 @@ Atlas hierarchy.</p>
     <tbody>
         <tr>
           <td>
+                <code>Plotly.<span title="Plotly.Figure">Figure</span></code>
           </td>
-          <td><p>Plotly.Figure: A Plotly Figure containing a treemap of the Allen Brain Atlas hierarchy.</p></td>
+          <td><p>A Plotly Figure containing a treemap of the Allen Brain Atlas
+hierarchy.</p></td>
         </tr>
     </tbody>
   </table>
 
       <details class="quote">
         <summary>Source code in <code>modules/figures.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1470</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1464</span>
+<span class="normal">1465</span>
+<span class="normal">1466</span>
+<span class="normal">1467</span>
+<span class="normal">1468</span>
+<span class="normal">1469</span>
+<span class="normal">1470</span>
 <span class="normal">1471</span>
 <span class="normal">1472</span>
 <span class="normal">1473</span>
@@ -13894,12 +13857,7 @@ Atlas hierarchy.</p>
 <span class="normal">1490</span>
 <span class="normal">1491</span>
 <span class="normal">1492</span>
-<span class="normal">1493</span>
-<span class="normal">1494</span>
-<span class="normal">1495</span>
-<span class="normal">1496</span>
-<span class="normal">1497</span>
-<span class="normal">1498</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">compute_treemaps_figure</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">maxdepth</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+<span class="normal">1493</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">compute_treemaps_figure</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">maxdepth</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;This function is used to generate a Plotly Figure containing a treemap of the Allen Brain</span>
 <span class="sd">    Atlas hierarchy.</span>
 
@@ -13907,7 +13865,8 @@ Atlas hierarchy.</p>
 <span class="sd">        maxdepth (int, optional): The depth of the treemap to generate. Defaults to 5.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        Plotly.Figure: A Plotly Figure containing a treemap of the Allen Brain Atlas hierarchy.</span>
+<span class="sd">        (Plotly.Figure): A Plotly Figure containing a treemap of the Allen Brain Atlas</span>
+<span class="sd">            hierarchy.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1"># Build treemaps from list of children and parents</span>
@@ -13965,7 +13924,8 @@ decrease the size of the output.</p>
           <td>
                 <code>int</code>
           </td>
-          <td><p>An integer used for subsampling the array. The</p></td>
+          <td><p>An integer used for subsampling the array. The
+higher, the higher the subsampling.</p></td>
           <td>
               <em>required</em>
           </td>
@@ -13984,8 +13944,9 @@ decrease the size of the output.</p>
     <tbody>
         <tr>
           <td>
+                <code><span title="numpy">np</span>.<span title="numpy.ndarray">ndarray</span></code>
           </td>
-          <td><p>np.ndarray: A 3D array of annotation, in which structures are annotated with specific
+          <td><p>A 3D array of annotation, in which structures are annotated with specific
 identifiers.</p></td>
         </tr>
     </tbody>
@@ -13993,7 +13954,12 @@ identifiers.</p></td>
 
       <details class="quote">
         <summary>Source code in <code>modules/figures.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1575</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1570</span>
+<span class="normal">1571</span>
+<span class="normal">1572</span>
+<span class="normal">1573</span>
+<span class="normal">1574</span>
+<span class="normal">1575</span>
 <span class="normal">1576</span>
 <span class="normal">1577</span>
 <span class="normal">1578</span>
@@ -14017,20 +13983,15 @@ identifiers.</p></td>
 <span class="normal">1596</span>
 <span class="normal">1597</span>
 <span class="normal">1598</span>
-<span class="normal">1599</span>
-<span class="normal">1600</span>
-<span class="normal">1601</span>
-<span class="normal">1602</span>
-<span class="normal">1603</span>
-<span class="normal">1604</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_array_of_annotations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">decrease_dimensionality_factor</span><span class="p">):</span>
+<span class="normal">1599</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_array_of_annotations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">decrease_dimensionality_factor</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;This function returns the array of annotations from the Allen Brain Atlas, subsampled to</span>
 <span class="sd">    decrease the size of the output.</span>
 <span class="sd">    Args:</span>
 <span class="sd">        decrease_dimensionality_factor (int): An integer used for subsampling the array. The</span>
-<span class="sd">        higher, the higher the subsampling.</span>
+<span class="sd">            higher, the higher the subsampling.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        np.ndarray: A 3D array of annotation, in which structures are annotated with specific</span>
+<span class="sd">        (np.ndarray): A 3D array of annotation, in which structures are annotated with specific</span>
 <span class="sd">            identifiers.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># Get subsampled array of annotations</span>
@@ -14139,8 +14100,9 @@ data. Needed as the resulting figure can be very heavy. Defaults to 20.</p></td>
     <tbody>
         <tr>
           <td>
+                <code><span title="plotly.graph_objects">go</span>.<span title="plotly.graph_objects.Surface">Surface</span></code>
           </td>
-          <td><p>go.Surface: A Plotly Surface representing the requested slice in 3D.</p></td>
+          <td><p>A Plotly Surface representing the requested slice in 3D.</p></td>
         </tr>
     </tbody>
   </table>
@@ -14211,8 +14173,7 @@ data. Needed as the resulting figure can be very heavy. Defaults to 20.</p></td>
 <span class="normal">612</span>
 <span class="normal">613</span>
 <span class="normal">614</span>
-<span class="normal">615</span>
-<span class="normal">616</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_surface</span><span class="p">(</span>
+<span class="normal">615</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_surface</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span> <span class="n">slice_index</span><span class="p">,</span> <span class="n">l_transform_parameters</span><span class="p">,</span> <span class="n">array_projection</span><span class="p">,</span> <span class="n">reduce_resolution_factor</span>
 <span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;This function returns a Plotly Surface representing the requested slice in 3D.</span>
@@ -14225,7 +14186,7 @@ data. Needed as the resulting figure can be very heavy. Defaults to 20.</p></td>
 <span class="sd">        reduce_resolution_factor (int, optional): Divides (reduce) the initial resolution of the</span>
 <span class="sd">            data. Needed as the resulting figure can be very heavy. Defaults to 20.</span>
 <span class="sd">    Returns:</span>
-<span class="sd">        go.Surface: A Plotly Surface representing the requested slice in 3D.</span>
+<span class="sd">        (go.Surface): A Plotly Surface representing the requested slice in 3D.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1">#  Get the parameters for the transformation of the coordinats from 2D to 3D</span>
@@ -14244,7 +14205,6 @@ data. Needed as the resulting figure can be very heavy. Defaults to 20.</p></td>
 
         <span class="c1"># Loop over the second 2D coordinate of the slice</span>
         <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">mu</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">array_projection</span><span class="p">[</span><span class="n">slice_index</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])):</span>
-
             <span class="c1"># Get rescaled 3D coordinates</span>
             <span class="n">x_atlas</span><span class="p">,</span> <span class="n">y_atlas</span><span class="p">,</span> <span class="n">z_atlas</span> <span class="o">=</span> <span class="p">(</span>
                 <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
@@ -14309,15 +14269,22 @@ data. Needed as the resulting figure can be very heavy. Defaults to 20.</p></td>
     <tbody>
         <tr>
           <td>
+                <code>Plotly Figure</code>
           </td>
-          <td><p>Plotly Figure: A Plotly Figure representing an empty spectrum.</p></td>
+          <td><p>A Plotly Figure representing an empty spectrum.</p></td>
         </tr>
     </tbody>
   </table>
 
       <details class="quote">
         <summary>Source code in <code>modules/figures.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1402</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1396</span>
+<span class="normal">1397</span>
+<span class="normal">1398</span>
+<span class="normal">1399</span>
+<span class="normal">1400</span>
+<span class="normal">1401</span>
+<span class="normal">1402</span>
 <span class="normal">1403</span>
 <span class="normal">1404</span>
 <span class="normal">1405</span>
@@ -14335,17 +14302,11 @@ data. Needed as the resulting figure can be very heavy. Defaults to 20.</p></td>
 <span class="normal">1417</span>
 <span class="normal">1418</span>
 <span class="normal">1419</span>
-<span class="normal">1420</span>
-<span class="normal">1421</span>
-<span class="normal">1422</span>
-<span class="normal">1423</span>
-<span class="normal">1424</span>
-<span class="normal">1425</span>
-<span class="normal">1426</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">return_empty_spectrum</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="normal">1420</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">return_empty_spectrum</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;This function returns an empty spectrum, used to display when no spectrum is available.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        Plotly Figure: A Plotly Figure representing an empty spectrum.&quot;&quot;&quot;</span>
+<span class="sd">        (Plotly Figure): A Plotly Figure representing an empty spectrum.&quot;&quot;&quot;</span>
 
     <span class="c1"># Define empty figure data</span>
     <span class="n">data</span> <span class="o">=</span> <span class="p">(</span><span class="n">go</span><span class="o">.</span><span class="n">Scattergl</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="p">[],</span> <span class="n">y</span><span class="o">=</span><span class="p">[],</span> <span class="n">visible</span><span class="o">=</span><span class="kc">True</span><span class="p">),)</span>
@@ -14424,8 +14385,9 @@ a new figure will be generated. Defaults to None.</p></td>
     <tbody>
         <tr>
           <td>
+                <code>Plotly Figure</code>
           </td>
-          <td><p>Plotly Figure: A Plotly Figure containing an empty go.Heatmap, or complete the figure
+          <td><p>A Plotly Figure containing an empty go.Heatmap, or complete the figure
 passed as argument with a proper layout that matches the theme of the app.</p></td>
         </tr>
     </tbody>
@@ -14433,7 +14395,13 @@ passed as argument with a proper layout that matches the theme of the app.</p></
 
       <details class="quote">
         <summary>Source code in <code>modules/figures.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1432</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1426</span>
+<span class="normal">1427</span>
+<span class="normal">1428</span>
+<span class="normal">1429</span>
+<span class="normal">1430</span>
+<span class="normal">1431</span>
+<span class="normal">1432</span>
 <span class="normal">1433</span>
 <span class="normal">1434</span>
 <span class="normal">1435</span>
@@ -14459,13 +14427,7 @@ passed as argument with a proper layout that matches the theme of the app.</p></
 <span class="normal">1455</span>
 <span class="normal">1456</span>
 <span class="normal">1457</span>
-<span class="normal">1458</span>
-<span class="normal">1459</span>
-<span class="normal">1460</span>
-<span class="normal">1461</span>
-<span class="normal">1462</span>
-<span class="normal">1463</span>
-<span class="normal">1464</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">return_heatmap_lipid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fig</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="normal">1458</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">return_heatmap_lipid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fig</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;This function is used to either generate a Plotly Figure containing an empty go.Heatmap,</span>
 <span class="sd">    or complete the figure passed as argument with a proper layout that matches the theme of the</span>
 <span class="sd">    app.</span>
@@ -14475,7 +14437,7 @@ passed as argument with a proper layout that matches the theme of the app.</p></
 <span class="sd">            a new figure will be generated. Defaults to None.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        Plotly Figure: A Plotly Figure containing an empty go.Heatmap, or complete the figure</span>
+<span class="sd">        (Plotly Figure): A Plotly Figure containing an empty go.Heatmap, or complete the figure</span>
 <span class="sd">            passed as argument with a proper layout that matches the theme of the app.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -14523,23 +14485,23 @@ database, to indicate that the arrays do not need to be recomputed at next app s
 
       <details class="quote">
         <summary>Source code in <code>modules/figures.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">2807</span>
-<span class="normal">2808</span>
-<span class="normal">2809</span>
-<span class="normal">2810</span>
-<span class="normal">2811</span>
-<span class="normal">2812</span>
-<span class="normal">2813</span>
-<span class="normal">2814</span>
-<span class="normal">2815</span>
-<span class="normal">2816</span>
-<span class="normal">2817</span>
-<span class="normal">2818</span>
-<span class="normal">2819</span>
-<span class="normal">2820</span>
-<span class="normal">2821</span>
-<span class="normal">2822</span>
-<span class="normal">2823</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">shelve_all_arrays_annotation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">2792</span>
+<span class="normal">2793</span>
+<span class="normal">2794</span>
+<span class="normal">2795</span>
+<span class="normal">2796</span>
+<span class="normal">2797</span>
+<span class="normal">2798</span>
+<span class="normal">2799</span>
+<span class="normal">2800</span>
+<span class="normal">2801</span>
+<span class="normal">2802</span>
+<span class="normal">2803</span>
+<span class="normal">2804</span>
+<span class="normal">2805</span>
+<span class="normal">2806</span>
+<span class="normal">2807</span>
+<span class="normal">2808</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">shelve_all_arrays_annotation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;This functions precomputes and shelves the array of structure annotation used in a</span>
 <span class="sd">    3D representation of the brain (through self.compute_3D_volume_figure()), at different</span>
 <span class="sd">    resolutions. Once everything has been shelved, a boolean value is stored in the shelve</span>
@@ -14628,7 +14590,20 @@ the brain 2. Defaults to True.</p></td>
 
       <details class="quote">
         <summary>Source code in <code>modules/figures.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">2702</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">2689</span>
+<span class="normal">2690</span>
+<span class="normal">2691</span>
+<span class="normal">2692</span>
+<span class="normal">2693</span>
+<span class="normal">2694</span>
+<span class="normal">2695</span>
+<span class="normal">2696</span>
+<span class="normal">2697</span>
+<span class="normal">2698</span>
+<span class="normal">2699</span>
+<span class="normal">2700</span>
+<span class="normal">2701</span>
+<span class="normal">2702</span>
 <span class="normal">2703</span>
 <span class="normal">2704</span>
 <span class="normal">2705</span>
@@ -14716,22 +14691,7 @@ the brain 2. Defaults to True.</p></td>
 <span class="normal">2787</span>
 <span class="normal">2788</span>
 <span class="normal">2789</span>
-<span class="normal">2790</span>
-<span class="normal">2791</span>
-<span class="normal">2792</span>
-<span class="normal">2793</span>
-<span class="normal">2794</span>
-<span class="normal">2795</span>
-<span class="normal">2796</span>
-<span class="normal">2797</span>
-<span class="normal">2798</span>
-<span class="normal">2799</span>
-<span class="normal">2800</span>
-<span class="normal">2801</span>
-<span class="normal">2802</span>
-<span class="normal">2803</span>
-<span class="normal">2804</span>
-<span class="normal">2805</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">shelve_all_l_array_2D</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">force_update</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">sample</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">brain_1</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="normal">2790</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">shelve_all_l_array_2D</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">force_update</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">sample</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">brain_1</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;This functions precomputes and shelves all the arrays of lipid expression used in a 3D</span>
 <span class="sd">    representation of the brain (through self.compute_3D_volume_figure()). Once everything has</span>
 <span class="sd">    been shelved, a boolean value is stored in the shelve database, to indicate that the arrays</span>
@@ -14765,7 +14725,6 @@ the brain 2. Defaults to True.</p></td>
                 <span class="k">for</span> <span class="n">slice_index</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">get_slice_list</span><span class="p">(</span>
                     <span class="n">indices</span><span class="o">=</span><span class="s2">&quot;brain_1&quot;</span> <span class="k">if</span> <span class="n">brain_1</span> <span class="k">else</span> <span class="s2">&quot;brain_2&quot;</span>
                 <span class="p">):</span>
-
                     <span class="c1"># Find lipid location</span>
                     <span class="n">l_lipid_loc</span> <span class="o">=</span> <span class="p">(</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">get_annotations</span><span class="p">()</span>
@@ -14796,7 +14755,6 @@ the brain 2. Defaults to True.</p></td>
                 <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">l_selected_lipids</span><span class="p">)</span> <span class="o">&gt;</span> <span class="o">-</span><span class="nb">len</span><span class="p">(</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">get_slice_list</span><span class="p">(</span><span class="n">indices</span><span class="o">=</span><span class="s2">&quot;brain_1&quot;</span> <span class="k">if</span> <span class="n">brain_1</span> <span class="k">else</span> <span class="s2">&quot;brain_2&quot;</span><span class="p">)</span>
                 <span class="p">):</span>
-
                     <span class="c1"># Build the list of mz boundaries for each peak and each index</span>
                     <span class="n">lll_lipid_bounds</span> <span class="o">=</span> <span class="p">[</span>
                         <span class="p">[</span>
@@ -14886,7 +14844,19 @@ Defaults to False.</p></td>
 
       <details class="quote">
         <summary>Source code in <code>modules/figures.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">2670</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">2658</span>
+<span class="normal">2659</span>
+<span class="normal">2660</span>
+<span class="normal">2661</span>
+<span class="normal">2662</span>
+<span class="normal">2663</span>
+<span class="normal">2664</span>
+<span class="normal">2665</span>
+<span class="normal">2666</span>
+<span class="normal">2667</span>
+<span class="normal">2668</span>
+<span class="normal">2669</span>
+<span class="normal">2670</span>
 <span class="normal">2671</span>
 <span class="normal">2672</span>
 <span class="normal">2673</span>
@@ -14903,20 +14873,7 @@ Defaults to False.</p></td>
 <span class="normal">2684</span>
 <span class="normal">2685</span>
 <span class="normal">2686</span>
-<span class="normal">2687</span>
-<span class="normal">2688</span>
-<span class="normal">2689</span>
-<span class="normal">2690</span>
-<span class="normal">2691</span>
-<span class="normal">2692</span>
-<span class="normal">2693</span>
-<span class="normal">2694</span>
-<span class="normal">2695</span>
-<span class="normal">2696</span>
-<span class="normal">2697</span>
-<span class="normal">2698</span>
-<span class="normal">2699</span>
-<span class="normal">2700</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">shelve_arrays_basic_figures</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">force_update</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="normal">2687</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">shelve_arrays_basic_figures</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">force_update</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;This function shelves in the database all the arrays of basic images computed in</span>
 <span class="sd">    self.compute_figure_basic_image(), across all slices and all types of arrays. This forces</span>
 <span class="sd">    the precomputations of these arrays, and allows to access them faster. Once everything has</span>
@@ -14930,7 +14887,6 @@ Defaults to False.</p></td>
     <span class="k">for</span> <span class="n">idx_slice</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">get_slice_number</span><span class="p">()):</span>
         <span class="k">for</span> <span class="n">type_figure</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;original_data&quot;</span><span class="p">,</span> <span class="s2">&quot;warped_data&quot;</span><span class="p">,</span> <span class="s2">&quot;projection_corrected&quot;</span><span class="p">,</span> <span class="s2">&quot;atlas&quot;</span><span class="p">]:</span>
             <span class="k">for</span> <span class="n">display_annotations</span> <span class="ow">in</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">]:</span>
-
                 <span class="c1"># Force no annotation for the original data</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_storage</span><span class="o">.</span><span class="n">return_shelved_object</span><span class="p">(</span>
                     <span class="s2">&quot;figures/load_page&quot;</span><span class="p">,</span>

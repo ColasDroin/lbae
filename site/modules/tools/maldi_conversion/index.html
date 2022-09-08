@@ -6,7 +6,13 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
+        <meta name="description" content="A web application to explore the mouse Lipid Brain Atlas.">
       
+      
+        <meta name="author" content="Colas Droin">
+      
+      
+        <link rel="canonical" href="https://TOUPDATE.com/modules/tools/maldi_conversion/">
       
       <link rel="icon" href="../../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.3.9">
@@ -138,6 +144,18 @@
 </div>
     
     
+      <div class="md-header__source">
+        <a href="https://github.com/ColasDroin/lbae" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
   </nav>
   
 </header>
@@ -170,6 +188,18 @@
     </a>
     LBAE technical documentation
   </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/ColasDroin/lbae" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
   
   <ul class="md-nav__list" data-md-scrollfix>
     
@@ -940,6 +970,10 @@
             <article class="md-content__inner md-typeset">
               
                 
+  <a href="https://github.com/ColasDroin/lbae/edit/master/docs/modules/tools/maldi_conversion.md" title="Edit this page" class="md-content__button md-icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+  </a>
+
 
 
   <h1>Maldi conversion</h1>
@@ -1024,8 +1058,9 @@ intensity).</p></td>
     <tbody>
         <tr>
           <td>
+                <code><span title="numpy">np</span>.<span title="numpy.ndarray">ndarray</span></code>
           </td>
-          <td><p>np.ndarray: A numpy array of len n_pixels containing the TIC for each pixel.</p></td>
+          <td><p>A numpy array of len n_pixels containing the TIC for each pixel.</p></td>
         </tr>
     </tbody>
   </table>
@@ -1058,7 +1093,7 @@ intensity).</p></td>
 <span class="sd">        n_pixels (int): Number of pixels in the acquisition.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        np.ndarray: A numpy array of len n_pixels containing the TIC for each pixel.</span>
+<span class="sd">        (np.ndarray): A numpy array of len n_pixels containing the TIC for each pixel.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">array_TIC</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n_pixels</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">array_spectra</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
@@ -1099,7 +1134,7 @@ to the transformation made in 'arrays_before_transfo' and 'arrays_after_transfo'
     </thead>
     <tbody>
         <tr>
-          <td><code>array_spectra</code></td>
+          <td><code>array_spectra_pixel</code></td>
           <td>
                 <code><span title="numpy">np</span>.<span title="numpy.ndarray">ndarray</span></code>
           </td>
@@ -1187,8 +1222,9 @@ lipids we want to visualize, for each pixel, after these intensities were transf
     <tbody>
         <tr>
           <td>
+                <code><span title="numpy">np</span>.<span title="numpy.ndarray">ndarray</span></code>
           </td>
-          <td><p>np.ndarray: A numpy array containing spectrum data (pixel index, m/z and intensity), of
+          <td><p>A numpy array containing spectrum data (pixel index, m/z and intensity), of
 pixel 'idx_pixel', sorted by mz, with lipids values transformed.</p></td>
         </tr>
     </tbody>
@@ -1196,7 +1232,8 @@ pixel 'idx_pixel', sorted by mz, with lipids values transformed.</p></td>
 
       <details class="quote">
         <summary>Source code in <code>modules/tools/maldi_conversion.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">409</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">408</span>
+<span class="normal">409</span>
 <span class="normal">410</span>
 <span class="normal">411</span>
 <span class="normal">412</span>
@@ -1289,9 +1326,7 @@ pixel 'idx_pixel', sorted by mz, with lipids values transformed.</p></td>
 <span class="normal">499</span>
 <span class="normal">500</span>
 <span class="normal">501</span>
-<span class="normal">502</span>
-<span class="normal">503</span>
-<span class="normal">504</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@njit</span>
+<span class="normal">502</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@njit</span>
 <span class="k">def</span> <span class="nf">compute_standardization</span><span class="p">(</span>
     <span class="n">array_spectra_pixel</span><span class="p">,</span> <span class="n">idx_pixel</span><span class="p">,</span> <span class="n">array_peaks</span><span class="p">,</span> <span class="n">arrays_before_transfo</span><span class="p">,</span> <span class="n">arrays_after_transfo</span>
 <span class="p">):</span>
@@ -1300,7 +1335,7 @@ pixel 'idx_pixel', sorted by mz, with lipids values transformed.</p></td>
 <span class="sd">    to the transformation made in &#39;arrays_before_transfo&#39; and &#39;arrays_after_transfo&#39;.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        array_spectra (np.ndarray): A numpy array containing spectrum data (pixel index, m/z and</span>
+<span class="sd">        array_spectra_pixel (np.ndarray): A numpy array containing spectrum data (pixel index, m/z and</span>
 <span class="sd">            intensity) of pixel &#39;idx_pixel&#39;, sorted by mz.</span>
 <span class="sd">        idx_pixel (int): Index of the current pixel whose spectrum is transformed.</span>
 <span class="sd">        array_peaks (np.ndarray): A numpy array containing the peak annotations (min peak, max peak,</span>
@@ -1317,7 +1352,7 @@ pixel 'idx_pixel', sorted by mz, with lipids values transformed.</p></td>
 <span class="sd">        Exception: _description_</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        np.ndarray: A numpy array containing spectrum data (pixel index, m/z and intensity), of</span>
+<span class="sd">        (np.ndarray): A numpy array containing spectrum data (pixel index, m/z and intensity), of</span>
 <span class="sd">            pixel &#39;idx_pixel&#39;, sorted by mz, with lipids values transformed.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># Define initial values</span>
@@ -1344,7 +1379,6 @@ pixel 'idx_pixel', sorted by mz, with lipids values transformed.</p></td>
 
             <span class="c1"># Else compute a multiplicative factor</span>
             <span class="k">else</span><span class="p">:</span>
-
                 <span class="c1"># Get array of intensity before and after correction for current pixel</span>
                 <span class="n">intensity_before</span> <span class="o">=</span> <span class="n">arrays_before_transfo</span><span class="p">[</span><span class="n">idx_peak</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">()[</span><span class="n">idx_pixel</span><span class="p">]</span>
                 <span class="n">intensity_after</span> <span class="o">=</span> <span class="n">arrays_after_transfo</span><span class="p">[</span><span class="n">idx_peak</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">()[</span><span class="n">idx_pixel</span><span class="p">]</span>
@@ -1466,8 +1500,9 @@ Defaults to True (only option implemented for now for the rest of the pipeline).
     <tbody>
         <tr>
           <td>
+                <code><span title="numpy">np</span>.<span title="numpy.ndarray">ndarray</span>, <span title="numpy">np</span>.<span title="numpy.ndarray">ndarray</span></code>
           </td>
-          <td><p>np.ndarray, np.ndarray: The first array, of shape (3,n), contains, for the current
+          <td><p>The first array, of shape (3,n), contains, for the current
 acquisition, the mz value (2nd column) and intensity (3rd column) for each pixel
 (first column). The second array contains two integers representing the acquisition
 shape.</p></td>
@@ -1477,7 +1512,9 @@ shape.</p></td>
 
       <details class="quote">
         <summary>Source code in <code>modules/tools/maldi_conversion.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">709</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">707</span>
+<span class="normal">708</span>
+<span class="normal">709</span>
 <span class="normal">710</span>
 <span class="normal">711</span>
 <span class="normal">712</span>
@@ -1529,9 +1566,7 @@ shape.</p></td>
 <span class="normal">758</span>
 <span class="normal">759</span>
 <span class="normal">760</span>
-<span class="normal">761</span>
-<span class="normal">762</span>
-<span class="normal">763</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">extract_raw_data</span><span class="p">(</span>
+<span class="normal">761</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">extract_raw_data</span><span class="p">(</span>
     <span class="n">t_index_path</span><span class="p">,</span>
     <span class="n">save</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="n">output_path</span><span class="o">=</span><span class="s2">&quot;/data/lipidatlas/data/app/data/temp/&quot;</span><span class="p">,</span>
@@ -1548,7 +1583,7 @@ shape.</p></td>
 <span class="sd">            &quot;/data/lipidatlas/data/app/data/temp/&quot;.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        np.ndarray, np.ndarray: The first array, of shape (3,n), contains, for the current</span>
+<span class="sd">        (np.ndarray, np.ndarray): The first array, of shape (3,n), contains, for the current</span>
 <span class="sd">            acquisition, the mz value (2nd column) and intensity (3rd column) for each pixel</span>
 <span class="sd">            (first column). The second array contains two integers representing the acquisition</span>
 <span class="sd">            shape.</span>
@@ -1659,19 +1694,21 @@ values of the lipids we want to visualize.</p></td>
   <table>
     <thead>
       <tr>
-<th>Name</th>        <th>Type</th>
+        <th>Type</th>
         <th>Description</th>
       </tr>
     </thead>
     <tbody>
         <tr>
-<td><code>list</code></td>          <td>
+          <td>
+                <code>list</code>
           </td>
           <td><p>m/z values corresponding to peaks that have been annotated and belong to lipids we
 want to visualize.</p></td>
         </tr>
         <tr>
-<td><code>list</code></td>          <td>
+          <td>
+                <code>list</code>
           </td>
           <td><p>m/z values of the lipids the lipids we want to visualize that have been kept.</p></td>
         </tr>
@@ -1779,9 +1816,9 @@ want to visualize.</p></td>
 <span class="sd">            values of the lipids we want to visualize.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        list: m/z values corresponding to peaks that have been annotated and belong to lipids we</span>
+<span class="sd">        (list): m/z values corresponding to peaks that have been annotated and belong to lipids we</span>
 <span class="sd">            want to visualize.</span>
-<span class="sd">        list: m/z values of the lipids the lipids we want to visualize that have been kept.</span>
+<span class="sd">        (list): m/z values of the lipids the lipids we want to visualize that have been kept.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># Define initial values</span>
     <span class="n">l_to_keep</span> <span class="o">=</span> <span class="p">[]</span>
@@ -1893,7 +1930,7 @@ visualize.</p></td>
           </td>
         </tr>
         <tr>
-          <td><code>array_mz_lipids_per_slice</code></td>
+          <td><code>array_mz_lipids</code></td>
           <td>
                 <code><span title="numpy">np</span>.<span title="numpy.ndarray">ndarray</span></code>
           </td>
@@ -1928,8 +1965,9 @@ number of pixels containing the peak, average value of the peak), sorted by min_
     <tbody>
         <tr>
           <td>
+                <code><span title="numpy">np</span>.<span title="numpy.ndarray">ndarray</span></code>
           </td>
-          <td><p>np.ndarray: A numpy array similar to 'array_peaks', but containing only the lipids that have
+          <td><p>A numpy array similar to 'array_peaks', but containing only the lipids that have
 been MAIA-transformed.</p></td>
         </tr>
     </tbody>
@@ -1937,7 +1975,9 @@ been MAIA-transformed.</p></td>
 
       <details class="quote">
         <summary>Source code in <code>modules/tools/maldi_conversion.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">507</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">505</span>
+<span class="normal">506</span>
+<span class="normal">507</span>
 <span class="normal">508</span>
 <span class="normal">509</span>
 <span class="normal">510</span>
@@ -2001,21 +2041,19 @@ been MAIA-transformed.</p></td>
 <span class="normal">568</span>
 <span class="normal">569</span>
 <span class="normal">570</span>
-<span class="normal">571</span>
-<span class="normal">572</span>
-<span class="normal">573</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_array_peaks_to_correct</span><span class="p">(</span><span class="n">l_lipids_float</span><span class="p">,</span> <span class="n">array_mz_lipids</span><span class="p">,</span> <span class="n">array_peaks</span><span class="p">,</span> <span class="n">slice_index</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="normal">571</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_array_peaks_to_correct</span><span class="p">(</span><span class="n">l_lipids_float</span><span class="p">,</span> <span class="n">array_mz_lipids</span><span class="p">,</span> <span class="n">array_peaks</span><span class="p">,</span> <span class="n">slice_index</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;This function computes an array similar to &#39;array_peaks&#39;, but containing only the lipids that</span>
 <span class="sd">    have been MAIA-transformed.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        l_lipids_float (list): A list containing the estimated m/z values of the lipids we want to</span>
 <span class="sd">            visualize.</span>
-<span class="sd">        array_mz_lipids_per_slice (np.ndarray): A 1-D numpy array containing the per-slice mz</span>
+<span class="sd">        array_mz_lipids (np.ndarray): A 1-D numpy array containing the per-slice mz</span>
 <span class="sd">            values of the lipids we want to visualize.</span>
 <span class="sd">        array_peaks (np.ndarray): A numpy array containing the peak annotations (min peak, max peak,</span>
 <span class="sd">            number of pixels containing the peak, average value of the peak), sorted by min_mz.</span>
 <span class="sd">    Returns:</span>
-<span class="sd">        np.ndarray: A numpy array similar to &#39;array_peaks&#39;, but containing only the lipids that have</span>
+<span class="sd">        (np.ndarray): A numpy array similar to &#39;array_peaks&#39;, but containing only the lipids that have</span>
 <span class="sd">            been MAIA-transformed.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># Low precision as the reference can be quite different from the actual m/z value estimated</span>
@@ -2167,8 +2205,9 @@ data is missing.</p></td>
     <tbody>
         <tr>
           <td>
+                <code>list, list, <span title="numpy">np</span>.<span title="numpy.array">array</span>, <span title="numpy">np</span>.<span title="numpy.array">array</span></code>
           </td>
-          <td><p>list, list, np.array, np.array : 2 lists and 2 arrays containing respectively:
+          <td><p>2 lists and 2 arrays containing respectively:
 - The name of the folders containing the transformed lipid expression. The name is a
     string representing the mz value itself.
 - The corresponding mz values as floats.
@@ -2268,8 +2307,7 @@ data is missing.</p></td>
 <span class="normal">400</span>
 <span class="normal">401</span>
 <span class="normal">402</span>
-<span class="normal">403</span>
-<span class="normal">404</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_standardized_values</span><span class="p">(</span>
+<span class="normal">403</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_standardized_values</span><span class="p">(</span>
     <span class="n">slice_index</span><span class="p">,</span>
     <span class="n">path_array_data</span><span class="p">,</span>
     <span class="n">path_array_transformed_data</span><span class="p">,</span>
@@ -2290,7 +2328,7 @@ data is missing.</p></td>
 <span class="sd">            data is missing.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        list, list, np.array, np.array : 2 lists and 2 arrays containing respectively:</span>
+<span class="sd">        (list, list, np.array, np.array): 2 lists and 2 arrays containing respectively:</span>
 <span class="sd">            - The name of the folders containing the transformed lipid expression. The name is a</span>
 <span class="sd">                string representing the mz value itself.</span>
 <span class="sd">            - The corresponding mz values as floats.</span>
@@ -2324,7 +2362,6 @@ data is missing.</p></td>
     <span class="n">l_arrays_after_transfo</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">set_idx_to_keep</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([])</span>
     <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">lipid_str</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">l_lipids_str</span><span class="p">):</span>
-
         <span class="n">array_after_transfo</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span>
             <span class="n">path_array_transformed_data</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">lipid_str</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">slice_index</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.npy&quot;</span>
         <span class="p">)</span>
@@ -2423,8 +2460,9 @@ with the given resolution, and turns it into a scipy sparse matrix.</p>
     <tbody>
         <tr>
           <td>
+                <code>scipy.<span title="scipy.sparse">sparse</span></code>
           </td>
-          <td><p>scipy.sparse: A sparse matrix containing the intensity for each m/z value.</p></td>
+          <td><p>A sparse matrix containing the intensity for each m/z value.</p></td>
         </tr>
     </tbody>
   </table>
@@ -2462,7 +2500,7 @@ with the given resolution, and turns it into a scipy sparse matrix.</p>
 <span class="sd">        resolution (float, optional): The resolution of the file to load. Defaults to 1e-5.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        scipy.sparse: A sparse matrix containing the intensity for each m/z value.</span>
+<span class="sd">        (scipy.sparse): A sparse matrix containing the intensity for each m/z value.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># Check if imzML exists and load if possible</span>
     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span> <span class="o">+</span> <span class="s2">&quot;.imzML&quot;</span><span class="p">):</span>
@@ -2544,8 +2582,9 @@ want to keep for further visualization.</p>
     <tbody>
         <tr>
           <td>
+                <code><span title="numpy">np</span>.<span title="numpy.ndarray">ndarray</span></code>
           </td>
-          <td><p>np.ndarray: A two-dimensional array of m/z values corrsponding to the lipids that we want to
+          <td><p>A two-dimensional array of m/z values corrsponding to the lipids that we want to
 keep for further visualization (first column is per-slice value, second column is
 averaged value). Sorted by individual slice value in the end.</p></td>
         </tr>
@@ -2597,7 +2636,7 @@ averaged value). Sorted by individual slice value in the end.</p></td>
 <span class="sd">        path (string): The path of the csv file containing the lipids annotations.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        np.ndarray: A two-dimensional array of m/z values corrsponding to the lipids that we want to</span>
+<span class="sd">        (np.ndarray): A two-dimensional array of m/z values corrsponding to the lipids that we want to</span>
 <span class="sd">            keep for further visualization (first column is per-slice value, second column is</span>
 <span class="sd">            averaged value). Sorted by individual slice value in the end.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -2675,8 +2714,9 @@ at the provided path. It returns a numpy array sorted by min peak value (m/z) an
     <tbody>
         <tr>
           <td>
+                <code><span title="numpy">np</span>.<span title="numpy.ndarray">ndarray</span></code>
           </td>
-          <td><p>np.ndarray: The sorted dataframe containing the annotations (min peak, max peak, number of
+          <td><p>The sorted dataframe containing the annotations (min peak, max peak, number of
 pixels containing the current molecule, estimated mz of the current molecule).</p></td>
         </tr>
     </tbody>
@@ -2725,7 +2765,7 @@ pixels containing the current molecule, estimated mz of the current molecule).</
 <span class="sd">        path (string): The path of the csv file containing the peaks annotations.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        np.ndarray: The sorted dataframe containing the annotations (min peak, max peak, number of</span>
+<span class="sd">        (np.ndarray): The sorted dataframe containing the annotations (min peak, max peak, number of</span>
 <span class="sd">            pixels containing the current molecule, estimated mz of the current molecule).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># Load the peaks annotations using the last definition used for the csv file</span>
@@ -2817,8 +2857,9 @@ intensity).</p></td>
     <tbody>
         <tr>
           <td>
+                <code><span title="numpy">np</span>.<span title="numpy.ndarray">ndarray</span></code>
           </td>
-          <td><p>np.ndarray: A numpy array containing TIC-normalized spectrum data (pixel index, m/z and
+          <td><p>A numpy array containing TIC-normalized spectrum data (pixel index, m/z and
 intensity).</p></td>
         </tr>
     </tbody>
@@ -2852,7 +2893,7 @@ intensity).</p></td>
 <span class="sd">        array_TIC (np.ndarray): A numpy array of len n_pixels containing the TIC for each pixel.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        np.ndarray: A numpy array containing TIC-normalized spectrum data (pixel index, m/z and</span>
+<span class="sd">        (np.ndarray): A numpy array containing TIC-normalized spectrum data (pixel index, m/z and</span>
 <span class="sd">            intensity).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">array_spectra</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
@@ -2955,25 +2996,14 @@ Defaults to False.</p></td>
           </td>
         </tr>
         <tr>
-          <td><code>load_from_file(bool,</code></td>
+          <td><code>load_from_file</code></td>
           <td>
-                <code>optional</code>
+                <code>bool</code>
           </td>
           <td><p>If True, loads the extracted data from npz file. Only option
 implemented for now.</p></td>
           <td>
-              <em>required</em>
-          </td>
-        </tr>
-        <tr>
-          <td><code>sample_app</code></td>
-          <td>
-                <code>bool</code>
-          </td>
-          <td><p>If True, the output arrays only consist of the MAIA-transformed
-lipids. Defaults to False.</p></td>
-          <td>
-              <em>required</em>
+                <code>True</code>
           </td>
         </tr>
     </tbody>
@@ -2999,7 +3029,9 @@ above.</p></td>
 
       <details class="quote">
         <summary>Source code in <code>modules/tools/maldi_conversion.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">766</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">764</span>
+<span class="normal">765</span>
+<span class="normal">766</span>
 <span class="normal">767</span>
 <span class="normal">768</span>
 <span class="normal">769</span>
@@ -3212,12 +3244,7 @@ above.</p></td>
 <span class="normal">976</span>
 <span class="normal">977</span>
 <span class="normal">978</span>
-<span class="normal">979</span>
-<span class="normal">980</span>
-<span class="normal">981</span>
-<span class="normal">982</span>
-<span class="normal">983</span>
-<span class="normal">984</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">process_raw_data</span><span class="p">(</span>
+<span class="normal">979</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">process_raw_data</span><span class="p">(</span>
     <span class="n">t_index_path</span><span class="p">,</span>
     <span class="n">save</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="n">return_result</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
@@ -3255,11 +3282,8 @@ above.</p></td>
 <span class="sd">            Defaults to False.</span>
 <span class="sd">        output_path (str, optional): Path to save the output npz file. Defaults to</span>
 <span class="sd">            &quot;/data/lipidatlas/data/app/data/temp/&quot;.</span>
-<span class="sd">        load_from_file(bool, optional): If True, loads the extracted data from npz file. Only option</span>
+<span class="sd">        load_from_file (bool, optional): If True, loads the extracted data from npz file. Only option</span>
 <span class="sd">            implemented for now.</span>
-<span class="sd">        sample_app (bool, optional): If True, the output arrays only consist of the MAIA-transformed</span>
-<span class="sd">            lipids. Defaults to False.</span>
-
 
 <span class="sd">    Returns:</span>
 <span class="sd">        Depending on &#39;return result&#39;, returns either nothing, either several np.ndarrays, described</span>
@@ -3515,8 +3539,9 @@ to False.</p></td>
     <tbody>
         <tr>
           <td>
+                <code>pandas.<span title="pandas.Dataframe">Dataframe</span></code>
           </td>
-          <td><p>pandas.Dataframe: A sorted dataframe with three columns: pixels index, m/z, and intensity
+          <td><p>A sorted dataframe with three columns: pixels index, m/z, and intensity
 value.</p></td>
         </tr>
     </tbody>
@@ -3575,7 +3600,7 @@ value.</p></td>
 <span class="sd">            to False.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        pandas.Dataframe: A sorted dataframe with three columns: pixels index, m/z, and intensity</span>
+<span class="sd">        (pandas.Dataframe): A sorted dataframe with three columns: pixels index, m/z, and intensity</span>
 <span class="sd">            value.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># We&#39;re going to slice the matrix row by row, so it&#39;s faster to convert to csr rather than csc</span>
@@ -3669,8 +3694,9 @@ value.</p></td>
     <tbody>
         <tr>
           <td>
+                <code><span title="numpy">np</span>.<span title="numpy.ndarray">ndarray</span></code>
           </td>
-          <td><p>np.ndarray: An array of shape (m,2) containing the boundary indices of each pixel in the
+          <td><p>An array of shape (m,2) containing the boundary indices of each pixel in the
 original spectra array.</p></td>
         </tr>
     </tbody>
@@ -3713,7 +3739,7 @@ original spectra array.</p></td>
 <span class="sd">        total_shape (int): Total number of pixels in the slice.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        np.ndarray: An array of shape (m,2) containing the boundary indices of each pixel in the</span>
+<span class="sd">        (np.ndarray): An array of shape (m,2) containing the boundary indices of each pixel in the</span>
 <span class="sd">            original spectra array.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">array_pixel_indexes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">total_shape</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
@@ -3793,8 +3819,9 @@ across all spectra from all pixels.</p></td>
     <tbody>
         <tr>
           <td>
+                <code><span title="numpy">np</span>.<span title="numpy.ndarray">ndarray</span></code>
           </td>
-          <td><p>np.ndarray: Array of length m containing the summed intensities for the unique m/z values
+          <td><p>Array of length m containing the summed intensities for the unique m/z values
 across all spectra from all pixels.</p></td>
         </tr>
     </tbody>
@@ -3802,7 +3829,9 @@ across all spectra from all pixels.</p></td>
 
       <details class="quote">
         <summary>Source code in <code>modules/tools/maldi_conversion.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">661</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">659</span>
+<span class="normal">660</span>
+<span class="normal">661</span>
 <span class="normal">662</span>
 <span class="normal">663</span>
 <span class="normal">664</span>
@@ -3822,9 +3851,7 @@ across all spectra from all pixels.</p></td>
 <span class="normal">678</span>
 <span class="normal">679</span>
 <span class="normal">680</span>
-<span class="normal">681</span>
-<span class="normal">682</span>
-<span class="normal">683</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@njit</span>
+<span class="normal">681</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@njit</span>
 <span class="k">def</span> <span class="nf">return_average_spectrum</span><span class="p">(</span><span class="n">array_intensity</span><span class="p">,</span> <span class="n">array_unique_counts</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Returns intensities averaged over all pixels, given the previously computed unique m/z value</span>
 <span class="sd">    across all pixels.</span>
@@ -3836,7 +3863,7 @@ across all spectra from all pixels.</p></td>
 <span class="sd">            across all spectra from all pixels.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        np.ndarray: Array of length m containing the summed intensities for the unique m/z values</span>
+<span class="sd">        (np.ndarray): Array of length m containing the summed intensities for the unique m/z values</span>
 <span class="sd">            across all spectra from all pixels.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">array_unique_intensity</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">array_unique_counts</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
@@ -3903,8 +3930,9 @@ in each row.</p></td>
     <tbody>
         <tr>
           <td>
+                <code><span title="numpy">np</span>.<span title="numpy.ndarray">ndarray</span></code>
           </td>
-          <td><p>np.ndarray: Array of shape (2,n) containing intensities averaged over unique m/z values
+          <td><p>Array of shape (2,n) containing intensities averaged over unique m/z values
 across all pixels.</p></td>
         </tr>
     </tbody>
@@ -3912,7 +3940,9 @@ across all pixels.</p></td>
 
       <details class="quote">
         <summary>Source code in <code>modules/tools/maldi_conversion.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">686</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">684</span>
+<span class="normal">685</span>
+<span class="normal">686</span>
 <span class="normal">687</span>
 <span class="normal">688</span>
 <span class="normal">689</span>
@@ -3930,9 +3960,7 @@ across all pixels.</p></td>
 <span class="normal">701</span>
 <span class="normal">702</span>
 <span class="normal">703</span>
-<span class="normal">704</span>
-<span class="normal">705</span>
-<span class="normal">706</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">return_averaged_spectra_array</span><span class="p">(</span><span class="n">array</span><span class="p">):</span>
+<span class="normal">704</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">return_averaged_spectra_array</span><span class="p">(</span><span class="n">array</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Returns full spectrum averaged over all pixels</span>
 
 <span class="sd">    Args:</span>
@@ -3940,7 +3968,7 @@ across all pixels.</p></td>
 <span class="sd">            in each row.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        np.ndarray: Array of shape (2,n) containing intensities averaged over unique m/z values</span>
+<span class="sd">        (np.ndarray): Array of shape (2,n) containing intensities averaged over unique m/z values</span>
 <span class="sd">            across all pixels.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># Take the transpose for easier browsing</span>
@@ -4019,7 +4047,7 @@ number of pixels containing the peak, average value of the peak), sorted by min_
           </td>
         </tr>
         <tr>
-          <td><code>array_mz_lipids_per_slice</code></td>
+          <td><code>array_mz_lipids</code></td>
           <td>
                 <code><span title="numpy">np</span>.<span title="numpy.ndarray">ndarray</span></code>
           </td>
@@ -4101,20 +4129,23 @@ is not useless as it still returns 'array_peaks_to_correct' and
     <tbody>
         <tr>
           <td>
+                <code><span title="numpy">np</span>.<span title="numpy.ndarray">ndarray</span></code>
           </td>
-          <td><p>np.ndarray: A numpy array containing spectrum data (pixel index, m/z and intensity), sorted
+          <td><p>A numpy array containing spectrum data (pixel index, m/z and intensity), sorted
 by pixel index and mz, with lipids values transformed.</p></td>
         </tr>
         <tr>
           <td>
+                <code><span title="numpy">np</span>.<span title="numpy.ndarray">ndarray</span></code>
           </td>
-          <td><p>np.ndarray: A numpy array similar to 'array_peaks', but containing only the lipids that have
+          <td><p>A numpy array similar to 'array_peaks', but containing only the lipids that have
 been transformed.</p></td>
         </tr>
         <tr>
           <td>
+                <code><span title="numpy">np</span>.<span title="numpy.ndarray">ndarray</span></code>
           </td>
-          <td><p>np.ndarray: A numpy array equal to the ratio of 'arrays_after_transfo' and
+          <td><p>A numpy array equal to the ratio of 'arrays_after_transfo' and
 'arrays_before_transfo' containing the corrective factor used for lipid and each pixel.</p></td>
         </tr>
     </tbody>
@@ -4122,7 +4153,9 @@ been transformed.</p></td>
 
       <details class="quote">
         <summary>Source code in <code>modules/tools/maldi_conversion.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">576</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">574</span>
+<span class="normal">575</span>
+<span class="normal">576</span>
 <span class="normal">577</span>
 <span class="normal">578</span>
 <span class="normal">579</span>
@@ -4202,9 +4235,7 @@ been transformed.</p></td>
 <span class="normal">653</span>
 <span class="normal">654</span>
 <span class="normal">655</span>
-<span class="normal">656</span>
-<span class="normal">657</span>
-<span class="normal">658</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">standardize_values</span><span class="p">(</span>
+<span class="normal">656</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">standardize_values</span><span class="p">(</span>
     <span class="n">array_spectra</span><span class="p">,</span>
     <span class="n">array_pixel_indexes</span><span class="p">,</span>
     <span class="n">array_peaks</span><span class="p">,</span>
@@ -4225,7 +4256,7 @@ been transformed.</p></td>
 <span class="sd">            indices of each pixel in the original spectra array.</span>
 <span class="sd">        array_peaks (np.ndarray): A numpy array containing the peak annotations (min peak, max peak,</span>
 <span class="sd">            number of pixels containing the peak, average value of the peak), sorted by min_mz.</span>
-<span class="sd">        array_mz_lipids_per_slice (np.ndarray): A 1-D numpy array containing the per-slice mz</span>
+<span class="sd">        array_mz_lipids (np.ndarray): A 1-D numpy array containing the per-slice mz</span>
 <span class="sd">            values of the lipids we want to visualize.</span>
 <span class="sd">        l_lipids_float (list): A list containing the estimated m/z values of the lipids we want to</span>
 <span class="sd">            visualize.</span>
@@ -4241,11 +4272,11 @@ been transformed.</p></td>
 <span class="sd">            is not useless as it still returns &#39;array_peaks_to_correct&#39; and</span>
 <span class="sd">            &#39;array_corrective_factors&#39;.</span>
 <span class="sd">    Returns:</span>
-<span class="sd">        np.ndarray: A numpy array containing spectrum data (pixel index, m/z and intensity), sorted</span>
+<span class="sd">        (np.ndarray): A numpy array containing spectrum data (pixel index, m/z and intensity), sorted</span>
 <span class="sd">            by pixel index and mz, with lipids values transformed.</span>
-<span class="sd">        np.ndarray: A numpy array similar to &#39;array_peaks&#39;, but containing only the lipids that have</span>
+<span class="sd">        (np.ndarray): A numpy array similar to &#39;array_peaks&#39;, but containing only the lipids that have</span>
 <span class="sd">            been transformed.</span>
-<span class="sd">        np.ndarray: A numpy array equal to the ratio of &#39;arrays_after_transfo&#39; and</span>
+<span class="sd">        (np.ndarray): A numpy array equal to the ratio of &#39;arrays_after_transfo&#39; and</span>
 <span class="sd">            &#39;arrays_before_transfo&#39; containing the corrective factor used for lipid and each pixel.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
