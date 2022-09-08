@@ -23,6 +23,8 @@ For a faster app, please install orjson with pip before launching the app:
 `pip install orjson`
 
 WARNING: because of a bug, Dash version >2.5.1 make long_callbacks not work anymore.
+WARNING: because of a bug with the shelvedb, the app precomputations must be computed with Linux 
+    (not OS X).
 """
 
 # ==================================================================================================
