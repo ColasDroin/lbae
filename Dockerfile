@@ -19,6 +19,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Bug with Werkzeug
 RUN pip install Werkzeug==2.0.0
 
+# Bug with Flask
+RUN pip install Flask==2.1.3
+
 # Copy app folder to app folder in container
 COPY . /usr/src/app/
 

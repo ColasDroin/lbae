@@ -2182,8 +2182,10 @@ class Figures:
         logging.info("Lipid indexes replaced by names")
         logging.info("Preparing plot")
         # Plot
+        data_array = df_avg_intensity_lipids.to_numpy()
         fig_heatmap_lipids = Clustergram(
-            data=df_avg_intensity_lipids.to_numpy(),
+            data=data_array
+            + data_array.min(axis=0),  # Add min per column to remove negative values
             column_labels=df_avg_intensity_lipids.columns.to_list(),
             row_labels=df_avg_intensity_lipids.index.to_list(),
             hidden_labels="row" if len(df_avg_intensity_lipids.index.to_list()) > 100 else None,
