@@ -10,6 +10,7 @@
 # Standard modules
 import dash
 from dash import html, dcc
+import dash_bootstrap_components as dbc
 import dash_mantine_components as dmc
 from dash.dependencies import Input, Output, State
 from in_app_documentation.documentation import return_documentation
@@ -82,15 +83,36 @@ layout = (
                                 },
                                 align="center",
                             ),
-                            html.Div(id="rotating-brain"),
                             html.Div(
-                                id="skeleton-rotating-brain",
-                                children=dmc.Image(
-                                    src="/assets/ressources/brain.png",
-                                    height=500,
-                                ),
+                                children=[
+                                    dbc.Spinner(
+                                        color="info",
+                                        spinner_style={
+                                            # "margin-top": "40%",
+                                            "width": "3rem",
+                                            "height": "3rem",
+                                        },
+                                        children=[
+                                            html.Div(
+                                                children=[
+                                                    html.Div(id="rotating-brain"),
+                                                    visdcc.Run_js(id="javascript"),
+                                                ],
+                                                style={"height": "500px"},
+                                            ),
+                                            # html.Div(
+                                            #     id="skeleton-rotating-brain",
+                                            #     # children=dmc.Image(
+                                            #     #     src="/assets/ressources/brain.png",
+                                            #     #     height=500,
+                                            #     # ),
+                                            #     style={"height": "500px"},
+                                            # ),
+                                        ],
+                                    ),
+                                ],
+                                style={"height": "500px", "min-width": "100px"},
                             ),
-                            visdcc.Run_js(id="javascript"),
                             # Below logo text
                             dmc.Text(
                                 "Please start exploring our data by using the navigation bar on the"

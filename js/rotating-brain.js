@@ -78,7 +78,7 @@ Plotly.plot(
 );
 
 // Remove skeleton
-document.getElementById("skeleton-rotating-brain").innerHTML = "";
+// document.getElementById("skeleton-rotating-brain").innerHTML = "";
 
 // Functions to rotate brain
 

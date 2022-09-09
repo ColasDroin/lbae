@@ -1673,7 +1673,7 @@ def page_3_plot_spectrum(
                 l_idx_labels_kept = list(pad_l_idx_labels(l_idx_labels_kept, array_index_padding))
 
                 # Rebuild lipid name from structure, cation, etc.
-                l_labels_all_lipids = data.compute_l_labels()
+                l_labels_all_lipids = data.compute_l_labels(slice_index)
                 l_labels = [
                     l_labels_all_lipids[idx] if idx != -1 else "" for idx in l_idx_labels_kept
                 ]
@@ -1869,13 +1869,12 @@ def page_3_draw_heatmap_per_lipid_selection(
                     else:
                         df_avg_intensity_lipids.sort_values(by=l_sel[0], inplace=True)
 
-                print("IOCI", df_avg_intensity_lipids)
-
                 l_idx_lipids = list(df_avg_intensity_lipids.index)
 
                 # Replace idx_lipids by actual name
-                print("ICI2", slice_index)
                 df_names = data.get_annotations()[data.get_annotations()["slice"] == slice_index]
+
+
                 df_avg_intensity_lipids.index = df_avg_intensity_lipids.index.map(
                     lambda idx: df_names.iloc[idx]["name"]
                     + "_"

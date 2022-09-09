@@ -149,7 +149,8 @@ class MaldiData:
             brain 1, False otherwise.
         clean_memory(slice_index=None, array=None, cache=None): Cleans the memory (reset the
             memory-mapped arrays) of the app.
-        compute_l_labels(): Computes and returns the labels of the lipids in the dataset.
+        compute_l_labels(slice_index): Computes and returns the labels of the lipids in the dataset
+            for the requested slice.
         return_lipid_options(): Computes and returns the list of lipid names, structures and cation.
         compute_padded_original_images(): Pads the original slice images of the dataset so that they
             all have the same size.
@@ -842,20 +843,31 @@ class MaldiData:
 
         logging.info("Memory cleaned")
 
-    def compute_l_labels(self):
-        """Computes the list of labels of the dataset.
+    def compute_l_labels(self, slice_index = None):
+        """Computes the list of labels of the dataset (for the whole dataset, or a given slice).
+
+        Args:
+            slice_index (int, optional): Index of the slice for which the list of labels must be
+                computed. Defaults to None.
 
         Returns:
             (list): List of labels of the dataset.
         """
 
-        l_labels = (
-            self._df_annotations["name"]
-            + "_"
-            + self._df_annotations["structure"]
-            + "_"
-            + self._df_annotations["cation"]
-        ).to_list()
+        if slice_index is None:
+            l_labels = (
+                self._df_annotations["name"]
+                + "_"
+                + self._df_annotations["structure"]
+                + "_"
+                + self._df_annotations["cation"]
+            ).to_list()
+
+        else:
+            df_slice = self._df_annotations[self._df_annotations["slice"] == slice_index]
+            l_labels = (
+                df_slice["name"] + "_" + df_slice["structure"] + "_" + df_slice["cation"]
+            ).to_list()
         return l_labels
 
     def return_lipid_options(self):
