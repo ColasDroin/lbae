@@ -1,10 +1,11 @@
 ## How to use the app
 
-The use of the app should be relatively intuitive. It is composed of 4 different pages, accessible from the left navigation bar. From top to bottom, they are as follow (described in the sections hereafter):
+The use of the app should be relatively intuitive. It is composed of 5 different pages, accessible from the left navigation bar. From top to bottom, they are as follow (described in the sections hereafter):
  - Dataset overview
  - Lipid selection
  - Region analysis
  - Three-dimensional analysis
+ - spatial transcriptomics 
  
 Each of this tabs allows for a different type of exploration/analysis of the MALDI-MSI data, through the use of various widgets. Apart from the *three-dimensional analysis*, all the pages can only display one slice at most. In this case, slices can be browsed using the slider at the bottom of the page. 
 
@@ -26,7 +27,7 @@ An additional switch to display the annotations from the reference is available.
 
 This part of the app allows for the visualization of up to three manually selected lipids (themselves, corresponding to a given m/z range in the original MALDI-MSI data) using the top-left dropdown, or the visualization of a manually inputed range using the bottom left user input field. 
 
-If lipids are selected, they can be displayed as an RGB image (each lipid corresponding to a given channel), or summed and displayed as a heatmap with the standard *viridis* colormap. For manually selectes ranges, only the colormap option is available. In both case, no explicit scale is displayed as mass-spectrometry intensity data is hard to interpret in terms of concentration of quantity units. For most lipids, the scale is anyway normalized according to the 95th percentile of the image. However, the lipids that were significantly expressed in all the slices were renormalized according to the method [MAIA](TODO.linkpaperMAIA) , allowing for a comparison of the intensity across slices (given that the switch to activate the transform is on).
+If lipids are selected, they can be displayed as an RGB image (each lipid corresponding to a given channel), or summed and displayed as a heatmap with the standard *viridis* colormap. For manually selectes ranges, only the colormap option is available. In both case, no explicit scale is displayed as mass-spectrometry intensity data is hard to interpret in terms of concentration of quantity units. For most lipids, the scale is anyway normalized according to the 95th percentile of the image. However, the lipids that were significantly expressed in all the slices were renormalized according to the method MAIA (see companion paper when it gets published), allowing for a comparison of the intensity across slices (given that the switch to activate the transform is on).
 
 To avoid confusion, the input used for plotting the image in the center is always displayed at the top-right, along with the potentially selected lipids (each with the color of the channel it corresponds to, in the case of an RGB plot).
 

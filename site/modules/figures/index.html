@@ -12,7 +12,7 @@
         <meta name="author" content="Colas Droin">
       
       
-        <link rel="canonical" href="https://TOUPDATE.com/modules/figures/">
+        <link rel="canonical" href="https://lbae.epfl.ch/modules/figures/">
       
       <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.3.9">
@@ -4095,7 +4095,9 @@ shelve_all_arrays_annotation(): Precomputes and shelves the array of structure a
 <span class="normal">2805</span>
 <span class="normal">2806</span>
 <span class="normal">2807</span>
-<span class="normal">2808</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">Figures</span><span class="p">:</span>
+<span class="normal">2808</span>
+<span class="normal">2809</span>
+<span class="normal">2810</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">Figures</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;This class is used to produce the figures and widgets used in the app. It uses the special</span>
 <span class="sd">    attribute __slots__ for faster access to the attributes. Parameters are ignored in the docstring</span>
 <span class="sd">    of the listed methods below to save space. Please consult the docstring of the actual methods</span>
@@ -6230,8 +6232,10 @@ shelve_all_arrays_annotation(): Precomputes and shelves the array of structure a
         <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Lipid indexes replaced by names&quot;</span><span class="p">)</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Preparing plot&quot;</span><span class="p">)</span>
         <span class="c1"># Plot</span>
+        <span class="n">data_array</span> <span class="o">=</span> <span class="n">df_avg_intensity_lipids</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
         <span class="n">fig_heatmap_lipids</span> <span class="o">=</span> <span class="n">Clustergram</span><span class="p">(</span>
-            <span class="n">data</span><span class="o">=</span><span class="n">df_avg_intensity_lipids</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(),</span>
+            <span class="n">data</span><span class="o">=</span><span class="n">data_array</span>
+            <span class="o">+</span> <span class="n">data_array</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>  <span class="c1"># Add min per column to remove negative values</span>
             <span class="n">column_labels</span><span class="o">=</span><span class="n">df_avg_intensity_lipids</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">to_list</span><span class="p">(),</span>
             <span class="n">row_labels</span><span class="o">=</span><span class="n">df_avg_intensity_lipids</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">to_list</span><span class="p">(),</span>
             <span class="n">hidden_labels</span><span class="o">=</span><span class="s2">&quot;row&quot;</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">df_avg_intensity_lipids</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">to_list</span><span class="p">())</span> <span class="o">&gt;</span> <span class="mi">100</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
@@ -8957,9 +8961,7 @@ lists contain the corresponding names of the genes and lipids represented.</p></
 
       <details class="quote">
         <summary>Source code in <code>modules/figures.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">2294</span>
-<span class="normal">2295</span>
-<span class="normal">2296</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">2296</span>
 <span class="normal">2297</span>
 <span class="normal">2298</span>
 <span class="normal">2299</span>
@@ -9092,7 +9094,9 @@ lists contain the corresponding names of the genes and lipids represented.</p></
 <span class="normal">2426</span>
 <span class="normal">2427</span>
 <span class="normal">2428</span>
-<span class="normal">2429</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">compute_barplots_enrichment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">brain_1</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">idx_dot</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="normal">2429</span>
+<span class="normal">2430</span>
+<span class="normal">2431</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">compute_barplots_enrichment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">brain_1</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">idx_dot</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;This functions computes two figures representing, in barplots, the lipid expression in</span>
 <span class="sd">    the spots acquired using spatial scRNAseq experiments, as well as how it can be explained by</span>
 <span class="sd">    an elastic net regression using gene expression as explaing factors.</span>
@@ -9500,7 +9504,9 @@ the MAIA-transformed lipids in the dataset in the selected regions.</p></td>
 <span class="normal">2200</span>
 <span class="normal">2201</span>
 <span class="normal">2202</span>
-<span class="normal">2203</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">compute_clustergram_figure</span><span class="p">(</span>
+<span class="normal">2203</span>
+<span class="normal">2204</span>
+<span class="normal">2205</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">compute_clustergram_figure</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">set_progress</span><span class="p">,</span>
     <span class="n">cache_flask</span><span class="p">,</span>
@@ -9643,8 +9649,10 @@ the MAIA-transformed lipids in the dataset in the selected regions.</p></td>
     <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Lipid indexes replaced by names&quot;</span><span class="p">)</span>
     <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Preparing plot&quot;</span><span class="p">)</span>
     <span class="c1"># Plot</span>
+    <span class="n">data_array</span> <span class="o">=</span> <span class="n">df_avg_intensity_lipids</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
     <span class="n">fig_heatmap_lipids</span> <span class="o">=</span> <span class="n">Clustergram</span><span class="p">(</span>
-        <span class="n">data</span><span class="o">=</span><span class="n">df_avg_intensity_lipids</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(),</span>
+        <span class="n">data</span><span class="o">=</span><span class="n">data_array</span>
+        <span class="o">+</span> <span class="n">data_array</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>  <span class="c1"># Add min per column to remove negative values</span>
         <span class="n">column_labels</span><span class="o">=</span><span class="n">df_avg_intensity_lipids</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">to_list</span><span class="p">(),</span>
         <span class="n">row_labels</span><span class="o">=</span><span class="n">df_avg_intensity_lipids</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">to_list</span><span class="p">(),</span>
         <span class="n">hidden_labels</span><span class="o">=</span><span class="s2">&quot;row&quot;</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">df_avg_intensity_lipids</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">to_list</span><span class="p">())</span> <span class="o">&gt;</span> <span class="mi">100</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
@@ -10448,9 +10456,7 @@ expression of the selected lipid and genes.</p></td>
 
       <details class="quote">
         <summary>Source code in <code>modules/figures.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">2431</span>
-<span class="normal">2432</span>
-<span class="normal">2433</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">2433</span>
 <span class="normal">2434</span>
 <span class="normal">2435</span>
 <span class="normal">2436</span>
@@ -10669,7 +10675,9 @@ expression of the selected lipid and genes.</p></td>
 <span class="normal">2649</span>
 <span class="normal">2650</span>
 <span class="normal">2651</span>
-<span class="normal">2652</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">compute_heatmap_lipid_genes</span><span class="p">(</span>
+<span class="normal">2652</span>
+<span class="normal">2653</span>
+<span class="normal">2654</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">compute_heatmap_lipid_genes</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">lipid</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">l_genes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -13027,9 +13035,7 @@ acquired spots.</p></td>
 
       <details class="quote">
         <summary>Source code in <code>modules/figures.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">2209</span>
-<span class="normal">2210</span>
-<span class="normal">2211</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">2211</span>
 <span class="normal">2212</span>
 <span class="normal">2213</span>
 <span class="normal">2214</span>
@@ -13110,7 +13116,9 @@ acquired spots.</p></td>
 <span class="normal">2289</span>
 <span class="normal">2290</span>
 <span class="normal">2291</span>
-<span class="normal">2292</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">compute_scatter_3D</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="normal">2292</span>
+<span class="normal">2293</span>
+<span class="normal">2294</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">compute_scatter_3D</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;This functions computes a figure representing, in a 3D scatter plot, the spots acquired</span>
 <span class="sd">    using spatial scRNAseq experiments.</span>
 
@@ -14485,9 +14493,7 @@ database, to indicate that the arrays do not need to be recomputed at next app s
 
       <details class="quote">
         <summary>Source code in <code>modules/figures.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">2792</span>
-<span class="normal">2793</span>
-<span class="normal">2794</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">2794</span>
 <span class="normal">2795</span>
 <span class="normal">2796</span>
 <span class="normal">2797</span>
@@ -14501,7 +14507,9 @@ database, to indicate that the arrays do not need to be recomputed at next app s
 <span class="normal">2805</span>
 <span class="normal">2806</span>
 <span class="normal">2807</span>
-<span class="normal">2808</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">shelve_all_arrays_annotation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="normal">2808</span>
+<span class="normal">2809</span>
+<span class="normal">2810</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">shelve_all_arrays_annotation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;This functions precomputes and shelves the array of structure annotation used in a</span>
 <span class="sd">    3D representation of the brain (through self.compute_3D_volume_figure()), at different</span>
 <span class="sd">    resolutions. Once everything has been shelved, a boolean value is stored in the shelve</span>
@@ -14590,9 +14598,7 @@ the brain 2. Defaults to True.</p></td>
 
       <details class="quote">
         <summary>Source code in <code>modules/figures.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">2689</span>
-<span class="normal">2690</span>
-<span class="normal">2691</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">2691</span>
 <span class="normal">2692</span>
 <span class="normal">2693</span>
 <span class="normal">2694</span>
@@ -14691,7 +14697,9 @@ the brain 2. Defaults to True.</p></td>
 <span class="normal">2787</span>
 <span class="normal">2788</span>
 <span class="normal">2789</span>
-<span class="normal">2790</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">shelve_all_l_array_2D</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">force_update</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">sample</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">brain_1</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="normal">2790</span>
+<span class="normal">2791</span>
+<span class="normal">2792</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">shelve_all_l_array_2D</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">force_update</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">sample</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">brain_1</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;This functions precomputes and shelves all the arrays of lipid expression used in a 3D</span>
 <span class="sd">    representation of the brain (through self.compute_3D_volume_figure()). Once everything has</span>
 <span class="sd">    been shelved, a boolean value is stored in the shelve database, to indicate that the arrays</span>
@@ -14844,9 +14852,7 @@ Defaults to False.</p></td>
 
       <details class="quote">
         <summary>Source code in <code>modules/figures.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">2658</span>
-<span class="normal">2659</span>
-<span class="normal">2660</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">2660</span>
 <span class="normal">2661</span>
 <span class="normal">2662</span>
 <span class="normal">2663</span>
@@ -14873,7 +14879,9 @@ Defaults to False.</p></td>
 <span class="normal">2684</span>
 <span class="normal">2685</span>
 <span class="normal">2686</span>
-<span class="normal">2687</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">shelve_arrays_basic_figures</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">force_update</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="normal">2687</span>
+<span class="normal">2688</span>
+<span class="normal">2689</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">shelve_arrays_basic_figures</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">force_update</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;This function shelves in the database all the arrays of basic images computed in</span>
 <span class="sd">    self.compute_figure_basic_image(), across all slices and all types of arrays. This forces</span>
 <span class="sd">    the precomputations of these arrays, and allows to access them faster. Once everything has</span>
