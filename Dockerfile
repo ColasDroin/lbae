@@ -31,5 +31,8 @@ CMD [ "gunicorn", "main:server", "--bind", "0.0.0.0:8050", "--workers=1", "--thr
 # To build the app, use the commande below:
 # docker build -t lbae_app .  
 
+# If there's a bug because of files starting with . or ._, use the following command:
+# dot_clean -n . 
+
 # To run the app, use the command below
 # docker run -p 8051:8050 lbae_app
