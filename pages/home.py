@@ -91,6 +91,7 @@ layout = (
                                             # "margin-top": "40%",
                                             "width": "3rem",
                                             "height": "3rem",
+                                            "position": "absolute",
                                         },
                                         children=[
                                             html.Div(
@@ -111,7 +112,9 @@ layout = (
                                         ],
                                     ),
                                 ],
-                                style={"height": "500px", "min-width": "100px"},
+                                style={
+                                    "height": "500px",
+                                },  # "min-width": "100px"},
                             ),
                             # Below logo text
                             dmc.Text(
@@ -120,7 +123,7 @@ layout = (
                                 size="xl",
                                 align="center",
                                 color="dimmed",
-                                # class_name="mt-4",
+                                class_name="mt-4",
                                 style={
                                     "margin-top": "-3rem",
                                 },
