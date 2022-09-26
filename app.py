@@ -135,7 +135,7 @@ else:
 
 # Initiate Cache
 cache_flask = Cache()
-cache_flask.init_app(app.server, config=CACHE_CONFIG)
+cache_flask.init_app(app.server, config=CACHE_CONFIG)  # Comment this line for a faster launch
 
 # Initiate the cache as unlocked
 cache_flask.set("locked-cleaning", False)
