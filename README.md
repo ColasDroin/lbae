@@ -58,7 +58,7 @@ In both cases, it will be accesible with a browser at http://localhost:8077.
 
 ## Technical documentation
 
-The technical documentation of the app is available [here](https://lbae-doc.epfl.ch/).
+The technical documentation of the app is available [here](https://lbae.epfl.ch/documentation/).
 
 
 
