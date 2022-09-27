@@ -1,3 +1,8 @@
+# Run with 'mkdocs serve'
+# Build with 'mkdocs build'
+# The documentation is available at https://lbae.epfl.ch/documentation/
+# For updating the doc, please first build the doc locally, then copy the content of the local 'site' folder to the 'var/www/lbae-doc' folder.
+
 site_name: LBAE technical documentation
 repo_url: https://github.com/ColasDroin/lbae
 site_url: https://lbae.epfl.ch
@@ -44,5 +49,3 @@ nav:
       - region_analysis: pages/region_analysis.md
       - threeD_exploration: pages/threeD_exploration.md
       - scRNAseq: pages/scRNAseq.md
-# Run with 'mkdocs serve'
-# Build with 'mkdocs build'
