@@ -170,7 +170,7 @@ def return_main_content():
                         # title="LBAE documentation",
                         opened=False,
                         padding="md",
-                        size="85vh",
+                        size="90vh",
                         position="bottom",
                     ),
                     # Spinner when switching pages

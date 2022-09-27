@@ -10,11 +10,6 @@ RUN apt-get update -y && apt-get install -y gcc
 ADD requirements.txt .
 RUN pip install --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
-#RUN pip install --no-cache-dir gunicorn
-#RUN pip install --no-cache-dir gevent
-#RUN pip install --no-cache-dir multiprocess 
-#RUN pip install --no-cache-dir diskcache 
-#RUN pip install --no-cache-dir psutil
 
 # Bug with Werkzeug
 RUN pip install Werkzeug==2.0.0

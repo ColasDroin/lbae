@@ -80,6 +80,8 @@ logging.info("Memory use after three main object have been instantiated" + logme
 
 # Compute and shelve potentially missing objects
 launch = Launch(data, atlas, figures, storage)
+
+# This line can be commented out to gain speed at startup... But lose security and speed during use
 launch.launch()
 
 logging.info("Memory use after main functions have been compiled" + logmem())
